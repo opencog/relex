@@ -1,0 +1,2276 @@
+;  Known issues:
+;  1.   Passive is not handled correctly.  "This is the cup that John gave me."
+;       We need a non-template alg to handle passive ditransitive verbs.
+;       Also "This is the cup that John was given."
+;  2. Special O*i construction: It is Jane who wants to do it.
+;  3. VERB_INF / PAST PART alg?
+;  4. R exception for "even" and "only"
+;
+;/////////////////////////////////////////////////////////////////////////////
+; 
+;  Part-of-speech Tagging:
+;  categories for Morphy are "noun" "verb" "adj" "adv"
+;
+;  Empty or blank node is shown by "%"
+;
+;  Regular expression is introduced by "\"
+;  In regular expressions, "\." is converted to "[a-z\*]" 
+;     (meaning any lower case or the * character)
+;     (also meaning that there is no way to represent a "." in a regular expression)
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;
+; POS TAGGING		
+;
+;
+#TemplateActionAlg
+POS_VERB
+<LAB> = \S\.*|\SF\.*|\SX\.*|\I\.*|\B\.*|\BW\.*|\P\.*|\PP\.*|\Mv\.*|\Mg\.*
+<F_R POS> = WORD
+=
+<F_R POS> = verb
+;
+#TemplateActionAlg
+POS_VERB_INVERTED
+<LAB> = \SI\.*|\O\.*|\PP\.*|\SXI\.*|\SFI\.*
+<F_L POS> = WORD
+=
+<F_L POS> = verb
+;
+#TemplateActionAlg
+POS_NOUN
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*
+<F_L POS> = WORD
+=
+<F_L POS> = noun
+;
+#TemplateActionAlg
+DETERMINER_FLAG
+<LAB> = \D\.*|\DD\.*
+<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that
+=
+<DETERMINER_LINK_FLAG> = T
+<F_L DETERMINER_FLAG> = T
+<F_L POS> = det
+;
+#TemplateActionAlg
+POS_NOUN_DET
+<DETERMINER_LINK_FLAG> = T
+=
+<F_R POS> = noun
+;
+#TemplateActionAlg
+POS_NOUN_INVERTED
+<LAB> = \SI\.*|\O\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*
+<F_R POS> = WORD
+=
+<F_R POS> = noun
+;
+#TemplateActionAlg
+POS_PREP
+<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
+<F_L POS> = WORD
+=
+<F_L POS> = prep
+;
+#TemplateActionAlg
+POS_PREP_INVERTED
+<LAB> = \Mp\.*|\MVp\.*|\Pp\.*
+<F_R POS> = WORD
+=
+<F_R POS> = prep
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG1
+<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
+=
+<PREP-OBJ-LINK-FLAG> = T
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG2
+<PREP-OBJ-LINK-FLAG> = T
+=
+<F_L PREP-OBJ> = T
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG_INVERSE
+<LAB> = \B\.*|\BW\.*
+<F_R POS> = prep
+=
+<F_R PREP-OBJ> = T
+;
+#TemplateActionAlg
+PREP_CLAUSE_OBJ
+; States that the prep takes an object when that object is actually a clause
+; "I see the building where Joe lives"
+<LAB> = \Cs\.*|\WR\.*
+<F_L POS> = prep
+=
+<F_L PREP-OBJ> = T
+;
+#TemplateActionAlg
+POS_ADJ
+<LAB> = \A\.*|\AF\.*|\DP\.*|\D\.*
+<F_L PREP-OBJ> = %
+<F_L str> != a|A|an|An|the|The|
+<F_L DETERMINER_FLAG> != T
+=
+<F_L POS> = %
+<F_L POS> = adj
+;
+#TemplateActionAlg
+POS_ADJ_INVERTED
+; Treat Pp like an adjective if it takes no object ("I am here.")
+; Treat Mp like it identifies adjective to left if "prep" takes 
+; no object (in_line: "The man in line is happy.")
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*
+<F_R PREP-OBJ> = %
+=
+<F_R POS> = %
+<F_R POS> = adj
+;
+#TemplateActionAlg
+POS_ADV
+<LAB> = \MVa\.*|\EB\.*
+<F_R POS> = WORD
+=
+<F_R POS> = adv
+;
+#TemplateActionAlg
+POS_ADV_INVERTED
+<LAB> = \E\.*|\EA\.*|\EE\.*
+<F_L POS> = WORD
+=
+<F_L POS> = adv
+;
+; Identify a particle: 
+;   The word "that" in "I heard that you fell."
+#TemplateActionAlg
+POS_TH_PARTICLE
+<LAB> = TH
+<F_R POS> = WORD
+=
+<F_R POS> = particle
+;
+; Identify a particle: 
+;   The word "to" in "I like to read."
+#TemplateActionAlg
+POS_I_PARTICLE
+<LAB> = I
+<F_L POS> = WORD
+=
+<F_L POS> = particle
+;
+; Is John Barleycorn alive?
+; marks the ? as "punctuation"
+#TemplateActionAlg
+POS_PUNCTUATION
+<LAB> = Xp
+<F_R POS> = WORD
+=
+<F_R POS> = punctuation
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; PAST-TENSE TENSE
+;
+;
+; VTAlg flag only set for verbs which are possible past-tense forms
+#TemplateActionAlg
+VTALG1
+;<F_R POS> = verb
+<lab_R> = S|RS|SFsi|SF
+=
+<F_R VTAlg_flag> = T
+;
+#TemplateActionAlg
+VTALG2
+;<F_L POS> = verb
+<lab_L> = SI|SFI|SI*j|SXI
+=
+<F_L VTAlg_flag> = T
+;
+#TemplateActionAlg
+VTALG3
+<POS> = verb
+<str> = did|didn't|had|hadn't|was|wasn't|were|weren't
+=
+<VTAlg_flag> = T
+;
+#TemplateActionAlg
+VTALG4
+<LAB> = PP|PPf
+<F_R str> = had|hadn't
+=
+<F_R VTAlg_flag> = F
+;
+#VerbTenseAlg
+VERB_TENSE
+<VTAlg_flag> = T
+=
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; MORPHOLOGY 
+;
+;
+#MorphyAlg
+;
+#TemplateActionAlg
+IDENTIFY_POSSESSIVE
+<orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours
+=
+<POSSESSIVE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; MODAL TENSE
+;
+; done after morphology so that algorithms can match to word root forms
+;
+;
+#TemplateActionAlg
+TENSE_PERFECT
+<LAB>=\PP\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = perfect
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_DO
+<LAB>=\I\.d\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = none
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_COPULA
+;Pp is not used if it takes a complement so that copula is still explicit in "John is in the park."
+;But "John is here." treats "here" like an adj
+<LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
+<F_L PREP-OBJ> = %
+<F_L str> = be
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_COPULA_INV
+<LAB> = \AF\.*
+<F_R str> = be
+=
+<INV-TENSE-LINK-FLAG> = T
+<F_L tense prev> = <F_R tense>
+;
+#TemplateActionAlg
+TENSE_FUTURE
+;The place holder prevents "will" from having empty tense
+;Without that, the next verb might be affected by TENSE-LIST-CONNECT1, which would incorrectly
+;set the following verb's prev feature to itself
+<LAB>=\I\.*
+<F_L str> = will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense prev> = <F_L tense>
+<F_R tense val> = future
+<F_L tense PLACE-HOLDER> = T
+;
+#TemplateActionAlg
+TENSE_INFINITIVE
+<LAB>=\I\.*
+<F_L str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+=
+<F_R tense val> = infinitive
+;
+#TemplateActionAlg
+TENSE_PROGRESSIVE
+<LAB>=\Pg\.*
+<F_L str> = be
+=
+<F_R tense val> = progressive
+;
+#TemplateActionAlg
+TENSE_NOTENSE
+;This prevents tense from being set to present
+<LAB>=\Pa\.*|\Mv\.*
+<F_L str> != be
+=
+<F_R tense val> = none
+;
+#TemplateActionAlg
+INV-TENSE_NOTENSE
+;This prevents tense from being set to present
+<LAB>=\AF\.*
+<F_R str> != be
+=
+<F_L tense val> = none
+;
+#TemplateActionAlg
+TENSE_PROGRESSIVE2
+;This prevents tense from being set to present
+<LAB>=\Pg\.*|\Mg\.*
+<F_L str> != be
+=
+<F_R tense val> = progressive
+;
+#TemplateActionAlg
+BLANK_TENSE
+<LAB>=\Pv\.*|\Pp\.*
+=
+<F_R BLANK-TENSE-FLAG> = T
+;
+#TemplateActionAlg
+TENSE_PRESENT
+;//For verbs that are not identified with future or passive, set tense to present
+<POS> = verb
+<str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+<BLANK-TENSE-FLAG> = %
+<tense val> = %
+=
+<tense val> = present
+;
+#TemplateActionAlg
+TENSE_IMPERATIVE
+;/Can overrule TENSE_PRESENT
+<LAB> = \Wi\.*
+=
+<F_R tense val> = imperative
+<F_R POS> = verb
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; BASIC REFERENCE
+;
+;
+#TemplateActionAlg
+BASIC_REF
+<str> = $string
+=
+<ref name> = <str>
+<ref nameSource> = <this>
+;
+#EntityAlg
+ENTITY
+; sets ENTITY-FLAG = T for words which are names, places, etc.
+<str> != %
+=
+;
+; Entities need to be identified as nouns, so that later
+; relex rules, which look for nouns, treat them appropriately.
+;
+#TemplateActionAlg
+ENTITY_IS_NOUN
+<ENTITY-FLAG> = T
+=
+<POS> = %
+<POS> = noun
+;
+; The PERSON-FLAG, etc. are set by the entity detection code.
+; the following rules copy them to the ref, where they will 
+; appear in the relex output.
+#TemplateActionAlg
+ENTITY-PERSON
+<PERSON-FLAG> = T
+=
+<ref person-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-LOCATION
+<LOCATION-FLAG> = T
+=
+<ref location-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-ORGANIZATION
+<ORGANIZATION-FLAG> = T
+=
+<ref organization-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-DATE
+<DATE-FLAG> = T
+=
+<ref date-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-MONEY
+<MONEY-FLAG> = T
+=
+<ref money-FLAG> = T
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = who|Who|whom|Whom
+=
+<F_R ref QUERY-TYPE> = who
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = what|What
+=
+<F_R ref QUERY-TYPE> = what
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = which|Which
+=
+<F_R ref QUERY-TYPE> = which
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+#WordSequenceCombineAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+<F_R> = $right
+=
+;
+#TemplateActionAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
+;//Necessary because the WordSequenceCombineAlg changes replaces <str> with a new node
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+=
+<F_R ref name> = %
+<F_R ref name> = <F_R str>
+;
+#TemplateActionAlg
+PROPER_NAME_POS_CORRECTION
+<LAB> = \G\.*
+=
+<F_R POS> = %
+<F_R POS> = noun
+;
+#TwoWordCombineToLeftAlg
+COMBINE_PARTICLES
+<LAB> = K
+=
+#TwoWordCombineToRightAlg
+COMBINE_AS_MANY
+<LAB> = AM
+=
+;
+#TemplateActionAlg
+DEFINITE_NAMES
+<LAB> = \G\.*
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_ENTITIES
+<ENTITY-FLAG> = T
+=
+<ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_DETERMINED
+<LAB> = \D\.*
+<F_L orig_str> = the|The|This|this|These|these|Those|those|That|that|'s|his|His|her|Her|their|Their|my|My|our|Our|your|Your
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \DD\.*
+=
+<F_R DD-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \D\.*
+<F_L DD-FLAG> = T
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; RELATIVE REFERENCE (who, which, whom, that)
+;
+;
+;
+#TemplateActionAlg
+SET_RS_FLAG
+;//Puts a flag in a node to indeicate that it has an RS link
+<LAB> = \RS\.*
+=
+<F_R RS-FLAG> = T
+;
+#TemplateActionAlg
+RELATIVE_REF1
+<LAB> = \R\.*
+<F_R RS-FLAG> = T
+;The dog who barked, ... (no comma between 'dog' and 'barked')
+=
+<F_R ref> = %
+;
+#TemplateActionAlg
+RELATIVE_REF2
+<LAB> = \R\.*
+<F_R RS-FLAG> = T
+;The dog who barked, ... (no comma between 'dog' and 'barked')
+=
+<F_R ref> += <F_L ref>
+;
+#TemplateActionAlg
+RELATIVE_REF1
+<LAB> = \MX.r\.*
+;The dog, who barked, ...
+=
+<F_R ref> = %
+;
+#TemplateActionAlg
+RELATIVE_REF2
+<LAB> = \MX.r\.*
+;The dog, who barked, ...
+=
+<F_R ref> += <F_L ref>
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF1
+<LAB> = \Jw\.*
+;The man, of whom I know, ...
+=
+<F_L RELATIVE-REF-LOC> = <F_R>
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF2
+<LAB> = \MX.j\.*|\Mj\.*
+<F_R RELATIVE-REF-LOC> != %
+;The man, of whom I know, ...
+=
+<F_R RELATIVE-REF-LOC ref> = %
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF3
+<LAB> = \MX.j\.*|\Mj\.*
+<F_R RELATIVE-REF-LOC> != %
+;The man, of whom I know, ...
+=
+<F_R RELATIVE-REF-LOC ref> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; NOUN NUMBER
+; Determiners (D links) get priority to identify noun number.
+; Then S and O links can identify as singular or plural.  However,
+; if an S or O link identifies the noun as singular, but it has no
+; determiner, then it is "uncountable"  
+;
+; Test sentences
+; Kim eats butter and those deer at Tuesdays.
+; Deer eat mice.
+;
+;
+#TemplateActionAlg
+ENTITY_SINGULAR
+<ENTITY-FLAG> = T
+=
+<num> = %
+<num> = singular
+;
+#TemplateActionAlg
+WORD-FORM
+<POS> = noun
+<str> != <orig_str>
+<num> = %
+=
+<num> = plural
+;
+#TemplateActionAlg
+SINGULAR_DET
+<LAB>=\Ds\.*
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+PLURAL_DET
+<LAB>=\Dmc\.*
+<F_R num> = %
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+UNCOUNTABLE_DET
+<LAB>=\Dmu\.*
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+DET-FLAG
+<LAB> = \D\.*|\DG\.*
+=
+<F_R DET-FLAG> = T
+;
+#TemplateActionAlg
+SINGULAR_OBJ
+<LAB> = \Os\.*
+<F_R DET-FLAG> = T
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+UNCOUNTABLE_OBJ
+<LAB> = \Os\.*
+<F_R DET-FLAG> != T
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+PLURAL_OBJ
+<LAB> = \Op\.*
+<F_R num> = %
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+SINGULAR_SUBJ
+<LAB> = \Ss\.*
+<F_L DET-FLAG> = T
+<F_L num> = %
+=
+<F_L num> = singular
+;
+#TemplateActionAlg
+SINGULAR_SUBJ_INV
+<LAB> = \SIs\.*
+<F_R DET-FLAG> = T
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+UNCOUNTABLE_SUBJ
+<LAB> = \Ss\.*
+<F_L DET-FLAG> != T
+<F_L num> = %
+=
+<F_L num> = uncountable
+;
+#TemplateActionAlg
+UNCOUNTABLE_SUBJ_INV
+<LAB> = \SIs\.*
+<F_R DET-FLAG> != T
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+PLURAL_SUBJ
+<LAB> = \Sp\.*
+<F_L num> = %
+<F_L str> != i|I|you|You
+=
+<F_L num> = plural
+;
+#TemplateActionAlg
+PLURAL_SUBJ
+<LAB> = \SIp\.*
+<F_R num> = %
+<F_R str> != i|I|you|You
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+SINGULAR_PRONOUNS
+<str> = I|i|Me|me|Myself|myself|He|he|She|she|Him|him|Her|her|Himself|himself|Herself|herself
+=
+<num> = singular
+<ref DEFINITE-FLAG>=T
+;
+#TemplateActionAlg
+PLURAL_PRONOUNS
+<str> = We|we|Us|us|Them|them|Ourselves|ourselves|Themselves|themselves
+=
+<num> = plural
+<ref DEFINITE-FLAG>=T
+;
+; "it" is definite, but can be singular or uncountable (but not plural).
+; (It was hot coffee. It was a book.)
+;
+#TemplateActionAlg
+IT_IS_DEFINITE
+<str> = It|it
+=
+<num> = %
+<ref DEFINITE-FLAG>=T
+;
+#TemplateActionAlg
+NUM_TO_REF
+<num> != %
+<ref noun_number> = %
+=
+<ref noun_number> = <num>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; PRONOUN IDENTIFICATION
+; Needed for Anaphora resolution
+; Perhaps this info could be obtained from the link grammar parser,
+; but it seems easier to just make an exhaustive list.
+;
+#TemplateActionAlg
+TAG_PRONOUNS
+<str> = He|he|Him|him|His|his|It|it|Its|its|She|she|Her|her|Hers|hers
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS2
+<str> = I|i|Me|me|We|we|Us|us|You|you|Them|them|They|they
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS_POSS
+<str> = their|Their|my|My|our|Our|your|Your
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_REFLEXIVE_PRONOUNS
+<str> = Himself|himself|Itself|itself|Herself|herself|Myself|myself|Ourselves|ourselves|Themselves|themselves
+=
+<ref PRONOUN-FLAG> = T
+<ref REFLEXIVE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; GENDER IDENTIFICATION
+; Needed for Anaphora resolution
+;
+#TemplateActionAlg
+MALE_PRONOUNS
+<str> = He|he|Him|him|Himself|himself|His|his
+=
+<gend> = masculine
+;
+#TemplateActionAlg
+FEMALE_PRONOUNS
+<str> = She|she|Her|her|Hers|hers|Herself|herself
+=
+<gend> = feminine
+;
+; Sex is unknown, but personal pronouns cannot refer to inanimate objects.
+#TemplateActionAlg
+PERSON_PRONOUNS
+<str> = I|me|Me|We|we|Us|us|You|you|Them|them|They|they|Myself|myself|Ourselves|ourselves|Themselves|themselves
+=
+<gend> = person
+;
+#TemplateActionAlg
+NEUTER_PRONOUNS
+<str> = It|it|Its|its|Itself|itself
+=
+<gend> = neuter
+;
+; person == not neuter == masc or fem
+; i.e. even if we don't know sex, at least we know its a human.
+#TemplateActionAlg
+PERSON_HAS_GENDER
+<PERSON-FLAG> = T
+=
+<gend> = %
+<gend> = person
+;
+#TemplateActionAlg
+ENTITY_GENDER
+<GENDER> != %
+=
+<gend> = %
+<gend> = <GENDER>
+;
+#TemplateActionAlg
+GENDER_TO_REF
+<gend> != %
+=
+<ref gender> = %
+<ref gender> = <gend>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; SYNTACTIC ARG FILLING
+;
+;
+#TemplateActionAlg
+STANDARD_SUBJ
+;  Putting this alg before subject linking ensures AND support.
+;  As a test, reverse the alg order and process "Kim and Pat are hungry."
+<LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
+; No subject for SF (filler subject)
+<LAB> != \MX.[rj]\.*
+<LAB> != MX|MXs|MXp
+; exclude some relative constructions
+=
+<F_R subj> += <F_L ref>
+;
+#TemplateActionAlg
+INVERTED_SUBJ
+; Inverted version of standard subject.
+<LAB> = \SI\.*|\SXI\.*
+=
+<F_L subj> += <F_R ref>
+;
+#TemplateActionAlg
+REL_SUBJ
+;  If a node has both B and RS, then get the subject from the B-link.
+;  "This is the dog and cat that chased me."
+<LAB> = \B\.*|\BW\.*
+<F_R RS-FLAG> = T
+=
+<F_R REL-SUBJ-FLAG> = T
+<F_R subj> += <F_L ref>
+;
+#TemplateActionAlg
+OBJ-LINK-TAG-INIT1
+<LAB> = \Mv\.*|\Pv\.*|\B\.*|\BW\.*
+<F_R RS-FLAG> != T
+=
+<F_R OBJ-LINK-TAG> = UNSET
+;
+#TemplateActionAlg
+OBJ-LINK-TAG-INIT2
+<LAB> = \O\.*|\OD\.*|\OT\.*
+=
+<F_L OBJ-LINK-TAG> = UNSET
+;
+#TemplateActionAlg
+GER_OBJ
+;//Pv and Mv GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
+;//Identifies a modifying gerund fills the argument
+;//"This is the man given a dog by me."
+<LAB> = \Mv\.*
+=
+<F_R OBJ-LINK-TAG> = Mv
+<F_R obj> += <F_L ref>
+;
+#TemplateActionAlg
+PASS_OBJ
+;//Pv and Mh GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
+;//We dont do linking until the arguments are filled (to be AND safe)
+;//"He was chased."
+<LAB> = \Pv\.*
+=
+<F_R OBJ-LINK-TAG> = Pv
+;
+#TemplateActionAlg
+DIR_OBJ1
+;//O GETS SECOND CHANCE TO IDENTIFY DIRECT OBJECT
+;//If there no object, then O-link defines object
+;//Must check for own tag value to be AND-SAFE
+;//"I gave him the car." 
+;//"This is the car I gave the man." (B has not had a chance to identify object)
+<LAB> = \O\.*|\OD\.*|\OT\.*
+<LAB> != \O\.n\.*
+<LAB> != \O\.i\.*
+<F_L OBJ-LINK-TAG> = O|UNSET
+=
+<F_L OBJ-LINK-TAG> = O
+<F_L obj> += <F_R ref>
+;
+#TemplateActionAlg
+INDIR_OBJ1
+;//If there is already an object, then O-link defines indirect object
+;//"He was given the car."
+;//"This is the man given the car."
+<LAB> = \O\.*|\OD\.*|\OT\.*
+<LAB> != \O\.n\.*
+<LAB> != \O\.i\.*
+<F_L OBJ-LINK-TAG> != O|UNSET
+=
+<F_L obj2> += <F_R ref>
+;
+#TemplateActionAlg
+REL_OBJ
+;//B (without RS) GETS THIRD CHANCE TO IDENTIFY DIRECT OBJECT
+;//Checks to make sure Mv/Pv or O have not already filled the object
+;//Identifies a relative object and fills the argument
+;//"This is the dog and cat Pat and I chased and ate."
+<LAB> = \B\.*|\BW\.*
+<F_R RS-FLAG> != T
+<F_R OBJ-LINK-TAG> = B|UNSET
+=
+<F_R OBJ-LINK-TAG> = B
+<F_R obj> += <F_L ref>
+;
+#TemplateActionAlg
+REL_INDIR_OBJ
+;//If O or MvPv have already filled the object, B identifies indirect
+;//"This is the car I gave the man." (O fills before B)
+;//"This is the car the man was given." (Pv filles vefore B)
+<LAB> = \B\.*|\BW\.*
+<F_R RS-FLAG> != T
+<F_R OBJ-LINK-TAG> != B|UNSET
+=
+<F_R obj2> += <F_L ref>
+;
+#TemplateActionAlg
+DIR_OBJ2
+;//O*n GETS FOURTH CHANCE TO IDENTIFY DIRECT OBJECT
+<LAB> = \O\.n\.*
+<LAB> != \O\.i\.*
+<F_L OBJ-LINK-TAG> = O-n|UNSET
+=
+<F_L OBJ-LINK-TAG> = O-n
+<F_L obj> += <F_R ref>
+;
+#TemplateActionAlg
+DIR_OBJ2
+<LAB> = \O\.n\.*
+<LAB> != \O\.i\.*
+<F_L OBJ-LINK-TAG> != O-n|UNSET
+=
+<F_L obj2> += <F_R ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  SYNTACTIC ARGUMENT LINKING
+;
+;
+#TemplateActionAlg
+PASSIVE_OBJ_LINK
+;//"He was eaten."
+<LAB> = \Pv\.*
+=
+<F_R obj> = <F_L subj>
+;
+#TemplateActionAlg
+;  "Tom made it unlikely that she will come."
+MARK_FILLER_OBJ
+<LAB> = \OX\.*
+=
+<F_L FILLER-OBJ-FLAG> = T
+;
+#TemplateActionAlg
+SUBJECT_LINKING
+; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
+; Jim wants to eat a cat
+; Jim is green
+<LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
+<F_L obj> = %
+<F_L FILLER-OBJ-FLAG> != T
+=
+<F_R subj> = <F_L subj>
+;
+#TemplateActionAlg
+INV-SUBJECT_LINKING
+; Look how green Jim is.
+<LAB> = \AF\.*
+<F_R obj> = %
+<F_R FILLER-OBJ-FLAG> != T
+=
+<F_L subj> = <F_R subj>
+;
+#TemplateActionAlg
+OBJECT_LINKING
+; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
+;  Jim wants Mike to eat a cat
+;  Jim finds Mike interesting
+<LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
+<F_L obj> != %
+=
+<F_R subj> = <F_L obj>
+;
+#TemplateActionAlg
+INV_OBJECT_LINKING
+;  Look how interesting Jim finds Mike
+<LAB> = \AF\.*
+<F_R obj> != %
+=
+<F_L subj> = <F_R obj>
+;
+#TemplateActionAlg
+SPECIAL-ADJ
+; Used for "easy to read." 
+; The B links back to the adjective.  But it should really be 
+; interpretted as linking back to the subject of the adjective
+<LAB> = \B\.*|\BW\.*
+<F_L POS> = adj
+=
+<F_R obj> = %
+<F_R obj> = <F_L subj>
+<F_L ADJ-OBJ-FLAG> = T
+;
+#TemplateActionAlg
+SUBJECT_LINKING_TO
+; TO-INF only links subject for non-copula
+<LAB> = \TO\.*|\MVi\.*
+<F_L str> != be
+<F_L obj> = %
+<F_L ADJ-OBJ-FLAG> = %
+=
+<F_R subj> = <F_L subj>
+;
+#TemplateActionAlg
+OBJECT_LINKING_TO
+;//TO-INF only links subject for non-copula
+<LAB> = \TO\.*|\MVi\.*
+<F_L str> != be
+<F_L obj> != %
+<F_L ADJ-OBJ-FLAG> = %
+=
+<F_R subj> = <F_L obj>
+;
+#TemplateActionAlg
+PREP_OBJ
+<PREP-OBJ-LINK-FLAG> = T
+=
+<F_L obj> += <F_R ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; TENSE SETTING AND 
+; HEAD RELATION IDENTIFICATION
+;
+;
+#TemplateActionAlg
+TENSE_LIST_CONNECT1
+;//This applies to the first verb in a tense link sequence.
+;//It sets the "first_verb" feature to point itself.
+;//This will also apply to a plain verb that is not modified by tense modals.
+<tense prev> = %
+<tense> = $T
+=
+<tense first_verb> = <this>
+;
+#TemplateActionAlg
+TENSE_LIST_CONNECT2
+;//This applies to all links in a tense link sequence
+;//It sets a flag in any modal (always to the right of the link)
+;//It ensures that all sequence members have pointers to the first verb
+<TENSE-LINK-FLAG> = T
+=
+<F_L tense MODAL-FLAG> = T
+<F_R tense first_verb> = <F_L tense first_verb>
+;
+#TemplateActionAlg
+INV_TENSE_LIST_CONNECT2
+;//Inverse of TENSE_LIST_CONNECT2
+;//Look how big Jim is.
+<INV-TENSE-LINK-FLAG> = T
+=
+<F_R tense MODAL-FLAG> = T
+<F_L tense first_verb> = <F_R tense first_verb>
+;
+#TemplateActionAlg
+HEAD_IDENTIFY
+<tense> != %
+<tense MODAL-FLAG> = %
+=
+<HEAD-FLAG> = T
+;
+#TenseConjoinAlg
+TENSE_CONJOIN
+;//This applies only to the last (or only) verb in a tense sequence
+;//It conjoins all of the tense names in the sequence
+<HEAD-FLAG> = T
+=
+;
+#TemplateActionAlg
+HEAD_INIT
+;//This applies only to the last (or only) verb in a tense sequence
+;//puts the head links in place
+<HEAD-FLAG> = T
+=
+<ref tense> = <tense name>
+;
+#TemplateActionAlg
+HEAD_TO_FIRST_VERB
+; This applies only to the last (or only) verb in a tense sequence
+; It sets the first verb to contain this as a 'head-word' feature
+<HEAD-FLAG> = T
+=
+<tense first_verb head-word> += <this>
+;
+#TemplateActionAlg
+HEAD_TO_SUBJ_AND_OBJ1
+<LAB> = \S\.*|\SX\.*|\B.w\.*|\SF\.*
+=
+<F_L head-word> += <F_R head-word>
+;
+#TemplateActionAlg
+HEAD_TO_SUBJ_AND_OBJ2
+<LAB> = \S\.*|\SX\.*
+=
+<F_L head-word> += <F_R head-word>
+;
+#TemplateActionAlg
+HEAD-QUESTION-WORD
+;//Who does John think the man I love wants?
+<LAB> = \Rw\.*|Q
+=
+<F_L head-question-word> += <F_R head-word>
+;
+#TemplateActionAlg
+HEAD-QUESTION-WHICH
+;//Which cat/one does he think John wants?
+<LAB> = \D\.\.w\.*
+<F_R head-question-word> != %
+=
+<F_L head-question-word> += <F_R head-question-word>
+;
+#TemplateActionAlg
+HEAD-QUESTION-WHICH
+;//Which cat/one does he think John wants?
+<LAB> = \D\.\.w\.*
+<F_R head-question-word> = %
+=
+<F_L head-question-word> += <F_R head-word>
+;
+#TemplateActionAlg
+HEAD-QUESTION-WORD2
+<LAB> = \W[qs]\.*
+<F_R head-question-word> != %
+=
+<F_L head-word> += <F_R head-question-word>
+;
+#TemplateActionAlg
+HEAD-QUESTION-WORD2NULL
+<LAB> = \W[qs]\.*
+<F_R head-question-word> = %
+=
+<F_L head-word> += <F_R head-word>
+;
+#TemplateActionAlg
+HEAD_TO_CLAUSE_AND_WALL
+<LAB> = \W\.*|\C\.*|\RS\.*|\Qd\.*
+<LAB> != \C[ie]|\Ct\.*
+<LAB> != \W[qs]\.*
+;dont change the head-word for a verb that takes a clausal complement (Ce)
+;also dont propogate head to "than" (Ct)
+=
+<F_L head-word> += <F_R head-word>
+;
+#TemplateActionAlg
+PROPOGATE_HEAD-WORD
+<tense first_verb head-word> = $Z
+=
+<head-word> = $Z
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; FILLER FIXING
+;
+;
+#TemplateActionAlg
+FILLER_FIX
+;Transfers object to subject for "There appears to [be]/[have been] a problem
+; But only if there is no subject.  So wont tranfer for "Jim appears..."
+<LAB> = \Ix\.*|\PPf\.*
+<F_R subj> = %
+<F_R obj> != %
+=
+<F_R subj> = <F_R obj>
+<F_R obj> = %
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; QUESTION identification
+;
+;
+#TemplateActionAlg
+QUESTION2
+<LAB> = \D\.\.w\.*
+=
+<F_R ref QUERY-FLAG> = T
+<F_L wall sentence_type> = QUERY
+;
+#TemplateActionAlg
+QUESTION-ID
+<LAB> = \Q\.*
+=
+<F_L wall sentence_type> = QUERY
+;
+#TemplateActionAlg
+QUESTION3_DO
+; TRUTH-QUERY is used when the query variable should not be expanded.
+; For "Who died?" you want "who" and "die" to be query variables.
+; But for "Did John die?" only "die" is a query variable. (see FNtoAtomConverter)
+<LAB> = \Qd\.*
+<F_L str> = LEFT-WALL
+=
+<F_R head-word ref TRUTH-QUERY-FLAG> = T
+<F_R head-word ref HYP> = T
+;
+#TemplateActionAlg
+DECLARATIVE_QUESTION1
+<LAB> = \Xp\.*
+=
+<F_L punc> = <F_R str>
+;
+#TemplateActionAlg
+DECLARATIVE_QUESTION2
+; not AND-SAFE!
+; regular expression [\\?] matches just the question mark
+<LAB> = \Wd\.*
+<F_L punc> = \[\\?]
+<F_L head-word> != %
+=
+<F_R head-word ref TRUTH-QUERY-FLAG> = T
+<F_R head-word ref HYP> = T
+<F_L wall sentence_type> = QUERY
+;
+#TemplateActionAlg
+QUESTIONS-COPULA
+<LAB> = Q
+<F_L head-question-word str> = be
+<F_L head-question-word obj> = %
+=
+<F_L head-question-word ref name> = %
+<F_L head-question-word ref name> = _%copula
+;
+#TemplateActionAlg
+WHEN
+<LAB> = Q
+<F_L str> = When|when
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = when
+<F_L head-question-word ref links _%atTime> = <F_L ref>
+;
+#TemplateActionAlg
+; This algoritm was modified to exclude cases where there isn a todo link followed by a verb
+; This case is dealt with in WHERE_HACK_FOR_QP
+WHERE1
+<LAB> = Q
+<F_L str> = Where|where
+;<F_L head-question-word> != %
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = where
+<F_L head-question-word ref links _%atLocation> = <F_L ref>
+;
+#TemplateActionAlg
+WHERE2q
+<LAB> = \Wq\.*
+<F_R str> = Where|where
+=
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_L ref QUERY-TYPE> = where
+;
+#TemplateActionAlg
+WHERE2
+<LAB> = \WR\.*
+<F_L ref QUERY-TYPE> = where
+=
+<F_R ref links _%atLocation> = <F_L ref>
+;
+;
+#TemplateActionAlg
+HOW
+<LAB> = Q
+<F_L str> = How|how
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = how
+<F_L head-question-word ref links how> = <F_L ref>
+<F_L head-question-word ref linkSources how> = <F_L>
+;
+#TemplateActionAlg
+WHY
+<LAB> = Q
+<F_L str> = Why|why
+<F_L head-question-word> != %
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = why
+<F_L head-question-word ref links _%because> = <F_L ref>
+;
+;
+;  SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want to do?"
+; Prevents "do" from having an object.  instead turns the head verb into a query variable.
+; So for above sentences, we would be looking for any event with "subj" relation to Ben
+;
+;
+;
+#TemplateActionAlg
+DO_QUESTION1
+<LAB> = \B.w
+<F_R str> = do
+=
+<F_R obj> = %
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref QUERY-FLAG> = T
+;
+;
+;  SPECIAL RULE FOR COPULA-Questions: "Who/What is the cat?"
+;    Prevents "who" from acting as the subject.
+;    Instead, "cat" will act as the subject and a query variable
+;
+;
+;
+;#TemplateActionAlg
+;COPULA_QUESTION1
+;<ref name> = be
+;<subj name> = _$qVar
+;<subj QUERY-FLAG> = T
+;<obj> != %
+;=
+;<subj> = %
+;<subj> = <obj>
+;<subj QUERY-FLAG> = T
+;<obj> = %
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; TRANSFER LINKS TO REF
+;
+;
+#TemplateActionAlg
+SUBJ_TO_LINKS
+<HEAD-FLAG> = T
+<subj> != %
+=
+<ref links _subj> = <subj>
+;
+#TemplateActionAlg
+OBJ_TO_LINKS
+<HEAD-FLAG> = T
+<obj> != %
+=
+<ref links _obj> = <obj>
+;
+#TemplateActionAlg
+OBJ_TO_LINKS_GERUND
+<POS> = noun
+<obj> != %
+=
+<ref links _obj> = <obj>
+;
+#TemplateActionAlg
+OBJ2_TO_LINKS
+<HEAD-FLAG> = T
+<obj2> != %
+=
+<ref links _obj2> = <obj2>
+;
+#TemplateActionAlg
+OBJ2_TO_LINKS_GERUND
+<POS> = noun
+<obj2> != %
+=
+<ref links _obj2> = <obj2>
+;
+#TemplateActionAlg
+PREPOSITION_MARKING
+<LAB> = \Pp\.*
+<F_L str> = be
+=
+;<F_R ref COPULA-FLAG> = T
+;<F_L ref COPULA-FLAG> = T
+<F_L ref name> = %
+<F_L ref name> = _%copula
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  Z-HEAD AND-SAFE REF TRANSFER
+;  When z-heads have been groups, this brings the ref feature outside the group
+;
+;
+#TemplateActionAlg
+HEAD-WORD_GROUP0
+<head-word member0 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP1
+<head-word member1 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP2
+<head-word member2 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP3
+<head-word member3 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP4
+<head-word member4 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP5
+<head-word member5 ref> = $R
+=
+<head-word ref> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP6
+<head-word member6 ref> = $R
+=
+<head-word ref> += $R
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  CLAUSAL COMPLEMENTS
+;  (note that HEAD_TO_CLAUSE_AND_WALL must already have run.
+;
+;
+;
+#TemplateActionAlg
+THAT1
+<LAB> = \C[ei]\.*
+<LAB> != \Cet\.*
+; Ce is direct complement of verb (Cet means 'that' is present)
+; 'that' is handled in preposition section. (PREP_CLAUSE_OBJECT)
+=
+<F_L that> += <F_R head-word ref>
+;
+#TemplateActionAlg
+THAT_TO_LINKS
+; 'that' is handled in preposition section. (PREP_CLAUSE_OBJECT)
+<str> != %
+<str> != that
+<that> != %
+=
+<ref links _that> = <that>
+;
+#TemplateActionAlg
+RELATIVE_CLAUSE_TO_BACKGROUND
+<LAB> = \R\.*
+<LAB> != \Rw\.*
+=
+<F_L background ref> += <F_R head-word ref>
+<F_L background wall> = <F_L wall>
+<F_L background BACKGROUND-FLAG> = T
+;
+#TemplateActionAlg
+MODIFYING_PHRASES_TO_BACKGROUND
+<LAB> = \Mv\.*|\Mg\.*
+=
+<F_R BACKGROUND-FLAG> = T
+;
+#TemplateActionAlg
+MARK_TOBE
+<LAB> = \Pa\.*
+=
+<F_L TO-BE-FLAG> = T
+;
+#TemplateActionAlg
+INV-MARK_TOBE
+<LAB> = \AF\.*
+=
+<F_R TO-BE-FLAG> = T
+;
+;#TemplateActionAlg
+;TODO1
+;<LAB> = \I\.*|\Pg\.*
+;<F_R TO-BE-FLAG> != T
+;<F_R head-word> = %
+;=
+;<F_L to-do> += <F_R ref>
+;
+#TemplateActionAlg
+TODO1z
+; I like running.
+; The exception for Pg*b prevents hypotehtical for forms of be: 
+; "They WERE RUNNING." and "what ARE they PLANNING?"
+<LAB> = \I\.*|\Pg\.*
+<LAB> != Pg*b
+<F_R TO-BE-FLAG> != T
+;<F_R head-word> != %
+=
+<F_L to-do> += <F_R head-word ref>
+;
+#TemplateActionAlg
+TODO2
+<LAB> = \TO\.*
+<F_R to-do> != %
+=
+<F_L to-do> += <F_R to-do>
+;
+#TemplateActionAlg
+TODO_TO_LINKS
+<HEAD-FLAG> = T
+<to-do> != %
+=
+<ref links _to-do> = <to-do>
+;
+;For sentences such as "I had a plan to laugh."
+; we want to have the option of having a todo link from "have" to "laugh".
+; that is, linkg the main verb to the object of the todo verb
+;
+#TemplateActionAlg
+TODO_TO_LINK_FOR_NOUNS
+<POS> = noun
+<to-do> != %
+=
+<ref links _to-do> = <to-do>
+;
+;
+;For sentences such as "I had a plan to laugh."
+; we want to have the option of having a todo link from "have" to "laugh".
+; that is, linkg the main verb to the object of the todo verb
+;
+;#TemplateActionAlg
+;TODO_TO_LINK_FOR_VERBS
+;<POS> = verb
+;<to-do> != %
+;=
+;<ref links _to-do> = <to-do>
+;
+;
+#TemplateActionAlg
+TOBE1
+<LAB> = \Pa\.*
+<F_L str> != be
+<F_R head-word> = %
+=
+<F_L to-be> += <F_R ref>
+;
+#TemplateActionAlg
+INV_TOBE
+;No need to check for head-word, because it might be something else:
+;//Look how big Pat seems.
+<LAB> = \AF\.*
+<F_R str> != be
+=
+<F_R to-be> += <F_L ref>
+;
+#TemplateActionAlg
+TOBE1z
+<LAB> = \Pa\.*
+<F_L str> != be
+<F_R head-word> != %
+=
+<F_L to-be> += <F_R head-word ref>
+;
+#TemplateActionAlg
+TOBE-TOINF
+<LAB> = \I\.*
+<F_R TO-BE-FLAG> = T
+=
+<F_L to-be> += <F_R head-word ref>
+;
+#TemplateActionAlg
+TOBE2
+<LAB> = \TO\.*
+<F_R to-be> != %
+=
+<F_L to-be> += <F_R to-be>
+;
+#TemplateActionAlg
+TOBE_TO_LINKS
+<HEAD-FLAG> = T
+<to-be> != %
+=
+<ref links _to-be> = <to-be>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  PREPOSITIONS
+;
+;
+#TemplateActionAlg
+PREP_CLAUSE_LINKING_WHERE
+<LAB> = \WR\.*
+<F_L ref QUERY-TYPE> = %
+=
+<F_L head-word> += <F_R>
+;
+#PrepositionLinkAlg
+PREP_CLAUSE_LINKING
+; The preposition modifies the preceeding word with a clause
+; Fails if any of the template variables are not filled
+;   "I see the building where Jim lives."
+;   "I feel like Jim feels."
+<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<F_R head-word> !=%
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R head-word ref> = $prep_obj
+=
+;
+#PrepositionLinkAlg
+PREP_LINKING
+; The preposition modifies the preceeding word with a noun
+; Fails if any of the template variables are not filled
+<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<F_R head-word> = %
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R obj> = $prep_obj
+=
+#PrepositionLinkAlg
+PREP_LINKING
+; The preposition modifies the preceeding phrase
+<LAB> = \MVi\.*
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R to-do> = $prep_obj
+=
+#PrepositionLinkAlg
+; The preposition modifies the following phrase
+;   "Jim, on whom we sat, cried."
+;   "The man on whom we sat cried."
+PREP_RELATIVE_LINK
+<LAB> = \Mj\.*|\MX.j\.*
+<F_R head-word> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R obj> = $prep_obj
+=
+;
+#TemplateActionAlg
+; Relative prepositions should have their modified phrases 
+; added to the background
+PREP_RELATIVE_BACKGROUND
+<LAB> = \Mj\.*|\MX.j\.*
+=
+<F_L background ref> += <F_R head-word ref>
+<F_L background wall> = <F_L wall>
+<F_L background BACKGROUND-FLAG> = T
+;
+; You are happy because you are here.
+; Because you are here, you are happy.
+; I know that you are happy because you are here."
+; You laugh because you are here.
+; I know that you laugh because you are here.
+;
+#PrepositionLinkAlg
+; The preposition modifies the following phrase
+;    "On Tuesday, we left."
+; Wont apply to "Often, we left" because 'often' has no obj
+PRECEEDING_PREP_LINK
+<LAB> = \CO\.*|\Qd\.*
+<F_L PREP-OBJ> = T
+<F_R head-word> = $modified
+<F_L str> = $prep
+<F_L> = $prep_source
+<F_L obj> = $prep_obj
+=
+#PrepositionLinkAlg
+PREP_CLAUSE_OBJECT
+; The preposition modifies the preceeding phrase
+<LAB> = MVs|\TH\.*|\WN\.*
+<F_L head-word> != %
+<F_L head-word> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R head-word ref> = $prep_obj
+=
+;
+#PrepositionLinkAlg
+PREP_CLAUSE_OBJECT2
+; The preposition modifies the preceeding phrase
+<LAB> = MVs|\TH\.*|\WN\.*
+<F_L head-word> = %
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R head-word ref> = $prep_obj
+=
+;
+#PrepositionLinkAlg
+PRECEEDING_PREP_CLAUSE_OBJECT
+; The preposition modifies the following phrase
+<LAB> = \CO..\.*
+<F_R head-word> = $modified
+<F_L str> = $prep
+<F_L> = $prep_source
+<F_L head-word ref> = $prep_obj
+=
+#TemplateActionAlg
+SPECIAL_PREP_RULE
+; NOTE special prep rule is not working when the prep is modified: 
+;    "Mike is in the room on Tuesday..."
+; This is used for "John is in the room" to change subj to prepSubj
+; XXX this is no longer working, obsoleted by general relations, not just prepositionals.
+; XXX this should probably be removed completely.
+<LAB> = \Pp\.*
+<F_L str> = be
+<F_R ref links _subj> != %
+<F_R ref links _obj> != %
+=
+<F_R ref SPECIAL-PREP-FLAG> = T
+<F_R ref links _prepSubj> = <F_R ref links _subj> 
+<F_R ref links _prepObj> = <F_R ref links _obj>
+<F_R ref links _subj> = %
+<F_R ref links _obj> = %
+;
+#TemplateActionAlg
+SPECIAL_PREP_RULE_WHERE
+<LAB> = \PF\.*
+<F_L str> = where
+=
+<F_L ref name> = %
+<F_L ref name> = _%atLocation
+#TemplateActionAlg
+SPECIAL_PREP_RULE_WHEN
+<LAB> = \PF\.*
+<F_L str> = when
+=
+<F_L ref name> = %
+<F_L ref name> = _%atTime
+;
+#TemplateActionAlg
+SPECIAL_PREP_RULE_WHERE_WHERE
+<LAB> = \PF\.*
+<F_L str> = where
+=
+<F_L ref SPECIAL-PREP-FLAG> = T
+<F_L ref links _prepSubj> = <F_R ref links _subj>
+<F_L ref links _prepObj name> = _$qVar
+<F_L ref links _prepObj nameSource> = %
+<F_L ref links _prepObj nameSource> = <F_L>
+<F_L ref links _prepObj QUERY-TYPE> = where
+<F_L ref tense> = <F_R ref tense>
+<F_L head-word> = <F_L>
+;
+#TemplateActionAlg
+SPECIAL_PREP_RULE_WHEN_WHEN
+<LAB> = \PF\.*
+<F_L str> = when
+=
+<F_L ref SPECIAL-PREP-FLAG> = T
+<F_L ref links _prepSubj> = <F_R ref links _subj>
+<F_L ref links _prepObj name> = _$qVar
+<F_L ref links _prepObj nameSource> = %
+<F_L ref links _prepObj nameSource> = <F_L>
+<F_L ref links _prepObj QUERY-TYPE> = when
+<F_L ref tense> = <F_R ref tense>
+<F_L head-word> = <F_L>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; ADJECTIVE MODIFICATIONS
+;
+;
+#TemplateActionAlg
+ADJ1
+<LAB> = \A\.*|\DT\.*
+=
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _amod> += <F_R ref>
+;
+#TemplateActionAlg
+ADJ2
+;  Treat preps without objects as adjectives -- copula (Pp) is treated separately
+<LAB> = \Mp\.*|\MVp\.*
+<F_R PREP-OBJ> = %
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _amod> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; SUPERLATIVES
+;
+;
+#TemplateActionAlg
+SUPERLATIVE-1
+<LAB> = \D\.*
+=
+<F_L det-obj> += <F_R ref>
+;
+; DD -- definite determiner -- "The last six paychecks"
+#TemplateActionAlg
+SUPERLATIVE-1a
+<LAB> = \DD\.*
+=
+<F_L det-obj> += <F_R ref>
+;
+#TemplateActionAlg
+SUPERLATIVE-2
+<LAB> = \L\.*
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _amod> += <F_L det-obj>
+;
+#TemplateActionAlg
+SUPERLATIVE-3
+<LAB> = \L\.*
+<F_R str> != <F_R orig_str>
+=
+<F_R ref SUPERLATIVE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; ADVERB MODIFICATIONS
+;
+;
+#TemplateActionAlg
+ADV1
+; Jim runs quickly.
+<LAB> = \MVa\.*|\EB\.*
+<F_R str> != not
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _advmod> += <F_L head-word ref>
+;
+#TemplateActionAlg
+ADV2
+; Jim quickly runs.
+; Jim is very tired.
+<LAB> = \E\.*|\EA\.*
+<LAB> != \EA[my]\.*
+=
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _advmod> += <F_R head-word ref>
+;
+;
+;
+#TemplateActionAlg
+ADV3
+;  Jim runs very quickly  --   EE(very,quickly) 
+;  Jim ate a very fat chicken -- has EA(very, fat)
+<LAB> = \EE\.* | EA
+=
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _advmod> += <F_R ref>
+;
+#TemplateActionAlg
+ADV4
+; Often, Jim runs.
+<LAB> = \CO\.*
+<F_L obj> = %
+<F_L head-word> = %
+=
+<F_L POS> = adv
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _advmod> += <F_R head-word ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; NOUN MODIFICATION
+;
+;
+;
+#TemplateActionAlg
+NOUN-MOD
+<LAB> = \AN\.*
+=
+<F_L ref links _nn> += <F_R ref>
+<F_L BACKGROUND-FLAG> = T
+;
+;#TemplateActionAlg
+;NOUN-MODIF_ASSOC
+;<LAB> = \AN\.*
+;=
+;<F_L background ref name> = _association
+;<F_L background ref links _arg0> = <F_R ref>
+;<F_L background ref links _arg1> = <F_L ref>
+;<F_L background wall> = <F_L wall>
+;<F_L background BACKGROUND-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; QUANTITY DETERMINERS
+;
+;
+;
+#TemplateActionAlg
+QUERY_INDEFINATE_DETERMINER1
+;identfies indefinate determiners for the purpose of queries.  For instance: 
+;In the sentence "Did Mike love a cat?" we want "cat" to be a variable so 
+;that reference resolution does not attempt to resolve it.  For a normal statement
+;(a non-query) we would want to resolve it.
+<LAB> = \D\.*|\DD\.*
+<F_L wall sentence_type> = QUERY
+<F_L str> = a|A|an|An|some|Some|any|Any
+=
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> = T
+;
+#TemplateActionAlg
+QUERY_INDEFINATE_DETERMINER2
+; Identfies indefinate determiners for the purpose of queries.  For instance: 
+; In the sentence "Did Mike love a cat?" we want "cat" to be a variable so 
+; that reference resolution does not attempt to resolve it.  For a normal statement
+; (a non-query) we would want to resolve it.
+; This is a truth-query (yes/no answer)
+<LAB> = \D\.*|\DD\.*
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> = T
+=
+<F_R ref TRUTH-QUERY-FLAG> = T
+;
+;
+#TemplateActionAlg
+QUANTITY_EXCEPTION
+<LAB> = \D\.*|\DD\.*
+<F_L str> = more|More|'s|few|Few
+=
+<F_L QUANTITY-EXCEPTION-FLAG> = T
+;
+#TemplateActionAlg
+NUMBER-1
+<LAB> = \D\.*|\ND\.*|\NW\.*
+<LAB> != \D..y
+<LAB> != \D..w
+<F_L DETERMINER_FLAG> != T
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
+<F_L POSSESSIVE-FLAG> != T
+<F_L QUANTITY-EXCEPTION-FLAG> != T
+=
+<F_R ref links _%quantity> = <F_L ref>
+;
+#TemplateActionAlg
+NUMBER-MOD
+<LAB> = \EN\.*
+=
+<F_R ref links _%quantity_mod> = <F_L ref>
+;
+#TemplateActionAlg
+NUMBER-MULT
+<LAB> = \NN\.*
+=
+<F_R ref links _%quantity_mult> = <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; POSSESSIVES
+;
+;
+; Example: The students' rooms are large. Mike's sister laughs.
+;
+#TemplateActionAlg
+POSSR_TO_APOSTROPHE
+<LAB> = \YS\.* |\YP\.*
+=
+<F_R possessor> += <F_L ref>
+;
+#TemplateActionAlg
+POSSR_TO_POSS
+<LAB> = \D\.*
+<F_L possessor> != %
+=
+<F_R ref links _poss> += <F_L possessor>
+;
+; Possessive pronouns
+;
+; Using the DP link which connects possessive determiners to gerunds.
+; Example: Your singing is ugly.
+#TemplateActionAlg
+POSSRDET_TO_GERUND
+<LAB> = \DP\.*
+=
+<F_R ref links _poss> += <F_L ref>
+;
+; Other Possessive Pronouns
+#TemplateActionAlg
+POSSR_TO_DET
+<LAB> = \D\.*
+<F_L POSSESSIVE-FLAG> = T
+=
+<F_R ref links _poss> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+; 
+;  COMPARATIVES
+;
+#TemplateActionAlg
+COMPARATIVE_RELATION1
+; Marks the comparative subject with a reference to the relation word
+;    Dave eats more/as_many cats than/as... (D**m/D**y)
+<LAB> = \D\.\.[my]\.*
+=
+<F_R comparative-relation-word> = <F_L>
+<F_R COMP-SUBJ-FLAG> = T
+;
+#TemplateActionAlg
+COMPARATIVE_OBJ1
+;Puts a reference to object of 'than' in the word 'than'
+<LAB> = \U\.c\.*|\O\.c\.*
+<F_L str> = than|as
+=
+<F_L comparative-obj-word> = <F_R>
+;
+#TemplateActionAlg
+COMPARATIVE_OBJ2
+;Brings the comparative object into the controlling verb
+<LAB> = \MV[tz]\.*
+<F_R comparative-obj-word> != % 
+=
+<F_L comparative-obj-word> = <F_R comparative-obj-word>
+;
+#TemplateActionAlg
+COMPARATIVE_OBJ3A
+;Brings the object and comparative 2nd-part into the comparative subject
+<LAB> = \O\.*
+<F_R COMP-SUBJ-FLAG> = T
+=
+<F_R comparative-cvar name> = _$cVar
+<F_R comparative-cvar links _$crVar> = <F_L comparative-obj-word ref>
+;
+#PrepositionLinkAlg
+COMPARATIVE_OBJECT_FINAL
+<COMP-SUBJ-FLAG> = T
+<this> = $modified
+<comparative-relation-word ref name> = $prep
+<comparative-relation-word> = $prep_source
+<comparative-cvar> = $prep_obj
+=
+;
+;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; NEGATIVITY
+; NOT AND-SAFE
+;
+;
+#TemplateActionAlg
+NEGATIVE1
+;//By using '+=' we can recognize double negatives by counting the T's
+<LAB> = \N\.*|\EB\.*
+<F_R str> = not
+=
+<F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
+;
+#TemplateActionAlg
+NEGATIVE_CONTR1
+<LAB> = \I\.*|\PP\.*|\P\.*
+<F_L orig_str> = didn't|doesn't|don't|won't|weren't|aren't|isn't|wasn't|hasn't|haven't|hadn't
+;<F_L tense first_verb head-word ref COPULA-FLAG> != T
+<F_L tense first_verb head-word name> != _%copula
+=
+<F_R tense first_verb head-word ref NEGATIVE-FLAG> += T
+;
+#TemplateActionAlg
+NEGATIVE_CONTR2
+<LAB> = \P\.*
+<F_L orig_str> = weren't|aren't|isn't|wasn't
+;<F_L tense first_verb head-word ref COPULA-FLAG> = T
+<F_L tense first_verb head-word name> = _%copula
+=
+<F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
+;
+#TemplateActionAlg
+NEGATIVE_CONTR3
+<LAB> = \I\.*|\O\.*
+<F_L orig_str> = can't|cannot|wouldn't|shouldn't|couldn't|hadn't|haven't|hasn't
+=
+<F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
+;
+#TemplateActionAlg
+NEGATIVE_INF1
+<LAB> = \NT\.*
+<F_L str> = not
+=
+<F_R NEG-SYN-FLAG> = T
+;
+#TemplateActionAlg
+NEGATIVE_INF2
+<LAB> = \I\.*
+<F_L NEG-SYN-FLAG> = T
+=
+<F_R tense first_verb head-word ref NEGATIVE-FLAG> += T
+;
+#TemplateActionAlg
+NEGATIVE-IS-HYP
+<NEGATIVE-FLAG> = T
+<HYP> = %
+=
+<HYP> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; PARENTHETICALS (MX, GN)  --- NOT AND-SAFE
+; AND SOME RELATIVE PREPS
+;
+;
+#TemplateActionAlg
+PAREN_1
+<LAB> = \MX.[rj]\.*
+;The dog, who barked, ...
+=
+<F_R head-word BACKGROUND-FLAG> = T
+#TemplateActionAlg
+PAREN_3
+<LAB> = MX|MXs|MXp
+=
+<F_L ref links _%inheritance> += <F_R ref>
+;<F_R background ref name> = _inheritance
+;<F_R background ref links _arg0> = <F_L ref>
+;<F_R background ref links _arg1> = <F_R ref>
+;<F_R background wall> = <F_R wall>
+;<F_R background BACKGROUND-FLAG> = T
+#TemplateActionAlg
+PAREN_3
+<LAB> = \GN\.*
+=
+<F_R ref links _%inheritance> += <F_L ref>
+;<F_L background ref name> = _inheritance
+;<F_L background ref links _arg0> = <F_R ref>
+;<F_L background ref links _arg1> = <F_L ref>
+;<F_L background wall> = <F_L wall>
+;<F_L background BACKGROUND-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; HYPOTHETICAL
+;
+;
+#TemplateActionAlg
+HYP-TO-DO
+<to-do> != %
+=
+<to-do HYP> = T
+;
+#TemplateActionAlg
+HYP-TO-BE
+<_to-be> != %
+=
+<_to-be HYP> = T
+;
+#TemplateActionAlg
+HYP-THAT
+<_that> != %
+=
+<_that HYP> = T
+;
+#TemplateActionAlg
+HYP-THAT2
+<that> != %
+=
+<that HYP> = T
+;
+#TemplateActionAlg
+HYP-IF
+<if> != %
+=
+<if HYP> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; SEND BACKGROUND INFO TO WALL
+;
+;
+;
+#TemplateActionAlg
+WALL_BACKGROUND
+<BACKGROUND-FLAG> = T
+=
+<wall background> += <ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  SEND HEAD-WORD to HEAD
+;
+;
+;
+#TemplateActionAlg
+HEAD_WORD_REF_TO_HEAD
+<head-word ref> = $R
+=
+<head> = $R
+;
+#TemplateActionAlg
+HEAD-WORD_GROUP0
+<head-word member0 ref> = $R
+=
+<head> += $R
+;
+#TemplateActionAlg
+HEAD-WORD_GROUP1
+<head-word member1 ref> = $R
+=
+<head> += $R
+;
+#TemplateActionAlg
+HEAD-WORD_GROUP2
+<head-word member2 ref> = $R
+=
+<head> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP3
+<head-word member3 ref> = $R
+=
+<head> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP4
+<head-word member4 ref> = $R
+=
+<head> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP5
+<head-word member5 ref> = $R
+=
+<head> += $R
+#TemplateActionAlg
+HEAD-WORD_GROUP6
+<head-word member6 ref> = $R
+=
+<head> += $R
+;
+;
+;
+;
+;
+;
+#TemplateActionAlg
+COPULA_QUESTION1
+<head name> = be
+<head links _subj name> = _$qVar
+<head links _obj> = $O
+=
+<head> = %
+<head> = $O
+<head TRUTH-QUERY-FLAG> = T
+<head COPULA-QUESTION-FLAG> = T
+; For cases such "Where did hugo plan to go?" we force the location link upon go
+#TemplateActionAlg
+WHERE_HACK_FOR_QP
+<LAB> = Q
+<F_L str> = Where|where
+<F_L ref QUERY-TYPE> = where
+<F_L head-question-word ref links _%atLocation> != %
+<F_L head-question-word ref links _to-do> != %
+;<F_L head-question-word> != %
+=
+<F_L head-question-word ref links _to-do links _%atLocation> = <F_L head-question-word ref links _%atLocation>
+<F_L head-question-word ref links _%atLocation> = %
+;
+#TemplateActionAlg
+CLEAN_UP_BAD_REFS1
+<ref name> != %
+=
+<GOOD-REF-FLAG> = T
+;
+#TemplateActionAlg
+CLEAN_UP_BAD_REFS2
+<GOOD-REF-FLAG> != T
+<ref> != %
+=
+<ref> = %
+;#TemplateActionAlg
+;CLEAN_UP_BAD_REFS3
+;<ref BAD> = T
+;=
+;<ref> = %
+;
+;
+;
+;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;/////////////////////////////// END OF FILE /////////////////////////////////
+;/////////////////////////////////////////////////////////////////////////////

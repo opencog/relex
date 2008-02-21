@@ -1,0 +1,39 @@
+
+There are several distinct, code-wise unrelated,
+but conceptually similar systems in this directory.
+All of these are focused on providing printed output 
+of the RelEx graph, or the concept frames.
+
+There are other (older) output routines in other 
+directories, including printZHeads and LinakbleView.
+These older output routines should be migrated here, 
+or possibly deprecated.
+
+This directory contains:
+
+SimpleView.java:
+	Provides a very simple, simplistic printing of
+	the RelEx relationship graph.
+
+RawView.java:
+	Provides an indented, structurally correct graph-style
+	visualization of the RelEx graph.
+
+ParseView.java:
+PhraseView.java:
+RelationView.java:
+	These three files, together as a group, implement
+	the so-called "Cerego-style" output. There are two
+	variants "plain-text" and XML. The XML format is 
+	quite complex and daunting. Only ParseView is public;
+	the other two are helper classes.
+
+OpenCogXML.java:
+RelXML.java:
+FrameXML.java:
+	Generates OpenCog XML. Only the OpenCog class is 
+	public; the other two are helpers. RelXML generates
+	output that corresponds to the basic RelEx feature 
+	graph, while FrameXML generates output for the 
+	frame relations.
+	

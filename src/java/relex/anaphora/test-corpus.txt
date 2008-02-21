@@ -1,0 +1,134 @@
+The window had a crack in it.
+END.
+Alice sat in it.
+
+Jane loved herself. -- ok
+The window had a crack in it. -- loose (no ante at all in trad hobbs)
+Jane's mom loved her. --ok
+The cup held coffee and it was hot. -- ok
+Alice walked to the chair and sat in it. -- too loose (no ante at all in trad hobbs)
+The window of the automobile had a crack in it. -- too loose (Hobbs is less loose)
+It looked like a nice chair, and so Alice sat in it. -- too loose.
+There was a large window with a good view out of it. -- loose but good
+
+# Problems:
+# The basic Hobbs algo correctly identifies "Jane" as the
+# antecedent to "her" in the sentence "Jane's mom loved her."
+# (S (NP (NP Jane 's) mom) (VP loved (NP her_1)) .)
+# It also correctly rejects "mom".
+#
+# However, for the same reasons, it fails to identify
+# "window" as the antecedent in the sentence
+# "The window had a crack in it."
+# (S (NP The window) (VP had (NP a crack) (PP in (NP it_1))) .)
+# A minor modification will allow "window" to be correctly identified.
+# In this mod, Step 2 uses S/NP or PP nodes; the intervening PP allows
+# "window" to be found.
+#
+# However, this loosening then finds some other, unwanted antecdents:
+# "Alice sat in it." Clearly, "it" shouldn't be "Alice", but:
+# (S (NP Alice) (VP sat (PP in (NP it_1))) .)
+#
+# Structurally, "Alice sat in it" and "The window had a crack in it"
+# are similar, but with one crucial difference:
+# XXX finish me.
+
+# This sort-of works: "they" could be "the plates and the cup"
+# but there is no way in relex to mark this up.
+# So only "the plates" are identified.
+Jane looked at the plates and the cup.
+They were ugly.
+
+# Test for step three, reflexive vs. non-reflexive.
+Jane loved her.
+Jane loved herself.
+
+# Test for step three, non-reflexive must have intervening S/NP:
+# (S (NP (NP Jane 's) mom) (VP loved (NP her_1)) .)
+Jane's mom loved her.
+
+# Test for modified step two: modified step 2 is "S or VP or NP"
+# this allows VP to act as intervening node, the algorithm then
+# stepping to step 7, where, for example, it can traverse
+# (S (NP The window) (VP had (NP a crack) (PP in (NP it_1))) .)
+# to pick up "window" as antecedent to "it".
+The window had a crack in it.
+The windows all had cracks in them.
+Alice walked to the chair and sat in it.
+There was a large window with a good view out of it.
+
+# The below is a variant that parses OK without the modified-step-2
+# and shows why the modified step-2 is needed.
+# Basically "of the automobile" adds the needed intermeidate phrase.
+The window of the automobile had a crack in it.
+
+# Test step four: "She" is antecedent for "Jane"
+Jane walked to the chair.
+She sat down.
+END.
+
+# The following three sentence pairs are structurally identical, but
+# are semantically different. The algo needs to loose enough
+# to identify all the possibile antecedents.
+Alice always wanted a new boyfreind.
+Then she found him, and he was beautiful.
+END.
+
+Alice always wanted a new boyfreind.
+Then she found him, and she was enthralled.
+END.
+
+Alice always wanted a new boyfreind.
+Then he bumped into her, and she was enthralled.
+END.
+
+# Test number matching: "it" cannot refer to the boxes.
+Jane looked at the boxes and the cup.
+It was small.
+
+# Test step 6.
+Then Alice saw what she had always looked for.
+Then Alice found what she had been looking for.
+
+# Tests step seven: "it" is farther down in the phrase tree.
+The cup held coffee and it was hot.
+
+# Tests step seven, with a block on previous branches:
+# The terminal "it" couldn't have been Alice, so don't find it again.
+# However, the new, loosened algo will find
+It looked like a nice chair, and so Alice sat in it.
+
+# Tests step eight: want to look to the right of "it" to find "chair"
+Then Alice saw it: a nice chair
+Then Alice saw it, lying under the chair.
+
+
+# Non-Hobbs anaphora handling:
+# "It looked like a nice chair." -- It refers to "chair" on right.
+# The standard relex parse seem to handle this just fine, and
+# no extra anaphora resolution step is needed.
+It looked like a nice chair.
+
+# "She loved herself." -- handled by relex already, no additional
+# resolution needed.
+She loved herself.
+
+# Sentences that Hobbs algo seems to miss:
+
+# Incorrect parses from link parser:
+
+# Some fun sentences that seem to work:
+Mrs. Bennet exclaimed: "My dear Mr. Bennet, have you heard that Netherfield Park is let at last?"
+# "My" is correctly identified as "Mrs. Bennet"
+
+# --------------------------------------------
+# Crashes link parser with a double-free during panic-parse.
+#
+The ladies of Longbourn soon waited on those of Netherfield.
+The visit was soon returned in due form.  
+Miss Bennet's pleasing manners grew on the goodwill of Mrs. Hurst and Miss Bingley; and though the mother was found to be intolerable, and the younger sisters not worth speaking to, a wish of being better acquainted with them was expressed towards the two eldest.  
+By Jane, this attention was received with the greatest pleasure, but Elizabeth still saw superciliousness in their treatment of everybody, hardly excepting even her sister, and could not like them; though their kindness to Jane, such as it was, had a value as arising in all probability from the influence of their brother's admiration.  
+It was generally evident whenever they met, that he did admire her and to her it was equally evident that Jane was yielding to the preference which she had begun to entertain for him from the first, and was in a way to be very much in love; but she considered with pleasure that it was not likely to be discovered by the world in general, since Jane united, with great strength of feeling, a composure of temper and a uniform cheerfulness of manner which would guard her from the suspicions of the impertinent.  
+She mentioned this to her friend Miss Lucas.
+END.
+# --------------------------------------------

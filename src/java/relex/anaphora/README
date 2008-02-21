@@ -1,0 +1,40 @@
+
+           Anaphora resolution via Hobbs algorithm
+           ---------------------------------------
+
+The code in this directory implements a slightly modified
+version of Hobbs algorithm for anaphora resolution.  That is,
+it resolves the references "he" and "it" in the example text
+"John went to the door. He opened it."
+
+A more extensive set of tested examples are in 
+"test-corpus.txt"
+
+ToDo:
+----
+"Do you see the doggie bed? Go there and lie down".
+"John and I saw the bridge. We went there."
+
+-- For this example,  I think location resolution could proceed much
+as pronoun resolution: "there" refers to "bridge".  This isn't yet
+implemented.
+
+-- The current relex output format has trouble representing
+"John and I" as the antecedent to "we".  This is a variant
+of the "phrase heads" problem with the cerego code.
+
+I'm not sure what a clean resolution to this would be,
+perhaps:
+
+_phrase("John and I", idnum_1)
+_ante(we,idnum_1)
+
+Note the introduction of the artificial label, which breaks
+current relex style. Alternately,
+
+_ante(we, "John and I")
+
+which breaks the current style by using quotation marks
+for strings longer than one word.
+
+

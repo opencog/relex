@@ -1,0 +1,38 @@
+
+Directory structure overview:
+-----------------------------
+
+RelationExtractor.java:
+	This is the main class, wrapping together all of the function.
+	It also includes a functional main(), showing how to use this stuff.
+
+algs: 
+	code for applying the relation extraction algorithms,
+	such as the template substitution algorithm.
+
+anaphora:
+	Anaphora resolution algorithm. Implements the Hobbs algorithm.
+
+corpus:
+	Code to handle multiple-sentence corpuses. Includes a class to 
+	split a document into multiple sentences, and another to perform
+	entity extraction.
+
+entity:
+	Mangle sentences to consolidate entities before parsing them.
+	This eases the burden on the parser.
+
+feature:
+	The base classes for representing the feature graph.
+
+morphy:
+	A simple, easy-to-use class for finding the base forms (lemmas)
+	of a word.
+
+parser:
+	Interfaces to the link grammar parser. Two choices: an in-process
+	JNI binding to the C-language liblink-grammar.so, and an 
+	out-of-process server, reachable via a socket interface.
+	
+
+
