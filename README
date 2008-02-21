@@ -1,0 +1,179 @@
+
+                  OpenRelEx Semantic Relation Extractor
+                  -------------------------------------
+
+RelEx is a syntactic relationship extractor; it will parse
+English language sentences and return the  relationships
+between different parts of the sentence.
+
+There are two parts: the command-line version, and an
+graphical visualizer. Build and install for the command 
+line version is discussed first.
+
+Dependencies
+-------------
+The following packages are required to be installed:
+ - libgetopt-java
+ - LinkParser
+ - Wordnet 2.0 or later
+ - JWNL Java wordnet library
+ - OpenNLP tools
+ - GATE 4.0 or later (optional)
+
+Building command-line RelEx
+---------------------------
+
+- Link Grammar Parser
+ X  XXX the sentences below are wrong, version 4.3.2 or later is needed.
+X	Ubunut/Debian users can install the linkparser with apt-get:
+X
+X		apt-get install liblink-grammar4 link-grammar-dictionaries-en
+X
+ X  XXX the sentences above are wrong, version 4.3.2 or later is needed.
+
+   Other users:
+	Compile and install the Link Grammar Parser. This parser is
+	described at http://www.link.cs.cmu.edu/link/, and sources
+	are available for download at
+	http://www.abisource.com/projects/link-grammar/#download
+
+	The Link Grammar Parser is the underlying engine, providing
+	the core sentence parsing ability.
+
+	If the link-grammar is installed in an unusual location,
+	be sure to modify -Djava.library.path appropriately in 
+	relation-extractor.sh.
+
+- Wordnet
+	Wordnet is used by RelEx to provide basic English morphology,
+	such as singular versions of (plural) nouns, base forms (lemmas)
+	of adjectives, adverbs and infinitve forms of verbs.
+
+	Download, unpack and install WordNet 2.0.  The install directory
+	then needs to be specified in data/wordnet/file_properties-linux.xml,
+	with the name="dictionary_path" property in this file.
+
+	Some typical install locations are:
+	/opt/WordNet-2.0/data for RedHat and SuSE
+	/usr/share/wordnet for Ubuntu and Debian
+	C:\Program Files\WordNet\2.0\data for Windows
+
+	The relex/Morphy/Morphy.java class provides a simple, easy-to-use
+	wrapper around wordnet, providing the needed word morphology info.
+
+- didion.jwnl
+	The didion JWNL is the "Java WordNet Libary", and provides the
+	Java programming API to access the wordnet data files.
+	Its home page is at http://sourceforge.net/projects/jwordnet
+	and can be downloaded from
+	http://sourceforge.net/project/showfiles.php?group_id=33824	
+
+	Verify that the final installed location of jwnl.jar is correctly
+	specified in the build.xml file. Note that GATE (below) also
+	provides a jwnl.jar, but the GATE version of jwnl.jar is not
+	compatible (welcome to java DLL hell).
+
+- GATE
+	GATE, the "General Architecture for Text Engineering", 
+	http://www.gate.ac.uk/ provides a large framework which
+	RelEx does not use. However, it does provide a good entity
+	detector, which RelEx does employ. "Entities" are the 
+	names of people, corporations and institutions, as well 
+	as time, date and money expressions. Factoring these out
+	explicitly makes parsing and relation extraction simpler.
+
+	Download GATE 4.0 from http://gate.ac.uk/download/index.html
+
+	Install it at /opt/GATE-4.0 . If you change this location,
+	please modify the system property -Dgate.home=/opt/GATE-4.0
+	in relation-extractor.sh.  Modify build.xml to point at the
+	correct location of gate-4.0.jar.
+
+	GATE is used solely to perform entity resolution; that is, 
+	to determine substrings that correspond to names, dates, 
+	addresses, money amounts, etc. The use of GATE is optional,
+	however, without it, the parser has trouble with dates, 
+	money amounts etc. GATE is also needed to identify the gender
+	(male, female) of people names; the gender is needed for 
+	anaphora resolution (so that "she" is matched nly to female 
+	names).
+
+	Alternatives to GATE may be used by providing a replacement
+	for the relex/corpus/GateEntityMaintainer.java file.
+
+- OpenNLP
+	OpenNLP provides a number of natural language processing tools.
+	RelEx uses OpenNLP for sentence detection, giving RelEx the
+	ability to input texts containing multiple sentences.
+
+	The OpenNLP home page is at http://opennlp.sourceforge.net/
+	Download and install OpenNLP tools, and verify that the 
+	installed files are correctly identified in both build.xml
+	and in relation-extractor.sh.
+	
+	The OpenNLP package is used solely in corpus/DocSplitter.java,
+	which provides a simple, easy-to-use wrapper for splitting a
+	document into sentences. Replace this file if an alternate
+	sentence detector is desired.
+
+- GraphViz
+	XXX current distro does not use graphviz; ignore the following.
+
+	GraphViz is needed to generate dependency relation graphs.
+	These are output as PNG graphics files, illustrating the
+	parsed sentence.
+
+	GraphViz is installable as an Ubuntu package; rpms are available
+	for Fedora and other distros. If needed, source can be downloaded
+	from http://www.graphviz.org/ If installing from source, be sure
+	that the executables (dot, neato, fdp, twopi, circo) are in the
+	system path. The manner in whcih they are called can be modified
+	by referring to the Java class relex.uima.RelexEngine
+
+	The default viewer for PNG images when running RelexEngine from
+	the command-line is eog ("Eye of Gnome"). 
+
+	XXX current distro does not use graphviz; ignore the above.
+
+Building
+--------
+	After the above are installed, the relex java code can be built.
+	The build system uses "ant", and the ant build specifictions
+	are in "build.xml". Simply saying "ant" at the command line
+	should be enough to build.
+
+
+Running Relex
+-------------
+Several example shell scripts (MS Windows batch files) are included
+to show sample usage. These files (*.sh in unix, or *.bat, in Windows)
+define the required system properties, classpath and JVM options.
+
+If there are any ClassNotFound exceptions, please verify the paths
+and values in these files.  An important property is relex.algpath;
+it defines the semantic algorithms used by RelEx.  The default file
+is data/relex-semantic-algs.txt.
+
+1) Simple single-sentence parser
+   The "relation-extractor.sh" file is a simple shell script illustrating
+   the parse of single sentence.  Shows typical RelEx raw output.
+
+   Dependencies:
+   - relex.parser.LinkParserJNINewClient: liblink-grammar.so,
+	  liblink-grammar-java.so, and the linkparser data files 
+	  (by default, in /usr/share/link-grammar/data/)
+   - relex.morphy.Morphy: jwnl.jar, commons-logging.jar, WordNet
+     data files (external)
+
+2) Relex Engine 
+
+   The relex engine is the main entry point for the system.
+   It is invoked from the command line by running "relex-engine.sh". It
+   will accept sentences from the command-line, and display:
+   - The link parser output
+   - The detected persons, organizations and locations
+   - The dependency relations found. The number after each relation is the
+     number of parses where the relation was found.
+   - The raw relex output (the same produced by relation-extractor)
+   - Optionally, a dependency relation graph (in the PNG format)
+
