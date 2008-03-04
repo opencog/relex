@@ -115,7 +115,7 @@ public class DocSplitter
 			// XXX Strange ... this sometimes works, and sometimes doesn't ...
 			try
 			{
-				ClassLoader ld = ClassLoader.getSystemClassLoader();
+				ClassLoader ld = Thread.currentThread().getContextClassLoader();
 				ld.loadClass("opennlp.tools.sentdetect.EnglishSentenceDetectorME");
 			}
 			catch(Throwable t)

@@ -213,7 +213,8 @@ VERB_TENSE
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; MORPHOLOGY 
-;
+; Apply word lemmas before working on tense, so that tense can 
+; make use of the root forms.
 ;
 #MorphyAlg
 ;
@@ -227,7 +228,7 @@ IDENTIFY_POSSESSIVE
 ;
 ; MODAL TENSE
 ;
-; done after morphology so that algorithms can match to word root forms
+; Done after morphology so that algorithms can match to word root forms
 ;
 ;
 #TemplateActionAlg
@@ -248,8 +249,9 @@ TENSE_DO
 ;
 #TemplateActionAlg
 TENSE_COPULA
-;Pp is not used if it takes a complement so that copula is still explicit in "John is in the park."
-;But "John is here." treats "here" like an adj
+; Pp is not used if it takes a complement, so that copula is still explicit 
+; in "John is in the park."
+; But "John is here." treats "here" like an adj
 <LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
 <F_L PREP-OBJ> = %
 <F_L str> = be
@@ -267,9 +269,9 @@ TENSE_COPULA_INV
 ;
 #TemplateActionAlg
 TENSE_FUTURE
-;The place holder prevents "will" from having empty tense
-;Without that, the next verb might be affected by TENSE-LIST-CONNECT1, which would incorrectly
-;set the following verb's prev feature to itself
+; The place holder prevents "will" from having empty tense.
+; Without that, the next verb might be affected by TENSE-LIST-CONNECT1, 
+; which would incorrectly set the following verb's prev feature to itself.
 <LAB>=\I\.*
 <F_L str> = will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
 =
@@ -294,7 +296,7 @@ TENSE_PROGRESSIVE
 ;
 #TemplateActionAlg
 TENSE_NOTENSE
-;This prevents tense from being set to present
+; This prevents tense from being set to present.
 <LAB>=\Pa\.*|\Mv\.*
 <F_L str> != be
 =
@@ -302,7 +304,7 @@ TENSE_NOTENSE
 ;
 #TemplateActionAlg
 INV-TENSE_NOTENSE
-;This prevents tense from being set to present
+; This prevents tense from being set to present.
 <LAB>=\AF\.*
 <F_R str> != be
 =
@@ -310,7 +312,7 @@ INV-TENSE_NOTENSE
 ;
 #TemplateActionAlg
 TENSE_PROGRESSIVE2
-;This prevents tense from being set to present
+; This prevents tense from being set to present.
 <LAB>=\Pg\.*|\Mg\.*
 <F_L str> != be
 =
@@ -324,7 +326,7 @@ BLANK_TENSE
 ;
 #TemplateActionAlg
 TENSE_PRESENT
-;//For verbs that are not identified with future or passive, set tense to present
+; For verbs that are not identified with future or passive, set tense to present.
 <POS> = verb
 <str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
 <BLANK-TENSE-FLAG> = %
@@ -334,11 +336,20 @@ TENSE_PRESENT
 ;
 #TemplateActionAlg
 TENSE_IMPERATIVE
-;/Can overrule TENSE_PRESENT
+; Can overrule TENSE_PRESENT
 <LAB> = \Wi\.*
 =
 <F_R tense val> = imperative
 <F_R POS> = verb
+;
+; post-tense morphology cleanup: If the verb is "saw" and the tense is "past",
+; then we are seeing with eyes, not sawing with a saw.
+#TemplateActionAlg
+SEE_SAW
+<tense val> = past
+<str> = saw
+=
+<str> = see
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;

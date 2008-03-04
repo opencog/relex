@@ -16,7 +16,6 @@
 package relex.output;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 import relex.frame.Frame;
 import relex.ParsedSentence;
@@ -99,6 +98,8 @@ public class FrameXML
 				cpt1 = cpt1.substring(0, comma);
 			}
 			if (cpt1 == null) continue;
+			cpt1 = id_map.get(cpt1);
+			if (cpt1 == null) continue;
 
 			// Is cpt1 a "DefinedLinguisticConceptNode"?
 			Boolean cpt1_is_ling = false;
@@ -144,37 +145,34 @@ public class FrameXML
 			// If no second concept, then we are done.
 			if (cpt2 == null) continue;
 
-			// Link first and second concepts together.
-			UUID guid = UUID.randomUUID();
-			ret += "  <ListLink name=\"" + frm + "_" + guid + "\">\n";
-			if (cpt1_is_ling)
-			{
-				ret += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
-			}
-			else
-			{
-				ret += "    <Element class=\"ConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
-			}
-			if (cpt2_is_ling)
-			{
-				ret += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
-				            cpt2 + "\"/>\n";
-			}
-			else
-			{
-				ret += "    <Element class=\"ConceptNode\" name=\"" + 
-				            cpt2 + "\"/>\n";
-			}
-			ret += "  </ListLink>\n";
-
 			// Finally link the frame element
 			ret += "  <EvaluationLink>\n";
 			ret += "    <Element class=\"DefinedFrameElementNode\" name=\"#" +
                      frm + ":" + felt + "\"/>\n";
-			ret += "    <Element class=\"ListLink\" name=\"" +
-                     frm + "_" + guid + "\"/>\n";
+
+			// Embedded: Link first and second concepts together.
+			ret += "    <ListLink>\n";
+			if (cpt1_is_ling)
+			{
+				ret += "      <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
+				            cpt1 + "\"/>\n";
+			}
+			else
+			{
+				ret += "      <Element class=\"ConceptNode\" name=\"" + 
+				            cpt1 + "\"/>\n";
+			}
+			if (cpt2_is_ling)
+			{
+				ret += "      <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
+				            cpt2 + "\"/>\n";
+			}
+			else
+			{
+				ret += "      <Element class=\"ConceptNode\" name=\"" + 
+				            cpt2 + "\"/>\n";
+			}
+			ret += "    </ListLink>\n";
 			ret += "  </EvaluationLink>\n";
 		}
 		return ret;
@@ -183,12 +181,7 @@ public class FrameXML
 	/* ------------------------------------------------------------- */
 	public String toString()
 	{
-		String ret = "";
-
-		ret += "<list>\n";
-		ret += printFrames();
-		ret += "</list>\n";
-		return ret;
+		return printFrames();
 	}
 }
 

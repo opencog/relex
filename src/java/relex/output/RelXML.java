@@ -43,7 +43,7 @@ class RelXML
 
 	private HashMap<String,String> id_map = null;
 
-	/* -------------------------------------------------------------------- */
+	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
 	public RelXML()
@@ -57,9 +57,10 @@ class RelXML
 		id_map = im;
 	}
 
-	/* -------------------------------------------------------------------- */
+	/* ----------------------------------------------------------- */
 	/**
-	 * Walk the graph, extracting semantic relationships, and word attributes.
+	 * Walk the graph, extracting semantic relationships, and word 
+	 * attributes.
 	 */
 	private class prtRelation implements RelationCallback
 	{
@@ -82,6 +83,12 @@ class RelXML
 
 			outstr += "<!-- " + attrName + " (" + srcName + ", " + value + ") -->\n";
 			String guid = id_map.get(srcName);
+
+			// Flags are assumed to be true, so value is the flag name.
+			if (attrName.endsWith("-FLAG"))
+				value = attrName.replaceAll("-FLAG","").toLowerCase();
+			if (attrName.equals("HYP"))
+				value = attrName.toLowerCase();
 
 			outstr += "  <DefinedLinguisticConceptNode name=\"#" + value + "\"/>\n";
 
@@ -107,17 +114,15 @@ class RelXML
 			String src_guid = id_map.get(srcName.getValue());
 			String tgt_guid = id_map.get(tgtName.getValue());
 
-			UUID guid = UUID.randomUUID();
-			outstr += "  <ListLink name=\"" + relName + "_" + guid + "\">\n";
-			outstr += "    <Element class=\"ConceptNode\" name=\"" + src_guid + "\"/>\n";
-			outstr += "    <Element class=\"ConceptNode\" name=\"" + tgt_guid + "\"/>\n";
-			outstr += "  </ListLink>\n";
 
 			outstr += "  <DefinedLinguisticRelationshipNode name=\"" + relName + "\"/>\n";
 
 			outstr += "  <EvaluationLink>\n";
 			outstr += "    <Element class=\"DefinedLinguisticRelationshipNode\" name=\"" + relName + "\"/>\n";
-			outstr += "    <Element class=\"ListLink\" name=\"" + relName + "_" + guid + "\"/>\n";
+			outstr += "    <ListLink>\n";
+			outstr += "      <Element class=\"ConceptNode\" name=\"" + src_guid + "\"/>\n";
+			outstr += "      <Element class=\"ConceptNode\" name=\"" + tgt_guid + "\"/>\n";
+			outstr += "    </ListLink>\n";
 			outstr += "  </EvaluationLink>\n";
 
 			return false;
@@ -135,7 +140,7 @@ class RelXML
 		return prt.outstr;
 	}
 
-	/* -------------------------------------------------------------------- */
+	/* ----------------------------------------------------------- */
 	/**
 	 * Print the word referents, Novamente-style.
 	 */
@@ -193,17 +198,13 @@ class RelXML
 		return refs;
 	}
 
-	/* -------------------------------------------------------------------- */
+	/* ----------------------------------------------------------- */
 
 	public String toString()
 	{
 		String ret = "";
-
-		ret += "<list>\n";
 		ret += printWordRefs();
 		ret += printRelations();
-		
-		ret += "</list>\n";
 		return ret;
 	}
 

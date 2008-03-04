@@ -334,7 +334,12 @@ public class Rule
 			if (frag.substring(3).trim().matches("%%%PARENS_\\d+%%%")) {
 				n = new NotNode(parensNodeMap.get(frag.substring(3).trim()));
 			} else {
-				// not is for a single condition
+				//NOT is for a single condition
+				//make sure there are no (unexpected) curly braces within the 
+				//condition string
+				if (frag.contains("{") || frag.contains("}")) {
+					return null;	
+				}
 				n = new NotNode(frag);
 			}
 			n.setRule(this);
@@ -342,6 +347,13 @@ public class Rule
 		}
 
 		//else return condition node
+		//first check for curly braces in frag for condition string,
+		//if curly braces are present within conditionStr, this indicates
+		//a malformed rule
+		if (frag.contains("{") || frag.contains("}")) {
+			return null;	
+		}
+
 		return new ConditionNode(frag);
 	}
 
@@ -523,7 +535,7 @@ public class Rule
 				return false;
 			}
 			for (String value: legalValues) {
-				if (value.equals(word)) {
+				if (value.equalsIgnoreCase(word)) {
 					legal = true;
 					break;
 				}

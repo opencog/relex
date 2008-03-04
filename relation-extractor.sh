@@ -40,7 +40,7 @@ bin:\
 
 # Read a sentence from stdin:
 echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
-	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t
+	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \

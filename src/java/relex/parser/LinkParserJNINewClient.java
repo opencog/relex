@@ -35,10 +35,6 @@ public class LinkParserJNINewClient extends LinkParserClient {
 	}
 
 	static {
-		// On a linux system, the actual name of the library is prefixed
-		// with "lib" and suffixed with ".so" -- e.g. "liblink-grammar.so"
-		System.loadLibrary("link-grammar");
-		System.loadLibrary("link-grammar-java");
 		singletonInstance = new LinkParserJNINewClient();
 	}
 

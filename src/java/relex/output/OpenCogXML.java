@@ -58,11 +58,14 @@ public class OpenCogXML
 	{
 		String ret = "";
 
+		ret += "<list>\n";
+		ret += "<AssertionLink>\n";
 		ret += rel_xml.toString();
 		ret += frame_xml.toString();
-		
+		ret += "</AssertionLink>\n";
+		ret += "</list>\n";
+
 		return ret;
 	}
 
 } // end OpenCogXML
-

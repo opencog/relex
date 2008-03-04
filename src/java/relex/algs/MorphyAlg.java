@@ -21,14 +21,14 @@ import relex.morphy.Morphy;
 import relex.morphy.Morphed;
 
 /**
- * Uses MORPHY to generate the root of a word. Handles "n't" negation (didn't,
- * hasn't wasn't) with special rules
+ * Uses Morphy to generate the root of a word.
  */
 public class MorphyAlg extends SentenceAlgorithm
 {
 	protected int init(String s) {
 		if (s.length() > 0)
-			throw new RuntimeException("MorphyAlg should always be initialized with empty string.");
+			throw new RuntimeException(
+				"MorphyAlg should always be initialized with empty string.");
 		return 0;
 	}
 

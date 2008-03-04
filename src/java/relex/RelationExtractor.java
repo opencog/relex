@@ -347,6 +347,10 @@ public class RelationExtractor
 			return;
 		}
 
+		// If generating OpenCog XML, delimit non-xml output.
+		if (commandMap.get("-o") != null)
+			System.out.print("data\n<!-- ");
+
 		RelationExtractor re = new RelationExtractor(false);
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
@@ -369,9 +373,6 @@ public class RelationExtractor
 		OpenCogXML opencog = new OpenCogXML();
 		Frame frame = new Frame();
 		
-		if (commandMap.get("-o") != null)
-			System.out.print("data\n<!-- ");
-
 		while(true)
 		{
 			// If no sentence specified on the command line 
@@ -385,7 +386,12 @@ public class RelationExtractor
 					{
 						System.out.println("Bye.");
 						if (commandMap.get("-o") != null)
+						{
 							System.out.print("-->\n");
+							char[] eot = new char[1];
+							eot[0] = 0x4;
+							System.out.println(new String (eot));
+						}
 						return;
 					}
 				} catch (IOException e) {
@@ -430,8 +436,13 @@ public class RelationExtractor
 	
 					if (commandMap.get("-t") != null)
 						System.out.println("\n" + parse.getPhraseString());
-					if (commandMap.get("-l") != null)
+
+					// Don't print the link string if xml output is enabled.
+					// XML parsers choke on it.
+					if ((commandMap.get("-l") != null) &&
+					    (commandMap.get("-o") == null))
 						System.out.println("\n" + parse.getLinkString());
+
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 					System.out.println("\n======\n");
@@ -471,7 +482,11 @@ public class RelationExtractor
 						System.out.print("-->\n");
 						opencog.setParse(parse);
 						System.out.println(opencog.toString());
-						System.out.println("\n<!-- ======\n");
+
+						char[] eot = new char[1];
+						eot[0] = 0x4;
+						System.out.println(new String (eot));
+						System.out.println("data\n<!-- ======\n");
 					}
 	
 					if (++numParses >= parseNum) break;

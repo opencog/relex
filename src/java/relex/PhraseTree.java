@@ -148,6 +148,7 @@ public class PhraseTree
 
 	public FeatureNode get(String str)
 	{
+		if (phr == null) return null;
 		return phr.get(str);
 	}
 

@@ -146,7 +146,7 @@ public class GateEntityMaintainer
 			if (DEBUG>0) System.out.println("About to register ANNIE directories...");
 
 			Gate.getCreoleRegister().registerDirectories(
-					new File(new File(fGateHome, "plugins"), "ANNIE").toURL());
+					new File(new File(fGateHome, "plugins"), "ANNIE").toURI().toURL());
 
 			if (DEBUG>0) System.out.println("Annie plugins registered. Initializing ANNIE...");
 			initAnnie();
