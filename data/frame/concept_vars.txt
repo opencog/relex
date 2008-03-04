@@ -50,12 +50,12 @@ $Imperative_relation
 imperative
 imperative-infinitive
 
-$copula
+$Copula
 be
 is
 am
 are
-will_be
+will be
 were
 was
 being
@@ -91,7 +91,7 @@ down
 elsewhere
 everywhere
 here
-east_of
+east of
 in
 in_back_of
 in_front_of
@@ -130,49 +130,159 @@ within
 
 $relTime
 after
-ago
-ahead_of
+ahead of
 at
 before
 by
 following
 for
 in
+on
 simultaneous_to
 since
-then
-through
 until
 up_to
-when
 while
 within
 
+$Number
+lots
+some
+few
+several
+many
+approximation
+numbers
+count
+number
+handful
+couple
+random
+no
+none
+one
+two
+three
+four
+five
+six
+seven
+eight
+nine
+ten
+eleven
+twelve
+thirteen
+fourteen
+fifteen
+sixteen
+seventeen
+eighteen
+nineteen
+twenty
+thirty
+forty
+fifty
+sixty
+seventy
+eighty
+ninety
+hundred
+thousand
+million
+billion
+trillion
+google
+googleplex
+half
+third
+quarter
+
 $About
-a_good
+a good
 about
 almost
 approximately
 around
-at_least
-at_most
+at least
+at most
 barely
 circa
-close_to
+close to
 exactly
-in_neighborhood_of
-in_vicinity_of
-minimum
+in the neighborhood of
+in the vicinity of
+minimum of
 nearly
-or_so
+or so
 over
 precisely
 roughly
-something_like
-than
-thereabouts
+something like
 under
-upwards_of
+upwards of
+
+$Locative_relation
+above-ground
+above
+abut
+abutting
+adjacent
+adjoin
+adjoining
+against
+all over
+along
+amid
+among
+around
+astride
+at
+athwart
+atop
+below
+beneath
+beside
+between
+beyond
+border
+by
+distant
+down
+east
+elsewhere
+everywhere
+here
+in
+inland
+inside
+near
+neighbor
+neighboring
+next to
+north
+off
+offshore
+on
+on top of
+opposite
+out
+outlying
+outside
+over
+past
+south
+surrounding
+there
+ubiquitous
+under
+underground
+underground
+underneath
+up
+upon
+west
+where
 
 $Include
 among
@@ -197,7 +307,7 @@ $Storing
 cache
 hoard
 stockpile
-stock_up
+stock
 store
 warehouse
 
@@ -235,7 +345,7 @@ deploy
 format
 organize
 sort
-set_up
+set up
 
 $Assessing
 appraise
@@ -293,9 +403,9 @@ meningitis
 flu
 arthritis
 lymphoma
-common_cold
+common cold
 depression 
-heart_disease
+heart disease
 stroke
 allergies
 obesity
@@ -303,64 +413,64 @@ osteoporosis
 anorexia
 hypertension
 epilepsy
-kidney_disease
+kidney disease
 anxiety
-multiple_sclerosis
+multiple sclerosis
 insomnia
 fibromyalgia
 headache
 heartburn
-alzheimer's_disease
+alzheimer's disease
 allergy
-high_cholesterol
+high cholesterol
 herpes
 shingles
-Parkinson's_disease
+Parkinson's disease
 AIDS
 SIDS
-Down's_Syndrome
+Down's Syndrome
 Paranoia
 neuroses
 psychoses
 anemia
 Plague
-Small_pox
-chicken_pox
+Small pox
+chicken pox
 mumps
 measles
 tuberculosis
-yellow_fever
+yellow fever
 malaria
 influenza
 rabies
-hepatitis_b
+hepatitis b
 polio
-hepatitis_a
+hepatitis a
 meningitis
 tetanus
 diphtheria
 cholera
-typhoid_fever
+typhoid fever
 smallpox
 pertussis
 anthrax
-whooping_cough
+whooping cough
 dengue_fever
 brucellosis
 typhoid
-lyme_disease
+lyme disease
 hepatitis
 encephalitis
-Japanese_encephalitis
+Japanese encephalitis
 pneumonia
 poliomyelitis
 mononucleosis
 varicella
 leptospirosis
-meningococcal_syphilis
+meningococcal syphilis
 toxoplasmosis
-hepatitis_c
-scarlet_fever
+hepatitis c
+scarlet fever
 listeriosis
 cytomegalovirus
 leprosy
@@ -389,8 +499,8 @@ implication
 indicate
 indication
 indicator
-point_to
-point_out
+point to
+point out
 proof
 prove
 reveal
@@ -439,7 +549,7 @@ reproach
 respect
 revere
 scorn
-set_store
+set store
 stigmatize
 value
 
@@ -654,8 +764,8 @@ zigzag
 $Cotheme
 accompany
 chase
-come_with
-come_along
+come with
+come along
 conduct
 escort
 follow
@@ -666,7 +776,7 @@ pursue
 shadow
 shepherd
 stalk
-tag_along
+tag along
 tail
 track
 trail
@@ -674,26 +784,18 @@ usher
 
 $Posture
 bend
-crouch_down
 crouch
 drop
 huddle
 hunch
-kneel_down
 kneel
 lean
-lie_down
 lie
 rise
-sit_down
-sit_up
 sit
 slouch
-sprawl_out
 sprawl
-squat_down
 squat
-stand_up
 stand
 stoop
 
@@ -860,76 +962,52 @@ sometimes
 
 $Time
 afternoon
-afternoons
 anon
 century
-centuries
 date
-dates
 dawn
 day
-days
 decade
-decades
 early
 evening
-evenings
 forenoon
 fortnight
 hour
-hours
 late
 later
 midnight
 millennium
 millennia
 millisecond
-milliseconds
 minute
-minutes
 month
 month
 morning
 morning
 nanosecond
-nanoseconds
 night
-nights
 noon
-noons
 now
 quarter
 second
-seconds
 soon
 sooner
 sundown
-sundowns
 sunrise
-sunrises
 sunset
-sunsets
 sunup
 today
 tomorrow
 then
 week
-weeks
 weekday
-weekdays
 weekend
-weekends
 year
-years
 yesterday
 winter
-winters
 spring
-springs
 summer
-summers
 fall
-falls
 Sunday
 Monday
 Tuesday
@@ -1004,120 +1082,40 @@ petameters
 hektometer
 rods
 angstroms
-nautical_miles
-imperial_measure
+imperial measure
 
 $Area
 acre
 hectare
 square mile
 yard
-square_foot
-square_yard
-square_inch
-square_metre
-square_kilometre
-square_kilometer
+square foot
+square yard
+square inch
+square metre
+square kilometre
+square kilometer
 section
-square_centimetre
-square_centimeter
-square_rod
-acres
-hectares
-square_miles
-yards
-square_feet
-square_yards
-square_inches
-square_metres
-square_kilometre
-square_kilometers
-sections
-square_centimetres
-square_centimeters
-square_rods
-
+square centimetre
+square centimeter
+square rod
+ 
 $Volume
 liter
 pint
 gallon
-cubic_mile
-cubic_meter
+cubic mile
+cubic meter
 quart
 cup
 ounce
 teaspoon
 dram
 tablespoon
-cubic_yard
-cubic_foot
-cubic_inch
-liters
-pints
-gallons
-cubic_miles
-cubic_meters
-quarts
-cups
-ounces
-teaspoons
-drams
-tablespoons
-cubic_yards
-cubic_feet
-cubic_inches
-
-$Number
-lots
-some
-few
-several
-many
-approximation
-numbers
-count
-number
-handful
-couple
-random
-one
-two
-three
-four
-five
-six
-seven
-eight
-nine
-ten
-eleven
-twelve
-thirteen
-fourteen
-fifteen
-sixteen
-seventeen
-eighteen
-nineteen
-twenty
-thirty
-forty
-fifty
-sixty
-seventy
-eighty
-ninety
-hundred
-thousand
-million
-billion
-trillion
-google
-googleplex
-half
-third
-quarter
-
+cubic yard
+cubic foot
+cubic inch
+ 
 $Appearance
 appear
 feel
@@ -1209,7 +1207,7 @@ evaporation
 condensation
 melting
 sublimation
-absolute_zero
+absolute zero
 steam
 freezing
 mixture
@@ -1250,8 +1248,8 @@ munch
 nibble
 nosh
 nurse
-put_away
-put_back
+put away
+put back
 quaff
 sip
 slurp
@@ -1421,7 +1419,7 @@ brown
 char
 coddle
 cook
-deep_fry
+deep fry
 fry
 grill
 microwave
@@ -1441,12 +1439,12 @@ toast
 $Amalgamation
 admix
 amalgamate
-band_together
+band together
 blend
-bring_together
+bring together
 coalesce
 combine
-come_together
+come together
 commingle
 compound
 conflate
@@ -1460,7 +1458,7 @@ meld
 merge
 mix
 pair
-throw_together
+throw together
 unify
 unite
 
@@ -1507,7 +1505,7 @@ staple
 stick
 strap
 tack
-tack_on
+tack on
 tape
 tether
 tie
@@ -1519,14 +1517,15 @@ yoke
 $Abusing
 abuse
 batter
-beat_up
+beat
+beat up
 maltreat
 mistreat
 
 $Accomplishment
 accomplish
 achieve
-bring_about
+bring about
 
 $Accuracy
 accurate
@@ -1534,8 +1533,6 @@ exact
 inaccurate
 imprecise
 inexact
-off
-on
 precise
 
 $Activity_stop
@@ -1546,7 +1543,7 @@ conclude
 discontinue
 end
 finish
-give_up
+give up
 halt
 quit
 stop
@@ -1680,10 +1677,10 @@ snatch
 $Assistance
 abet
 aid
-aid_and_abet
+aid and abet
 assist
 cater
-help_out
+help out
 help
 serve
 succor
@@ -1745,9 +1742,9 @@ take
 terrify
 unfaze
 upset
-worked_up
+worked up
 worry
-wrapped_up_in
+wrapped up in
 
 $Mental_property
 absent-minded
@@ -1808,15 +1805,16 @@ conclude
 finish
 resolve
 terminate
-tie_up
-wrap_up
+tie up
+wrap up
 
 $Activity_ongoing
-carry_on
+carry on
 continue
-keep_on
-keep_up
+keep on
+keep up
 keep
+last
 maintain
 proceed
 
@@ -1860,7 +1858,7 @@ grunt
 guffaw
 gurgle
 hawk
-hem_and_haw
+hem and haw
 hiss
 hoot
 howl
@@ -1956,12 +1954,12 @@ $Arriving
 approach
 arrive
 come
-come_back
+come back
 crest
-descend_on
+descend on
 enter
 get
-make_it
+make it
 make
 reach
 return
@@ -1981,10 +1979,10 @@ regurgitate
 retch
 shit
 spew
-spit_up
+spit up
 sweat
-take_a_piss
-throw_up
+take a piss
+throw up
 urinate
 void
 vomit
@@ -2021,20 +2019,20 @@ bequeath
 contribute
 donate
 endow
-fob_off
+fob off
 foist
 gift
 give
-give_out
-hand_in
-hand_out
-hand_over
-pass_out
+give out
+hand in
+hand out
+hand over
+pass out
 treat
 
 $Intentionally_act
 act
-carry_out
+carry out
 conduct
 do
 engage
@@ -2073,17 +2071,14 @@ contend
 declare
 deny
 describe
-detail
 exclaim
 explain
-gloat
 hazard
 insist
 maintain
 mention
 note
 observe
-pout
 preach
 proclaim
 profess
@@ -2096,12 +2091,10 @@ relate
 remark
 report
 say
-smirk
 speak
 state
 suggest
 talk
-venture
 write
 
 $Participation
@@ -2109,9 +2102,9 @@ embroiled
 entangled
 ininvolved
 participate
-party_to
-play_in
-take_part
+party to
+play in
+take part
 
 $Expertise
 adept
@@ -2135,10 +2128,10 @@ incredible
 inept
 inexperienced
 inexpert
-knowknowledgeable
+knowledgeable
 master
 mediocre
-new_to
+new to
 outstanding
 proficient
 skilful
@@ -2201,13 +2194,11 @@ felonious
 foul
 good
 heinous
-high-minded
 honorable
 immoral
 improper
 iniquitous
 insidious
-low-minded
 low
 miscreant
 moral
@@ -2330,19 +2321,19 @@ gather
 
 $Gathering_up
 assemble
-bring_together
+bring together
 collect
 convene
 gather
 herd
 
 $Successful_action
-come_off
+come off
 do
-do_the_trick
+do the trick
 fail
 manage
-pull_off
+pull off
 succeed
 
 $Attention
@@ -2350,11 +2341,11 @@ alert
 attend
 attentive
 close
-keep_a_eye
+keep an eye
 watchful
 vigilant
 observant
-on_the_ball
+on the ball
 unprepared
 
 $Seeking
@@ -2371,15 +2362,15 @@ look
 nose
 palpate
 pan
-pat_down
+pat down
 probe
 ransack
 rummage
 scour
 search
 seek
-sniff_out
-watch_for
+sniff out
+watch for
 
 $Attack
 ambush
@@ -2388,12 +2379,12 @@ assault
 attack
 bomb
 charge
-fall_upon
+fall upon
 invade
 jump
-lay_into
+lay into
 raid
-set_upon
+set upon
 storm
 strike
 terrorize
@@ -2403,8 +2394,8 @@ attempt
 endeavor
 endeavour
 quest
-take_a_shot
-take_a_stab
+take a shot
+take a stab
 try
 undertake
 
@@ -2421,12 +2412,12 @@ $Cooking_creation
 bake
 brew
 concoct
-cook_up
+cook up
 cook
 make
 prepare
-put_together
-whip_up
+put together
+whip up
 
 $Killing
 annihilate
@@ -2585,23 +2576,23 @@ would
 
 $Being_obligated
 bound
-duty_bound
-got_to
+duty bound
+got to
 gotta
 hafta
-have_to
+have to
 must
 obligated
-ought_to
+ought to
 oughta
 should
 
 $Causation
-bring_on
-bring_about
+bring on
+bring about
 cause
 induce
-lead_to
+lead to
 make
 mean
 precipitate
@@ -2638,12 +2629,10 @@ understand
 understanding
 
 $Amalgamation
-add_to
+add to
 amalgamate
-band_together
 blend
 combine
-come_together
 commingle
 fuse
 intermix
@@ -2685,7 +2674,7 @@ lodge
 occupy
 reside
 room
-shack_up
+shack up
 squat
 stay
 
@@ -2707,31 +2696,30 @@ escape
 eschew
 evade
 forgo
-keep_away
+keep away
 shirk
-shrink_from
+shrink from
 shun
 sidestep
 skirt
-stay_away
+stay away
 
 $Arranging
 arrange
 array
 deploy
 format
-set_up
+set up
 
 $Amounting_to
 amount
 number
 tally
 total
-add_up_to
-add_up
-
+add up to
+ 
 $Adding_up
-add_up
+add up
 tally
 total
 
@@ -2747,13 +2735,13 @@ enter
 initiate
 launch
 start
-swing_into
-take_up
+swing into
+take up
 
 $Activity_prepare
 fix
-gear_up
-get_ready
+gear up
+get ready
 prepare
 rally
 ready
@@ -2768,7 +2756,7 @@ attractive
 beautiful
 elegant
 fine
-good_looking
+good-looking
 gorgeous
 handsome
 hideous
@@ -2784,36 +2772,28 @@ unattractive
 unsightly
 
 $Quantity
-a_bit
-a_few
-a_lot
+a bit
+a few
+a lot
 abundance
 all
 amount
 any
 avalanche
-billions
-degree
 deluge
-dose
-dozens
-few
 few
 flood
 handful
 heap
-hundreds
 load
+lots
 many
-mass
 measure
-millions
 mite
 modicum
 mountain
 multiple
 myriad
-no
 number
 numerous
 oodles
@@ -2825,10 +2805,8 @@ quantity
 raft
 scads
 scores
-several
 shitload
 stream
-thousands
 ton
 torrent
 touch
@@ -2851,8 +2829,8 @@ leave
 quit
 retreat
 sally
-set_off
-set_out
+set off
+set out
 skedaddle
 split
 vacate
@@ -2863,7 +2841,7 @@ withdraw
 $Commerce_pay
 disburse
 pay
-shell_out
+shell out
 
 $Money
 moolah
@@ -2916,13 +2894,13 @@ resuscitate
 treat
 
 $Contingency
-based_on
+based on
 depend
 depends
 determine
-hang_on
+hang on
 hinge
-turn_on
+turn on
 
 $Manipulation
 bite
@@ -2933,7 +2911,6 @@ clutch
 diddle
 finger
 fumble
-grab_hold
 grab
 grasp
 grip
@@ -3013,7 +2990,7 @@ tumble
 
 $Becoming
 become
-end_up
+end up
 form
 get
 go
@@ -3051,7 +3028,7 @@ demolish
 destroy
 devastate
 dismantle
-lay_waste
+lay waste
 level
 obliterate
 raze
@@ -3065,8 +3042,8 @@ decease
 die
 drown
 expire
-kick_the_bucket
-pass_away
+kick the bucket
+pass away
 perish
 starve
 suffocate
@@ -3075,7 +3052,7 @@ $Opinion
 expect
 feel
 figure
-have_feeling
+have feeling
 suppose
 think
 view
@@ -3212,31 +3189,32 @@ whip
 wound
 
 $Becoming_aware
-chance_across
-chance_on
-come_across
-come_upon
+chance across
+chance on
+come across
+come upon
 descry
 detect
 discern
 discover
 encounter
 espy
-fall_on
+fall on
 find
-find_out
-happen_on
+find out
+happen on
 learn
 locate
 note
 notice
 observe
 perceive
-pick_up
+pick up
+pick up on
 recognize
 register
 spot
-spy_out
+spy out
 
 $Mass_motion
 crowd
@@ -3291,19 +3269,19 @@ withdraw
 
 $Replacing
 change
-do_duty_for
+do duty for
 exchange
 replace
 substitute
-swap_out
+swap out
 switch
-take_place_of
+take place of
 
 $Reasoning
 argue
 demonstrate
 disprove
-make_case
+make case
 prove
 reason
 
@@ -3311,19 +3289,19 @@ $Coming_to_be
 appear
 arise
 coalesce
-come_into_existence
-come_to_be
+come into existence
+come to be
 develop
 emerge
 evolve
 form
 materialize
-spring_up
-take_shape
+spring up
+take shape
 
 $Reading
 peruse
-pore_over
+pore over
 proofread
 read
 scan
@@ -3336,12 +3314,10 @@ found
 generate
 make
 produce
-set_up
 synthesise
 
 $Supply
 equip
-fix_up
 fuel
 outfit
 provide
@@ -3354,7 +3330,7 @@ include
 incorporate
 have
 integrate
-be_part_of
+be part of
 
 $Including
 among
@@ -3392,7 +3368,7 @@ $Emitting
 discharge
 emit
 exude
-give_off
+give off
 radiate
 
 $Separating
@@ -3421,7 +3397,7 @@ thin
 
 $Possession
 belong
-have_got
+have got
 have
 lack
 own
@@ -3445,7 +3421,7 @@ $Activity_pause
 freeze
 pause
 suspend
-take_break
+take break
 
 $Manufacturing
 fabricate
@@ -3498,8 +3474,8 @@ effortless
 hard
 impossible
 intricate
-near_thing
-no_picnic
+near thing
+no picnic
 painless
 problematical
 straightforward
@@ -3592,14 +3568,14 @@ torment
 
 $Event
 happen
-go_on
-go_down
+go on
+go down
 occur
-take_place
+take place
 transpire
 
 $Grant_permission
-agree_to
+agree to
 allow
 approve
 assent
@@ -3607,7 +3583,7 @@ ban
 clear
 disallow
 forbid
-consent_to
+consent to
 greenlight
 let
 okay
@@ -3621,17 +3597,17 @@ ascertain
 conclude
 deduce
 determine
-figure_out
-find_out
+figure out
+find out
 find
 guess
 infer
 learn
-puzzle_out
+puzzle out
 realize
 speculate
 surmise
-work_out
+work out
 
 $Dispersal
 disperse
@@ -3665,12 +3641,10 @@ fatter
 fattest
 flabby
 gaunt
-heavy-set
 hefty
 lanky
 lean
 lithe
-medium-build
 muscular
 obese
 paunchy
@@ -3707,7 +3681,6 @@ $Theft
 embezzle
 filch
 lift
-light-fingered
 misappropriate
 nick
 pickpocket
@@ -3738,7 +3711,7 @@ obedient
 obey
 observant
 observe
-play_by_the_rules
+play by the rules
 submit
 transgress
 violate
@@ -3758,7 +3731,7 @@ discriminate
 distinguish
 separate
 sort
-tell_apart
+tell apart
 
 $Cause_to_be_wet
 dampen
@@ -3779,24 +3752,24 @@ author
 chronicle
 compose
 draft
-get_down
-jot_down
+get down
+jot down
 jot
 note
-note_down
+note down
 pen
 print
-print_out
-print_up
+print out
+print up
 speak
-type_in
-type_out
-type_up
+type in
+type out
+type up
 type
-write_down
-write_in
-write_out
-write_up
+write down
+write in
+write out
+write up
 write
 
 $Choosing
@@ -3806,7 +3779,7 @@ elect
 opt
 pick
 select
-settle_on
+settle on
 
 $Predicting
 claim
@@ -3828,12 +3801,12 @@ $Preventing
 avert
 check
 frustrate
-nip_in_the_bud
+nip in the bud
 obviate
 pre-empt
 prevent
 prohibit
-stave_off
+stave off
 stop
 
 $Building
@@ -3842,11 +3815,11 @@ build
 construct
 erect
 fashion
-fit_together
+fit together
 glue
 make
-piece_together
-put_together
+piece together
+put together
 raise
 weld
 
@@ -3857,7 +3830,7 @@ covet
 crave
 desire
 fancy
-feel_like
+feel like
 hanker
 hope
 hunger
@@ -3900,9 +3873,7 @@ amorous
 aroused
 beat
 bilious
-bone-weary
 bushed
-dog-tired
 drowsy
 enervated
 exhausted
@@ -3926,9 +3897,9 @@ soporific
 thirsty
 tired
 tuckered
-turned_on
+turned on
 weary
-worn_out
+worn out
 
 $Emptying
 cleanse
@@ -3963,9 +3934,6 @@ void
 
 $Wearing
 attired
-bare-armed
-bare-breasted
-bare-chested
 bare
 barefoot
 barefooted
@@ -4050,31 +4018,31 @@ drill
 exercise
 practice
 rehearse
-run-through
+run through
 
 $Contingency
 depend
 depends
 determine
-hang_on
+hang on
 hinge
 
 $Dressing
 don
-dress_up
+dress up
 dress
-get_on
-pull_on
-put_on
-slip_on
-throw_on
+get on
+pull on
+put on
+slip on
+throw on
 
 $Evading
 elude
 evade
 flee
-get_away
-give_the_slip
+get away
+give the slip
 
 $Imitating
 ape
@@ -4094,7 +4062,7 @@ divorce
 leave
 marry
 separate
-tie_the_knot
+tie the knot
 wed
 
 $Moving_in_place
@@ -4131,9 +4099,9 @@ $Birth
 bear
 beget
 birth
-bring_forth
+bring forth
 calve
-carry_to_term
+carry to term
 drop
 father
 generate
@@ -4148,7 +4116,7 @@ whelp
 
 $Bungling
 blow
-blow_it
+blow it
 bollix up
 bollix
 botch up
@@ -4161,21 +4129,21 @@ fluff
 foozle
 foul up
 founder
-louse_up
-mess-up
-muck_up
+louse up
+mess up
+muck up
 muff
 ruin
-screw_up
+screw up
 stumble
 
 $Congregating
 assemble
-band_together
-come_together
+band together
+come together
 congregate
 convene
-gang_together
+gang together
 gather
 meet
 throng
@@ -4197,7 +4165,7 @@ preside
 rule
 reign
 run
-take_over
+take over
 manage
 organize
 
@@ -4217,9 +4185,9 @@ consider
 contemplate
 deliberate
 dwell
-give_thought
+give thought
 meditate
-mull_over
+mull over
 muse
 ponder
 reflect
@@ -4237,10 +4205,8 @@ cover
 covering
 discuss
 discussion
-dwell_on
-dwelling_on
-on
-over
+dwell on
+dwelling on
 regard
 regarding
 subject
@@ -4255,6 +4221,66 @@ cost
 price
 worth
 value
+
+$Cause_motion
+attract
+cast
+catapult
+chuck
+drag
+draw
+fling
+force
+haul
+hurl
+move
+nudge
+pitch
+press
+pull
+push
+scoot
+shove
+slide
+throw
+thrust
+toss
+tug
+yank
+
+$Deserving
+call for
+deserve
+justify
+merit
+warrant
+worth
+
+$Encoding
+cast
+couch
+express
+formulate
+frame
+misword
+phrase
+put
+word
+
+$Evoking
+bring to mind
+call to mind
+conjure
+evocative
+evoke
+recall
+remind
+ring a bell
+
+$Adopt_selection
+adopt
+assume
+embrace
 
 
 
