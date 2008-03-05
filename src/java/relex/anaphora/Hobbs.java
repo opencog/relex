@@ -108,6 +108,12 @@ public class Hobbs
 	private void relabel(PhraseTree ana)
 	{
 		FeatureNode name = ana.get("str");
+		if (name == null)
+		{
+			System.err.println(
+			     "Error: can't find str featurenode during anaphora resolution");
+			return;
+		}
 		String str = name.getValue();
 		str += "_" + ana_id;
 		name.setValue(str);
