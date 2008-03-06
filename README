@@ -92,6 +92,13 @@ X
 	in relation-extractor.sh.  Modify build.xml to point at the
 	correct location of gate-4.0.jar.
 
+	GATE also requires the installation of the Xerces XML parser.
+	Debian/Ubuntu users can install Xerces using apt, via
+	"apt-get install libxerces2-java"
+
+	Other users may need to get xerces from 
+	http://xerces.apache.org/xerces2-j/
+
 	GATE is used solely to perform entity resolution; that is, 
 	to determine substrings that correspond to names, dates, 
 	addresses, money amounts, etc. The use of GATE is optional,
