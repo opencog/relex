@@ -24,7 +24,7 @@ CLASSPATH="-classpath \
 bin:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/opennlp-tools-1.2.0.jar:\
-/usr/local/share/java/maxent-2.3.0.jar:\
+/usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\

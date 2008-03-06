@@ -31,7 +31,7 @@ X		apt-get install liblink-grammar4 link-grammar-dictionaries-en
 X
  X  XXX the sentences above are wrong, version 4.3.2 or later is needed.
 
-   Other users:
+	Other users:
 	Compile and install the Link Grammar Parser. This parser is
 	described at http://www.link.cs.cmu.edu/link/, and sources
 	are available for download at
@@ -73,6 +73,9 @@ X
 	provides a jwnl.jar, but the GATE version of jwnl.jar is not
 	compatible (welcome to java DLL hell).
 
+	RelEx works with jwnl-1.3.3 but problems have been reported
+	with jwnl-1.4-rc1. 
+
 - GATE
 	GATE, the "General Architecture for Text Engineering", 
 	http://www.gate.ac.uk/ provides a large framework which
@@ -88,6 +91,13 @@ X
 	please modify the system property -Dgate.home=/opt/GATE-4.0
 	in relation-extractor.sh.  Modify build.xml to point at the
 	correct location of gate-4.0.jar.
+
+	GATE also requires the installation of the Xerces XML parser.
+	Debian/Ubuntu users can install Xerces using apt, via
+	"apt-get install libxerces2-java"
+
+	Other users may need to get xerces from 
+	http://xerces.apache.org/xerces2-j/
 
 	GATE is used solely to perform entity resolution; that is, 
 	to determine substrings that correspond to names, dates, 
@@ -110,11 +120,27 @@ X
 	Download and install OpenNLP tools, and verify that the 
 	installed files are correctly identified in both build.xml
 	and in relation-extractor.sh.
+
+	OpenNLP also requires the installation of maxent from
+	http://maxent.sourceforge.net/  It appears that both maxent-2.4.0.jar
+	and maxent-2.4.0.jar work fine with RelEx.
 	
 	The OpenNLP package is used solely in corpus/DocSplitter.java,
 	which provides a simple, easy-to-use wrapper for splitting a
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
+
+- Trove
+	Some users may require GNU Trove to run RelEx, although this may
+	depend on the JDK installed.  GNU Trove is an implementation of 
+	the java.util class heirarchy, which may or may not be included
+	in the installed JDK.  If needed, download trove from:
+
+	http://trove4j.sourceforge.net/
+
+	Using trove may improve performance and/or decrease memory
+	usage, as compared to the standard JDK implementation of 
+	the java.util heirarchy.
 
 - GraphViz
 	XXX current distro does not use graphviz; ignore the following.
@@ -155,25 +181,25 @@ it defines the semantic algorithms used by RelEx.  The default file
 is data/relex-semantic-algs.txt.
 
 1) Simple single-sentence parser
-   The "relation-extractor.sh" file is a simple shell script illustrating
-   the parse of single sentence.  Shows typical RelEx raw output.
+	The "relation-extractor.sh" file is a simple shell script illustrating
+	the parse of single sentence.  Shows typical RelEx raw output.
 
-   Dependencies:
-   - relex.parser.LinkParserJNINewClient: liblink-grammar.so,
+	Dependencies:
+	- relex.parser.LinkParserJNINewClient: liblink-grammar.so,
 	  liblink-grammar-java.so, and the linkparser data files 
 	  (by default, in /usr/share/link-grammar/data/)
-   - relex.morphy.Morphy: jwnl.jar, commons-logging.jar, WordNet
-     data files (external)
+	- relex.morphy.Morphy: jwnl.jar, commons-logging.jar, WordNet
+	  data files (external)
 
 2) Relex Engine 
 
-   The relex engine is the main entry point for the system.
-   It is invoked from the command line by running "relex-engine.sh". It
-   will accept sentences from the command-line, and display:
-   - The link parser output
-   - The detected persons, organizations and locations
-   - The dependency relations found. The number after each relation is the
-     number of parses where the relation was found.
-   - The raw relex output (the same produced by relation-extractor)
-   - Optionally, a dependency relation graph (in the PNG format)
+	The relex engine is the main entry point for the system.
+	It is invoked from the command line by running "relex-engine.sh". It
+	will accept sentences from the command-line, and display:
+	- The link parser output
+	- The detected persons, organizations and locations
+	- The dependency relations found. The number after each relation is the
+	  number of parses where the relation was found.
+	- The raw relex output (the same produced by relation-extractor)
+	- Optionally, a dependency relation graph (in the PNG format)
 
