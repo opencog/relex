@@ -113,6 +113,10 @@ X
 	Download and install OpenNLP tools, and verify that the 
 	installed files are correctly identified in both build.xml
 	and in relation-extractor.sh.
+
+	OpenNLP also requires the installation of maxent from
+	http://maxent.sourceforge.net/  It appears that both maxent-2.3.0.jar
+	and maxent-2.4.0.jar work fine with RelEx.
 	
 	The OpenNLP package is used solely in corpus/DocSplitter.java,
 	which provides a simple, easy-to-use wrapper for splitting a
