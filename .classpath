@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="bin" path="src/java"/>
+	<classpathentry kind="lib" path="/usr/share/java/gnu-getopt.jar"/>
+	<classpathentry kind="lib" path="/usr/local/share/java/opennlp-tools-1.2.0.jar"/>
+	<classpathentry kind="lib" path="/usr/local/share/java/jwnl.jar"/>
+	<classpathentry kind="lib" path="/usr/local/share/java/maxent-2.3.0.jar"/>
+	<classpathentry kind="lib" path="/usr/local/share/java/trove.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/opt/GATE-4.0/bin/gate.jar"/>
+	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/jasper-compiler-jdt.jar"/>
+	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/nekohtml-0.9.5.jar"/>
+	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/ontotext.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
