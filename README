@@ -203,3 +203,13 @@ is data/relex-semantic-algs.txt.
 	- The raw relex output (the same produced by relation-extractor)
 	- Optionally, a dependency relation graph (in the PNG format)
 
+
+TODO
+----
+The Java install dependencies would be much easier to deal with if
+there was a centralized repository from which one could easily obtain
+the needed jar files. That is, something analogous to apt-get or CPAN.
+The closest such thing for Java is "maven"; however, none of the jar
+files required by relex have been checked into maven. Thus, a to-do:
+get all of the jar files submitted to maven.
+
