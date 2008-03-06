@@ -123,6 +123,18 @@ X
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
 
+- Trove
+	Some users may require GNU Trove to run RelEx, although this may
+	depend on the JDK installed.  GNU Trove is an implementation of 
+	the java.util class heirarchy, which may or may not be included
+	in the installed JDK.  If needed, download trove from:
+
+	http://trove4j.sourceforge.net/
+
+	Using trove may improve performance and/or decrease memory
+	usage, as compared to the standard JDK implementation of 
+	the java.util heirarchy.
+
 - GraphViz
 	XXX current distro does not use graphviz; ignore the following.
 
