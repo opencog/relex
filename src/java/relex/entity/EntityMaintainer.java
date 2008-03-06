@@ -120,23 +120,37 @@ public class EntityMaintainer
 			// not preceeded by white space.
 			if (convertedSentence.length() > 0
 					&& !Character.isWhitespace(convertedSentence
-							.charAt(convertedSentence.length() - 1))) {
+							.charAt(convertedSentence.length() - 1)))
+			{
 				convertedSentence += ' ';
-				insertedWhitespaceCharIndexes.add(new Integer(convertedSentence.length() - 1));
+				insertedWhitespaceCharIndexes.add(
+					new Integer(convertedSentence.length() - 1));
+			}
+
+			// If the entity is at the end of the sentence, then the 
+			// entity detector may swallow the period at the end 
+			// of the sentence. This can confuse downstream handlers,
+			// so remove the period from the entity, and put it back 
+			// at the end of the sentence.
+			if ((originalSentence.length() == curIndex) &&
+			    (originalSentence.charAt(eInfo.getLastCharIndex()) == '.'))
+			{
+				eInfo.setLastCharIndex(eInfo.getLastCharIndex()-1);
 			}
 
 			// Insert the ID string of the entity.
-			convertedSentence += makeID(eInfo);
 			curIndex = eInfo.getLastCharIndex() + 1;
+			convertedSentence += makeID(eInfo);
 
 			// Insert trailing white space after eInfo if it is 
 			// not followed by a legal string
 			if (originalSentence.length() > curIndex
 					&& !isLegalEntityFollowingString(originalSentence
-							.substring(curIndex))) {
+							.substring(curIndex)))
+			{
 				convertedSentence += ' ';
-				insertedWhitespaceCharIndexes.add(new Integer(convertedSentence
-						.length() - 1));
+				insertedWhitespaceCharIndexes.add(
+					new Integer(convertedSentence.length() - 1));
 			}
 		}
 

@@ -48,6 +48,10 @@ public class EntityInfo
 		return lastCharIndex;
 	}
 
+	public void setLastCharIndex(int i) {
+		lastCharIndex = i;
+	}
+
 	public String getOriginalString() {
 		return originalSentence.substring(firstCharIndex, lastCharIndex + 1);
 	}
