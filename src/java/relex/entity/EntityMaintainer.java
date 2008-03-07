@@ -155,7 +155,8 @@ public class EntityMaintainer
 		}
 
 		// Copy the remaining portion (if any) of the original string.
-		convertedSentence += originalSentence.substring(curIndex);
+		if (curIndex < originalSentence.length())
+			convertedSentence += originalSentence.substring(curIndex);
 		// System.out.println("CONVERSION\n" + originalSentence + "\n" +
 		// convertedSentence);
 	}
