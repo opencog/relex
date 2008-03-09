@@ -273,7 +273,7 @@ public class EntityMaintainer
 			int end = start + emo.length();
 	
 			EntityInfo ei = new EmoticonEntityInfo(originalSentence, start, end);
-			orderedEntityInfos.add(ei);
+			addEntity(ei);
 		}
 	}
 
@@ -292,7 +292,7 @@ public class EntityMaintainer
 			if (start < 0) break;
 
 			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
-			orderedEntityInfos.add(ei);
+			addEntity(ei);
 			start++;
 		}
 		while (true)
@@ -301,9 +301,16 @@ public class EntityMaintainer
 			if (start < 0) break;
 
 			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
-			orderedEntityInfos.add(ei);
+			addEntity(ei);
 			start++;
 		}
+	}
+
+	// --------------------------------------------------------
+	
+	public void addEntity(EntityInfo ei)
+	{
+		orderedEntityInfos.add(ei);
 	}
 
 	// --------------------------------------------------------
@@ -311,9 +318,10 @@ public class EntityMaintainer
 	 * CONSTRUCTOR
 	 */
 	public EntityMaintainer(String _originalSentence,
-			ArrayList<EntityInfo> _orderedEntityInfos)
+			ArrayList<EntityInfo> eis)
 	{
-		if (_orderedEntityInfos.size() > MAX_NUM_ENTITIES) {
+		if (eis.size() > MAX_NUM_ENTITIES)
+		{
 			System.err.println("WARNING: Sentence had more than "
 					+ MAX_NUM_ENTITIES
 					+ ".  Ignoring extras.\nOriginal sentence:"
@@ -322,9 +330,9 @@ public class EntityMaintainer
 		originalSentence = _originalSentence;
 		orderedEntityInfos = new ArrayList<EntityInfo>();
 
-		for (EntityInfo it : _orderedEntityInfos)
+		for (EntityInfo it : eis)
 		{
-			orderedEntityInfos.add(it);
+			addEntity(it);
 		}
 
 		// Strip out emoticons, which GATE doesn't do.
