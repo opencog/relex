@@ -201,34 +201,34 @@ public class RelationExtractor
 
 	public RelexInfo processSentence(String sentence) 
 	{
-		EntityMaintainer enm = new EntityMaintainer(sentence, 
-		                               new ArrayList<EntityInfo>());
-		return processSentence(sentence, enm);
+		return processSentence(sentence, null);
 	}
 
 	public RelexInfo processSentence(String sentence,
 	                                 EntityMaintainer entityMaintainer)
 	{
+		if (entityMaintainer == null)
+		{
+			entityMaintainer = new EntityMaintainer(sentence, 
+		                               new ArrayList<EntityInfo>());
+		}
+
 		ArrayList<ParsedSentence> currentParses = 
 		               parseSentence(sentence, entityMaintainer);
 		RelexInfo ri = new RelexInfo(sentence, currentParses);
 
 		for (ParsedSentence parse : currentParses)
 		{
-			if (entityMaintainer != null) {
-				// Markup feature node graph with entity info,
-				// so that the relex algs (next step) can see them.
-				entityMaintainer.prepareSentence(parse.getLeft());
-			}
+			// Markup feature node graph with entity info,
+			// so that the relex algs (next step) can see them.
+			entityMaintainer.prepareSentence(parse.getLeft());
 
 			// The actual relation extraction is done here.
 			sentenceAlgorithmApplier.applyAlgs(parse);
 
 			// Strip out the entity markup, so that when the 
 			// sentence is printed, we don't print gunk.
-			if (entityMaintainer != null) {
-				entityMaintainer.repairSentence(parse.getLeft());
-			}
+			entityMaintainer.repairSentence(parse.getLeft());
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
