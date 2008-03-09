@@ -65,6 +65,7 @@ public class EntityMaintainer
 	// A set of integer indexes of inserted whitespace characters
 	private TreeSet<Integer> insertedWhitespaceCharIndexes;
 
+	// --------------------------------------------------------
 	/**
 	 * Returns true iff the character after the entity is legal.
 	 * Only whitespace and certain punction are allowed.
@@ -169,23 +170,7 @@ public class EntityMaintainer
 		return id;
 	}
 
-/*
- * -------------------- unused  --------------
-	private Iterator<FeatureNode>
-	recursiveFNIterator(FeatureNode f, ArrayList<FeatureNode> alreadyVisited) {
-		if (alreadyVisited.contains(f))
-			return alreadyVisited.iterator();
-		alreadyVisited.add(f);
-		if (f.isValued())
-			return alreadyVisited.iterator();
-		Iterator<String> i = f.getFeatureNames().iterator();
-		while (i.hasNext())
-			recursiveFNIterator(f.get(i.next()), alreadyVisited);
-		return alreadyVisited.iterator();
-	}
- * -------------------- unused  --------------
- */
-
+	// --------------------------------------------------------
 	/*
 	 * CONSTRUCTOR
 	 */
@@ -213,6 +198,8 @@ public class EntityMaintainer
 		createConvertedSentence();
 	}
 
+	// --------------------------------------------------------
+
 	public boolean isEntityID(String e) {
 		return iDs2Entities.containsKey(e);
 	}
@@ -220,35 +207,6 @@ public class EntityMaintainer
 	public EntityInfo getEntityInfo(String entityID) {
 		return iDs2Entities.get(entityID);
 	}
-
-	/*
-	 * Replaces all feature values containing entityIDs, so that they now
-	 * contain original strings. Stores the FeatureNodes in a map which maps
-	 * them to entityIDs Does not repair char index values in the word nodes
-	 *
-	 * XXX Deprecated, use repairSentence below.
-	 */
-/* DEAD CODE DEAD CODE
-	private void recursivelyReplaceEntityIDsWithStrings(FeatureNode fn,
-			boolean useNormalized) {
-		Iterator<FeatureNode> allNodes = recursiveFNIterator(fn, new ArrayList<FeatureNode>());
-		while (allNodes.hasNext()) {
-			FeatureNode curFN = allNodes.next();
-			if (curFN.isValued()) {
-				String fnVal = curFN.getValue();
-				if (isEntityID(fnVal)) {
-					String id = fnVal;
-					// replace id with original string
-					if (useNormalized)
-						curFN.setValue(getEntityInfo(id).getNormalizedString());
-					else
-						curFN.setValue(getEntityInfo(id).getOriginalString());
-					featureNodes2EntityIDs.put(curFN, id);
-				}
-			}
-		}
-	}
-DEAD CODE DEAD CODE */
 
 	private int previouslyInsertedWhitespace(int index)
 	{
