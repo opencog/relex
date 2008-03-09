@@ -65,6 +65,96 @@ public class EntityMaintainer
 	// A set of integer indexes of inserted whitespace characters
 	private TreeSet<Integer> insertedWhitespaceCharIndexes;
 
+	static ArrayList<String> emolist = new ArrayList<String>();
+
+	static
+	{
+		// Partial list, only of the basics, taken from wikipedia
+		// This could be improved on by automatically generating
+		// these with and without noses, etc. 
+		//
+		// More generally, we should have a "bogus punctutation entity"
+		// for any sort of markup that is not recognized here.
+		//
+		emolist.add(":-)");
+		emolist.add(":-(");
+		emolist.add(":)");
+		emolist.add(":(");
+		emolist.add(":'-)");
+		emolist.add(":')");
+		emolist.add(":D");
+		emolist.add(":-D");
+		emolist.add(":-O");
+		emolist.add(":-S");
+		emolist.add(":-$");
+		emolist.add(":-*");
+		emolist.add(":[");
+		emolist.add(":'[");
+		emolist.add(":'\\");
+		emolist.add(":-B");
+		emolist.add(":-#");
+		emolist.add(":-|");
+		emolist.add(":-&");
+		emolist.add(":-X");
+		emolist.add(":-K");
+		emolist.add(":]");
+		emolist.add(":-@");
+		emolist.add(":@");
+		emolist.add(":O]");
+		emolist.add(":d");
+		emolist.add("|-O");
+		emolist.add("%-(");
+		emolist.add("=)");
+		emolist.add("=O");
+		emolist.add(";)");
+		emolist.add(";-)");
+		emolist.add(";]");
+		emolist.add(";O]");
+		emolist.add(";O");
+		emolist.add(";D");
+		emolist.add("B-)");
+		emolist.add("T.T");
+		emolist.add("`:-)");
+		emolist.add(":P");
+		emolist.add("O:-)");
+		emolist.add("><");
+		emolist.add(">_<");
+		emolist.add("<_<");
+		emolist.add(">_>");
+		emolist.add("Oo");
+		emolist.add(">:D");
+		emolist.add("e.e");
+		emolist.add("-.-*");
+		emolist.add("~.^");
+		emolist.add("(-_-)");
+		emolist.add("(-.-)");
+		emolist.add("-.-'");
+		emolist.add("E.E");
+		emolist.add("-.O");
+		emolist.add("*o*");
+		emolist.add("=^.^=");
+		emolist.add("8)");
+		emolist.add("8D");
+		emolist.add(">O");
+		emolist.add("(:-D");
+		emolist.add("c^:3");
+		emolist.add("~:>");
+		emolist.add("x-(");
+		emolist.add(";:^)B>");
+		emolist.add("O.O");
+		emolist.add("o.o");
+		emolist.add("O.o");
+		emolist.add("o.O");
+		emolist.add("8|");
+		emolist.add(">8V-()<");
+		emolist.add("=3");
+		emolist.add("-:3");
+		emolist.add("<3");
+		emolist.add("<><");
+		emolist.add("<@:)");
+		emolist.add(":3=");
+	}
+
 	// --------------------------------------------------------
 	/**
 	 * Returns true iff the character after the entity is legal.
@@ -171,6 +261,23 @@ public class EntityMaintainer
 	}
 
 	// --------------------------------------------------------
+	/**
+	 * Strip out emoticons, smileys
+	 */
+	private void identifyEmoticons()
+	{
+		for(String emo : emolist)
+		{
+			int start = originalSentence.indexOf(emo);
+			if (start < 0) continue;
+			int end = start + emo.length();
+	
+			EntityInfo ei = new EmoticonEntityInfo(originalSentence, start, end);
+			orderedEntityInfos.add(ei);
+		}
+	}
+
+	// --------------------------------------------------------
 	/*
 	 * CONSTRUCTOR
 	 */
@@ -190,6 +297,10 @@ public class EntityMaintainer
 		{
 			orderedEntityInfos.add(it);
 		}
+
+		// Strip out emoticons, which GATE doesn't do.
+		// Emoticons confuse the parser.
+		identifyEmoticons();
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
