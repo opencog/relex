@@ -262,7 +262,7 @@ public class EntityMaintainer
 
 	// --------------------------------------------------------
 	/**
-	 * Strip out emoticons, smileys
+	 * Strip out emoticons, smileys :-)
 	 */
 	private void identifyEmoticons()
 	{
@@ -274,6 +274,35 @@ public class EntityMaintainer
 	
 			EntityInfo ei = new EmoticonEntityInfo(originalSentence, start, end);
 			orderedEntityInfos.add(ei);
+		}
+	}
+
+	/**
+	 * Escape parenthesis, treating them as entities.
+	 * This is needed for one reason only: the phrase markup
+	 * uses a LISP-like structure for the Penn-treebank markup,
+	 * and stray parens in the original sentence mess it up.
+	 */
+	private void escapeParens()
+	{
+		int start = 0;
+		while (true)
+		{
+			start = originalSentence.indexOf('(', start);
+			if (start < 0) break;
+
+			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
+			orderedEntityInfos.add(ei);
+			start++;
+		}
+		while (true)
+		{
+			start = originalSentence.indexOf(')', start);
+			if (start < 0) break;
+
+			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
+			orderedEntityInfos.add(ei);
+			start++;
 		}
 	}
 
@@ -301,6 +330,9 @@ public class EntityMaintainer
 		// Strip out emoticons, which GATE doesn't do.
 		// Emoticons confuse the parser.
 		identifyEmoticons();
+
+		// Escape parenthis. These confuse the phrase-tree markup.
+		escapeParens();
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
