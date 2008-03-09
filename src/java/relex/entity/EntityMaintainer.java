@@ -28,7 +28,7 @@ import relex.output.RawView;
 public class EntityMaintainer
 {
 	/**
-	  * This number is derived from the LinkParser dictionary -- 
+	 * This number is derived from the LinkParser dictionary -- 
 	 * it only accepts suffixes up to "60." To increase this 
 	 * number, you need to add more words to the Link parser 
 	 * dictionary, like "genericID61, dateID61, etc."
