@@ -28,8 +28,6 @@ import relex.feature.FeatureNode;
 
 public class EntityInfo
 {
-	protected String normalizedString;
-
 	private String originalSentence;
 
 	public String getOriginalSentence() {
@@ -61,16 +59,6 @@ public class EntityInfo
 	}
 
 	/**
-	 *  Override to present a normalized representation
-	 */
-	public String getNormalizedString()
-	{
-		if (normalizedString == null)
-			return getOriginalString();
-		return normalizedString;
-	}
-
-	/**
 	 * Override to add additional information & markup to 
 	 * the feature node for a given word. May be used to
 	 * indicate gender, count, etc.
@@ -87,6 +75,5 @@ public class EntityInfo
 		originalSentence = _originalSentence;
 		firstCharIndex = _firstCharIndex;
 		lastCharIndex = _lastCharIndex;
-		normalizedString = null;
 	}
 }
