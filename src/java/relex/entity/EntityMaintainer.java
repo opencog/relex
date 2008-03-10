@@ -331,7 +331,7 @@ public class EntityMaintainer
 			open = e.getLastCharIndex();
 
 			// If our entity overlaps with existing entities, ignore it.
-			if (end < open) return;
+			if (start < open) return;
 		}
 		orderedEntityInfos.add(ei);
 	}
