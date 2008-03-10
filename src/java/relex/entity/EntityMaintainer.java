@@ -191,16 +191,19 @@ public class EntityMaintainer
 		{
 			if (eInfo.getFirstCharIndex() < curIndex)
 			{
-				// XXX The following input triggers this warning:
-				// BY ALEXIS THOMSON, F.R.C.S.Ed.
-				// with the problem being at the period after the S.
-				// Ignore this, for now.
-				System.err.println(
+				if (eInfo.getFirstCharIndex() == curIndex - 1)
+				{
+					curIndex = eInfo.getFirstCharIndex();
+				}
+				else
+				{
+					System.err.println(
 						"Error: Entity start is at an unexpected location:\n" +
-				      "Sentence= " + originalSentence + "\n" +
-				      "firt char= " + eInfo.getFirstCharIndex() +
-				      " curidx= " + curIndex + "\n");
-				continue;
+						"Sentence= " + originalSentence + "\n" +
+						"firt char= " + eInfo.getFirstCharIndex() +
+						" curidx= " + curIndex + "\n");
+					continue;
+				}
 			}
 
 			// Copy the preceeding portion (if any) of the original string.
@@ -291,7 +294,7 @@ public class EntityMaintainer
 			start = originalSentence.indexOf('(', start);
 			if (start < 0) break;
 
-			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
+			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start+1);
 			addEntity(ei);
 			start++;
 		}
@@ -300,7 +303,7 @@ public class EntityMaintainer
 			start = originalSentence.indexOf(')', start);
 			if (start < 0) break;
 
-			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start);
+			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start+1);
 			addEntity(ei);
 			start++;
 		}
@@ -308,8 +311,33 @@ public class EntityMaintainer
 
 	// --------------------------------------------------------
 	
+	/**
+	 * Add the entity info to the list, inserting it in sorted order.
+	 * 
+	 * XXX It would be algorithmically faster to add in random order,
+	 * and sort later, but I can't figure out how to sort in Java :-(
+	 */
 	public void addEntity(EntityInfo ei)
 	{
+		int open = 0;
+		int start = ei.getFirstCharIndex();
+		int end = ei.getLastCharIndex();
+		for (EntityInfo e: orderedEntityInfos)
+		{
+			int beg = e.getFirstCharIndex();
+System.out.println("duude look at " + beg + " " +e.getLastCharIndex()) ;
+			if ((open <= start) && (end <= beg))
+			{
+System.out.println("duude its " + open + " " + start + " " + end + " " + beg);
+				int idx = orderedEntityInfos.indexOf(e);
+				orderedEntityInfos.add(idx, ei);
+				return;
+			}
+			open = e.getLastCharIndex();
+
+			// If our entity overlaps with existing entities, ignore it.
+			if (end < open) return;
+		}
 		orderedEntityInfos.add(ei);
 	}
 
@@ -337,7 +365,7 @@ public class EntityMaintainer
 
 		// Strip out emoticons, which GATE doesn't do.
 		// Emoticons confuse the parser.
-		identifyEmoticons();
+		// identifyEmoticons();
 
 		// Escape parenthis. These confuse the phrase-tree markup.
 		escapeParens();
