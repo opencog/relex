@@ -413,6 +413,14 @@ ENTITY-MONEY
 <ref money-FLAG> = T
 ;
 #TemplateActionAlg
+ENTITY-EMOTICON
+<EMOTICON-FLAG> = T
+=
+<ref emoticon-FLAG> = T
+;
+; -----------------------------------------------------------
+;
+#TemplateActionAlg
 QUESTION1
 <LAB> = \W[sq]\.*|\Jw\.*
 <F_R str> = who|Who|whom|Whom
