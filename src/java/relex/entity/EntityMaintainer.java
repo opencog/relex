@@ -313,9 +313,6 @@ public class EntityMaintainer
 	
 	/**
 	 * Add the entity info to the list, inserting it in sorted order.
-	 * 
-	 * XXX It would be algorithmically faster to add in random order,
-	 * and sort later, but I can't figure out how to sort in Java :-(
 	 */
 	public void addEntity(EntityInfo ei)
 	{
@@ -325,10 +322,8 @@ public class EntityMaintainer
 		for (EntityInfo e: orderedEntityInfos)
 		{
 			int beg = e.getFirstCharIndex();
-System.out.println("duude look at " + beg + " " +e.getLastCharIndex()) ;
 			if ((open <= start) && (end <= beg))
 			{
-System.out.println("duude its " + open + " " + start + " " + end + " " + beg);
 				int idx = orderedEntityInfos.indexOf(e);
 				orderedEntityInfos.add(idx, ei);
 				return;
@@ -339,7 +334,6 @@ System.out.println("duude its " + open + " " + start + " " + end + " " + beg);
 			if (end < open) return;
 		}
 		orderedEntityInfos.add(ei);
-System.out.println("duude yah man " + ei.getFirstCharIndex()+ " " +ei.getLastCharIndex()) ;
 	}
 
 	// --------------------------------------------------------
@@ -366,9 +360,9 @@ System.out.println("duude yah man " + ei.getFirstCharIndex()+ " " +ei.getLastCha
 
 		// Strip out emoticons, which GATE doesn't do.
 		// Emoticons confuse the parser.
-		// identifyEmoticons();
+		identifyEmoticons();
 
-		// Escape parenthis. These confuse the phrase-tree markup.
+		// Escape parenthesis. These confuse the phrase-tree markup.
 		escapeParens();
 
 		iDs2Entities = new HashMap<String, EntityInfo>();

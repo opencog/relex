@@ -1,4 +1,3 @@
-package relex.entity;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,7 @@ package relex.entity;
  * limitations under the License.
  */
 
+package relex.entity;
 import relex.feature.FeatureNode;
 
 /**
@@ -24,6 +24,11 @@ import relex.feature.FeatureNode;
  * entity-identifying substring are stored.  The class may be subclassed
  * to store info about particular entity types such as dates, times,
  * people, etc.
+ *
+ * The convention is that the lastCharIndex points at the character
+ * just after the entity, so that 
+ *    lastCharIndex = firstCharIndex + entity.length() 
+ * holds true.
  */
 
 public class EntityInfo
