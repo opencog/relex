@@ -233,7 +233,7 @@ public class EntityMaintainer
 			}
 
 			// Insert the ID string of the entity.
-			curIndex = eInfo.getLastCharIndex() + 1;
+			curIndex = eInfo.getLastCharIndex();
 			convertedSentence += makeID(eInfo);
 
 			// Insert trailing white space after eInfo if it is 
@@ -339,6 +339,7 @@ System.out.println("duude its " + open + " " + start + " " + end + " " + beg);
 			if (end < open) return;
 		}
 		orderedEntityInfos.add(ei);
+System.out.println("duude yah man " + ei.getFirstCharIndex()+ " " +ei.getLastCharIndex()) ;
 	}
 
 	// --------------------------------------------------------
@@ -402,9 +403,6 @@ System.out.println("duude its " + open + " " + start + " " + end + " " + beg);
 	 * Replaces all feature values containing entityIDs, so that they now
 	 * contain original strings. Stores the FeatureNodes in a map which maps
 	 * them to entityIDs. Does not repair char index values in the word nodes
-	 *
-	 * An alternative to recursivelyReplaceEntityIDsWithStrings Saves time by
-	 * travering only the words and their refs. Also repairs start and end chars
 	 */
 	public void repairSentence(FeatureNode leftNode)
 	{

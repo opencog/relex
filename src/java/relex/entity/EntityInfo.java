@@ -51,7 +51,7 @@ public class EntityInfo
 	}
 
 	public String getOriginalString() {
-		return originalSentence.substring(firstCharIndex, lastCharIndex + 1);
+		return originalSentence.substring(firstCharIndex, lastCharIndex);
 	}
 
 	public String idStringPrefix() {
