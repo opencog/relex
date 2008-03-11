@@ -1099,7 +1099,7 @@
 # IF between($Change_position_on_a_scale,$var0) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Value_range($Change_position_on_a_scale,$var0)
 # IF when($Change_position_on_a_scale,$var0) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Circumstances($Change_position_on_a_scale,$var0)
 # IF as($Change_position_on_a_scale,$var0) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Correlate($Change_position_on_a_scale,$var0)
-# IF _advmod($var0,$Change_position_on_a_scale) ^ NOT {$var0=$Frequency || _obj($Change_position_on_a_scale,$var1) THEN ^1_Change_position_on_a_scale:Manner($Change_position_on_a_scale,$var0)
+# IF _advmod($var0,$Change_position_on_a_scale) ^ NOT {$var0=$Frequency || _obj($Change_position_on_a_scale,$var1)} THEN ^1_Change_position_on_a_scale:Manner($Change_position_on_a_scale,$var0)
 # IF for($Change_position_on_a_scale,$Time) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Duration($Change_position_on_a_scale,$Time)
 # IF among($Change_position_on_a_scale,$var0) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Group($Change_position_on_a_scale,$var0)
 # IF through($Change_position_on_a_scale,$var0) ^ NOT _obj($Change_position_on_a_scale,$var0) THEN ^1_Change_position_on_a_scale:Path($Change_position_on_a_scale,$var0)
