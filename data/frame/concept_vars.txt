@@ -199,28 +199,30 @@ third
 quarter
 
 $About
-a good
+a_good
 about
 almost
 approximately
 around
-at least
-at most
+at_least
+at_most
 barely
 circa
 close to
 exactly
-in the neighborhood of
-in the vicinity of
-minimum of
+in_the_neighborhood_of
+in_the_vicinity_of
+less_than
+a_minimum_of
+more_than
 nearly
-or so
+or_so
 over
 precisely
 roughly
-something like
+something_like
 under
-upwards of
+upwards_of
 
 $Locative_relation
 above-ground
@@ -4281,6 +4283,24 @@ $Adopt_selection
 adopt
 assume
 embrace
+
+$Request
+ask
+beg
+beseech
+call
+command
+demand
+entreat
+implore
+invite
+order
+plead
+request
+summon
+tell
+urge
+
 
 
 
