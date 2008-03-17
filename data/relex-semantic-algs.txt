@@ -2243,7 +2243,7 @@ HEAD-WORD_GROUP6
 ;
 ;
 ;
-;
+; Copula questions: "What is yarn?", "Who is Lincoln?"
 ;
 #TemplateActionAlg
 COPULA_QUESTION1
@@ -2253,7 +2253,6 @@ COPULA_QUESTION1
 =
 <head> = %
 <head> = $O
-<head TRUTH-QUERY-FLAG> = T
 <head COPULA-QUESTION-FLAG> = T
 ; For cases such "Where did hugo plan to go?" we force the location link upon go
 #TemplateActionAlg
