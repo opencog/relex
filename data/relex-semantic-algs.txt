@@ -1234,6 +1234,9 @@ DECLARATIVE_QUESTION1
 =
 <F_L punc> = <F_R str>
 ;
+; Declarative questions, such as "Fred is dead?"
+; we are asking for the truth of thw question, and "dead" is hypothetical.
+;
 #TemplateActionAlg
 DECLARATIVE_QUESTION2
 ; not AND-SAFE!
