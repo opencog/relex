@@ -66,9 +66,9 @@ public class GateEntityMaintainer
 	{
 		"gate.creole.annotdelete.AnnotationDeletePR",
 		"gate.creole.tokeniser.DefaultTokeniser",
-		"gate.creole.splitter.SentenceSplitter",
+		// "gate.creole.splitter.SentenceSplitter",
 		"gate.creole.gazetteer.DefaultGazetteer",
-		"gate.creole.POSTagger",
+		// "gate.creole.POSTagger",
 		"gate.creole.ANNIETransducer",
 		"gate.creole.orthomatcher.OrthoMatcher"
 	};
@@ -156,7 +156,16 @@ public class GateEntityMaintainer
 		} catch(MalformedURLException m) {
 			throw new RuntimeException(m.getMessage());
 		}
-		if (DEBUG>0) System.out.println("...GATE initialised");
+		if (DEBUG>0)
+		{
+			System.out.println("...GATE initialised");
+			Package p = annieController.getClass().getPackage();
+			System.out.println("GATE Specification Version : " 
+			                   + p.getSpecificationVersion());
+			System.out.println("GATE Implementation Version : " 
+			                   + p.getImplementationVersion());
+		}
+
 		initialized = true;
 	}
 
