@@ -3,8 +3,11 @@ Directory structure overview:
 -----------------------------
 
 RelationExtractor.java:
-	This is the main class, wrapping together all of the function.
-	It also includes a functional main(), showing how to use this stuff.
+	This is the main class, wrapping together all of the various
+	functions.  It should be taken to be an "example" of how 
+	to use RelEx in other systems. Yet, it is fully functional, and 
+	implements main(), which accepts sentences and generates output
+	of various forms, depending on the command-line flags.
 
 algs: 
 	code for applying the relation extraction algorithms,
@@ -16,22 +19,36 @@ anaphora:
 corpus:
 	Code to handle multiple-sentence corpuses. Includes a class to 
 	split a document into multiple sentences, and another to perform
-	entity extraction.
+	entity extraction. The current system uses OpenNLP for sentence
+	detection, so this directory contains code to wrap the OpenNLP
+	system.
 
 entity:
-	Mangle sentences to consolidate entities before parsing them.
-	This eases the burden on the parser.
+	Mangle sentences to consolidate entities before passing a sentence
+	to the parser.  This eases the burden on the parser. The entity
+	detection is supplied by systems outside of relex. The current 
+	implementation uses GATE.
 
 feature:
 	The base classes for representing the feature graph.
 
+frame:
+	An implementation of a simple forward-chainging inference engine,
+	which is used to apply a set of frame rules to the relex output.
+
 morphy:
 	A simple, easy-to-use class for finding the base forms (lemmas)
-	of a word.
+	of a word. The current system uses wordnet to determine the lemmas,
+	and so most of the code here is a wrapper around wordnet.
+
+output:
+	A collection of disparate classes that convert relex output to 
+	various formats. Notable are a set of classes that generate
+	OpenCog format XML.
 
 parser:
 	Interfaces to the link grammar parser. Two choices: an in-process
-	JNI binding to the C-language liblink-grammar.so, and an 
+	JNI binding to the C-language liblink-grammar-java.so, and an 
 	out-of-process server, reachable via a socket interface.
 	
 
