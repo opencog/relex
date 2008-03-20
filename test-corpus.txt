@@ -1,3 +1,22 @@
+Yarn is used in the making of cloth.  What is yarn used for?
+END.
+
+Yarn is used to make cloth.
+END.
+
+John threw a ball.
+What did John throw?
+END.
+There is nothing in the dispatch which indicates
+anything but the eventual success of the work, nor that the defenses
+have proved more formidable than was anticipated.
+END.
+A bird is an animal.
+What is a bird?
+END.
+What is yarn?
+Yarn is a length of fibers.
+END.
 The concert continued to midnight.
 The room is next to the house.
 END.
