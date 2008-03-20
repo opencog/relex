@@ -1,0 +1,3 @@
+
+New in version 0.8.4:
+ * Convert DocSplitter to factory, so that the OpenNLP install is optional.
