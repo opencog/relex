@@ -1,4 +1,3 @@
-package relex;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,9 @@ package relex;
  * limitations under the License.
  */
 
+package relex.tree;
+
+import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 
 /**
@@ -71,7 +73,7 @@ public class PhraseMarkup
 	int word_index;
 	ParsedSentence sentence;
 
-	PhraseMarkup()
+	public PhraseMarkup()
 	{
 		word_index = 0;
 		sentence = null;

@@ -1,4 +1,3 @@
-package relex.anaphora;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,12 +14,14 @@ package relex.anaphora;
  * limitations under the License.
  */
 
+package relex.anaphora;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import relex.RelexInfo;
 import relex.ParsedSentence;
-import relex.PhraseTree;
 import relex.feature.FeatureNode;
+import relex.tree.PhraseTree;
 
 /**
  * Implementation of a modified Hobbs algorithm for pronoun resolution.

@@ -18,8 +18,8 @@ package relex.output;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import relex.PhraseTree;
 import relex.feature.FeatureNode;
+import relex.tree.PhraseTree;
 
 /**
  * A RelationView object displays a word relationship in the

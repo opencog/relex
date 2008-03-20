@@ -50,6 +50,9 @@ parser:
 	Interfaces to the link grammar parser. Two choices: an in-process
 	JNI binding to the C-language liblink-grammar-java.so, and an 
 	out-of-process server, reachable via a socket interface.
-	
+
+tree:
+	Routines to extract and manipulate the treebank style phrase tree
+	of a given parse. The phrase ttree is central to Hobbs algorithm.
 
 

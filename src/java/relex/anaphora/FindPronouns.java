@@ -1,4 +1,3 @@
-package relex.anaphora;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,12 +14,14 @@ package relex.anaphora;
  * limitations under the License.
  */
 
+package relex.anaphora;
+
 import java.util.ArrayList;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.FeatureForeach;
 import relex.ParsedSentence;
-import relex.PhraseTree;
+import relex.tree.PhraseTree;
 
 /**
  * Return a list of all the pronouns in a parse.

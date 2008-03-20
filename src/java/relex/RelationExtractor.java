@@ -42,6 +42,7 @@ import relex.parser.LinkParserClient;
 import relex.parser.LinkParserJNIClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
+import relex.tree.PhraseMarkup;
 
 /**
  * The RelationExtractor class provides the central processing

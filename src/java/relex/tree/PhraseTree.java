@@ -1,4 +1,3 @@
-package relex;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.tree;
 
 import java.util.ArrayList;
 import java.util.Iterator;

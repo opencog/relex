@@ -1,4 +1,3 @@
-package relex.anaphora;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,9 +14,11 @@ package relex.anaphora;
  * limitations under the License.
  */
 
+package relex.anaphora;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import relex.PhraseTree;
+import relex.tree.PhraseTree;
 import relex.feature.FeatureNode;
 
 /**
