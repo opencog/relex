@@ -15,13 +15,11 @@ package relex.corpus;
  * limitations under the License.
  */
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.lang.ClassLoader;
-
 import opennlp.tools.sentdetect.EnglishSentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceDetector;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * DocSplitter -- split document into sentences.
@@ -51,11 +49,12 @@ import opennlp.tools.sentdetect.SentenceDetector;
  * fails to recognize exclamation mark as end of sentence, unless
  * it is preceeded by white space.
  */
-public class DocSplitter
+@SuppressWarnings({"CallToPrintStackTrace", "UseOfSystemOutOrSystemErr"})
+public class DocSplitterOpenNLPImpl implements DocSplitter
 {
-	public static final int DEBUG = 0;
-	public static final String DEFAULT_ENGLISH_FILENAME =
-	        "./data/sentence-detector/EnglishSD.bin.gz";
+	private static final int DEBUG = 0;
+	private static final String DEFAULT_ENGLISH_FILENAME =
+	        "data/sentence-detector/EnglishSD.bin.gz";
 
 	private static HashSet<String> capitalizedUnacceptableSentenceEnds;
 
@@ -68,40 +67,20 @@ public class DocSplitter
 		capitalizedUnacceptableSentenceEnds.add("MR.");
 	}
 
-	private static SentenceDetector detector = null;
+	private static SentenceDetector detector;
 
 	// Returned values
-	private ArrayList<TextInterval> lst = null;
-	private ArrayList<String> snl = null;
+	private ArrayList<TextInterval> lst;
+	private ArrayList<String> snl;
 
 	// Buffered text, for FIFO mode.
 	private String buffer;
 
 	// parameters
-	private String englishModelFilename = null;
+	private String englishModelFilename;
 
 	/* --------------------------------------------------------------- */
-	// private static intializer -- Manually verify the user's installation.
-	static {
-		// XXX Strange ... this sometimes works, and sometimes doesn't ...
-		try
-		{
-			Class.forName("opennlp.tools.sentdetect.EnglishSentenceDetectorME");
-		}
-		catch(Throwable t)
-		{
-			System.out.println(
-				"\nWARNING:\n" +
-				"\tIt appears the the OpenNLP tools are not installed\n" +
-				"\tor are not correctly specified in the java classpath.\n" +
-				"\tThe OpenNLP tools are used to perform sentence detection,\n" +
-				"\tand RelEx will have trouble handling multiple sentences.\n" +
-				"\tPlease see the README file for install info.\n");
-		}
-	}
-
-	/* --------------------------------------------------------------- */
-	public DocSplitter()
+	public DocSplitterOpenNLPImpl()
 	{
 		buffer = "";
 		initialize();
@@ -111,29 +90,11 @@ public class DocSplitter
 	{
 		if (detector == null)
 		{
-			// Manually verify the user's installation.
-			// XXX Strange ... this sometimes works, and sometimes doesn't ...
-			try
-			{
-				ClassLoader ld = Thread.currentThread().getContextClassLoader();
-				ld.loadClass("opennlp.tools.sentdetect.EnglishSentenceDetectorME");
-			}
-			catch(Throwable t)
-			{
-				System.out.println(
-					"\nWARNING:\n" +
-					"\tIt appears the the OpenNLP tools are not installed\n" +
-					"\tor are not correctly specified in the java classpath.\n" +
-					"\tThe OpenNLP tools are used to perform sentence detection,\n" +
-					"\tand RelEx will have trouble handling multiple sentences.\n" +
-					"\tPlease see the README file for install info.\n");
-				return;
-			}
 			try
 			{
 				if (englishModelFilename == null)
 					englishModelFilename = System.getProperty("EnglishModelFilename");
-				if ((englishModelFilename == null) || (englishModelFilename.length() == 0))
+				if (englishModelFilename == null || englishModelFilename.length() == 0)
 					englishModelFilename = DEFAULT_ENGLISH_FILENAME;
 
 				detector = new EnglishSentenceDetectorME(englishModelFilename);
@@ -164,15 +125,13 @@ public class DocSplitter
 	public boolean acceptableBreak(String s, int start, int end)
 	{
 		// if the string ends with "Ms." preceeded by whitespace
-		Iterator<String> i = capitalizedUnacceptableSentenceEnds.iterator();
-		while (i.hasNext()) {
-			String endString = i.next();
-			int len = endString.length();
-			if (end >= start + len && s.substring(end - len, end).toUpperCase().equals(endString)
-					&& (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) {
-				return false;
-			}
-		}
+    for (String endString : capitalizedUnacceptableSentenceEnds) {
+      int len = endString.length();
+      if (end >= start + len && s.substring(end - len, end).toUpperCase().equals(endString)
+              && (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) {
+        return false;
+      }
+    }
 		return true;
 	}
 
@@ -235,10 +194,8 @@ public class DocSplitter
 
 		trimmedStart = docText.indexOf(trimmedSentence.charAt(0), start);
 		trimmedEnd = trimmedStart + trimmedSentence.length();
-		if (!acceptableBreak(docText, trimmedStart, trimmedEnd))
-			return false;
-		return true;
-	}
+    return acceptableBreak(docText, trimmedStart, trimmedEnd);
+  }
 
 	/* --------------------------------------------------------------- */
 	/**
@@ -271,22 +228,21 @@ public class DocSplitter
 
 		start = 0;
 		end = 0;
-		for (int i = 0; i < sentenceEnds.length; i++) {
-			int prevstart = start;
-			start = end; // from previous loop iteration
-			end = sentenceEnds[i];
+    for (int sentenceEnd : sentenceEnds) {
+      int prevstart = start;
+      start = end; // from previous loop iteration
+      end = sentenceEnd;
 
-			if (!foundSentence(docText))
-			{
-				// go back to previous start
-				start = prevstart;
-				end = prevstart;
-				continue;
-			}
+      if (!foundSentence(docText)) {
+        // go back to previous start
+        start = prevstart;
+        end = prevstart;
+        continue;
+      }
 
-			if (DEBUG > 0) System.out.println(start + "," + end + ": " + trimmedSentence);
-			lst.add(new TextInterval(trimmedStart, trimmedEnd));
-			snl.add(trimmedSentence);
-		}
+      if (DEBUG > 0) System.out.println(start + "," + end + ": " + trimmedSentence);
+      lst.add(new TextInterval(trimmedStart, trimmedEnd));
+      snl.add(trimmedSentence);
+    }
 	}
 }

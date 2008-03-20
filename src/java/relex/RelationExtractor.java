@@ -27,6 +27,7 @@ import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
+import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
@@ -367,12 +368,12 @@ public class RelationExtractor
 
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		DocSplitter ds = new DocSplitter();
+		DocSplitter ds = DocSplitterFactory.create();
 
 		ParseView ceregoView = new ParseView();
 		OpenCogXML opencog = new OpenCogXML();
 		Frame frame = new Frame();
-		
+
 		while(true)
 		{
 			// If no sentence specified on the command line 
@@ -413,7 +414,7 @@ public class RelationExtractor
 					em = gem.process(sentence);
 					re.reportTime("Gate processing: ");
 				}
-	
+
 				re.starttime = System.currentTimeMillis();
 				RelexInfo ri = re.processSentence(sentence,em);
 				re.reportTime("Relex processing: ");
@@ -445,6 +446,7 @@ public class RelationExtractor
 
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
+
 					System.out.println("\n======\n");
 					System.out.println(SimpleView.printRelations(parse.getLeft()));
 					System.out.println("\n======\n");
