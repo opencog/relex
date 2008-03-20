@@ -24,12 +24,12 @@ Building command-line RelEx
 ---------------------------
 
 - Link Grammar Parser
- X  XXX the sentences below are wrong, version 4.3.2 or later is needed.
+ X  XXX the sentences below are wrong, version 4.3.5 or later is needed.
 X	Ubunut/Debian users can install the linkparser with apt-get:
 X
 X		apt-get install liblink-grammar4 link-grammar-dictionaries-en
 X
- X  XXX the sentences above are wrong, version 4.3.2 or later is needed.
+ X  XXX the sentences above are wrong, version 4.3.5 or later is needed.
 
 	Other users:
 	Compile and install the Link Grammar Parser. This parser is
