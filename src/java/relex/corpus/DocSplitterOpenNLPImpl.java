@@ -1,4 +1,3 @@
-package relex.corpus;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.corpus;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.corpus;
 
 import opennlp.tools.sentdetect.EnglishSentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceDetector;
@@ -49,7 +50,7 @@ import java.util.HashSet;
  * fails to recognize exclamation mark as end of sentence, unless
  * it is preceeded by white space.
  */
-@SuppressWarnings({"CallToPrintStackTrace", "UseOfSystemOutOrSystemErr"})
+// @SuppressWarnings({"CallToPrintStackTrace", "UseOfSystemOutOrSystemErr"})
 public class DocSplitterOpenNLPImpl implements DocSplitter
 {
 	private static final int DEBUG = 0;
@@ -125,13 +126,15 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	public boolean acceptableBreak(String s, int start, int end)
 	{
 		// if the string ends with "Ms." preceeded by whitespace
-    for (String endString : capitalizedUnacceptableSentenceEnds) {
-      int len = endString.length();
-      if (end >= start + len && s.substring(end - len, end).toUpperCase().equals(endString)
-              && (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) {
-        return false;
-      }
-    }
+		for (String endString : capitalizedUnacceptableSentenceEnds)
+		{
+			int len = endString.length();
+			if (end >= start + len && s.substring(end - len, end).toUpperCase().equals(endString)
+			    && (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) 
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -194,8 +197,8 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 
 		trimmedStart = docText.indexOf(trimmedSentence.charAt(0), start);
 		trimmedEnd = trimmedStart + trimmedSentence.length();
-    return acceptableBreak(docText, trimmedStart, trimmedEnd);
-  }
+		return acceptableBreak(docText, trimmedStart, trimmedEnd);
+	}
 
 	/* --------------------------------------------------------------- */
 	/**
@@ -228,21 +231,23 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 
 		start = 0;
 		end = 0;
-    for (int sentenceEnd : sentenceEnds) {
-      int prevstart = start;
-      start = end; // from previous loop iteration
-      end = sentenceEnd;
+		for (int sentenceEnd : sentenceEnds)
+		{
+			int prevstart = start;
+			start = end; // from previous loop iteration
+			end = sentenceEnd;
 
-      if (!foundSentence(docText)) {
-        // go back to previous start
-        start = prevstart;
-        end = prevstart;
-        continue;
-      }
+			if (!foundSentence(docText))
+			{
+				// go back to previous start
+				start = prevstart;
+				end = prevstart;
+				continue;
+			}
 
-      if (DEBUG > 0) System.out.println(start + "," + end + ": " + trimmedSentence);
-      lst.add(new TextInterval(trimmedStart, trimmedEnd));
-      snl.add(trimmedSentence);
-    }
+			if (DEBUG > 0) System.out.println(start + "," + end + ": " + trimmedSentence);
+			lst.add(new TextInterval(trimmedStart, trimmedEnd));
+			snl.add(trimmedSentence);
+		}
 	}
 }
