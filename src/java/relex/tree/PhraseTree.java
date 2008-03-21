@@ -170,6 +170,11 @@ public class PhraseTree
 		return true;
 	}
 
+	public Boolean isLeaf()
+	{
+		return isLeaf(phr);
+	}
+
 	/* ------------------------------------------------------------ */
 	/* equivalent static interfaces below */
 
