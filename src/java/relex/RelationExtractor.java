@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
-import relex.chunk.Chunk;
+import relex.chunk.FindChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
@@ -75,7 +75,7 @@ public class RelationExtractor
 	private Hobbs hobbs = null;
 
 	/** Phrase chunks */
-	private Chunk chunk = null;
+	private FindChunks chunker = null;
 
 	/** Single-threaded-ness hack */
 	private static RelationExtractor singleton = null;
@@ -159,7 +159,7 @@ public class RelationExtractor
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
-		chunk = new Chunk();
+		chunker = new FindChunks();
 	}
 
 	/* ---------------------------------------------------------- */
@@ -236,7 +236,7 @@ public class RelationExtractor
 			phraseMarkup.markup(parse);
 
 			// Identify chunked phrases.
-			chunk.findChunks(parse);
+			chunker.findChunks(parse);
 		}
 
 		// Perform anaphora resolution

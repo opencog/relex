@@ -27,10 +27,10 @@ import relex.tree.PhraseTree;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class Chunk implements FeatureNodeCallback
+public class FindChunks implements FeatureNodeCallback
 {
 	// private ArrayList<FeatureNode> 
-	public Chunk() {}
+	public FindChunks() {}
 
 	public void findChunks(ParsedSentence parse)
 	{
