@@ -210,7 +210,7 @@ System.out.println("now do step 6 XXX -- step 6 not implemented!!");
 
 			// XXX ignore all but the first parse right now
 			ParsedSentence ps = ri.parsedSentences.get(0);
-			PhraseTree head = new PhraseTree(ps.getLeft());
+			PhraseTree head = ps.getPhraseTree();
 			StepFour(head);
 		}
 	}
