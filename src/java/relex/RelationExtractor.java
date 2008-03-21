@@ -159,6 +159,7 @@ public class RelationExtractor
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
+		chunk = new Chunk();
 	}
 
 	/* ---------------------------------------------------------- */
