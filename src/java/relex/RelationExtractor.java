@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
+import relex.chunk.Chunk;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
@@ -73,6 +74,9 @@ public class RelationExtractor
 	/** Anaphora resolution */
 	public Antecedents antecedents = null;
 	private Hobbs hobbs = null;
+
+	/** Phrase chunks */
+	private Chunk chunk = null;
 
 	/** Single-threaded-ness hack */
 	private static RelationExtractor singleton = null;
