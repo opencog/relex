@@ -29,7 +29,7 @@ import relex.tree.PhraseTree;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class FindChunks implements FeatureNodeCallback
+public class FindChunks
 {
 	private ArrayList<Chunk> chunks;
 	
@@ -41,7 +41,8 @@ public class FindChunks implements FeatureNodeCallback
 	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
-		pt.foreach(this);
+		PhraseChunks pc = new PhraseChunks();
+		pt.foreach(pc);
 	}
 
 	public ArrayList<Chunk> getChunks()
@@ -49,29 +50,32 @@ public class FindChunks implements FeatureNodeCallback
 		return chunks;
 	}
 
-	public Boolean FNCallback(FeatureNode fn)
+	private class PhraseChunks implements FeatureNodeCallback
 	{
-		PhraseTree pt = new PhraseTree(fn);
+		public Boolean FNCallback(FeatureNode fn)
+		{
+			PhraseTree pt = new PhraseTree(fn);
 
-		String type = pt.getPhraseType();
-		if (!type.equals("NP") && !type.equals("VP")) return false;
+			String type = pt.getPhraseType();
+			if (!type.equals("NP") && !type.equals("VP")) return false;
 
-		int depth = pt.getDepth();
-		if (depth > 3) return false;
+			int depth = pt.getDepth();
+			if (depth > 3) return false;
 
-		int breadth = pt.getBreadth();
-		if (breadth < 2) return false;
+			int breadth = pt.getBreadth();
+			if (breadth < 2) return false;
 
 
-		Chunk chunk = new Chunk();
-		chunks.add(chunk);
+			Chunk chunk = new Chunk();
+			chunks.add(chunk);
 
-		ArrayList<FeatureNode> words = pt.getWordList();
-		chunk.addWords(words);
+			ArrayList<FeatureNode> words = pt.getWordList();
+			chunk.addWords(words);
 
 System.out.println("candidate phrase " +  pt.toString());
 System.out.println("strintcly: "+chunk.toString());
 
-		return false;
+			return false;
+		}
 	}
 }
