@@ -32,7 +32,8 @@ DIST_FILES = \
 	src/java/relex/output/README \
 	src/java/relex/parser/*.java \
 	src/java/relex/tree/*.java \
-	src/java/relex/util/socket/*.java
+	src/java/relex/util/socket/*.java \
+	src/java_test/relex/test/corpus/*.java
 
 all:
 
