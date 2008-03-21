@@ -153,6 +153,11 @@ public class PhraseTree
 		return phr.get(str);
 	}
 
+	public FeatureNode getNode()
+	{
+		return phr;
+	}
+
 	public void setMark(String str)
 	{
 		FeatureNode he = phr.get("phr-head");
