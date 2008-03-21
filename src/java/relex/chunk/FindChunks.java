@@ -16,6 +16,8 @@
 
 package relex.chunk;
 
+import java.util.ArrayList;
+
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
@@ -29,8 +31,12 @@ import relex.tree.PhraseTree;
 
 public class FindChunks implements FeatureNodeCallback
 {
-	// private ArrayList<FeatureNode> 
-	public FindChunks() {}
+	private ArrayList<Chunk> chunks;
+	
+	public FindChunks()
+	{
+		chunks = new ArrayList<Chunk>();
+	}
 
 	public void findChunks(ParsedSentence parse)
 	{
@@ -52,7 +58,7 @@ public class FindChunks implements FeatureNodeCallback
 		int breadth = pt.getBreadth();
 		if (breadth < 2) return false;
 
-System.out.println("candiddate phrase " +  pt.toString());
+System.out.println("candidate phrase " +  pt.toString());
 
 		return false;
 	}

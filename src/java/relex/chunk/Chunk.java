@@ -16,44 +16,38 @@
 
 package relex.chunk;
 
-import relex.ParsedSentence;
+import java.util.ArrayList;
+
 import relex.feature.FeatureNode;
-import relex.feature.FeatureNodeCallback;
-import relex.tree.PhraseTree;
 
 /**
- * Discover phrase chunks
+ * Holder of phrase chunks
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class Chunk implements FeatureNodeCallback
+public class Chunk
 {
-	// private ArrayList<FeatureNode> 
-	public Chunk() {}
-
-	public void findChunks(ParsedSentence parse)
+	private ArrayList<FeatureNode> chunk;
+	public Chunk()
 	{
-		PhraseTree pt = parse.getPhraseTree();
-		pt.foreach(this);
-
+		chunk = new ArrayList<FeatureNode>();
 	}
 
-	public Boolean FNCallback(FeatureNode fn)
+	public void addNode(FeatureNode fn)
 	{
-		PhraseTree pt = new PhraseTree(fn);
+		chunk.add(fn);
+	}
 
-		String type = pt.getPhraseType();
-		if (!type.equals("NP") && !type.equals("VP")) return false;
-
-		int depth = pt.getDepth();
-		if (depth > 3) return false;
-
-		int breadth = pt.getBreadth();
-		if (breadth < 2) return false;
-
-System.out.println("candiddate phrase " +  pt.toString());
-
-		return false;
+	public String toString()
+	{
+		String str = "";
+		for (int i=0; i<chunk.size(); i++)
+		{
+			FeatureNode fn = chunk.get(i);
+			str += fn.get("str").getValue();
+			str += " ";
+		}
+		return str;
 	}
 }
