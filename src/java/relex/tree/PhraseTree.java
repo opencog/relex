@@ -185,6 +185,13 @@ public class PhraseTree
 		return getBreadth(phr);
 	}
 
+	public ArrayList<FeatureNode> getWordList()
+	{
+		ArrayList<FeatureNode> words = new ArrayList<FeatureNode>();
+		getWordList(phr, words);
+		return words;
+	}
+
 	/* ------------------------------------------------------------ */
 	/* equivalent static interfaces below */
 
@@ -388,6 +395,26 @@ public class PhraseTree
 		if (fn == null) return null;
 		fn = fn.get("nameSource");
 		return fn;
+	}
+
+	/**
+	 * Return a list of feature nodes of the words in the phrase.
+	 */
+	public static void getWordList(FeatureNode word, ArrayList<FeatureNode> words)
+	{
+		FeatureNode fn = word.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) words.add (wd);
+
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				getWordList(fn, words);
+			}
+			fn = fn.get("phr-next");
+		}
 	}
 
 	/**
