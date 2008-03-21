@@ -21,7 +21,6 @@ public class Chunk implements FeatureNodeCallback
 	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
-System.out.println("duude its " + pt.toString());
 		pt.foreach(this);
 
 	}
@@ -31,14 +30,15 @@ System.out.println("duude its " + pt.toString());
 		PhraseTree pt = new PhraseTree(fn);
 
 		String type = pt.getPhraseType();
-		if (type.equals("NP"))
-		{
-System.out.println("have NP"+ pt.toString());
-		}
-		if (type.equals("VP"))
-		{
-System.out.println("have VP"+ pt.toString());
-		}
+		if (!type.equals("NP") && !type.equals("VP")) return false;
+
+		int depth = pt.getDepth();
+		if (depth > 3) return false;
+
+		int breadth = pt.getBreadth();
+		if (breadth < 2) return false;
+
+System.out.println("candiddate phrase " +  pt.toString());
 
 		return false;
 	}

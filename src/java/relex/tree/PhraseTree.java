@@ -180,6 +180,11 @@ public class PhraseTree
 		return getDepth(phr);
 	}
 
+	public int getBreadth()
+	{
+		return getBreadth(phr);
+	}
+
 	/* ------------------------------------------------------------ */
 	/* equivalent static interfaces below */
 
@@ -298,6 +303,29 @@ public class PhraseTree
 		}
 		if (cnt > 2) return true;
 		return false;
+	}
+
+	/**
+	 * Return the breadth of the tree
+	 */
+	public static int getBreadth(FeatureNode word)
+	{
+		int cnt = -1;  // don't count the phrase type as part of the breadth
+		FeatureNode fn = word.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null)
+			{
+				cnt += getBreadth(fn);
+			}
+			else
+			{
+				cnt ++;
+			}
+			fn = fn.get("phr-next");
+		}
+		return cnt;
 	}
 
 	/**
