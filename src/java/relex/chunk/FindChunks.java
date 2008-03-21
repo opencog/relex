@@ -50,8 +50,14 @@ public class FindChunks
 		return chunks;
 	}
 
+	/* Use the phrase-tree approach to finding chunks */
 	private class PhraseChunks implements FeatureNodeCallback
 	{
+
+		/**
+		 * Called for each phrase in a parse.
+		 * Pick out phrases that seem distinct.
+		 */
 		public Boolean FNCallback(FeatureNode fn)
 		{
 			PhraseTree pt = new PhraseTree(fn);
@@ -65,17 +71,56 @@ public class FindChunks
 			int breadth = pt.getBreadth();
 			if (breadth < 2) return false;
 
-
 			Chunk chunk = new Chunk();
 			chunks.add(chunk);
 
-			ArrayList<FeatureNode> words = pt.getWordList();
-			chunk.addWords(words);
+			if (type.equals("NP"))
+			{
+				ArrayList<FeatureNode> words = pt.getWordList();
+				chunk.addWords(words);
+			}
+			else if (type.equals("VP"))
+			{
+				chunkVerbPhrase(pt.getNode(), chunk);
+			}
 
 System.out.println("candidate phrase " +  pt.toString());
 System.out.println("strintcly: "+chunk.toString());
 
 			return false;
 		}
+
+		/**
+		 * Add verb phrase words to chunk, skipping sub noun-phrases.
+		 * So, for example, given the input phrase:
+		 *    (VP took_office (PP on (NP Monday)))
+		 * this will add the words "took office on" to the chunk.
+		 */
+		public void chunkVerbPhrase(FeatureNode fn, Chunk chunk)
+		{
+			String phrase_type = "";
+
+			fn = fn.get("phr-head");
+			while (fn != null)
+			{
+				FeatureNode ty = fn.get("phr-type");
+				if (ty != null)
+				{
+					phrase_type = ty.getValue();
+				}
+				FeatureNode wd = fn.get("phr-word");
+				if (wd != null) chunk.addWord(wd);
+
+				// Add subphrases to the word list, but only if
+				// the current phrase isn't a prepostional phrase (PP)
+				FeatureNode subf = fn.get("phr-head");
+				if (subf != null && !phrase_type.equals ("PP")) 
+				{
+					chunkVerbPhrase(fn, chunk);
+				}
+				fn = fn.get("phr-next");
+			}
+		}
+
 	}
 }
