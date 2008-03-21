@@ -34,9 +34,13 @@ public class Chunk
 		chunk = new ArrayList<FeatureNode>();
 	}
 
-	public void addNode(FeatureNode fn)
+	public void addWord(FeatureNode fn)
 	{
 		chunk.add(fn);
+	}
+	public void addWords(ArrayList<FeatureNode> words)
+	{
+		chunk.addAll(words);
 	}
 
 	public String toString()
@@ -45,8 +49,12 @@ public class Chunk
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
-			str += fn.get("str").getValue();
-			str += " ";
+			fn = fn.get("str");
+			if (fn != null)
+			{
+				str += fn.getValue();
+				str += " ";
+			}
 		}
 		return str;
 	}

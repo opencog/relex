@@ -42,7 +42,11 @@ public class FindChunks implements FeatureNodeCallback
 	{
 		PhraseTree pt = parse.getPhraseTree();
 		pt.foreach(this);
+	}
 
+	public ArrayList<Chunk> getChunks()
+	{
+		return chunks;
 	}
 
 	public Boolean FNCallback(FeatureNode fn)
@@ -58,7 +62,15 @@ public class FindChunks implements FeatureNodeCallback
 		int breadth = pt.getBreadth();
 		if (breadth < 2) return false;
 
+
+		Chunk chunk = new Chunk();
+		chunks.add(chunk);
+
+		ArrayList<FeatureNode> words = pt.getWordList();
+		chunk.addWords(words);
+
 System.out.println("candidate phrase " +  pt.toString());
+System.out.println("strintcly: "+chunk.toString());
 
 		return false;
 	}
