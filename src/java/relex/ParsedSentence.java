@@ -1,4 +1,3 @@
-package relex;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,12 +14,15 @@ package relex;
  * limitations under the License.
  */
 
+package relex;
+
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
+import relex.tree.PhraseTree;
 
 /**
  * A ParsedSentence object stores all of the syntactic and semantic information
@@ -61,7 +63,8 @@ public class ParsedSentence
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
-	public ParsedSentence(String originalString) {
+	public ParsedSentence(String originalString)
+	{
 		original = originalString;
 		linkString = null;
 		errorString = "";
@@ -129,7 +132,8 @@ public class ParsedSentence
 	 * Shows the full feature structure of the parse as it can be found by
 	 * tracing links from the left-most word. Islands will be missed
 	 */
-	public String fullParseString() {
+	public String fullParseString()
+	{
 		if (getLeft() != null)
 			return getLeft().toString();
 		return "";
@@ -197,9 +201,18 @@ public class ParsedSentence
 	/**
 	 * @return the FeatureNode representing the left-most word in the sentence.
 	 */
-	public FeatureNode getLeft() {
+	public FeatureNode getLeft()
+	{
 		return leafConstituents.get(0);
-	} // end getLeft
+	}
+
+	/**
+	 * @return the phrase tree associated with this parse
+	 */
+	public PhraseTree getPhraseTree()
+	{
+		return new PhraseTree(getLeft());
+	}
 
 } // end ParsedSentence
 
