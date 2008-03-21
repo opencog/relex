@@ -40,7 +40,6 @@ import relex.output.RawView;
 import relex.output.SimpleView;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
-import relex.parser.LinkParserJNIClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
 import relex.tree.PhraseMarkup;
@@ -93,7 +92,7 @@ public class RelationExtractor
 		if (singleton != null) {
 			throw new RuntimeException("RelationExtractor already initialized.");
 		}
-		singleton = new RelationExtractor(algsFile, useSocket, true);
+		singleton = new RelationExtractor(algsFile, useSocket);
 	}
 
 	public RelationExtractor(boolean useSocket)
@@ -111,19 +110,17 @@ public class RelationExtractor
 			System.err.println("Error reading semantic algorithms file " + algsFile);
 			return;
 		}
-		_newRelex(algsFile, useSocket, true);
+		_newRelex(algsFile, useSocket);
 	}
 
 	private RelationExtractor(File algsFile,
-	                          boolean useSocket,
-	                          boolean useNewJNI)
+	                          boolean useSocket)
 	{
-		_newRelex(algsFile, useSocket, useNewJNI);
+		_newRelex(algsFile, useSocket);
 	}
 
 	private void _newRelex(File algsFile,
-	                  boolean useSocket,
-	                  boolean useNewJNI)
+	                  boolean useSocket)
 	{
 		LinkParser p = null;
 		if (!LinkParser.isSingletonCreated())
@@ -131,10 +128,8 @@ public class RelationExtractor
 			LinkParserClient lpc = null;
 			if (useSocket) {
 				lpc = LinkParserSocketClient.getSingletonInstance();
-			} else if (useNewJNI) {
-				lpc = LinkParserJNINewClient.getSingletonInstance();
 			} else {
-				lpc = LinkParserJNIClient.getSingletonInstance();
+				lpc = LinkParserJNINewClient.getSingletonInstance();
 			}
 			p = LinkParser.createSingletonInstance(lpc);
 		}
