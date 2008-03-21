@@ -3,6 +3,8 @@
 #
 
 DIST_FILES = \
+	AUTHORS \
+	ChangeLog \
 	LICENSE \
 	Makefile \
 	README \
@@ -14,6 +16,8 @@ DIST_FILES = \
 	data/relex-semantic-algs.txt \
 	data/sentence-detector/EnglishSD.bin.gz \
 	data/wordnet/file_properties.xml \
+	src/java/relex/README \
+	src/java/relex/*.java
 	src/java/relex/algs/*.java \
 	src/java/relex/anaphora/test-corpus.txt \
 	src/java/relex/anaphora/*.java \
@@ -26,12 +30,10 @@ DIST_FILES = \
 	src/java/relex/output/*.java \
 	src/java/relex/output/README \
 	src/java/relex/parser/*.java \
-	src/java/relex/util/socket/*.java \
-	src/java/relex/*.java \
-	src/java/relex/README \
-	src/java/org/linkgrammar/*.java
+	src/java/relex/tree/*.java \
+	src/java/relex/util/socket/*.java
 
 all:
 
 dist:
-	tar --transform "s#^#relex-0.8.3/#" -zcvf relex-0.8.3.tar.gz ${DIST_FILES}
+	tar --transform "s#^#relex-0.8.4/#" -zcvf relex-0.8.4.tar.gz ${DIST_FILES}
