@@ -175,6 +175,11 @@ public class PhraseTree
 		return isLeaf(phr);
 	}
 
+	public int getDepth()
+	{
+		return getDepth(phr);
+	}
+
 	/* ------------------------------------------------------------ */
 	/* equivalent static interfaces below */
 
@@ -252,6 +257,26 @@ public class PhraseTree
 			fn = fn.get("phr-next");
 		}
 		return true;
+	}
+
+	/**
+	 * Return the depth of the tree
+	 */
+	public static int getDepth(FeatureNode word)
+	{
+		int maxdepth = 0;
+		FeatureNode fn = word.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				int depth = getDepth(fn);
+				if (maxdepth < depth) maxdepth = depth;
+			}
+			fn = fn.get("phr-next");
+		}
+		return maxdepth+1;
 	}
 
 	/**
