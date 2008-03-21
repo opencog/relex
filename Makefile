@@ -22,6 +22,7 @@ DIST_FILES = \
 	src/java/relex/anaphora/test-corpus.txt \
 	src/java/relex/anaphora/*.java \
 	src/java/relex/anaphora/README \
+	src/java/relex/chunk/*.java \
 	src/java/relex/corpus/*.java \
 	src/java/relex/entity/*.java \
 	src/java/relex/feature/*.java \
