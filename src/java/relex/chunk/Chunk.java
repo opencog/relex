@@ -2,8 +2,12 @@
 
 package relex.chunk;
 
-class Chunk
+import relex.ParsedSentence;
+
+public class Chunk
 {
 	public Chunk() {}
 
+	public void findChunks(ParsedSentence parse)
+	{}
 }

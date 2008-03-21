@@ -233,6 +233,9 @@ public class RelationExtractor
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
+
+			// Identify chunked phrases.
+			chunk.findChunks(parse);
 		}
 
 		// Perform anaphora resolution
