@@ -225,7 +225,7 @@ public class ParseView {
 		rel_implode = new HashMap<String,HashMap<String,String>>();
 
 		// Implodables
-		declRel("_%inheritance", "appo",         true);
+		declRel("_appo",         "appo",         true);
 		declRel("_obj",          "object",       true);
 		declRel("_obj2",         "ind-obj",      true);
 		declRel("_subj",         "subject",      true);
@@ -296,7 +296,7 @@ public class ParseView {
 		rel_implode = new HashMap<String,HashMap<String,String>>();
 
 		// Implodables
-		declRel("_%inheritance", "Appo",                 true);
+		declRel("_appo",         "Appositive",           true);
 		declRel("_obj",          "Object",               true);
 		declRel("_obj2",         "IndirectObject",       true);
 		declRel("_subj",         "Subject",              true);
