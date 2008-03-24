@@ -1,5 +1,5 @@
 # IF NEGATIVE-IS-HYP($var0) THEN ^2_Negation:Successful_action(NEGATIVE-IS-HYP,$var0)
-# IF _%inheritance($var0,$var1) THEN ^2_Inheritance:Item_1(_%inheritance,$var0) ^2_Inheritance:Item_2(_%inheritance,$var1)
+# IF _appo($var0,$var1) THEN ^2_Inheritance:Item_1(_appo,$var0) ^2_Inheritance:Item_2(_appo,$var1)
 
 # IF _%quantity_mult($Number,$Number_1) THEN ^2_Calculate:Factor_1(_%quantity_mult,$Number) ^2_Calculate:Factor_2(_%quantity_mult,$Number_1)
 # IF _subj(multiply,$Number) ^ by(multiply,$Number_1) THEN ^2_Calculate:Factor_1(multiply,$Number) ^2_Calculate:Factor_2(multiply,$Number_1)

@@ -2133,21 +2133,26 @@ PAREN_1
 ;The dog, who barked, ...
 =
 <F_R head-word BACKGROUND-FLAG> = T
+;
+; Apposition of a noun phrase
+; "My friend Alice" or "The bird, a robin"
+;
 #TemplateActionAlg
-PAREN_3
+APPO_RIGHT
 <LAB> = MX|MXs|MXp
 =
-<F_L ref links _%inheritance> += <F_R ref>
+<F_L ref links _appo> += <F_R ref>
 ;<F_R background ref name> = _inheritance
 ;<F_R background ref links _arg0> = <F_L ref>
 ;<F_R background ref links _arg1> = <F_R ref>
 ;<F_R background wall> = <F_R wall>
 ;<F_R background BACKGROUND-FLAG> = T
+;
 #TemplateActionAlg
-PAREN_3
+APPO_LEFT
 <LAB> = \GN\.*
 =
-<F_R ref links _%inheritance> += <F_L ref>
+<F_R ref links _appo> += <F_L ref>
 ;<F_L background ref name> = _inheritance
 ;<F_L background ref links _arg0> = <F_R ref>
 ;<F_L background ref links _arg1> = <F_L ref>
