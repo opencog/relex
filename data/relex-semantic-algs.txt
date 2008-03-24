@@ -1976,10 +1976,11 @@ NUMBER-MULT
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; POSSESSIVES
-;
+; POSSESSIVES aka GENITIVES
 ;
 ; Example: The students' rooms are large. Mike's sister laughs.
+;
+; We generate _poss for this, although _gen is also in common usage for this relation.
 ;
 #TemplateActionAlg
 POSSR_TO_APOSTROPHE
