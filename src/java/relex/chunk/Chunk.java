@@ -42,6 +42,10 @@ public class Chunk
 	{
 		chunk.addAll(words);
 	}
+	public void clear()
+	{
+		chunk.clear();
+	}
 
 	public String toString()
 	{

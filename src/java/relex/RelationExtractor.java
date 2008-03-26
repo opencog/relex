@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
+import relex.chunk.Chunk;
 import relex.chunk.FindChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
@@ -73,9 +74,6 @@ public class RelationExtractor
 	/** Anaphora resolution */
 	public Antecedents antecedents = null;
 	private Hobbs hobbs = null;
-
-	/** Phrase chunks */
-	private FindChunks chunker = null;
 
 	/** Single-threaded-ness hack */
 	private static RelationExtractor singleton = null;
@@ -159,7 +157,6 @@ public class RelationExtractor
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
-		chunker = new FindChunks();
 	}
 
 	/* ---------------------------------------------------------- */
@@ -234,9 +231,6 @@ public class RelationExtractor
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
-
-			// Identify chunked phrases.
-			// chunker.findChunks(parse);
 		}
 
 		// Perform anaphora resolution
@@ -293,6 +287,7 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
+			" [-p (show phrase chunks)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
@@ -307,6 +302,7 @@ public class RelationExtractor
 		flags.add("-h");
 		flags.add("-l");
 		flags.add("-o");
+		flags.add("-p");
 		flags.add("-r");
 		flags.add("-t");
 		flags.add("-v");
@@ -455,6 +451,19 @@ public class RelationExtractor
 					System.out.println(SimpleView.printRelations(parse.getLeft()));
 					System.out.println("\n======\n");
 	
+					if (commandMap.get("-p") != null)
+					{
+						// Identify chunked phrases.
+						FindChunks chunker = new FindChunks();
+						chunker.findChunks(parse);
+						ArrayList<Chunk> chunks = chunker.getChunks();
+						for (Chunk ch : chunks)
+						{
+							System.out.println(ch.toString());
+						}
+						chunker.clear();
+						System.out.println("\n======\n");
+					}
 					if (commandMap.get("-c") != null)
 					{
 						ceregoView.setParse(parse);

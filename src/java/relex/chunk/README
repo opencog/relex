@@ -1,10 +1,30 @@
 
-I TOOK her TO the dance.
+ToDo:
 
-use _subj + prep to report a phrase.
+skip phrases with
 
 
-He will TAKE OFFICE on monday.
-(S (NP He) (VP will (VP take office (PP on (NP Monday)))) .)
+Unit tests:
+-----------
+ * I TOOK her TO the dance.
+       (VP took (NP her) (PP to (NP the dance)))
 
-need to drop PP in VP.
+   Skip the NP's, to get "took to"
+
+ * He will TAKE OFFICE ON monday.
+      (S (NP He) (VP will (VP take office (PP on (NP Monday)))) .)
+
+   need to drop PP in VP, to get "take office on"
+
+ * General Custer gave the Sioux chief no quarter.
+      (S (NP General Custer) (VP gave (NP the Sioux chief) (NP no quarter)) .)
+
+   The desired answer if "give ... no quarter". However, this one doesn't 
+   do very well, since simply skipping NP's fails.
+   Answer: the algorithm should look for indirect objects.
+
+ 
+
+
+Idioms:
+That is a hard act to follow.

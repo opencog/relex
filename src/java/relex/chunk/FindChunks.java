@@ -50,6 +50,11 @@ public class FindChunks
 		return chunks;
 	}
 
+	public void clear()
+	{
+		chunks.clear();
+	}
+
 	/* Use the phrase-tree approach to finding chunks */
 	private class PhraseChunks implements FeatureNodeCallback
 	{
@@ -96,6 +101,11 @@ System.out.println("strintcly: "+chunk.toString());
 		 * So, for example, given the input phrase:
 		 *    (VP took_office (PP on (NP Monday)))
 		 * this will add the words "took office on" to the chunk.
+		 *
+		 * However, the current algo fails to return 
+		 * "give ... no quarter" in
+		 *     (VP gave (NP the Sioux chief) (NP no quarter))
+		 * because it discards "no quarter" as well as "the Sioux chief"
 		 */
 		public void chunkVerbPhrase(FeatureNode fn, Chunk chunk)
 		{
