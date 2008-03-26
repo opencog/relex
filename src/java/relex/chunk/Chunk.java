@@ -47,18 +47,66 @@ public class Chunk
 		chunk.clear();
 	}
 
+	/**
+	 * A very simple output routine.
+	 */
 	public String toString()
 	{
-		String str = "";
+		// First, print out the phrase itself.
+		String str = "Phrase: (";
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
-			fn = fn.get("str");
-			if (fn != null)
+			FeatureNode sf = fn.get("str");
+			if (sf != null)
 			{
-				str += fn.getValue();
-				str += " ";
+				if (i != 0) str += " ";
+				str += sf.getValue();
 			}
+		}
+		str += ") Ranges: ";
+
+		// Next, print out the character ranges.
+		int chunk_start = -1;
+		int chunk_end = -1;
+		for (int i=0; i<chunk.size(); i++)
+		{
+			FeatureNode fn = chunk.get(i);
+			FeatureNode sf = fn.get("str");
+			if (sf != null)
+			{
+				FeatureNode start = fn.get("start_char");
+				FeatureNode orig = fn.get("orig_str");
+				String st = start.getValue();
+				String or = orig.getValue();
+				if (st == null || or == null)
+				{
+					System.err.println("Error: chunk is missing feature nodes");
+					continue;
+				}
+				int ist = Integer.parseInt(st);
+				int len = or.length();
+				int end = ist+len;
+				if (chunk_start < 0)
+				{
+					chunk_start = ist;
+					chunk_end = end;
+				}
+				else if (chunk_end+1 == ist)
+				{
+					chunk_end = end;
+				}
+				else
+				{
+					str += "["+ chunk_start + "-" + chunk_end + "]";
+					chunk_start = ist;
+					chunk_end = end;
+				}
+			}
+		}
+		if (0 <= chunk_start)
+		{
+			str += "["+ chunk_start + "-" + chunk_end + "]";
 		}
 		return str;
 	}
