@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/nekohtml-0.9.5.jar"/>
 	<classpathentry kind="lib" path="/opt/GATE-4.0/lib/ontotext.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/usr/share/java/link-grammar-4.3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
