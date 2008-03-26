@@ -1,11 +1,25 @@
-He took office on Monday.
+General Custer gave the Sioux chief no quarter.
 END.
-I took her to the dance.
+She forced him to resign.
+END.
+That was one whale of a screwup.
 That is a hard act to follow.
+I took her to the dance.
+He took office on Monday.
+He ate a wee bit of cheese.
+That was one hell of a ride.
+That chopper is one hell of a ride.
+
+
 It's a good bet he did it.
+
+The color of the book is red. What color is the book?
 
 Yarn is used in the making of cloth.  What is yarn used for?
 Yarn is used to make cloth.
+END.
+Yarn is a length of fibers.
+What is yarn?
 END.
 
 John threw a ball.
@@ -17,9 +31,6 @@ have proved more formidable than was anticipated.
 END.
 A bird is an animal.
 What is a bird?
-END.
-What is yarn?
-Yarn is a length of fibers.
 END.
 The concert continued to midnight.
 The room is next to the house.
@@ -33,7 +44,8 @@ Sally saw seashells at the seashore.
 Alice wrote a book about dinosaurs.
 
 END.
-Much has happened since this Manual was last revised, and many surgical lessons have been learned in the hard school of war.
+Much has happened since this Manual was last revised, 
+and many surgical lessons have been learned in the hard school of war.
 END.
 We're going now. 
 He was unhappy and underpaid.
