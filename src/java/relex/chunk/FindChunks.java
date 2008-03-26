@@ -77,7 +77,6 @@ public class FindChunks
 			if (breadth < 2) return false;
 
 			Chunk chunk = new Chunk();
-			chunks.add(chunk);
 
 			if (type.equals("NP"))
 			{
@@ -90,8 +89,12 @@ public class FindChunks
 				chunkVerbPhrase(pt.getNode(), chunk);
 			}
 
+			// Discard single-word chunks ... !?
+			if (1 < chunk.size())
+			{
+				chunks.add(chunk);
 System.out.println("candidate phrase " +  pt.toString());
-System.out.println("strintcly: "+chunk.toString());
+			}
 
 			return false;
 		}

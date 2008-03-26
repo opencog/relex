@@ -46,6 +46,10 @@ public class Chunk
 	{
 		chunk.clear();
 	}
+	public int size()
+	{
+		return chunk.size();
+	}
 
 	/**
 	 * A very simple output routine.
@@ -64,9 +68,10 @@ public class Chunk
 				str += sf.getValue();
 			}
 		}
-		str += ") Ranges: ";
+		str += ")";
 
 		// Next, print out the character ranges.
+		str += "      Character ranges: ";
 		int chunk_start = -1;
 		int chunk_end = -1;
 		for (int i=0; i<chunk.size(); i++)
