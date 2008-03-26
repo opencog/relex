@@ -1715,7 +1715,6 @@ rueful
 satisfy
 savour
 scare
-take
 terrify
 unfaze
 upset
@@ -3966,7 +3965,6 @@ paddle
 parachute
 pedal
 raft
-ride
 row
 sail
 skate
@@ -4314,20 +4312,16 @@ crinkle
 cross
 crumple
 curtsy
-drop
 duck
 fidget
 flap
 flex
-fling
 flutter
 gnash
-grind
 hang
 jerk
 jiggle
 kneel
-lift
 nod
 open
 pout
@@ -4345,8 +4339,6 @@ smack
 stamp
 stretch
 swing
-throw
-toss
 twiddle
 twitch
 wag
@@ -4815,6 +4807,308 @@ burgeon
 develop
 mature
 progress
+
+$Recovery
+convalesce
+heal
+perk up
+recover
+recuperate
+
+$Reporting
+finger
+fink
+inform
+peach
+rat out
+rat
+report
+snitch
+tell
+
+$Reshaping
+bend
+crumple
+crush
+deform
+dent
+flatten
+fold
+form
+mash
+mold
+pulp
+roll
+scrunch
+shape
+squash
+squish
+warp
+
+$Resolve_problem
+address
+clear up
+deal
+do something about
+fix
+resolve
+solve
+work through
+
+$Reveal_secret
+admit
+come forward
+come clean
+confess
+confide
+disclose
+divulge
+expose
+fess up
+leak
+let slip
+reveal
+spill beans
+tip hand
+
+$Revenge
+avenge
+get back at
+get even
+retaliate
+retributive
+retributory
+revenge
+revengeful
+vengeful
+vindictive
+
+$Ride_vehicle
+coast
+cruise
+fly
+hitchhike
+jet
+ride
+sail
+take
+taxi
+
+$Rotting
+decay
+decompose
+fester
+moulder
+perish
+putrefy
+rot
+spoil
+
+$Sign
+indicate
+signify
+symptomatic
+
+$Silencing
+hush
+hush up
+quiet
+quiet down
+shush
+shut up
+silence
+
+$Simultaneity
+co-occur
+coincide
+concurrent
+simultaneous
+
+$Speak_on_topic
+address
+deal
+discuss
+expatiate
+expound
+go on
+hold forth
+lecture
+pontificate
+preach
+ramble
+sermonize
+
+$Success_or_failure
+fail
+manage
+miss
+pull off
+succeed
+successful
+unsuccessful
+
+$Suitability
+correct
+fit
+fit
+fitting
+proper
+right
+suit
+suitable
+suited
+unsuitable
+
+$Sufficiency
+adequate
+ample
+enough
+inadequate
+insufficient
+plenty
+suffice
+sufficient
+
+$Surpassing
+better
+eclipse
+outdo
+outshine
+outstrip
+pale
+surpass
+
+$Supporting
+bolster
+buttress
+support
+prop up
+
+$Surrendering
+give up
+surrender
+turn in
+
+$Suspiciousness
+dubious
+fishy
+questionable
+suspect
+suspicious
+
+$Talking_into
+incite
+induce
+influence
+inspire
+lead
+talk
+
+$Thriving
+fare
+flourish
+languish
+prosper
+thrive
+
+$Thwarting
+derail
+foil
+forestall
+frustrate
+hamstring
+preclude
+prevent
+stop
+stymie
+thwart
+
+$Travel
+commute
+journey
+tour
+travel
+voyage
+
+$Direction
+north
+south
+east
+west
+up
+down
+left
+right
+forward
+backward
+northeast
+northwest
+southeast
+southwest
+
+$Traversing
+ascend
+circle
+crisscross
+cross
+descend
+hop
+jump
+leap
+mount
+pass
+skirt
+traverse
+
+$Trendiness
+chic
+cool
+fashionable
+hip
+trendy
+
+$Trust
+believe
+credulous
+gullible
+reliable
+trust
+trustworthy
+
+$Verification
+confirm
+identify
+make sure
+substantiate
+verifiable
+verify
+
+$Waking_up
+awake
+come to
+get up
+revive
+wake up
+wake
+
+$Wealthiness
+affluent
+bankrupt
+broke
+impoverished
+needy
+poor
+privileged
+prosperous
+rich
+underprivileged
+wealthy
+well-off
+
+$Withdraw_from_participation
+beg off
+pull out
+withdraw
 
 
 
