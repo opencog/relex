@@ -236,7 +236,7 @@ public class RelationExtractor
 			phraseMarkup.markup(parse);
 
 			// Identify chunked phrases.
-			chunker.findChunks(parse);
+			// chunker.findChunks(parse);
 		}
 
 		// Perform anaphora resolution
