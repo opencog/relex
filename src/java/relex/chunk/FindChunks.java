@@ -76,8 +76,9 @@ public class FindChunks
 
 			if (type.equals("NP"))
 			{
-				ArrayList<FeatureNode> words = pt.getWordList();
-				chunk.addWords(words);
+				// ArrayList<FeatureNode> words = pt.getWordList();
+				// chunk.addWords(words);
+				chunkNounPhrase(pt.getNode(), chunk);
 			}
 			else if (type.equals("VP"))
 			{
@@ -107,6 +108,8 @@ System.out.println("strintcly: "+chunk.toString());
 				if (ty != null)
 				{
 					phrase_type = ty.getValue();
+					// Skip subphrases that are noun phrases
+					if (phrase_type.equals ("NP")) return;
 				}
 				FeatureNode wd = fn.get("phr-word");
 				if (wd != null) chunk.addWord(wd);
@@ -117,6 +120,40 @@ System.out.println("strintcly: "+chunk.toString());
 				if (subf != null && !phrase_type.equals ("PP")) 
 				{
 					chunkVerbPhrase(fn, chunk);
+				}
+				fn = fn.get("phr-next");
+			}
+		}
+
+		/**
+		 * Add noun phrase words to chunk, skipping subphrases
+		 * of prepositional phrases.
+		 * So, for example, given the input phrase:
+		 *     (NP (NP a wee bit) (PP of (NP cheese)))
+		 *    
+		 * this will add the words "a wee bit of" to the chunk.
+		 */
+		public void chunkNounPhrase(FeatureNode fn, Chunk chunk)
+		{
+			String phrase_type = "";
+
+			fn = fn.get("phr-head");
+			while (fn != null)
+			{
+				FeatureNode ty = fn.get("phr-type");
+				if (ty != null)
+				{
+					phrase_type = ty.getValue();
+				}
+				FeatureNode wd = fn.get("phr-word");
+				if (wd != null) chunk.addWord(wd);
+
+				// Add subphrases to the word list, but only if
+				// the current phrase isn't a prepostional phrase (PP)
+				FeatureNode subf = fn.get("phr-head");
+				if (subf != null && !phrase_type.equals ("PP")) 
+				{
+					chunkNounPhrase(fn, chunk);
 				}
 				fn = fn.get("phr-next");
 			}
