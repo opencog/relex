@@ -35,6 +35,8 @@ import relex.tree.PhraseTree;
 
 public class Hobbs
 {
+	public static final int DEBUG = 0; 
+	
 	// Buffer of sentences previously seen.
 	private ArrayList<RelexInfo> sentences;
 
@@ -185,7 +187,8 @@ public class Hobbs
 			if (type.equals("NP"))
 			{
 				// Step 6.
-System.out.println("now do step 6 XXX -- step 6 not implemented!!");
+				if (DEBUG > 0)
+					System.out.println("now do step 6 XXX -- step 6 not implemented!!");
 			}
 			// Step 7. Same as step 3, but for the new X.
 			StepSeven(pt, anaphore);
@@ -402,6 +405,7 @@ System.out.println("now do step 6 XXX -- step 6 not implemented!!");
 						if (num_proposals > max_proposals) return;
 
 						antecedents.add(anaphore, pt);
+						if (DEBUG > 0)
 						System.out.println("found antecedent "
 						                 +  pt.toString()
 						                 + " to pronoun "
