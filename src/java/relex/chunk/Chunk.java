@@ -99,7 +99,7 @@ public class Chunk
 					chunk_start = ist;
 					chunk_end = end;
 				}
-				else if (chunk_end+1 == ist)
+				else if (ist <= chunk_end+1)
 				{
 					chunk_end = end;
 				}
