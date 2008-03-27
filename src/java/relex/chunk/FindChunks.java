@@ -79,7 +79,7 @@ public class FindChunks
 			int degree = pt.getDegree();
 			if (degree <= 2) return false;
 
-System.out.println("candidate phrase " +  pt.toString());
+// System.out.println("candidate phrase " +  pt.toString());
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
 			chunks.add(chunk);
