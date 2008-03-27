@@ -458,7 +458,7 @@ public class RelationExtractor
 						// Identify chunked phrases.
 						FindChunks chunker = new FindChunks();
 						if (commandMap.get("-a") != null) chunker.findBasicChunks(parse);
-						if (commandMap.get("-p") != null) chunker.findChunks(parse);
+						if (commandMap.get("-p") != null) chunker.findSparseChunks(parse);
 						chunker.findBasicChunks(parse);
 						ArrayList<Chunk> chunks = chunker.getChunks();
 						for (Chunk ch : chunks)
