@@ -180,6 +180,11 @@ public class PhraseTree
 		return isLeaf(phr);
 	}
 
+	public int getDegree()
+	{
+		return getDegree(phr);
+	}
+
 	public int getDepth()
 	{
 		return getDepth(phr);
@@ -274,6 +279,21 @@ public class PhraseTree
 			fn = fn.get("phr-next");
 		}
 		return true;
+	}
+
+	/**
+	 * Return the degree of a node in the tree
+	 */
+	public static int getDegree(FeatureNode word)
+	{
+		int cnt = 0;
+		FeatureNode fn = word.get("phr-head");
+		while (fn != null)
+		{
+			cnt++;
+			fn = fn.get("phr-next");
+		}
+		return cnt;
 	}
 
 	/**
