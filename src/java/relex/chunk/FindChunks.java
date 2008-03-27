@@ -45,7 +45,7 @@ public class FindChunks
 		pt.foreach(pc);
 	}
 
-	public void findChunks(ParsedSentence parse)
+	public void findSparseChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
 		PhraseChunks pc = new PhraseChunks();

@@ -280,6 +280,7 @@ public class RelationExtractor
 	public static void main(String[] args) 
 	{
 		String callString = "RelationExtractor" + 
+			" [-a (show all phrase chunks)]" +
 			" [-c (show plain output)]" +
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
@@ -287,7 +288,7 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
-			" [-p (show phrase chunks)]" +
+			" [-p (show refined phrase chunks)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
@@ -451,11 +452,14 @@ public class RelationExtractor
 					System.out.println(SimpleView.printRelations(parse.getLeft()));
 					System.out.println("\n======\n");
 	
-					if (commandMap.get("-p") != null)
+					if ((commandMap.get("-a") != null) ||
+					    (commandMap.get("-p") != null))
 					{
 						// Identify chunked phrases.
 						FindChunks chunker = new FindChunks();
-						chunker.findChunks(parse);
+						if (commandMap.get("-a") != null) chunker.findBasicChunks(parse);
+						if (commandMap.get("-p") != null) chunker.findChunks(parse);
+						chunker.findBasicChunks(parse);
 						ArrayList<Chunk> chunks = chunker.getChunks();
 						for (Chunk ch : chunks)
 						{
