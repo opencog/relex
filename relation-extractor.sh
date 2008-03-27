@@ -26,9 +26,9 @@ bin:\
 /usr/local/share/java/opennlp-tools-1.2.0.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
+/usr/local/share/java/link-grammar-4.3.4.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
-/usr/share/java/link-grammar-4.3.4.jar:\
 /usr/share/java/xercesImpl.jar:\
 /opt/GATE-4.0/bin/gate.jar:\
 /opt/GATE-4.0/lib/jdom.jar:\
