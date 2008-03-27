@@ -38,6 +38,13 @@ public class FindChunks
 		chunks = new ArrayList<Chunk>();
 	}
 
+	public void findBasicChunks(ParsedSentence parse)
+	{
+		PhraseTree pt = parse.getPhraseTree();
+		BasicChunks pc = new BasicChunks();
+		pt.foreach(pc);
+	}
+
 	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
@@ -55,6 +62,47 @@ public class FindChunks
 		chunks.clear();
 	}
 
+	/* -------------------------------------------------------- */
+	/* Use the phrase-tree approach to finding chunks */
+	private class BasicChunks implements FeatureNodeCallback
+	{
+		/**
+		 * Called for each phrase in a parse.
+		 * Add all parts of the phrase tree.
+		 */
+		public Boolean FNCallback(FeatureNode fn)
+		{
+			PhraseTree pt = new PhraseTree(fn);
+			int breadth = pt.getBreadth();
+			if (breadth < 2) return false;
+
+System.out.println("candidate phrase " +  pt.toString());
+			Chunk chunk = new Chunk();
+			chunkPhrase(fn, chunk);
+			chunks.add(chunk);
+			return false;
+		}
+
+		public void chunkPhrase(FeatureNode fn, Chunk chunk)
+		{
+			fn = fn.get("phr-head");
+			while (fn != null)
+			{
+				FeatureNode wd = fn.get("phr-word");
+				if (wd != null) chunk.addWord(wd);
+
+				// Add subphrases to the word list
+				FeatureNode subf = fn.get("phr-head");
+				if (subf != null) 
+				{
+					chunkPhrase(fn, chunk);
+				}
+				fn = fn.get("phr-next");
+			}
+		}
+	}
+
+	/* -------------------------------------------------------- */
 	/* Use the phrase-tree approach to finding chunks */
 	private class PhraseChunks implements FeatureNodeCallback
 	{
@@ -88,12 +136,15 @@ public class FindChunks
 			{
 				chunkVerbPhrase(pt.getNode(), chunk);
 			}
+			else if (type.equals("S"))
+			{
+				chunkVerbPhrase(pt.getNode(), chunk);
+			}
 
 			// Discard single-word chunks ... !?
 			if (1 < chunk.size())
 			{
 				chunks.add(chunk);
-System.out.println("candidate phrase " +  pt.toString());
 			}
 
 			return false;

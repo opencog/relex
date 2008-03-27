@@ -61,7 +61,8 @@ public class Chunk
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
-			FeatureNode sf = fn.get("str");
+			// FeatureNode sf = fn.get("str");
+			FeatureNode sf = fn.get("orig_str");
 			if (sf != null)
 			{
 				if (i != 0) str += " ";
@@ -77,7 +78,8 @@ public class Chunk
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
-			FeatureNode sf = fn.get("str");
+			// FeatureNode sf = fn.get("str");
+			FeatureNode sf = fn.get("orig_str");
 			if (sf != null)
 			{
 				FeatureNode start = fn.get("start_char");
