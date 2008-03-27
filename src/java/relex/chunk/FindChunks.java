@@ -19,8 +19,10 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
+import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
+import relex.feature.RelationCallback;
 import relex.tree.PhraseTree;
 
 /**
@@ -47,9 +49,21 @@ public class FindChunks
 
 	public void findChunks(ParsedSentence parse)
 	{
+		findPhraseChunks(parse);
+	}
+
+	public void findPhraseChunks(ParsedSentence parse)
+	{
 		PhraseTree pt = parse.getPhraseTree();
 		PhraseChunks pc = new PhraseChunks();
 		pt.foreach(pc);
+	}
+
+	public void findObjectChunks(ParsedSentence parse)
+	{
+		ObjChunks obj = new ObjChunks();
+		FeatureNode sent = parse.getLeft();
+		FeatureForeach.foreach(sent, obj);
 	}
 
 	public ArrayList<Chunk> getChunks()
@@ -225,6 +239,23 @@ public class FindChunks
 				fn = fn.get("phr-next");
 			}
 		}
+	}
 
+	/* -------------------------------------------------------- */
+	private class ObjChunks implements RelationCallback
+	{
+		public Boolean UnaryRelationCB(FeatureNode from, String rel)
+		{
+			return false;
+		}
+		public Boolean BinaryHeadCB(FeatureNode from)
+		{
+			return false;
+		}
+		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
+		{
+System.out.println ("duude rel="+relation);
+			return false;
+		}
 	}
 }
