@@ -76,6 +76,9 @@ public class FindChunks
 			int breadth = pt.getBreadth();
 			if (breadth < 2) return false;
 
+			int degree = pt.getDegree();
+			if (degree <= 2) return false;
+
 System.out.println("candidate phrase " +  pt.toString());
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
