@@ -19,7 +19,8 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
-// import relex.feature.FeatureNode;
+import relex.feature.FeatureNode;
+import relex.feature.FeatureNodeCallback;
 import relex.tree.PatternCallback;
 import relex.tree.PatternMatch;
 import relex.tree.PhraseTree;
@@ -33,17 +34,19 @@ import relex.tree.PhraseTree;
 public class MatchChunks
 {
 	private ArrayList<Chunk> chunks;
+	private PatCB callback;
 	
 	public MatchChunks()
 	{
 		chunks = new ArrayList<Chunk>();
+		callback = new PatCB();
 	}
 
 	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
-		PatCB cb = new PatCB();
-		PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, cb);
+		SubPhrase sb = new SubPhrase();
+		pt.foreach(sb);
 	}
 
 	public ArrayList<Chunk> getChunks()
@@ -54,6 +57,24 @@ public class MatchChunks
 	public void clear()
 	{
 		chunks.clear();
+	}
+
+	/* -------------------------------------------------------- */
+	/* Try to pattern match each subphrase */
+	private class SubPhrase implements FeatureNodeCallback
+	{
+		/**
+		 * Called for each phrase in a parse.
+		 * Add all parts of the phrase tree.
+		 */
+		public Boolean FNCallback(FeatureNode fn)
+		{
+			PhraseTree pt = new PhraseTree(fn);
+
+			PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, callback);
+
+			return false;
+		}
 	}
 
 	/* -------------------------------------------------------- */
