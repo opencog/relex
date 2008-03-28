@@ -19,10 +19,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
+import relex.parser.LinkParserClient;
 
 /**
  * SentenceAlgorithmApplier is responsible for loading SentenceAlgorithms from a
@@ -53,10 +53,10 @@ public class SentenceAlgorithmApplier {
 	}
 
 	// The apply method!
-	public void applyAlgs(ParsedSentence sentence) {
-		Iterator<SentenceAlgorithm> i = algs.iterator();
-		while (i.hasNext())
-			(i.next()).apply(sentence);
+	public void applyAlgs(ParsedSentence sentence, LinkParserClient lpc) {
+		for (SentenceAlgorithm alg: algs){
+			alg.apply(sentence, lpc);
+		}
 	}
 
 	/**

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import relex.ParsedSentence;
 import relex.feature.FeatureAction;
 import relex.feature.FeatureNode;
+import relex.parser.LinkParserClient;
 
 public class TemplateActionAlg extends TemplateMatchingAlg {
 
@@ -30,7 +31,7 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 	 */
 	private ArrayList<FeatureAction> featureActions;
 
-	protected void applyTo(FeatureNode node) {
+	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
 		Iterator<FeatureAction> i = featureActions.iterator();
 		while (i.hasNext()) {
 			FeatureAction act = i.next();
@@ -77,9 +78,9 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 		cn.get("a").set("c", cn.get("a").get("b"));
 		ps.addWord(cn);
 		System.out.println("Applying to:\n" + cn);
-		test.apply(ps);
+		test.apply(ps, null);
 		System.out.println("Result:\n" + cn);
-		test.apply(ps);
+		test.apply(ps, null);
 		System.out.println("Result:\n" + cn);
 
 	}

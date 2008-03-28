@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import relex.ParsedSentence;
+import relex.RelationExtractor;
 import relex.RelexProperties;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
@@ -34,35 +35,7 @@ public class LinkParser extends Parser
 
 	private static final boolean storePhraseString = true;
 
-	private static LinkParser singleton = null;
-
-	private LinkParserClient lpc = null;
-
-	public void setMaxParses(int maxParses) {
-		lpc.setMaxParses(maxParses);
-	}
-
-	public void setAllowSkippedWords(boolean val) {
-		lpc.setAllowSkippedWords(val);
-	}
-
-	public void setMaxParseSeconds(int maxParseSeconds) {
-		lpc.setMaxParseSeconds(maxParseSeconds);
-	}
-
-	public void setMaxCost(int maxCost) {
-		lpc.setMaxCost(maxCost);
-	}
-
-	public boolean isPastTenseForm(String word) {
-		return lpc.isPastTenseForm(word);
-	}
-
-	public boolean isEntity(String word) {
-		return lpc.isEntity(word);
-	}
-
-	public String simpleParse(String sentence) {
+	public String simpleParse(String sentence, LinkParserClient lpc) {
 		System.out.println("Calling cParse for sentence: " + sentence);
 		lpc.execParse(sentence);
 		if (lpc.getNumLinkages() > 0) {
@@ -84,7 +57,7 @@ public class LinkParser extends Parser
 	 * The ParsedSentence has ConstituentNodes for every tokenized word. It 
 	 * does not have a Tree structure or Linkage structure.
 	 */
-	private ArrayList<ParsedSentence> tokenizeAndParseSentence(String sentence)
+	private ArrayList<ParsedSentence> tokenizeAndParseSentence(String sentence, LinkParserClient lpc)
 	{
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
@@ -188,9 +161,9 @@ public class LinkParser extends Parser
 			s.setMetaData(meta);
 			// add linkage and tree structure
 			if (verbosity >= 5) System.out.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast);
+			addLinkageStructure(s, ignoreFirst, ignoreLast, lpc);
 			if (verbosity >= 5) System.out.println("Adding Tree Structure");
-			if (storePhraseString) addTreeStructure(s);
+			if (storePhraseString) addTreeStructure(s, lpc);
 			if (verbosity >= 5) System.out.println("Ready To Finish");
 			
 			// add to return list
@@ -201,7 +174,7 @@ public class LinkParser extends Parser
 		return parsedSentences;
 	}
 
-	private void addLinkageStructure(ParsedSentence s, boolean ignoreFirst, boolean ignoreLast) {
+	private void addLinkageStructure(ParsedSentence s, boolean ignoreFirst, boolean ignoreLast, LinkParserClient lpc) {
 		int length = lpc.getNumWords();
 		int numLinks = lpc.getNumLinks();
 		s.setLinkString(lpc.getLinkString());
@@ -238,7 +211,7 @@ public class LinkParser extends Parser
 	/**
 	 * Uses the Penn-tree-bank style "phrase structure".
 	 */
-	private void addTreeStructure(ParsedSentence s) {
+	private void addTreeStructure(ParsedSentence s, LinkParserClient lpc) {
 		String treeString = lpc.getConstituentString();
 		s.setPhraseString(treeString);
 	}
@@ -247,64 +220,29 @@ public class LinkParser extends Parser
 	 * Given a sentence, returns a vector of parses, ordered by likelihood.
 	 * 
 	 * @param sentence
+	 * @param lpc 
 	 * @return only a single parse for now. Need to add more parses by modifying calls to tokenizeAndParseSentence
 	 */
-	public ArrayList<ParsedSentence> parse(String sentence) {
-		return tokenizeAndParseSentence(sentence);
-	}
-
-	/*
-	 * (see bug #48 at kmi's bugzilla //frees the C memory space public void
-	 * finalize() { close(); }
-	 */
-
-	public void close() {
-		lpc.close();
+	public ArrayList<ParsedSentence> parse(String sentence, LinkParserClient lpc) {
+		return tokenizeAndParseSentence(sentence, lpc);
 	}
 
 	public static String retrievePathName() {
 		return RelexProperties.getProperty("relex.parser.LinkParser.pathname");
 	}
 
-	public void reset() {
-		close();
-		lpc.init(retrievePathName());
-	}
-
-	private LinkParser(LinkParserClient _lpc) {
-		lpc = _lpc;
-		if (verbosity > 3) System.out.println("LinkParser: initializing client with pathname:" + retrievePathName());
-		lpc.init(retrievePathName());
-	}
-
-	public static LinkParser createSingletonInstance(LinkParserClient _lpc) {
-		if (singleton != null) throw new RuntimeException("LinkParser Singleton has already been created");
-		singleton = new LinkParser(_lpc);
-		return singleton;
-	}
-
-	public static boolean isSingletonCreated() {
-		return singleton != null;
-	}
-
-	// defaults to JNINewClient
-	public static LinkParser getSingletonInstance()
-	{
-		if (singleton == null)
-			singleton = LinkParser.createSingletonInstance(LinkParserJNINewClient.getSingletonInstance());
-		return singleton;
-	}
-
 	// Main is for unit testing only.
 	public static void main(String[] args)
 	{
-		LinkParser lp = LinkParser.createSingletonInstance(LinkParserJNINewClient.getSingletonInstance());
+		LinkParserJNINewClient lpc = LinkParserJNINewClient.getSingletonInstance();
+		lpc.init(RelationExtractor.DEFAULT_ALGS_FILE);
+		LinkParser lp = new LinkParser();
 		ArrayList<ParsedSentence> v = lp.parse(
-			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.");
+			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.", lpc);
 		System.out.println("FOUND " + v.size() + " sentence(s)");
-		System.out.println("HAD is past: " + lp.isPastTenseForm("had"));
-		System.out.println("HAVE is past: " + lp.isPastTenseForm("have"));
-		v = lp.parse("Mike saw the man with the telescope.");
+		System.out.println("HAD is past: " + lpc.isPastTenseForm("had"));
+		System.out.println("HAVE is past: " + lpc.isPastTenseForm("have"));
+		v = lp.parse("Mike saw the man with the telescope.", lpc);
 		if (v.size() > 0) {
 			ParsedSentence sentence = v.get(0);
 			System.out.println("ParsedSentence.getLinkString():\n"+ sentence.getLinkString());
@@ -313,8 +251,8 @@ public class LinkParser extends Parser
 			System.out.println("No parse found for sentence");
 		}
 		if (args.length > 0)
-			System.out.println(args[0] + " is past: "+ lp.isPastTenseForm(args[0]));
-		lp.close();
+			System.out.println(args[0] + " is past: "+ lpc.isPastTenseForm(args[0]));
+		lpc.close();
 	}
 }
 

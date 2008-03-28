@@ -21,6 +21,7 @@ import java.util.Iterator;
 
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
+import relex.parser.LinkParserClient;
 
 public abstract class SentenceAlgorithm {
 
@@ -34,7 +35,7 @@ public abstract class SentenceAlgorithm {
 	 * Iterates over the entire feature structure in the ParsedSentence,
 	 * applying the algorithm whereever it can be applied.
 	 */
-	public void apply(ParsedSentence sentence) {
+	public void apply(ParsedSentence sentence, LinkParserClient lpc) {
 		Iterator<FeatureNode> i = sentence.iteratorFromLeft();
 		while (i.hasNext()) {
 			FeatureNode c = i.next();
@@ -52,7 +53,7 @@ public abstract class SentenceAlgorithm {
 					}
 				} // end if(INTERACTIVE)
 				try {
-					applyTo(c);
+					applyTo(c, lpc);
 				} catch (Exception e) {
 					sentence.setErrorString(this + "\n" + e.toString());
 					// System.out.println(sentence);
@@ -80,7 +81,7 @@ public abstract class SentenceAlgorithm {
 
 	protected abstract String getSignature();
 
-	protected abstract void applyTo(FeatureNode node);
+	protected abstract void applyTo(FeatureNode node, LinkParserClient lpc);
 
 	protected abstract boolean canApplyTo(FeatureNode node);
 

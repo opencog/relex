@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import relex.ParsedSentence;
 
 /**
- * This class has a single public interface which excepts a String and returns a vector of parses.
+ * The interface to
  */
 public abstract class Parser {
 
@@ -28,18 +28,20 @@ public abstract class Parser {
 	 * Given a sentence, returns a list of parses, ordered by likelihood
 	 * 
 	 * @param sentence
+	 * @param LinkParserClient The client to be used for link-grammar processing
 	 * @return a list of parses, ordered by likelihood
 	 *
 	 */
-	public abstract ArrayList<ParsedSentence> parse(String sentence);
+	public abstract ArrayList<ParsedSentence> parse(String sentence, LinkParserClient lpc);
 
 	/**
 	 * Given a sentence, returns a string representation of a parse of that sentence.
 	 * 
 	 * @param sentence
+	 * @param LinkParserClient The client to be used for link-grammar processing
 	 * @return a string representation of a parse of that sentence.
 	 */
-	public abstract String simpleParse(String sentence);
+	public abstract String simpleParse(String sentence, LinkParserClient lpc);
 
 }
 

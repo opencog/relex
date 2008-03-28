@@ -21,13 +21,14 @@ package relex.algs;
  */
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
+import relex.parser.LinkParserClient;
 
 /**
  * Combines two words into one, stored in the left node.
  */
 public class TwoWordCombineToLeftAlg extends TemplateMatchingAlg {
 
-    protected void applyTo(FeatureNode node) {
+    protected void applyTo(FeatureNode node, LinkParserClient lpc) {
         FeatureNode rightNode = LinkView.getRight(node);
         FeatureNode leftNode = LinkView.getLeft(node);
 
