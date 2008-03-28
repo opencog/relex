@@ -6,24 +6,72 @@ skip phrases with
 
 Unit tests:
 -----------
+ * General Custer gave the Sioux chief no quarter.
+   The desired answer is "give ... no quarter". 
+
+      (VP gave (NP the Sioux chief) (NP no quarter)) 
+
+   Skip first NP, keep second.
+
  * I TOOK her TO the dance.
+   Desired answer: "took ... to"
+
        (VP took (NP her) (PP to (NP the dance)))
 
-   Skip the NP's, to get "took to"
+   Skip both NP's, to get "took ... to"
 
  * He will TAKE OFFICE ON monday.
-      (S (NP He) (VP will (VP take office (PP on (NP Monday)))) .)
+   Desired answer: "take office on"
 
-   need to drop PP in VP, to get "take office on"
+      (VP will (VP take office (PP on (NP Monday))))
 
- * General Custer gave the Sioux chief no quarter.
-      (S (NP General Custer) (VP gave (NP the Sioux chief) (NP no quarter)) .)
+   need to drop NP in PP, to get "take office on"
 
-   The desired answer if "give ... no quarter". However, this one doesn't 
-   do very well, since simply skipping NP's fails.
-   Answer: the algorithm should look for indirect objects.
+ * I was in love with that bunny.
+   Desired answer: "in love with"
 
+      (VP was (PP in (NP love)) (PP with (NP that bunny)))
+
+   Drop leading VP, keep first NP, drop second NP.
+   (drop first VP perhaps because its a copula?)
  
+  * I ran away from home at age two.
+    Desired answer: "ran away from"
+
+       (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
+
+    Keep the VP, and the first PP, and the second PP, 
+    dropping NP in the second PP.
+
+
+Noun phrases:
+-------------
+ * I ate a wee bit of cheese.
+   Desired answer: "a wee bit of"
+
+       (NP (NP a wee bit) (PP of (NP cheese)))
+
+   Drop NP after PP.
+
+ * It is a day's march from home.
+   Desired: "a day's march"
+
+       (NP (NP (NP a day 's) march) (PP from (NP home)))
+
+   Rule: three NP's are too deep.
+
+ * It is a couple of clicks down the road.
+   Desired: "a couple of"
+
+       (NP (NP a couple) (PP of (NP clicks)))
+
+
+
+Pattern match:
+--------------
+a == accept, r == reject
+(NP (NP a) (PP a (NP r)))
+    
 
 
 Idioms:
