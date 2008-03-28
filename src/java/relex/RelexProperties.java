@@ -59,7 +59,6 @@ public class RelexProperties {
         // This is used in the Windows build. If undefined, uses default. 
 		String pathname = System.getProperty("relex.parser.LinkParser.pathname");
 		if (pathname!=null) setProperty("relex.parser.LinkParser.pathname", pathname);
-        System.out.println(getProperty("relex.parser.LinkParser.pathname"));
         // The pathname of the Linkparser's default directory
         // XXX killed ... its fundamentally wrong to second-guess where 
         // the link parsers data files might be: only the link parser
