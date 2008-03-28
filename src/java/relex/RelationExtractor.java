@@ -274,13 +274,23 @@ public class RelationExtractor
 	}
 
 	/* ---------------------------------------------------------- */
+	private static void prt_chunks(FindChunks chunker)
+	{
+		ArrayList<Chunk> chunks = chunker.getChunks();
+		for (Chunk ch : chunks)
+		{
+			System.out.println(ch.toString());
+		}
+		System.out.println("\n======\n");
+	}
+
+	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
 	 */
 	public static void main(String[] args) 
 	{
 		String callString = "RelationExtractor" + 
-			" [-a (show all phrase chunks)]" +
 			" [-c (show plain output)]" +
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
@@ -288,7 +298,9 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
-			" [-p (show refined phrase chunks)]" +
+			" [--pa (show basic phrase chunks)]" +
+			" [--pb (show refined phrase chunks)]" +
+			" [--pc (show object phrase chunks)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
@@ -303,7 +315,9 @@ public class RelationExtractor
 		flags.add("-h");
 		flags.add("-l");
 		flags.add("-o");
-		flags.add("-p");
+		flags.add("--pa");
+		flags.add("--pb");
+		flags.add("--pc");
 		flags.add("-r");
 		flags.add("-t");
 		flags.add("-v");
@@ -452,21 +466,26 @@ public class RelationExtractor
 					System.out.println(SimpleView.printRelations(parse.getLeft()));
 					System.out.println("\n======\n");
 	
-					if ((commandMap.get("-a") != null) ||
-					    (commandMap.get("-p") != null))
+					if (commandMap.get("--pa") != null)
 					{
-						// Identify chunked phrases.
+						System.out.println("Basic chunks:");
 						FindChunks chunker = new FindChunks();
-						if (commandMap.get("-a") != null) chunker.findBasicChunks(parse);
-						if (commandMap.get("-p") != null) chunker.findChunks(parse);
 						chunker.findBasicChunks(parse);
-						ArrayList<Chunk> chunks = chunker.getChunks();
-						for (Chunk ch : chunks)
-						{
-							System.out.println(ch.toString());
-						}
-						chunker.clear();
-						System.out.println("\n======\n");
+						prt_chunks(chunker);
+					}
+					if (commandMap.get("--pb") != null)
+					{
+						System.out.println("Phrase chunks:");
+						FindChunks chunker = new FindChunks();
+						chunker.findPhraseChunks(parse);
+						prt_chunks(chunker);
+					}
+					if (commandMap.get("--pc") != null)
+					{
+						System.out.println("Object chunks:");
+						FindChunks chunker = new FindChunks();
+						chunker.findObjectChunks(parse);
+						prt_chunks(chunker);
 					}
 					if (commandMap.get("-c") != null)
 					{
