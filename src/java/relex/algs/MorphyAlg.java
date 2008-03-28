@@ -19,6 +19,7 @@ import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
 import relex.morphy.Morphy;
 import relex.morphy.Morphed;
+import relex.parser.LinkParserClient;
 
 /**
  * Uses Morphy to generate the root of a word.
@@ -36,7 +37,7 @@ public class MorphyAlg extends SentenceAlgorithm
 		return "MORPHY_ALG";
 	}
 
-	protected void applyTo(FeatureNode node)
+	protected void applyTo(FeatureNode node, LinkParserClient lpc)
 	{
 		LinkableView w = new LinkableView(node);
 		String original = w.getWordString();

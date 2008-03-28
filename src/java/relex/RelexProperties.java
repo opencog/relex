@@ -44,45 +44,18 @@ public class RelexProperties {
     private static void setDefaultValues() {
         // The number of parses before the socket client sends a kill signal to the server.
         // This protects from unexpected server errors due to out-of-memory from the linkparser
-        setProperty("relex.parser.LinkParserSocketClient.parseCountBetweenKills",
-                "100");
-        setProperty("relex.parser.LinkParserSocketClient.HOST", "localhost");
-        setProperty("relex.parser.LinkParserSocketClient.PORT", "4444");
+        setProperty("relex.parser.LinkParserSocketClient.parseCountBetweenKills","100");
         setProperty(
                 "relex.parser.LinkParserSocketClient.millisecondsBetweenConnectionAttempts",
                 "5000");
-        setProperty("relex.parser.LinkParserSocketClient.failedRequestRepeatLimit",
-                "3");
+        setProperty("relex.parser.LinkParserSocketClient.failedRequestRepeatLimit","3");
 
-        // The pathname of the Linkparser's default directory
-        // XXX killed ... its fundamentally wrong to second-guess where 
-        // the link parsers data files might be: only the link parser
-        // itself can ever be the ultimate authority for this info.
-        // setProperty("relex.parser.LinkParser.pathname", retrieveLinkParserPathname());
+        // Allows the user change the dictionaries path using a System property, 
+        // defined with -Drelex.parser.LinkParser.pathname=...
+        // This is used in the Windows build. If undefined, uses default. 
+		String pathname = System.getProperty("relex.parser.LinkParser.pathname");
+		if (pathname!=null) setProperty("relex.parser.LinkParser.pathname", pathname);
     }
-
-    /*
-     * Retrieves the linkparser pathname from system properties
-     */
-/* ----------- DEAD CODE --------------------
-    private static String retrieveLinkParserPathname() {
-    	String p = System.getProperty("relex.linkparserpath");
-    	if (p == null)
-    	{
-    		System.err.println("WARNING: relex.linkparserpath not specified.");
-    		return "";
-    	}
-    		// throw new IllegalArgumentException("System property relex.linkparserpath isn't defined.");
-    	System.out.println("Provided relex.linkparserpath: "+p);
-    	p = p.replace("\\", "/");
-    	if (!p.endsWith("/")) p += "/";
-    	File f = new File(p);
-    	if (!f.exists()) 
-    		System.err.println("WARNING: Path doesn't exist: relex.linkparserpath = "+p);
-    	System.out.println("Processed relex.linkparserpath: "+p);
-        return p;
-    }
- ----------- DEAD CODE -------------------- */
     
     private static void loadPropertiesIfRequired() {
         String loadFilename = System.getProperty("relex.RelexProperties.loadFilename");

@@ -64,19 +64,24 @@ public class RelationExtractor
 	public static final int DEFAULT_MAX_PARSE_COST = 1000;
 	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
 
+	/** The LinkParserClient to be used - this class isn't thread safe! */
+	private LinkParserClient lpc;
+	
 	/** Syntax processing */
-	private LinkParser parser = null;
+	private LinkParser parser;
 
 	/** Semantic processing */
-	private SentenceAlgorithmApplier sentenceAlgorithmApplier = null;
-	private PhraseMarkup phraseMarkup = null;
+	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
+	
+	/** Penn tree-bank style phrase structure markup. */
+	private PhraseMarkup phraseMarkup;
 
 	/** Anaphora resolution */
-	public Antecedents antecedents = null;
-	private Hobbs hobbs = null;
+	public Antecedents antecedents;
+	private Hobbs hobbs;
 
 	/** Single-threaded-ness hack */
-	private static RelationExtractor singleton = null;
+	private static RelationExtractor singleton;
 	
 	public static RelationExtractor getSingletonInstance()
 	{
@@ -120,21 +125,13 @@ public class RelationExtractor
 	private void _newRelex(File algsFile,
 	                  boolean useSocket)
 	{
-		LinkParser p = null;
-		if (!LinkParser.isSingletonCreated())
-		{
-			LinkParserClient lpc = null;
-			if (useSocket) {
-				lpc = LinkParserSocketClient.getSingletonInstance();
-			} else {
-				lpc = LinkParserJNINewClient.getSingletonInstance();
-			}
-			p = LinkParser.createSingletonInstance(lpc);
+		LinkParser p = new LinkParser();
+		if (useSocket) {
+			lpc = new LinkParserSocketClient();
+		} else {
+			lpc = LinkParserJNINewClient.getSingletonInstance();
 		}
-		else
-		{
-			p = LinkParser.getSingletonInstance();
-		}
+		lpc.init(null);
 		SentenceAlgorithmApplier saa = new SentenceAlgorithmApplier();
 		saa.read(algsFile);
 
@@ -167,19 +164,19 @@ public class RelationExtractor
 	 * but only this many are returned.
 	 */
 	public void setMaxParses(int maxParses) {
-		parser.setMaxParses(maxParses);
+		lpc.setMaxParses(maxParses);
 	}
 
 	public void setMaxCost(int maxCost) {
-		parser.setMaxCost(maxCost);
+		lpc.setMaxCost(maxCost);
 	}
 
 	public void setAllowSkippedWords(boolean allow) {
-		parser.setAllowSkippedWords(allow);
+		lpc.setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {
-		parser.setMaxParseSeconds(maxParseSeconds);
+		lpc.setMaxParseSeconds(maxParseSeconds);
 	}
 
 	/* ---------------------------------------------------------- */
@@ -223,7 +220,7 @@ public class RelationExtractor
 			entityMaintainer.prepareSentence(parse.getLeft());
 
 			// The actual relation extraction is done here.
-			sentenceAlgorithmApplier.applyAlgs(parse);
+			sentenceAlgorithmApplier.applyAlgs(parse, lpc);
 
 			// Strip out the entity markup, so that when the 
 			// sentence is printed, we don't print gunk.
@@ -253,7 +250,7 @@ public class RelationExtractor
 		if (sentence == null) return null;
 		ArrayList<ParsedSentence> parses = null;
 		if (sentence.length() < 1024) {
-			parses = parser.parse(sentence);
+			parses = parser.parse(sentence, lpc);
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
 			parses = new ArrayList<ParsedSentence>();

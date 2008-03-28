@@ -1,4 +1,6 @@
 package relex.parser;
+
+import org.linkgrammar.LinkGrammar;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -73,7 +75,9 @@ public abstract class LinkParserClient {
         // must extend this!
     }
     
-    public void init(String pathname) {}
+    public void init(String pathname) {
+    	if (pathname != null) LinkGrammar.setDictionariesPath(pathname);
+    }
 
     abstract public boolean isPastTenseForm(String word);
 

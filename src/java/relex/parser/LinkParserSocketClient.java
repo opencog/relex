@@ -26,9 +26,11 @@ import relex.util.socket.ProcessClient;
  */
 public class LinkParserSocketClient extends LinkParserClient {
 
-	private static final int verbosity = 1;
+	private static final int DEFAULT_PORT = 9000;
 
-	private static LinkParserSocketClient singletonInstance = null;
+	private static final String DEFAULT_HOST = "127.0.0.1";
+
+	private static final int verbosity = 1;
 
 	// Properties set from RelexProperties
 	private int parseCountBetweenKills;
@@ -39,13 +41,17 @@ public class LinkParserSocketClient extends LinkParserClient {
 
 	private ArrayList<String> restoreCommands;
 
-	private LinkParserSocketClient() {
+	public LinkParserSocketClient() {
+		this(DEFAULT_HOST,DEFAULT_PORT);
+	}
+	
+	public LinkParserSocketClient(String host, int port) {
 		super();
 		setProperties();
 		parseCount = 0;
 		client = new ProcessClient(
-				RelexProperties.getProperty("relex.parser.LinkParserSocketClient.HOST"),
-				RelexProperties.getIntProperty("relex.parser.LinkParserSocketClient.PORT"),
+				host,
+				port,
 				RelexProperties.getIntProperty("relex.parser.LinkParserSocketClient.millisecondsBetweenConnectionAttempts"),
 				RelexProperties.getIntProperty("relex.parser.LinkParserSocketClient.failedRequestRepeatLimit")
 				);
@@ -55,12 +61,6 @@ public class LinkParserSocketClient extends LinkParserClient {
 
 	private void setProperties() {
 		parseCountBetweenKills = RelexProperties.getIntProperty("relex.parser.LinkParserSocketClient.parseCountBetweenKills");
-	}
-
-	public static LinkParserSocketClient getSingletonInstance() {
-		if (singletonInstance == null)
-			singletonInstance = new LinkParserSocketClient();
-		return singletonInstance;
 	}
 
 	private void resetRestoreCommands() {

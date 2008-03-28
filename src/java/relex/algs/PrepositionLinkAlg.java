@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import relex.feature.FeatureNode;
 import relex.feature.SemanticView;
+import relex.parser.LinkParserClient;
 
 public class PrepositionLinkAlg extends TemplateMatchingAlg
 {
@@ -53,7 +54,7 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		}
 	}
 
-	protected void applyTo(FeatureNode node)
+	protected void applyTo(FeatureNode node, LinkParserClient lpc)
 	{
 		FeatureNode modified = getTemplate().val("modified");
 		FeatureNode prepStringValue = getTemplate().val("prep");
