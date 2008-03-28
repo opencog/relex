@@ -67,6 +67,7 @@ public class LinkParserJNINewClient extends LinkParserClient {
 	public void init(String pathname) {
 		super.init(pathname);
 		if (verbosity > 3) System.out.println("LinkParserJNINewClient: initializing.");
+		if (pathname != null) LinkGrammar.setDictionariesPath(pathname);
 		LinkGrammar.init();
 	}
 
