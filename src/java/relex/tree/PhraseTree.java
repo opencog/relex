@@ -180,6 +180,16 @@ public class PhraseTree
 		return isLeaf(phr);
 	}
 
+	public Boolean hasWord()
+	{
+		return hasWord(phr);
+	}
+
+	public Boolean startsWithWord()
+	{
+		return startsWithWord(phr);
+	}
+
 	public int getDegree()
 	{
 		return getDegree(phr);
@@ -279,6 +289,40 @@ public class PhraseTree
 			fn = fn.get("phr-next");
 		}
 		return true;
+	}
+
+	/**
+	 * Return true, if this phrase has at least one word in it 
+	 * (as opposed to consisting entirely of subphrases)
+	 */
+	public static Boolean hasWord(FeatureNode phr)
+	{
+		FeatureNode fn = phr.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode word = fn.get("phr-word");
+			if (word != null) return true;
+			fn = fn.get("phr-next");
+		}
+		return false;
+	}
+
+	/**
+	 * Return true, if this phrase starts with a word 
+	 * (as opposed to starting with a subphrases)
+	 */
+	public static Boolean startsWithWord(FeatureNode phr)
+	{
+		FeatureNode fn = phr.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode word = fn.get("phr-word");
+			if (word != null) return true;
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) return false;
+			fn = fn.get("phr-next");
+		}
+		return false;
 	}
 
 	/**
