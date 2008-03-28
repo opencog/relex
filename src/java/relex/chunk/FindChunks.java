@@ -77,6 +77,26 @@ public class FindChunks
 	}
 
 	/* -------------------------------------------------------- */
+
+	private void chunkPhrase(FeatureNode fn, Chunk chunk)
+	{
+		fn = fn.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) chunk.addWord(wd);
+
+			// Add subphrases to the word list
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				chunkPhrase(fn, chunk);
+			}
+			fn = fn.get("phr-next");
+		}
+	}
+
+	/* -------------------------------------------------------- */
 	/* Use the phrase-tree approach to finding chunks */
 	private class BasicChunks implements FeatureNodeCallback
 	{
@@ -98,24 +118,6 @@ public class FindChunks
 			chunkPhrase(fn, chunk);
 			chunks.add(chunk);
 			return false;
-		}
-
-		public void chunkPhrase(FeatureNode fn, Chunk chunk)
-		{
-			fn = fn.get("phr-head");
-			while (fn != null)
-			{
-				FeatureNode wd = fn.get("phr-word");
-				if (wd != null) chunk.addWord(wd);
-
-				// Add subphrases to the word list
-				FeatureNode subf = fn.get("phr-head");
-				if (subf != null) 
-				{
-					chunkPhrase(fn, chunk);
-				}
-				fn = fn.get("phr-next");
-			}
 		}
 	}
 
@@ -254,7 +256,15 @@ public class FindChunks
 		}
 		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
 		{
-System.out.println ("duude rel="+relation);
+			if (relation.equals("_subj")) return false;
+
+			FeatureNode fm = from.get("nameSource");
+
+			Chunk chunk = new Chunk();
+			chunkPhrase(fm, chunk);
+			chunks.add(chunk);
+
+
 			return false;
 		}
 	}
