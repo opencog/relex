@@ -113,7 +113,6 @@ public class FindChunks
 			int degree = pt.getDegree();
 			if (degree <= 2) return false;
 
-// System.out.println("candidate phrase " +  pt.toString());
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
 			chunks.add(chunk);
@@ -147,16 +146,17 @@ public class FindChunks
 
 			if (type.equals("NP"))
 			{
-				// ArrayList<FeatureNode> words = pt.getWordList();
-				// chunk.addWords(words);
+System.out.println("candidate phrase " +  pt.toString());
 				chunkNounPhrase(pt.getNode(), chunk);
 			}
 			else if (type.equals("VP"))
 			{
+System.out.println("candidate phrase " +  pt.toString());
 				chunkVerbPhrase(pt.getNode(), chunk);
 			}
 			else if (type.equals("S"))
 			{
+System.out.println("candidate phrase " +  pt.toString());
 				chunkVerbPhrase(pt.getNode(), chunk);
 			}
 
@@ -183,6 +183,7 @@ public class FindChunks
 		public void chunkVerbPhrase(FeatureNode fn, Chunk chunk)
 		{
 			String phrase_type = "";
+			boolean discard_pp = false;
 
 			fn = fn.get("phr-head");
 			while (fn != null)
@@ -191,18 +192,34 @@ public class FindChunks
 				if (ty != null)
 				{
 					phrase_type = ty.getValue();
-					// Skip subphrases that are noun phrases
-					if (phrase_type.equals ("NP")) return;
 				}
+
+				// Skip subphrases that are noun phrases
+				if (phrase_type.equals ("NP")) return;
+
+				// Look at the leading verb
 				FeatureNode wd = fn.get("phr-word");
-				if (wd != null) chunk.addWord(wd);
+				if (wd != null)
+				{
+					// Get the word string. 
+					String verb_str = wd.get("str").getValue();
+System.out.println("duude got word "+verb_str);
+
+					// If it contains an underscore, its idiomatic, keep it.
+					if (0 <= verb_str.indexOf('_'))
+					{
+						discard_pp = true;
+						chunk.addWord(wd);
+					}
+				}
 
 				// Add subphrases to the word list, but only if
 				// the current phrase isn't a prepostional phrase (PP)
 				FeatureNode subf = fn.get("phr-head");
-				if (subf != null && !phrase_type.equals ("PP")) 
+				if (subf != null && !discard_pp && !phrase_type.equals ("PP")) 
 				{
 					chunkVerbPhrase(fn, chunk);
+					discard_pp = true;
 				}
 				fn = fn.get("phr-next");
 			}
@@ -244,6 +261,12 @@ public class FindChunks
 	}
 
 	/* -------------------------------------------------------- */
+	/**
+	 * John Dillinger was a man who broke the law.
+	 * _obj(break, law)
+	 *  will generate th phrase "broke the law"
+	 *
+	 */
 	private class ObjChunks implements RelationCallback
 	{
 		public Boolean UnaryRelationCB(FeatureNode from, String rel)
@@ -257,8 +280,11 @@ public class FindChunks
 		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
 		{
 			if (relation.equals("_subj")) return false;
+			if (relation.equals("_prepSubj")) return false;
 
 			FeatureNode fm = from.get("nameSource");
+
+			System.out.println(relation + "(" + from.get("name").getValue() + "," + to.get("name").getValue() + ")");
 
 			Chunk chunk = new Chunk();
 			chunkPhrase(fm, chunk);
