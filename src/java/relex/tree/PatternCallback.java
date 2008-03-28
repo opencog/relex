@@ -26,5 +26,5 @@ package relex.tree;
 
 public interface PatternCallback
 {
-	public Boolean PMCallback (String pattern, PhraseTree pt);
+	public Boolean PMCallback(String pattern, PhraseTree pt);
 }

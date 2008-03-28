@@ -38,9 +38,28 @@ public class PatternMatch
 	 *    ("a", (PP of (NP clicks)))
 	 *    ("r", (NP clicks))
 	 */
-	public Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
+	public static Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
+		int open = pattern.indexOf('(');
+		if (open < 0) return false;  // no opening paren was found.
 
-		return false;
+		int close = pattern.lastIndexOf(')');
+		if (close < 0) return false;  // no closing paren was found.
+
+		pattern = pattern.substring(open+1, close).trim();
+
+		int white = pattern.indexOf(' ');
+		if (white < 0) return false;  // no whitespace after token!
+
+		// ptype is the phrase type (S, NP, VP, ADVP, etc.)
+		String ptype = pattern.substring(0, white);
+
+		String phtype = pt.getPhraseType();
+System.out.println ("duude ptype="+ptype + " ph=" + phtype);
+
+		if (!ptype.equals(phtype)) return false;
+
+		Boolean rc = cb.PMCallback(pattern, pt);
+		return rc;
 	}
 }
