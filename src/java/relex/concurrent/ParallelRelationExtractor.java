@@ -186,10 +186,11 @@ public class ParallelRelationExtractor {
 	 * @throws InterruptedException
 	 */
 	public static void main(final String[] args) throws IOException, InterruptedException {
-		final long t = System.currentTimeMillis();
-		
+		long t = System.currentTimeMillis();
 		final ParallelRelationExtractor pre = new ParallelRelationExtractor();
+		System.out.println("Initialization time: "+((System.currentTimeMillis() - t)/1000)+" s");
 		
+		final long xt = System.currentTimeMillis();
 		// Producer - submits sentences from a file 
 		new Thread(new Runnable(){
 			public void run() {
@@ -231,7 +232,7 @@ public class ParallelRelationExtractor {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("Elapsed time: "+((System.currentTimeMillis() - t)/1000)+" s");
+				System.out.println("Elapsed time: "+((System.currentTimeMillis() - xt)/1000)+" s");
 			}
 		}).start();
         
