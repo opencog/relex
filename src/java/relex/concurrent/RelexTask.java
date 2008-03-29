@@ -61,19 +61,23 @@ public class RelexTask implements Callable<RelexTaskResult> {
 		int i=0; 
 		for (ParsedSentence parse : parses)
 		{
-			// Markup feature node graph with entity info,
-			// so that the relex algs (next step) can see them.
-			entityMaintainer.prepareSentence(parse.getLeft());
-
-			// The actual relation extraction is done here.
-			sentenceAlgorithmApplier.applyAlgs(parse, lpc);
-			
-			// Strip out the entity markup, so that when the 
-			// sentence is printed, we don't print gunk.
-			entityMaintainer.repairSentence(parse.getLeft());
-
-			// Also do a Penn tree-bank style phrase structure markup.
-			phraseMarkup.markup(parse);
+			try {
+				// Markup feature node graph with entity info,
+				// so that the relex algs (next step) can see them.
+				entityMaintainer.prepareSentence(parse.getLeft());
+	
+				// The actual relation extraction is done here.
+				sentenceAlgorithmApplier.applyAlgs(parse, lpc);
+				
+				// Strip out the entity markup, so that when the 
+				// sentence is printed, we don't print gunk.
+				entityMaintainer.repairSentence(parse.getLeft());
+	
+				// Also do a Penn tree-bank style phrase structure markup.
+				phraseMarkup.markup(parse);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 			if (DEBUG > 0) System.out.println("["+index+"] end post-processing sentence "+(i++)+"/"+parses.size());
 		}
 
