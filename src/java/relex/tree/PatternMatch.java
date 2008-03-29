@@ -109,7 +109,7 @@ System.out.println("duude got subf");
 			fn = fn.get("phr-next");
 		}
 
-		if (0 < pattern.length() && pat_start_with_word && !saw_word) return true;
+		if (0 < pattern.length() && pat_starts_with_word && !saw_word) return true;
 System.out.println("at the end but patt=" + pattern + "=");
 		Boolean rc = cb.PMCallback(pattern, pt);
 		return rc;
