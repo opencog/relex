@@ -93,7 +93,16 @@ System.out.println("duude got match word "+ fus);
 			FeatureNode subf = fn.get("phr-head");
 			if (subf != null)
 			{
-				if (pat_starts_with_word && (saw_word == false)) return true; // no match
+				if (pat_starts_with_word)
+				{
+					if (saw_word == false) return true; // no match
+					String wat = pattern.substring(0, pattern.indexOf('('));
+System.out.println("breakout pat=" + wat);
+					Boolean rc = cb.PMCallback(wat, pt);
+					if (rc) return rc;
+				}
+
+				// extract a sub-tree from the pattern.
 				open = pattern.indexOf('(');
 				close = get_closing_paren (pattern, open);
 
@@ -110,7 +119,8 @@ System.out.println("duude got subf");
 			fn = fn.get("phr-next");
 		}
 
-		if (0 < pattern.length() && pat_starts_with_word && !saw_word) return true;
+		if (0 == pattern.length()) return false;
+		if (pat_starts_with_word && !saw_word) return true;
 System.out.println("at the end but patt=" + pattern + "=");
 		Boolean rc = cb.PMCallback(pattern, pt);
 		return rc;
