@@ -42,6 +42,9 @@ public class PatternMatch
 	 */
 	public static Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
+		Boolean rc = _match(pattern, pt, null);
+		if (rc) return rc;
+System.out.println("==================== hot tdog!");
 		return _match(pattern, pt, cb);
 	}
 
@@ -96,10 +99,13 @@ System.out.println("duude got match word "+ fus);
 				if (pat_starts_with_word)
 				{
 					if (saw_word == false) return true; // no match
-					String wat = pattern.substring(0, pattern.indexOf('(')).trim();
+					if (cb != null)
+					{
+						String wat = pattern.substring(0, pattern.indexOf('(')).trim();
 System.out.println("breakout pat=" + wat);
-					Boolean rc = cb.PMCallback(wat, pt);
-					if (rc) return rc;
+						Boolean rc = cb.PMCallback(wat, pt);
+						if (rc) return rc;
+					}
 				}
 
 				// extract a sub-tree from the pattern.
@@ -122,8 +128,12 @@ System.out.println("duude got subf");
 		if (0 == pattern.length()) return false;
 		if (pat_starts_with_word && !saw_word) return true;
 System.out.println("at the end but patt=" + pattern + "=");
-		Boolean rc = cb.PMCallback(pattern, pt);
-		return rc;
+		if (cb != null)
+		{
+			Boolean rc = cb.PMCallback(pattern, pt);
+			return rc;
+		}
+		return false;
 	}
 
 	static private int get_closing_paren(String str, int open)
