@@ -95,7 +95,8 @@ System.out.println("duude got match word "+ fus);
 			{
 				if (pat_starts_with_word && (saw_word == false)) return true; // no match
 				open = pattern.indexOf('(');
-				close = pattern.indexOf(')');
+				close = get_closing_paren (pattern, open);
+
 				String subpat = pattern.substring(open, close+1);
 System.out.println("duude got subf");
 				PhraseTree subt = new PhraseTree(fn);
@@ -113,5 +114,33 @@ System.out.println("duude got subf");
 System.out.println("at the end but patt=" + pattern + "=");
 		Boolean rc = cb.PMCallback(pattern, pt);
 		return rc;
+	}
+
+	static private int get_closing_paren(String str, int open)
+	{
+		int cnt = 1;
+		int paren = open;
+		while (cnt != 0)
+		{
+			int next_clos = str.indexOf(')', paren+1);
+			if (next_clos < 0) return -1;
+			int next_open = str.indexOf('(', paren+1);
+			if (next_clos < next_open)
+			{
+				cnt --;
+				paren = next_clos;
+			} 
+			else if (0 < next_open) 
+			{
+				cnt ++;
+				paren = next_open;
+			}
+			else // if we are here, then next_open = -1 and there's no opener.
+			{
+				cnt --;
+				paren = next_clos;
+			}
+		}
+		return paren;
 	}
 }
