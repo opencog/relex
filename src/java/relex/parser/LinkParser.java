@@ -36,11 +36,10 @@ public class LinkParser extends Parser
 	private static final boolean storePhraseString = true;
 
 	public String simpleParse(String sentence, LinkParserClient lpc) {
-		System.out.println("Calling cParse for sentence: " + sentence);
 		lpc.execParse(sentence);
 		if (lpc.getNumLinkages() > 0) {
 			lpc.makeLinkage(0);
-			return lpc.getConstituentString() + "\n";
+			return lpc.getConstituentString();
 		}
 		return null;
 	}
