@@ -62,33 +62,34 @@ public class Morphy
 	public static String TYPE_F = "type";
 	public static String NEG_F = "neg";
 
-	private static Morphy instance = null;
+//	private static Morphy instance = null;
 
 	public static final String DEFAULT_MORPHY_IMPLEMENTATION = "relex.morphy.Morphy";
 	public static final String MORPHY_IMPLEMENTATION_PROPERTY = "relex.morphy.Morphy";
 
-	public static synchronized Morphy getInstance()
-	{
-		if (instance == null)
-		{
-			String implementationClassname = System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
-			if (implementationClassname == null)
-				implementationClassname = DEFAULT_MORPHY_IMPLEMENTATION;
-			try
-			{
-				Class<?> cl = Class.forName(implementationClassname);
-				instance = (Morphy)cl.newInstance();
-				instance.initialize();
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException(
-						"Unable to initialize Morphy algorithm:" + ex.toString(),
-						ex);
-			}
-		}
-		return instance;
-	}
+	// Not thread-safe! 
+//	public static synchronized Morphy getInstance()
+//	{
+//		if (instance == null)
+//		{
+//			String implementationClassname = System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
+//			if (implementationClassname == null)
+//				implementationClassname = DEFAULT_MORPHY_IMPLEMENTATION;
+//			try
+//			{
+//				Class<?> cl = Class.forName(implementationClassname);
+//				instance = (Morphy)cl.newInstance();
+//				instance.initialize();
+//			}
+//			catch (Exception ex)
+//			{
+//				throw new RuntimeException(
+//						"Unable to initialize Morphy algorithm:" + ex.toString(),
+//						ex);
+//			}
+//		}
+//		return instance;
+//	}
 
 	private static HashMap<String, String> irregularVerbContractions = new HashMap<String, String>();
 	private static HashMap<String, String> possessiveAdjRoots = new HashMap<String, String>();
@@ -417,7 +418,8 @@ DEAD CODE DEAD CODE DEAD CODE */
 
 	public static void main(String[] args)
 	{
-		Morphy morphy = getInstance();
+//		Morphy morphy = getInstance();
+		Morphy morphy = new Morphy();
 		System.out.println(morphy.morph(args[0]));
 	}
 }
