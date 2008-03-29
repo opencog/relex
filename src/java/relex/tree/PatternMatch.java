@@ -96,7 +96,7 @@ System.out.println("duude got match word "+ fus);
 				if (pat_starts_with_word)
 				{
 					if (saw_word == false) return true; // no match
-					String wat = pattern.substring(0, pattern.indexOf('('));
+					String wat = pattern.substring(0, pattern.indexOf('(')).trim();
 System.out.println("breakout pat=" + wat);
 					Boolean rc = cb.PMCallback(wat, pt);
 					if (rc) return rc;
