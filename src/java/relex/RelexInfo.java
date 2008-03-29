@@ -17,6 +17,8 @@ package relex;
 
 import java.util.ArrayList;
 
+import relex.output.SimpleView;
+
 /**
  * @author miross
  * Created on Mar 29, 2005
@@ -33,6 +35,23 @@ public class RelexInfo
 	{
 		originalSentence = _originalSentence;
 		parsedSentences = _parsedSentences;
+	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		int numParses = 0;
+		for (ParsedSentence parse: parsedSentences)
+		{
+			sb.append(originalSentence).append("\n");
+			sb.append("\n====\n").append("\n");
+			sb.append("Parse " + (numParses+1) +" of " + parsedSentences.size()).append("\n");
+			sb.append("\n" + parse.getPhraseString()).append("\n");
+			sb.append("\n" + parse.getLinkString()).append("\n");
+			sb.append("\n======\n").append("\n");
+			sb.append(SimpleView.printRelations(parse.getLeft())).append("\n");
+			sb.append("\n======\n").append("\n");
+		}
+		return sb.toString();
 	}
 }
 
