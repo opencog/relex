@@ -30,7 +30,7 @@ public class ParallelRelationExtractor {
 	
 	private static final String DEFAULT_HOST = "localhost";
 	public static final int FIRST_PORT = 9000;
-	public static final int CLIENT_POOL_SIZE = 1;
+	public static final int CLIENT_POOL_SIZE = 2;
 	
     private ExecutorService exec;
 
