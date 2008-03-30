@@ -71,6 +71,7 @@ public class MatchChunks
 		{
 			PhraseTree pt = new PhraseTree(fn);
 
+			PatternMatch.match("(NP (NP a) a)", pt, callback);
 			PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, callback);
 
 			return false;
@@ -79,8 +80,7 @@ public class MatchChunks
 
 	/* -------------------------------------------------------- */
 
-/* --
-	private void chunkPhrase(FeatureNode fn, Chunk chunk)
+	private static void chunkWords(FeatureNode fn, Chunk chunk)
 	{
 		fn = fn.get("phr-head");
 		while (fn != null)
@@ -88,24 +88,33 @@ public class MatchChunks
 			FeatureNode wd = fn.get("phr-word");
 			if (wd != null) chunk.addWord(wd);
 
-			// Add subphrases to the word list
+			// Quit when a subprhase is seen.
 			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
-			{
-				chunkPhrase(fn, chunk);
-			}
+			if (subf != null) return;
+
 			fn = fn.get("phr-next");
 		}
 	}
--- */
 
 	/* -------------------------------------------------------- */
 	/* Use the phrase-tree approach to finding chunks */
 	private class PatCB implements PatternCallback
 	{
+		private Chunk curr_chunk;
+		public void FoundCallback(PhraseTree pt)
+		{
+ System.out.println("==================== hot tdog!");
+
+			curr_chunk = new Chunk();
+			chunks.add(curr_chunk);
+		}
 		public Boolean PMCallback(String pattern, PhraseTree pt)
 		{
-System.out.println("duude " + pattern + " " + pt.toString());
+System.out.println(">>> enfin duude >" + pattern + "< " + pt.toString());
+			if (pattern.equals("a"))
+			{
+				chunkWords(pt.getNode(), curr_chunk);
+			}
 			return false;
 		}
 	}

@@ -70,7 +70,8 @@ Noun phrases:
 Pattern match:
 --------------
 a == accept, r == reject
-(NP (NP a) (PP a (NP r)))
+(NP (NP a) a)               -- (NP (NP a day 's) march)
+(NP (NP a) (PP a (NP r)))   -- (NP (NP a couple) (PP of (NP clicks)))
     
 
 
