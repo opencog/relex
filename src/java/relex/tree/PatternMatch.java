@@ -42,9 +42,12 @@ public class PatternMatch
 	 */
 	public static Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
+		// Called twice -- first to see if there's a match,
+		// and a second time to report the results.
 		Boolean rc = _match(pattern, pt, null);
 		if (rc) return rc;
 System.out.println("==================== hot tdog!");
+		cb.FoundCallback(pt);
 		return _match(pattern, pt, cb);
 	}
 
