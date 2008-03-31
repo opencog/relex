@@ -26,6 +26,7 @@ import java.util.Map;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.chunk.Chunk;
 import relex.chunk.FindChunks;
+import relex.chunk.MatchChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
@@ -270,10 +271,9 @@ public class RelationExtractor
 		System.out.println(msg + elapsed + " millseconds");
 	}
 
-	/* ---------------------------------------------------------- */
-	private static void prt_chunks(FindChunks chunker)
+	/* --------------------------------------------------------- */
+	private static void prt_chunks(ArrayList<Chunk> chunks)
 	{
-		ArrayList<Chunk> chunks = chunker.getChunks();
 		for (Chunk ch : chunks)
 		{
 			System.out.println(ch.toString());
@@ -468,21 +468,25 @@ public class RelationExtractor
 						System.out.println("Basic chunks:");
 						FindChunks chunker = new FindChunks();
 						chunker.findBasicChunks(parse);
-						prt_chunks(chunker);
+						prt_chunks(chunker.getChunks());
 					}
 					if (commandMap.get("--pb") != null)
 					{
 						System.out.println("Phrase chunks:");
-						FindChunks chunker = new FindChunks();
-						chunker.findPhraseChunks(parse);
-						prt_chunks(chunker);
+						// FindChunks chunker = new FindChunks();
+						// chunker.findPhraseChunks(parse);
+						// prt_chunks(chunker.getChunks());
+
+MatchChunks mc = new MatchChunks();
+mc.findChunks(parse);
+prt_chunks(mc.getChunks());
 					}
 					if (commandMap.get("--pc") != null)
 					{
 						System.out.println("Object chunks:");
 						FindChunks chunker = new FindChunks();
 						chunker.findObjectChunks(parse);
-						prt_chunks(chunker);
+						prt_chunks(chunker.getChunks());
 					}
 					if (commandMap.get("-c") != null)
 					{
