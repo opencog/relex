@@ -482,7 +482,7 @@ public class RelationExtractor
 						System.out.println("Phrase chunks:");
 						MatchChunks chunker = new MatchChunks();
 						chunker.findChunks(parse);
-						prt_chunks(cunker.getChunks());
+						prt_chunks(chunker.getChunks());
 					}
 					if (commandMap.get("--pc") != null)
 					{
