@@ -21,7 +21,7 @@ import relex.util.socket.ProcessServer;
 
 public class LinkParserServer
 {
-	public static int verbosity = 1;
+	public static int verbosity = 0;
 
 	public static void main(String[] args) throws IOException {
 		ProcessServer ps = new ProcessServer(Integer.parseInt(args[0]),

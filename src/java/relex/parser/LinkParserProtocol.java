@@ -155,6 +155,7 @@ public class LinkParserProtocol extends ProcessProtocol
 		} else if (message.equals(MSG_IS_ENTITY)) {
 			return makeMessage(Boolean.toString(client.isEntity(arg)));
 		} else if (message.equals(MSG_PARSE)) {
+			System.out.println("Parsing "+arg);
 			client.execParse(arg);
 		} else if (message.equals(MSG_GET_NUM_LINKAGES)) {
 			return makeMessage(Integer.toString(client.getNumLinkages()));

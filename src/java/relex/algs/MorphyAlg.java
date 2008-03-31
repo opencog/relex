@@ -41,8 +41,9 @@ public class MorphyAlg extends SentenceAlgorithm
 	{
 		LinkableView w = new LinkableView(node);
 		String original = w.getWordString();
-		Morphed m = Morphy.getInstance().morph(original);
-		// m.load(original);
+		// not thread-safe
+		// Morphed m = Morphy.getInstance().morph(original);
+		Morphed m = new Morphy().morph(original);
 		String pos = w.getPOS();
 		if (pos == null)
 			throw new RuntimeException("All nodes with 'str' should have 'POS'");
