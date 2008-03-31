@@ -71,6 +71,7 @@ public class MatchChunks
 		{
 			PhraseTree pt = new PhraseTree(fn);
 
+			// A list of clauses to match, in disjunctive normal form.
 			PatternMatch.match("(NP (NP a) a)", pt, callback);
 			PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, callback);
 
