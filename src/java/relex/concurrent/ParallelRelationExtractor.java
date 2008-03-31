@@ -83,6 +83,8 @@ public class ParallelRelationExtractor {
 	private void initializePool() {
 		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool 
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
+		Morphy morphy = new Morphy();
+		morphy.initialize();
 		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
 			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
