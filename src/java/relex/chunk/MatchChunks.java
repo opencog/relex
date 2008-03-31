@@ -108,9 +108,9 @@ public class MatchChunks
 	private class PatCB implements PatternCallback
 	{
 		private Chunk curr_chunk;
-		public void FoundCallback(PhraseTree pt)
+		public void FoundCallback(String pattern, PhraseTree pt)
 		{
- System.out.println("==================== hot tdog!");
+ System.out.println("==================== hot dog! "+ pattern + " " + pt.toString());
 
 			curr_chunk = new Chunk();
 			chunks.add(curr_chunk);

@@ -57,7 +57,7 @@ public class PatternMatch
 		Boolean rc = _match(pattern, pt, null);
 		if (rc) return rc;
 
-		cb.FoundCallback(pt);
+		cb.FoundCallback(pattern, pt);
 		return _match(pattern, pt, cb);
 	}
 

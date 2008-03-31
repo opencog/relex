@@ -1,11 +1,24 @@
 
-ToDo:
 
-skip phrases with
+Unit tests
+----------
 
 
-Unit tests:
------------
+
+Sentence phrases
+----------------
+ * I'll DO it even IF IT KILLS me.
+   Desired answer: "do ... if it kills"
+      (SBAR if (S (NP it) (VP kills (NP me))))
+
+   This is tricky, because the "do" an be embedded
+   in a wide variety of phrase forms.
+
+   XXX this is currently not deteted.
+
+
+Verb phrases:
+------------
  * General Custer gave the Sioux chief no quarter.
    The desired answer is "give ... no quarter". 
 
