@@ -80,6 +80,7 @@ import relex.feature.FeatureNodeCallback;
 public class PhraseTree
 {
 	FeatureNode phr;
+	FeatureNode cur; /* cursor into phrase */
 
 	protected PhraseTree() {}
 
@@ -87,12 +88,27 @@ public class PhraseTree
 	{
 		if (fn.get("phr-head") != null) phr = fn;
 		else phr = fn.get("phr-root");
+		cur = phr.get("phr-head");
 	}
 
 	public String toString()
 	{
 		return toString(phr);
 	}
+
+	public FeatureNode getCursor()
+	{
+		return cur;
+	}
+	public void setCursor(FeatureNode c)
+	{
+		cur = c;
+	}
+	public void resetCursor()
+	{
+		cur = phr.get("phr-head");
+	}
+
 	public String getPhraseType()
 	{
 		return getPhraseType(phr);
@@ -165,6 +181,7 @@ public class PhraseTree
 		if (ph == null) ph = he.add("phr-mark");
 		ph.set(str, new FeatureNode("T"));
 	}
+
 	public Boolean getMark(String str)
 	{
 		FeatureNode ph = phr.get("phr-head");

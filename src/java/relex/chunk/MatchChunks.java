@@ -82,7 +82,6 @@ public class MatchChunks
 
 	private static void chunkWords(FeatureNode fn, Chunk chunk)
 	{
-		fn = fn.get("phr-head");
 		while (fn != null)
 		{
 			FeatureNode wd = fn.get("phr-word");
@@ -113,7 +112,8 @@ public class MatchChunks
 System.out.println(">>> enfin duude >" + pattern + "< " + pt.toString());
 			if (pattern.equals("a"))
 			{
-				chunkWords(pt.getNode(), curr_chunk);
+System.out.println(">>> enfin ptr " + PhraseTree.toString(pt.getCursor()));
+				chunkWords(pt.getCursor(), curr_chunk);
 			}
 			return false;
 		}

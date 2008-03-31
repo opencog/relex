@@ -92,10 +92,12 @@ System.out.println("duude so far so good with " + pt.toString() + " and pat=" + 
 			if (wd != null)
 			{
 				if (!pat_starts_with_word) return true; // no match
+
 FeatureNode fu= wd.get("orig_str");
 String fus="";
 if (fu != null) fus=fu.getValue();
 System.out.println("duude got match word "+ fus);
+				if (!saw_word)	pt.setCursor(fn);
 				saw_word = true;
 			}
 			FeatureNode subf = fn.get("phr-head");
