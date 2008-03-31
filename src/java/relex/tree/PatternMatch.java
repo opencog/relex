@@ -95,7 +95,7 @@ public class PatternMatch
 		// Now start walking the thing.
 		FeatureNode fn = pt.get("phr-head");
 		boolean saw_word = false;
-		if (0 < debug) System.out.println("match so far so good with " + pt.toString() + " and pat=" + pattern);
+		if (0 < debug) System.out.println("match type for " + pt.toString() + " and pat=" + pattern);
 
 		while (fn != null)
 		{
@@ -109,7 +109,7 @@ public class PatternMatch
 					FeatureNode fu= wd.get("orig_str");
 					String fus="";
 					if (fu != null) fus=fu.getValue();
-					System.out.println("mathc got a word "+ fus);
+					System.out.println("mathc got a word >>" + fus + "<<");
 				}
 				if (!saw_word)	pt.setCursor(fn);
 				saw_word = true;
@@ -148,6 +148,7 @@ public class PatternMatch
 
 		if (0 == pattern.length()) return false;
 		if (pat_starts_with_word && !saw_word) return true;
+		if (0 <= pattern.indexOf('(')) return true;  // shorted the pattern! 
 		if (0 < debug) System.out.println("match word string at end of pattern, patt=" + pattern + "=");
 		if (cb != null)
 		{
