@@ -1,4 +1,4 @@
-Claire killed Richard; then she hastily buried him in the backyard.
+It is a day's march from home.
 END.
 
 It is a couple of clicks down the road.
@@ -69,6 +69,7 @@ If paid weekly, bring the last six pay stubs.
 Alice looked at the cover of Shonen Jump.
 She decided to buy it.
 END.
+Claire killed Richard; then she hastily buried him in the backyard.
 Shares of the XYZ Widget Manufacturing Company rose on heavy trading today.
 Curzio bought a copy of Shonen Knife at the newsstand.
 It is five minutes of two.
