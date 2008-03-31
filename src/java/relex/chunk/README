@@ -59,6 +59,7 @@ Noun phrases:
        (NP (NP (NP a day 's) march) (PP from (NP home)))
 
    Rule: three NP's are too deep.
+   Otherwise, same as "a wee bit of cheese".
 
  * It is a couple of clicks down the road.
    Desired: "a couple of"
@@ -70,10 +71,17 @@ Noun phrases:
 Pattern match:
 --------------
 a == accept, r == reject
-(NP (NP a) a)               -- (NP (NP a day 's) march)
-(NP (NP a) (PP a (NP r)))   -- (NP (NP a couple) (PP of (NP clicks)))
+(NP (NP a) a)               -- (NP (NP a day 's) march)                -- a day's march
+(NP (NP a) (PP a (NP r)))   -- (NP (NP a couple) (PP of (NP clicks)))  -- a couple of
+                            -- (NP (NP a wee bit) (PP of (NP cheese))) -- a wee bit of
     
+(VP a (PP a (NP r)))        -- (VP take office (PP on (NP Monday)))            -- take office on
+(VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
+(VP a (NP r) (PP a (NP r))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 
+(VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
+
+(VP a (PP a) (PP a (NP r)) (PP r (NP r))) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
 
 Idioms:
 That is a hard act to follow.

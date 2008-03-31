@@ -74,6 +74,13 @@ public class MatchChunks
 			PatternMatch.match("(NP (NP a) a)", pt, callback);
 			PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, callback);
 
+			PatternMatch.match("(VP a (PP a (NP r)))", pt, callback);
+			PatternMatch.match("(VP a (NP r) (NP a))", pt, callback);
+			PatternMatch.match("(VP a (NP r) (PP a (NP r)))", pt, callback);
+			PatternMatch.match("(VP r (PP a (NP a)) (PP a (NP r)))", pt, callback);
+			PatternMatch.match("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))", pt, callback);
+			// PatternMatch.match("", pt, callback);
+
 			return false;
 		}
 	}
