@@ -19,6 +19,7 @@ import relex.feature.FeatureNode;
 
 /**
  * Implements phrase pattern matching.
+ * Implementation is an adh-hoc finite state machine with a tiny number of states.
  *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */

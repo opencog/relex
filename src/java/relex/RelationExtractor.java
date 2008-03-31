@@ -480,13 +480,9 @@ public class RelationExtractor
 					if (commandMap.get("--pb") != null)
 					{
 						System.out.println("Phrase chunks:");
-						// FindChunks chunker = new FindChunks();
-						// chunker.findPhraseChunks(parse);
-						// prt_chunks(chunker.getChunks());
-
-MatchChunks mc = new MatchChunks();
-mc.findChunks(parse);
-prt_chunks(mc.getChunks());
+						MatchChunks chunker = new MatchChunks();
+						chunker.findChunks(parse);
+						prt_chunks(cunker.getChunks());
 					}
 					if (commandMap.get("--pc") != null)
 					{
