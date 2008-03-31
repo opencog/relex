@@ -63,14 +63,14 @@ public class MatchChunks
 	/* Try to pattern match each subphrase */
 	private class SubPhrase implements FeatureNodeCallback
 	{
-		private FeatureNode fn;
+		private PhraseTree pt;
 		/**
 		 * Called for each phrase in a parse.
 		 * Add all parts of the phrase tree.
 		 */
-		public Boolean FNCallback(FeatureNode f)
+		public Boolean FNCallback(FeatureNode fn)
 		{
-			fn = f;
+			pt = new PhraseTree(fn);
 
 			// A list of clauses to match, in disjunctive normal form.
 			matcher("(NP (NP a) a)");
@@ -88,7 +88,6 @@ public class MatchChunks
 
 		private void matcher(String str)
 		{
-			PhraseTree pt = new PhraseTree(fn);
 			PatternMatch.match(str, pt, callback);
 		}
 	}
