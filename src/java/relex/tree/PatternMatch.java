@@ -25,6 +25,7 @@ import relex.feature.FeatureNode;
 
 public class PatternMatch
 {
+	static final int debug = 0;
 
 	/**
 	 * Phrase pattern matching.
@@ -67,7 +68,7 @@ public class PatternMatch
 	 */
 	private static Boolean _match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
-System.out.println("enter match pat= " + pattern + " tree=" + pt.toString());
+		if (0<debug) System.out.println("Enter match, pat= " + pattern + " tree=" + pt.toString());
 		int open = pattern.indexOf('(');
 		if (open < 0) return true;  // no opening paren was found.
 
@@ -94,7 +95,8 @@ System.out.println("enter match pat= " + pattern + " tree=" + pt.toString());
 		// Now start walking the thing.
 		FeatureNode fn = pt.get("phr-head");
 		boolean saw_word = false;
-System.out.println("duude so far so good with " + pt.toString() + " and pat=" + pattern);
+		if (0 < debug) System.out.println("match so far so good with " + pt.toString() + " and pat=" + pattern);
+
 		while (fn != null)
 		{
 			FeatureNode wd = fn.get("phr-word");
@@ -102,10 +104,13 @@ System.out.println("duude so far so good with " + pt.toString() + " and pat=" + 
 			{
 				if (!pat_starts_with_word) return true; // no match
 
-FeatureNode fu= wd.get("orig_str");
-String fus="";
-if (fu != null) fus=fu.getValue();
-System.out.println("duude got match word "+ fus);
+				if (0 < debug)
+				{
+					FeatureNode fu= wd.get("orig_str");
+					String fus="";
+					if (fu != null) fus=fu.getValue();
+					System.out.println("mathc got a word "+ fus);
+				}
 				if (!saw_word)	pt.setCursor(fn);
 				saw_word = true;
 			}
@@ -118,7 +123,7 @@ System.out.println("duude got match word "+ fus);
 					if (cb != null)
 					{
 						String wat = pattern.substring(0, pattern.indexOf('(')).trim();
-System.out.println("breakout pat=" + wat);
+						if (0 < debug) System.out.println("match end of word string, pat=" + wat);
 						Boolean rc = cb.PMCallback(wat, pt);
 						if (rc) return rc;
 					}
@@ -129,7 +134,7 @@ System.out.println("breakout pat=" + wat);
 				close = get_closing_paren (pattern, open);
 
 				String subpat = pattern.substring(open, close+1);
-System.out.println("duude got subf");
+				if (0 < debug) System.out.println("match recursive call");
 				PhraseTree subt = new PhraseTree(fn);
 				boolean rc = _match(subpat, subt, cb);
 				if (rc) return rc;
@@ -143,7 +148,7 @@ System.out.println("duude got subf");
 
 		if (0 == pattern.length()) return false;
 		if (pat_starts_with_word && !saw_word) return true;
-System.out.println("at the end but patt=" + pattern + "=");
+		if (0 < debug) System.out.println("match word string at end of pattern, patt=" + pattern + "=");
 		if (cb != null)
 		{
 			Boolean rc = cb.PMCallback(pattern, pt);
