@@ -39,6 +39,8 @@ public class PatternMatch
 	 *    ("a", (NP a couple))
 	 *    ("a", (PP of (NP clicks)))
 	 *    ("r", (NP clicks))
+	 *
+	 * The callbacks are guaranteed to be made in sentence word order.
 	 */
 	public static Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
@@ -46,7 +48,7 @@ public class PatternMatch
 		// and a second time to report the results.
 		Boolean rc = _match(pattern, pt, null);
 		if (rc) return rc;
-System.out.println("==================== hot tdog!");
+
 		cb.FoundCallback(pt);
 		return _match(pattern, pt, cb);
 	}
