@@ -15,9 +15,9 @@ package relex.algs;
  * limitations under the License.
  */
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
-import relex.parser.LinkParserClient;
 
 /**
  * Any words listed in the LinkParser dictionary as Specific are tagged here.
@@ -25,11 +25,11 @@ import relex.parser.LinkParserClient;
  */
 public class EntityAlg extends TemplateMatchingAlg {
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 		LinkableView linkable = new LinkableView(node);
 		String word = linkable.getWordString();
 		if (word.length() >= 1) {
-			boolean ise = lpc.isEntity(word);
+			boolean ise = context.getLinkParserClient().isEntity(word);
 			if (Character.isUpperCase(word.charAt(0)) || ise) {
 				node.set("ENTITY-FLAG", new FeatureNode("T"));
 			}

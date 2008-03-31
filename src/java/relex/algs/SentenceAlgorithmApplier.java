@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
-import relex.parser.LinkParserClient;
+import relex.concurrent.RelexContext;
 
 /**
  * SentenceAlgorithmApplier is responsible for loading SentenceAlgorithms from a
@@ -53,9 +53,9 @@ public class SentenceAlgorithmApplier {
 	}
 
 	// The apply method!
-	public void applyAlgs(ParsedSentence sentence, LinkParserClient lpc) {
+	public void applyAlgs(ParsedSentence sentence, RelexContext context) {
 		for (SentenceAlgorithm alg: algs){
-			alg.apply(sentence, lpc);
+			alg.apply(sentence, context);
 		}
 	}
 

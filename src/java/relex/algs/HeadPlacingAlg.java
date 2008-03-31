@@ -15,8 +15,8 @@ package relex.algs;
  * limitations under the License.
  */
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
-import relex.parser.LinkParserClient;
 
 /**
  * This algorithm combines sequences of words which should be a single word
@@ -30,7 +30,7 @@ public class HeadPlacingAlg extends TemplateMatchingAlg {
 
 	static String allLabelRegex = "(" + subjectLabelRegex + ")|(" + headLabelRegex + ")";
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 	}
 
 }

@@ -19,16 +19,16 @@ package relex.algs;
  * This algorithm combines sequences of words which should be a single
  * word ("as many/much")
  */
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
-import relex.parser.LinkParserClient;
 
 /**
  * Combines two words into one, stored in the right node.
  */
 public class TwoWordCombineToRightAlg extends TemplateMatchingAlg {
 
-    protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+    protected void applyTo(FeatureNode node, RelexContext context) {
         FeatureNode leftNode = LinkView.getLeft(node);
         FeatureNode rightNode = LinkView.getRight(node);
 

@@ -21,10 +21,10 @@ package relex.algs;
  */
 import java.util.regex.Pattern;
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.feature.LinkableView;
-import relex.parser.LinkParserClient;
 
 public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 
@@ -85,7 +85,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 				+ collectNames(nextNode(current, directionRight, labelRegex), rightNode, labelRegex, shouldEraseStrAndRef);
 	}
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 		FeatureNode rightNode = getTemplate().val("right");
 		if (rightNode != LinkView.getRight(node))
 			throw new RuntimeException("variable 'right' is not properly assigned");
@@ -110,7 +110,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 
 		// use morephology on the right node, just in case.
 		MorphyAlg m = new MorphyAlg();
-		m.applyTo(rightNode, lpc);
+		m.applyTo(rightNode, context);
 
 	}
 

@@ -21,6 +21,7 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
 import relex.entity.EntityMaintainer;
+import relex.morphy.Morphy;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
 import relex.parser.LinkParserSocketClient;
@@ -34,7 +35,7 @@ public class ParallelRelationExtractor {
 	
     private ExecutorService exec;
 
-	private BlockingQueue<LinkParserClient> pool;
+	private BlockingQueue<RelexContext> pool;
 
 	private LinkedBlockingQueue<Future<RelexTaskResult>> results;
 	
@@ -81,11 +82,13 @@ public class ParallelRelationExtractor {
 	 */
 	private void initializePool() {
 		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool 
-		pool = new ArrayBlockingQueue<LinkParserClient>(CLIENT_POOL_SIZE);
+		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
+		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
 			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
+			 RelexContext context = new RelexContext(lpc, new Morphy());
 			 try {
-				pool.put(lpc);
+				pool.put(context);
 			} catch (InterruptedException e) {
 			}
 		 }
@@ -115,13 +118,13 @@ public class ParallelRelationExtractor {
 		if (entityMaintainer == null) {
 			entityMaintainer = entityDetector.process(sentence);
 		}
-		LinkParserClient lpc = pool.take();
+		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable = 
 			new RelexTask(count++, sentence, 
 					entityMaintainer, 
 					linkParser, 
 					sentenceAlgorithmApplier, 
-					phraseMarkup, lpc, pool);
+					phraseMarkup, context, pool);
 		Future<RelexTaskResult> submit = exec.submit(callable);
         results.add(submit);
 	}

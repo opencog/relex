@@ -15,13 +15,13 @@ package relex.algs;
  * limitations under the License.
  */
 
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import relex.ParsedSentence;
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureAction;
 import relex.feature.FeatureNode;
-import relex.parser.LinkParserClient;
 
 public class TemplateActionAlg extends TemplateMatchingAlg {
 
@@ -31,7 +31,7 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 	 */
 	private ArrayList<FeatureAction> featureActions;
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 		Iterator<FeatureAction> i = featureActions.iterator();
 		while (i.hasNext()) {
 			FeatureAction act = i.next();

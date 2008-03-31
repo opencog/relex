@@ -15,9 +15,9 @@ package relex.algs;
  * limitations under the License.
  */
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
-import relex.parser.LinkParserClient;
 
 /**
  * Indicate if word is in past tense form.
@@ -25,11 +25,11 @@ import relex.parser.LinkParserClient;
  */
 public class VerbTenseAlg extends TemplateMatchingAlg
 {
-	protected void applyTo(FeatureNode node, LinkParserClient lpc)
+	protected void applyTo(FeatureNode node, RelexContext context)
 	{
 		LinkableView verb = new LinkableView(node);
 		String word = verb.getWordString();
-		if (lpc.isPastTenseForm(word))
+		if (context.getLinkParserClient().isPastTenseForm(word))
 			verb.setTenseVal("past");
 	}
 

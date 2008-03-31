@@ -28,6 +28,7 @@ import relex.chunk.Chunk;
 import relex.chunk.FindChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
+import relex.concurrent.RelexContext;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
@@ -35,6 +36,7 @@ import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
 import relex.frame.Frame;
+import relex.morphy.Morphy;
 import relex.output.OpenCogXML;
 import relex.output.ParseView;
 import relex.output.RawView;
@@ -65,7 +67,7 @@ public class RelationExtractor
 	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
 
 	/** The LinkParserClient to be used - this class isn't thread safe! */
-	private LinkParserClient lpc;
+	private RelexContext context; 
 	
 	/** Syntax processing */
 	private LinkParser parser;
@@ -126,12 +128,17 @@ public class RelationExtractor
 	                  boolean useSocket)
 	{
 		LinkParser p = new LinkParser();
+		LinkParserClient lpc = null;
 		if (useSocket) {
 			lpc = new LinkParserSocketClient();
 		} else {
 			lpc = LinkParserJNINewClient.getSingletonInstance();
 		}
 		lpc.init(null);
+		Morphy morphy = new Morphy();
+		morphy.initialize(); // make sure that JWNL is being used
+		context = new RelexContext(lpc, morphy);
+		
 		SentenceAlgorithmApplier saa = new SentenceAlgorithmApplier();
 		saa.read(algsFile);
 
@@ -164,19 +171,19 @@ public class RelationExtractor
 	 * but only this many are returned.
 	 */
 	public void setMaxParses(int maxParses) {
-		lpc.setMaxParses(maxParses);
+		context.getLinkParserClient().setMaxParses(maxParses);
 	}
 
 	public void setMaxCost(int maxCost) {
-		lpc.setMaxCost(maxCost);
+		context.getLinkParserClient().setMaxCost(maxCost);
 	}
 
 	public void setAllowSkippedWords(boolean allow) {
-		lpc.setAllowSkippedWords(allow);
+		context.getLinkParserClient().setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {
-		lpc.setMaxParseSeconds(maxParseSeconds);
+		context.getLinkParserClient().setMaxParseSeconds(maxParseSeconds);
 	}
 
 	/* ---------------------------------------------------------- */
@@ -220,7 +227,7 @@ public class RelationExtractor
 			entityMaintainer.prepareSentence(parse.getLeft());
 
 			// The actual relation extraction is done here.
-			sentenceAlgorithmApplier.applyAlgs(parse, lpc);
+			sentenceAlgorithmApplier.applyAlgs(parse, context);
 
 			// Strip out the entity markup, so that when the 
 			// sentence is printed, we don't print gunk.
@@ -250,7 +257,7 @@ public class RelationExtractor
 		if (sentence == null) return null;
 		ArrayList<ParsedSentence> parses = null;
 		if (sentence.length() < 1024) {
-			parses = parser.parse(sentence, lpc);
+			parses = parser.parse(sentence, context.getLinkParserClient());
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
 			parses = new ArrayList<ParsedSentence>();

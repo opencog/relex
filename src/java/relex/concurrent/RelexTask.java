@@ -9,7 +9,6 @@ import relex.RelexInfo;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.entity.EntityMaintainer;
 import relex.parser.LinkParser;
-import relex.parser.LinkParserClient;
 import relex.tree.PhraseMarkup;
 
 /**
@@ -31,21 +30,21 @@ public class RelexTask implements Callable<RelexTaskResult> {
 	private PhraseMarkup phraseMarkup;
 
 	// Used in mutual exclusion, must be returned to the pool
-	private LinkParserClient lpc;
-	private BlockingQueue<LinkParserClient> pool;
+	private RelexContext context; 
+	private BlockingQueue<RelexContext> pool;
 	
 	public RelexTask(int index, String sentence,
 			EntityMaintainer entityMaintainer,
 			LinkParser lp, 
 			SentenceAlgorithmApplier sentenceAlgorithmApplier,
 			PhraseMarkup phraseMarkup,
-			LinkParserClient lpc, BlockingQueue<LinkParserClient> pool){
+			RelexContext context, BlockingQueue<RelexContext> pool){
 		this.index = index;
 		this.entityMaintainer = entityMaintainer;
 		this.lp = lp; 
 		this.sentenceAlgorithmApplier = sentenceAlgorithmApplier;
 		this.phraseMarkup = phraseMarkup;
-		this.lpc = lpc;
+		this.context = context;
 		this.pool = pool;
 		this.sentence = sentence;
 	}
@@ -54,7 +53,7 @@ public class RelexTask implements Callable<RelexTaskResult> {
 		if (DEBUG > 0) System.out.println("["+index+"] Start processing "+sentence);
 		String convertedSentence = entityMaintainer.getConvertedSentence();
 		if (DEBUG > 0) System.out.println("["+index+"] End entity detection");
-		ArrayList<ParsedSentence> parses = lp.parse(convertedSentence, lpc);
+		ArrayList<ParsedSentence> parses = lp.parse(convertedSentence, context.getLinkParserClient());
 		RelexInfo ri = new RelexInfo(sentence, parses);
 		if (DEBUG > 0) System.out.println("["+index+"] End parsing");
 
@@ -67,7 +66,7 @@ public class RelexTask implements Callable<RelexTaskResult> {
 				entityMaintainer.prepareSentence(parse.getLeft());
 	
 				// The actual relation extraction is done here.
-				sentenceAlgorithmApplier.applyAlgs(parse, lpc);
+				sentenceAlgorithmApplier.applyAlgs(parse, context);
 				
 				// Strip out the entity markup, so that when the 
 				// sentence is printed, we don't print gunk.
@@ -84,7 +83,7 @@ public class RelexTask implements Callable<RelexTaskResult> {
 		
 		if (DEBUG > 0) System.out.println("["+index+"] End processing");
 		try {
-			pool.put(lpc);
+			pool.put(context);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
