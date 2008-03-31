@@ -19,7 +19,6 @@ import relex.feature.FeatureNode;
 
 /**
  * Implements phrase pattern matching.
- * Implementation is an adh-hoc finite state machine with a tiny number of states.
  *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
@@ -40,6 +39,13 @@ public class PatternMatch
 	 *    ("a", (NP a couple))
 	 *    ("a", (PP of (NP clicks)))
 	 *    ("r", (NP clicks))
+	 * In this example, the letters "a" and "r" have explicit meaning;
+	 * it is up to the callback to decide what to do with them. They 
+	 * do have an implicit meaning: they are "wildcards" which match
+	 * any string of words.
+	 *
+	 * As of the current implementation, there is no wild-card to match 
+	 * phrase types, or to match phrases. Perhaps these should be added.
 	 *
 	 * The callbacks are guaranteed to be made in sentence word order.
 	 */
@@ -55,7 +61,9 @@ public class PatternMatch
 	}
 
 	/**
-	 * Return true to indicate mismatch
+	 * Return true to indicate mismatch; false to continue trying to match.
+	 *
+	 * Implementation is an adh-hoc finite state machine with a tiny number of states.
 	 */
 	private static Boolean _match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
@@ -144,6 +152,11 @@ System.out.println("at the end but patt=" + pattern + "=");
 		return false;
 	}
 
+	/**
+	 * Return pointer to right-parenthesis that matches the indicated
+	 * left-paren. Counts number of open and close parens, until the
+	 * count drops to zero. Returns -1 if the closing paren is not found.
+	 */
 	static private int get_closing_paren(String str, int open)
 	{
 		int cnt = 1;
