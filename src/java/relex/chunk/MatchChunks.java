@@ -63,26 +63,33 @@ public class MatchChunks
 	/* Try to pattern match each subphrase */
 	private class SubPhrase implements FeatureNodeCallback
 	{
+		private FeatureNode fn;
 		/**
 		 * Called for each phrase in a parse.
 		 * Add all parts of the phrase tree.
 		 */
-		public Boolean FNCallback(FeatureNode fn)
+		public Boolean FNCallback(FeatureNode f)
 		{
-			PhraseTree pt = new PhraseTree(fn);
+			fn = f;
 
 			// A list of clauses to match, in disjunctive normal form.
-			PatternMatch.match("(NP (NP a) a)", pt, callback);
-			PatternMatch.match("(NP (NP a) (PP a (NP r)))", pt, callback);
+			matcher("(NP (NP a) a)");
+			matcher("(NP (NP a) (PP a (NP r)))");
 
-			PatternMatch.match("(VP a (PP a (NP r)))", pt, callback);
-			PatternMatch.match("(VP a (NP r) (NP a))", pt, callback);
-			PatternMatch.match("(VP a (NP r) (PP a (NP r)))", pt, callback);
-			PatternMatch.match("(VP r (PP a (NP a)) (PP a (NP r)))", pt, callback);
-			PatternMatch.match("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))", pt, callback);
-			// PatternMatch.match("", pt, callback);
+			matcher("(VP a (PP a (NP r)))");
+			matcher("(VP a (NP r) (NP a))");
+			matcher("(VP a (NP r) (PP a (NP r)))");
+			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
+			matcher("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))");
+			// matcher("");
 
 			return false;
+		}
+
+		private void matcher(String str)
+		{
+			PhraseTree pt = new PhraseTree(fn);
+			PatternMatch.match(str, pt, callback);
 		}
 	}
 
