@@ -2284,6 +2284,18 @@ WHERE_HACK_FOR_QP
 <F_L head-question-word ref links _to-do links _%atLocation> = <F_L head-question-word ref links _%atLocation>
 <F_L head-question-word ref links _%atLocation> = %
 ;
+; ////////////////////////////////////////////////////////////////////////
+;
+; Final ref cleanup
+;
+; Copy part-of-speach to where its visible.
+;
+#TemplateActionAlg
+COPY_POS_TO_REF
+<POS> != %
+=
+<ref pos> = <POS>
+;
 #TemplateActionAlg
 CLEAN_UP_BAD_REFS1
 <ref name> != %

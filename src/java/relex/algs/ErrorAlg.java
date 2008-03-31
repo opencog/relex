@@ -15,15 +15,15 @@ package relex.algs;
  * limitations under the License.
  */
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
-import relex.parser.LinkParserClient;
 
 /**
  * Throws a runtime exception if an error is encountered
  */
 public class ErrorAlg extends TemplateMatchingAlg {
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 		throw new RuntimeException("ErrorAlg with template:\n" + getTemplate() + "\n\napplied to FeatureNode:\n" + node);
 	}
 

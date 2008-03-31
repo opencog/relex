@@ -429,7 +429,7 @@ public class EntityMaintainer
 		catch (Exception e)
 		{
 			System.err.println("Error: failed to repair sentence.");
-			System.err.println("Broken sentence was:");
+			System.err.println("Broken sentence was: "+getOriginalSentence());
 			System.err.println(RawView.printZHeads(leftNode));
 			e.printStackTrace();
 		}

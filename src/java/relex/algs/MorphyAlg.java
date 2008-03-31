@@ -15,11 +15,10 @@
  */
 package relex.algs;
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
-import relex.morphy.Morphy;
 import relex.morphy.Morphed;
-import relex.parser.LinkParserClient;
 
 /**
  * Uses Morphy to generate the root of a word.
@@ -37,13 +36,11 @@ public class MorphyAlg extends SentenceAlgorithm
 		return "MORPHY_ALG";
 	}
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc)
+	protected void applyTo(FeatureNode node, RelexContext context)
 	{
 		LinkableView w = new LinkableView(node);
 		String original = w.getWordString();
-		// not thread-safe
-		// Morphed m = Morphy.getInstance().morph(original);
-		Morphed m = new Morphy().morph(original);
+		Morphed m = context.getMorphy().morph(original);
 		String pos = w.getPOS();
 		if (pos == null)
 			throw new RuntimeException("All nodes with 'str' should have 'POS'");

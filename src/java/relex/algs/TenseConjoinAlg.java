@@ -15,8 +15,8 @@ package relex.algs;
  * limitations under the License.
  */
 
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
-import relex.parser.LinkParserClient;
 
 /**
  * Traverses a sequence of tense feature nodes in which each node has a "val"
@@ -40,7 +40,7 @@ public class TenseConjoinAlg extends TemplateMatchingAlg {
 		return val;
 	}
 
-	protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+	protected void applyTo(FeatureNode node, RelexContext context) {
 		FeatureNode tenseNode = node.get("tense");
 		tenseNode.set("name", new FeatureNode(recursiveTenseExtract(tenseNode)));
 	}

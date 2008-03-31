@@ -19,16 +19,16 @@ package relex.algs;
  * This algorithm combines sequences of words which should be a single 
  * word (proper names, and idioms like "at hand")
  */
+import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
-import relex.parser.LinkParserClient;
 
 /**
  * Combines two words into one, stored in the left node.
  */
 public class TwoWordCombineToLeftAlg extends TemplateMatchingAlg {
 
-    protected void applyTo(FeatureNode node, LinkParserClient lpc) {
+    protected void applyTo(FeatureNode node, RelexContext context) {
         FeatureNode rightNode = LinkView.getRight(node);
         FeatureNode leftNode = LinkView.getLeft(node);
 
