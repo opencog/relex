@@ -54,6 +54,16 @@ DETERMINER_FLAG
 <F_L DETERMINER_FLAG> = T
 <F_L POS> = det
 ;
+; "The Widget Company" has a DG link to "the", which is missed by rule above.
+#TemplateActionAlg
+DETERMINER_FLAG2
+<LAB> = \DG\.*
+<F_L str> = the|The
+=
+<DETERMINER_LINK_FLAG> = T
+<F_L DETERMINER_FLAG> = T
+<F_L POS> = det
+;
 #TemplateActionAlg
 POS_NOUN_DET
 <DETERMINER_LINK_FLAG> = T
