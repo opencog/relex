@@ -88,7 +88,8 @@ public class PhraseTree
 	{
 		if (fn.get("phr-head") != null) phr = fn;
 		else phr = fn.get("phr-root");
-		cur = phr.get("phr-head");
+		if (phr != null) cur = phr.get("phr-head");
+		else cur = null;
 	}
 
 	public String toString()
