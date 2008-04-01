@@ -3,9 +3,11 @@ package relex.morphy;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NavigableSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
@@ -24,10 +26,10 @@ public class MapMorphy implements Morphy{
 	public static String TYPE_F = "type";
 	public static String NEG_F = "neg";
 
-	private static HashMap<String, String> irregularVerbContractions = new HashMap<String, String>();
-	private static HashMap<String, String> possessiveAdjRoots = new HashMap<String, String>();
-	private static HashMap<String, String> possessiveNounRoots = new HashMap<String, String>();
-	private static HashMap<String, String> standardContractions = new HashMap<String, String>();
+	private static Map<String, String> irregularVerbContractions = new TreeMap<String, String>();
+	private static Map<String, String> possessiveAdjRoots = new TreeMap<String, String>();
+	private static Map<String, String> possessiveNounRoots = new TreeMap<String, String>();
+	private static Map<String, String> standardContractions = new TreeMap<String, String>();
 
 	/* static private initializer */
 	static {
@@ -75,9 +77,9 @@ public class MapMorphy implements Morphy{
 	
 	final POS[] pos = new POS[] { POS.NOUN, POS.VERB, POS.ADVERB, POS.ADJECTIVE };
 	
-	HashMap<POS, HashMap<String, IndexWord>> partsOfSpeech = new HashMap<POS, HashMap<String,IndexWord>>();
+	Map<POS, Map<String, IndexWord>> partsOfSpeech = new HashMap<POS, Map<String,IndexWord>>();
 	
-	HashMap<POS, HashMap<String, HashSet<String>>> exceptions = new HashMap<POS, HashMap<String,HashSet<String>>>();
+	Map<POS, Map<String, NavigableSet<String>>> exceptions = new HashMap<POS, Map<String, NavigableSet<String>>>();
 	
 	@SuppressWarnings("unchecked")
 	public void initialize() {
@@ -85,25 +87,25 @@ public class MapMorphy implements Morphy{
 		
 		Dictionary d = Dictionary.getInstance();			
 		for(int i = 0; i < pos.length; i++) {
-			HashMap<String, HashSet<String>> posExceptions = exceptions.get(pos[i]); 
+			Map<String, NavigableSet<String>> posExceptions = exceptions.get(pos[i]); 
 			if (posExceptions == null){
-				posExceptions = new HashMap<String, HashSet<String>>();
+				posExceptions = new TreeMap<String, NavigableSet<String>>();
 				exceptions.put(pos[i], posExceptions);
 			}
 			try {
 				for (Iterator it = d.getExceptionIterator(pos[i]); it.hasNext(); ){
 					Exc exc = (Exc) it.next();
 					String word = exc.getLemma();
-					HashSet<String> wordExceptions = posExceptions.get(word);
+					NavigableSet<String> wordExceptions = posExceptions.get(word);
 					if (wordExceptions==null){
-						wordExceptions = new HashSet<String>();
+						wordExceptions = new TreeSet<String>();
 						posExceptions.put(word, wordExceptions);
 					}
 					wordExceptions.addAll(exc.getExceptions());
 				}
-				HashMap<String, IndexWord> indexWords = partsOfSpeech.get(pos[i]);
+				Map<String, IndexWord> indexWords = partsOfSpeech.get(pos[i]);
 				if (indexWords == null){
-					indexWords = new HashMap<String, IndexWord>();
+					indexWords = new TreeMap<String, IndexWord>();
 					partsOfSpeech.put(pos[i], indexWords);
 				}
 				for (Iterator it = d.getIndexWordIterator(pos[i]); it.hasNext(); ){
@@ -178,7 +180,7 @@ public class MapMorphy implements Morphy{
 	 * @param lookup
 	 */
 	private IndexWord lookupExceptions(POS pos, String lookup) {
-		HashSet<String> wordExceptions = exceptions.get(pos).get(lookup);
+		NavigableSet<String> wordExceptions = exceptions.get(pos).get(lookup);
 		if ( (wordExceptions!=null) && (wordExceptions.size()>0) ){
 			for(String exception: wordExceptions){
 				IndexWord exceptionResult = partsOfSpeech.get(pos).get(exception.toLowerCase());
