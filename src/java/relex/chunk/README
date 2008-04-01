@@ -48,14 +48,17 @@ Verb phrases:
    Drop leading VP, keep first NP, drop second NP.
    (drop first VP perhaps because its a copula?)
  
-  * I ran away from home at age two.
-    Desired answer: "ran away from"
+ * I RAN AWAY FROM home at age two.
+   Desired answer: "ran away from"
 
-       (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
+      (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
 
-    Keep the VP, and the first PP, and the second PP, 
-    dropping NP in the second PP.
+   Keep the VP, and the first PP, and the second PP, 
+   dropping NP in the second PP.
 
+ * It was A BITTER PILL TO SWALLOW.
+
+      (VP was (NP a bitter pill) (S (VP to (VP swallow))))
 
 Noun phrases:
 -------------
@@ -84,17 +87,20 @@ Noun phrases:
 Pattern match:
 --------------
 a == accept, r == reject
-(NP (NP a) a)               -- (NP (NP a day 's) march)                -- a day's march
 (NP (NP a) (PP a (NP r)))   -- (NP (NP a couple) (PP of (NP clicks)))  -- a couple of
                             -- (NP (NP a wee bit) (PP of (NP cheese))) -- a wee bit of
-    
+(NP (NP (NP a) a) (PP r (NP r))) -- (NP (NP (NP a day 's) march) (PP from (NP home))) --  a day's march
+
+
 (VP a (PP a (NP r)))        -- (VP take office (PP on (NP Monday)))            -- take office on
 (VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
 (VP a (NP r) (PP a (NP r))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 
+(VP r (NP a) (S (VP a (VP a))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to swallow.
 (VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
 
 (VP a (PP a) (PP a (NP r)) (PP r (NP r))) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
+
 
 Idioms:
 That is a hard act to follow.

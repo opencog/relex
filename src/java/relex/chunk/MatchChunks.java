@@ -73,12 +73,13 @@ public class MatchChunks
 			pt = new PhraseTree(fn);
 
 			// A list of clauses to match, in disjunctive normal form.
-			matcher("(NP (NP a) a)");
 			matcher("(NP (NP a) (PP a (NP r)))");
+			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
 
 			matcher("(VP a (PP a (NP r)))");
 			matcher("(VP a (NP r) (NP a))");
 			matcher("(VP a (NP r) (PP a (NP r)))");
+			matcher("(VP r (NP a) (S (VP a (VP a))))");
 			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
 			matcher("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))");
 			// matcher("");
@@ -116,7 +117,7 @@ public class MatchChunks
 		private Chunk curr_chunk;
 		public void FoundCallback(String pattern, PhraseTree pt)
 		{
- System.out.println("==================== hot dog! "+ pattern + " " + pt.toString());
+ System.out.println("========== hot dog! "+ pattern + " == " + pt.toString());
 
 			curr_chunk = new Chunk();
 			chunks.add(curr_chunk);
