@@ -1529,7 +1529,7 @@ INV-MARK_TOBE
 #TemplateActionAlg
 TODO1z
 ; I like running.
-; The exception for Pg*b prevents hypotehtical for forms of be: 
+; The exception for Pg*b prevents hypothetical for forms of be: 
 ; "They WERE RUNNING." and "what ARE they PLANNING?"
 <LAB> = \I\.*|\Pg\.*
 <LAB> != Pg*b
@@ -1544,6 +1544,8 @@ TODO2
 <F_R to-do> != %
 =
 <F_L to-do> += <F_R to-do>
+;
+; Transfer head links to ref.
 ;
 #TemplateActionAlg
 TODO_TO_LINKS
@@ -2293,6 +2295,31 @@ WHERE_HACK_FOR_QP
 =
 <F_L head-question-word ref links _to-do links _%atLocation> = <F_L head-question-word ref links _%atLocation>
 <F_L head-question-word ref links _%atLocation> = %
+;
+; ////////////////////////////////////////////////////////////////////////
+;
+; Attempt to make "The dog will eat it" and "The dog is going to eat it"
+; yield the same relex output. This requires dropping _to-do(go,eat) and 
+; the _subj(go,dog) from the list of exported relations. What remains is
+; _subj(eat,dog) _obj(eat,it) HYP(eat,T)
+;
+#TemplateActionAlg
+WILL_TODO
+<links _to-do> != %
+<links _subj> != %
+<name> = go
+<HYP> = T
+<tense> = present_progressive
+=
+<DROP-REF-FLAG> = T
+;
+; Drop all tagged refs.
+;
+#TemplateActionAlg
+DROP_REF
+<ref DROP-REF-FLAG> = T
+=
+<ref> = %
 ;
 ; ////////////////////////////////////////////////////////////////////////
 ;
