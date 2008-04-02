@@ -37,9 +37,11 @@ public class DocSplitterFallbackImpl implements DocSplitter
 		sb.setLength(0);
 	}
 
-	public String getNextSentence() {
+	public String getNextSentence()
+	{
 		String s = sb.toString();
 		clearBuffer();
+		if (s.equals("")) s = null;
 		return s;
 	}
 
