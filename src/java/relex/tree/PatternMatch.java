@@ -132,6 +132,7 @@ public class PatternMatch
 				// extract a sub-tree from the pattern.
 				open = pattern.indexOf('(');
 				close = get_closing_paren (pattern, open);
+				if ((open < 0) || (close < 0)) return true;
 
 				String subpat = pattern.substring(open, close+1);
 				if (0 < debug) System.out.println("match recursive call");
