@@ -1,4 +1,4 @@
-The dog ate it.
+It is a good bet that he did it.
 END.
 
 We had a bit of a laugh over Mike's tragic demise.
@@ -9,9 +9,7 @@ I ran away from home at age two.
 I was in love with that bunny.
 John Dillinger was a man who broke the law.
 General Custer gave the Sioux chief no quarter.
-END.
 She forced him to resign.
-END.
 That was one whale of a screwup.
 That is a hard act to follow.
 I took her to the dance.
@@ -20,9 +18,9 @@ He ate a wee bit of cheese.
 That was one hell of a ride.
 That chopper is one hell of a ride.
 I'll do it even if it kills me.
+END.
 
-
-It's a good bet he did it.
+The dog was going to eat it.
 
 The color of the book is red. What color is the book?
 

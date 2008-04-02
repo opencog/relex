@@ -76,6 +76,10 @@ public class MatchChunks
 			matcher("(NP (NP a) (PP a (NP r)))");
 			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
 
+			matcher("(S (VP a (NP a)))");
+			matcher("(SBAR a (S (NP a) (VP a (NP r))))");
+
+			//
 			matcher("(VP a (PP a (NP r)))");
 			matcher("(VP a (NP r) (NP a))");
 			matcher("(VP a (NP r) (PP a (NP r)))");
