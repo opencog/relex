@@ -2313,6 +2313,16 @@ WILL_TODO
 =
 <DROP-REF-FLAG> = T
 ;
+; Twiddle the tense of the infinitive. So, "is going to eat", eat is marked
+; as "infinitve", but since we dropped "is going", the semantic tense of "eat" is "future"
+; We look at word order for this: two NEXT word connections (to skip over particle "to")
+#TemplateActionAlg
+WILL_TODO_FUTURE
+<head DROP-REF-FLAG> = T
+<NEXT NEXT head tense> = infinitive
+=
+<NEXT NEXT head tense> = future
+;
 ; Drop all tagged refs.
 ;
 #TemplateActionAlg
