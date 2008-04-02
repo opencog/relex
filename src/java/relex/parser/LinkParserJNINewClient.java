@@ -71,9 +71,20 @@ public class LinkParserJNINewClient extends LinkParserClient {
 	}
 
 	void execParse(String sentence) {
-		if (verbosity > 3) System.out.println("parsing:" + sentence + "[end_sentence]");
+		Long starttime;
+		if (verbosity > 0)
+		{
+			if (verbosity > 3) System.out.println("parsing:" + sentence + "[end_sentence]");
+			starttime = System.currentTimeMillis();
+		}
 		LinkGrammar.parse(sentence);
-		if (verbosity > 3) System.out.println("parsing LinkGrammar.completed.");
+		if (verbosity > 0)
+		{
+			Long now = System.currentTimeMillis();
+			Long elapsed = now - starttime;
+			System.out.println("Link parse time: " + elapsed + " milliseconds");
+			if (verbosity > 3) System.out.println("parsing LinkGrammar.completed.");
+		}
 	}
 
 	int getNumLinkages() {

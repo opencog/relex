@@ -19,12 +19,16 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
+import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
+import relex.feature.RelationCallback;
 import relex.tree.PhraseTree;
 
 /**
- * Discover phrase chunks
+ * Discover phrase chunks.
+ * XXX This is so rudimentary that this should probably be deleted. XXX
+ * XXX It just doesn't do anything usefule or interesting. XXX
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
@@ -45,11 +49,11 @@ public class FindChunks
 		pt.foreach(pc);
 	}
 
-	public void findChunks(ParsedSentence parse)
+	public void findObjectChunks(ParsedSentence parse)
 	{
-		PhraseTree pt = parse.getPhraseTree();
-		PhraseChunks pc = new PhraseChunks();
-		pt.foreach(pc);
+		ObjChunks obj = new ObjChunks();
+		FeatureNode sent = parse.getLeft();
+		FeatureForeach.foreach(sent, obj);
 	}
 
 	public ArrayList<Chunk> getChunks()
@@ -60,6 +64,26 @@ public class FindChunks
 	public void clear()
 	{
 		chunks.clear();
+	}
+
+	/* -------------------------------------------------------- */
+
+	private void chunkPhrase(FeatureNode fn, Chunk chunk)
+	{
+		fn = fn.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) chunk.addWord(wd);
+
+			// Add subphrases to the word list
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				chunkPhrase(fn, chunk);
+			}
+			fn = fn.get("phr-next");
+		}
 	}
 
 	/* -------------------------------------------------------- */
@@ -79,152 +103,45 @@ public class FindChunks
 			int degree = pt.getDegree();
 			if (degree <= 2) return false;
 
-// System.out.println("candidate phrase " +  pt.toString());
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
 			chunks.add(chunk);
 			return false;
 		}
-
-		public void chunkPhrase(FeatureNode fn, Chunk chunk)
-		{
-			fn = fn.get("phr-head");
-			while (fn != null)
-			{
-				FeatureNode wd = fn.get("phr-word");
-				if (wd != null) chunk.addWord(wd);
-
-				// Add subphrases to the word list
-				FeatureNode subf = fn.get("phr-head");
-				if (subf != null) 
-				{
-					chunkPhrase(fn, chunk);
-				}
-				fn = fn.get("phr-next");
-			}
-		}
 	}
 
 	/* -------------------------------------------------------- */
-	/* Use the phrase-tree approach to finding chunks */
-	private class PhraseChunks implements FeatureNodeCallback
+	/**
+	 * John Dillinger was a man who broke the law.
+	 * _obj(break, law)
+	 *  will generate th phrase "broke the law"
+	 *
+	 */
+	private class ObjChunks implements RelationCallback
 	{
-
-		/**
-		 * Called for each phrase in a parse.
-		 * Pick out phrases that seem distinct.
-		 */
-		public Boolean FNCallback(FeatureNode fn)
+		public Boolean UnaryRelationCB(FeatureNode from, String rel)
 		{
-			PhraseTree pt = new PhraseTree(fn);
+			return false;
+		}
+		public Boolean BinaryHeadCB(FeatureNode from)
+		{
+			return false;
+		}
+		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
+		{
+			if (relation.equals("_subj")) return false;
+			if (relation.equals("_prepSubj")) return false;
 
-			String type = pt.getPhraseType();
-			if (!type.equals("NP") && !type.equals("VP")) return false;
+			FeatureNode fm = from.get("nameSource");
 
-			int depth = pt.getDepth();
-			if (depth > 3) return false;
-
-			int breadth = pt.getBreadth();
-			if (breadth < 2) return false;
+			System.out.println(relation + "(" + from.get("name").getValue() + "," + to.get("name").getValue() + ")");
 
 			Chunk chunk = new Chunk();
+			chunkPhrase(fm, chunk);
+			chunks.add(chunk);
 
-			if (type.equals("NP"))
-			{
-				// ArrayList<FeatureNode> words = pt.getWordList();
-				// chunk.addWords(words);
-				chunkNounPhrase(pt.getNode(), chunk);
-			}
-			else if (type.equals("VP"))
-			{
-				chunkVerbPhrase(pt.getNode(), chunk);
-			}
-			else if (type.equals("S"))
-			{
-				chunkVerbPhrase(pt.getNode(), chunk);
-			}
-
-			// Discard single-word chunks ... !?
-			if (1 < chunk.size())
-			{
-				chunks.add(chunk);
-			}
 
 			return false;
 		}
-
-		/**
-		 * Add verb phrase words to chunk, skipping sub noun-phrases.
-		 * So, for example, given the input phrase:
-		 *    (VP took_office (PP on (NP Monday)))
-		 * this will add the words "took office on" to the chunk.
-		 *
-		 * However, the current algo fails to return 
-		 * "give ... no quarter" in
-		 *     (VP gave (NP the Sioux chief) (NP no quarter))
-		 * because it discards "no quarter" as well as "the Sioux chief"
-		 */
-		public void chunkVerbPhrase(FeatureNode fn, Chunk chunk)
-		{
-			String phrase_type = "";
-
-			fn = fn.get("phr-head");
-			while (fn != null)
-			{
-				FeatureNode ty = fn.get("phr-type");
-				if (ty != null)
-				{
-					phrase_type = ty.getValue();
-					// Skip subphrases that are noun phrases
-					if (phrase_type.equals ("NP")) return;
-				}
-				FeatureNode wd = fn.get("phr-word");
-				if (wd != null) chunk.addWord(wd);
-
-				// Add subphrases to the word list, but only if
-				// the current phrase isn't a prepostional phrase (PP)
-				FeatureNode subf = fn.get("phr-head");
-				if (subf != null && !phrase_type.equals ("PP")) 
-				{
-					chunkVerbPhrase(fn, chunk);
-				}
-				fn = fn.get("phr-next");
-			}
-		}
-
-		/**
-		 * Add noun phrase words to chunk, skipping subphrases
-		 * of prepositional phrases.
-		 * So, for example, given the input phrase:
-		 *     (NP (NP a wee bit) (PP of (NP cheese)))
-		 *    
-		 * this will add the words "a wee bit of" to the chunk.
-		 */
-		public void chunkNounPhrase(FeatureNode fn, Chunk chunk)
-		{
-			String phrase_type = "";
-
-			fn = fn.get("phr-head");
-			while (fn != null)
-			{
-				FeatureNode ty = fn.get("phr-type");
-				if (ty != null)
-				{
-					phrase_type = ty.getValue();
-				}
-				FeatureNode wd = fn.get("phr-word");
-				if (wd != null) chunk.addWord(wd);
-
-				// Add subphrases to the word list, but only if
-				// the current phrase isn't a prepostional phrase (PP)
-				FeatureNode subf = fn.get("phr-head");
-				if (subf != null && !phrase_type.equals ("PP")) 
-				{
-					chunkNounPhrase(fn, chunk);
-				}
-				fn = fn.get("phr-next");
-			}
-		}
-
 	}
 }

@@ -80,6 +80,7 @@ import relex.feature.FeatureNodeCallback;
 public class PhraseTree
 {
 	FeatureNode phr;
+	FeatureNode cur; /* cursor into phrase */
 
 	protected PhraseTree() {}
 
@@ -87,12 +88,28 @@ public class PhraseTree
 	{
 		if (fn.get("phr-head") != null) phr = fn;
 		else phr = fn.get("phr-root");
+		if (phr != null) cur = phr.get("phr-head");
+		else cur = null;
 	}
 
 	public String toString()
 	{
 		return toString(phr);
 	}
+
+	public FeatureNode getCursor()
+	{
+		return cur;
+	}
+	public void setCursor(FeatureNode c)
+	{
+		cur = c;
+	}
+	public void resetCursor()
+	{
+		cur = phr.get("phr-head");
+	}
+
 	public String getPhraseType()
 	{
 		return getPhraseType(phr);
@@ -165,6 +182,7 @@ public class PhraseTree
 		if (ph == null) ph = he.add("phr-mark");
 		ph.set(str, new FeatureNode("T"));
 	}
+
 	public Boolean getMark(String str)
 	{
 		FeatureNode ph = phr.get("phr-head");
@@ -178,6 +196,16 @@ public class PhraseTree
 	public Boolean isLeaf()
 	{
 		return isLeaf(phr);
+	}
+
+	public Boolean hasWord()
+	{
+		return hasWord(phr);
+	}
+
+	public Boolean startsWithWord()
+	{
+		return startsWithWord(phr);
 	}
 
 	public int getDegree()
@@ -279,6 +307,40 @@ public class PhraseTree
 			fn = fn.get("phr-next");
 		}
 		return true;
+	}
+
+	/**
+	 * Return true, if this phrase has at least one word in it 
+	 * (as opposed to consisting entirely of subphrases)
+	 */
+	public static Boolean hasWord(FeatureNode phr)
+	{
+		FeatureNode fn = phr.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode word = fn.get("phr-word");
+			if (word != null) return true;
+			fn = fn.get("phr-next");
+		}
+		return false;
+	}
+
+	/**
+	 * Return true, if this phrase starts with a word 
+	 * (as opposed to starting with a subphrases)
+	 */
+	public static Boolean startsWithWord(FeatureNode phr)
+	{
+		FeatureNode fn = phr.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode word = fn.get("phr-word");
+			if (word != null) return true;
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) return false;
+			fn = fn.get("phr-next");
+		}
+		return false;
 	}
 
 	/**

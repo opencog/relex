@@ -1,0 +1,39 @@
+
+Phrase Tree Overview
+--------------------
+
+A phrase tree, or component tree, is a sentence marked up in tree-bank
+style, so, for example:
+
+(S (NP General Custer) (VP gave (NP the Sioux chief) (NP no quarter)) .)
+
+In RelEx, the phrase trees are embedded in the feature graph, using
+feature nodes starting with the string "phr-".  Given any word in a 
+sentence, the phrase in which it lies can easily be found. Conversely,
+give a sentence, the prhase can be traversed, and the corresponding
+feature nodes for the words can be easily accessed.
+
+
+The following classes are implemented in this directory:
+
+PhraseTree.java:
+   Implements general-purpose routines for traversing the tree in 
+   various ways.  Includes utilities for measureing the depth and
+   breadth of the tree, the degree of a node, identifying a leaf, etc.
+
+PhraseMarkup.java:
+   A class that adds the phrase-tree structure to the feature graph of
+   a parsed sentence.  This is called internally by other routines to
+   add the markup.  This class shouldn't be generally used, its 
+   semi-private.
+
+PhraseLeader.java:
+   Identifies the leader word of a phrase. For example, the leader of 
+   (NP a big robot) is "robot".
+
+PatternMatch.java:
+   A class for performing pattern matching on phrase trees.
+
+PatternCallback.java:
+   A callback interface class. 
+
