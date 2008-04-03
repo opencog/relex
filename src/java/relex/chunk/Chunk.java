@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import relex.feature.FeatureNode;
 
 /**
- * Holder of phrase chunks
+ * Holder of lexical chunks
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
@@ -49,6 +49,27 @@ public class Chunk
 	public int size()
 	{
 		return chunk.size();
+	}
+
+	/**
+	 * Add an entire phrase.
+	 */
+	public void addPhrase(FeatureNode fn)
+	{
+		fn = fn.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) addWord(wd);
+
+			// Add subphrases to the word list
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				addPhrase(fn);
+			}
+			fn = fn.get("phr-next");
+		}
 	}
 
 	/**

@@ -70,7 +70,7 @@ public class RelationChunker extends LexicalChunker
 				                   to.get("name").getValue() + ")");
 
 			Chunk chunk = new Chunk();
-			chunkPhrase(fm, chunk);
+			chunk.addPhrase(fm);
 			chunks.add(chunk);
 
 			return false;
