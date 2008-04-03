@@ -155,7 +155,8 @@ Verb phrases:
    phrase becomes:
        (VP let's (VP get out (NP it) (PRT) (PP in (NP the open))))
    because the K link was used to merge "get" and "out". This, 
-   ahem, wrecks the pattern matching.
+   ahem, wrecks the pattern matching. -- Fixed, had to hack 
+   algs/TwoWordCombineToLeftAlg.java to not merge the orig_str.
 
 Noun phrases:
 -------------
@@ -212,8 +213,9 @@ a == accept, r == reject
 (VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
 (VP r (NP a) (PP a (NP r (NP r)))) -- (VP had (NP a good feeling) (PP for (NP that sort of (NP thing)))) -- a good feeling for
 
-(VP a (PP a) (PP a (NP r)) (PP r (NP r))) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
+(VP a (PP a) (PP a (NP r)) *) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
 
+(VP a (NP a) (PRT a) *) -- (VP get (NP it) (PRT out)) -- Let's get it out in the open.
 
 (S (VP a (NP a))) -- (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) -- broke the law.
 
