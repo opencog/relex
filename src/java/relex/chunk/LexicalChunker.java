@@ -19,6 +19,7 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
+import relex.feature.FeatureNode;
 
 /**
  * Lexical chunking base class.
@@ -49,4 +50,28 @@ public abstract class LexicalChunker
 	{
 		chunks.clear();
 	}
+
+	/* -------------------------------------------------------- */
+
+	/**
+	 * Add an entire phrase to the indicated chunk.
+	 */
+	protected void chunkPhrase(FeatureNode fn, Chunk chunk)
+	{
+		fn = fn.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) chunk.addWord(wd);
+
+			// Add subphrases to the word list
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				chunkPhrase(fn, chunk);
+			}
+			fn = fn.get("phr-next");
+		}
+	}
+
 }
