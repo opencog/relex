@@ -1,9 +1,55 @@
 
+                         Lexical Chunking
+                         ----------------
+                    Linas Vepstas, April 2008
+
+Key ideas: 
+ * Lexis is the basis of language.
+ * Language consists of grammaticalized lexis, not lexicalized grammar.
+
+See: Olga Moudraia, "Lexical Approach to Second Language Teaching"
+http://www.cal.org/resources/digest/0102lexical.html
+
+Alternate names: "gambits", "lexical phrases", "lexical units", 
+"lexicalized stems", "speech formulae".
+
+
+Definition of Lexical Chunks
+----------------------------
+Lexis may be single words, and also the word combinations that are a
+basis of one's mental lexicon.  That is, language consists of meaningful
+chunks that, when combined, produce continuous coherent text; only a
+minority of spoken sentences are entirely novel creations.
+
+Types of lexical chunks:
+    * Words (e.g., book, pen)
+    * Polywords (e.g., by the way, upside down)
+    * Collocations, or word partnerships (e.g., community service,
+      absolutely convinced)
+    * Institutionalized utterances (e.g., I'll get it; We'll see; 
+      That'll do; If I were you . . .; Would you like a cup of coffee?)
+    * Sentence frames and heads (e.g., That is not as . . . as you think;
+      The fact/suggestion/problem/danger was . . .) and even text frames 
+      (e.g., In this paper we explore . . .; Firstly . . .; Secondly . . .;
+      Finally . . .)
+
+The code in this directory can be used to obtain polywords and sentence
+frames.  Three distinct mechanisms are encoded in this directory.
+
+FindChucks::findBasicChunks() -- print out phrases identified via the 
+     classical tree-bank style phrase tree.
+
+FindChuncks::findObjectChunks() -- print out phrases based on the 
+     binary RelEx relations -- e.g. object phraes, noun modifier phrases,
+     prepositional phrases, etc.
+
+MatchChunks::findChunks() -- print out lexical chunks based on matching
+     to a collection of sentence patterns. The rest of this README file
+     is concnered wth these sentence patterns.
+
 
 Unit tests
 ----------
-
-
 
 Sentence phrases
 ----------------
