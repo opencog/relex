@@ -101,6 +101,10 @@ Verb phrases:
       (VP will (VP take office (PP on (NP Monday))))
 
    need to drop NP in PP, to get "take office on"
+   Similarly: (VP was (VP filled (PP to (NP overflowing))))
+
+ * The cup was FILLED TO overflowing.
+     (VP was (VP filled (PP to (S (VP overflowing)))))
 
  * I was in love with that bunny.
    Desired answer: "in love with"
@@ -170,6 +174,8 @@ a == accept, r == reject
 
 
 (VP a (PP a (NP r)))        -- (VP take office (PP on (NP Monday)))            -- take office on
+(VP a (VP a (PP a (NP r)))) -- (VP was (VP filled (PP to (NP overflowing)))) -- was filled to
+(VP a (VP a (PP a (S (VP r))))) -- (VP was (VP filled (PP to (S (VP overflowing)))))-- was filled to
 (VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
 (VP a (NP r) (PP a (NP r))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 

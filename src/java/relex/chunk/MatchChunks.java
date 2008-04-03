@@ -84,7 +84,10 @@ public class MatchChunks
 			matcher("(SBAR a (S (NP a) (VP a (NP r))))");
 
 			//
-			matcher("(VP a (PP a (NP r)))");
+			matcher("(VP a (PP a (NP r)))");  // a subphrase of the below, which seems to cover most of it?
+			matcher("(VP a (VP a (PP a (NP r))))"); 
+			matcher("(VP a (VP a (PP a (S (VP r)))))");
+
 			matcher("(VP a (NP r) (NP a))");
 			matcher("(VP a (NP r) (PP a (NP r)))");
 
