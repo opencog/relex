@@ -37,6 +37,8 @@ import relex.tree.PhraseTree;
 
 public class MatchChunks
 {
+	static final int debug = 0;
+
 	private ArrayList<Chunk> chunks;
 	private PatCB callback;
 	
@@ -134,17 +136,19 @@ public class MatchChunks
 		private Chunk curr_chunk;
 		public void FoundCallback(String pattern, PhraseTree pt)
 		{
- System.out.println("========== hot dog! "+ pattern + " == " + pt.toString());
+			if (0 < debug) System.out.println("========== match! "+ pattern + " == " + pt.toString());
 
 			curr_chunk = new Chunk();
 			chunks.add(curr_chunk);
 		}
 		public Boolean PMCallback(String pattern, PhraseTree pt)
 		{
-System.out.println(">>> enfin duude >" + pattern + "< " + pt.toString());
+			if(0 < debug)
+				System.out.println("=== >" + pattern + "< == >" + 
+                              PhraseTree.toString(pt.getCursor()) +
+				                  "< phr=" + pt.toString());
 			if (pattern.equals("a"))
 			{
-System.out.println(">>> enfin ptr " + PhraseTree.toString(pt.getCursor()));
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
 			return false;
