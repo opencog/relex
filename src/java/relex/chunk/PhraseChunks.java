@@ -16,8 +16,6 @@
 
 package relex.chunk;
 
-import java.util.ArrayList;
-
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
@@ -31,31 +29,15 @@ import relex.tree.PhraseTree;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class PhraseChunks
+public class PhraseChunks extends LexicalChunker
 {
 	static final int debug = 0;
-	private ArrayList<Chunk> chunks;
 	
-	public PhraseChunks()
-	{
-		chunks = new ArrayList<Chunk>();
-	}
-
-	public void findBasicChunks(ParsedSentence parse)
+	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
 		BasicChunks pc = new BasicChunks(pt);
 		pt.foreach(pc);
-	}
-
-	public ArrayList<Chunk> getChunks()
-	{
-		return chunks;
-	}
-
-	public void clear()
-	{
-		chunks.clear();
 	}
 
 	/* -------------------------------------------------------- */

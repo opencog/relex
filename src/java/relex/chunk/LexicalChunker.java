@@ -28,7 +28,7 @@ import relex.ParsedSentence;
 
 public abstract class LexicalChunker
 {
-	private ArrayList<Chunk> chunks;
+	protected ArrayList<Chunk> chunks;
 	
 	public LexicalChunker()
 	{
