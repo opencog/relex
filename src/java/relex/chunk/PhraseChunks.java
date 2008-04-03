@@ -19,10 +19,8 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
-import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
-import relex.feature.RelationCallback;
 import relex.tree.PhraseTree;
 
 /**
@@ -48,13 +46,6 @@ public class PhraseChunks
 		PhraseTree pt = parse.getPhraseTree();
 		BasicChunks pc = new BasicChunks(pt);
 		pt.foreach(pc);
-	}
-
-	public void findObjectChunks(ParsedSentence parse)
-	{
-		ObjChunks obj = new ObjChunks();
-		FeatureNode sent = parse.getLeft();
-		FeatureForeach.foreach(sent, obj);
 	}
 
 	public ArrayList<Chunk> getChunks()
@@ -115,43 +106,6 @@ public class PhraseChunks
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
 			chunks.add(chunk);
-			return false;
-		}
-	}
-
-	/* -------------------------------------------------------- */
-	/**
-	 * John Dillinger was a man who broke the law.
-	 * _obj(break, law)
-	 *  will generate th phrase "broke the law"
-	 *
-	 */
-	private class ObjChunks implements RelationCallback
-	{
-		public Boolean UnaryRelationCB(FeatureNode from, String rel)
-		{
-			return false;
-		}
-		public Boolean BinaryHeadCB(FeatureNode from)
-		{
-			return false;
-		}
-		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
-		{
-			if (relation.equals("_subj")) return false;
-			if (relation.equals("_prepSubj")) return false;
-
-			FeatureNode fm = from.get("nameSource");
-
-			if (0 < debug)
-				System.out.println(relation + "(" + 
-				                   from.get("name").getValue() + "," + 
-				                   to.get("name").getValue() + ")");
-
-			Chunk chunk = new Chunk();
-			chunkPhrase(fm, chunk);
-			chunks.add(chunk);
-
 			return false;
 		}
 	}
