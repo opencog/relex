@@ -29,7 +29,7 @@ import relex.tree.PhraseTree;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class PhraseChunks extends LexicalChunker
+public class PhraseChunker extends LexicalChunker
 {
 	static final int debug = 0;
 	
