@@ -303,9 +303,9 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
-			" [--pa (show basic phrase chunks)]" +
-			" [--pb (show refined phrase chunks)]" +
-			" [--pc (show object phrase chunks)]" +
+			" [--pa (show basic lexical (phrase) chunks)]" +
+			" [--pb (show compound lexical chunks)]" +
+			" [--pc (show relational lexical chunks)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
