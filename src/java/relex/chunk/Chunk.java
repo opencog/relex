@@ -138,4 +138,19 @@ public class Chunk
 		}
 		return str;
 	}
+
+	/**
+	 * return true if the other oject equails this one, else return false.
+	 */
+	public boolean equals(Object other)
+	{
+		if (!(other instanceof Chunk)) return false;
+		Chunk oth = (Chunk) other;
+		if (oth.chunk.size() != chunk.size()) return false;
+		for (int i=0; i<chunk.size(); i++)
+		{
+			if(chunk.get(i) != oth.chunk.get(i)) return false;
+		}
+		return true;
+	}
 }
