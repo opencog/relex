@@ -21,6 +21,7 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
 import relex.entity.EntityMaintainer;
+import relex.morphy.MapMorphy;
 import relex.morphy.Morphy;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
@@ -31,7 +32,7 @@ public class ParallelRelationExtractor {
 	
 	private static final String DEFAULT_HOST = "localhost";
 	public static final int FIRST_PORT = 9000;
-	public static final int CLIENT_POOL_SIZE = 2;
+	public static final int CLIENT_POOL_SIZE = 1;
 	
     private ExecutorService exec;
 
@@ -83,10 +84,12 @@ public class ParallelRelationExtractor {
 	private void initializePool() {
 		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool 
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
+		Morphy morphy = new MapMorphy();
+		morphy.initialize();
 		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
 			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
-			 RelexContext context = new RelexContext(lpc, new Morphy());
+			 RelexContext context = new RelexContext(lpc, morphy);
 			 try {
 				pool.put(context);
 			} catch (InterruptedException e) {
