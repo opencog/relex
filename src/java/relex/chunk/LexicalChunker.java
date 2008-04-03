@@ -28,7 +28,7 @@ import relex.ParsedSentence;
 
 public abstract class LexicalChunker
 {
-	protected ArrayList<Chunk> chunks;
+	private ArrayList<Chunk> chunks;
 	
 	public LexicalChunker()
 	{
@@ -48,5 +48,18 @@ public abstract class LexicalChunker
 	public void clear()
 	{
 		chunks.clear();
+	}
+
+	/**
+	 * add a chunk, but only if its unique.
+	 */
+	public void add(Chunk ch)
+	{
+		for (int i=0; i<chunks.size(); i++)
+		{
+			Chunk c = chunks.get(i);
+			if (ch.equals(c)) return;
+		}
+		chunks.add(ch);
 	}
 }

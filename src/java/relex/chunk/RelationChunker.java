@@ -79,7 +79,7 @@ public class RelationChunker extends LexicalChunker
 
 			Chunk chunk = new Chunk();
 			chunk.addPhrase(fm);
-			chunks.add(chunk);
+			add(chunk);
 
 			return false;
 		}

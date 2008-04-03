@@ -67,7 +67,7 @@ public class PhraseChunker extends LexicalChunker
 
 			Chunk chunk = new Chunk();
 			chunk.addPhrase(fn);
-			chunks.add(chunk);
+			add(chunk);
 			return false;
 		}
 	}

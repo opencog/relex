@@ -125,7 +125,7 @@ public class PatternChunker extends LexicalChunker
 			if (0 < debug) System.out.println("========== match! "+ pattern + " == " + pt.toString());
 
 			curr_chunk = new Chunk();
-			chunks.add(curr_chunk);
+			add(curr_chunk);
 		}
 		public Boolean PMCallback(String pattern, PhraseTree pt)
 		{
