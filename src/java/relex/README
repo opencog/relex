@@ -16,6 +16,10 @@ algs:
 anaphora:
 	Anaphora resolution algorithm. Implements the Hobbs algorithm.
 
+chunk:
+	Code to generate lexical chunks, aka lexicalized stems or units
+   or phrases.
+
 corpus:
 	Code to handle multiple-sentence corpuses. Includes a class to 
 	split a document into multiple sentences, and another to perform
