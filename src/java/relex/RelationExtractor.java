@@ -25,6 +25,8 @@ import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
 import relex.chunk.Chunk;
+import relex.chunk.LexicalChunker;
+import relex.chunk.PhraseChunker;
 import relex.chunk.FindChunks;
 import relex.chunk.MatchChunks;
 import relex.anaphora.Antecedents;
@@ -473,9 +475,9 @@ public class RelationExtractor
 	
 					if (commandMap.get("--pa") != null)
 					{
-						System.out.println("Basic chunks:");
-						FindChunks chunker = new FindChunks();
-						chunker.findBasicChunks(parse);
+						System.out.println("Phrase tree-based lexical chunks:");
+						LexicalChunker chunker = new PhraseChunker();
+						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
 					}
 					if (commandMap.get("--pb") != null)

@@ -41,8 +41,11 @@ University Press.)
 The code in this directory can be used to obtain polywords and sentence
 frames.  Three distinct mechanisms are encoded in this directory.
 
-FindChucks::findBasicChunks() -- print out phrases identified via the 
-     classical tree-bank style phrase tree.
+LexicalChunker -- abstract base class providing the interface for
+     several alternate chunking routines.
+
+PhraseChunker -- print out phrases identified via the classical tree-bank
+     style phrase tree.
 
 FindChuncks::findObjectChunks() -- print out phrases based on the 
      binary RelEx relations -- e.g. object phraes, noun modifier phrases,
