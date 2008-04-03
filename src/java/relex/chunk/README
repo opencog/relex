@@ -114,9 +114,11 @@ Verb phrases:
    Drop leading VP, keep first NP, drop second NP.
    (drop first VP perhaps because its a copula?)
  
- * I RAN AWAY FROM home at age two.
+ * I RAN AWAY FROM home.
+   I RAN AWAY FROM home at age two.
    Desired answer: "ran away from"
 
+      (VP ran (PP away) (PP from (NP home)))
       (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
 
    Keep the VP, and the first PP, and the second PP, 
@@ -130,7 +132,20 @@ Verb phrases:
      She forced him to resign.
      (VP forced (NP him_1) (S (VP to (VP resign))))
      Phrase: (him to resign)      Character ranges: [11-24]
-   XXX so this needs modification.
+   -- so this needs modification; perhaps we should drop the final VP?
+
+ * I didn't HAVE THE HEART TO tell hem.
+      (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
+
+ * Let's GET IT OUT.
+   Let's GET IT OUT in the open.
+   Let's GET IT OUT in the open now.
+	Let's PUT IT ON.
+
+      (VP get (NP it) (PRT out))
+      (VP get (NP it) (PRT out) (PP in (NP the open)))
+      (VP get (NP it) (PRT out) (PP in (NP the open)) (PP now))
+
 
 Noun phrases:
 -------------
@@ -179,7 +194,11 @@ a == accept, r == reject
 (VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
 (VP a (NP r) (PP a (NP r))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 
-(VP r (NP a) (S (VP a (VP a))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to swallow.
+(VP r (NP a) (S (VP a (VP r))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to
+
+(VP r (VP a (NP a) (S (VP a (VP r (NP r)))))) -- (VP didn't (VP have (NP the heart) (S (VP to
+(VP tell (NP him)))))) -- have the heart to.
+
 (VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
 (VP r (NP a) (PP a (NP r (NP r)))) -- (VP had (NP a good feeling) (PP for (NP that sort of (NP thing)))) -- a good feeling for
 
