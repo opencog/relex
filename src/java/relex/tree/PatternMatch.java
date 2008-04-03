@@ -45,10 +45,28 @@ public class PatternMatch
 	 * do have an implicit meaning: they are "wildcards" which match
 	 * any string of words.
 	 *
+	 * There is also a wild-card terminator, "*", which halts further
+	 * processing of the phrase, and thus acts to accept all phrase
+	 * components that follow.  Thus, for example:
+	 *    (VP a (PP a) (PP a (NP r)) *)
+	 * will match both of the following:
+	 *    (VP a (PP a) (PP a (NP r)))
+	 *    (VP a (PP a) (PP a (NP r)) (PP r))
+	 *
 	 * As of the current implementation, there is no wild-card to match 
-	 * phrase types, or to match phrases. Perhaps these should be added.
+	 * phrase types, or to do infix-matching of phrases. There seems to 
+	 * be no particular need for these right now.
 	 *
 	 * The callbacks are guaranteed to be made in sentence word order.
+	 *
+	 * The actual implementation below is a rather ad hoc, matching 
+	 * trees expressed as strings to trees expressed as FeatureNode
+	 * PhraseTrees. One might have gotten a so-called "cleaner" 
+	 * implementation by converting the former into a PhraseTree,
+	 * and then matching PhraseTrees, using an elegent general 
+	 * finite stack machine of some sort.  But this seemed like 
+	 * more work than needed; so the long-winded, "elegent" solution
+	 * looses to the shorter, ad-hoc solution.
 	 */
 	public static Boolean match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
@@ -109,7 +127,7 @@ public class PatternMatch
 					FeatureNode fu= wd.get("orig_str");
 					String fus="";
 					if (fu != null) fus=fu.getValue();
-					System.out.println("mathc got a word >>" + fus + "<<");
+					System.out.println("match got a word >>" + fus + "<<");
 				}
 				if (!saw_word)	pt.setCursor(fn);
 				saw_word = true;
@@ -144,6 +162,8 @@ public class PatternMatch
 				pat_starts_with_word = !pattern.startsWith("(");
 				saw_word = false;
 			}
+         if (pattern.equals("*")) return false;  // wildcard match
+
 			fn = fn.get("phr-next");
 		}
 
