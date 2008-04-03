@@ -27,8 +27,8 @@ import relex.tree.PhraseTree;
 
 /**
  * Discover phrase chunks.
- * XXX This is so rudimentary that this should probably be deleted. XXX
- * XXX It just doesn't do anything usefule or interesting. XXX
+ * XXX This is so rudimentary that it might not be useful. XXX
+ * XXX This might go away ...  XXX
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
@@ -46,7 +46,7 @@ public class FindChunks
 	public void findBasicChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();
-		BasicChunks pc = new BasicChunks();
+		BasicChunks pc = new BasicChunks(pt);
 		pt.foreach(pc);
 	}
 
@@ -91,18 +91,26 @@ public class FindChunks
 	/* Use the phrase-tree approach to finding chunks */
 	private class BasicChunks implements FeatureNodeCallback
 	{
+		private FeatureNode root;
+		public BasicChunks (PhraseTree pt)
+		{
+			root = pt.getNode();
+		}
+
 		/**
 		 * Called for each phrase in a parse.
 		 * Add all parts of the phrase tree.
 		 */
 		public Boolean FNCallback(FeatureNode fn)
 		{
+			if (root == fn) return false;  // don't report the whole sentence 
+
 			PhraseTree pt = new PhraseTree(fn);
 			int breadth = pt.getBreadth();
-			if (breadth < 2) return false;
+			if (breadth < 2) return false; // don't report single words.
 
 			int degree = pt.getDegree();
-			if (degree <= 2) return false;
+			if (degree <= 2) return false;  // don't report repeats!
 
 			Chunk chunk = new Chunk();
 			chunkPhrase(fn, chunk);
