@@ -26,7 +26,11 @@ import relex.tree.PatternMatch;
 import relex.tree.PhraseTree;
 
 /**
- * Discover phrase chunks
+ * Identify "lexical units" aka "phrase chunks" aka "lexicalized stems".
+ * These are identified by means of certain sentence patterns: certain 
+ * "idiomatic" patterns for NP, VP and PP phrases.  The main function
+ * is split into two parts: a dictionary of phrase types, and a pattern
+ * matcher that can find these inside of sentences.
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
