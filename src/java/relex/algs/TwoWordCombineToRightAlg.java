@@ -1,4 +1,3 @@
-package relex.algs;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -19,46 +18,51 @@ package relex.algs;
  * This algorithm combines sequences of words which should be a single
  * word ("as many/much")
  */
+package relex.algs;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 
 /**
  * Combines two words into one, stored in the right node.
+ * Leave the orig_str alone, however, don't mangle that.
+ * (its needed for printing the orig sentence, etc.)
  */
-public class TwoWordCombineToRightAlg extends TemplateMatchingAlg {
-
-    protected void applyTo(FeatureNode node, RelexContext context) {
+public class TwoWordCombineToRightAlg extends TemplateMatchingAlg
+{
+    protected void applyTo(FeatureNode node, RelexContext context)
+    {
         FeatureNode leftNode = LinkView.getLeft(node);
         FeatureNode rightNode = LinkView.getRight(node);
 
         // find the strings and originals
         String leftString = leftNode.featureValue("str");
-        String leftOriginal = leftNode.featureValue("orig_str");
-        if (leftOriginal == null)
-            leftOriginal = leftString;
+        // String leftOriginal = leftNode.featureValue("orig_str");
+        // if (leftOriginal == null)
+        //     leftOriginal = leftString;
 
         String rightString = rightNode.featureValue("str");
-        String rightOriginal = rightNode.featureValue("orig_str");
-        if (rightOriginal == null)
-            rightOriginal = rightString;
+        // String rightOriginal = rightNode.featureValue("orig_str");
+        // if (rightOriginal == null)
+        //     rightOriginal = rightString;
 
         // make the combined strings
-        String original = leftOriginal + " " + rightOriginal;
+        // String original = leftOriginal + " " + rightOriginal;
         String str = leftString + "_" + rightString;
 
         // set the values
         rightNode.get("ref").set("name", new FeatureNode(str));
         rightNode.set("str", new FeatureNode(str));
-        rightNode.set("orig_str", new FeatureNode(original));
+        // rightNode.set("orig_str", new FeatureNode(original));
         rightNode.set("collocation_end", leftNode);
         rightNode.set("collocation_start", rightNode);
    
         //erase the other word strings
         leftNode.set("str", null);
-        leftNode.set("orig_str", null);
+        // leftNode.set("orig_str", null);
         
-        System.out.println("RIGHT NODE SET TO " + str);
+        // System.out.println("RIGHT NODE SET TO " + str);
     }
 
 }
