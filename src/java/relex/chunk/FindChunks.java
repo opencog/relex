@@ -35,6 +35,7 @@ import relex.tree.PhraseTree;
 
 public class FindChunks
 {
+	static final int debug = 0;
 	private ArrayList<Chunk> chunks;
 	
 	public FindChunks()
@@ -134,12 +135,14 @@ public class FindChunks
 
 			FeatureNode fm = from.get("nameSource");
 
-			System.out.println(relation + "(" + from.get("name").getValue() + "," + to.get("name").getValue() + ")");
+			if (0 < debug)
+				System.out.println(relation + "(" + 
+				                   from.get("name").getValue() + "," + 
+				                   to.get("name").getValue() + ")");
 
 			Chunk chunk = new Chunk();
 			chunkPhrase(fm, chunk);
 			chunks.add(chunk);
-
 
 			return false;
 		}
