@@ -123,6 +123,7 @@ Verb phrases:
 
    Keep the VP, and the first PP, and the second PP, 
    dropping NP in the second PP.
+      (VP a (PP a) (PP a (NP r)) *)
 
  * It was A BITTER PILL TO SWALLOW.
 
@@ -146,6 +147,13 @@ Verb phrases:
       (VP get (NP it) (PRT out) (PP in (NP the open)))
       (VP get (NP it) (PRT out) (PP in (NP the open)) (PP now))
 
+
+   The obvious pattern is (VP a (NP a) (PRT a) *) but this won't work
+   with RelEx, because earlier stages mangle the snetence. The actual
+   phrase becomes:
+       (VP let's (VP get out (NP it) (PRT) (PP in (NP the open))))
+   because the K link was used to merge "get" and "out". This, 
+   ahem, wrecks the pattern matching.
 
 Noun phrases:
 -------------
@@ -205,7 +213,7 @@ a == accept, r == reject
 (VP a (PP a) (PP a (NP r)) (PP r (NP r))) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
 
 
-(S (VP a (NP a))) -- (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) -- brokke the law.
+(S (VP a (NP a))) -- (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) -- broke the law.
 
 
 Idioms:

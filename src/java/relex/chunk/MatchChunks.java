@@ -92,10 +92,13 @@ public class MatchChunks
 			matcher("(VP a (NP r) (PP a (NP r)))");
 
 			matcher("(VP r (NP a) (S (VP a (VP r))))");
-			matcher("(VP r (VP a (NP a) (S (VP a (VP r (NP r))))))");
 			matcher("(VP r (NP a) (PP a (NP r (NP r))))");
 			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
-			matcher("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))");
+			matcher("(VP a (PP a) (PP a (NP r)) *)");
+			matcher("(VP r (VP a (NP a) (S (VP a (VP r (NP r))))))");
+
+			// No good, since relex wrecks the phrase structure.
+			// matcher("(VP a (NP a) (PRT a) *) ");
 			// matcher("");
 
 			return false;
