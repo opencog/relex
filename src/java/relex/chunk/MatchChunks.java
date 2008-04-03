@@ -83,7 +83,9 @@ public class MatchChunks
 			matcher("(VP a (PP a (NP r)))");
 			matcher("(VP a (NP r) (NP a))");
 			matcher("(VP a (NP r) (PP a (NP r)))");
+
 			matcher("(VP r (NP a) (S (VP a (VP a))))");
+			matcher("(VP r (NP a) (PP a (NP r (NP r))))");
 			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
 			matcher("(VP a (PP a) (PP a (NP r)) (PP r (NP r)))");
 			// matcher("");

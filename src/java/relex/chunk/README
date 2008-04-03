@@ -33,6 +33,11 @@ Types of lexical chunks:
       (e.g., In this paper we explore . . .; Firstly . . .; Secondly . . .;
       Finally . . .)
 
+(Taken from Lewis, M. (1997b). "Pedagogical implications of the lexical 
+approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary 
+acquisition: A rationale for pedagogy" (pp.  255-270). Cambridge: Cambridge 
+University Press.)
+
 The code in this directory can be used to obtain polywords and sentence
 frames.  Three distinct mechanisms are encoded in this directory.
 
@@ -70,6 +75,7 @@ Sentence phrases
 
 Verb phrases:
 ------------
+
  * General Custer gave the Sioux chief no quarter.
    The desired answer is "give ... no quarter". 
 
@@ -83,6 +89,11 @@ Verb phrases:
        (VP took (NP her) (PP to (NP the dance)))
 
    Skip both NP's, to get "took ... to"
+
+ * He had A GOOD FEELING FOR that sort of thing.
+   Desired answer: "a good feeling for"
+
+      (VP had (NP a good feeling) (PP for (NP that sort of (NP thing))))
 
  * He will TAKE OFFICE ON monday.
    Desired answer: "take office on"
@@ -125,6 +136,7 @@ Noun phrases:
        (NP (NP a wee bit) (PP of (NP cheese)))
 
    Drop NP after PP.
+   a helping of, a hail of, a finger in
 
  * It is a day's march from home.
    Desired: "a day's march"
@@ -138,7 +150,6 @@ Noun phrases:
    Desired: "a couple of"
 
        (NP (NP a couple) (PP of (NP clicks)))
-
 
 ---------------
 
@@ -164,10 +175,13 @@ a == accept, r == reject
 
 (VP r (NP a) (S (VP a (VP a))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to swallow.
 (VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
+(VP r (NP a) (PP a (NP r (NP r)))) -- (VP had (NP a good feeling) (PP for (NP that sort of (NP thing)))) -- a good feeling for
 
 (VP a (PP a) (PP a (NP r)) (PP r (NP r))) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
 
+
 (S (VP a (NP a))) -- (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) -- brokke the law.
+
 
 Idioms:
 That is a hard act to follow.
