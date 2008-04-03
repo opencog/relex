@@ -27,7 +27,7 @@ import relex.algs.SentenceAlgorithmApplier;
 import relex.chunk.Chunk;
 import relex.chunk.LexicalChunker;
 import relex.chunk.PhraseChunker;
-import relex.chunk.FindChunks;
+import relex.chunk.RelationChunker;
 import relex.chunk.MatchChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
@@ -489,9 +489,9 @@ public class RelationExtractor
 					}
 					if (commandMap.get("--pc") != null)
 					{
-						System.out.println("Object chunks:");
-						FindChunks chunker = new FindChunks();
-						chunker.findObjectChunks(parse);
+						System.out.println("Relation-based lexical chunks:");
+						LexicalChunker chunker = new RelationChunker();
+						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
 					}
 					if (commandMap.get("-c") != null)

@@ -16,66 +16,28 @@
 
 package relex.chunk;
 
-import java.util.ArrayList;
-
 import relex.ParsedSentence;
 import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 
 /**
- * Discover phrase chunks.
+ * Identify relation-based lexical chunks.
  * XXX This is so rudimentary that it might not be useful. XXX
  * XXX This might go away ...  XXX
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class FindChunks
+public class RelationChunker extends LexicalChunker
 {
 	static final int debug = 0;
-	private ArrayList<Chunk> chunks;
 	
-	public FindChunks()
+	public void findChunks(ParsedSentence parse)
 	{
-		chunks = new ArrayList<Chunk>();
-	}
-
-	public void findObjectChunks(ParsedSentence parse)
-	{
-		ObjChunks obj = new ObjChunks();
+		RelChunks obj = new RelChunks();
 		FeatureNode sent = parse.getLeft();
 		FeatureForeach.foreach(sent, obj);
-	}
-
-	public ArrayList<Chunk> getChunks()
-	{
-		return chunks;
-	}
-
-	public void clear()
-	{
-		chunks.clear();
-	}
-
-	/* -------------------------------------------------------- */
-
-	private void chunkPhrase(FeatureNode fn, Chunk chunk)
-	{
-		fn = fn.get("phr-head");
-		while (fn != null)
-		{
-			FeatureNode wd = fn.get("phr-word");
-			if (wd != null) chunk.addWord(wd);
-
-			// Add subphrases to the word list
-			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
-			{
-				chunkPhrase(fn, chunk);
-			}
-			fn = fn.get("phr-next");
-		}
 	}
 
 	/* -------------------------------------------------------- */
@@ -85,7 +47,7 @@ public class FindChunks
 	 *  will generate th phrase "broke the law"
 	 *
 	 */
-	private class ObjChunks implements RelationCallback
+	private class RelChunks implements RelationCallback
 	{
 		public Boolean UnaryRelationCB(FeatureNode from, String rel)
 		{
@@ -97,8 +59,8 @@ public class FindChunks
 		}
 		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
 		{
-			if (relation.equals("_subj")) return false;
-			if (relation.equals("_prepSubj")) return false;
+			// if (relation.equals("_subj")) return false;
+			// if (relation.equals("_prepSubj")) return false;
 
 			FeatureNode fm = from.get("nameSource");
 
