@@ -47,13 +47,12 @@ LexicalChunker -- abstract base class providing the interface for
 PhraseChunker -- print out phrases identified via the classical tree-bank
      style phrase tree.
 
-FindChuncks::findObjectChunks() -- print out phrases based on the 
-     binary RelEx relations -- e.g. object phraes, noun modifier phrases,
-     prepositional phrases, etc.
+RelationChunker -- print out phrases based on the binary RelEx relations 
+     -- e.g. object phraes, noun modifier phrases, prepositional phrases, etc.
 
-MatchChunks::findChunks() -- print out lexical chunks based on matching
-     to a collection of sentence patterns. The rest of this README file
-     is concnered wth these sentence patterns.
+PatternChunker() -- print out lexical chunks based on matching to a 
+     collection of sentence patterns. The rest of this README file is
+     concerned wth these sentence patterns.
 
 
 Unit tests

@@ -26,9 +26,9 @@ import java.util.Map;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.chunk.Chunk;
 import relex.chunk.LexicalChunker;
+import relex.chunk.PatternChunker;
 import relex.chunk.PhraseChunker;
 import relex.chunk.RelationChunker;
-import relex.chunk.MatchChunks;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.concurrent.RelexContext;
@@ -305,8 +305,8 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
-			" [--pa (show basic lexical (phrase) chunks)]" +
-			" [--pb (show compound lexical chunks)]" +
+			" [--pa (show phrase-based lexical chunks)]" +
+			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
@@ -482,8 +482,8 @@ public class RelationExtractor
 					}
 					if (commandMap.get("--pb") != null)
 					{
-						System.out.println("Phrase chunks:");
-						MatchChunks chunker = new MatchChunks();
+						System.out.println("Pattern-matching lexical chunks:");
+						LexicalChunker chunker = new PatternChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
 					}

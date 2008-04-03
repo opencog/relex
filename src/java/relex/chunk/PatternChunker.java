@@ -16,8 +16,6 @@
 
 package relex.chunk;
 
-import java.util.ArrayList;
-
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
@@ -35,16 +33,15 @@ import relex.tree.PhraseTree;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class MatchChunks
+public class PatternChunker extends LexicalChunker
 {
 	static final int debug = 0;
 
-	private ArrayList<Chunk> chunks;
 	private PatCB callback;
 	
-	public MatchChunks()
+	public PatternChunker()
 	{
-		chunks = new ArrayList<Chunk>();
+		super();
 		callback = new PatCB();
 	}
 
@@ -53,16 +50,6 @@ public class MatchChunks
 		PhraseTree pt = parse.getPhraseTree();
 		SubPhrase sb = new SubPhrase();
 		pt.foreach(sb);
-	}
-
-	public ArrayList<Chunk> getChunks()
-	{
-		return chunks;
-	}
-
-	public void clear()
-	{
-		chunks.clear();
 	}
 
 	/* -------------------------------------------------------- */
