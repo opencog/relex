@@ -373,6 +373,11 @@ BASIC_REF
 <ref name> = <str>
 <ref nameSource> = <this>
 ;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; ENTITY PROCESSING
+;
 #EntityAlg
 ENTITY
 ; sets ENTITY-FLAG = T for words which are names, places, etc.
@@ -435,6 +440,90 @@ LABEL_IDIOMS
 <F_R ref IDIOM-FLAG> = T
 ;
 ; -----------------------------------------------------------
+; If there was no front-end entity processor, then use the link-grammar
+; output for identidying entities. These will have G links to the left.
+;
+#WordSequenceCombineAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+<F_R> = $right
+=
+;
+; Fix up entities and idioms -- 
+; Necessary because the WordSequenceCombineAlg changes replaces <str> with a new node
+;
+#TemplateActionAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+=
+<F_R ref name> = %
+<F_R ref name> = <F_R str>
+;
+; The above entity mangling sometimes leaves behind empty, non-null strings.
+; Kill these here, explicitly -- replace them with nulls.
+#TemplateActionAlg
+MERGED_EMPTY_STRING_ELIMINATION
+<LAB> = \G\.*
+<F_L str> = %
+=
+<F_L str> = %
+;
+;
+#TemplateActionAlg
+PROPER_NAME_POS_CORRECTION
+<LAB> = \G\.*
+=
+<F_R POS> = %
+<F_R POS> = noun
+;
+#TemplateActionAlg
+DEFINITE_NAMES
+<LAB> = \G\.*
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_ENTITIES
+<ENTITY-FLAG> = T
+=
+<ref DEFINITE-FLAG> = T
+;
+; -------------------------------------------
+; Combine particles and other things.
+;
+#TwoWordCombineToLeftAlg
+COMBINE_PARTICLES
+<LAB> = K
+=
+;
+#TwoWordCombineToRightAlg
+COMBINE_AS_MANY
+<LAB> = AM
+=
+;
+; -------------------------------------------
+;
+#TemplateActionAlg
+DEFINITE_DETERMINED
+<LAB> = \D\.*
+<F_L orig_str> = the|The|This|this|These|these|Those|those|That|that|'s|his|His|her|Her|their|Their|my|My|our|Our|your|Your
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \DD\.*
+=
+<F_R DD-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \D\.*
+<F_L DD-FLAG> = T
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+; -----------------------------------------------------------
 ;
 #TemplateActionAlg
 QUESTION1
@@ -469,69 +558,6 @@ QUESTION1
 <F_R ref nameSource> = %
 <F_R ref nameSource> = <F_R>
 ;
-#WordSequenceCombineAlg
-PROPER_NAME_AND_ENTITIES_AND_IDIOMS
-<LAB> = \G\.*|\ID[A-Z]*[a-z]*
-<F_R> = $right
-=
-;
-; Fix up entities and idioms -- 
-; Necessary because the WordSequenceCombineAlg changes replaces <str> with a new node
-;
-#TemplateActionAlg
-PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
-<LAB> = \G\.*|\ID[A-Z]*[a-z]*
-=
-<F_R ref name> = %
-<F_R ref name> = <F_R str>
-;
-#TemplateActionAlg
-PROPER_NAME_POS_CORRECTION
-<LAB> = \G\.*
-=
-<F_R POS> = %
-<F_R POS> = noun
-;
-#TwoWordCombineToLeftAlg
-COMBINE_PARTICLES
-<LAB> = K
-=
-#TwoWordCombineToRightAlg
-COMBINE_AS_MANY
-<LAB> = AM
-=
-;
-#TemplateActionAlg
-DEFINITE_NAMES
-<LAB> = \G\.*
-=
-<F_R ref DEFINITE-FLAG> = T
-;
-#TemplateActionAlg
-DEFINITE_ENTITIES
-<ENTITY-FLAG> = T
-=
-<ref DEFINITE-FLAG> = T
-;
-#TemplateActionAlg
-DEFINITE_DETERMINED
-<LAB> = \D\.*
-<F_L orig_str> = the|The|This|this|These|these|Those|those|That|that|'s|his|His|her|Her|their|Their|my|My|our|Our|your|Your
-=
-<F_R ref DEFINITE-FLAG> = T
-;
-#TemplateActionAlg
-DEFINITE_NUMBERED1
-<LAB> = \DD\.*
-=
-<F_R DD-FLAG> = T
-;
-#TemplateActionAlg
-DEFINITE_NUMBERED1
-<LAB> = \D\.*
-<F_L DD-FLAG> = T
-=
-<F_R ref DEFINITE-FLAG> = T
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
