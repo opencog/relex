@@ -172,14 +172,21 @@ POS_I_PARTICLE
 =
 <F_L POS> = particle
 ;
-; Is John Barleycorn alive?
-; marks the ? as "punctuation"
+; "Is John Barleycorn alive?"  marks the ? as "punctuation"
+; "Bling, also know as jewelry, is da bomb." has Xc and Xd.
 #TemplateActionAlg
 POS_PUNCTUATION
-<LAB> = Xp
+<LAB> = Xp|Xc
 <F_R POS> = WORD
 =
 <F_R POS> = punctuation
+;
+#TemplateActionAlg
+POS_PUNCTUATION2
+<LAB> = Xd
+<F_L POS> = WORD
+=
+<F_L POS> = punctuation
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
