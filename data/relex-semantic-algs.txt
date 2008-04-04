@@ -176,7 +176,7 @@ POS_I_PARTICLE
 ; "Bling, also know as jewelry, is da bomb." has Xc and Xd.
 #TemplateActionAlg
 POS_PUNCTUATION
-<LAB> = Xp|Xc
+<LAB> = Xc|Xp|Xi|Xe|Xx
 <F_R POS> = WORD
 =
 <F_R POS> = punctuation
