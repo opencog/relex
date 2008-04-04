@@ -1895,15 +1895,29 @@ ADV1
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L head-word ref>
 ;
-#TemplateActionAlg
-ADV2
 ; Jim quickly runs.
 ; Jim is very tired.
+#TemplateActionAlg
+ADV2
 <LAB> = \E\.*|\EA\.*
 <LAB> != \EA[my]\.*
+<F_R head-word ref> != %
 =
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _advmod> += <F_R head-word ref>
+;
+; The head-word can be blank in unusual or quirky parses, for example:
+; "There are also bogus plans" where "bogus" is the head, instead of "are".
+; the "bogus" head is handled below, the "are" head is handles above.
+;
+#TemplateActionAlg
+ADV2_HEADLESS
+<LAB> = \E\.*|\EA\.*
+<LAB> != \EA[my]\.*
+<F_R head-word ref> = %
+=
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _advmod> += <F_R ref>
 ;
 ;
 ;
