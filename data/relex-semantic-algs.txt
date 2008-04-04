@@ -1892,11 +1892,15 @@ SUPERLATIVE-3
 ;
 ; ADVERB MODIFICATIONS
 ;
+; Exclude "EBx", because this is a modifier to punctuation.
+; For example, "Bling, also known as jewelry, is da bomb."
+; also modified the first comma.
 ;
 #TemplateActionAlg
 ADV1
 ; Jim runs quickly.
 <LAB> = \MVa\.*|\EB\.*
+<LAB> != \EBx\.*
 <F_R str> != not
 =
 <F_R BACKGROUND-FLAG> = T
