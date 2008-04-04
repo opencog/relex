@@ -470,7 +470,7 @@ PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
 ; Kill these here, explicitly -- replace them with nulls.
 #TemplateActionAlg
 MERGED_EMPTY_STRING_ELIMINATION
-<LAB> = \G\.*
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
 <F_L str> = %
 =
 <F_L str> = %
