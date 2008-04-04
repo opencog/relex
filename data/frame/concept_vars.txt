@@ -26,19 +26,19 @@ hyp
 progressive
 participle
 perfect
-past-perfect
-present-perfect
-future-perfect
+past_perfect
+present_perfect
+future_perfect
 imperfect
-past-imperfect
-present-imperfect
-future-imperfect
+past_imperfect
+present_imperfect
+future_imperfect
 imperative
 infinitive
-imperative-infinitive
-past-infinitive
-present-infinitive
-future-infinitive
+imperative_infinitive
+past_infinitive
+present_infinitive
+future_infinitive
 pluperfect
 conditional
 passive
@@ -49,16 +49,6 @@ subjunctive
 $Imperative_relation
 imperative
 imperative-infinitive
-
-$Copula
-be
-is
-am
-are
-will be
-were
-was
-being
 
 $atLocation
 about
@@ -265,8 +255,8 @@ where
 $Include
 among
 amongst
-excluding
-including
+exclude
+include
 without
 minus
 
@@ -311,10 +301,10 @@ wrangle
 
 $Being_located
 lying
-located
-sitting
-situated
-standing
+locate
+sit
+situate
+stand
 
 $Arranging
 arrange
@@ -496,7 +486,8 @@ verification
 $Purpose
 aim
 bent
-determined
+determine
+go
 intend
 mean
 plan
@@ -940,6 +931,7 @@ sometimes
 
 $Time
 afternoon
+ago
 anon
 century
 date
@@ -1158,7 +1150,9 @@ scalding
 icy
 freezing
 frozen
+chill
 chilly
+burn
 burning
 cold
 cool
@@ -1786,6 +1780,7 @@ wrap up
 
 $Activity_ongoing
 carry on
+doing so
 continue
 keep on
 keep up
@@ -2074,9 +2069,9 @@ talk
 write
 
 $Participation
-embroiled
-entangled
-ininvolved
+embroil
+entangle
+involve
 participate
 party to
 play in
@@ -3308,6 +3303,7 @@ incorporate
 have
 integrate
 be part of
+seat
 
 $Including
 among
@@ -3442,7 +3438,7 @@ welcoming
 
 $Difficulty
 arduous
-challenging
+challenge
 complex
 complicated
 difficult
@@ -3729,15 +3725,18 @@ author
 chronicle
 compose
 draft
+edit
 get down
 jot down
 jot
+list
 note
 note down
 pen
 print
 print out
 print up
+rewrite
 speak
 type in
 type out
@@ -3841,9 +3840,11 @@ bless
 $Prohibiting
 ban
 forbid
+limit
 outlaw
 prohibit
 prescribe
+proscribe
 
 $Biological_urge
 amorous
@@ -5109,6 +5110,30 @@ $Withdraw_from_participation
 beg off
 pull out
 withdraw
+
+$Compatibility
+accord
+agree
+biocompatible
+clash
+cohere
+compatible
+comport
+conflict
+conflicting
+congruent
+congruous
+consistent
+consonant
+dovetail
+go
+harmonize
+incompatible
+jibe
+match
+meet
+rhyme
+square
 
 
 
