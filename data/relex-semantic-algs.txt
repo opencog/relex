@@ -1896,12 +1896,17 @@ SUPERLATIVE-3
 ; For example, "Bling, also known as jewelry, is da bomb."
 ; also modified the first comma.
 ;
+; Sometimes, big complex sentences fail to get tagged with an
+; appropriate head-word. This seems hard to reproduce, and is
+; partly due to bad parses. So require a head-word, explicitly.
+;
 #TemplateActionAlg
 ADV1
 ; Jim runs quickly.
 <LAB> = \MVa\.*|\EB\.*
 <LAB> != \EBx\.*
 <F_R str> != not
+<F_L head-word> != %
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L head-word ref>
