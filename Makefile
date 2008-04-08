@@ -17,7 +17,7 @@ DIST_FILES = \
 	data/sentence-detector/EnglishSD.bin.gz \
 	data/wordnet/file_properties.xml \
 	src/java/relex/README \
-	src/java/relex/*.java
+	src/java/relex/*.java \
 	src/java/relex/algs/*.java \
 	src/java/relex/anaphora/test-corpus.txt \
 	src/java/relex/anaphora/*.java \
