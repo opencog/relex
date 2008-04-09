@@ -40,7 +40,7 @@ import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
-import relex.morphy.MorphyJWNL;
+import relex.morphy.MorphyFactory;
 import relex.output.OpenCogXML;
 import relex.output.ParseView;
 import relex.output.RawView;
@@ -139,7 +139,7 @@ public class RelationExtractor
 			lpc = LinkParserJNINewClient.getSingletonInstance();
 		}
 		lpc.init(null);
-		Morphy morphy = new MorphyJWNL();
+		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		morphy.initialize(); // make sure that JWNL is being used
 		context = new RelexContext(lpc, morphy);
 		

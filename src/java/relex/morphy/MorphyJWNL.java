@@ -54,36 +54,6 @@ public class MorphyJWNL implements Morphy
 	public static final boolean DEBUG = false;
 	// STATIC ATTRIBUTES
 
-//	private static Morphy instance = null;
-
-	public static final String DEFAULT_MORPHY_IMPLEMENTATION = "relex.morphy.Morphy";
-	public static final String MORPHY_IMPLEMENTATION_PROPERTY = "relex.morphy.Morphy";
-	
-	private static Morphy instance;
-
-	public static synchronized Morphy getInstance()
-	{
-		if (instance == null)
-		{
-			String implementationClassname = System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
-			if (implementationClassname == null)
-				implementationClassname = DEFAULT_MORPHY_IMPLEMENTATION;
-			try
-			{
-				Class<?> cl = Class.forName(implementationClassname);
-				instance = (Morphy)cl.newInstance();
-				instance.initialize();
-			}
-			catch (Exception ex)
-			{
-				throw new RuntimeException(
-						"Unable to initialize Morphy algorithm:" + ex.toString(),
-						ex);
-			}
-		}
-		return instance;
-	}
-
 	private static HashMap<String, String> irregularVerbContractions = new HashMap<String, String>();
 	private static HashMap<String, String> possessiveAdjRoots = new HashMap<String, String>();
 	private static HashMap<String, String> possessiveNounRoots = new HashMap<String, String>();
@@ -178,35 +148,6 @@ public class MorphyJWNL implements Morphy
 	{
 		initWordNet();
 	}
-
-//	private static final int CACHE_MAX_SIZE = 100;
-
-//	private static HashMap<String, Morphy> original2MorphyCache = new LinkedHashMap<String, Morphy>();
-
-	/* (non-Javadoc)
-	 * @see relex.morphy.Morphy#morph(java.lang.String)
-	 */
-/*	DEAD CODE DEAD CODE DEAD CODE DEAD CODE
-	public static Morphy getMorphy(String word)
-	{
-		// Morphy result = new Morphy(word);
-		Morphy result = original2MorphyCache.get(word);
-		if (result == null) {
-			result = new Morphy(word);
-			original2MorphyCache.put(word, result);
-			if (original2MorphyCache.size() > CACHE_MAX_SIZE) {
-				// Removes the first one (FIFO)
-				// TODO: We can think of a better heuristic if needed.
-				Object removal = original2MorphyCache.keySet().iterator().next();
-				original2MorphyCache.remove(removal);
-				// System.out.println("Removed " + ((Morphy)removal).getOriginal());
-			}
-		} else {
-			// System.out.println("Retrieved " + result.getOriginal());
-		}
-		return result;
-	}
-DEAD CODE DEAD CODE DEAD CODE */
 
 	public Morphed morph(String word)
 	{
