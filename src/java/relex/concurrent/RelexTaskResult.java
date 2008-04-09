@@ -4,10 +4,10 @@ import relex.RelexInfo;
 import relex.entity.EntityMaintainer;
 
 public class RelexTaskResult implements Comparable<RelexTaskResult> {
-	Integer index;
-	String sentence; 
-	RelexInfo result;
-	EntityMaintainer entityMaintainer;
+	public Integer index;
+	public String sentence; 
+	public RelexInfo result;
+	public EntityMaintainer entityMaintainer;
 	
 	public RelexTaskResult(int index, String sentence, EntityMaintainer entityMaintainer, RelexInfo ri){
 		this.index = index;
