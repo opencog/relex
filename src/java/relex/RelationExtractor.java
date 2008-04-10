@@ -121,12 +121,11 @@ public class RelationExtractor
 		} else {
 			lpc = LinkParserJNINewClient.getSingletonInstance();
 		}
-		lpc.init(null);
+		lpc.init();
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(lpc, morphy);
 		
 		SentenceAlgorithmApplier saa = new SentenceAlgorithmApplier();
-		saa.read(algsFile);
 
 		_newRelex(p,saa);
 	}

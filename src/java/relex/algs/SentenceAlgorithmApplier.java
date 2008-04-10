@@ -16,9 +16,11 @@ package relex.algs;
  */
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import relex.ParsedSentence;
@@ -31,7 +33,7 @@ import relex.concurrent.RelexContext;
 public class SentenceAlgorithmApplier {
 
 	/** a debug variable */
-	private static int verbosity = 0;
+	private static int verbosity = 1;
 
 	/** The list of algorithms to be applied */
 	private ArrayList<SentenceAlgorithm> algs;
@@ -45,10 +47,14 @@ public class SentenceAlgorithmApplier {
 	/** The character in an algfile which preceeds a comment. */
 	private static char COMMENT_CHAR = ';';
 
+	public SentenceAlgorithmApplier(){
+		read();
+	}
+	
 	private void addAlg(SentenceAlgorithm alg, String initString) {
 		alg.init(initString); // init the algorithm
 		algs.add(alg); // add it to algs vector
-		if (verbosity > 0)
+		if (verbosity > 1)
 			System.out.println("Adding alg: " + alg.getSignature());
 	}
 
@@ -62,14 +68,11 @@ public class SentenceAlgorithmApplier {
 	/**
 	 *  Read in the set of SentenceAlgorithms
 	 */
-	public void read(File file) {
+	public void read() {
+		InputStream in = getAlgorithmsFile();
 		algs = new ArrayList<SentenceAlgorithm>();
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(file));
-		} catch (IOException e) {
-			throw new RuntimeException("Problem reading file " + file);
-		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		
 		SentenceAlgorithm curAlg = null;
 		StringBuffer sb = new StringBuffer();
 		String line = null;
@@ -97,7 +100,7 @@ public class SentenceAlgorithmApplier {
 				addAlg(curAlg, sb.toString());
 			}
 		} catch (IOException e) {
-			throw new RuntimeException("Problem reading file " + file);
+			throw new RuntimeException("Problem reading relex semantic algorithms file.");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Invalid class: " + e);
 		} catch (InstantiationException e) {
@@ -107,4 +110,49 @@ public class SentenceAlgorithmApplier {
 		}
 	}
 
+	/**
+	 * Determine the relex algorithms file will be used. 
+	 * 
+	 * <ul>
+	 * <li>First try to load the the file defined by the system property relex.algpath.</li> 
+	 * <li>Then try to load the file as a resource in the jar file.</li>  
+	 * <li>Finally, tries the default location (equivalent to -Drelex.algpath=./data/relex-semantic-algs.txt)</li>
+	 * </ul>
+	 * 
+	 * @return
+	 */
+	public static InputStream getAlgorithmsFile(){
+		try {
+			InputStream in = null; 
+			String algsFileName = System.getProperty("relex.algpath");
+			if (algsFileName!=null) {
+				in = new FileInputStream(algsFileName);
+				if (in!=null) {
+					if (verbosity > 0) System.out.println("Using relex algorithms file defined in relex.algpath:"+algsFileName);
+					return in;
+				}
+			}
+			
+			in = SentenceAlgorithmApplier.class.getResourceAsStream("/relex-semantic-algs.txt");
+			if (in!=null) {
+				if (verbosity > 0) System.out.println("Using relex algorithms file defined as a resource.");
+				return in;
+			}
+	
+			String defaultRelexSemanticAlgsFile = "./data/relex-semantic-algs.txt";
+			in = new FileInputStream(defaultRelexSemanticAlgsFile);
+			if (in!=null) {
+				if (verbosity > 0) System.out.println("Using default relex algorithms file "+defaultRelexSemanticAlgsFile);
+				return in;
+			}
+	
+			throw new RuntimeException("Error reading semantic algorithms file.");
+		} catch (FileNotFoundException exception){
+			throw new RuntimeException(exception);
+		}
+	}
+	
+	public static void main(String[] args){
+		new SentenceAlgorithmApplier();
+	}
 }

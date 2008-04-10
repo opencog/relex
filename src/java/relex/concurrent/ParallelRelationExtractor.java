@@ -1,7 +1,6 @@
 package relex.concurrent;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,7 +12,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import relex.RelationExtractor;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
@@ -71,7 +69,6 @@ public class ParallelRelationExtractor {
 		entityDetector.initialize();
 		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-		sentenceAlgorithmApplier.read(new File(RelationExtractor.DEFAULT_ALGS_FILE));
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
