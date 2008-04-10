@@ -86,23 +86,8 @@ public class RelationExtractor
 	public Antecedents antecedents;
 	private Hobbs hobbs;
 
-	/** Single-threaded-ness hack */
-	private static RelationExtractor singleton;
-	
-	public static RelationExtractor getSingletonInstance()
-	{
-		return singleton;
-	}
-
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
-	public static void init(File algsFile, boolean useSocket)
-	{
-		if (singleton != null) {
-			throw new RuntimeException("RelationExtractor already initialized.");
-		}
-		singleton = new RelationExtractor(algsFile, useSocket);
-	}
 
 	public RelationExtractor(boolean useSocket)
 	{
@@ -122,9 +107,7 @@ public class RelationExtractor
 		_newRelex(algsFile, useSocket);
 	}
 
-	private RelationExtractor(File algsFile,
-	                          boolean useSocket)
-	{
+	public RelationExtractor(File algsFile, boolean useSocket) {
 		_newRelex(algsFile, useSocket);
 	}
 
@@ -140,7 +123,6 @@ public class RelationExtractor
 		}
 		lpc.init(null);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
-		morphy.initialize(); // make sure that JWNL is being used
 		context = new RelexContext(lpc, morphy);
 		
 		SentenceAlgorithmApplier saa = new SentenceAlgorithmApplier();
