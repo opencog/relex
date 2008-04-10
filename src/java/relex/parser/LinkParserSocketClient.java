@@ -89,10 +89,14 @@ public class LinkParserSocketClient extends LinkParserClient {
 		exec(LinkParserProtocol.MSG_SET_MAX_COST + maxCost);
 	}
 
+	public void init() {
+		init(null);
+	}
+	
 	// These are not added to restorecommands, so we do not use exec
-	public void init(String pathname) {
-		super.init(pathname);
-		client.process(LinkParserProtocol.MSG_INIT + pathname, null);
+	public void init(String linkGrammarDictionariesPath) {
+		super.init(linkGrammarDictionariesPath);
+		client.process(LinkParserProtocol.MSG_INIT + linkGrammarDictionariesPath, null);
 	}
 
 	public boolean isPastTenseForm(String word) {
