@@ -29,6 +29,7 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
+        <delete file="relex-0.8.3.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
