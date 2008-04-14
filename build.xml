@@ -29,6 +29,7 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
+        <delete file="relex-0.8.3.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
@@ -49,6 +50,7 @@
                 <attribute name="Implementation-Version" value="0.8.3"/>
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
+        	<fileset file="data/relex-semantic-algs.txt" />
         </jar>
     </target>
 

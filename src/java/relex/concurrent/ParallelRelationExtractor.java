@@ -1,7 +1,6 @@
 package relex.concurrent;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,7 +12,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import relex.RelationExtractor;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
@@ -21,8 +19,8 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
 import relex.entity.EntityMaintainer;
-import relex.morphy.MapMorphy;
 import relex.morphy.Morphy;
+import relex.morphy.MorphyFactory;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
 import relex.parser.LinkParserSocketClient;
@@ -71,7 +69,6 @@ public class ParallelRelationExtractor {
 		entityDetector.initialize();
 		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-		sentenceAlgorithmApplier.read(new File(RelationExtractor.DEFAULT_ALGS_FILE));
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
@@ -84,7 +81,7 @@ public class ParallelRelationExtractor {
 	private void initializePool() {
 		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool 
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
-		Morphy morphy = new MapMorphy();
+		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 		morphy.initialize();
 		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){

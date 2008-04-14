@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import relex.ParsedSentence;
-import relex.RelationExtractor;
 import relex.RelexProperties;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
@@ -234,7 +233,7 @@ public class LinkParser extends Parser
 	public static void main(String[] args)
 	{
 		LinkParserJNINewClient lpc = LinkParserJNINewClient.getSingletonInstance();
-		lpc.init(RelationExtractor.DEFAULT_ALGS_FILE);
+		lpc.init();
 		LinkParser lp = new LinkParser();
 		ArrayList<ParsedSentence> v = lp.parse(
 			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.", lpc);

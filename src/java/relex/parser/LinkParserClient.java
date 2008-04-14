@@ -75,8 +75,12 @@ public abstract class LinkParserClient {
         // must extend this!
     }
     
-    public void init(String pathname) {
-    	if (pathname != null) LinkGrammar.setDictionariesPath(pathname);
+    public void init(){
+    	init(null);
+    }
+    
+    public void init(String linkGrammarDictionariesPath) {
+    	if (linkGrammarDictionariesPath != null) LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
     }
 
     abstract public boolean isPastTenseForm(String word);

@@ -453,6 +453,17 @@ public class EntityMaintainer
 		}
 	}
 
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		for (EntityInfo info: orderedEntityInfos){
+			String name = info.getOriginalSentence().substring(
+					info.getFirstCharIndex(), 
+					info.getLastCharIndex());
+			sb.append(makeID(info)).append(": ").append(name).append("\n");
+		}
+		return sb.toString();
+	}
+	
 	public static void main(String[] args)
 	{
 		/*

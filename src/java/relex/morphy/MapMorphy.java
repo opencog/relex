@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -79,7 +78,7 @@ public class MapMorphy implements Morphy{
 	
 	Map<POS, Map<String, IndexWord>> partsOfSpeech = new HashMap<POS, Map<String,IndexWord>>();
 	
-	Map<POS, Map<String, NavigableSet<String>>> exceptions = new HashMap<POS, Map<String, NavigableSet<String>>>();
+	Map<POS, Map<String, TreeSet<String>>> exceptions = new HashMap<POS, Map<String, TreeSet<String>>>();
 	
 	@SuppressWarnings("unchecked")
 	public void initialize() {
@@ -87,16 +86,16 @@ public class MapMorphy implements Morphy{
 		
 		Dictionary d = Dictionary.getInstance();			
 		for(int i = 0; i < pos.length; i++) {
-			Map<String, NavigableSet<String>> posExceptions = exceptions.get(pos[i]); 
+			Map<String, TreeSet<String>> posExceptions = exceptions.get(pos[i]); 
 			if (posExceptions == null){
-				posExceptions = new TreeMap<String, NavigableSet<String>>();
+				posExceptions = new TreeMap<String, TreeSet<String>>();
 				exceptions.put(pos[i], posExceptions);
 			}
 			try {
 				for (Iterator it = d.getExceptionIterator(pos[i]); it.hasNext(); ){
 					Exc exc = (Exc) it.next();
 					String word = exc.getLemma();
-					NavigableSet<String> wordExceptions = posExceptions.get(word);
+					TreeSet<String> wordExceptions = posExceptions.get(word);
 					if (wordExceptions==null){
 						wordExceptions = new TreeSet<String>();
 						posExceptions.put(word, wordExceptions);
@@ -180,7 +179,7 @@ public class MapMorphy implements Morphy{
 	 * @param lookup
 	 */
 	private IndexWord lookupExceptions(POS pos, String lookup) {
-		NavigableSet<String> wordExceptions = exceptions.get(pos).get(lookup);
+		TreeSet<String> wordExceptions = exceptions.get(pos).get(lookup);
 		if ( (wordExceptions!=null) && (wordExceptions.size()>0) ){
 			for(String exception: wordExceptions){
 				IndexWord exceptionResult = partsOfSpeech.get(pos).get(exception.toLowerCase());

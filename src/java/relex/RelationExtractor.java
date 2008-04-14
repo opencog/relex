@@ -16,7 +16,6 @@
 package relex;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -24,13 +23,13 @@ import java.util.HashSet;
 import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
+import relex.anaphora.Antecedents;
+import relex.anaphora.Hobbs;
 import relex.chunk.Chunk;
 import relex.chunk.LexicalChunker;
 import relex.chunk.PatternChunker;
 import relex.chunk.PhraseChunker;
 import relex.chunk.RelationChunker;
-import relex.anaphora.Antecedents;
-import relex.anaphora.Hobbs;
 import relex.concurrent.RelexContext;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
@@ -40,7 +39,7 @@ import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
-import relex.morphy.MorphyJWNL;
+import relex.morphy.MorphyFactory;
 import relex.output.OpenCogXML;
 import relex.output.ParseView;
 import relex.output.RawView;
@@ -86,78 +85,20 @@ public class RelationExtractor
 	public Antecedents antecedents;
 	private Hobbs hobbs;
 
-	/** Single-threaded-ness hack */
-	private static RelationExtractor singleton;
-	
-	public static RelationExtractor getSingletonInstance()
-	{
-		return singleton;
-	}
-
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
-	public static void init(File algsFile, boolean useSocket)
-	{
-		if (singleton != null) {
-			throw new RuntimeException("RelationExtractor already initialized.");
-		}
-		singleton = new RelationExtractor(algsFile, useSocket);
-	}
 
 	public RelationExtractor(boolean useSocket)
 	{
-		// algs file path can be specified with the -Drelex.algpath= flag
-		String algsFileName = System.getProperty("relex.algpath");
-		if ((algsFileName == null) || (algsFileName.length() == 0))
-		{
-			algsFileName = DEFAULT_ALGS_FILE;
-		}
-
-		File algsFile = new File(algsFileName);
-		if ( (algsFile == null) || (!algsFile.canRead()) )
-		{
-			System.err.println("Error reading semantic algorithms file " + algsFile);
-			return;
-		}
-		_newRelex(algsFile, useSocket);
-	}
-
-	private RelationExtractor(File algsFile,
-	                          boolean useSocket)
-	{
-		_newRelex(algsFile, useSocket);
-	}
-
-	private void _newRelex(File algsFile,
-	                  boolean useSocket)
-	{
-		LinkParser p = new LinkParser();
-		LinkParserClient lpc = null;
-		if (useSocket) {
-			lpc = new LinkParserSocketClient();
-		} else {
-			lpc = LinkParserJNINewClient.getSingletonInstance();
-		}
-		lpc.init(null);
-		Morphy morphy = new MorphyJWNL();
-		morphy.initialize(); // make sure that JWNL is being used
+		parser = new LinkParser();
+		
+		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
+		lpc.init();
+		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(lpc, morphy);
 		
-		SentenceAlgorithmApplier saa = new SentenceAlgorithmApplier();
-		saa.read(algsFile);
-
-		_newRelex(p,saa);
-	}
-	
-	public RelationExtractor(LinkParser p, SentenceAlgorithmApplier saa)
-	{
-		_newRelex(p,saa);
-	}
-
-	private void _newRelex(LinkParser p, SentenceAlgorithmApplier saa)
-	{
-		sentenceAlgorithmApplier = saa;
-		parser = p;
+		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
+		
 		setMaxParses(DEFAULT_MAX_PARSES);
 		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
