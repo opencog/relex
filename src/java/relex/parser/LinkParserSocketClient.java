@@ -71,11 +71,15 @@ public class LinkParserSocketClient extends LinkParserClient {
 			restoreCommands.add(LinkParserProtocol.MSG_SET_MAX_PARSE_SECONDS+ serverParams.maxCost);
 	}
 
-	private String exec(String command) {
+	private String exec(String command)
+	{
 		if (verbosity > 3) System.out.println("LinkParserSocketClient Executing:" + command);
 		String response = client.process(command, restoreCommands);
 		if (verbosity > 3) System.out.println("LinkParserSocketClient Received:" + response);
-		restoreCommands.add(command);
+
+		// Avoid infinite loop, if link parser crashes.
+		if (response != null)
+			restoreCommands.add(command);
 		return response;
 	}
 
