@@ -140,6 +140,17 @@ Verb phrases:
  * I didn't HAVE THE HEART TO tell hem.
       (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
 
+ * He WENT AWAY.  I want to GO HOME now. 
+      (VP went (PRT away)) 
+      (S (VP to (VP go (PRT home))))
+      (S (VP to (VP go (PRT home) (PP now))))
+      (S (VP Please (VP go (PRT away) (PP now))) .)
+
+
+   This should cover it:
+      (VP a (PRT a) *)
+      (S (VP to (VP go (PRT home) *)))
+
  * Let's GET IT OUT.
    Let's GET IT OUT in the open.
    Let's GET IT OUT in the open now.
