@@ -85,11 +85,9 @@ public class PatternChunker extends LexicalChunker
 			matcher("(VP r (NP a) (S (VP a (VP r))))");
 			matcher("(VP r (NP a) (PP a (NP r (NP r))))");
 
-			// Prepositional phrasal verbs, but messed up a bit.
-			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
-			matcher("(VP a (PP a (NP r)) (PP a (NP r)))");
+			// Prepositional phrasal verbs with TWO prepositions:
+			matcher("(VP notcop (PP a (NP postcop)) (PP a (NP r)))");
 			matcher("(VP a (PP a) (PP a (NP r)) *)");
-
 
 			matcher("(VP r (VP a (NP a) (S (VP a (VP r (NP r))))))");
 
@@ -133,12 +131,14 @@ public class PatternChunker extends LexicalChunker
 	private class PatCB implements PatternCallback
 	{
 		private Chunk curr_chunk;
+		private boolean saw_copula;
 		public void FoundCallback(String pattern, PhraseTree pt)
 		{
 			if (0 < debug) System.out.println("========== match! "+ pattern + " == " + pt.toString());
 
 			curr_chunk = new Chunk();
 			add(curr_chunk);
+			saw_copula = false;
 		}
 		public Boolean PMCallback(String pattern, PhraseTree pt)
 		{
@@ -162,14 +162,29 @@ public class PatternChunker extends LexicalChunker
 				if (false == isPronoun(word)) return false;
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
-			else if (pattern.equals("c"))
+
+			// Reject if its a copula (is, was, ...) and keep otherwise.
+			else if (pattern.equals("notcop"))
 			{
-				// accept only copula.
-System.out.println("duude copula flag "+ pt.toString());
+				FeatureNode word = pt.getFirstWord();
+				if (isCopula(word))
+				{
+					saw_copula = true;
+					return false;
+				}
+				chunkWords(pt.getCursor(), curr_chunk);
+			}
+
+			// Accept only if copula seen previously
+			else if (pattern.equals("postcop"))
+			{
+				if (!saw_copula) return false;
+				chunkWords(pt.getCursor(), curr_chunk);
 			}
 			return false;
 		}
 
+		// Return true if the feature node is a pronoun.
 		private boolean isPronoun(FeatureNode fn)
 		{
 			fn = fn.get("ref");
@@ -177,6 +192,18 @@ System.out.println("duude copula flag "+ pt.toString());
 			fn = fn.get("PRONOUN-FLAG");
 			if (fn == null) return false;
 			return true;
+		}
+
+		// Return true if the featue node is the verb "to be".
+		private boolean isCopula(FeatureNode fn)
+		{
+			fn = fn.get("morph");
+			if (fn == null) return false;
+			fn = fn.get("root");
+			if (fn == null) return false;
+			String root = fn.getValue();
+			if (root.equals("be")) return true;
+			return false;
 		}
 	}
 

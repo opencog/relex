@@ -126,22 +126,24 @@ Most of these are phrasal verbs of one sort or another.
    The cup was FILLED TO overflowing.
      (VP was (VP filled (PP to (S (VP overflowing)))))
 
- * I was in love with that bunny.
+ * Prepositional verbs with two prepositions:
+   We TALKED TO the minister ABOUT the crisis.
+      (VP talked (PP to (NP the minister)) (PP about (NP the crisis)))
+   so:
+      (VP a (PP a (NP r)) (PP a (NP r)))
+ 
+   However, problems when the verb is a copula:
+   I was IN LOVE WITH that bunny.
    Desired answer: "in love with"
 
       (VP was (PP in (NP love)) (PP with (NP that bunny)))
-      (VP r (PP a (NP a)) (PP a (NP r)))
+      (VP notcop (PP a (NP postcop)) (PP a (NP r)))
 
    Drop leading VP, keep first NP, drop second NP.
-   (drop first VP perhaps because its a copula!!?)
+   (drop first VP because its a copula!)
 
-   XXX
-   We TALKED TO the minister ABOUT the crisis.
-   (VP talked (PP to (NP the minister)) (PP about (NP the crisis)))
-   so:
-   (VP a (PP a (NP r)) (PP a (NP r)))
- 
- * I RAN AWAY FROM home.
+ * Prepositional verbs with two prepositions:
+   I RAN AWAY FROM home.
    I RAN AWAY FROM home at age two.
    Desired answer: "ran away from"
 
