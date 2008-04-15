@@ -77,6 +77,7 @@ Sentence phrases
 
 Verb phrases:
 ------------
+Most of these are phrasal verbs of one sort or another.
 
  * General Custer gave the Sioux chief no quarter.
    The desired answer is "give ... no quarter". 
@@ -85,36 +86,60 @@ Verb phrases:
 
    Skip first NP, keep second.
 
- * I TOOK her TO the dance.
+ * Prepositional verbs are phrasal verbs that contain a preposition,
+   which is always followed by its nominal object.  The verb has its
+   own object, which usually precedes the preposition:
+
+   I TOOK her TO the dance.
    Desired answer: "took ... to"
 
-       (VP took (NP her) (PP to (NP the dance)))
+      (VP took (NP her) (PP to (NP the dance)))
 
    Skip both NP's, to get "took ... to"
+      (VP a (NP r) (PP a (NP r)))
+
+   Similarly, but more complex: 
+   She HELPED the boy TO an extra portion of potatoes.
+
+      (VP helped (NP the boy) (PP to (NP (NP an extra portion) (PP of (NP potatoes)))))
+      (VP a (NP r) (PP a (NP (NP r) (PP r (NP r)))))
+      (VP a (NP r) (PP a (NP *)))
+
+   So we use a * here for the general case.
 
  * He had A GOOD FEELING FOR that sort of thing.
    Desired answer: "a good feeling for"
 
       (VP had (NP a good feeling) (PP for (NP that sort of (NP thing))))
 
- * He will TAKE OFFICE ON monday.
+ * Phrasal verbs: prepositional verb: 
+   He will TAKE OFFICE ON monday.
    Desired answer: "take office on"
 
       (VP will (VP take office (PP on (NP Monday))))
 
    need to drop NP in PP, to get "take office on"
    Similarly: (VP was (VP filled (PP to (NP overflowing))))
+   (VP look (PP after (NP them))), want "look after".
 
- * The cup was FILLED TO overflowing.
+ * Phrasal verb -- particle verb
+   The cup was FILLED TO overflowing.
      (VP was (VP filled (PP to (S (VP overflowing)))))
 
  * I was in love with that bunny.
    Desired answer: "in love with"
 
       (VP was (PP in (NP love)) (PP with (NP that bunny)))
+      (VP r (PP a (NP a)) (PP a (NP r)))
 
    Drop leading VP, keep first NP, drop second NP.
-   (drop first VP perhaps because its a copula?)
+   (drop first VP perhaps because its a copula!!?)
+
+   XXX
+   We TALKED TO the minister ABOUT the crisis.
+   (VP talked (PP to (NP the minister)) (PP about (NP the crisis)))
+   so:
+   (VP a (PP a (NP r)) (PP a (NP r)))
  
  * I RAN AWAY FROM home.
    I RAN AWAY FROM home at age two.
@@ -140,18 +165,21 @@ Verb phrases:
  * I didn't HAVE THE HEART TO tell hem.
       (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
 
- * He WENT AWAY.  I want to GO HOME now. 
+
+
+ * Phrasal verbs -- 
+   He WENT AWAY.  I want to GO HOME now. 
       (VP went (PRT away)) 
       (S (VP to (VP go (PRT home))))
       (S (VP to (VP go (PRT home) (PP now))))
       (S (VP Please (VP go (PRT away) (PP now))) .)
 
-
    This should cover it:
       (VP a (PRT a) *)
       (S (VP to (VP go (PRT home) *)))
 
- * Let's GET IT OUT.
+ * Phrasal verbs -- particle verbs
+   Let's GET IT OUT.
    Let's GET IT OUT in the open.
    Let's GET IT OUT in the open now.
 	Let's PUT IT ON.
@@ -162,12 +190,19 @@ Verb phrases:
 
 
    The obvious pattern is (VP a (NP a) (PRT a) *) but this won't work
-   with RelEx, because earlier stages mangle the snetence. The actual
+   with RelEx, because earlier stages mangle the sentence. The actual
    phrase becomes:
        (VP let's (VP get out (NP it) (PRT) (PP in (NP the open))))
    because the K link was used to merge "get" and "out". This, 
    ahem, wrecks the pattern matching. -- Fixed, had to hack 
    algs/TwoWordCombineToLeftAlg.java to not merge the orig_str.
+
+   However, this screws up:
+   SWITCH the light OFF.
+   (S (VP Switch (NP the light) (PRT off)) .)
+
+   We want to keep NP only if its a pronoun ?? 
+
 
 Noun phrases:
 -------------
@@ -214,7 +249,7 @@ a == accept, r == reject
 (VP a (VP a (PP a (NP r)))) -- (VP was (VP filled (PP to (NP overflowing)))) -- was filled to
 (VP a (VP a (PP a (S (VP r))))) -- (VP was (VP filled (PP to (S (VP overflowing)))))-- was filled to
 (VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
-(VP a (NP r) (PP a (NP r))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
+(VP a (NP r) (PP a (NP *))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 
 (VP r (NP a) (S (VP a (VP r))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to
 

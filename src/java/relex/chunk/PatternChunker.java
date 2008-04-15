@@ -72,20 +72,28 @@ public class PatternChunker extends LexicalChunker
 			matcher("(S (VP a (NP a)))");
 			matcher("(SBAR a (S (NP a) (VP a (NP r))))");
 
-			//
+			// Phrasal verbs: prepositonal verbs
+			// e.g. (VP look (PP after (NP them))) " We look after tehm."
 			matcher("(VP a (PP a (NP r)))");  // a subphrase of the below, which seems to cover most of it?
 			matcher("(VP a (VP a (PP a (NP r))))"); 
 			matcher("(VP a (VP a (PP a (S (VP r)))))");
 
 			matcher("(VP a (NP r) (NP a))");
-			matcher("(VP a (NP r) (PP a (NP r)))");
+			matcher("(VP a (NP r) (PP a (NP *)))");
+			// matcher("(VP a (NP r) (PP a (NP r)))");
 
 			matcher("(VP r (NP a) (S (VP a (VP r))))");
 			matcher("(VP r (NP a) (PP a (NP r (NP r))))");
+
+			// Prepositional phrasal verbs, but messed up a bit.
 			matcher("(VP r (PP a (NP a)) (PP a (NP r)))");
+			matcher("(VP a (PP a (NP r)) (PP a (NP r)))");
 			matcher("(VP a (PP a) (PP a (NP r)) *)");
+
+
 			matcher("(VP r (VP a (NP a) (S (VP a (VP r (NP r))))))");
 
+			// Phrasal verbs: particle verbs.
 			matcher("(VP a (PRT a) *)");
 			matcher("(S (VP a (VP a (PRT a) *)))");
 			matcher("(VP a (NP a) (PRT a) *)");
