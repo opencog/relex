@@ -194,11 +194,27 @@ Particle Verbs:
 
    We want to keep the object NP only if its a pronoun !!
 
-  * Infinitive forms:
-    I want TO GO HOME now. 
-      (S (VP to (VP go (PRT home))))
-      (S (VP to (VP go (PRT home) (PP now))))
-      (S (VP Please (VP go (PRT away) (PP now))) .)
+ * With prepositions, but without a direct object:
+   The driver GOT OFF TO a flying start.
+
+      (VP got (PRT off) (PP to (NP a flying start)))
+
+      (VP a (PRT a) (PP a (NP r)))
+
+ * With prepositions, and with a direct object:
+   Onlookers PUT the accident DOWN TO bad luck.
+
+      (VP put (NP the accident) (PRT down) (PP to (NP bad luck)))
+      (VP a (NP p) (PRT a) (PP a (NP *)))
+
+    XXX this clashes with "get it out in the open", which is perhaps
+    too idiomatic to handle correctly!?
+
+ * Infinitive forms:
+   I want TO GO HOME now. 
+     (S (VP to (VP go (PRT home))))
+     (S (VP to (VP go (PRT home) (PP now))))
+     (S (VP Please (VP go (PRT away) (PP now))) .)
 
 XXX borken
    This should cover it:

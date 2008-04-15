@@ -92,11 +92,19 @@ public class PatternChunker extends LexicalChunker
 			matcher("(VP r (VP a (NP a) (S (VP a (VP r (NP r))))))");
 
 			// Phrasal verbs: particle verbs.
-			matcher("(VP a (PRT a) *)");
-			matcher("(S (VP a (VP a (PRT a) *)))");
+			matcher("(S (NP r) (VP a (PRT a)) *)");
+			matcher("(VP notcop (VP a (PRT a) *))");
+
+			matcher("(VP a (PRT a) (PP a (NP *)))");
+
+			// this one is rather loose XXXX
+			// matcher("(VP a (PRT a) *)");
 
 			// p means "accept only if its a pronoun"
-			matcher("(VP a (NP p) (PRT a) *)");
+			matcher("(VP a (NP p) (PRT a))");
+			// XXX this needs to be narrowed ... 
+			// matcher("(VP a (NP p) (PRT a) *)");
+			matcher("(VP a (NP r) (PRT a) (PP a (NP *)))");
 
 			// matcher("");
 
