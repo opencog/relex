@@ -96,7 +96,9 @@ public class PatternChunker extends LexicalChunker
 			// Phrasal verbs: particle verbs.
 			matcher("(VP a (PRT a) *)");
 			matcher("(S (VP a (VP a (PRT a) *)))");
-			matcher("(VP a (NP a) (PRT a) *)");
+
+			// p means "accept only if its a pronoun"
+			matcher("(VP a (NP p) (PRT a) *)");
 
 			// matcher("");
 
@@ -148,7 +150,33 @@ public class PatternChunker extends LexicalChunker
 			{
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
+
+			// "p" means "accept only if its a pronoun".
+			else if (pattern.equals("p"))
+			{
+				// Must have only one word in the phrase ... 
+				if (1 != pt.getBreadth()) return false;
+
+				// ... and that word must be a pronoun.
+				FeatureNode word = pt.getFirstWord();
+				if (false == isPronoun(word)) return false;
+				chunkWords(pt.getCursor(), curr_chunk);
+			}
+			else if (pattern.equals("c"))
+			{
+				// accept only copula.
+System.out.println("duude copula flag "+ pt.toString());
+			}
 			return false;
+		}
+
+		private boolean isPronoun(FeatureNode fn)
+		{
+			fn = fn.get("ref");
+			if (fn == null) return false;
+			fn = fn.get("PRONOUN-FLAG");
+			if (fn == null) return false;
+			return true;
 		}
 	}
 

@@ -166,8 +166,9 @@ Most of these are phrasal verbs of one sort or another.
       (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
 
 
+ * Phrasal verbs -- Particle verbs.
+   Intransitive particle verbs do not have an object:
 
- * Phrasal verbs -- 
    He WENT AWAY.  I want to GO HOME now. 
       (VP went (PRT away)) 
       (S (VP to (VP go (PRT home))))
@@ -178,7 +179,15 @@ Most of these are phrasal verbs of one sort or another.
       (VP a (PRT a) *)
       (S (VP to (VP go (PRT home) *)))
 
- * Phrasal verbs -- particle verbs
+  * Transitive particle verbs have an object, which may preceed 
+    the verb:
+   SWITCH the light OFF.
+      (VP Switch (NP the light) (PRT off))
+   so:
+      (VP a (NP p) (PRT a))
+
+   "p" flag -- if the NP is a pronoun, we want to keep it!
+
    Let's GET IT OUT.
    Let's GET IT OUT in the open.
    Let's GET IT OUT in the open now.
@@ -188,7 +197,6 @@ Most of these are phrasal verbs of one sort or another.
       (VP get (NP it) (PRT out) (PP in (NP the open)))
       (VP get (NP it) (PRT out) (PP in (NP the open)) (PP now))
 
-
    The obvious pattern is (VP a (NP a) (PRT a) *) but this won't work
    with RelEx, because earlier stages mangle the sentence. The actual
    phrase becomes:
@@ -197,11 +205,7 @@ Most of these are phrasal verbs of one sort or another.
    ahem, wrecks the pattern matching. -- Fixed, had to hack 
    algs/TwoWordCombineToLeftAlg.java to not merge the orig_str.
 
-   However, this screws up:
-   SWITCH the light OFF.
-   (S (VP Switch (NP the light) (PRT off)) .)
-
-   We want to keep NP only if its a pronoun ?? 
+   We want to keep the object NP only if its a pronoun !!
 
 
 Noun phrases:
