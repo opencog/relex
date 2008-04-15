@@ -497,16 +497,33 @@ DEFINITE_ENTITIES
 ;
 ; -------------------------------------------
 ; Combine particles and other things.
+; For example, "Please go away" creates the polyword "go_away".
+; Note that part of speech is still identified as "verb", which 
+; in this case should be taken to mean "phrasal verb".
 ;
 #TwoWordCombineToLeftAlg
 COMBINE_PARTICLES
 <LAB> = K
 =
 ;
+#TemplateActionAlg
+POLYWORD_PARTICLES
+<LAB> = K
+=
+<F_L ref POLYWORD-FLAG> = T
+;
+; "He ate as many as I did"  combines into "as_many"
+;
 #TwoWordCombineToRightAlg
 COMBINE_AS_MANY
 <LAB> = AM
 =
+;
+#TemplateActionAlg
+POLYWORD_AS_MANY
+<LAB> = AM
+=
+<F_R ref POLYWORD-FLAG> = T
 ;
 ; -------------------------------------------
 ;
