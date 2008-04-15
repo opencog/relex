@@ -48,21 +48,25 @@ Three distinct mechanisms are encoded in this directory.
 LexicalChunker -- abstract base class providing the interface for
      several alternate chunking routines.
 
-PhraseChunker -- print out phrases identified via the classical tree-bank
-     style phrase tree.
+PhraseChunker -- print out phrases identified via the classical
+     tree-bank style phrase tree.
 
-RelationChunker -- print out phrases based on the binary RelEx relations 
-     -- e.g. object phraes, noun modifier phrases, prepositional phrases, etc.
+RelationChunker -- print out phrases based on the binary RelEx
+      relations -- e.g. object phrases, noun modifier phrases,
+      prepositional phrases, etc.
 
 PatternChunker() -- print out lexical chunks based on matching to a 
-     collection of sentence patterns. The rest of this README file is
-     concerned wth these sentence patterns.
+     collection of sentence patterns. Of the various mechanisms, this
+     one yeilds the most interesting/best results.  The rest of this 
+     README file is concerned wth these sentence patterns.
 
 
 Pattern matching
 ----------------
 a == accept, r == reject
 p == accept only if pronoun
+notcop == accept only if not a copula
+postcop == accept only if preceeded by copula
 
 Verb phrases:
 ------------
@@ -168,7 +172,7 @@ Particle Verbs:
    so:
       (VP a (NP p) (PRT a))
 
-   "p" flag -- if the NP is a pronoun, we want to keep it!
+   "p" flag -- if the NP is a pronoun, we want to keep it! See below:
 
    Let's GET IT OUT.
    Let's GET IT OUT in the open.
@@ -229,7 +233,7 @@ Miscellany
 
       (VP r (NP a) (PP a (NP r (NP r))))
 
- * General Custer gave the Sioux chief no quarter.
+ * General Custer GAVE the Sioux chief NO QUARTER.
    The desired answer is "give ... no quarter". 
 
       (VP gave (NP the Sioux chief) (NP no quarter)) 
@@ -322,8 +326,6 @@ Fails to parse.
 
 Pattern match:
 --------------
-(VP a (VP a (PP a (NP r)))) -- (VP was (VP filled (PP to (NP overflowing)))) -- was filled to
-(VP a (VP a (PP a (S (VP r))))) -- (VP was (VP filled (PP to (S (VP overflowing)))))-- was filled to
 
 (VP r (NP a) (PP a (NP r (NP r)))) -- (VP had (NP a good feeling) (PP for (NP that sort of (NP thing)))) -- a good feeling for
 
