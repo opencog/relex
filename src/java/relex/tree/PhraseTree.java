@@ -230,6 +230,11 @@ public class PhraseTree
 		return words;
 	}
 
+	public FeatureNode getFirstWord()
+	{
+		return getFirstWord(phr);
+	}
+
 	/* ------------------------------------------------------------ */
 	/* equivalent static interfaces below */
 
@@ -502,6 +507,28 @@ public class PhraseTree
 			}
 			fn = fn.get("phr-next");
 		}
+	}
+
+	/**
+	 * Return the feature node of the first word of the phrase.
+	 */
+	public static FeatureNode getFirstWord(FeatureNode word)
+	{
+		FeatureNode fn = word.get("phr-head");
+		while (fn != null)
+		{
+			FeatureNode wd = fn.get("phr-word");
+			if (wd != null) return wd;
+
+			FeatureNode subf = fn.get("phr-head");
+			if (subf != null) 
+			{
+				wd = getFirstWord(fn);
+				if (wd != null) return wd;
+			}
+			fn = fn.get("phr-next");
+		}
+		return null;
 	}
 
 	/**
