@@ -66,19 +66,12 @@ public class PatternChunker extends LexicalChunker
 			pt = new PhraseTree(fn);
 
 			// A list of clauses to match, in disjunctive normal form.
-			matcher("(NP (NP a) (PP a (NP r)))");
-			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
-
-			matcher("(S (VP a (NP a)))");
-			matcher("(SBAR a (S (NP a) (VP a (NP r))))");
-
 			// Phrasal verbs: prepositonal verbs
 			// e.g. (VP look (PP after (NP them))) " We look after tehm."
 			matcher("(VP a (PP a (NP r)))");  // a subphrase of the below, which seems to cover most of it?
 			matcher("(VP a (VP a (PP a (NP r))))"); 
 			matcher("(VP a (VP a (PP a (S (VP r)))))");
 
-			matcher("(VP a (NP r) (NP a))");
 			matcher("(VP a (NP r) (PP a (NP *)))");
 			// matcher("(VP a (NP r) (PP a (NP r)))");
 
@@ -105,6 +98,19 @@ public class PatternChunker extends LexicalChunker
 			// XXX this needs to be narrowed ... 
 			// matcher("(VP a (NP p) (PRT a) *)");
 			matcher("(VP a (NP r) (PRT a) (PP a (NP *)))");
+
+			// More complex phrasal verbs: "You can't STOP me FROM seeing her."
+			matcher("(VP r (VP a (NP r) (PP a (S *))))");
+
+			// GAVE the Sioux cheif NO QUARTER
+			matcher("(VP a (NP r) (NP a))");
+
+			// Sentence phrases:
+			matcher("(NP (NP a) (PP a (NP r)))");
+			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
+
+			matcher("(S (VP a (NP a)))");
+			matcher("(SBAR a (S (NP a) (VP a (NP r))))");
 
 			// matcher("");
 

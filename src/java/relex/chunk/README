@@ -23,9 +23,11 @@ minority of spoken sentences are entirely novel creations.
 
 Types of lexical chunks:
     * Words (e.g., book, pen)
+    * Phrasal verbs (e.g. switch off, talk to ... about ...)
     * Polywords (e.g., by the way, upside down)
     * Collocations, or word partnerships (e.g., community service,
       absolutely convinced)
+    * Idioms (e.g. break a leg, back in the day)
     * Institutionalized utterances (e.g., I'll get it; We'll see; 
       That'll do; If I were you . . .; Would you like a cup of coffee?)
     * Sentence frames and heads (e.g., That is not as . . . as you think;
@@ -38,8 +40,10 @@ approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary
 acquisition: A rationale for pedagogy" (pp.  255-270). Cambridge: Cambridge 
 University Press.)
 
-The code in this directory can be used to obtain polywords and sentence
-frames.  Three distinct mechanisms are encoded in this directory.
+The code in this directory can be used to obtain phrasal verbs and
+polywords.  There is currently no support for idioms or collocations.
+
+Three distinct mechanisms are encoded in this directory.
 
 LexicalChunker -- abstract base class providing the interface for
      several alternate chunking routines.
@@ -55,25 +59,10 @@ PatternChunker() -- print out lexical chunks based on matching to a
      concerned wth these sentence patterns.
 
 
-Unit tests
-----------
-
-Sentence phrases
+Pattern matching
 ----------------
- * John Dillinger was a man who BROKE THE LAW.
-   Desired answer: "broke the law"
-
-      (S (NP John Dillinger) (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) .)
-
- * I'll DO it even IF IT KILLS me.
-   Desired answer: "do ... if it kills"
-      (SBAR if (S (NP it) (VP kills (NP me))))
-
-   This is tricky, because the "do" will be embedded
-   in a wide variety of phrase forms.
-
-   XXX this is currently not deteted.
-
+a == accept, r == reject
+p == accept only if pronoun
 
 Verb phrases:
 ------------
@@ -150,9 +139,15 @@ which is always followed by its nominal object.
    Desired answer: "in love with"
 
       (VP was (PP in (NP love)) (PP with (NP that bunny)))
-      (VP notcop (PP a (NP postcop)) (PP a (NP r)))
 
    Drop leading VP, keep first NP, drop second NP.
+
+      (VP r (PP a (NP a)) (PP a (NP r)))
+
+   But this conflicts with above, so use a more complex rule:
+
+      (VP notcop (PP a (NP postcop)) (PP a (NP r)))
+
    (drop first VP because its a copula!)
 
 Particle Verbs:
@@ -218,14 +213,21 @@ Particle Verbs:
 
 XXX borken
    This should cover it:
-      (VP notcop (VP a (PRT a) *))
+      (VP a (VP a (PRT a) *))
 
-Miiscellany
+Miscellany
 -----------
+ * You can't STOP me FROM seeing her.
+      (VP can't (VP stop (NP me) (PP from (S (VP seeing (NP her))))))
+   
+      (VP r (VP a (NP r) (PP a (S *))))
+
  * He had A GOOD FEELING FOR that sort of thing.
    Desired answer: "a good feeling for"
 
       (VP had (NP a good feeling) (PP for (NP that sort of (NP thing))))
+
+      (VP r (NP a) (PP a (NP r (NP r))))
 
  * General Custer gave the Sioux chief no quarter.
    The desired answer is "give ... no quarter". 
@@ -234,43 +236,79 @@ Miiscellany
 
    Skip first NP, keep second.
 
+      (VP a (NP r) (NP a))
+
+Sentence phrases
+----------------
+ * John Dillinger was a man who BROKE THE LAW.
+   Desired answer: "broke the law"
+
+      (S (NP John Dillinger) (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) .)
+
+  Currently using a broad coverage:
+    (S (VP a (NP a))) 
+
+  XXX This pattern matches a lot. Could narrow to require WHNP.
+  Perhaps this is too much of a collocation to detect automatically?
+
+ * I'll DO it even IF IT KILLS me.
+   Desired answer: "do ... if it kills"
+      (SBAR if (S (NP it) (VP kills (NP me))))
+
+   This is tricky, because the "do" will be embedded
+   in a wide variety of phrase forms.
+
+   XXX this is currently not deteted.
+
+
+Idioms that break rules:
+------------------------
  * It was A BITTER PILL TO SWALLOW.
 
       (VP was (NP a bitter pill) (S (VP to (VP swallow))))
+      (VP r (NP a) (S (VP a (VP r))))
 
    However, this also reports:
      She forced him to resign.
      (VP forced (NP him_1) (S (VP to (VP resign))))
      Phrase: (him to resign)      Character ranges: [11-24]
    -- so this needs modification; perhaps we should drop the final VP?
+   XXX fix the above somehow ...  perhaps its too idiomatic to work
+   right.
 
  * I didn't HAVE THE HEART TO tell hem.
       (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
 
+      (VP r (VP a (NP a) (S (VP a (VP r (NP r))))))
 
 
 Noun phrases:
 -------------
- * I ate a wee bit of cheese.
+ * I ate A WEE BIT OF cheese.
    Desired answer: "a wee bit of"
 
-       (NP (NP a wee bit) (PP of (NP cheese)))
+      (NP (NP a wee bit) (PP of (NP cheese)))
 
    Drop NP after PP.
-   a helping of, a hail of, a finger in
+
+      (NP (NP a) (PP a (NP r)))
+
+   Also: a helping of, a hail of, a finger in
+
+   It is A COUPLE OF clicks down the road.
+   Desired: "a couple of"
+
+      (NP (NP a couple) (PP of (NP clicks)))
 
  * It is a day's march from home.
    Desired: "a day's march"
 
-       (NP (NP (NP a day 's) march) (PP from (NP home)))
+      (NP (NP (NP a day 's) march) (PP from (NP home)))
 
    Rule: three NP's are too deep.
    Otherwise, same as "a wee bit of cheese".
 
- * It is a couple of clicks down the road.
-   Desired: "a couple of"
-
-       (NP (NP a couple) (PP of (NP clicks)))
+      (NP (NP (NP a) a) (PP r (NP r)))
 
 ---------------
 
@@ -284,24 +322,9 @@ Fails to parse.
 
 Pattern match:
 --------------
-a == accept, r == reject
-(NP (NP a) (PP a (NP r)))   -- (NP (NP a couple) (PP of (NP clicks)))  -- a couple of
-                            -- (NP (NP a wee bit) (PP of (NP cheese))) -- a wee bit of
-(NP (NP (NP a) a) (PP r (NP r))) -- (NP (NP (NP a day 's) march) (PP from (NP home))) --  a day's march
-
-
-(VP a (PP a (NP r)))        -- (VP take office (PP on (NP Monday)))            -- take office on
 (VP a (VP a (PP a (NP r)))) -- (VP was (VP filled (PP to (NP overflowing)))) -- was filled to
 (VP a (VP a (PP a (S (VP r))))) -- (VP was (VP filled (PP to (S (VP overflowing)))))-- was filled to
-(VP a (NP r) (NP a))        -- (VP gave (NP the Sioux chief) (NP no quarter))  -- give ... no quarter.
-(VP a (NP r) (PP a (NP *))) -- (VP took (NP her) (PP to (NP the dance)))       -- took ... to
 
-(VP r (NP a) (S (VP a (VP r))))    -- (VP was (NP a bitter pill) (S (VP to (VP swallow)))) -- a bitter pill to
-
-(VP r (VP a (NP a) (S (VP a (VP r (NP r)))))) -- (VP didn't (VP have (NP the heart) (S (VP to
-(VP tell (NP him)))))) -- have the heart to.
-
-(VP r (PP a (NP a)) (PP a (NP r))) -- (VP was (PP in (NP love)) (PP with (NP that bunny))) -- in love with
 (VP r (NP a) (PP a (NP r (NP r)))) -- (VP had (NP a good feeling) (PP for (NP that sort of (NP thing)))) -- a good feeling for
 
 (VP a (PP a) (PP a (NP r)) *) -- (VP ran (PP away) (PP from (NP home)) (PP at (NP age two))) -- ran away from
