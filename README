@@ -213,3 +213,8 @@ The closest such thing for Java is "maven"; however, none of the jar
 files required by relex have been checked into maven. Thus, a to-do:
 get all of the jar files submitted to maven.
 
+
+TODO - polywords, lexical units, collocations, idioms. 
+----------------
+Would be nice to identify: "By the way" as a polyword.
+"Break a leg" as an idiom.
