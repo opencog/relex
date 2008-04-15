@@ -79,17 +79,35 @@ Verb phrases:
 ------------
 Most of these are phrasal verbs of one sort or another.
 
- * General Custer gave the Sioux chief no quarter.
-   The desired answer is "give ... no quarter". 
+Prepositional Verbs:
+--------------------
+Prepositional verbs are phrasal verbs that contain a preposition,
+which is always followed by its nominal object.
 
-      (VP gave (NP the Sioux chief) (NP no quarter)) 
+ * We LOOK AFTER our children.
 
-   Skip first NP, keep second.
+		(VP look (PP after (NP our children)))
 
- * Prepositional verbs are phrasal verbs that contain a preposition,
-   which is always followed by its nominal object.  The verb has its
-   own object, which usually precedes the preposition:
+   Need to drop NP in PP, to get "look after".
+	This pattern matches to 
 
+		(VP a (PP a (NP r)))
+	
+   Some more complicated examples:
+   He will TAKE OFFICE ON monday.
+
+      (VP will (VP take office (PP on (NP Monday))))
+
+   Similarly:
+   The cup was FILLED TO overflowing.
+     (VP was (VP filled (PP to (NP overflowing))))
+     (VP was (VP filled (PP to (S (VP overflowing)))))
+   (The second parse is inappropriate).
+
+ * Prepositional verbs that have thier own object, which 
+   usually precedes the preposition:
+
+	She HELPED him TO some more.
    I TOOK her TO the dance.
    Desired answer: "took ... to"
 
@@ -107,26 +125,21 @@ Most of these are phrasal verbs of one sort or another.
 
    So we use a * here for the general case.
 
- * He had A GOOD FEELING FOR that sort of thing.
-   Desired answer: "a good feeling for"
-
-      (VP had (NP a good feeling) (PP for (NP that sort of (NP thing))))
-
- * Phrasal verbs: prepositional verb: 
-   He will TAKE OFFICE ON monday.
-   Desired answer: "take office on"
-
-      (VP will (VP take office (PP on (NP Monday))))
-
-   need to drop NP in PP, to get "take office on"
-   Similarly: (VP was (VP filled (PP to (NP overflowing))))
-   (VP look (PP after (NP them))), want "look after".
-
- * Phrasal verb -- particle verb
-   The cup was FILLED TO overflowing.
-     (VP was (VP filled (PP to (S (VP overflowing)))))
-
  * Prepositional verbs with two prepositions:
+   I RAN AWAY FROM home.
+   I RAN AWAY FROM home at age two.
+   Desired answer: "ran away from"
+
+      (VP ran (PP away) (PP from (NP home)))
+      (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
+
+   Keep the VP, and the first PP, and the second PP, 
+   dropping NP in the second PP.
+      (VP a (PP a) (PP a (NP r)) *)
+
+ * Prepositional verbs with two prepositions, and the
+   preposition has an object:
+
    We TALKED TO the minister ABOUT the crisis.
       (VP talked (PP to (NP the minister)) (PP about (NP the crisis)))
    so:
@@ -142,44 +155,16 @@ Most of these are phrasal verbs of one sort or another.
    Drop leading VP, keep first NP, drop second NP.
    (drop first VP because its a copula!)
 
- * Prepositional verbs with two prepositions:
-   I RAN AWAY FROM home.
-   I RAN AWAY FROM home at age two.
-   Desired answer: "ran away from"
-
-      (VP ran (PP away) (PP from (NP home)))
-      (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
-
-   Keep the VP, and the first PP, and the second PP, 
-   dropping NP in the second PP.
-      (VP a (PP a) (PP a (NP r)) *)
-
- * It was A BITTER PILL TO SWALLOW.
-
-      (VP was (NP a bitter pill) (S (VP to (VP swallow))))
-
-   However, this also reports:
-     She forced him to resign.
-     (VP forced (NP him_1) (S (VP to (VP resign))))
-     Phrase: (him to resign)      Character ranges: [11-24]
-   -- so this needs modification; perhaps we should drop the final VP?
-
- * I didn't HAVE THE HEART TO tell hem.
-      (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
-
-
+Particle Verbs:
+---------------
  * Phrasal verbs -- Particle verbs.
    Intransitive particle verbs do not have an object:
 
-   He WENT AWAY.  I want to GO HOME now. 
+   He WENT AWAY.
       (VP went (PRT away)) 
-      (S (VP to (VP go (PRT home))))
-      (S (VP to (VP go (PRT home) (PP now))))
-      (S (VP Please (VP go (PRT away) (PP now))) .)
 
-   This should cover it:
-      (VP a (PRT a) *)
-      (S (VP to (VP go (PRT home) *)))
+   Keep the match tight:
+      (S (NP r) (VP a (PRT a)) *)
 
   * Transitive particle verbs have an object, which may preceed 
     the verb:
@@ -208,6 +193,44 @@ Most of these are phrasal verbs of one sort or another.
    algs/TwoWordCombineToLeftAlg.java to not merge the orig_str.
 
    We want to keep the object NP only if its a pronoun !!
+
+  * Infinitive forms:
+    I want TO GO HOME now. 
+      (S (VP to (VP go (PRT home))))
+      (S (VP to (VP go (PRT home) (PP now))))
+      (S (VP Please (VP go (PRT away) (PP now))) .)
+
+XXX borken
+   This should cover it:
+      (VP notcop (VP a (PRT a) *))
+
+Miiscellany
+-----------
+ * He had A GOOD FEELING FOR that sort of thing.
+   Desired answer: "a good feeling for"
+
+      (VP had (NP a good feeling) (PP for (NP that sort of (NP thing))))
+
+ * General Custer gave the Sioux chief no quarter.
+   The desired answer is "give ... no quarter". 
+
+      (VP gave (NP the Sioux chief) (NP no quarter)) 
+
+   Skip first NP, keep second.
+
+ * It was A BITTER PILL TO SWALLOW.
+
+      (VP was (NP a bitter pill) (S (VP to (VP swallow))))
+
+   However, this also reports:
+     She forced him to resign.
+     (VP forced (NP him_1) (S (VP to (VP resign))))
+     Phrase: (him to resign)      Character ranges: [11-24]
+   -- so this needs modification; perhaps we should drop the final VP?
+
+ * I didn't HAVE THE HEART TO tell hem.
+      (VP didn't (VP have (NP the heart) (S (VP to (VP tell (NP him))))))
+
 
 
 Noun phrases:
