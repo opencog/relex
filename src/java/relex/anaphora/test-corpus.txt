@@ -122,8 +122,8 @@ Mrs. Bennet exclaimed: "My dear Mr. Bennet, have you heard that Netherfield Park
 # "My" is correctly identified as "Mrs. Bennet"
 
 # --------------------------------------------
-# Crashes link parser with a double-free during panic-parse.
-#
+His hair standing up in the stiff breeze, Benedict, in a flapping white cassock and shoulder cape, briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
+# --------------------------------------------
 The ladies of Longbourn soon waited on those of Netherfield.
 The visit was soon returned in due form.  
 Miss Bennet's pleasing manners grew on the goodwill of Mrs. Hurst and Miss Bingley; and though the mother was found to be intolerable, and the younger sisters not worth speaking to, a wish of being better acquainted with them was expressed towards the two eldest.  
