@@ -19,6 +19,7 @@ package relex.chunk;
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
+import relex.feature.WordFeature;
 import relex.tree.PatternCallback;
 import relex.tree.PatternMatch;
 import relex.tree.PhraseTree;
@@ -173,7 +174,7 @@ public class PatternChunker extends LexicalChunker
 
 				// ... and that word must be a pronoun.
 				FeatureNode word = pt.getFirstWord();
-				if (false == isPronoun(word)) return false;
+				if (false == WordFeature.isPronoun(word)) return false;
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
 
@@ -181,7 +182,7 @@ public class PatternChunker extends LexicalChunker
 			else if (pattern.equals("notcop"))
 			{
 				FeatureNode word = pt.getFirstWord();
-				if (isCopula(word))
+				if (WordFeature.isCopula(word))
 				{
 					saw_copula = true;
 					return false;
@@ -195,28 +196,6 @@ public class PatternChunker extends LexicalChunker
 				if (!saw_copula) return false;
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
-			return false;
-		}
-
-		// Return true if the feature node is a pronoun.
-		private boolean isPronoun(FeatureNode fn)
-		{
-			fn = fn.get("ref");
-			if (fn == null) return false;
-			fn = fn.get("PRONOUN-FLAG");
-			if (fn == null) return false;
-			return true;
-		}
-
-		// Return true if the featue node is the verb "to be".
-		private boolean isCopula(FeatureNode fn)
-		{
-			fn = fn.get("morph");
-			if (fn == null) return false;
-			fn = fn.get("root");
-			if (fn == null) return false;
-			String root = fn.getValue();
-			if (root.equals("be")) return true;
 			return false;
 		}
 	}
