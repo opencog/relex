@@ -1,4 +1,4 @@
-Don't hit your head on the low beam.
+Benedict briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
 END.
 He went away.
 END.
@@ -9,6 +9,7 @@ We look after our children.
 We look after them.
 She helped the boy to an extra portion of potatoes.
 She helped him to some.
+Can I help you to some more potatoes?
 We talked to the minister about the crisis.
 I was in love with that bunny.
 The driver got off to a flying start.
@@ -18,6 +19,7 @@ You can't prevent me from seeing her.
 My friends will come for me when the time comes.
 My friends should call for me when the time comes.
 Watch out that you don't hit your head on the low beam.
+Don't hit your head on the low beam.
 END.
 When he entered the room, I looked up.
 Speaking of tofu; did you have some?

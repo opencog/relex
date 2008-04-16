@@ -38,6 +38,16 @@ public class WordFeature
 		return true;
 	}
 
+	// Return true if the feature node is punctuation.
+	public static boolean isPunctuation(FeatureNode fn)
+	{
+		fn = fn.get("POS");
+		if (fn == null) return false;
+		String str = fn.getValue();
+		if (str.equals("punctuation")) return true;
+		return false;
+	}
+
 	// Return true if the featue node is the verb "to be".
 	public static boolean isCopula(FeatureNode fn)
 	{

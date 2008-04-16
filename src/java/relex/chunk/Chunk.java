@@ -19,6 +19,7 @@ package relex.chunk;
 import java.util.ArrayList;
 
 import relex.feature.FeatureNode;
+import relex.feature.WordFeature;
 
 /**
  * Holder of lexical chunks
@@ -36,6 +37,7 @@ public class Chunk
 
 	public void addWord(FeatureNode fn)
 	{
+		if (WordFeature.isPunctuation(fn)) return;
 		chunk.add(fn);
 	}
 	public void addWords(ArrayList<FeatureNode> words)
