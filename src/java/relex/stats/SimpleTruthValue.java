@@ -56,5 +56,17 @@ public class SimpleTruthValue implements TruthValue
 		double rms = (sum_squared - sum*sum/count) / count;
 		return 1.0/rms;
 	}
+
+	public void increment(double val)
+	{
+		count ++;
+		sum += val;
+		sum_squared += val*val;
+	}
+
+	public void setCount(int cnt)
+	{
+		count = cnt;
+	}
 }
 
