@@ -1,0 +1,5 @@
+
+This directory provides some extremely simple, basic
+statistical support.  Currently, that consists of an
+object similar to OpenCog's SimpleTruthValue.
+
