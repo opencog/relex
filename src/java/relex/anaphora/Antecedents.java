@@ -22,7 +22,7 @@ import relex.tree.PhraseTree;
 import relex.feature.FeatureNode;
 
 /**
- * Implements storage of anaphoara-antecedent pairs,
+ * Implements storage of anaphora-antecedent pairs,
  * used during pronoun resolution.
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>

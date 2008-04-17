@@ -28,11 +28,11 @@ import relex.ParsedSentence;
 
 public abstract class LexicalChunker
 {
-	private ArrayList<Chunk> chunks;
+	private ArrayList<LexChunk> chunks;
 	
 	public LexicalChunker()
 	{
-		chunks = new ArrayList<Chunk>();
+		chunks = new ArrayList<LexChunk>();
 	}
 
 	/**
@@ -40,7 +40,7 @@ public abstract class LexicalChunker
 	 */
 	abstract public void findChunks(ParsedSentence parse);
 
-	public ArrayList<Chunk> getChunks()
+	public ArrayList<LexChunk> getChunks()
 	{
 		return chunks;
 	}
@@ -51,13 +51,13 @@ public abstract class LexicalChunker
 	}
 
 	/**
-	 * add a chunk, but only if its unique.
+	 * Add a chunk, but only if its unique.
 	 */
-	public void add(Chunk ch)
+	public void add(LexChunk ch)
 	{
 		for (int i=0; i<chunks.size(); i++)
 		{
-			Chunk c = chunks.get(i);
+			LexChunk c = chunks.get(i);
 			if (ch.equals(c)) return;
 		}
 		chunks.add(ch);

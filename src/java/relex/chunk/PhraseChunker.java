@@ -65,7 +65,7 @@ public class PhraseChunker extends LexicalChunker
 			int degree = pt.getDegree();
 			if (degree <= 2) return false;  // don't report repeats!
 
-			Chunk chunk = new Chunk();
+			LexChunk chunk = new LexChunk();
 			chunk.addPhrase(fn);
 			add(chunk);
 			return false;

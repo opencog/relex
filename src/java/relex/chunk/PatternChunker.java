@@ -126,7 +126,7 @@ public class PatternChunker extends LexicalChunker
 
 	/* -------------------------------------------------------- */
 
-	private static void chunkWords(FeatureNode fn, Chunk chunk)
+	private static void chunkWords(FeatureNode fn, LexChunk chunk)
 	{
 		while (fn != null)
 		{
@@ -145,13 +145,13 @@ public class PatternChunker extends LexicalChunker
 	/* Use the phrase-tree approach to finding chunks */
 	private class PatCB implements PatternCallback
 	{
-		private Chunk curr_chunk;
+		private LexChunk curr_chunk;
 		private boolean saw_copula;
 		public void FoundCallback(String pattern, PhraseTree pt)
 		{
 			if (0 < debug) System.out.println("========== match! "+ pattern + " == " + pt.toString());
 
-			curr_chunk = new Chunk();
+			curr_chunk = new LexChunk();
 			add(curr_chunk);
 			saw_copula = false;
 		}

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import relex.feature.FeatureNode;
 import relex.feature.WordFeature;
+import relex.feature.Chunk;
 
 /**
  * Holder of lexical chunks
@@ -27,14 +28,8 @@ import relex.feature.WordFeature;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class Chunk
+public class LexChunk extends Chunk
 {
-	private ArrayList<FeatureNode> chunk;
-	public Chunk()
-	{
-		chunk = new ArrayList<FeatureNode>();
-	}
-
 	public void addWord(FeatureNode fn)
 	{
 		if (WordFeature.isPunctuation(fn)) return;
@@ -42,36 +37,7 @@ public class Chunk
 	}
 	public void addWords(ArrayList<FeatureNode> words)
 	{
-		chunk.addAll(words);
-	}
-	public void clear()
-	{
-		chunk.clear();
-	}
-	public int size()
-	{
-		return chunk.size();
-	}
-
-	/**
-	 * Add an entire phrase.
-	 */
-	public void addPhrase(FeatureNode fn)
-	{
-		fn = fn.get("phr-head");
-		while (fn != null)
-		{
-			FeatureNode wd = fn.get("phr-word");
-			if (wd != null) addWord(wd);
-
-			// Add subphrases to the word list
-			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
-			{
-				addPhrase(fn);
-			}
-			fn = fn.get("phr-next");
-		}
+		addNodes(words);
 	}
 
 	/**
@@ -139,20 +105,5 @@ public class Chunk
 			str += "["+ chunk_start + "-" + chunk_end + "]";
 		}
 		return str;
-	}
-
-	/**
-	 * return true if the other oject equails this one, else return false.
-	 */
-	public boolean equals(Object other)
-	{
-		if (!(other instanceof Chunk)) return false;
-		Chunk oth = (Chunk) other;
-		if (oth.chunk.size() != chunk.size()) return false;
-		for (int i=0; i<chunk.size(); i++)
-		{
-			if(chunk.get(i) != oth.chunk.get(i)) return false;
-		}
-		return true;
 	}
 }
