@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class Chunk
+public class Chunk extends Atom
 {
 	protected ArrayList<FeatureNode> chunk;
 	public Chunk()
