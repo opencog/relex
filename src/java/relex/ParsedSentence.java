@@ -25,16 +25,19 @@ import relex.feature.LinkableView;
 import relex.tree.PhraseTree;
 
 /**
- * A ParsedSentence object stores all of the syntactic and semantic information
- * about a sentence parse. The data in the Object is gradually built up by
- * RelationExtractor
+ * A ParsedSentence object stores all of the syntactic and semantic
+ * information about a sentence parse. The data in the Object is
+ * gradually built up by RelationExtractor.
  *
- * ParsedSentence contains: 1. a FeatureNode with metaData about the parse (i.e.,
- * the number of conjunctions) 2. a ArrayList of FeatureNodes (leafConstituents)
- * representing each word in the sentence. -- the parse data can be found by
- * checking the links in these words. 3. Strings representing the original
- * sentence, and representations of its parses 4. Sets of relations, with the
- * semantic data from the sentence.
+ * ParsedSentence contains:
+ * 1. A FeatureNode with metaData about the parse (i.e., the number
+ *    of conjunctions)
+ * 2. An ArrayList of FeatureNodes (leafConstituents) representing each
+ *    word in the sentence. -- the parse data can be found by checking
+ *    the links in these words.
+ * 3. Strings representing the original sentence, and representations
+ *    of its parses
+ * 4. Sets of relations, with the semantic data from the sentence.
  */
 public class ParsedSentence
 {
