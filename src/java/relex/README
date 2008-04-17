@@ -18,7 +18,7 @@ anaphora:
 
 chunk:
 	Code to generate lexical chunks, aka lexicalized stems or units
-   or phrases.
+   or phrases. Mostly focused on phrasal verbs.
 
 corpus:
 	Code to handle multiple-sentence corpuses. Includes a class to 
@@ -34,7 +34,7 @@ entity:
 	implementation uses GATE.
 
 feature:
-	The base classes for representing the feature graph.
+	The core classes for representing the feature graph.
 
 frame:
 	An implementation of a simple forward-chainging inference engine,
@@ -55,8 +55,13 @@ parser:
 	JNI binding to the C-language liblink-grammar-java.so, and an 
 	out-of-process server, reachable via a socket interface.
 
+stats:
+	Some simple classes providing very basic statistical support,
+	including some TruthValue (a la OpenCog) classes.
+
 tree:
 	Routines to extract and manipulate the treebank style phrase tree
-	of a given parse. The phrase ttree is central to Hobbs algorithm.
+	of a given parse. The phrase tree is central to the Hobbs algorithm,
+	and to lexical chunking.
 
 
