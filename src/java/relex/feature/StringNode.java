@@ -24,7 +24,7 @@ package relex.feature;
 
 public class StringNode extends Atom
 {
-	protected string;
+	protected String string;
 
 	public String getValue()
 	{
