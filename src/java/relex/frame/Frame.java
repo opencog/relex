@@ -41,8 +41,11 @@
 package relex.frame;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,7 +53,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 //TODO handle comments in mapping rules file?
 //TODO handling commas in relex output (take out?), e.g, 14,000
@@ -63,10 +65,10 @@ public class Frame
 {
 	static /*final*/ boolean VERBOSE = false;
 
-	static final String MAPPING_RULES_DIR		  = "data/frame/";
-	public static final String MAPPING_RULES_FILE		 = "mapping_rules.txt";
-	static final String CONCEPT_VARS_DIR		 = MAPPING_RULES_DIR;
-	public static final String CONCEPT_VARS_FILE		 = "concept_vars.txt";
+	public static final String MAPPING_RULES_DIR	= "data/frame/";
+	public static final String CONCEPT_VARS_DIR 	= MAPPING_RULES_DIR;
+	public static final String MAPPING_RULES_FILE	= "mapping_rules.txt";
+	public static final String CONCEPT_VARS_FILE	= "concept_vars.txt";
 
 	static ArrayList<Rule> rules = new ArrayList<Rule>();
 
@@ -129,7 +131,7 @@ public class Frame
 	 */
 	public String[] process(String[] relex)
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i=0; i < relex.length; i++) {
 		  sb.append(relex[i]);
 		}
@@ -138,7 +140,7 @@ public class Frame
 
 	public String printAppliedRules()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (Rule rule : fireRules.keySet()) {
 			sb.append(rule.ruleStr + "\n");
 		}
@@ -151,19 +153,66 @@ public class Frame
 		feedback += loadMappingRules();
 		return feedback;
 	}
+	
 
+	/**
+	 * Determine the file that will be used. 
+	 * 
+	 * <ul>
+	 * <li>First try to load the the file in the directory defined by the system property frame.datapath.</li> 
+	 * <li>Then try to load the file as a resource in the jar file.</li>  
+	 * <li>Finally, tries the default location (equivalent to -Dframe.datapath=./data/frame)</li>
+	 * </ul>
+	 * 
+	 * @return
+	 * @throws FileNotFoundException 
+	 */
+	private static BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException{
+			InputStream in = null; 
+			String dir = System.getProperty("frame.datapath");
+			
+			if (dir!=null) {
+				in = new FileInputStream(dir+"/"+file);
+				if (in!=null) {
+					System.out.println("Using frame directory defined in frame.datapath:"+dir);
+					return new BufferedReader(new InputStreamReader(in));
+				}
+			}
+			
+			in = Frame.class.getResourceAsStream("/"+file);
+			if (in!=null) {
+				System.out.println("Using " + file +" from resource (jar file).");
+				return new BufferedReader(new InputStreamReader(in));
+			}
+			
+			String defaultFile = defaultDir+"/"+file;
+			in = new FileInputStream(defaultFile);
+			if (in!=null) {
+				System.out.println("Using default "+defaultFile);
+				return new BufferedReader(new InputStreamReader(in));
+			}
+			
+			throw new RuntimeException("Error loading "+file+" file.");
+	}
+	
+	/**
+	 * Determine the frame file that will be used. 
+	 * 
+	 * <ul>
+	 * <li>First try to load the the file in the directory defined by the system property frame.datapath.</li> 
+	 * <li>Then try to load the file as a resource in the jar file.</li>  
+	 * <li>Finally, tries the default location (equivalent to -Dframe.datapath=./data/frame)</li>
+	 * </ul>
+	 * 
+	 * @return
+	 */
 	private static String loadConceptVars()
 	{
 		try {
-			String dataPath = System.getProperty("frame.datapath");
-			if (dataPath==null) {
-				dataPath = CONCEPT_VARS_DIR;
-			}
 			String msg = "";
-			StringBuffer fileStr = new StringBuffer();
+			StringBuilder fileStr = new StringBuilder();
 			try {
-				BufferedReader in = new BufferedReader(
-					new FileReader(dataPath + CONCEPT_VARS_FILE));
+				BufferedReader in = new BufferedReader(getReader(CONCEPT_VARS_FILE, CONCEPT_VARS_DIR));
 				String line;
 				while ((line = in.readLine()) != null) {
 					fileStr.append(line + "\n");
@@ -224,15 +273,10 @@ public class Frame
 	{
 		try {
 			String relexRulesStr = "";
-			String dataPath = System.getProperty("frame.datapath");
-			if (dataPath==null) {
-				dataPath = MAPPING_RULES_DIR;
-			}
 			try {
-				BufferedReader in = new BufferedReader(
-						new FileReader(dataPath + MAPPING_RULES_FILE));
+				BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
 				String line;
-				StringBuffer sb = new StringBuffer();
+				StringBuilder sb = new StringBuilder();
 				while ((line = in.readLine()) != null) {
 					sb.append(line + "\n");
 				}
