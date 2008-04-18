@@ -65,7 +65,7 @@ public class Frame
 {
 	static /*final*/ boolean VERBOSE = false;
 
-	public static final String MAPPING_RULES_DIR	= "data/frame/";
+	public static final String MAPPING_RULES_DIR	= "data/frame";
 	public static final String CONCEPT_VARS_DIR 	= MAPPING_RULES_DIR;
 	public static final String MAPPING_RULES_FILE	= "mapping_rules.txt";
 	public static final String CONCEPT_VARS_FILE	= "concept_vars.txt";
