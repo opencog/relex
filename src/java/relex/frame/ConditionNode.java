@@ -31,6 +31,7 @@ class ConditionNode extends ASTNode
 	Pattern varNamePattern;
 	Pattern relexLinePattern;
 	Pattern indexPattern;
+	Pattern conceptVarPattern;
 
 	ConditionNode(String condStr)
 	{
@@ -40,6 +41,8 @@ class ConditionNode extends ASTNode
 		varNamePattern = Pattern.compile("(?<!_)\\$\\w+");
 		indexPattern = Pattern.compile("\\_\\d+\\z");
 
+		conceptVarPattern = Pattern.compile("(\\$var[^=]+= *\\$.*)");
+		
 		// String regex = "w+\\(";
 		relpat = Pattern.compile(".+\\(");
 
@@ -148,7 +151,7 @@ class ConditionNode extends ASTNode
 
 		// Check for $var=$Concept syntax.
 		// Store in VarMap as $varCONCEPT => $Concept
-		if (conditionStr.startsWith("$var") && conditionStr.contains("=")) {
+		if (conceptVarPattern.matcher(conditionStr).find()) {
 			if (vars.size() < 2) {
 				System.err.println("Error: badly formed condition in a rule; " +
 				      "the condition is: " + conditionStr);
