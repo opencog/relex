@@ -1,6 +1,5 @@
 package relex.morphy;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,7 +7,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
 import net.didion.jwnl.data.Exc;
 import net.didion.jwnl.data.IndexWord;
@@ -82,7 +80,7 @@ public class MapMorphy implements Morphy{
 	
 	@SuppressWarnings("unchecked")
 	public void initialize() {
-		initializeJWNL();
+		MorphyFactory.initializeJWNL();
 		
 		Dictionary d = Dictionary.getInstance();			
 		for(int i = 0; i < pos.length; i++) {
@@ -117,33 +115,6 @@ public class MapMorphy implements Morphy{
 			}
 		}
 
-	}
-
-	/**
-	 * 
-	 */
-	private void initializeJWNL() {
-		String wordNetConfigFile = null;
-		try {
-			wordNetConfigFile = System.getProperty("wordnet.configfile");
-			if (wordNetConfigFile == null) {
-				if (DEBUG)
-					System.out.println(
-							"WordNet config file not set(wordnet.configfile).\n" +
-							"Trying default path: " + DEFAULT_WORDNET_CONFIG_FILE);
-				wordNetConfigFile = DEFAULT_WORDNET_CONFIG_FILE;
-			}
-			if (DEBUG)
-				System.out.print("Reading Wordnet Java API...");
-				JWNL.initialize(new FileInputStream(wordNetConfigFile));
-			if (DEBUG)
-				System.out.println("ok");
-		}
-		catch (Exception ex){
-			System.err.println(
-			       "Unable to load Java Wordnet files from config file: " +
-					 wordNetConfigFile + " .\n");
-		}
 	}
 
 	public Morphed morph(String word) {
