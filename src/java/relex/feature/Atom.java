@@ -36,7 +36,7 @@ public class Atom
 	{
 		return truth_value;
 	}
-	public void setTruthValue(TruthVale tv)
+	public void setTruthValue(TruthValue tv)
 	{
 		truth_value = tv;
 	}
