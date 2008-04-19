@@ -40,6 +40,11 @@ public class SimpleTruthValue implements TruthValue
 		return mean;
 	}
 
+	public void setMean(double m)
+	{
+		mean = m;
+	}
+
 	public double getCount()
 	{
 		return count;

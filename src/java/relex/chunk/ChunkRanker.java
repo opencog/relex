@@ -30,16 +30,17 @@ import relex.stats.SimpleTruthValue;
 
 public abstract class ChunkRanker
 {
+	private int numParses;
 	private ArrayList<LexChunk> chunks;
 	
 	public ChunkRanker()
 	{
+		numParses = 1;
 		chunks = new ArrayList<LexChunk>();
 	}
 
 	public ArrayList<LexChunk> getChunks()
 	{
-		rank();
 		return chunks;
 	}
 
@@ -54,23 +55,29 @@ public abstract class ChunkRanker
 	 */
 	public void add(LexChunk ch)
 	{
+		boolean not_found = true;
 		for (int i=0; i<chunks.size(); i++)
 		{
 			LexChunk c = chunks.get(i);
 
-			// Increase the overall truth value if found,
+			// Increase the overall confidence.
 			if (ch.equals(c))
 			{
-				TruthValue tv = c.getTruthValue();
-				SimpleTruthValue stv = (SimpleTruthValue) tv;
-				// stv.increment(1.0);
-				return;
+				not_found = false;
+				ch = c;
+				break;
 			}
 		}
-		chunks.add(ch);
-	}
 
-	private void rank()
-	{
+		if (not_found)
+		{
+			chunks.add(ch);
+		}
+
+		TruthValue tv = ch.getTruthValue();
+		SimpleTruthValue stv = (SimpleTruthValue) tv;
+		double confidence = stv.getConfidence();
+		confidence += 1.0/numParses;
+		stv.setConfidence(confidence);
 	}
 }
