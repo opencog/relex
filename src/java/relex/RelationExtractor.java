@@ -223,6 +223,7 @@ public class RelationExtractor
 	}
 
 	/* --------------------------------------------------------- */
+
 	private static void prt_chunks(ArrayList<LexChunk> chunks)
 	{
 		for (LexChunk ch : chunks)
@@ -254,7 +255,6 @@ public class RelationExtractor
 			" [-t (show parse tree)]" +
 			" [-v verbose]" +
 			" [-x (show cerego XML output)]" +
-			" [--maxParses N]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-c");
@@ -273,26 +273,21 @@ public class RelationExtractor
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("-s");
-		opts.add("--maxParses");
 		opts.add("--maxParseSeconds");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
 		String sentence = null;
-		Integer parseNum = null;
-		Integer maxParses = null;
-		Integer maxParseSeconds = null;
+		int maxParses = 10;
+		int maxParseSeconds = 60;
 
 		// Check for optional command line arguments.
 		try
 		{
-			parseNum = commandMap.get("-n") != null ? 
+			maxParses = commandMap.get("-n") != null ? 
 				Integer.parseInt(commandMap.get("-n").toString()) : 1;
 
 			sentence = commandMap.get("-s") != null ? 
 				commandMap.get("-s").toString() : null;
-
-			maxParses = commandMap.get("--maxParses") != null ?
-				Integer.parseInt(commandMap.get("--maxParses").toString()) : 3;
 
 			maxParseSeconds = commandMap.get("--maxParseSeconds") != null ?
 				Integer.parseInt(commandMap.get("--maxParseSeconds").toString()) : 60;
@@ -475,7 +470,7 @@ public class RelationExtractor
 						System.out.println("data\n<!-- ======\n");
 					}
 	
-					if (++numParses >= parseNum) break;
+					if (++numParses >= maxParses) break;
 				}
 				System.out.println("\nAntecedent candidates:\n" + re.antecedents.toString());
 	
