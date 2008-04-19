@@ -28,14 +28,14 @@ import relex.stats.SimpleTruthValue;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public abstract class ChunkRanker
+public class ChunkRanker
 {
 	private int numParses;
 	private ArrayList<LexChunk> chunks;
 	
-	public ChunkRanker()
+	public ChunkRanker(int np)
 	{
-		numParses = 1;
+		numParses = np;
 		chunks = new ArrayList<LexChunk>();
 	}
 
@@ -56,10 +56,8 @@ public abstract class ChunkRanker
 	public void add(LexChunk ch)
 	{
 		boolean not_found = true;
-		for (int i=0; i<chunks.size(); i++)
+		for (LexChunk c : chunks)
 		{
-			LexChunk c = chunks.get(i);
-
 			// Increase the overall confidence.
 			if (ch.equals(c))
 			{
@@ -71,6 +69,7 @@ public abstract class ChunkRanker
 
 		if (not_found)
 		{
+			ch.addTruthValue(new SimpleTruthValue());
 			chunks.add(ch);
 		}
 
@@ -79,5 +78,32 @@ public abstract class ChunkRanker
 		double confidence = stv.getConfidence();
 		confidence += 1.0/numParses;
 		stv.setConfidence(confidence);
+	}
+
+	public void add(ArrayList<LexChunk> lst)
+	{
+		for (LexChunk ch : lst)
+			add(ch);
+	}
+
+	/**
+	 * Ad-hoc printed representation of the ranked contents.
+	 * Meant to be human readable, and nothing more.
+	 * May change from one Relex version to another, not stable.
+	 */
+	public String toString()
+	{
+		String str = "";
+		for (LexChunk ch: chunks)
+		{
+			str += ch.toString();
+
+			TruthValue tv = ch.getTruthValue();
+			SimpleTruthValue stv = (SimpleTruthValue) tv;
+			double confidence = stv.getConfidence();
+
+			str += " Confidence: " + confidence + "\n";
+		}
+		return str;
 	}
 }
