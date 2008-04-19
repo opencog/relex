@@ -59,6 +59,7 @@ public class SimpleTruthValue implements TruthValue
 	{
 		// The goal of EPSILON is to allow cnf=1.0
 		// without causing a divide-by-zero.
+		if (1.0 < cnf) cnf = 1.0;
 		count =  offset*cnf / (PLUS_EPSILON - cnf);
 	}
 
