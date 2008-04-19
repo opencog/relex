@@ -25,7 +25,7 @@ import java.util.Map;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
-import relex.chunk.Chunk;
+import relex.chunk.LexChunk;
 import relex.chunk.LexicalChunker;
 import relex.chunk.PatternChunker;
 import relex.chunk.PhraseChunker;
@@ -223,9 +223,9 @@ public class RelationExtractor
 	}
 
 	/* --------------------------------------------------------- */
-	private static void prt_chunks(ArrayList<Chunk> chunks)
+	private static void prt_chunks(ArrayList<LexChunk> chunks)
 	{
-		for (Chunk ch : chunks)
+		for (LexChunk ch : chunks)
 		{
 			System.out.println(ch.toString());
 		}
