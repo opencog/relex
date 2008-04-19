@@ -25,6 +25,7 @@ import java.util.Map;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
+import relex.chunk.ChunkRanker;
 import relex.chunk.LexChunk;
 import relex.chunk.LexicalChunker;
 import relex.chunk.PatternChunker;
@@ -377,10 +378,16 @@ public class RelationExtractor
 				RelexInfo ri = re.processSentence(sentence,em);
 				re.reportTime("Relex processing: ");
 	
+				int np = ri.parsedSentences.size();
+				if (np > maxParses) np = maxParses;
+				ChunkRanker ranker = new ChunkRanker(np);
+
 				// Print output
 				int numParses = 0;
 				for (ParsedSentence parse: ri.parsedSentences)
 				{
+					ChunkRanker rollup = new ChunkRanker(1);
+
 					System.out.println(sentence);
 					System.out.println("\n====\n");
 					System.out.println("Parse " + (numParses+1) + 
@@ -415,6 +422,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PhraseChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
+						rollup.add(chunker.getChunks());
 					}
 					if (commandMap.get("--pb") != null)
 					{
@@ -422,6 +430,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PatternChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
+						rollup.add(chunker.getChunks());
 					}
 					if (commandMap.get("--pc") != null)
 					{
@@ -429,7 +438,13 @@ public class RelationExtractor
 						LexicalChunker chunker = new RelationChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
+						rollup.add(chunker.getChunks());
 					}
+
+					// Now roll them up. Need to do this in two stages
+					// to get the probability calculations correct.
+					ranker.add(rollup.getChunks());
+
 					if (commandMap.get("-c") != null)
 					{
 						ceregoView.setParse(parse);
@@ -469,10 +484,16 @@ public class RelationExtractor
 						System.out.println(new String (eot));
 						System.out.println("data\n<!-- ======\n");
 					}
-	
+
 					if (++numParses >= maxParses) break;
 				}
-				System.out.println("\nAntecedent candidates:\n" + re.antecedents.toString());
+				if (0 < ranker.getChunks().size())
+				{
+					System.out.println("\nLexical Chunks:\n" +
+					             ranker.toString());
+				}
+				System.out.println("\nAntecedent candidates:\n"
+				                   + re.antecedents.toString());
 	
 				sentence = ds.getNextSentence();
 			}
