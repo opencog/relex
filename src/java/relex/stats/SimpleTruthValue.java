@@ -18,28 +18,26 @@ package relex.stats;
 /**
  * This class provides a simple OpenCog-like TruthValue object.
  * It is similar to, but not the same as, OpenCog TV objects.
- * Perhaps someday, it should be refectored to resemble OpenCog
- * more.
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org> 
  */
 public class SimpleTruthValue implements TruthValue
 {
-	private int count;
-	private double sum;
-	private double sum_squared;
+	private double count;
+	private int offset;
+	private double mean;
+	private static final double PLUS_EPSILON = 1.0 + 1.0E-6;
 
 	public SimpleTruthValue()
 	{
-		count = 0;
-		sum = 0.0;
-		sum_squared = 0.0;
+		count = 0.0;
+		mean = 0.0;
+		offset = 10;
 	}
 
 	public double getMean()
 	{
-		if (count <= 0) return 0; 
-		return sum/count;
+		return mean;
 	}
 
 	public double getCount()
@@ -49,24 +47,24 @@ public class SimpleTruthValue implements TruthValue
 
 	public double getConfidence()
 	{
-		if (count <= 0) return 0.0;
-
-		// XXX FIXME
-		// A total hack, right now -- the invese RMS value.
-		double rms = (sum_squared - sum*sum/count) / count;
-		return 1.0/rms;
+		return PLUS_EPSILON * count/(count+offset);
 	}
 
-	public void increment(double val)
+	public void setConfidence(double cnf)
 	{
-		count ++;
-		sum += val;
-		sum_squared += val*val;
+		// The goal of EPSILON is to allow cnf=1.0
+		// without causing a divide-by-zero.
+		count =  offset*cnf / (PLUS_EPSILON - cnf);
 	}
 
 	public void setCount(int cnt)
 	{
 		count = cnt;
+	}
+
+	public void setOffset(int off)
+	{
+		offset = off;
 	}
 }
 

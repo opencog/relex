@@ -63,7 +63,7 @@ public abstract class ChunkRanker
 			{
 				TruthValue tv = c.getTruthValue();
 				SimpleTruthValue stv = (SimpleTruthValue) tv;
-				stv.increment(1.0);
+				// stv.increment(1.0);
 				return;
 			}
 		}
