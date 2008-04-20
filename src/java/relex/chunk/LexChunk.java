@@ -41,7 +41,42 @@ public class LexChunk extends Chunk
 	}
 
 	/**
-	 * A very simple output routine.
+	 * Return true if the other object equals this one, else return false.
+	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares 
+	 * structure to determine if they have congruent structure.
+	 * For lexical object, this means "the same words", and nothing more.
+	 */
+	public boolean equals(Object other)
+	{
+		if (!(other instanceof LexChunk)) return false;
+		LexChunk oth = (LexChunk) other;
+		if (oth.chunk.size() != chunk.size()) return false;
+		for (int i=0; i<chunk.size(); i++)
+		{
+			FeatureNode fthis = chunk.get(i);
+			FeatureNode foth = oth.chunk.get(i);
+			FeatureNode sfthis = fthis.get("orig_str");
+			FeatureNode sfoth = foth.get("orig_str");
+			if (sfthis == null || sfoth == null) return false;
+			String sthis = sfthis.getValue();
+			String soth = sfoth.getValue();
+			if (!sthis.equals(soth)) return false;
+
+			FeatureNode tstart = fthis.get("start_char");
+			FeatureNode ostart = foth.get("start_char");
+			String st = tstart.getValue();
+			String ot = ostart.getValue();
+			if (st == null || ot == null) return false;
+			if (!st.equals(ot)) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * A very simple output routine. It is meant to provide
+	 * common-sense, human readable output, rahter than a fixed,
+	 * computer-paraable format. It is subject to change from one
+	 * relex release to another.
 	 */
 	public String toString()
 	{
