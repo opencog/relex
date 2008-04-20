@@ -69,7 +69,7 @@ public class ChunkRanker
 
 		if (not_found)
 		{
-			ch.addTruthValue(new SimpleTruthValue());
+			ch.setTruthValue(new SimpleTruthValue());
 			chunks.add(ch);
 		}
 
@@ -77,6 +77,7 @@ public class ChunkRanker
 		SimpleTruthValue stv = (SimpleTruthValue) tv;
 		double confidence = stv.getConfidence();
 		confidence += 1.0/numParses;
+
 		stv.setConfidence(confidence);
 	}
 
@@ -96,13 +97,12 @@ public class ChunkRanker
 		String str = "";
 		for (LexChunk ch: chunks)
 		{
-			str += ch.toString();
-
 			TruthValue tv = ch.getTruthValue();
 			SimpleTruthValue stv = (SimpleTruthValue) tv;
 			double confidence = stv.getConfidence();
 
-			str += " Confidence: " + confidence + "\n";
+			str += "Confidence: " + confidence;
+			str += " " + ch.toString() + "\n";
 		}
 		return str;
 	}
