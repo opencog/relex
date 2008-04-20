@@ -71,7 +71,9 @@ public class Chunk extends Atom
 	}
 
 	/**
-	 * Return true if the other oject equals this one, else return false.
+	 * Return true if the other object equals this one, else return false.
+	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares 
+	 * structure to determine if they have congruent structure.
 	 */
 	public boolean equals(Object other)
 	{
