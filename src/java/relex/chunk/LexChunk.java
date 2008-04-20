@@ -55,6 +55,8 @@ public class LexChunk extends Chunk
 		{
 			FeatureNode fthis = chunk.get(i);
 			FeatureNode foth = oth.chunk.get(i);
+
+			// Compare string values .. 
 			FeatureNode sfthis = fthis.get("orig_str");
 			FeatureNode sfoth = foth.get("orig_str");
 			if (sfthis == null || sfoth == null) return false;
@@ -62,6 +64,7 @@ public class LexChunk extends Chunk
 			String soth = sfoth.getValue();
 			if (!sthis.equals(soth)) return false;
 
+			// Make sure that the location in the sentence matches also.
 			FeatureNode tstart = fthis.get("start_char");
 			FeatureNode ostart = foth.get("start_char");
 			String st = tstart.getValue();
