@@ -16,10 +16,9 @@
 
 package relex;
 
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
+import relex.feature.Atom;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
 import relex.tree.PhraseTree;
@@ -38,8 +37,11 @@ import relex.tree.PhraseTree;
  * 3. Strings representing the original sentence, and representations
  *    of its parses
  * 4. Sets of relations, with the semantic data from the sentence.
+ * 5. A TruthValue (inherited from Atom) that ranks the relative
+ *    likelihood of this parse of being a correct (meaningful) parse
+ *    of the sentence.
  */
-public class ParsedSentence
+public class ParsedSentence extends Atom
 {
 	// String containing the original sentence
 	private String original;
@@ -174,33 +176,6 @@ public class ParsedSentence
 	}
 
 	/* ---------------------------------------------------------------- */
-	/**
-	 * Returns an Iterator over ALL the FeatureNodes in the parse.
-	 * That is, not only are nodes representing the constituents
-	 * returned, but also all their sub-FeatureNodes representing
-	 * links, semantic info, etc.
-	 *
-	 * @return an Iterator over ALL the FeatureNodes in the parse.
-	 */
-	public Iterator<FeatureNode> iteratorFromLeft()
-	{
-		return _iteratorFromLeft(getLeft(), new LinkedHashSet<FeatureNode>()).iterator();
-	}
-
-	private LinkedHashSet<FeatureNode> 
-	_iteratorFromLeft(FeatureNode f, LinkedHashSet<FeatureNode> alreadyVisited) 
-	{
-		if (alreadyVisited.contains(f))
-			return alreadyVisited;
-		alreadyVisited.add(f);
-		if (f.isValued())
-			return alreadyVisited;
-		Iterator<String> i = f.getFeatureNames().iterator();
-		while (i.hasNext())
-			_iteratorFromLeft(f.get(i.next()), alreadyVisited);
-		return alreadyVisited;
-	}
-
 	/**
 	 * @return the FeatureNode representing the left-most word in the sentence.
 	 */

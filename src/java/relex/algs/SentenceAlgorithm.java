@@ -1,4 +1,3 @@
-package relex.algs;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,16 +14,19 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 
-public abstract class SentenceAlgorithm {
-
+public abstract class SentenceAlgorithm
+{
 	private static String SIGNATURE_FEATURE_NAME = "SIG";
 
 	public static boolean VERBOSE = false;
@@ -35,8 +37,9 @@ public abstract class SentenceAlgorithm {
 	 * Iterates over the entire feature structure in the ParsedSentence,
 	 * applying the algorithm whereever it can be applied.
 	 */
-	public void apply(ParsedSentence sentence, RelexContext context) {
-		Iterator<FeatureNode> i = sentence.iteratorFromLeft();
+	public void apply(ParsedSentence sentence, RelexContext context)
+	{
+		Iterator<FeatureNode> i = iteratorFromLeft(sentence);
 		while (i.hasNext()) {
 			FeatureNode c = i.next();
 			if (canApplyTo(c)) {
@@ -72,6 +75,35 @@ public abstract class SentenceAlgorithm {
 				}
 			}
 		}
+	}
+
+	/* ---------------------------------------------------------------- */
+	/**
+	 * Returns an Iterator over ALL the FeatureNodes in the parse.
+	 * That is, not only are nodes representing the constituents
+	 * returned, but also all their sub-FeatureNodes representing
+	 * links, semantic info, etc.
+	 *
+	 * @return an Iterator over ALL the FeatureNodes in the parse.
+	 */
+	public Iterator<FeatureNode> iteratorFromLeft(ParsedSentence sent)
+	{
+		return _iteratorFromLeft(sent.getLeft(),
+		                         new LinkedHashSet<FeatureNode>()).iterator();
+	}
+
+	private LinkedHashSet<FeatureNode> 
+	_iteratorFromLeft(FeatureNode f, LinkedHashSet<FeatureNode> alreadyVisited) 
+	{
+		if (alreadyVisited.contains(f))
+			return alreadyVisited;
+		alreadyVisited.add(f);
+		if (f.isValued())
+			return alreadyVisited;
+		Iterator<String> i = f.getFeatureNames().iterator();
+		while (i.hasNext())
+			_iteratorFromLeft(f.get(i.next()), alreadyVisited);
+		return alreadyVisited;
 	}
 
 	/**
