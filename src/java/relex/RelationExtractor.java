@@ -66,6 +66,7 @@ import relex.tree.PhraseMarkup;
 public class RelationExtractor
 {
 	public static final int DEFAULT_MAX_PARSES = 100;
+	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
 	public static final int DEFAULT_MAX_PARSE_COST = 1000;
 	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
@@ -162,11 +163,9 @@ public class RelationExtractor
 		                               new ArrayList<EntityInfo>());
 		}
 
-		ArrayList<ParsedSentence> currentParses = 
-		               parseSentence(sentence, entityMaintainer);
-		RelexInfo ri = new RelexInfo(sentence, currentParses);
+		RelexInfo ri = parseSentence(sentence, entityMaintainer);
 
-		for (ParsedSentence parse : currentParses)
+		for (ParsedSentence parse : ri.parsedSentences)
 		{
 			// Markup feature node graph with entity info,
 			// so that the relex algs (next step) can see them.
@@ -194,21 +193,23 @@ public class RelationExtractor
 	 * currentParses is filled with the ParsedSentences Uses an optional
 	 * EntityMaintainer to work on a converted sentence.
 	 */
-	private ArrayList<ParsedSentence> 
+	private RelexInfo
 	parseSentence(String sentence, EntityMaintainer entityMaintainer)
 	{
 		if (entityMaintainer != null) {
 			sentence = entityMaintainer.getConvertedSentence();
 		}
 		if (sentence == null) return null;
+
 		ArrayList<ParsedSentence> parses = null;
-		if (sentence.length() < 1024) {
+		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
 			parses = parser.parse(sentence, context.getLinkParserClient());
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
 			parses = new ArrayList<ParsedSentence>();
 		}
-		return parses;
+		RelexInfo ri = new RelexInfo(sentence, parses);
+		return ri;
 	}
 
 	/* ---------------------------------------------------------- */
