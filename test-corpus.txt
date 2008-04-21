@@ -1,8 +1,3 @@
-His hair standing up in the stiff breeze, Benedict, in a flapping white cassock and shoulder cape, briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
-END.
-Benedict briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
-He went away.
-END.
 The gas gave off fumes.
 Switch off the light.
 Switch the light off.
@@ -28,6 +23,11 @@ By the way, did you see it?
 Did you do it?
 END.
 This is a volcanic mountain peak in the locationID1 in northern California.
+END.
+His hair standing up in the stiff breeze, Benedict, in a flapping white cassock and shoulder cape, briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
+END.
+Benedict briskly descended the stairs of his Alitalia jetliner, waving and smiling at the crowd.
+He went away.
 END.
 
 I want to go to the store.
