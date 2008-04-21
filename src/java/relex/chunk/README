@@ -60,6 +60,10 @@ PatternChunker() -- print out lexical chunks based on matching to a
      one yeilds the most interesting/best results.  The rest of this 
      README file is concerned wth these sentence patterns.
 
+Also in this directory:
+
+ChunkRanker(): assigns a weight or probability for a chunk to be correct.
+
 
 Pattern matching
 ----------------
