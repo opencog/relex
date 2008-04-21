@@ -247,6 +247,7 @@ public class RelationExtractor
 			" [-g (use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
+			" [-m (show parse metadata)]" +
 			" [-n parse-number]" +
 			" [-o (show opencog XML output)]" +
 			" [--pa (show phrase-based lexical chunks)]" +
@@ -264,6 +265,7 @@ public class RelationExtractor
 		flags.add("-g");
 		flags.add("-h");
 		flags.add("-l");
+		flags.add("-m");
 		flags.add("-o");
 		flags.add("--pa");
 		flags.add("--pb");
@@ -409,6 +411,11 @@ public class RelationExtractor
 					if ((commandMap.get("-l") != null) &&
 					    (commandMap.get("-o") == null))
 						System.out.println("\n" + parse.getLinkString());
+
+					if (commandMap.get("-m") != null)
+					{
+						System.out.println(parse.getMetaData().toString() + "\n");
+					}
 
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
