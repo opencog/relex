@@ -1,6 +1,3 @@
-package relex.parser;
-
-import org.linkgrammar.LinkGrammar;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -8,7 +5,7 @@ import org.linkgrammar.LinkGrammar;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *	 http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,109 +14,110 @@ import org.linkgrammar.LinkGrammar;
  * limitations under the License.
  */
 
+package relex.parser;
+
+import org.linkgrammar.LinkGrammar;
 
 /**
  * The abstract interface to the C linkparser. Extensions of this class can link
  * directly to the linkparser through JNI, or through some other call method
  * such as Sockets
- * 
  */
 
-public abstract class LinkParserClient {
+public abstract class LinkParserClient
+{
+	// ServerParams are parameters that are used by the link parser c code
+	class ServerParams
+	{
+		String pathName = LinkParser.retrievePathName();
+		int maxParseSeconds = 20;
+		Integer maxCost = null;
+	}
 
-    // ServerParams are parameters that are used by the link parser c code
-    class ServerParams {
-        String pathName = LinkParser.retrievePathName();
+	// ClientParams are parameters that are used only by the client code
+	// to determine how it returns values
+	class ClientParams
+	{
+		int max_parses = 25;
+		boolean ALLOW_SKIPPED_WORDS = false;
+	}
 
-        int maxParseSeconds = 20;
+	ServerParams serverParams = new ServerParams();
 
-        Integer maxCost = null;
-    }
+	ClientParams clientParams = new ClientParams();
 
-    // ClientParams are parameters that are used only by the client code
-    // to determine how it returns values
-    class ClientParams {
-        int max_parses = 25;
+	// PUBLIC METHODS
+	public void setMaxParses(int maxParses) {
+		clientParams.max_parses = maxParses;
+	}
 
-        boolean ALLOW_SKIPPED_WORDS = false;
-    }
+	public int getMaxParses() {
+		return clientParams.max_parses;
+	}
 
-    ServerParams serverParams = new ServerParams();
+	public void setAllowSkippedWords(boolean val) {
+		clientParams.ALLOW_SKIPPED_WORDS = val;
+	}
 
-    ClientParams clientParams = new ClientParams();
+	public boolean getAllowSkippedWords() {
+		return clientParams.ALLOW_SKIPPED_WORDS;
+	}
 
-    // PUBLIC METHODS
-    public void setMaxParses(int maxParses) {
-        clientParams.max_parses = maxParses;
-    }
+	public void setMaxParseSeconds(int maxParseSeconds) {
+		serverParams.maxParseSeconds = maxParseSeconds;
+		// must extend this!
+	}
 
-    public int getMaxParses() {
-        return clientParams.max_parses;
-    }
+	public void setMaxCost(int maxCost) {
+		serverParams.maxCost = new Integer(maxCost);
+		// must extend this!
+	}
 
-    public void setAllowSkippedWords(boolean val) {
-        clientParams.ALLOW_SKIPPED_WORDS = val;
-    }
+	public void init(){
+		init(null);
+	}
 
-    public boolean getAllowSkippedWords() {
-        return clientParams.ALLOW_SKIPPED_WORDS;
-    }
+	public void init(String linkGrammarDictionariesPath) {
+		if (linkGrammarDictionariesPath != null) LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
+	}
 
-    public void setMaxParseSeconds(int maxParseSeconds) {
-        serverParams.maxParseSeconds = maxParseSeconds;
-        // must extend this!
-    }
+	abstract public boolean isPastTenseForm(String word);
 
-    public void setMaxCost(int maxCost) {
-        serverParams.maxCost = new Integer(maxCost);
-        // must extend this!
-    }
-    
-    public void init(){
-    	init(null);
-    }
-    
-    public void init(String linkGrammarDictionariesPath) {
-    	if (linkGrammarDictionariesPath != null) LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
-    }
+	abstract public boolean isEntity(String word);
 
-    abstract public boolean isPastTenseForm(String word);
+	abstract public void close();
 
-    abstract public boolean isEntity(String word);
+	// DEFAULT METHODS
+	abstract void execParse(String sentence);
 
-    abstract public void close();
+	abstract int getNumLinkages();
 
-    // DEFAULT METHODS
-    abstract void execParse(String sentence);
+	abstract void makeLinkage(int i);
 
-    abstract int getNumLinkages();
+	abstract String getConstituentString();
 
-    abstract void makeLinkage(int i);
+	abstract int getNumSkippedWords();
 
-    abstract String getConstituentString();
+	abstract int getNumWords();
 
-    abstract int getNumSkippedWords();
+	abstract String getWord(int w);
 
-    abstract int getNumWords();
+	abstract int getLinkageDisjunctCost();
 
-    abstract String getWord(int w);
+	abstract int getLinkageNumViolations();
 
-    abstract int getLinkageDisjunctCost();
+	abstract int getNumLinks();
 
-    abstract int getLinkageNumViolations();
+	abstract String getLinkString();
 
-    abstract int getNumLinks();
+	abstract int getLinkLWord(int i);
 
-    abstract String getLinkString();
+	abstract int getLinkRWord(int i);
 
-    abstract int getLinkLWord(int i);
+	abstract String getLinkLabel(int i);
 
-    abstract int getLinkRWord(int i);
+	abstract String getLinkLLabel(int i);
 
-    abstract String getLinkLabel(int i);
-
-    abstract String getLinkLLabel(int i);
-
-    abstract String getLinkRLabel(int i);
+	abstract String getLinkRLabel(int i);
 
 }
