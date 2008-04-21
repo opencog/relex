@@ -21,11 +21,12 @@ import relex.RelexProperties;
 import relex.util.socket.ProcessClient;
 
 /**
- * This class serves as a wrapper to the C linkparser library. 
- * Because it is using C, the class is not internally organized in a very good OOP way.
+ * This class serves as a wrapper to the C linkparser library.
+ * Because it is using C, the class is not internally organized
+ * in a very good OOP way. -- Someday, this should be fixed.
  */
-public class LinkParserSocketClient extends LinkParserClient {
-
+public class LinkParserSocketClient extends LinkParserClient
+{
 	private static final int DEFAULT_PORT = 9000;
 
 	private static final String DEFAULT_HOST = "127.0.0.1";
@@ -36,7 +37,7 @@ public class LinkParserSocketClient extends LinkParserClient {
 	private int parseCountBetweenKills;
 
 	private int parseCount;
-	
+
 	private ProcessClient client;
 
 	private ArrayList<String> restoreCommands;
@@ -44,7 +45,7 @@ public class LinkParserSocketClient extends LinkParserClient {
 	public LinkParserSocketClient() {
 		this(DEFAULT_HOST,DEFAULT_PORT);
 	}
-	
+
 	public LinkParserSocketClient(String host, int port) {
 		super();
 		setProperties();
@@ -96,7 +97,7 @@ public class LinkParserSocketClient extends LinkParserClient {
 	public void init() {
 		init(null);
 	}
-	
+
 	// These are not added to restorecommands, so we do not use exec
 	public void init(String linkGrammarDictionariesPath) {
 		super.init(linkGrammarDictionariesPath);
@@ -173,9 +174,19 @@ public class LinkParserSocketClient extends LinkParserClient {
 		return exec(LinkParserProtocol.MSG_GET_WORD + w);
 	}
 
+	int getLinkageAndCost() {
+		return Integer
+				.parseInt(exec(LinkParserProtocol.MSG_GET_LINKAGE_AND_COST));
+	}
+
 	int getLinkageDisjunctCost() {
 		return Integer
 				.parseInt(exec(LinkParserProtocol.MSG_GET_LINKAGE_DISJUNCT_COST));
+	}
+
+	int getLinkageLinkCost() {
+		return Integer
+				.parseInt(exec(LinkParserProtocol.MSG_GET_LINKAGE_LINK_COST));
 	}
 
 	int getLinkageNumViolations() {

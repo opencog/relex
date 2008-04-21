@@ -51,7 +51,9 @@ public class LinkParserProtocol extends ProcessProtocol
 
 	public static final String MSG_GET_LINKAGE_NUM_VIOLATIONS = "[getLinkageNumViolations]\0";
 
+	public static final String MSG_GET_LINKAGE_AND_COST = "[getLinkageAndCost]\0";
 	public static final String MSG_GET_LINKAGE_DISJUNCT_COST = "[getLinkageDisjunctCost]\0";
+	public static final String MSG_GET_LINKAGE_LINK_COST = "[getLinkageLinkCost]\0";
 
 	public static final String MSG_GET_NUM_LINKS = "[getNumLinks]\0";
 
@@ -171,8 +173,12 @@ public class LinkParserProtocol extends ProcessProtocol
 			return makeMessage(client.getWord(Integer.parseInt(arg)));
 		} else if (message.equals(MSG_GET_LINKAGE_NUM_VIOLATIONS)) {
 			return makeMessage(Integer.toString(client.getLinkageNumViolations()));
+		} else if (message.equals(MSG_GET_LINKAGE_AND_COST)) {
+			return makeMessage(Integer.toString(client.getLinkageAndCost()));
 		} else if (message.equals(MSG_GET_LINKAGE_DISJUNCT_COST)) {
 			return makeMessage(Integer.toString(client.getLinkageDisjunctCost()));
+		} else if (message.equals(MSG_GET_LINKAGE_LINK_COST)) {
+			return makeMessage(Integer.toString(client.getLinkageLinkCost()));
 		} else if (message.equals(MSG_GET_NUM_LINKS)) {
 			return makeMessage(Integer.toString(client.getNumLinks()));
 		} else if (message.equals(MSG_GET_LINK_STRING)) {

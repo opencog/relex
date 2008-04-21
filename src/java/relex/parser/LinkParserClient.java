@@ -102,7 +102,11 @@ public abstract class LinkParserClient
 
 	abstract String getWord(int w);
 
+	abstract int getLinkageAndCost();
+
 	abstract int getLinkageDisjunctCost();
+
+	abstract int getLinkageLinkCost();
 
 	abstract int getLinkageNumViolations();
 

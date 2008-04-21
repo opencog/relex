@@ -153,9 +153,16 @@ public class LinkParser extends Parser
 			if (verbosity >= 5) System.out.println("Done with parse " + i);
 			// set meta data
 			FeatureNode meta = new FeatureNode();
-			meta.set("skipped", new FeatureNode(Integer.toString(lpc.getNumSkippedWords())));
-			meta.set("disj_cost", new FeatureNode(Integer.toString(lpc.getLinkageDisjunctCost())));
-			meta.set("num_violations", new FeatureNode(Integer.toString(lpc.getLinkageNumViolations())));
+			meta.set("num_skipped_words", new FeatureNode(Integer.toString(
+			                              lpc.getNumSkippedWords())));
+			meta.set("and_cost", new FeatureNode(Integer.toString(
+			                          lpc.getLinkageAndCost())));
+			meta.set("disjunct_cost", new FeatureNode(Integer.toString(
+			                          lpc.getLinkageDisjunctCost())));
+			meta.set("link_cost", new FeatureNode(Integer.toString(
+			                          lpc.getLinkageLinkCost())));
+			meta.set("num_violations", new FeatureNode(Integer.toString(
+			                           lpc.getLinkageNumViolations())));
 			s.setMetaData(meta);
 			// add linkage and tree structure
 			if (verbosity >= 5) System.out.println("Adding Linkage Structure");

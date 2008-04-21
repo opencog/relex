@@ -25,7 +25,8 @@ import org.linkgrammar.LinkGrammar;
  * This class is for use with link-grammar versions 4.2.6 and later
  */
 
-public class LinkParserJNINewClient extends LinkParserClient {
+public class LinkParserJNINewClient extends LinkParserClient
+{
 	private static final int verbosity = 1;
 
 	private static LinkParserJNINewClient singletonInstance = null;
@@ -63,7 +64,7 @@ public class LinkParserJNINewClient extends LinkParserClient {
 	public void close() {
 		LinkGrammar.close();
 	}
-	
+
 	public void init() {
 		init(null);
 	}
@@ -115,8 +116,16 @@ public class LinkParserJNINewClient extends LinkParserClient {
 		return LinkGrammar.getWord(w);
 	}
 
+	int getLinkageAndCost() {
+		return LinkGrammar.getLinkageAndCost();
+	}
+
 	int getLinkageDisjunctCost() {
 		return LinkGrammar.getLinkageDisjunctCost();
+	}
+
+	int getLinkageLinkCost() {
+		return LinkGrammar.getLinkageLinkCost();
 	}
 
 	int getLinkageNumViolations() {
