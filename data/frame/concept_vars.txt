@@ -1,51 +1,6 @@
 $qVar
 _%qVar
 
-$Noun
-definite
-indefinite
-singular
-plural
-uncountable
-person
-location
-masculine
-feminine
-
-$Verb
-past
-past_progressive
-past_participle
-present
-present_progressive
-present_participle
-future
-future_progressive
-future_participle
-hyp
-progressive
-participle
-perfect
-past_perfect
-present_perfect
-future_perfect
-imperfect
-past_imperfect
-present_imperfect
-future_imperfect
-imperative
-infinitive
-imperative_infinitive
-past_infinitive
-present_infinitive
-future_infinitive
-pluperfect
-conditional
-passive
-active
-indicative
-subjunctive
-
 $Imperative_relation
 imperative
 imperative-infinitive
@@ -1930,6 +1885,7 @@ crest
 descend on
 enter
 get
+go home
 make it
 make
 reach
@@ -2798,6 +2754,7 @@ emerge
 emigrate
 escape
 exit
+go away
 leave
 quit
 retreat
@@ -4679,15 +4636,16 @@ predisposed
 prone
 
 $Inhibit_movement
+arrest
 confine
 detain
 hold
 immure
 imprison
-lock
+lock up
 restrict
 shut up
-tie
+tie up
 
 $Inspecting
 check
@@ -5227,5 +5185,41 @@ woebegone
 worried
 wretched
 
+$Cause_to_make_progress
+develop
+gain
+improve
+moderize
+perfect
+
+$Cause_expansion
+aggrandize
+augment
+blow up
+build on
+contract
+dilate
+enlarge
+explode
+expand
+grow
+inflate
+lengthen
+magnify
+narrow
+reduce
+shrink
+swell
+widen
+
+$Convict
+acquit
+clear
+convict
+find
+guilty
+not_guilty
+pronounce
+rule
 
 

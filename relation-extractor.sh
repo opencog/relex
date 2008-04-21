@@ -15,10 +15,12 @@ VM_OPTS="\
 	-Djava.library.path=/usr/lib:/usr/local/lib \
 	"
 
-RELEX_OPTS="\
-	-Drelex.algpath=data/relex-semantic-algs.txt \
-	-Dwordnet.configfile=data/wordnet/file_properties.xml \
-	"
+# By default these resources are read from the jar file or from 
+# the default paths (the same defined below)
+#RELEX_OPTS="\
+#	-Drelex.algpath=data/relex-semantic-algs.txt \
+#	-Dwordnet.configfile=data/wordnet/file_properties.xml \
+#	"
 
 CLASSPATH="-classpath \
 bin:\

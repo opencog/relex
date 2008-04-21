@@ -15,17 +15,13 @@ package relex.morphy;
  * limitations under the License.
  */
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
 import net.didion.jwnl.data.IndexWord;
 import net.didion.jwnl.data.POS;
 import net.didion.jwnl.dictionary.Dictionary;
-import relex.morphy.TextVacuum;
 
 /**
  * Return information about the base form (lemma) of a word.
@@ -91,51 +87,7 @@ public class MorphyJWNL implements Morphy
 		standardContractions.put( "'m", "am" );
 	}
 
-
-	/* ============================================================== */
-	private static final String DEFAULT_WORDNET_CONFIG_FILE =
-	      "data"+File.separator+"wordnet"+File.separator+"file_properties.xml";
-
 	private boolean javaWordnetFound = false;
-
-	/**
-	 * Attempts to load the wordnet data files, assuming
-	 * that thier location is given in a file called
-	 * "file_properties.xml"
-	 */
-	private void initWordNet()
-	{
-		String wordNetConfigFile = null;
-		try
-		{
-			wordNetConfigFile = System.getProperty("wordnet.configfile");
-			if (wordNetConfigFile == null)
-			{
-				if (DEBUG)
-					System.out.println(
-                   "WordNet config file not set(wordnet.configfile).\n" +
-				       "Trying default path: " + DEFAULT_WORDNET_CONFIG_FILE);
-				wordNetConfigFile = DEFAULT_WORDNET_CONFIG_FILE;
-			}
-			if (DEBUG)
-				System.out.print("Reading Wordnet Java API...");
-			JWNL.initialize(new FileInputStream(wordNetConfigFile));
-			if (DEBUG)
-				System.out.println("ok");
-			javaWordnetFound = true;
-		}
-		catch (Exception ex)
-		{
-			System.err.println(
-			       "Unable to load Java Wordnet files from config file: " +
-					 wordNetConfigFile + " .\n" +
-			       "Will use command-line interface; this will negatively " + 
-			       "impact performance.\n" + 
-			       ex.getMessage());
-		}
-	}
-
-	/* ============================================================== */
 
 	public MorphyJWNL()
 	{
@@ -146,7 +98,11 @@ public class MorphyJWNL implements Morphy
 	 */
 	public void initialize()
 	{
-		initWordNet();
+		if (!MorphyFactory.initializeJWNL()) {
+			System.err.println("Unable to initialize WordNet Java API (JWNL). "+
+					"Will use command-line interface; " +
+					"this will negatively impact performance."); 
+		}
 	}
 
 	public Morphed morph(String word)
@@ -158,8 +114,6 @@ public class MorphyJWNL implements Morphy
 			load(m);
 		return m;
 	}
-
-	/* ============================================================== */
 
 	private String convertStandardContraction(String word)
 	{
@@ -352,7 +306,6 @@ public class MorphyJWNL implements Morphy
 
 	public static void main(String[] args)
 	{
-//		Morphy morphy = getInstance();
 		Morphy morphy = new MorphyJWNL();
 		System.out.println(morphy.morph(args[0]));
 	}

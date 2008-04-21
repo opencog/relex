@@ -51,6 +51,9 @@
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
         	<fileset file="data/relex-semantic-algs.txt" />
+        	<fileset file="data/frame/concept_vars.txt" />
+        	<fileset file="data/frame/mapping_rules.txt" />
+        	<fileset file="data/wordnet/file_properties.xml" />
         </jar>
     </target>
 
