@@ -16,6 +16,7 @@
 
 package relex.wsd;
 
+import relex.RelationExtractor;
 import relex.RelexInfo;
 import relex.stats.SimpleTruthValue;
 
@@ -29,8 +30,27 @@ public class WordSense
 	                                       RelexInfo target)
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
+System.out.println("hello world");
 
 		return stv;
+	}
+
+	/**
+	 * Test/sample usage
+	 */
+
+	public static void main(String[] args)
+	{
+		RelationExtractor re = new RelationExtractor(false);
+
+		String example_sentence = "I was fishing for an answer";
+		String target_sentence = "We went on a fishing expedition.";
+
+		RelexInfo ri_example = re.processSentence(example_sentence);
+		RelexInfo ri_target = re.processSentence(target_sentence);
+
+		WordSense ws = new WordSense();
+		ws.wordSenseMatch("fishing", ri_example, ri_target);
 	}
 
 } // end WordSense
