@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import relex.feature.Atom;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
+import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseTree;
 
 /**
@@ -190,6 +191,61 @@ public class ParsedSentence extends Atom
 	public PhraseTree getPhraseTree()
 	{
 		return new PhraseTree(getLeft());
+	}
+
+	/* ---------------------------------------------------------------- */
+
+	public int getAndCost()
+	{
+		return getMeta("and_cost");
+	}
+
+	public int getDisjunctCost()
+	{
+		return getMeta("disjunct_cost");
+	}
+
+	public int getLinkCost()
+	{
+		return getMeta("link_cost");
+	}
+
+	public int getNumSkippedWords()
+	{
+		return getMeta("num_skipped_words");
+	}
+
+	private int getMeta(String str)
+	{
+		FeatureNode fn = metaData.get(str);
+		if (fn == null) return -1;
+		String val = fn.getValue();
+		return Integer.parseInt(val);
+	}
+
+	/**
+	 * Perform a crude parse-ranking based on Link-grammar output.
+	 * The ranking will be stored as the "confidence" of the 
+	 * TruthValue associated with this parse.
+	 */
+	public void simpleRankParse()
+	{
+		SimpleTruthValue stv = new SimpleTruthValue();
+		truth_value = stv;
+		stv.setMean(1.0);  // 1.0 == true -- this is a parse.
+
+		// The weights used here are rather ad-hoc; but the
+		// basic idea is that we want to penalize skipped words
+		// strongly, but disjunct costs not as much. Low link
+		// costs are the tiebreaker.
+		double weight = 0.4 * getNumSkippedWords();
+		weight += 0.2 * getDisjunctCost();
+		weight += 0.06 * getAndCost();
+		weight += 0.012 * getLinkCost();
+
+		weight = Math.exp(-weight);
+
+		stv.setConfidence(weight);
 	}
 
 } // end ParsedSentence

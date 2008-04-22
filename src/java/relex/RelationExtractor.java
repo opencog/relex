@@ -180,6 +180,9 @@ public class RelationExtractor
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
+
+			// Assign a simple parse-ranking score, based on LinkGrammar data.
+			parse.simpleRankParse();
 		}
 
 		// Perform anaphora resolution
@@ -417,6 +420,17 @@ public class RelationExtractor
 						System.out.println(parse.getMetaData().toString() + "\n");
 					}
 
+					// Print simple parse ranking
+					Double confidence = parse.getTruthValue().getConfidence();
+					String pconfidence = confidence.toString().substring(0,6);
+					System.out.println("Parse confidence: " + pconfidence);
+					System.out.println(
+						"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
+						" DIS=" + parse.getDisjunctCost() +
+						" AND=" + parse.getAndCost() +
+						" LEN=" + parse.getLinkCost() + ")");
+
+					// Verbose graph.
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
