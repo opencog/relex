@@ -121,6 +121,8 @@ public class FeatureForeach
 	 */
 	public static Boolean foreachWord(FeatureNode root, FeatureNodeCallback cb)
 	{
+		// skip the LEFT-WALL
+		root = root.get("NEXT");
 		while (root != null)
 		{
 			Boolean rc = cb.FNCallback(root);
