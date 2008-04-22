@@ -110,6 +110,26 @@ public class FeatureForeach
 		return rc;
 	}
 
+	/**
+	 * Walk the graph, following "NEXT" links only, and then
+	 * call the callback for each node visited.  Assuming that
+	 * "root" was the left-most word in a sentence, this will
+	 * result in the callback being called for each word in
+	 * the sentence, in a left-to-right order.
+	 *
+	 * The callback may return "true" to halt the loop.
+	 */
+	public static Boolean foreachWord(FeatureNode root, FeatureNodeCallback cb)
+	{
+		while (root != null)
+		{
+			Boolean rc = cb.FNCallback(root);
+			if (rc) return rc;
+			root = root.get("NEXT");
+		}
+		return false;
+	}
+
 	/* -------------------------------------------------------------- */
 	/**
 	 * Walk the graph, looking for all link relations in a graph.
