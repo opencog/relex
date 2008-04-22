@@ -20,6 +20,11 @@ chunk:
 	Code to generate lexical chunks, aka lexicalized stems or units
    or phrases. Mostly focused on phrasal verbs.
 
+concurrent:
+	Provide infrastructure for multi-threaded (parallel) execution.
+	Not normally used or needed; intended only for improving 
+   performance for production servers.
+
 corpus:
 	Code to handle multiple-sentence corpuses. Includes a class to 
 	split a document into multiple sentences, and another to perform
