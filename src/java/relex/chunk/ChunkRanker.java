@@ -53,7 +53,7 @@ public class ChunkRanker
 	 * Add a chunk. If its already in the list, then increment 
 	 * its liklihood of being appropriate.
 	 */
-	public void add(LexChunk ch)
+	public void add(LexChunk ch, TruthValue weight)
 	{
 		boolean not_found = true;
 		for (LexChunk c : chunks)
@@ -76,15 +76,16 @@ public class ChunkRanker
 		TruthValue tv = ch.getTruthValue();
 		SimpleTruthValue stv = (SimpleTruthValue) tv;
 		double confidence = stv.getConfidence();
-		confidence += 1.0/numParses;
+
+		confidence += weight.getConfidence()/numParses;
 
 		stv.setConfidence(confidence);
 	}
 
-	public void add(ArrayList<LexChunk> lst)
+	public void add(ArrayList<LexChunk> lst, TruthValue weight)
 	{
 		for (LexChunk ch : lst)
-			add(ch);
+			add(ch, weight);
 	}
 
 	/**

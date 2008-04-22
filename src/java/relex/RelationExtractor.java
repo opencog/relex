@@ -444,7 +444,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PhraseChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks());
+						rollup.add(chunker.getChunks(), parse.getTruthValue());
 					}
 					if (commandMap.get("--pb") != null)
 					{
@@ -452,7 +452,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PatternChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks());
+						rollup.add(chunker.getChunks(), parse.getTruthValue());
 					}
 					if (commandMap.get("--pc") != null)
 					{
@@ -460,12 +460,12 @@ public class RelationExtractor
 						LexicalChunker chunker = new RelationChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks());
+						rollup.add(chunker.getChunks(), parse.getTruthValue());
 					}
 
 					// Now roll them up. Need to do this in two stages
 					// to get the probability calculations correct.
-					ranker.add(rollup.getChunks());
+					ranker.add(rollup.getChunks(), parse.getTruthValue());
 
 					if (commandMap.get("-c") != null)
 					{
