@@ -19,7 +19,9 @@ package relex;
 import java.util.ArrayList;
 
 import relex.feature.Atom;
+import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
+import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkableView;
 import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseTree;
@@ -115,20 +117,66 @@ public class ParsedSentence extends Atom
 	}
 
 	/* -------------------------------------------------------------------- */
-	public int getNumWords() {
+	public int getNumWords()
+	{
 		return leafConstituents.size();
 	}
 
-	public FeatureNode getWordAsNode(int i) {
+	/**
+	 * Return the i'th word in the sentence, as a feature node
+	 */
+	public FeatureNode getWordAsNode(int i)
+	{
 		return leafConstituents.get(i);
 	}
 
-	public String getWord(int i) {
+	/**
+	 * Return the i'th word in the sentence, as a string
+	 */
+	public String getWord(int i)
+	{
 		return LinkableView.getWordString(getWordAsNode(i));
 	}
 
-	public void addWord(FeatureNode w) {
+	public void addWord(FeatureNode w)
+	{
 		leafConstituents.add(w);
+	}
+
+	/**
+	 * Return feature node for the indicated word. Return null
+	 * if the word cannot be found in the sentence. 
+	 *
+	 * If there are multiple occurances of a word in a sentence,
+	 * this will return only the left-most such occurance.
+	 */
+	public FeatureNode findWord(String word)
+	{
+		class word_cb implements FeatureNodeCallback
+		{
+			public String match_word;
+			public FeatureNode found;
+			public word_cb(String mw)
+			{
+				match_word = mw;
+				found = null;
+			}
+			public Boolean FNCallback(FeatureNode fn)
+			{
+				FeatureNode fstr = fn.get("str");
+				if (fstr == null) return false;
+				String w = fstr.getValue();
+				if (match_word.equals(w))
+				{
+					found = fn;
+					return true;
+				}
+				return false;
+			}
+		}
+		word_cb cb = new word_cb(word);
+		FeatureForeach.foreachWord(getLeft(), cb);
+		return cb.found;
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -194,6 +242,7 @@ public class ParsedSentence extends Atom
 	}
 
 	/* ---------------------------------------------------------------- */
+	/* Return unpacked meta information about parse, and ranking too */
 
 	public int getAndCost()
 	{
