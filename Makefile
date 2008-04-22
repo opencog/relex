@@ -23,6 +23,8 @@ DIST_FILES = \
 	src/java/relex/anaphora/*.java \
 	src/java/relex/anaphora/README \
 	src/java/relex/chunk/*.java \
+	src/java/relex/chunk/README \
+	src/java/relex/concurrent/*.java \
 	src/java/relex/corpus/*.java \
 	src/java/relex/entity/*.java \
 	src/java/relex/feature/*.java \
@@ -31,11 +33,14 @@ DIST_FILES = \
 	src/java/relex/output/*.java \
 	src/java/relex/output/README \
 	src/java/relex/parser/*.java \
+	src/java/relex/stats/*.java \
+	src/java/relex/stats/README \
 	src/java/relex/tree/*.java \
+	src/java/relex/tree/README \
 	src/java/relex/util/socket/*.java \
 	src/java_test/relex/test/corpus/*.java
 
 all:
 
 dist:
-	tar --transform "s#^#relex-0.8.4/#" -zcvf relex-0.8.4.tar.gz ${DIST_FILES}
+	tar --transform "s#^#relex-0.8.5/#" -zcvf relex-0.8.5.tar.gz ${DIST_FILES}
