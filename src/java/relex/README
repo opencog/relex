@@ -67,6 +67,9 @@ stats:
 tree:
 	Routines to extract and manipulate the treebank style phrase tree
 	of a given parse. The phrase tree is central to the Hobbs algorithm,
-	and to lexical chunking.
+	and to lexical chunking. The PhraseLeader class provides head-word
+   identification.
 
+wsd:
+	Experimental word-sense disambiguation code.
 

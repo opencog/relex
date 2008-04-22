@@ -28,8 +28,8 @@ PhraseMarkup.java:
    semi-private.
 
 PhraseLeader.java:
-   Identifies the leader word of a phrase. For example, the leader of 
-   (NP a big robot) is "robot".
+   Identifies the leader word or head-word of a phrase. For example,
+   the leader of (NP a big robot) is "robot".
 
 PatternMatch.java:
    A class for performing pattern matching on phrase trees.
