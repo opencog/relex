@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,15 +13,18 @@ package relex.feature;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * This class allows for a view of a FeatureNode as an element that contains
- * left and right links. 
- */
+
+package relex.feature;
+
 import java.util.HashSet;
 import java.util.ArrayList;
 
-public class LinkableView extends View { // implements TreeNode , LinkNode {
-
+/**
+ * This class allows for a view of a FeatureNode as an element that
+ * contains left and right links. 
+ */
+public class LinkableView extends View // implements TreeNode , LinkNode
+{
 	private static String NUM_LEFT_LINKS_FEATURE_NAME = "num_left_links";
 
 	private static String NUM_RIGHT_LINKS_FEATURE_NAME = "num_right_links";
@@ -55,7 +57,8 @@ public class LinkableView extends View { // implements TreeNode , LinkNode {
 
 	private static FeatureNameFilter filter;
 
-	static {
+	static
+	{
 		// Create the filter which controls how LinkableViews are printed.
 		ArrayList<String> featureOrder = new ArrayList<String>();
 		featureOrder.add(POS_FEATURE_NAME);

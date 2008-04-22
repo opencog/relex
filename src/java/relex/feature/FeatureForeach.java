@@ -46,7 +46,6 @@ import java.util.HashSet;
 
 public class FeatureForeach
 {
-
 	/**
 	 * Walk the graph, calling a callback for each node visited.
 	 */
@@ -101,6 +100,9 @@ public class FeatureForeach
 		return rc;
 	}
 
+	/**
+	 * Walk the entire graph, calling a callback for each node visited.
+	 */
 	public static Boolean foreach(FeatureNode root, FeatureNodeCallback cb)
 	{
 		HashSet<FeatureNode> alreadyVisited = new HashSet<FeatureNode>();

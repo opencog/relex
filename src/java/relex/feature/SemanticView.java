@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,8 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.feature;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ import java.util.List;
 /**
  * SemanticViews can represent either SimpleConcepts, Relations, or Groups
  */
-public class SemanticView extends View {
-
+public class SemanticView extends View
+{
 	private static String MEMBER_PREFIX = "member";
 
 	private static String NAME_FEATURE = "name";

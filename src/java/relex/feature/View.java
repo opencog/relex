@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,23 +14,27 @@ package relex.feature;
  * limitations under the License.
  */
 
-/**
- * This class allows FeatureNodes to have diffent views. Essentially, every view
- * will have special methods for setting and getting particular features
- */
-public abstract class View {
+package relex.feature;
 
+/**
+ * This class allows FeatureNodes to have different views. Essentially,
+ * every view will have special methods for setting and getting 
+ * particular features.
+ */
+public abstract class View
+{
 	private FeatureNode viewed;
 
-	public View(FeatureNode f) {
+	public View(FeatureNode f)
+	{
 		if (f == null) throw new RuntimeException("Cannot view a null FeatureNode.");
 		viewed = f;
 	}
 
-	public FeatureNode fn() {
+	public FeatureNode fn()
+	{
 		return viewed;
 	}
 
 	public abstract String toString();
-
 }
