@@ -163,7 +163,7 @@ public class ParsedSentence extends Atom
 			}
 			public Boolean FNCallback(FeatureNode fn)
 			{
-				FeatureNode fstr = fn.get("str");
+				FeatureNode fstr = fn.get("orig_str");
 				if (fstr == null) return false;
 				String w = fstr.getValue();
 				if (match_word.equals(w))
