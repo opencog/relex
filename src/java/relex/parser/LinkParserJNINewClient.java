@@ -75,7 +75,8 @@ public class LinkParserJNINewClient extends LinkParserClient
 		LinkGrammar.init();
 	}
 
-	void execParse(String sentence) {
+	void execParse(String sentence)
+	{
 		Long starttime;
 		if (verbosity > 0)
 		{
@@ -96,7 +97,8 @@ public class LinkParserJNINewClient extends LinkParserClient
 		return LinkGrammar.getNumLinkages();
 	}
 
-	void makeLinkage(int i) {
+	void makeLinkage(int i)
+	{
 		LinkGrammar.makeLinkage(i);
 	}
 
