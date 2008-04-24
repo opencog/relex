@@ -16,12 +16,22 @@
 
 package relex.wsd;
 
+import java.util.ArrayList;
+
+import relex.ParsedSentence;
 import relex.RelationExtractor;
 import relex.RelexInfo;
+import relex.feature.FeatureNode;
+import relex.feature.LinkableView;
 import relex.stats.SimpleTruthValue;
+import relex.stats.TruthValue;
 
 /**
  * Experimental word-sense disambiguation code.
+ *
+ * 1) part-of-speech must match, weighted by parse ranking.
+ * 2) look for _nn in one but not another, this disqualifies things.
+ *    (e.g. fishing expedition vs. went fishing.
  */
 public class WordSense
 {
@@ -30,7 +40,54 @@ public class WordSense
 	                                       RelexInfo target)
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
-System.out.println("hello world");
+
+		class SensePair
+		{
+			public SimpleTruthValue stv;
+			public ParsedSentence xmp;
+			public ParsedSentence tgt;
+			public FeatureNode xmp_word;
+			public FeatureNode tgt_word;
+		}
+
+		ArrayList<SensePair> spl = new ArrayList<SensePair>();
+
+		// Create the initial set of example-target matchups.
+		// Immediately rule out any that do not have matching
+		// parts of speech.
+		//
+		for (ParsedSentence exparse : example.parsedSentences)
+		{
+			FeatureNode xmp_fn = exparse.findWord(word);
+			String xmp_pos = LinkableView.getPOS(xmp_fn);
+
+			TruthValue xmp_tv = exparse.getTruthValue();
+			double xmp_conf = xmp_tv.getConfidence();
+			for (ParsedSentence tgparse : target.parsedSentences)
+			{
+				FeatureNode tgt_fn = tgparse.findWord(word);
+				String tgt_pos = LinkableView.getPOS(tgt_fn);
+				if (tgt_pos.equals(xmp_pos))
+				{
+					SensePair sp = new SensePair();
+					TruthValue tgt_tv = tgparse.getTruthValue();
+					double tgt_conf = tgt_tv.getConfidence();
+					sp.stv = new SimpleTruthValue(1.0, xmp_conf*tgt_conf);
+					sp.xmp = exparse;
+					sp.tgt = tgparse;
+					sp.xmp_word = xmp_fn;
+					sp.tgt_word = tgt_fn;
+System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf);
+					spl.add(sp);
+				}
+			}
+		}
+
+		// Now, loop over the plausible pairs, and see if 
+		// the word is used in the same way in both sentences.
+		for (SensePair sp : spl)
+		{
+		}
 
 		return stv;
 	}
