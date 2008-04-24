@@ -42,13 +42,17 @@ public class WordSense
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
 
+		// The SensePair class matches up possible pairings
+		// of the word usage in the example and target sentence.
+		// The associated truth value is meant to indicate the
+		// likelihood of the sense usage being the same.
 		class SensePair
 		{
 			public SimpleTruthValue stv;
-			public ParsedSentence xmp;
 			public ParsedSentence tgt;
-			public FeatureNode xmp_word;
+			public ParsedSentence xmp;
 			public FeatureNode tgt_word;
+			public FeatureNode xmp_word;
 		}
 
 		ArrayList<SensePair> spl = new ArrayList<SensePair>();
@@ -84,9 +88,10 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 			}
 		}
 
-		class RCB implements RelationCallback
+		class XmpCB implements RelationCallback
 		{
 			FeatureNode word;
+			int which;
 			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
 			{
 				return false;
@@ -94,8 +99,8 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 			public Boolean BinaryRelationCB(String relation,
 			                  FeatureNode srcNode, FeatureNode tgtNode)
 			{
-if (word == srcNode.get("nameSource")) System.out.println("src match "+relation);
-if (word == tgtNode.get("nameSource")) System.out.println("tgt match "+relation);
+if (word == srcNode.get("nameSource")) System.out.println("yahoo sr camatch "+relation);
+if (word == tgtNode.get("nameSource")) System.out.println("yahoo mtg aatch "+relation);
 				return false;
 			}
 			public Boolean BinaryHeadCB(FeatureNode from)
@@ -104,15 +109,57 @@ if (word == tgtNode.get("nameSource")) System.out.println("tgt match "+relation)
 			}
 		}
 
-		RCB rcb = new RCB();
+		class TgtCB implements RelationCallback
+		{
+			FeatureNode word;
+			SensePair sp;
+			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
+			{
+				return false;
+			}
+			public Boolean BinaryRelationCB(String relation,
+			                  FeatureNode srcNode, FeatureNode tgtNode)
+			{
+				int which = 0;
+				if (word == srcNode.get("nameSource")) 
+				{
+					which = 1;
+System.out.println("tgt src match "+relation);
+				}
+				if (word == tgtNode.get("nameSource"))
+				{
+					which = 2;
+System.out.println("tgt tgt match "+relation);
+				}
+				if (which != 0)
+				{
+					XmpCB xmp_cb = new XmpCB();
+					xmp_cb.word = sp.xmp_word;
+					xmp_cb.which = which;
+
+					// loop over all relations in the example.
+					sp.xmp.foreach(xmp_cb);
+				}
+				return false;
+			}
+			public Boolean BinaryHeadCB(FeatureNode from)
+			{
+				return false;
+			}
+		}
+
+		TgtCB tgt_cb = new TgtCB();
 
 		// Now, loop over the plausible pairs, and see if 
 		// the word is used in the same way in both sentences.
 		for (SensePair sp : spl)
 		{
 System.out.println("-------");
-			rcb.word = sp.xmp_word;
-			sp.xmp.foreach(rcb);
+			tgt_cb.word = sp.tgt_word;
+			tgt_cb.sp = sp;
+
+			// loop over all relations in the target
+			sp.tgt.foreach(tgt_cb);
 		}
 
 		return stv;
