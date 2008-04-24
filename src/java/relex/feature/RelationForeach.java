@@ -42,6 +42,15 @@ import java.util.HashSet;
  * which indicates that "need" is involved in two binary relations:
  *   _subj(need, she)  and _to-do(need, do)
  *
+ *
+ * The best way to think of a "foreach" class is to think of it as 
+ * a for-loop, with a "hidden" iterator. The callback is then the 
+ * inner block of the for loop. Because Java does not have the concept
+ * of anonymous blocks, the inner block callback has to be implemented
+ * as an actual class, making this programming style rather bulky. 
+ * However, its well worth it, as, despite the extra bulk, it can 
+ * dramatically simplify code.
+ *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
