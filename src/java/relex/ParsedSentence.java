@@ -23,6 +23,7 @@ import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkableView;
+import relex.feature.RelationCallback;
 import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseTree;
 
@@ -223,6 +224,16 @@ public class ParsedSentence extends Atom
 	{
 		return original;
 	}
+
+	/* ---------------------------------------------------------------- */
+	/**
+	 * Call the callback on each relation in the sentence
+	 */
+	public Boolean foreach(RelationCallback cb)
+	{
+		return FeatureForeach.foreach(getLeft(), cb);
+	}
+	
 
 	/* ---------------------------------------------------------------- */
 	/**
