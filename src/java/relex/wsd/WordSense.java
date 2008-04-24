@@ -67,6 +67,7 @@ public class WordSense
 		for (ParsedSentence exparse : example.parsedSentences)
 		{
 			FeatureNode xmp_fn = exparse.findWord(word);
+			if (null == xmp_fn) continue;
 			String xmp_pos = LinkableView.getPOS(xmp_fn);
 
 			TruthValue xmp_tv = exparse.getTruthValue();
@@ -276,6 +277,22 @@ public class WordSense
 			"We went on a fishing expedition.",
 			"I got seasick on the fishing vessel.",
 			true));
+
+		tpl.add(new TestPair(
+			"bark",
+			"The dog barked at the tree.",
+			"The tree bark of a birch is very papery.",
+			false));
+
+		// Here, the word "bark" is used in a similar way in
+		// both sentences, leading the syntatic comparison to
+		// beleive it has the same sense. Clearly, though, it
+		// is not.
+		tpl.add(new TestPair(
+			"bark",
+			"The dog's bark is worse than its bite.",
+			"The tree bark of a birch is very papery.",
+			false));
 
 		RelationExtractor re = new RelationExtractor(false);
 		WordSense ws = new WordSense();
