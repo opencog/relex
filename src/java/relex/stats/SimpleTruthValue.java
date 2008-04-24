@@ -35,6 +35,13 @@ public class SimpleTruthValue implements TruthValue
 		offset = 10;
 	}
 
+	public SimpleTruthValue(double m, double conf)
+	{
+		mean = m;
+		offset = 10;
+		setConfidence(conf);
+	}
+
 	public double getMean()
 	{
 		return mean;
