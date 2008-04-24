@@ -341,7 +341,9 @@ public class RelationExtractor
 
 		ParseView ceregoView = new ParseView();
 		OpenCogXML opencog = new OpenCogXML();
-		Frame frame = new Frame();
+
+		Frame frame = null;
+		if (commandMap.get("-f") != null) frame = new Frame();
 
 		while(true)
 		{
