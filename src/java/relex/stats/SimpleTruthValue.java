@@ -86,5 +86,14 @@ public class SimpleTruthValue implements TruthValue
 		offset = off;
 	}
 
+	public String toString()
+	{
+		Double m = mean;
+		Double c = getConfidence();
+
+		String str = "(" + m.toString().substring(0,6) + ", " +
+		             c.toString().substring(0,6) + ")";
+		return str;
+	}
 }
 
