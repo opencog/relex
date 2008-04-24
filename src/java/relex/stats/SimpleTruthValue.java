@@ -52,6 +52,12 @@ public class SimpleTruthValue implements TruthValue
 		mean = m;
 	}
 
+	public void setMean(double m, double conf)
+	{
+		mean = m;
+		setConfidence(conf);
+	}
+
 	public double getCount()
 	{
 		return count;
@@ -79,5 +85,6 @@ public class SimpleTruthValue implements TruthValue
 	{
 		offset = off;
 	}
+
 }
 
