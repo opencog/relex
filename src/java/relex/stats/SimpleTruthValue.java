@@ -89,10 +89,14 @@ public class SimpleTruthValue implements TruthValue
 	public String toString()
 	{
 		Double m = mean;
-		Double c = getConfidence();
+		String ms = m.toString();
+		if (6 < ms.length()) ms = ms.substring(0,6);
 
-		String str = "(" + m.toString().substring(0,6) + ", " +
-		             c.toString().substring(0,6) + ")";
+		Double c = getConfidence();
+		String cs = c.toString();
+		if (6 < cs.length()) cs = cs.substring(0,6);
+
+		String str = "(" + ms + ", " + cs + ")";
 		return str;
 	}
 }
