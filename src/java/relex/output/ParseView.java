@@ -20,7 +20,6 @@ import java.util.HashMap;
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
-import relex.feature.FeatureForeach;
 
 /**
  * A ParseView object displays a ParsedSentence in either
@@ -456,7 +455,7 @@ public class ParseView {
 	{
 		id_map = new HashMap<String,String>();
 		string_id = 2001;
-		FeatureForeach.foreach(sent.getLeft(), new findIDs());
+		sent.foreach(new findIDs());
 
 		String outstr = "   <relex_words>\n";
 
@@ -546,7 +545,7 @@ public class ParseView {
 		relview.setIndex(3001);
 		String outstr = rel_markup_start;
 		prtRelation prt = new prtRelation();
-		FeatureForeach.foreach(sent.getLeft(), prt);
+		sent.foreach(prt);
 		outstr += prt.outstr;
 		outstr += rel_markup_end;
 		return outstr;

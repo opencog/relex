@@ -22,7 +22,6 @@ import java.util.UUID;
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
-import relex.feature.FeatureForeach;
 
 /**
  * The RelXML object outputs a ParsedSentence in 
@@ -136,7 +135,7 @@ class RelXML
 	public String printRelations()
 	{
 		prtRelation prt = new prtRelation();
-		FeatureForeach.foreach(sent.getLeft(), prt);
+		sent.foreach(prt);
 		return prt.outstr;
 	}
 

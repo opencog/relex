@@ -19,7 +19,6 @@ package relex.anaphora;
 import java.util.ArrayList;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
-import relex.feature.FeatureForeach;
 import relex.ParsedSentence;
 import relex.tree.PhraseTree;
 
@@ -54,7 +53,7 @@ public class FindPronouns
 	public static ArrayList<PhraseTree> findPronouns(ParsedSentence parse)
 	{
 		GetPronouns gp = new GetPronouns();
-		FeatureForeach.foreach(parse.getLeft(), gp);
+		parse.foreach(gp);
 		return gp.pronouns;
 	}
 } // end FindPronouns

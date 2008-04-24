@@ -15,9 +15,9 @@
  */
 package relex.output;
 
-import relex.feature.RelationCallback;
-import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
+import relex.feature.RelationCallback;
+import relex.feature.RelationForeach;
 
 /**
  * Implements a very simple, direct printout of the 
@@ -42,7 +42,7 @@ public class SimpleView
 	{
 		Visit v = new Visit();
 		v.str = "";
-		FeatureForeach.foreach(root, v);
+		RelationForeach.foreach(root, v);
 		return v.str;
 	}
 
@@ -63,7 +63,7 @@ public class SimpleView
 		Visit v = new Visit();
 		v.unaryStyle = true;
 		v.str = "";
-		FeatureForeach.foreach(root, v);
+		RelationForeach.foreach(root, v);
 		return v.str;
 	}
 

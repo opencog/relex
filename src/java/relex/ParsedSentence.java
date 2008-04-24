@@ -24,6 +24,7 @@ import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkableView;
 import relex.feature.RelationCallback;
+import relex.feature.RelationForeach;
 import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseTree;
 
@@ -231,9 +232,13 @@ public class ParsedSentence extends Atom
 	 */
 	public Boolean foreach(RelationCallback cb)
 	{
-		return FeatureForeach.foreach(getLeft(), cb);
+		return RelationForeach.foreach(getLeft(), cb);
 	}
 	
+	public Boolean foreach(FeatureNodeCallback cb)
+	{
+		return RelationForeach.foreach(getLeft(), cb);
+	}
 
 	/* ---------------------------------------------------------------- */
 	/**

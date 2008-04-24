@@ -17,7 +17,6 @@
 package relex.chunk;
 
 import relex.ParsedSentence;
-import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.tree.PhraseTree;
@@ -37,8 +36,7 @@ public class RelationChunker extends LexicalChunker
 	public void findChunks(ParsedSentence parse)
 	{
 		RelChunks obj = new RelChunks();
-		FeatureNode sent = parse.getLeft();
-		FeatureForeach.foreach(sent, obj);
+		parse.foreach(obj);
 	}
 
 	/* -------------------------------------------------------- */

@@ -15,10 +15,10 @@
  */
 package relex.tree;
 
-import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.RelationCallback;
+import relex.feature.RelationForeach;
 
 /**
  * The PhraseLeader class adds a pointer to the "leader word"
@@ -103,7 +103,7 @@ public class PhraseLeader
 	/* -------------------------------------------------------------------- */
 	public static void markup(FeatureNode sent)
 	{
-		FeatureForeach.foreach(sent, new phraseHeads());
+		RelationForeach.foreach(sent, new phraseHeads());
 		PhraseTree.foreach(sent, new leafHeads());
 	}
 };
