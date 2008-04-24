@@ -47,7 +47,9 @@ import java.util.HashSet;
 public class FeatureForeach
 {
 	/**
-	 * Walk the graph, calling a callback for each node visited.
+	 * Walk the graph, calling a callback for each relation node visited.
+	 * The callback is called only when a node has a "name" entry. Only
+	 * ref nodes, and reation nodes, have such an entry.
 	 */
 	private static Boolean
 	_graphCrawl(FeatureNode f, 
@@ -101,7 +103,9 @@ public class FeatureForeach
 	}
 
 	/**
-	 * Walk the entire graph, calling a callback for each node visited.
+	 * Walk the graph, calling a callback for each relation node visited.
+	 * The callback is called only when a node has a "name" entry. Only
+	 * ref nodes, and reation nodes, have such an entry.
 	 */
 	public static Boolean foreach(FeatureNode root, FeatureNodeCallback cb)
 	{
