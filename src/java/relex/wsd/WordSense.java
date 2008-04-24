@@ -85,7 +85,7 @@ public class WordSense
 					sp.tgt = tgparse;
 					sp.xmp_word = xmp_fn;
 					sp.tgt_word = tgt_fn;
-System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf);
+					// System.out.println("got \""+ word + "\" pos " + xmp_pos + " conf=" + xmp_conf*tgt_conf);
 					spl.add(sp);
 				}
 			}
@@ -97,6 +97,7 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 		{
 			FeatureNode word;
 			SensePair sp;
+			ArrayList<SensePair> good_matches;
 
 			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
 			{
@@ -144,13 +145,13 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 				   (((word == srcNode.get("nameSource")) && which == 1) ||
 				    ((word == tgtNode.get("nameSource")) && which == 2)))
 				{
-System.out.println("yahoo mtg aatch "+relation);
+					good_matches.add(sp);
+					// System.out.println("got match" + relation);
 					return false;
 				}
 
 				// System.out.println("Reject " + relation + " vs. " + relation_name);
 				// If we got to here, there's no match.
-				sp.stv.setMean(0.0, 1.0);
 				return false;
 			}
 		}
@@ -186,6 +187,7 @@ System.out.println("yahoo mtg aatch "+relation);
 					xmp_cb.word = sp.xmp_word;
 					xmp_cb.which = which;
 					xmp_cb.relation_name = relation;
+					xmp_cb.good_matches = good_matches;
 
 					// Loop over all relations in the example.
 					sp.xmp.foreach(xmp_cb);
@@ -195,6 +197,7 @@ System.out.println("yahoo mtg aatch "+relation);
 		}
 
 		TgtCB tgt_cb = new TgtCB();
+		tgt_cb.good_matches = new ArrayList<SensePair>();
 
 		// Now, loop over the plausible pairs, and see if 
 		// the word is used in the same way in both sentences.
@@ -206,21 +209,7 @@ System.out.println("yahoo mtg aatch "+relation);
 			// loop over all relations in the target
 			sp.tgt.foreach(tgt_cb);
 		}
-
-		// Remove all pairs that are blatent mis-matches.
-		int i = 0;
-		while (true)
-		{
-			SensePair sp = spl.get(i);
-			i++;
-			if ((sp.stv.getMean() < 0.01) &&
-			    (sp.stv.getConfidence() > 0.99))
-			{
-				spl.remove(sp);
-				i = 0;
-			}
-			if (spl.size() <= i) break;
-		}
+		spl = tgt_cb.good_matches;
 
 		// If there are are no remaining matches, then we are
 		// unequivally sure that there is no word sense match.
@@ -229,6 +218,19 @@ System.out.println("yahoo mtg aatch "+relation);
 			stv.setMean(0.0, 1.0);
 			return stv;
 		}
+
+		// Compute average confidence
+		double avg = 0.0;
+		double count = 0.0;
+		for (SensePair sp : spl)
+		{
+			count += 1.0;
+			avg += sp.stv.getConfidence();
+		}
+		avg = avg / count;
+		avg = Math.sqrt(avg); // Since its product of parse rankings.
+
+		stv.setMean(1.0, avg);
 
 		return stv;
 	}
@@ -239,17 +241,54 @@ System.out.println("yahoo mtg aatch "+relation);
 
 	public static void main(String[] args)
 	{
+
+		class TestPair
+		{
+			boolean match;
+			String example_sentence;
+			String target_sentence;
+			String word;
+
+			TestPair(String w, String ex, String tgt, boolean tv)
+			{
+				word = w;
+				example_sentence = ex;
+				target_sentence = tgt;
+				match = tv;
+			}
+		}
+
+		ArrayList<TestPair> tpl = new ArrayList<TestPair>();
+		tpl.add(new TestPair(
+			"fishing",
+			"I was fishing for an answer",
+			"We went on a fishing expedition.",
+			false));
+
+		tpl.add(new TestPair(
+			"fishing",
+			"I was fishing for an answer",
+			"We went fishing for trout.",
+			true));
+
 		RelationExtractor re = new RelationExtractor(false);
-
-		String example_sentence = "I was fishing for an answer";
-		String target_sentence = "We went on a fishing expedition.";
-
-		RelexInfo ri_example = re.processSentence(example_sentence);
-		RelexInfo ri_target = re.processSentence(target_sentence);
-
 		WordSense ws = new WordSense();
-		SimpleTruthValue stv = ws.wordSenseMatch("fishing", ri_example, ri_target);
-		System.out.println("Got " + stv.getMean() + " conf=" + stv.getConfidence());
+
+		SimpleTruthValue stv;
+		RelexInfo ri_example;
+		RelexInfo ri_target;
+		for (TestPair tp : tpl)
+		{
+			ri_example = re.processSentence(tp.example_sentence);
+			ri_target = re.processSentence(tp.target_sentence);
+
+			stv = ws.wordSenseMatch(tp.word, ri_example, ri_target);
+			System.out.println("Got " + stv.toString() +
+			                   " expected " + tp.match +
+			                   " for \"" + tp.word + "\"" + 
+			                   " in \"" + tp.example_sentence + "\"" +
+			                   " and \"" + tp.target_sentence + "\"");
+		}
 	}
 
 } // end WordSense
