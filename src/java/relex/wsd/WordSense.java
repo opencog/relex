@@ -39,6 +39,7 @@ import relex.stats.TruthValue;
  */
 public class WordSense
 {
+	public final int verbosity = 1;
 	public SimpleTruthValue wordSenseMatch(String word,
 	                                       RelexInfo example,
 	                                       RelexInfo target)
@@ -75,6 +76,7 @@ public class WordSense
 			for (ParsedSentence tgparse : target.parsedSentences)
 			{
 				FeatureNode tgt_fn = tgparse.findWord(word);
+				if (null == tgt_fn) continue;
 				String tgt_pos = LinkableView.getPOS(tgt_fn);
 				if (tgt_pos.equals(xmp_pos))
 				{
@@ -86,7 +88,11 @@ public class WordSense
 					sp.tgt = tgparse;
 					sp.xmp_word = xmp_fn;
 					sp.tgt_word = tgt_fn;
-					// System.out.println("got \""+ word + "\" pos " + xmp_pos + " conf=" + xmp_conf*tgt_conf);
+					if (0 < verbosity)
+					{
+						System.out.println("pos match \""+ word + "\" pos " +
+							xmp_pos + " conf=" + xmp_conf*tgt_conf);
+					}
 					spl.add(sp);
 				}
 			}
@@ -147,7 +153,10 @@ public class WordSense
 				    ((word == tgtNode.get("nameSource")) && which == 2)))
 				{
 					good_matches.add(sp);
-					// System.out.println("got match" + relation);
+					if (0 < verbosity)
+					{
+						System.out.println("Rel match " + relation);
+					}
 					return false;
 				}
 
@@ -293,6 +302,21 @@ public class WordSense
 			"The dog's bark is worse than its bite.",
 			"The tree bark of a birch is very papery.",
 			false));
+
+		tpl.add(new TestPair(
+			"bark",
+			"The loud bark woke us up.",
+			"The rough tree bark cut my finger.",
+			false));
+
+		// Conversely, this one fools the system into thinking
+		// that the senses are distinct, because the sentences
+		// are quite different.
+		tpl.add(new TestPair(
+			"bark",
+			"The loud bark woke us up.",
+			"I heard a bark in the distance.",
+			true));
 
 		RelationExtractor re = new RelationExtractor(false);
 		WordSense ws = new WordSense();
