@@ -30,7 +30,7 @@ import relex.feature.LinkableView;
  */
 public class LinkParser extends Parser
 {
-	private static final int verbosity = 1;
+	private static final int verbosity = 0;
 
 	private static final boolean storePhraseString = true;
 
@@ -58,7 +58,7 @@ public class LinkParser extends Parser
 	private ArrayList<ParsedSentence> tokenizeAndParseSentence(String sentence, LinkParserClient lpc)
 	{
 		Long starttime;
-		starttime = System.currentTimeMillis();
+		if (verbosity > 0) starttime = System.currentTimeMillis();
 
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL

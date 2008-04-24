@@ -65,6 +65,8 @@ import relex.tree.PhraseMarkup;
  */
 public class RelationExtractor
 {
+	public static final int verbosity = 1;
+
 	public static final int DEFAULT_MAX_PARSES = 100;
 	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
@@ -157,6 +159,7 @@ public class RelationExtractor
 	public RelexInfo processSentence(String sentence,
 	                                 EntityMaintainer entityMaintainer)
 	{
+		starttime = System.currentTimeMillis();
 		if (entityMaintainer == null)
 		{
 			entityMaintainer = new EntityMaintainer(sentence, 
@@ -188,6 +191,7 @@ public class RelationExtractor
 		// Perform anaphora resolution
 		hobbs.addParse(ri);
 		hobbs.resolve(ri);
+		if (verbosity > 0) reportTime("Relex processing: ");
 		return ri;
 	}
 
@@ -380,9 +384,7 @@ public class RelationExtractor
 					re.reportTime("Gate processing: ");
 				}
 
-				re.starttime = System.currentTimeMillis();
 				RelexInfo ri = re.processSentence(sentence,em);
-				re.reportTime("Relex processing: ");
 	
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
