@@ -147,7 +147,9 @@ public class ParsedSentence extends Atom
 
 	/**
 	 * Return feature node for the indicated word. Return null
-	 * if the word cannot be found in the sentence. 
+	 * if the word cannot be found in the sentence.  The input
+	 * word may be either the word as it appears in the sentence,
+	 * or its morphological root.
 	 *
 	 * If there are multiple occurances of a word in a sentence,
 	 * this will return only the left-most such occurance.
