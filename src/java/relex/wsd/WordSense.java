@@ -23,6 +23,7 @@ import relex.RelationExtractor;
 import relex.RelexInfo;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
+import relex.feature.RelationCallback;
 import relex.stats.SimpleTruthValue;
 import relex.stats.TruthValue;
 
@@ -83,10 +84,35 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 			}
 		}
 
+		class RCB implements RelationCallback
+		{
+			FeatureNode word;
+			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
+			{
+				return false;
+			}
+			public Boolean BinaryRelationCB(String relation,
+			                  FeatureNode srcNode, FeatureNode tgtNode)
+			{
+if (word == srcNode.get("nameSource")) System.out.println("src match "+relation);
+if (word == tgtNode.get("nameSource")) System.out.println("tgt match "+relation);
+				return false;
+			}
+			public Boolean BinaryHeadCB(FeatureNode from)
+			{
+				return false;
+			}
+		}
+
+		RCB rcb = new RCB();
+
 		// Now, loop over the plausible pairs, and see if 
 		// the word is used in the same way in both sentences.
 		for (SensePair sp : spl)
 		{
+System.out.println("-------");
+			rcb.word = sp.xmp_word;
+			sp.xmp.foreach(rcb);
 		}
 
 		return stv;
