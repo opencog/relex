@@ -156,23 +156,31 @@ public class ParsedSentence extends Atom
 	{
 		class word_cb implements FeatureNodeCallback
 		{
-			public String match_word;
-			public FeatureNode found;
-			public word_cb(String mw)
+			String match_word;
+			FeatureNode found;
+			word_cb(String mw)
 			{
 				match_word = mw;
 				found = null;
 			}
-			public Boolean FNCallback(FeatureNode fn)
+
+			Boolean test(FeatureNode fn, FeatureNode fstr)
 			{
-				FeatureNode fstr = fn.get("orig_str");
-				if (fstr == null) return false;
+				if (null == fstr) return false;
 				String w = fstr.getValue();
 				if (match_word.equals(w))
 				{
 					found = fn;
 					return true;
 				}
+				return false;
+			}
+			public Boolean FNCallback(FeatureNode fn)
+			{
+				Boolean rc = test(fn, fn.get("orig_str"));
+				if (rc) return rc;
+				rc = test(fn, fn.get("str"));
+				if (rc) return rc;
 				return false;
 			}
 		}
