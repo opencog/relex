@@ -261,14 +261,20 @@ public class WordSense
 		ArrayList<TestPair> tpl = new ArrayList<TestPair>();
 		tpl.add(new TestPair(
 			"fishing",
-			"I was fishing for an answer",
+			"I was fishing for an answer.",
 			"We went on a fishing expedition.",
 			false));
 
 		tpl.add(new TestPair(
 			"fishing",
-			"I was fishing for an answer",
+			"I was fishing for an answer.",
 			"We went fishing for trout.",
+			true));
+
+		tpl.add(new TestPair(
+			"fishing",
+			"We went on a fishing expedition.",
+			"I got seasick on the fishing vessel.",
 			true));
 
 		RelationExtractor re = new RelationExtractor(false);
