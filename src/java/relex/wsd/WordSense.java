@@ -33,6 +33,9 @@ import relex.stats.TruthValue;
  * 1) part-of-speech must match, weighted by parse ranking.
  * 2) look for _nn in one but not another, this disqualifies things.
  *    (e.g. fishing expedition vs. went fishing.
+ *
+ * XXX this cleas does not correctly handle multiple occurances
+ * of a word in a sentence.
  */
 public class WordSense
 {
@@ -88,10 +91,13 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 			}
 		}
 
-		class XmpCB implements RelationCallback
+		// Stubby class to make following just a little easier.
+		// This just implements the for-loop block.
+		class RCB implements RelationCallback
 		{
 			FeatureNode word;
-			int which;
+			SensePair sp;
+
 			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
 			{
 				return false;
@@ -99,8 +105,6 @@ System.out.println("got "+ word + " pos " + xmp_pos + " conf="+xmp_conf*tgt_conf
 			public Boolean BinaryRelationCB(String relation,
 			                  FeatureNode srcNode, FeatureNode tgtNode)
 			{
-if (word == srcNode.get("nameSource")) System.out.println("yahoo sr camatch "+relation);
-if (word == tgtNode.get("nameSource")) System.out.println("yahoo mtg aatch "+relation);
 				return false;
 			}
 			public Boolean BinaryHeadCB(FeatureNode from)
@@ -109,41 +113,83 @@ if (word == tgtNode.get("nameSource")) System.out.println("yahoo mtg aatch "+rel
 			}
 		}
 
-		class TgtCB implements RelationCallback
+		// Inner loop block -- this class is the non-quite-anonymous
+		// inner loop, which runs over all example-sentence relations.
+		// (Java does not have the concept of anonymous loop blocks).
+		class XmpCB extends RCB
 		{
-			FeatureNode word;
-			SensePair sp;
-			public Boolean UnaryRelationCB(FeatureNode node, String attrName)
-			{
-				return false;
-			}
+			int which;  // first or second arg of the relation.
+			String relation_name;  // rlation we are trying to match.
+
 			public Boolean BinaryRelationCB(String relation,
 			                  FeatureNode srcNode, FeatureNode tgtNode)
 			{
+				// If the word doesn't even appear in the relation,
+				// just ignore this relation, try the next one.
+				if ((word != srcNode.get("nameSource")) && 
+				    (word != tgtNode.get("nameSource")))
+				{
+					return false;
+				}
+
+				// If the relation names don't match, then it
+				// is very unlikely that the word sense usage 
+				// in the target and example sentences match.
+				// So strike this one from the ranks.
+				// Assume the relation name matches, we also
+				// expect the word to appear in the same slot
+				// in the location -- if not, again, the 
+				// matching seems unlikely.
+				if (relation.equals(relation_name) &&
+				   (((word == srcNode.get("nameSource")) && which == 1) ||
+				    ((word == tgtNode.get("nameSource")) && which == 2)))
+				{
+System.out.println("yahoo mtg aatch "+relation);
+					return false;
+				}
+
+				// System.out.println("Reject " + relation + " vs. " + relation_name);
+				// If we got to here, there's no match.
+				sp.stv.setMean(0.0, 1.0);
+				return false;
+			}
+		}
+
+		// Outer loop block -- this class is the non-quite-anonymous
+		// outer loop, which runs over all target-sentence relations.
+		// (Java does not have the concept of anonymous loop blocks).
+		class TgtCB extends RCB
+		{
+			public Boolean BinaryRelationCB(String relation,
+			                  FeatureNode srcNode, FeatureNode tgtNode)
+			{
+				// "which" just says whether its the first or second 
+				// arg of the relation.
 				int which = 0;
 				if (word == srcNode.get("nameSource")) 
 				{
 					which = 1;
-System.out.println("tgt src match "+relation);
 				}
 				if (word == tgtNode.get("nameSource"))
 				{
 					which = 2;
-System.out.println("tgt tgt match "+relation);
 				}
+
+				// "which" isn't zero only if this word participated 
+				// in this relation. If it did, then loop over the
+				// relations in the example sentence, to see if we
+				// can find an analoguous one there.
 				if (which != 0)
 				{
 					XmpCB xmp_cb = new XmpCB();
+					xmp_cb.sp = sp;
 					xmp_cb.word = sp.xmp_word;
 					xmp_cb.which = which;
+					xmp_cb.relation_name = relation;
 
-					// loop over all relations in the example.
+					// Loop over all relations in the example.
 					sp.xmp.foreach(xmp_cb);
 				}
-				return false;
-			}
-			public Boolean BinaryHeadCB(FeatureNode from)
-			{
 				return false;
 			}
 		}
@@ -154,12 +200,34 @@ System.out.println("tgt tgt match "+relation);
 		// the word is used in the same way in both sentences.
 		for (SensePair sp : spl)
 		{
-System.out.println("-------");
 			tgt_cb.word = sp.tgt_word;
 			tgt_cb.sp = sp;
 
 			// loop over all relations in the target
 			sp.tgt.foreach(tgt_cb);
+		}
+
+		// Remove all pairs that are blatent mis-matches.
+		int i = 0;
+		while (true)
+		{
+			SensePair sp = spl.get(i);
+			i++;
+			if ((sp.stv.getMean() < 0.01) &&
+			    (sp.stv.getConfidence() > 0.99))
+			{
+				spl.remove(sp);
+				i = 0;
+			}
+			if (spl.size() <= i) break;
+		}
+
+		// If there are are no remaining matches, then we are
+		// unequivally sure that there is no word sense match.
+		if (spl.size() == 0)
+		{
+			stv.setMean(0.0, 1.0);
+			return stv;
 		}
 
 		return stv;
@@ -180,7 +248,8 @@ System.out.println("-------");
 		RelexInfo ri_target = re.processSentence(target_sentence);
 
 		WordSense ws = new WordSense();
-		ws.wordSenseMatch("fishing", ri_example, ri_target);
+		SimpleTruthValue stv = ws.wordSenseMatch("fishing", ri_example, ri_target);
+		System.out.println("Got " + stv.getMean() + " conf=" + stv.getConfidence());
 	}
 
 } // end WordSense
