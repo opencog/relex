@@ -435,7 +435,7 @@ public class RelationExtractor
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
 					System.out.println("\n======\n");
-					System.out.println(SimpleView.printRelations(parse.getLeft()));
+					System.out.println(SimpleView.printRelations(parse));
 					System.out.println("\n======\n");
 	
 					if (commandMap.get("--pa") != null)
@@ -485,7 +485,7 @@ public class RelationExtractor
 					if (commandMap.get("-f") != null)
 					{
 						re.starttime = System.currentTimeMillis();
-						String fin = SimpleView.printRelationsAlt(parse.getLeft());
+						String fin = SimpleView.printRelationsAlt(parse);
 						String[] fout = frame.process(fin);
 						re.reportTime("Frame processing: ");
 						for (int i=0; i < fout.length; i++) {

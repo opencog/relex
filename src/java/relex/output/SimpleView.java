@@ -17,7 +17,7 @@ package relex.output;
 
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
-import relex.feature.RelationForeach;
+import relex.ParsedSentence;
 
 /**
  * Implements a very simple, direct printout of the 
@@ -38,11 +38,11 @@ public class SimpleView
 	 *   DEFINITE-FLAG(ball, T)
 	 *   noun_number(ball, singular)
 	 */
-	public static String printRelations(FeatureNode root)
+	public static String printRelations(ParsedSentence parse)
 	{
 		Visit v = new Visit();
 		v.str = "";
-		RelationForeach.foreach(root, v);
+		parse.foreach(v);
 		return v.str;
 	}
 
@@ -58,12 +58,12 @@ public class SimpleView
 	 *   definite(ball)
 	 *   singular(ball)
 	 */
-	public static String printRelationsAlt(FeatureNode root)
+	public static String printRelationsAlt(ParsedSentence parse)
 	{
 		Visit v = new Visit();
 		v.unaryStyle = true;
 		v.str = "";
-		RelationForeach.foreach(root, v);
+		parse.foreach(v);
 		return v.str;
 	}
 

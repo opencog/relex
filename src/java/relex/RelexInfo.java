@@ -46,7 +46,7 @@ public class RelexInfo
 		{
 			sb.append("Parse " + ((numParses++)+1) + 
 			          " of " + parsedSentences.size()).append("\n");
-			sb.append(SimpleView.printRelations(parse.getLeft())).append("\n");
+			sb.append(SimpleView.printRelations(parse)).append("\n");
 		}
 		return sb.toString();
 	}

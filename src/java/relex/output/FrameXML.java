@@ -56,7 +56,7 @@ public class FrameXML
 	private String printFrames()
 	{
 		String ret = "";
-		String fin = SimpleView.printRelationsAlt(sent.getLeft());
+		String fin = SimpleView.printRelationsAlt(sent);
 		String[] fms = frame.process(fin);
 
 		for (String fm : fms) 
