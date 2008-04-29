@@ -1867,10 +1867,15 @@ ADJ1
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
 ;
+; Treat preps without objects as adjectives -- copula (Pp) is treated
+; separately.
+;
+; Example of Ma link is "appropriate" in 
+;   "It was done in a manner appropriate for the occasion."
+;
 #TemplateActionAlg
 ADJ2
-;  Treat preps without objects as adjectives -- copula (Pp) is treated separately
-<LAB> = \Mp\.*|\MVp\.*
+<LAB> = \Mp\.*|\MVp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
 <F_R BACKGROUND-FLAG> = T
