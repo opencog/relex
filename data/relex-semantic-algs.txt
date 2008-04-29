@@ -129,12 +129,15 @@ POS_ADJ
 <F_L POS> = %
 <F_L POS> = adj
 ;
-#TemplateActionAlg
-POS_ADJ_INVERTED
 ; Treat Pp like an adjective if it takes no object ("I am here.")
 ; Treat Mp like it identifies adjective to left if "prep" takes 
 ; no object (in_line: "The man in line is happy.")
-<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*
+; Treat Ma like an adjective, e.g. "appropriate", in
+; "It was done in a manner appropriate for the occasion."
+;
+#TemplateActionAlg
+POS_ADJ_INVERTED
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
 <F_R POS> = %
