@@ -21,7 +21,7 @@ public class DocSplitterFactory
 		Class<? extends DocSplitter> clazz0;
 		try
 		{
-			Class.forName("opennlp.tools.sentdetect.EnglishSentenceDetectorME");
+			Class.forName("opennlp.tools.lang.english.SentenceDetector");
 			clazz0=DocSplitterOpenNLPImpl.class;
 		}
 		catch(Throwable t)

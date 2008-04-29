@@ -16,7 +16,6 @@
 
 package relex.corpus;
 
-import opennlp.tools.sentdetect.EnglishSentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceDetector;
 
 import java.util.ArrayList;
@@ -98,7 +97,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 				if (englishModelFilename == null || englishModelFilename.length() == 0)
 					englishModelFilename = DEFAULT_ENGLISH_FILENAME;
 
-				detector = new EnglishSentenceDetectorME(englishModelFilename);
+				detector = new opennlp.tools.lang.english.SentenceDetector(englishModelFilename);
 			}
 			catch (Exception e)
 			{
