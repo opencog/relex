@@ -32,9 +32,9 @@ import relex.stats.TruthValue;
  *
  * 1) part-of-speech must match, weighted by parse ranking.
  * 2) look for _nn in one but not another, this disqualifies things.
- *    (e.g. fishing expedition vs. went fishing.
+ *    (e.g. fishing expedition vs. went fishing.)
  *
- * XXX this cleas does not correctly handle multiple occurances
+ * XXX this class does not correctly handle multiple occurances
  * of a word in a sentence.
  */
 public class WordSense
@@ -42,6 +42,14 @@ public class WordSense
 	public final int verbosity = 1;
 	public SimpleTruthValue wordSenseMatch(String word,
 	                                       RelexInfo example,
+	                                       RelexInfo target)
+	{
+		return wordSenseMatch(word, example, word, target);
+	}
+
+	public SimpleTruthValue wordSenseMatch(String example_word,
+	                                       RelexInfo example,
+	                                       String target_word,
 	                                       RelexInfo target)
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
@@ -67,7 +75,7 @@ public class WordSense
 		//
 		for (ParsedSentence exparse : example.parsedSentences)
 		{
-			FeatureNode xmp_fn = exparse.findWord(word);
+			FeatureNode xmp_fn = exparse.findWord(example_word);
 			if (null == xmp_fn) continue;
 			String xmp_pos = LinkableView.getPOS(xmp_fn);
 
@@ -75,7 +83,7 @@ public class WordSense
 			double xmp_conf = xmp_tv.getConfidence();
 			for (ParsedSentence tgparse : target.parsedSentences)
 			{
-				FeatureNode tgt_fn = tgparse.findWord(word);
+				FeatureNode tgt_fn = tgparse.findWord(target_word);
 				if (null == tgt_fn) continue;
 				String tgt_pos = LinkableView.getPOS(tgt_fn);
 				if (tgt_pos.equals(xmp_pos))
@@ -90,7 +98,8 @@ public class WordSense
 					sp.tgt_word = tgt_fn;
 					if (0 < verbosity)
 					{
-						System.out.println("pos match \""+ word + "\" pos " +
+						System.out.println("pos match \""+ example_word + 
+							"\" to \"" + target_word + "\" pos " +
 							xmp_pos + " conf=" + xmp_conf*tgt_conf);
 					}
 					spl.add(sp);
@@ -251,7 +260,6 @@ public class WordSense
 
 	public static void main(String[] args)
 	{
-
 		class TestPair
 		{
 			boolean match;

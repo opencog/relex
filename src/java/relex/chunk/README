@@ -246,6 +246,13 @@ Miscellany
 
       (VP a (NP r) (NP a))
 
+ * Reversed adjectival double prep phrase.
+    It was done IN A MANNER APPROPRIATE FOR the occasion.
+
+      (VP done (PP in (NP a manner (ADJP appropriate (PP for (NP the occasion)))))) 
+
+      (VP r (PP a (NP a (ADJP a (PP a (NP r)))))) 
+
 Sentence phrases
 ----------------
  * John Dillinger was a man who BROKE THE LAW.
