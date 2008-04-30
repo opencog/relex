@@ -106,6 +106,9 @@ public class PatternChunker extends LexicalChunker
 			// GAVE the Sioux cheif NO QUARTER
 			matcher("(VP a (NP r) (NP a))");
 
+			// It was done IN A MANNER APPROPRIATE FOR the occasion.	
+			matcher("(VP r (PP a (NP a (ADJP a (PP a (NP r))))))");
+
 			// Sentence phrases:
 			matcher("(NP (NP a) (PP a (NP r)))");
 			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
