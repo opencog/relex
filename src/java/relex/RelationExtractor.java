@@ -35,6 +35,7 @@ import relex.concurrent.RelexContext;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.corpus.GateEntityMaintainer;
+import relex.corpus.QuotesParensSentenceDetector;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
@@ -337,7 +338,7 @@ public class RelationExtractor
 
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		DocSplitter ds = DocSplitterFactory.create();
+		QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
 		ParseView ceregoView = new ParseView();
 		OpenCogXML opencog = new OpenCogXML();
@@ -378,6 +379,7 @@ public class RelationExtractor
 
 			while (sentence != null)
 			{
+				System.out.println("SENTENCE: ["+sentence+"]");
 				EntityMaintainer em = null;
 				if (gem != null)
 				{
