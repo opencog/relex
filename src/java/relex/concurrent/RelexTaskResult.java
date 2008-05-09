@@ -1,9 +1,14 @@
 package relex.concurrent;
 
+import java.io.Serializable;
+
 import relex.RelexInfo;
 import relex.entity.EntityMaintainer;
 
-public class RelexTaskResult implements Comparable<RelexTaskResult> {
+public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable {
+	
+	private static final long serialVersionUID = -3231030217056826602L;
+	
 	public Integer index;
 	public String sentence; 
 	public RelexInfo result;

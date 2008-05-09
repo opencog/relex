@@ -15,6 +15,7 @@
  */
 package relex.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,8 +26,10 @@ import relex.feature.LinkableView;
 import relex.feature.SemanticView;
 import relex.output.RawView;
 
-public class EntityMaintainer
+public class EntityMaintainer implements Serializable 
 {
+	private static final long serialVersionUID = -8186219027158709715L;
+
 	/**
 	 * This number is derived from the LinkParser dictionary -- 
 	 * it only accepts suffixes up to "60." To increase this 

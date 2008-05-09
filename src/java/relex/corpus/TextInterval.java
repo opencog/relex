@@ -1,8 +1,12 @@
 package relex.corpus;
 
+import java.io.Serializable;
+
 /* This class is not intedned for general public use */
-public final class TextInterval 
+public final class TextInterval implements Serializable 
 {
+	private static final long serialVersionUID = -7788249983906665037L;
+
 	private int start, end;
 	
 	public static final TextInterval NULL = new TextInterval(0,0);
@@ -48,5 +52,9 @@ public final class TextInterval
 			return false;
 		TextInterval i = (TextInterval)other;
 		return i.start == start && i.end == end;
+	}
+	
+	public String toString(){
+		return "("+start+", "+end+")";
 	}
 }

@@ -15,6 +15,8 @@
  */
 
 package relex.feature;
+import java.io.Serializable;
+
 import relex.stats.TruthValue;
 
 /**
@@ -23,8 +25,10 @@ import relex.stats.TruthValue;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class Atom
+public class Atom implements Serializable
 {
+	private static final long serialVersionUID = 4851663034991577183L;
+	
 	protected TruthValue truth_value;
 
 	public Atom()

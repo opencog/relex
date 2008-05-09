@@ -15,6 +15,7 @@ package relex.feature;
  * limitations under the License.
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +38,9 @@ import java.util.Set;
  * implement LISP-like cons, pair, car and cdr primitves to avoid
  * this confusion.
  */
-public class FeatureNode {
+public class FeatureNode implements Serializable {
+
+	private static final long serialVersionUID = -1498736655984934453L;
 
 	// Width of output of toString(), before it is truncated with "..."
 	private static int PRINT_LIMIT = 300;

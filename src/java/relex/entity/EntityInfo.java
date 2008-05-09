@@ -15,6 +15,8 @@
  */
 
 package relex.entity;
+import java.io.Serializable;
+
 import relex.feature.FeatureNode;
 
 /**
@@ -31,8 +33,10 @@ import relex.feature.FeatureNode;
  * holds true.
  */
 
-public class EntityInfo
+public class EntityInfo implements Serializable
 {
+	private static final long serialVersionUID = 344692623956286950L;
+	
 	private String originalSentence;
 
 	public String getOriginalSentence() {

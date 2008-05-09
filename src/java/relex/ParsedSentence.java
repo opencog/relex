@@ -16,6 +16,7 @@
 
 package relex;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import relex.feature.Atom;
@@ -46,8 +47,10 @@ import relex.tree.PhraseTree;
  *    likelihood of this parse of being a correct (meaningful) parse
  *    of the sentence.
  */
-public class ParsedSentence extends Atom
+public class ParsedSentence extends Atom implements Serializable
 {
+	private static final long serialVersionUID = -5518792541801263127L;
+
 	// String containing the original sentence
 	private String original;
 
