@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class PersonEntityInfo extends EntityInfo
 {
+	private static final long serialVersionUID = -2016132731519768171L;
+	
 	public final static String MALE = "male";
 	public final static String FEMALE = "female";
 

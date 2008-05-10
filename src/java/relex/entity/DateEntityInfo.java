@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class DateEntityInfo extends EntityInfo {
 
+	private static final long serialVersionUID = 1069608218157173963L;
+
 	public DateEntityInfo(String _originalSentence, int _firstCharIndex, int _lastCharIndex) {
 		super(_originalSentence, _firstCharIndex, _lastCharIndex);
 	}

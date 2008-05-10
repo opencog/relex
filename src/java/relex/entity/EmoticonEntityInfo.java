@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class EmoticonEntityInfo extends EntityInfo {
 
+	private static final long serialVersionUID = 5453313252010290312L;
+
 	public EmoticonEntityInfo(String _originalSentence, int _firstCharIndex, int _lastCharIndex) {
 		super(_originalSentence, _firstCharIndex, _lastCharIndex);
 	}

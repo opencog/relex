@@ -30,6 +30,8 @@ import relex.feature.Chunk;
 
 public class LexChunk extends Chunk
 {
+	private static final long serialVersionUID = 8648176749497688526L;
+
 	public void addWord(FeatureNode fn)
 	{
 		if (WordFeature.isPunctuation(fn)) return;

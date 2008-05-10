@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class LocationEntityInfo extends EntityInfo {
 
+	private static final long serialVersionUID = -2500026094550150448L;
+
 	public LocationEntityInfo(String _originalSentence, int _firstCharIndex, int _lastCharIndex) {
 		super(_originalSentence, _firstCharIndex, _lastCharIndex);
 	}

@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class PunctuationEntityInfo extends EntityInfo
 {
+	private static final long serialVersionUID = -127207643466171369L;
+	
 	private String id;
 	public PunctuationEntityInfo(String _originalSentence,
 	                             int _firstCharIndex,

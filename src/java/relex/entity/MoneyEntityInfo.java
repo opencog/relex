@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class MoneyEntityInfo extends EntityInfo {
 
+	private static final long serialVersionUID = -1748481065686541561L;
+
 	public MoneyEntityInfo(String _originalSentence, int _firstCharIndex, int _lastCharIndex) {
 		super(_originalSentence, _firstCharIndex, _lastCharIndex);
 	}

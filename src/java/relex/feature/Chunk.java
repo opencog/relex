@@ -26,7 +26,10 @@ import java.util.ArrayList;
 
 public class Chunk extends Atom
 {
+	private static final long serialVersionUID = -684476296428342726L;
+	
 	protected ArrayList<FeatureNode> chunk;
+	
 	public Chunk()
 	{
 		chunk = new ArrayList<FeatureNode>();

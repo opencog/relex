@@ -19,6 +19,8 @@ import relex.feature.FeatureNode;
 
 public class OrganizationEntityInfo extends EntityInfo {
 
+	private static final long serialVersionUID = 3583522523642453082L;
+
 	public OrganizationEntityInfo(String _originalSentence, int _firstCharIndex, int _lastCharIndex) {
 		super(_originalSentence, _firstCharIndex, _lastCharIndex);
 	}
