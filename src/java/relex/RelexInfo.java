@@ -21,6 +21,8 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
+
 import relex.output.SimpleView;
 
 /**
@@ -33,6 +35,8 @@ public class RelexInfo implements Serializable
 	
 	public String originalSentence;
 	public ArrayList<ParsedSentence> parsedSentences;
+
+	private String sentenceID;
 	
 	public RelexInfo(String _originalSentence, 
 	                 ArrayList<ParsedSentence> _parsedSentences)
@@ -40,13 +44,25 @@ public class RelexInfo implements Serializable
 		originalSentence = _originalSentence;
 		parsedSentences = _parsedSentences;
 
+		// Assign a unique sentence ID to each sentence; this is required
+		// for OpenCog output, where each sentence and parse needs to be 
+		// tagged.
+		UUID guid = UUID.randomUUID();
+		sentenceID = "sentence_" + guid;
+
 		int n = 0;
 		for (ParsedSentence parse: parsedSentences)
 		{
-			String id = "parse_" + n;
+			String id = sentenceID + "_parse_" + n;
 			parse.setIDString(id);
+			parse.setRI(this);
 			n++;
 		}
+	}
+
+	public String getID()
+	{
+		return sentenceID;
 	}
 	
 	public String toString()
