@@ -145,13 +145,15 @@ class RelXML
 	 */
 	private String printWordRefs()
 	{
+		String parse_id = sent.getIDString();
 		String refs = "";
 		int numWords = sent.getNumWords();
-		for (int i = 1; i < numWords; i++) {
+		for (int i = 1; i < numWords; i++)
+		{
 			FeatureNode fn = sent.getWordAsNode(i);
 
 			// There is no "name" for the given index, if it was
-			// merged into an entity. For example "New York", the
+			// merged into a colocation. For example "New York", the
 			// word "New" will not have an orig_str, while that for
 			// "York" will be "New_York".
 			if (fn == null) continue;
@@ -162,38 +164,29 @@ class RelXML
 
 			String word = fn.getValue();
 
+			// A unique UUID for each word instance.
+			UUID guid = UUID.randomUUID();
+			String guid_name = word + "_" + guid;
+
+			// Remember the word-to guid map; we'll need it for later
+			// in this sentence.
+			id_map.put(word, guid_name);
+
+
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "  <WordNode name=\"" + word + "\"/>\n";
-			refs += "  <ConceptNode name=\"" + word + "_1\"/>\n";
-			refs += "  <WRLink>\n";
+			refs += "  <ConceptNode name=\"" + guid_name + "\"/>\n";
+			refs += "  <ReferencLink>\n";
+			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
 			refs += "    <Element class=\"WordNode\" name=\"" + word + "\"/>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + word + "_1\"/>\n";
-			refs += "  </WRLink>\n";
+			refs += "  </ReferenceLink>\n";
 
-			// The word instance
-			refs += word_instance(word);
+			refs += "  <ParseInstanceLink>\n";
+			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
+			refs += "    <Element class=\"ConceptNode\" name=\"" + parse_id + "\"/>\n";
+			refs += "  </ParseInstanceLink>\n";
 		}
 
-		return refs;
-	}
-
-	private String word_instance(String word)
-	{
-		// An instance of this concept. Assign a UUID to this instance.
-		UUID guid = UUID.randomUUID();
-		String guid_name = word + "_" + guid;
-
-		// Remember the word-to guid map; we'll need it for later
-		// in this sentence.
-		id_map.put(word, guid_name);
-
-		// Write out a unique instance of each general word.
-		String refs = "";
-		refs += "  <ConceptNode name=\"" + word + "_" + guid + "\"/>\n";
-		refs += "  <InheritanceLink>\n";
-		refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
-		refs += "    <Element class=\"ConceptNode\" name=\"" + word + "_1\"/>\n";
-		refs += "  </InheritanceLink>\n";
 		return refs;
 	}
 
