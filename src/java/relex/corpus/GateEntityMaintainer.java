@@ -30,7 +30,9 @@ import gate.util.GateException;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import relex.entity.DateEntityInfo;
 import relex.entity.EntityInfo;
@@ -79,7 +81,8 @@ public class GateEntityMaintainer
 	private SerialAnalyserController annieController;
 	private Corpus corpus = null;
 	private Document doc = null;
-
+	private Map<String, Map<Object, Object>> annieParams = new HashMap<String, Map<Object, Object>>();
+	
 	/**
 	 * Initialise the ANNIE system. This creates a "corpus pipeline"
 	 * application that can be used to run sets of documents through
@@ -95,8 +98,11 @@ public class GateEntityMaintainer
 
 		// Load each PR as defined in ANNIEConstants
 		for (int i = 0; i < PR_NAMES.length; i++) {
-			FeatureMap params = Factory.newFeatureMap(); // use default parameters
 			if (DEBUG>0) System.out.println("About to create "+ PR_NAMES[i]);
+			FeatureMap params = Factory.newFeatureMap();
+			Map<Object, Object> configuredParams = annieParams.get(PR_NAMES[i]);
+			if (configuredParams != null)
+				params.putAll(configuredParams);
 			ProcessingResource pr = (ProcessingResource) Factory.createResource(PR_NAMES[i], params);
 			
 			if (pr instanceof gate.creole.tokeniser.DefaultTokeniser) {
@@ -122,6 +128,27 @@ public class GateEntityMaintainer
 		initialized = false;
 	}
 
+	public GateEntityMaintainer(Map<String, Map<Object, Object>> params)
+	{
+		this();
+		annieParams.putAll(params);
+	}
+	
+	/**
+	 * <p>
+	 * Return a map of name/value parameters used to initialize <code>Annie</code>. If you
+	 * wish to add custom configuration parameters to GATE, put them in this time after
+	 * construction time, but before any other processing. The keys to this map are classname
+	 * of processing resources (e.g. "gate.creole.gazetteer.DefaultGazetteer") and the values
+	 * are maps representing configuration parameters (GATE's FeatureMap) for each 
+	 * processing resource.
+	 * </p>
+	 */
+	public Map<String, Map<Object, Object>> getAnnieParams()
+	{
+		return annieParams;
+	}
+	
 	public void initialize()
 	{
 		//	Initialise the GATE library
@@ -279,7 +306,6 @@ public class GateEntityMaintainer
 				// Append at end, if not inserted in middle.
 				if (ei != null) eInfos.add(ei);
 			}
-
 		}
 		return new EntityMaintainer(sentence, eInfos);
 	}
