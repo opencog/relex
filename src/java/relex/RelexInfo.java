@@ -55,6 +55,7 @@ public class RelexInfo implements Serializable
 		{
 			String id = sentenceID + "_parse_" + n;
 			parse.setIDString(id);
+			parse.setRI(this);
 			n++;
 		}
 	}

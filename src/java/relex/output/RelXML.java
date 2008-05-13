@@ -199,6 +199,19 @@ class RelXML
 		Double confidence = sent.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6);
 		ret += "\" />\n";
+
+		ret += "  <ConceptNode name = \"";
+		ret += sent.getRI().getID();
+		ret += "\" />\n";
+
+		ret += "  <ParseLink>\n";
+		ret += "    <Element class=\"ConceptNode name = \"";
+		ret += sent.getIDString();
+		ret += "\" />\n";
+		ret += "    <Element class=\"ConceptNode name = \"";
+		ret += sent.getRI().getID();
+		ret += "\" />\n";
+		ret += "  </ParseLink>\n";
 		return ret;
 	}
 
