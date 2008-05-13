@@ -24,14 +24,13 @@ import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 
 /**
- * The RelXML object outputs a ParsedSentence in 
- * the Novamente OpenCog-style XML
+ * The RelXML object outputs a ParsedSentence in the Novamente
+ * OpenCog-style XML format. The actual format used, and its rational,
+ * is described in greater detail in the README file in the opencog
+ * source code directory src/nlp/wsd/README.
  *
- * As the same sentence can have multiple parses, this
- * class only displays a single, particular parse.
- *
- * This class makes heavy use of String. If performance needs to be
- * improved, then a conversion to StringBuff should be considered.
+ * As the same sentence can have multiple parses, this class only
+ * displays a single, particular parse.
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
@@ -58,7 +57,7 @@ class RelXML
 
 	/* ----------------------------------------------------------- */
 	/**
-	 * Walk the graph, extracting semantic relationships, and word 
+	 * Walk the graph, extracting semantic relationships, and word
 	 * attributes.
 	 */
 	private class prtRelation implements RelationCallback
@@ -171,7 +170,6 @@ class RelXML
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
 			id_map.put(word, guid_name);
-
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "  <WordNode name=\"" + word + "\"/>\n";
