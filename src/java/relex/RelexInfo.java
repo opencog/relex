@@ -39,6 +39,14 @@ public class RelexInfo implements Serializable
 	{
 		originalSentence = _originalSentence;
 		parsedSentences = _parsedSentences;
+
+		int n = 0;
+		for (ParsedSentence parse: parsedSentences)
+		{
+			String id = "parse_" + n;
+			parse.setIDString(id);
+			n++;
+		}
 	}
 	
 	public String toString()
