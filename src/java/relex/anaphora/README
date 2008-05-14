@@ -10,31 +10,61 @@ it resolves the references "he" and "it" in the example text
 A more extensive set of tested examples are in 
 "test-corpus.txt"
 
-ToDo:
-----
-"Do you see the doggie bed? Go there and lie down".
-"John and I saw the bridge. We went there."
+Bugs/ToDo:
+----------
+-- Disable the gender-checking filter if GATE is not performing
+   entity detection. The problem is that GATE is needed to identify
+   male/female names, to match against gendered pronouns he/she. 
+   Without entity detection, these potential matches are rejected.
+   (The should have been accepted, but marked as "uncertain").
 
--- For this example,  I think location resolution could proceed much
-as pronoun resolution: "there" refers to "bridge".  This isn't yet
-implemented.
+   In general, mis-matched gender should give a low score, not
+   an outright rejection, to avoid the Johnny Cash "Boy named Sue"
+   problem.
+
+-- Phrase heads are mucking things up.  For example:
+       "Aphrodite had not forgotten her promise, and she was at work
+       at its fulfillment."
+
+   The algo finds "work" as a candidate for "its", but incorrectly
+   prints "fulfillment" instead, since the match is to 
+   (NP its_2 fulfillment) and "fulfillment" is the head, not "its"
+
+-- Algo is too tight, rejecting some possibilities:
+       "Aphrodite had not forgotten her promise, and she was at work
+       at its fulfillment."
+   This misses resolving "her".
+
+   Also: it doesn't even examine "promise" as a candidate for "its".
+
+   The algo should be fixed to given high scores to "tight" matches,
+   and lower scores for "loose" matches.
+
+-- The following don't work:
+
+     "Do you see the doggie bed? Go there and lie down".
+
+-- prepositional resolution could work, but not quite:
+     "John and I saw the bridge. We went there."
+
+   For this example,  I think location resolution could proceed much
+   as pronoun resolution: "there" refers to "bridge".  This isn't yet
+   implemented.
 
 -- The current relex output format has trouble representing
-"John and I" as the antecedent to "we".  This is a variant
-of the "phrase heads" problem with the cerego code.
+   "John and I" as the antecedent to "we".  This is a variant
+   of the "phrase heads" problem with the cerego code.
 
-I'm not sure what a clean resolution to this would be,
-perhaps:
+   I'm not sure what a clean resolution to this would be,
+   perhaps:
 
-_phrase("John and I", idnum_1)
-_ante(we,idnum_1)
+   _colocation("John and I", idnum_1)
+   _ante(we,idnum_1)
 
-Note the introduction of the artificial label, which breaks
-current relex style. Alternately,
+   which is strange ... or possibly, just:
 
-_ante(we, "John and I")
+   _colocation("John and I")
+   _ante(we, "John and I")
 
-which breaks the current style by using quotation marks
-for strings longer than one word.
-
-
+   Currently, Relex does not designate phrases in this way, although
+   it does merge multi-word entities...
