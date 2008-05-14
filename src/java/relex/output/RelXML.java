@@ -101,8 +101,8 @@ class RelXML
 			outstr += "  <DefinedLinguisticConceptNode name=\"#" + value + "\"/>\n";
 
 			outstr += link_start;
-			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"#" + value + "\"/>\n";
 			outstr += "    <Element class=\"ConceptNode\" name=\"" + guid + "\"/>\n";
+			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"#" + value + "\"/>\n";
 			outstr += link_end;
 
 			// Make a note of the value, it is needed for frame printing.
