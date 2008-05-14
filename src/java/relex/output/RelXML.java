@@ -88,12 +88,22 @@ class RelXML
 			if (attrName.equals("HYP"))
 				value = attrName.toLowerCase();
 
+			// Special treatment for part-of-speech.
+			String link_start = "  <InheritanceLink>\n";
+			String link_end   = "  </InheritanceLink>\n";
+			if (attrName.equals("pos"))
+			{
+				link_start = "  <PartOfSpeechLink>\n";
+				link_end   = "  </PartOfSpeechLink>\n";
+			}
+
+			// All of the other cases.
 			outstr += "  <DefinedLinguisticConceptNode name=\"#" + value + "\"/>\n";
 
-			outstr += "  <InheritanceLink>\n";
+			outstr += link_start;
 			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"#" + value + "\"/>\n";
 			outstr += "    <Element class=\"ConceptNode\" name=\"" + guid + "\"/>\n";
-			outstr += "  </InheritanceLink>\n";
+			outstr += link_end;
 
 			// Make a note of the value, it is needed for frame printing.
 			id_map.put(value, "#" + value);
