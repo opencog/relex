@@ -34,13 +34,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import relex.entity.DateEntityInfo;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
-import relex.entity.LocationEntityInfo;
-import relex.entity.MoneyEntityInfo;
-import relex.entity.OrganizationEntityInfo;
-import relex.entity.PersonEntityInfo;
+import relex.entity.EntityType;
 
 /**
  * Refactored version of taca/GateEntityDetector
@@ -48,7 +44,7 @@ import relex.entity.PersonEntityInfo;
  * Goes directly over to EntityMaintainer, skipping 
  * the various intermediate steps.
  */
-public class GateEntityMaintainer
+public class GateEntityDetector extends EntityMaintainerFactory
 {
 	public static final int DEBUG=0;
 	Boolean initialized = false;
@@ -123,12 +119,12 @@ public class GateEntityMaintainer
 		gateHome = gh;
 	}
 
-	public GateEntityMaintainer()
+	public GateEntityDetector()
 	{
 		initialized = false;
 	}
 
-	public GateEntityMaintainer(Map<String, Map<Object, Object>> params)
+	public GateEntityDetector(Map<String, Map<Object, Object>> params)
 	{
 		this();
 		annieParams.putAll(params);
@@ -149,8 +145,10 @@ public class GateEntityMaintainer
 		return annieParams;
 	}
 	
-	public void initialize()
+	public synchronized void initialize()
 	{
+		if (initialized) return;
+		
 		//	Initialise the GATE library
 		try
 		{
@@ -201,11 +199,7 @@ public class GateEntityMaintainer
 		throws GateException
 	{
 		if (DEBUG>0) System.out.println("Original text is:\n"+documentText);
-		if (!initialized)
-		{
-			System.out.println("Error: the GateEntityMaintainer is not initialized!\n");
-			return null;
-		}
+		initialize();
 		
 		// Ugly hack; since Annie think "Don" is a person's name.
 		String fixed = documentText.replaceAll("Don't", "Do not").replaceAll("don't", "do not");
@@ -230,14 +224,10 @@ public class GateEntityMaintainer
 		annieController.setCorpus(null);
 	}
 
-	public EntityMaintainer process(String sentence)
+	public EntityMaintainer makeEntityMaintainer(String sentence)
 	{
+		initialize();
 		EntityMaintainer em = null;
-		if (!initialized)
-		{
-			System.out.println("Error: the GateEntityMaintainer is not initialized!\n");
-			return em;
-		}
 		try
 		{
 			AnnotationSet annoset = getAnnotations(sentence);
@@ -268,26 +258,25 @@ public class GateEntityMaintainer
 			if(a.getType().equals(ANNIEConstants.PERSON_ANNOTATION_TYPE))
 			{
 				String gender = (String) a.getFeatures().get(ANNIEConstants.PERSON_GENDER_FEATURE_NAME);
-
-				PersonEntityInfo pei = new PersonEntityInfo(sentence, start, end);
-				pei.setGender(gender);
+				EntityInfo pei = new EntityInfo(sentence, start, end, EntityType.PERSON);
+				pei.setNodeProperty(EntityInfo.GENDER, gender.charAt(0) == 'm' ? "masculine" : "feminine");
 				ei = pei;
 			}
 			else if(atype.equals(ANNIEConstants.ORGANIZATION_ANNOTATION_TYPE))
 			{
-				ei = new OrganizationEntityInfo(sentence, start, end);
+				ei = new EntityInfo(sentence, start, end, EntityType.ORGANIZATION);
 			}
 			else if(atype.equals(ANNIEConstants.LOCATION_ANNOTATION_TYPE))
 			{
-				ei = new LocationEntityInfo(sentence, start, end);
+				ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
 			}
 			else if(atype.equals(ANNIEConstants.MONEY_ANNOTATION_TYPE))
 			{
-				ei = new MoneyEntityInfo(sentence, start, end);
+				ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
 			}
 			else if(atype.equals(ANNIEConstants.DATE_ANNOTATION_TYPE))
 			{
-				ei = new DateEntityInfo(sentence, start, end);
+				ei = new EntityInfo(sentence, start, end, EntityType.DATE);
 			}
 
 			if (ei != null)

@@ -87,8 +87,8 @@ public class ProcessClient {
 		while (true) {
 			// wait for an initialized connection
 			waitForInitConnection();
-			// We prevent infinite recursion by passing "null" as the second argument to process
 			Iterator<String> coms = restoreCommands.iterator();
+			// We prevent infinite recursion by passing "null" as the second argument to process
 			while (coms.hasNext() && process(coms.next(), null) != null)
 				;
 			// if we made it through all restore requests, then we are done restoring.

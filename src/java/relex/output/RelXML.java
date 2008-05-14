@@ -24,13 +24,14 @@ import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 
 /**
- * The RelXML object outputs a ParsedSentence in the Novamente
- * OpenCog-style XML format. The actual format used, and its rational,
- * is described in greater detail in the README file in the opencog
- * source code directory src/nlp/wsd/README.
+ * The RelXML object outputs a ParsedSentence in 
+ * the Novamente OpenCog-style XML
  *
- * As the same sentence can have multiple parses, this class only
- * displays a single, particular parse.
+ * As the same sentence can have multiple parses, this
+ * class only displays a single, particular parse.
+ *
+ * This class makes heavy use of String. If performance needs to be
+ * improved, then a conversion to StringBuff should be considered.
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
@@ -57,7 +58,7 @@ class RelXML
 
 	/* ----------------------------------------------------------- */
 	/**
-	 * Walk the graph, extracting semantic relationships, and word
+	 * Walk the graph, extracting semantic relationships, and word 
 	 * attributes.
 	 */
 	private class prtRelation implements RelationCallback
@@ -144,15 +145,13 @@ class RelXML
 	 */
 	private String printWordRefs()
 	{
-		String parse_id = sent.getIDString();
 		String refs = "";
 		int numWords = sent.getNumWords();
-		for (int i = 1; i < numWords; i++)
-		{
+		for (int i = 1; i < numWords; i++) {
 			FeatureNode fn = sent.getWordAsNode(i);
 
 			// There is no "name" for the given index, if it was
-			// merged into a colocation. For example "New York", the
+			// merged into an entity. For example "New York", the
 			// word "New" will not have an orig_str, while that for
 			// "York" will be "New_York".
 			if (fn == null) continue;
@@ -163,56 +162,39 @@ class RelXML
 
 			String word = fn.getValue();
 
-			// A unique UUID for each word instance.
-			UUID guid = UUID.randomUUID();
-			String guid_name = word + "_" + guid;
-
-			// Remember the word-to guid map; we'll need it for later
-			// in this sentence.
-			id_map.put(word, guid_name);
-
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "  <WordNode name=\"" + word + "\"/>\n";
-			refs += "  <ConceptNode name=\"" + guid_name + "\"/>\n";
-			refs += "  <ReferenceLink>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
+			refs += "  <ConceptNode name=\"" + word + "_1\"/>\n";
+			refs += "  <WRLink>\n";
 			refs += "    <Element class=\"WordNode\" name=\"" + word + "\"/>\n";
-			refs += "  </ReferenceLink>\n";
+			refs += "    <Element class=\"ConceptNode\" name=\"" + word + "_1\"/>\n";
+			refs += "  </WRLink>\n";
 
-			refs += "  <ParseInstanceLink>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + parse_id + "\"/>\n";
-			refs += "  </ParseInstanceLink>\n";
+			// The word instance
+			refs += word_instance(word);
 		}
 
 		return refs;
 	}
 
-	/* ----------------------------------------------------------- */
-
-	private String printRank()
+	private String word_instance(String word)
 	{
-		String ret = "";
-		ret += "  <ConceptNode name = \"";
-		ret += sent.getIDString();
-		ret += "\" strength = \"1.0\" confidence = \"";
-		Double confidence = sent.getTruthValue().getConfidence();
-		ret += confidence.toString().substring(0,6);
-		ret += "\" />\n";
+		// An instance of this concept. Assign a UUID to this instance.
+		UUID guid = UUID.randomUUID();
+		String guid_name = word + "_" + guid;
 
-		ret += "  <SentenceNode name = \"";
-		ret += sent.getRI().getID();
-		ret += "\" />\n";
+		// Remember the word-to guid map; we'll need it for later
+		// in this sentence.
+		id_map.put(word, guid_name);
 
-		ret += "  <ParseLink>\n";
-		ret += "    <Element class=\"ConceptNode\" name = \"";
-		ret += sent.getIDString();
-		ret += "\" />\n";
-		ret += "    <Element class=\"SentenceNode\" name = \"";
-		ret += sent.getRI().getID();
-		ret += "\" />\n";
-		ret += "  </ParseLink>\n";
-		return ret;
+		// Write out a unique instance of each general word.
+		String refs = "";
+		refs += "  <ConceptNode name=\"" + word + "_" + guid + "\"/>\n";
+		refs += "  <InheritanceLink>\n";
+		refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
+		refs += "    <Element class=\"ConceptNode\" name=\"" + word + "_1\"/>\n";
+		refs += "  </InheritanceLink>\n";
+		return refs;
 	}
 
 	/* ----------------------------------------------------------- */
@@ -220,7 +202,6 @@ class RelXML
 	public String toString()
 	{
 		String ret = "";
-		ret += printRank();
 		ret += printWordRefs();
 		ret += printRelations();
 		return ret;

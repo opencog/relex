@@ -35,7 +35,7 @@ import relex.tree.PhraseTree;
 
 public class Hobbs
 {
-	public static final int DEBUG = 0;
+	public static final int DEBUG = 0; 
 	
 	// Buffer of sentences previously seen.
 	private ArrayList<RelexInfo> sentences;
@@ -406,15 +406,12 @@ public class Hobbs
 
 						antecedents.add(anaphore, pt);
 						if (DEBUG > 0)
-						{
-							System.out.println("Found antecedent "
+						System.out.println("found antecedent "
 						                 +  pt.toString()
 						                 + " to pronoun "
 						                 + anaphore.toString());
 
-							System.out.println("Current list:\n"
-							              + antecedents.toString(anaphore));
-						}
+						// System.out.println("List:\n" + antecedents.toString(anaphore));
 						if (stop_at_np) pt.setMark(marker);
 					}
 				}

@@ -51,12 +51,6 @@ public class ParsedSentence extends Atom implements Serializable
 {
 	private static final long serialVersionUID = -5518792541801263127L;
 
-	// Unique ID string identifying this parse.
-	private String idString;
-
-	// Back-pointer to collection of other parses for this sentence
-	private RelexInfo sentence;
-
 	// String containing the original sentence
 	private String original;
 
@@ -101,22 +95,6 @@ public class ParsedSentence extends Atom implements Serializable
 
 	public String getOriginalSentence() {
 		return original;
-	}
-
-	public String getIDString() {
-		return idString;
-	}
-
-	public RelexInfo getRI() {
-		return sentence;
-	}
-
-	public void setRI(RelexInfo ri) {
-		sentence = ri;
-	}
-
-	public void setIDString(String str) {
-		idString = str;
 	}
 
 	public String getLinkString() {

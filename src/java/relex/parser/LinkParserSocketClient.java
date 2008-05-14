@@ -77,7 +77,6 @@ public class LinkParserSocketClient extends LinkParserClient
 		if (verbosity > 3) System.out.println("LinkParserSocketClient Executing:" + command);
 		String response = client.process(command, restoreCommands);
 		if (verbosity > 3) System.out.println("LinkParserSocketClient Received:" + response);
-
 		// Avoid infinite loop, if link parser crashes.
 		if (response != null)
 			restoreCommands.add(command);

@@ -30,8 +30,6 @@ import relex.feature.FeatureNode;
 
 public class Antecedents
 {
-	public static final int DEBUG = 0;
-
 	// Map of anaphora to a list of candidate antecedents.
 	// What's actually stored are the pointers to the
 	// phrases for each. To get the actual words, use the 
@@ -91,7 +89,6 @@ public class Antecedents
 		}
 		return rlist;
 	}
-
 	public HashMap<FeatureNode,ArrayList<FeatureNode>> getAntecedents()
 	{
 		HashMap<FeatureNode,ArrayList<FeatureNode>> fmap = 
@@ -204,12 +201,6 @@ public class Antecedents
 			return false;
 		}
 		prn = prn.get("ref");
-
-		if (DEBUG > 0)
-		{
-			System.out.println("Anaphore: " + anaph.toString());
-			System.out.println("Candidate antecedent: " + ante.toString());
-		}
 
 		FeatureNode ref = ante.getPhraseLeader();
 		if ((ref == null) && nullLeaderFilter(ante, prn)) return true;

@@ -21,13 +21,14 @@ import java.util.HashMap;
 import relex.ParsedSentence;
 
 /**
- * The OpenCogXML object outputs a ParsedSentence in the Novamente
- * OpenCog-style XML format. The actual format used, and its rational,
- * is described in greater detail in the README file in the opencog
- * source code directory src/nlp/wsd/README.
+ * The OpenCogXML object outputs a ParsedSentence in 
+ * the Novamente OpenCog-style XML
  *
- * As the same sentence can have multiple parses, this class only
- * displays a single, particular parse.
+ * As the same sentence can have multiple parses, this
+ * class only displays a single, particular parse.
+ *
+ * This class makes heavy use of String. If performance needs to be
+ * improved, then a conversion to StringBuff should be considered.
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
@@ -58,8 +59,10 @@ public class OpenCogXML
 		String ret = "";
 
 		ret += "<list>\n";
+		ret += "<AssertionLink>\n";
 		ret += rel_xml.toString();
 		ret += frame_xml.toString();
+		ret += "</AssertionLink>\n";
 		ret += "</list>\n";
 
 		return ret;
