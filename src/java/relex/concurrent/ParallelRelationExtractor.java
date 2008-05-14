@@ -17,7 +17,7 @@ import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.corpus.GateEntityMaintainer;
+import relex.corpus.EntityMaintainerFactory;
 import relex.entity.EntityMaintainer;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
@@ -44,7 +44,7 @@ public class ParallelRelationExtractor {
 
 	// Single-threaded processors
 	/** Entity detector */ 
-	private GateEntityMaintainer entityDetector;
+	private EntityMaintainerFactory entityDetector;
 	
 	/** Antecedents used in anaphora resolution */
 	public Antecedents antecedents;
@@ -65,8 +65,7 @@ public class ParallelRelationExtractor {
 	public ParallelRelationExtractor(){
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
-		entityDetector = new GateEntityMaintainer();
-		entityDetector.initialize();
+		entityDetector = EntityMaintainerFactory.get();
 		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
 		phraseMarkup = new PhraseMarkup();
@@ -116,7 +115,7 @@ public class ParallelRelationExtractor {
 	 */
 	public void push(String sentence, EntityMaintainer entityMaintainer) throws InterruptedException{
 		if (entityMaintainer == null) {
-			entityMaintainer = entityDetector.process(sentence);
+			entityMaintainer = entityDetector.makeEntityMaintainer(sentence);
 		}
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable = 

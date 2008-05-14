@@ -32,7 +32,7 @@ import relex.chunk.PatternChunker;
 import relex.chunk.PhraseChunker;
 import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
-import relex.corpus.GateEntityMaintainer;
+import relex.corpus.EntityMaintainerFactory;
 import relex.corpus.QuotesParensSentenceDetector;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
@@ -325,13 +325,13 @@ public class RelationExtractor
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 
-		GateEntityMaintainer gem = null;
+		EntityMaintainerFactory gem = null;
 		if (commandMap.get("-g") != null)
 		{
 			re.starttime = System.currentTimeMillis();
-			gem = new GateEntityMaintainer();
-			gem.initialize();
-			re.reportTime("Gate initialization: ");
+			gem = EntityMaintainerFactory.get();
+			gem.makeEntityMaintainer(""); // force initialization to measure initialization time
+			re.reportTime("Entity Detection Initialization: ");
 		}
 
 		// If sentence is not passed at command line, read from standard input:
@@ -383,7 +383,7 @@ public class RelationExtractor
 				if (gem != null)
 				{
 					re.starttime = System.currentTimeMillis();
-					em = gem.process(sentence);
+					em = gem.makeEntityMaintainer(sentence);
 					re.reportTime("Gate processing: ");
 				}
 

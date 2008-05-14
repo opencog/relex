@@ -15,7 +15,13 @@
  */
 
 package relex.entity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import relex.feature.FeatureNode;
 
@@ -35,21 +41,66 @@ import relex.feature.FeatureNode;
 
 public class EntityInfo implements Serializable
 {
+	/**
+	 * The name of the attribute that constitutes the string to be prepended
+	 * to identifiers replacing entities in a sentence for parsing
+	 * purposes. Relex predefined entities already have predefined prefixes
+	 * which can be overriden by setting this attribute. Custom entity types
+	 * can specify their own prefix or rely on the generic default which
+	 * is simply "entityID".  
+	 */
+	public static final String ID_PREFIX = "ID_PREFIX";
+	
+	/**
+	 * Default prefix for entities of all types.
+	 */
+	public static final String DEFAULT_PREFIX = "entityID";
+	
+	/**
+	 * Name of gender attribute for entities of type person. 
+	 */
+	public static final String GENDER = "GENDER";
+	
 	private static final long serialVersionUID = 344692623956286950L;
 	
+	private static Map<String, String> defaultPrefixes = new HashMap<String, String>();
+	static
+	{
+		defaultPrefixes.put("GENERIC", DEFAULT_PREFIX);
+		defaultPrefixes.put("DATE", "dateID");
+		defaultPrefixes.put("EMOTICON", "emoticonID");
+		defaultPrefixes.put("LOCATION", "locationID");
+		defaultPrefixes.put("MONEY", "moneyID");
+		defaultPrefixes.put("ORGANIZATION", "organizationID");
+		defaultPrefixes.put("PERSON", "personID");
+	}
+	
 	private String originalSentence;
-
+	private int firstCharIndex;
+	private int lastCharIndex;
+	private String type = "ENTITY";
+	private Map<String, Object> attributes = Collections.synchronizedMap(new HashMap<String, Object>());	
+	private ArrayList<String> nodeProperties = new ArrayList<String>(1);
+	
+	private String getPunctuationPrefix()
+	{
+		String id = null;
+		if ('(' == originalSentence.charAt(firstCharIndex))
+			id = "lparenID";
+		else if (')' == originalSentence.charAt(firstCharIndex))
+			id = "rparenID";
+		else
+			id = "punctuationID";
+		return id;
+	}
+	
 	public String getOriginalSentence() {
 		return originalSentence;
-	}
-
-	private int firstCharIndex;
+	}	
 
 	public int getFirstCharIndex() {
 		return firstCharIndex;
 	}
-
-	private int lastCharIndex;
 
 	public int getLastCharIndex() {
 		return lastCharIndex;
@@ -64,9 +115,47 @@ public class EntityInfo implements Serializable
 	}
 
 	public String idStringPrefix() {
-		return "genericID";
+		String prefix = (String)attributes.get(ID_PREFIX);
+		if (prefix == null)
+			if (type.equals(EntityType.PUNCTUATION.name()))
+				prefix = getPunctuationPrefix();
+			else
+				prefix = defaultPrefixes.get(type);
+		if (prefix == null)
+			prefix = DEFAULT_PREFIX;
+		return prefix;
+	}
+	
+	public String getType()	{
+		return type;
 	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Map<String, Object> getAttributes()
+	{
+		return attributes;
+	}
+	
+	/**
+	 * <p>
+	 * Set an attribute which will also be added as a <code>FeatureNode</code>
+	 * property. Whenever, an attribute of the <code>EntityInfo</code> needs
+	 * to be propagated to the <code>FeatureNode</code> structure, this method 
+	 * should be used instead of <code>getAttributes().put(name, value)</code>. 
+	 * </p>
+	 * 
+	 * @param name The name of the attribute.
+	 * @param value
+	 */
+	public void setNodeProperty(String name, String value)
+	{
+		attributes.put(name, value);
+		nodeProperties.add(name);
+	}
+	
 	/**
 	 * Override to add additional information & markup to 
 	 * the feature node for a given word. May be used to
@@ -74,9 +163,21 @@ public class EntityInfo implements Serializable
 	 */
 	protected void setProperties(FeatureNode fn)
 	{
-		fn.set("ENTITY-FLAG", new FeatureNode("T"));
+		fn.set(type +  "-FLAG", new FeatureNode("T"));
+		for (String p : nodeProperties)
+			fn.set(p, new FeatureNode((String)attributes.get(p)));
 	}
 
+	/** 
+	 * <p>Return a list of names of attributes that are propagated as <code>FeatureNode</code>s
+	 * in a call to <code>setProperties(FeatureNode)</code>.
+	 * </p>
+	 */
+	public List<String> getNodePropertyNames()
+	{
+		return nodeProperties;
+	}
+	
 	public EntityInfo(String _originalSentence,
 	                  int _firstCharIndex,
 	                  int _lastCharIndex)
@@ -85,4 +186,21 @@ public class EntityInfo implements Serializable
 		firstCharIndex = _firstCharIndex;
 		lastCharIndex = _lastCharIndex;
 	}
+	
+	public EntityInfo(String _originalSentence,
+  		              int _firstCharIndex,
+			          int _lastCharIndex,
+			          String type)
+	{
+		this(_originalSentence, _firstCharIndex, _lastCharIndex);
+		this.type = type;
+	}
+	
+	public EntityInfo(String _originalSentence,
+		              int _firstCharIndex,
+			          int _lastCharIndex,
+			          EntityType type)
+	{
+		this(_originalSentence, _firstCharIndex, _lastCharIndex, type.name());
+	}	
 }

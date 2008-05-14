@@ -17,8 +17,10 @@ package relex.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeSet;
 
 import relex.feature.FeatureNode;
@@ -278,7 +280,7 @@ public class EntityMaintainer implements Serializable
 			if (start < 0) continue;
 			int end = start + emo.length();
 	
-			EntityInfo ei = new EmoticonEntityInfo(originalSentence, start, end);
+			EntityInfo ei = new EntityInfo(originalSentence, start, end, EntityType.EMOTICON);
 			addEntity(ei);
 		}
 	}
@@ -297,7 +299,7 @@ public class EntityMaintainer implements Serializable
 			start = originalSentence.indexOf('(', start);
 			if (start < 0) break;
 
-			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start+1);
+			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
 			addEntity(ei);
 			start++;
 		}
@@ -306,7 +308,7 @@ public class EntityMaintainer implements Serializable
 			start = originalSentence.indexOf(')', start);
 			if (start < 0) break;
 
-			EntityInfo ei = new PunctuationEntityInfo(originalSentence, start, start+1);
+			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
 			addEntity(ei);
 			start++;
 		}
@@ -343,8 +345,7 @@ public class EntityMaintainer implements Serializable
 	/*
 	 * CONSTRUCTOR
 	 */
-	public EntityMaintainer(String _originalSentence,
-			ArrayList<EntityInfo> eis)
+	public EntityMaintainer(String _originalSentence, Collection<EntityInfo> eis)
 	{
 		if (eis.size() > MAX_NUM_ENTITIES)
 		{
@@ -438,6 +439,15 @@ public class EntityMaintainer implements Serializable
 		}
 	}
 
+	/**
+	 * <p>Return all <code>EntityInfo</code>s ordered by their starting character
+	 * position.</code>.
+	 */
+	public List<EntityInfo> getEntities()
+	{
+		return orderedEntityInfos;
+	}
+	
 	/**
 	 * prepareSentence() -- markup parsed sentence with entity 
 	 * information. This needs to be done before the relex algs run,
