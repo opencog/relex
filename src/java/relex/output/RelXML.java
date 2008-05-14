@@ -174,7 +174,7 @@ class RelXML
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "  <WordNode name=\"" + word + "\"/>\n";
 			refs += "  <ConceptNode name=\"" + guid_name + "\"/>\n";
-			refs += "  <ReferencLink>\n";
+			refs += "  <ReferenceLink>\n";
 			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
 			refs += "    <Element class=\"WordNode\" name=\"" + word + "\"/>\n";
 			refs += "  </ReferenceLink>\n";
@@ -205,10 +205,10 @@ class RelXML
 		ret += "\" />\n";
 
 		ret += "  <ParseLink>\n";
-		ret += "    <Element class=\"ConceptNode name = \"";
+		ret += "    <Element class=\"ConceptNode\" name = \"";
 		ret += sent.getIDString();
 		ret += "\" />\n";
-		ret += "    <Element class=\"SentenceNode name = \"";
+		ret += "    <Element class=\"SentenceNode\" name = \"";
 		ret += sent.getRI().getID();
 		ret += "\" />\n";
 		ret += "  </ParseLink>\n";
