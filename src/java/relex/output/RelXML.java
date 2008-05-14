@@ -200,7 +200,7 @@ class RelXML
 		ret += confidence.toString().substring(0,6);
 		ret += "\" />\n";
 
-		ret += "  <ConceptNode name = \"";
+		ret += "  <SentenceNode name = \"";
 		ret += sent.getRI().getID();
 		ret += "\" />\n";
 
@@ -208,7 +208,7 @@ class RelXML
 		ret += "    <Element class=\"ConceptNode name = \"";
 		ret += sent.getIDString();
 		ret += "\" />\n";
-		ret += "    <Element class=\"ConceptNode name = \"";
+		ret += "    <Element class=\"SentenceNode name = \"";
 		ret += sent.getRI().getID();
 		ret += "\" />\n";
 		ret += "  </ParseLink>\n";
