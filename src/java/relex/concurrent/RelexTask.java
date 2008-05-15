@@ -50,45 +50,48 @@ public class RelexTask implements Callable<RelexTaskResult> {
 	}
 	
 	public RelexTaskResult call() {
-		if (DEBUG > 0) System.out.println("["+index+"] Start processing "+sentence);
-		String convertedSentence = entityMaintainer.getConvertedSentence();
-		if (DEBUG > 0) System.out.println("["+index+"] End entity detection");
-		ArrayList<ParsedSentence> parses = lp.parse(convertedSentence, context.getLinkParserClient());
-		RelexInfo ri = new RelexInfo(sentence, parses);
-		if (DEBUG > 0) System.out.println("["+index+"] End parsing");
+		try {
+			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
+			String convertedSentence = entityMaintainer.getConvertedSentence();
+			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
+			ArrayList<ParsedSentence> parses = lp.parse(convertedSentence, context.getLinkParserClient());
+			RelexInfo ri = new RelexInfo(sentence, parses);
+			if (DEBUG > 0) System.out.println("[" + index + "] End parsing");
 
-		int i=0; 
-		for (ParsedSentence parse : parses)
-		{
+			int i = 0;
+			for (ParsedSentence parse : parses) {
+				try {
+					// Markup feature node graph with entity info,
+					// so that the relex algs (next step) can see them.
+					entityMaintainer.prepareSentence(parse.getLeft());
+
+					// The actual relation extraction is done here.
+					sentenceAlgorithmApplier.applyAlgs(parse, context);
+
+					// Strip out the entity markup, so that when the
+					// sentence is printed, we don't print gunk.
+					entityMaintainer.repairSentence(parse.getLeft());
+
+					// Also do a Penn tree-bank style phrase structure markup.
+					phraseMarkup.markup(parse);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (DEBUG > 0) 
+					System.out.println("[" + index+ "] end post-processing sentence " + 
+							(i++) + "/"+ parses.size());
+			}
+			return new RelexTaskResult(index, sentence, entityMaintainer, ri);
+		} finally {
+			if (DEBUG > 0)
+				System.out.println("[" + index + "] End processing");
 			try {
-				// Markup feature node graph with entity info,
-				// so that the relex algs (next step) can see them.
-				entityMaintainer.prepareSentence(parse.getLeft());
-	
-				// The actual relation extraction is done here.
-				sentenceAlgorithmApplier.applyAlgs(parse, context);
-				
-				// Strip out the entity markup, so that when the 
-				// sentence is printed, we don't print gunk.
-				entityMaintainer.repairSentence(parse.getLeft());
-	
-				// Also do a Penn tree-bank style phrase structure markup.
-				phraseMarkup.markup(parse);
-			} catch (Exception e){
+				pool.put(context);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if (DEBUG > 0) System.out.println("["+index+"] end post-processing sentence "+(i++)+"/"+parses.size());
+			if (DEBUG > 0) System.out.println("[" + index + "] Release resources");
 		}
-
-		
-		if (DEBUG > 0) System.out.println("["+index+"] End processing");
-		try {
-			pool.put(context);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if (DEBUG > 0) System.out.println("["+index+"] Release resources");
-		return new RelexTaskResult(index, sentence, entityMaintainer, ri);
 	}
 	
 	public String toString(){
