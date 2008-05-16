@@ -54,7 +54,13 @@ public class RelexTask implements Callable<RelexTaskResult> {
 			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
 			String convertedSentence = entityMaintainer.getConvertedSentence();
 			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
-			ArrayList<ParsedSentence> parses = lp.parse(convertedSentence, context.getLinkParserClient());
+			ArrayList<ParsedSentence> parses = null;
+			try {
+				parses = lp.parse(convertedSentence, context.getLinkParserClient());
+			} catch (RuntimeException ex) {
+				parses = new ArrayList<ParsedSentence>();
+			}
+			
 			RelexInfo ri = new RelexInfo(sentence, parses);
 			if (DEBUG > 0) System.out.println("[" + index + "] End parsing");
 
