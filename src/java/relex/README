@@ -71,5 +71,6 @@ tree:
    identification.
 
 wsd:
-	Experimental word-sense disambiguation code.
+	Simple word-sense disambiguation code; compares word usage in pairs
+   of sentences.
 
