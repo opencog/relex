@@ -329,8 +329,8 @@ public class ParsedSentence extends Atom implements Serializable
 	 * TruthValue associated with this parse.
 	 *
 	 * A classic example of competing parses for a sentence is:
-	 * (S (NP I) (VP saw (NP the man) (PP with (NP the telescope))) .)
-	 * (S (NP I) (VP saw (NP (NP the man) (PP with (NP the telescope)))) .)
+	 * (S (NP I) (VP saw (NP the man) (PP with (NP the binoculars))) .)
+	 * (S (NP I) (VP saw (NP (NP the man) (PP with (NP the binoculars)))) .)
 	 * The ranker below gives both about equal scores.
 	 */
 	public void simpleRankParse()
