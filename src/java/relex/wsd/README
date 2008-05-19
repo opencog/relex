@@ -4,11 +4,14 @@
                      Linas Vepstas - April 2008
 
 This directory implements a simple word-sense disambiguation algorithm.
-The current algorithm functions entirely by examing the syntactic
-and semantic-relation structure of the sentence.  This approach is
-both simple (does not require a large corpus, or training), and
-error-prone.  It is sufficient for telling apart word senses in 
-simple sentences, but fails when common-sense or cognition is required.
+The algorithm compares pairs of sentences containing the same word, 
+and then returns a liklihood that the word is used in the same way
+in both sentences.  The algo does this by comparing the part-of-speech,
+and the phrase structure in each sentence: strong matches are declared
+as word-sense matches.  This approach is both simple (does not require 
+a large corpus, or training), and error-prone.  It is sufficient for
+telling apart word senses in simple sentences, but fails when 
+common-sense or cognition is required.
 
 Examples where this algorithm works well:
 -----------------------------------------
