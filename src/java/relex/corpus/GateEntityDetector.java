@@ -242,60 +242,68 @@ public class GateEntityDetector extends EntityMaintainerFactory
 
 	private EntityMaintainer findEntitiesInText(AnnotationSet annoset, String sentence)
 	{
-		ArrayList<EntityInfo> eInfos = new ArrayList<EntityInfo>();
-
-		for (Iterator<Annotation> it = annoset.iterator(); it.hasNext();)
-		{
-			Annotation a = it.next();
-			int start = a.getStartNode().getOffset().intValue();
-			int end = a.getEndNode().getOffset().intValue();
-
-			EntityInfo ei = null;
-
-			String atype = a.getType();
-			if (DEBUG>0) System.out.println("Found a " + atype + " entity " + a.toString());
-
-			if(a.getType().equals(ANNIEConstants.PERSON_ANNOTATION_TYPE))
+		try {
+			ArrayList<EntityInfo> eInfos = new ArrayList<EntityInfo>();
+	
+			for (Iterator<Annotation> it = annoset.iterator(); it.hasNext();)
 			{
-				String gender = (String) a.getFeatures().get(ANNIEConstants.PERSON_GENDER_FEATURE_NAME);
-				EntityInfo pei = new EntityInfo(sentence, start, end, EntityType.PERSON);
-				pei.setNodeProperty(EntityInfo.GENDER, gender.charAt(0) == 'm' ? "masculine" : "feminine");
-				ei = pei;
-			}
-			else if(atype.equals(ANNIEConstants.ORGANIZATION_ANNOTATION_TYPE))
-			{
-				ei = new EntityInfo(sentence, start, end, EntityType.ORGANIZATION);
-			}
-			else if(atype.equals(ANNIEConstants.LOCATION_ANNOTATION_TYPE))
-			{
-				ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
-			}
-			else if(atype.equals(ANNIEConstants.MONEY_ANNOTATION_TYPE))
-			{
-				ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
-			}
-			else if(atype.equals(ANNIEConstants.DATE_ANNOTATION_TYPE))
-			{
-				ei = new EntityInfo(sentence, start, end, EntityType.DATE);
-			}
-
-			if (ei != null)
-			{
-				// Insert in proper order.
-				for (int i = 0; i < eInfos.size(); i++)
+				Annotation a = it.next();
+				int start = a.getStartNode().getOffset().intValue();
+				int end = a.getEndNode().getOffset().intValue();
+	
+				EntityInfo ei = null;
+	
+				String atype = a.getType();
+				if (a.getType().equals(ANNIEConstants.SPACE_TOKEN_ANNOTATION_TYPE)) continue;
+				if (a.getType().equals(ANNIEConstants.TOKEN_ANNOTATION_TYPE)) continue;
+				
+				if (DEBUG>0) System.out.println("Found a " + atype + " entity " + a.toString());
+	
+				if(a.getType().equals(ANNIEConstants.PERSON_ANNOTATION_TYPE))
 				{
-					if (eInfos.get(i).getFirstCharIndex() > ei.getFirstCharIndex())
-					{
-						eInfos.add(i, ei);
-						ei = null;
-						break;
-					}
+					EntityInfo pei = new EntityInfo(sentence, start, end, EntityType.PERSON);
+					String gender = (String) a.getFeatures().get(ANNIEConstants.PERSON_GENDER_FEATURE_NAME);
+					if (gender!=null) pei.setNodeProperty(EntityInfo.GENDER, gender.charAt(0) == 'm' ? "masculine" : "feminine");
+					ei = pei;
 				}
-
-				// Append at end, if not inserted in middle.
-				if (ei != null) eInfos.add(ei);
+				else if(atype.equals(ANNIEConstants.ORGANIZATION_ANNOTATION_TYPE))
+				{
+					ei = new EntityInfo(sentence, start, end, EntityType.ORGANIZATION);
+				}
+				else if(atype.equals(ANNIEConstants.LOCATION_ANNOTATION_TYPE))
+				{
+					ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
+				}
+				else if(atype.equals(ANNIEConstants.MONEY_ANNOTATION_TYPE))
+				{
+					ei = new EntityInfo(sentence, start, end, EntityType.LOCATION);
+				}
+				else if(atype.equals(ANNIEConstants.DATE_ANNOTATION_TYPE))
+				{
+					ei = new EntityInfo(sentence, start, end, EntityType.DATE);
+				}
+	
+				if (ei != null)
+				{
+					// Insert in proper order.
+					for (int i = 0; i < eInfos.size(); i++)
+					{
+						if (eInfos.get(i).getFirstCharIndex() > ei.getFirstCharIndex())
+						{
+							eInfos.add(i, ei);
+							ei = null;
+							break;
+						}
+					}
+	
+					// Append at end, if not inserted in middle.
+					if (ei != null) eInfos.add(ei);
+				}
 			}
+			return new EntityMaintainer(sentence, eInfos);
+		} catch (RuntimeException e){
+			e.printStackTrace();
+			throw e;
 		}
-		return new EntityMaintainer(sentence, eInfos);
 	}
 }

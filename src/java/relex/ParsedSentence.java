@@ -347,6 +347,23 @@ public class ParsedSentence extends Atom implements Serializable
 
 		stv.setConfidence(weight);
 	}
+	
+	public int hashCode()
+	{
+		if (original == null)
+			return 0;
+		return original.hashCode() | leafConstituents.size();
+	}
 
+	public boolean equals(Object x)
+	{
+		if (! (x instanceof ParsedSentence))
+			return false;
+		ParsedSentence p = (ParsedSentence)x;
+		if (original == null)
+			return p.original == null;
+		else
+			return original.equals(p.original) && this.leafConstituents.equals(p.leafConstituents);
+	}
+	
 } // end ParsedSentence
-
