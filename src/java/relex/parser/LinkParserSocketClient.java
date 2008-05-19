@@ -113,7 +113,7 @@ public class LinkParserSocketClient extends LinkParserClient
 	}
 
 	public void close() {
-		client.process(LinkParserProtocol.MSG_CLOSE, null);
+		client.process(LinkParserProtocol.MSG_KILL_SYSTEM, null);
 	}
 
 	void execParse(String sentence) {
