@@ -327,6 +327,11 @@ public class ParsedSentence extends Atom implements Serializable
 	 * Perform a crude parse-ranking based on Link-grammar output.
 	 * The ranking will be stored as the "confidence" of the 
 	 * TruthValue associated with this parse.
+	 *
+	 * A classic example of competing parses for a sentence is:
+	 * (S (NP I) (VP saw (NP the man) (PP with (NP the telescope))) .)
+	 * (S (NP I) (VP saw (NP (NP the man) (PP with (NP the telescope)))) .)
+	 * The ranker below gives both about equal scores.
 	 */
 	public void simpleRankParse()
 	{
