@@ -174,7 +174,7 @@ class RelXML
 
 			// A unique UUID for each word instance.
 			UUID guid = UUID.randomUUID();
-			String guid_name = word + "^" + guid;
+			String guid_name = word + "@" + guid;
 
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
