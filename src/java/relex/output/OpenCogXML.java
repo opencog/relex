@@ -60,7 +60,7 @@ public class OpenCogXML
 
 		ret += "<list>\n";
 		ret += rel_xml.toString();
-		// ret += frame_xml.toString();
+		ret += frame_xml.toString();
 		ret += "</list>\n";
 
 		return ret;

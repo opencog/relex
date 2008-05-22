@@ -15,6 +15,8 @@
  */
 package relex.output;
 
+import java.util.HashMap;
+
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
@@ -40,7 +42,13 @@ public class SimpleView
 	 */
 	public static String printRelations(ParsedSentence parse)
 	{
+		return printRelations(parse, null);
+	}
+	public static String printRelations(ParsedSentence parse,
+	                                    HashMap<FeatureNode,String> map)
+	{
 		Visit v = new Visit();
+		v.id_map = map;
 		v.str = "";
 		parse.foreach(v);
 		return v.str;
@@ -60,7 +68,13 @@ public class SimpleView
 	 */
 	public static String printRelationsAlt(ParsedSentence parse)
 	{
+		return printRelationsAlt(parse, null);
+	}
+	public static String printRelationsAlt(ParsedSentence parse,
+	                                    HashMap<FeatureNode,String> map)
+	{
 		Visit v = new Visit();
+		v.id_map = map;
 		v.unaryStyle = true;
 		v.str = "";
 		parse.foreach(v);
@@ -69,6 +83,9 @@ public class SimpleView
 
 	private static class Visit implements RelationCallback
 	{
+		// Map associating a feature-node to a unique ID string.
+		public HashMap<FeatureNode,String> id_map = null;
+
 		public Boolean unaryStyle = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
@@ -86,6 +103,11 @@ public class SimpleView
 			}
 			String tgtName = tgt.getValue();
 
+			if (id_map != null)
+			{
+				srcName = id_map.get(srcNode);
+				tgtName = id_map.get(tgtNode);
+			}
 			str += relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
@@ -98,6 +120,10 @@ public class SimpleView
 			String value = attr.getValue();
 			String srcName = srcNode.get("name").getValue();
 
+			if (id_map != null)
+			{
+				srcName = id_map.get(srcNode);
+			}
 			if (unaryStyle)
 			{
 				if (attrName.endsWith("-FLAG"))
