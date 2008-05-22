@@ -586,15 +586,19 @@ QUESTION1
 <F_R ref nameSource> = <F_R>
 ;
 ;
-;/////////////////////////////////////////////////////////////////////////////
+;//////////////////////////////////////////////////////////////////////
 ;
 ; RELATIVE REFERENCE (who, which, whom, that)
 ;
-;
+; The rules below mainly serve to drop the relative-reference pronouns
+; from the output, since thier referents are immediately resolved. So,
+; for example, "The dog, who barked,...", its clear that "who" refers 
+; to "dog"; this is explicit in the parse, and so "who" plays no role
+; in the relex output. 
 ;
 #TemplateActionAlg
 SET_RS_FLAG
-;//Puts a flag in a node to indeicate that it has an RS link
+; Puts a flag in a node to indicate that it has an RS link
 <LAB> = \RS\.*
 =
 <F_R RS-FLAG> = T
