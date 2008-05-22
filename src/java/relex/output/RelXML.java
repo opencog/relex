@@ -39,7 +39,8 @@ class RelXML
 	// The sentence being examined.
 	private ParsedSentence sent;
 
-	private HashMap<String,String> id_map = null;
+	// Map associating a feature-node to a unique ID string.
+	private HashMap<FeatureNode,String> id_map = null;
 
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -49,7 +50,7 @@ class RelXML
 		sent = null;
 	}
 
-	public void setParse(ParsedSentence s, HashMap<String,String> im)
+	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
 	{
 		sent = s;
 		id_map = im;
@@ -80,7 +81,7 @@ class RelXML
 			String value = attr.getValue();
 
 			outstr += "<!-- " + attrName + " (" + srcName + ", " + value + ") -->\n";
-			String guid = id_map.get(srcName);
+			String guid = id_map.get(srcNode);
 
 			// Flags are assumed to be true, so value is the flag name.
 			if (attrName.endsWith("-FLAG"))
@@ -98,15 +99,13 @@ class RelXML
 			}
 
 			// All of the other cases.
-			outstr += "  <DefinedLinguisticConceptNode name=\"#" + value + "\"/>\n";
+			outstr += "  <DefinedLinguisticConceptNode name=\"" + value + "\"/>\n";
 
 			outstr += link_start;
 			outstr += "    <Element class=\"ConceptNode\" name=\"" + guid + "\"/>\n";
-			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"#" + value + "\"/>\n";
+			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"" + value + "\"/>\n";
 			outstr += link_end;
 
-			// Make a note of the value, it is needed for frame printing.
-			id_map.put(value, "#" + value);
 			return false;
 		}
 
@@ -119,9 +118,8 @@ class RelXML
 			if (tgtName == null) return false;
 
 			outstr += "<!-- " + relName + " (" + srcName + ", " + tgtName + ") -->\n";
-			String src_guid = id_map.get(srcName.getValue());
-			String tgt_guid = id_map.get(tgtName.getValue());
-
+			String src_guid = id_map.get(srcNode);
+			String tgt_guid = id_map.get(tgtNode);
 
 			outstr += "  <DefinedLinguisticRelationshipNode name=\"" + relName + "\"/>\n";
 
@@ -168,6 +166,7 @@ class RelXML
 			if (fn == null) continue;
 			fn = fn.get("ref");
 			if (fn == null) continue;
+			FeatureNode refNode = fn;
 			fn = fn.get("name");
 			if (fn == null) continue;
 
@@ -179,7 +178,7 @@ class RelXML
 
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
-			id_map.put(word, guid_name);
+			id_map.put(refNode, guid_name);
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "  <WordNode name=\"" + word + "\"/>\n";

@@ -19,6 +19,7 @@ package relex.output;
 import java.util.HashMap;
 
 import relex.ParsedSentence;
+import relex.feature.FeatureNode;
 
 /**
  * The OpenCogXML object outputs a ParsedSentence in the Novamente
@@ -33,7 +34,7 @@ import relex.ParsedSentence;
  */
 public class OpenCogXML
 {
-	private HashMap<String,String> id_map = null;
+	private HashMap<FeatureNode,String> id_map = null;
 	private RelXML rel_xml;
 	private FrameXML frame_xml;
 
@@ -47,7 +48,7 @@ public class OpenCogXML
 
 	public void setParse(ParsedSentence sent)
 	{
-		id_map = new HashMap<String,String>();
+		id_map = new HashMap<FeatureNode,String>();
 		rel_xml.setParse(sent, id_map);
 		frame_xml.setParse(sent, id_map);
 	}
@@ -59,7 +60,7 @@ public class OpenCogXML
 
 		ret += "<list>\n";
 		ret += rel_xml.toString();
-		ret += frame_xml.toString();
+		// ret += frame_xml.toString();
 		ret += "</list>\n";
 
 		return ret;

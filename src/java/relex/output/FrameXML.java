@@ -17,6 +17,7 @@ package relex.output;
 
 import java.util.HashMap;
 
+import relex.feature.FeatureNode;
 import relex.frame.Frame;
 import relex.ParsedSentence;
 
@@ -31,7 +32,7 @@ public class FrameXML
 	private ParsedSentence sent;
 
 	// The id_map, previously created, for OpenCog id's
-	private HashMap<String,String> id_map = null;
+	private HashMap<FeatureNode,String> id_map = null;
 
 	private Frame frame;
 
@@ -45,7 +46,7 @@ public class FrameXML
 		frame = new Frame();
 	}
 
-	public void setParse(ParsedSentence s, HashMap<String,String> im)
+	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
 	{
 		sent = s;
 		id_map = im;
@@ -98,7 +99,7 @@ public class FrameXML
 				cpt1 = cpt1.substring(0, comma);
 			}
 			if (cpt1 == null) continue;
-			cpt1 = id_map.get(cpt1);
+			// cpt1 = id_map.get(cpt1);
 			if (cpt1 == null) continue;
 
 			// Is cpt1 a "DefinedLinguisticConceptNode"?
@@ -108,7 +109,7 @@ public class FrameXML
 
 			if (cpt2 != null)
 			{
-				cpt2 = id_map.get(cpt2);
+				// cpt2 = id_map.get(cpt2);
 				if (cpt2 == null) continue;
 				if (cpt2.charAt(0) == '#') cpt2_is_ling = true;
 			}
