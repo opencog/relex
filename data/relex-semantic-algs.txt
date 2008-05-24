@@ -2039,11 +2039,13 @@ QUERY_INDEFINATE_DETERMINER2
 =
 <F_R ref TRUTH-QUERY-FLAG> = T
 ;
+; This is suppposed to protect against using "quantity" for comparatives: 
+; "More people like dogs than pigs", "Fewer people like pigs than dogs."
 ;
 #TemplateActionAlg
 QUANTITY_EXCEPTION
 <LAB> = \D\.*|\DD\.*
-<F_L str> = more|More|'s|few|Few
+<F_L str> = more|More|'s|fewer|Fewer
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
 ;
