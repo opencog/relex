@@ -1,0 +1,108 @@
+
+                       Rules
+                       -----
+
+The relex-semantic-algs.txt file contains rules for extracting 
+relationship types from the link grammar.  
+
+Some notes about verb tenses:
+-----------------------------
+
+I've identified 35 cases: sixteen perfect, sixteen imperfect, three
+oddball cases. Relex produces the right output for all be the very
+last, which is a confusing case anyway.
+
+   Imperfect:
+
+       * "I wake" I wake every morning at six. present
+       * "I woke" I woke up this morning at six. past
+       * "I will wake" I will wake tomorrow at six. future
+       * "I would wake" I would wake every day at dawn. infinitive
+
+   Imperfect passive:
+
+       * "I am woken." (Every day, I am woken by that damned dog.)
+         present passive
+       * "I was woken." (I was woken by the barking). past passive
+       * "I will be woken." (I will be woken again, if I don't do
+         something about it.) future passive
+       * "I would be woken." (I would be woken if I didn't wear ear
+         plugs'.) infinitive passive
+
+   Imperfect progressive:
+
+       * "I am waking" I am waking refreshed these days present progressive
+       * "I was waking" I was waking refreshed until recently. past progressive
+       * "I will be waking" I will be waking in time to make the
+         meeting. future progressive
+       * "I would be waking" I would be waking on time if my alarm
+         clock worked infinitive progressive
+
+   Imperfect passive progressive:
+
+       * "I am being woken" I am being woken every day by the
+         barking. present passive progressive
+       * "I was being woken" I was being woken by the dog, but then I
+         shot it. past passive progressive
+       * "I will be being woken" I will be being woken by the dog for
+         as long as it stays alive. future passive progressive
+       * "I would be being woken" I would be being woken by that dog,
+         if I hadn't shot it. inifinitive passive progressive
+
+   There are sixteen more perfect aspects:
+
+   Perfect:
+
+       * "I have woken" ('I have woken on time every day now for
+          months) present perfect.
+       * "I had woken" (I had woken on time, but then I went back to
+          sleep.) past perfect
+       * "I will have woken" (As of tommorrow, I will have woken on
+          time every day this week.) future perfect.
+       * "I would have woken" (I would have woken if the damned alarm
+          clock had gone off.) infinitive perfect
+
+   Perfect passive:
+
+       * "I have been woken". (Argh, I have been woken by that dog
+         one time too many.) present perfect passive
+       * "I had been woken". (I had been woken by that dog almost
+         every day, but now that I complained to the neighbors, its
+         been taken care of.) past perfect passive
+       * "I will have been woken". (If he barks again, I will have
+         been woken for the 3rd time tonight.) future perfect passive
+       * "I would have been woken" (I would have been woken lst
+         night, if I hadn't worn earplugs). infinitive perfect passive
+
+   Perfect progressive:
+
+       * "I have been waking" (I have been waking refreshed ever
+         since they put the dog inside.) This is present perfect progressive.
+       * "I had been waking" (I had been waking refreshed, until that
+         damned rooster moved in next door.) past perfect progressive
+       * "I will have been waking" (I will have been waking refreshed
+         for 3 months now, once I strangled the rooster by the neck). 
+         future perfect progressive
+       * "I would have been waking" (I would have been waking
+         refreshed, if it weren't for that rooster) infinitive perfect
+         progressive
+
+   Perfect passive progressive:
+
+       * "I have been being woken" (I have been being woken by that
+         dog as long as I can remember.) present perfect passive progressive
+       * "I had been being woken" (I had been being woken by the dog,
+         and so I took some sleeping pills.) past perfect passive progressive
+       * "I will have been being woken" (I will have been being woken
+         since January.) future perfect passive progressive
+       * "I would have been being woken" ... infinitive perfect
+         passive progressive
+
+   Infinitives:
+
+       * "I do wake", I do wake on time. present infinitive
+       * "I did wake", I'm telling you, I did wake on time!. past infinitive
+       * "I am going to wake" I made a promise that I am going to
+         wake on time. future infinitive (??)
+
+There are imperatives, too ...
