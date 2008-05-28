@@ -13,6 +13,7 @@ DIST_FILES = \
 	test-corpus.txt \
 	data/frame/concept_vars.txt \
 	data/frame/mapping_rules.txt \
+	data/README \
 	data/relex-semantic-algs.txt \
 	data/sentence-detector/EnglishSD.bin.gz \
 	data/wordnet/file_properties.xml \
