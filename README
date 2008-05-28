@@ -196,7 +196,7 @@ is data/relex-semantic-algs.txt.
 	- relex.morphy.Morphy: jwnl.jar, commons-logging.jar, WordNet
 	  data files (external)
 
-2) Relex Engine 
+2) RelEx Engine 
 
 	The relex engine is the main entry point for the system.
 	It is invoked from the command line by running "relex-engine.sh". It
@@ -207,6 +207,19 @@ is data/relex-semantic-algs.txt.
 	  number of parses where the relation was found.
 	- The raw relex output (the same produced by relation-extractor)
 	- Optionally, a dependency relation graph (in the PNG format)
+
+
+Using RelEx in custom code
+--------------------------
+The primary output of RelEx is the set of semantic relationships of a
+sentence. To obtain the list of these relationships, make a copy of
+src/java/relex/output/SimpleView.java, and customize it to provide 
+the relationships that you wish, in the format that you wish.
+
+The class src/java/relex/RelationExtractor.java should be considered 
+to be a large example program illustrating all of the various features
+of RelEx.  For custom applications, this class should be copied and
+modified as desired to fit the application.
 
 
 TODO
