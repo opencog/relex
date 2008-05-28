@@ -251,12 +251,22 @@ IDENTIFY_POSSESSIVE
 ; Done after morphology so that algorithms can match to word root forms
 ;
 ;
+; PP links identify past participles, in perfect aspect
+; Pv links identify past participles, in passive voice
 #TemplateActionAlg
 TENSE_PERFECT
 <LAB>=\PP\.*
 =
 <TENSE-LINK-FLAG> = T
 <F_R tense val> = perfect
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_PARTICIPLE
+<LAB>=\Pv\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = passive
 <F_R tense prev> = <F_L tense>
 ;
 #TemplateActionAlg
