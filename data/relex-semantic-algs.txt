@@ -33,7 +33,7 @@ POS_VERB
 ;
 #TemplateActionAlg
 POS_VERB_INVERTED
-<LAB> = \SI\.*|\O\.*|\PP\.*|\SXI\.*|\SFI\.*
+<LAB> = \SI\.*|\O\.*|\U\.*|\PP\.*|\SXI\.*|\SFI\.*
 <F_L POS> = WORD
 =
 <F_L POS> = verb
