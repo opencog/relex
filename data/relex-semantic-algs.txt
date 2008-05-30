@@ -723,7 +723,7 @@ DET-FLAG
 ;
 #TemplateActionAlg
 SINGULAR_OBJ
-<LAB> = \Os\.*
+<LAB> = \Os\.*|Us\.*
 <F_R DET-FLAG> = T
 <F_R num> = %
 =
@@ -731,7 +731,7 @@ SINGULAR_OBJ
 ;
 #TemplateActionAlg
 UNCOUNTABLE_OBJ
-<LAB> = \Os\.*
+<LAB> = \Os\.*|\Us\.*
 <F_R DET-FLAG> != T
 <F_R num> = %
 =
@@ -739,7 +739,7 @@ UNCOUNTABLE_OBJ
 ;
 #TemplateActionAlg
 PLURAL_OBJ
-<LAB> = \Op\.*
+<LAB> = \Op\.*|\Up\.*
 <F_R num> = %
 =
 <F_R num> = plural
