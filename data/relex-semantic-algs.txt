@@ -162,10 +162,23 @@ POS_ADV_INVERTED
 ;        conjunction, C link)
 ;   The word "yet" in "He crossed his heart, yet he lied."  
 ;        (coordinating conjunction, W link)
+;   The word "than" in "He earns more than I expected."
+;        (Z link)
 #TemplateActionAlg
 POS_CONJUNCTION_INVERTED
-<LAB> = \C\.*|\W\.*
+<LAB> = \C\.*|\W\.*|\Z\.*
 <F_L POS> = WORD
+=
+<F_L POS> = conjunction
+;
+; Override prep
+;   The second "as" in "He earns as much as I expected."
+;        (Z link), override prep identification from MV.
+; 
+#TemplateActionAlg
+POS_CONJUNCTION_INVERTED
+<LAB> = \Z\.*
+<F_L POS> = prep
 =
 <F_L POS> = conjunction
 ;
