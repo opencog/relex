@@ -157,6 +157,18 @@ POS_ADV_INVERTED
 =
 <F_L POS> = adv
 ;
+; Identify a conjuction:
+;   The word "after" in "He spoke after he ate." (subordinating 
+;        conjunction, C link)
+;   The word "yet" in "He crossed his heart, yet he lied."  
+;        (coordinating conjunction, W link)
+#TemplateActionAlg
+POS_CONJUNCTION_INVERTED
+<LAB> = \C\.*|\W\.*
+<F_L POS> = WORD
+=
+<F_L POS> = conjunction
+;
 ; Identify a particle: 
 ;   The word "that" in "I heard that you fell."
 #TemplateActionAlg
