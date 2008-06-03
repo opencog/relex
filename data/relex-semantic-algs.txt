@@ -143,9 +143,12 @@ POS_ADJ_INVERTED
 <F_R POS> = %
 <F_R POS> = adj
 ;
+; Adverbs: 
+; "He plays better" uses MVb link.
+; "He hears more" uses the MVm link.
 #TemplateActionAlg
 POS_ADV
-<LAB> = \MVa\.*|\EB\.*
+<LAB> = \MVa\.*|\MVb\.*|\MVm\.*|\EB\.*
 <F_R POS> = WORD
 =
 <F_R POS> = adv
