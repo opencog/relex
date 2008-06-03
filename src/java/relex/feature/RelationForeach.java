@@ -86,11 +86,26 @@ public class RelationForeach
 			// 	System.out.println(key + " <-- " + fk.getValue());
 			//
 			// The NEXT pointer is enough to walk through all of the words
-			// in the the sentence; that is all we need to crawl the graph.
-			if (!key.equals("head-word") &&
-			    !key.equals("NEXT") &&
-			    !key.equals("ref") &&
-			    !key.equals("name")) continue;
+			// in the the sentence; however, that is not quite enough to 
+			// to crawl the entire graph. In particular, comparative links
+			// to _$crVar aren't linked by words. So follow all pointers,
+			// unless they are one of the particularly boring kinds below.
+			if (key.equals("str")) continue;
+			if (key.equals("orig_str")) continue;
+			if (key.equals("SIG")) continue;
+			if (key.equals("POS")) continue;
+			if (key.equals("pos")) continue;
+			if (key.equals("LAB")) continue;
+			if (key.equals("PREV")) continue;
+			if (key.equals("this")) continue;
+			if (key.startsWith("phr-")) continue;
+			if (key.startsWith("F_")) continue;
+			if (key.startsWith("lab_")) continue;
+			if (key.startsWith("linkL")) continue;
+			if (key.startsWith("linkR")) continue;
+			if (key.endsWith("-FLAG")) continue;
+			if (key.endsWith("_char")) continue;
+			if (key.endsWith("_links")) continue;
 
 			FeatureNode fn = f.get(key);
 
