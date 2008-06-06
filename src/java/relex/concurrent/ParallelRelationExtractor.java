@@ -85,6 +85,7 @@ public class ParallelRelationExtractor {
 		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
 			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
+			 lpc.setAllowSkippedWords(true);
 			 RelexContext context = new RelexContext(lpc, morphy);
 			 try {
 				pool.put(context);
