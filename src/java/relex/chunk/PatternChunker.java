@@ -68,7 +68,7 @@ public class PatternChunker extends LexicalChunker
 
 			// A list of clauses to match, in disjunctive normal form.
 			// Phrasal verbs: prepositonal verbs
-			// e.g. (VP look (PP after (NP them))) " We look after tehm."
+			// e.g. (VP look (PP after (NP them))) " We look after them."
 			matcher("(VP a (PP a (NP r)))");  // a subphrase of the below, which seems to cover most of it?
 			matcher("(VP a (VP a (PP a (NP r))))"); 
 			matcher("(VP a (VP a (PP a (S (VP r)))))");
@@ -110,7 +110,7 @@ public class PatternChunker extends LexicalChunker
 			matcher("(VP r (PP a (NP a (ADJP a (PP a (NP r))))))");
 
 			// Sentence phrases:
-			matcher("(NP (NP a) (PP a (NP r)))");
+			matcher("(NP (NP a) (PP a (NP *)))");
 			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
 
 			matcher("(S (VP a (NP a)))");
