@@ -87,6 +87,7 @@ public class RelationExtractor
 	/** Anaphora resolution */
 	public Antecedents antecedents;
 	private Hobbs hobbs;
+	public boolean do_anaphora_resolution;
 
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
@@ -109,6 +110,7 @@ public class RelationExtractor
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
+		do_anaphora_resolution = false;
 	}
 
 	/* ---------------------------------------------------------- */
@@ -188,8 +190,11 @@ public class RelationExtractor
 		}
 
 		// Perform anaphora resolution
-		hobbs.addParse(ri);
-		hobbs.resolve(ri);
+		if (do_anaphora_resolution)
+		{
+			hobbs.addParse(ri);
+			hobbs.resolve(ri);
+		}
 		if (verbosity > 0) reportTime("Relex processing: ");
 		return ri;
 	}
@@ -248,6 +253,7 @@ public class RelationExtractor
 	public static void main(String[] args) 
 	{
 		String callString = "RelationExtractor" + 
+			" [-a (perform anaphora resolution)]" +
 			" [-c (show plain output)]" +
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
@@ -266,6 +272,7 @@ public class RelationExtractor
 			" [-x (show cerego XML output)]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
+		flags.add("-a");
 		flags.add("-c");
 		flags.add("-f");
 		flags.add("-g");
@@ -324,6 +331,11 @@ public class RelationExtractor
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
+
+		if (commandMap.get("-a") != null)
+		{
+			re.do_anaphora_resolution = true;
+		}
 
 		EntityMaintainerFactory gem = null;
 		if (commandMap.get("-g") != null)
@@ -514,13 +526,18 @@ public class RelationExtractor
 
 					if (++numParses >= maxParses) break;
 				}
+
 				if (0 < ranker.getChunks().size())
 				{
 					System.out.println("\nLexical Chunks:\n" +
 					             ranker.toString());
 				}
-				System.out.println("\nAntecedent candidates:\n"
-				                   + re.antecedents.toString());
+
+				if (re.do_anaphora_resolution)
+				{
+					System.out.println("\nAntecedent candidates:\n"
+					                   + re.antecedents.toString());
+				}
 	
 				sentence = ds.getNextSentence();
 			}
