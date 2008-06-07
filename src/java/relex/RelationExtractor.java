@@ -265,6 +265,7 @@ public class RelationExtractor
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
+			" [-q (do NOT show relations)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
@@ -283,6 +284,7 @@ public class RelationExtractor
 		flags.add("--pa");
 		flags.add("--pb");
 		flags.add("--pc");
+		flags.add("-q");
 		flags.add("-r");
 		flags.add("-t");
 		flags.add("-v");
@@ -451,9 +453,12 @@ public class RelationExtractor
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
-					System.out.println("\n======\n");
-					System.out.println(SimpleView.printRelations(parse));
-					System.out.println("\n======\n");
+					if (commandMap.get("-q") == null)
+					{
+						System.out.println("\n======\n");
+						System.out.println(SimpleView.printRelations(parse));
+						System.out.println("\n======\n");
+					}
 	
 					if (commandMap.get("--pa") != null)
 					{
