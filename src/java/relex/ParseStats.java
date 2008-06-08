@@ -95,17 +95,19 @@ public class ParseStats
 		str += "\nWords per sentence: " + word_count.getMean();
 		str += "\nParses per sentence: " + parse_count.getMean();
 		str += "\nsentences with more than " + max_parses + " parses: " +
-		       parse_count.getOverflow() + " as percent: " + ovfl;
+		       parse_count.getOverflow() + " as percent: " + ovfl + "%";
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
 		       " of " + first_parse_confidence.getCount() + " parses";
-		str += "\nFirst parse hi/lo: " + first_parse_confidence.getHighestBin() +
-		       " / " + first_parse_confidence.getLowestBin();
+		str += "\nFirst parse hi/lo: " + first_parse_confidence.getAllTimeHigh() +
+		       " / " + first_parse_confidence.getAllTimeLow();
 		str += "\nConfidence of second parse: " + second_parse_confidence.getMean() +
 		       " of " + second_parse_confidence.getCount() + " parses";
 		str += "\nConfidence of third parse: " + third_parse_confidence.getMean() +
 		       " of " + third_parse_confidence.getCount() + " parses";
 		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
 		       " of " + fourth_parse_confidence.getCount() + " parses";
+
+		str += "\n";
 		return str;
 	}
 }
