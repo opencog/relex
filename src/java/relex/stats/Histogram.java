@@ -32,7 +32,7 @@ public class Histogram implements TruthValue
 	int underflow;
 	int overflow;
 
-	public Histogram(int _nbins, double low, double high)
+	private void init(int _nbins, double low, double high)
 	{
 		nbins = _nbins;
 		min_value = low;
@@ -46,6 +46,16 @@ public class Histogram implements TruthValue
 		}
 
 		rate = nbins / (max_value - min_value);
+	}
+
+	public Histogram(int _nbins, double low, double high)
+	{
+		init(_nbins, low, high);
+	}
+
+	public Histogram(int binmin, int binmax)
+	{
+		init(binmax-binmin, (double) binmin, (double) binmax);
 	}
 
 	public void bin(double value)
