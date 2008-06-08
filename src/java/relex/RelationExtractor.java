@@ -89,6 +89,9 @@ public class RelationExtractor
 	private Hobbs hobbs;
 	public boolean do_anaphora_resolution;
 
+	/** Statistics */
+	private ParseStats stats;
+
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
 
@@ -111,6 +114,8 @@ public class RelationExtractor
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
 		do_anaphora_resolution = false;
+
+		stats = new ParseStats();
 	}
 
 	/* ---------------------------------------------------------- */
@@ -296,7 +301,7 @@ public class RelationExtractor
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
 		String sentence = null;
-		int maxParses = 10;
+		int maxParses = 30;
 		int maxParseSeconds = 60;
 
 		// Check for optional command line arguments.
@@ -359,6 +364,7 @@ public class RelationExtractor
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
 
+		int sentence_count = 0;
 		while(true)
 		{
 			// If no sentence specified on the command line 
@@ -402,6 +408,9 @@ public class RelationExtractor
 				}
 
 				RelexInfo ri = re.processSentence(sentence,em);
+
+				sentence_count ++;
+				re.stats.bin(ri);
 	
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
@@ -542,6 +551,12 @@ public class RelationExtractor
 				{
 					System.out.println("\nAntecedent candidates:\n"
 					                   + re.antecedents.toString());
+				}
+
+				// Print out the stats every now and then.
+				if (sentence_count%10 == 0)
+				{
+					System.out.println ("\n" + re.stats.toString());
 				}
 	
 				sentence = ds.getNextSentence();

@@ -26,22 +26,28 @@ import relex.stats.Histogram;
  */
 public class ParseStats
 {
+	private int count;
 	private Histogram parse_count;
 	private Histogram word_count;
+
 	public ParseStats()
 	{
+		count = 0;
 		word_count = new Histogram(1,31);
 		parse_count = new Histogram(0,10);
 	}
 
 	public void bin(RelexInfo ri)
 	{
+		count ++;
 		parse_count.bin(ri.parsedSentences.size());
 	}
 
 	public String toString()
 	{
 		String str = "";
+		str += "Total sentences: " + count;
+		str += "Parses per sentence: " + parse_count.getMean();
 		return str;
 	}
 }
