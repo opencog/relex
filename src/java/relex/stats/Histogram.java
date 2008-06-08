@@ -29,13 +29,16 @@ public class Histogram implements TruthValue
 	private double min_value;
 	private double max_value;
 	private double rate;
-	private double delta;
 	private int[] bins;
 	int underflow;
 	int overflow;
 
 	double all_time_high;
 	double all_time_low;
+
+	double cnt;
+	double sum;
+	double sumsq;
 
 	private void init(int _nbins, double low, double high)
 	{
@@ -51,7 +54,6 @@ public class Histogram implements TruthValue
 		}
 
 		rate = nbins / (max_value - min_value);
-		delta = 1.0 / rate;
 
 		all_time_high = -1.0e38;
 		all_time_low = +1.0e38;
@@ -85,28 +87,28 @@ public class Histogram implements TruthValue
 
 		if (value < all_time_low) all_time_low = value;
 		if (value > all_time_high) all_time_high = value;
+
+		cnt ++;
+		sum += value;
+		sumsq += value*value;
 	}
 
 	public double getCount()
 	{
-		int cnt = 0;
-		for (int i=0; i<nbins; i++)
-		{
-			cnt += bins[i];
-		}
 		return cnt;
 	}
 
 	public double getMean()
 	{
-		int cnt = 0;
-		double avg = 0.0;
-		for (int i=0; i<nbins; i++)
-		{
-			avg += delta * (i + 0.5) * bins[i];
-			cnt += bins[i];
-		}
-		return (avg / ((double) cnt)) + min_value;
+		return sum / ((double) cnt);
+	}
+
+	public double getStdDev()
+	{
+		double var = sumsq / ((double) cnt);
+		double exp = getMean();
+		var -= exp*exp;
+		return Math.sqrt(var);
 	}
 
 	public double getConfidence()

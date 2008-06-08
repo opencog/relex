@@ -100,12 +100,16 @@ public class ParseStats
 		       " of " + first_parse_confidence.getCount() + " parses";
 		str += "\nFirst parse hi/lo: " + first_parse_confidence.getAllTimeHigh() +
 		       " / " + first_parse_confidence.getAllTimeLow();
+		str += " stddev: " + first_parse_confidence.getStdDev();
 		str += "\nConfidence of second parse: " + second_parse_confidence.getMean() +
 		       " of " + second_parse_confidence.getCount() + " parses";
+		str += ", stddev: " + second_parse_confidence.getStdDev();
 		str += "\nConfidence of third parse: " + third_parse_confidence.getMean() +
 		       " of " + third_parse_confidence.getCount() + " parses";
+		str += ", stddev: " + third_parse_confidence.getStdDev();
 		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
 		       " of " + fourth_parse_confidence.getCount() + " parses";
+		str += ", stddev: " + fourth_parse_confidence.getStdDev();
 
 		str += "\n";
 		return str;
