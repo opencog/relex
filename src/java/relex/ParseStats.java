@@ -19,7 +19,10 @@ package relex;
 import java.lang.Math;
 import java.lang.String;
 
+import relex.feature.FeatureNode;
+import relex.feature.RelationCallback;
 import relex.stats.Histogram;
+
 
 /**
  * This class collects a miscellany of statistics about a parsed text.
@@ -38,6 +41,10 @@ public class ParseStats
 	private Histogram third_parse_confidence;
 	private Histogram fourth_parse_confidence;
 
+	private Histogram relations;
+	private int relcnt;
+	private Histogram tree_depth;
+
 	public ParseStats()
 	{
 		count = 0;
@@ -51,6 +58,8 @@ public class ParseStats
 		second_parse_confidence = new Histogram(20, 0.0, 1.0);
 		third_parse_confidence = new Histogram(20, 0.0, 1.0);
 		fourth_parse_confidence = new Histogram(20, 0.0, 1.0);
+		relations = new Histogram(1, 21);
+		tree_depth = new Histogram(1, 21);
 	}
 
 	public void bin(RelexInfo ri)
@@ -78,6 +87,25 @@ public class ParseStats
 		if (4 <= nparses)
 			fourth_parse_confidence.bin(ri.parsedSentences.get(3).getTruthValue().getConfidence());
 
+		// Count average number of relations per sentence.
+		// But only for the first, most high-confidence parse.
+		relcnt = 0;
+		RelCount rcnt = new RelCount();
+		fs.foreach(rcnt);
+		relations.bin(relcnt);
+
+		tree_depth.bin(fs.getPhraseTree().getDepth());
+	}
+
+	private class RelCount implements RelationCallback
+	{
+		public Boolean UnaryRelationCB(FeatureNode from, String rel) { return false; }
+		public Boolean BinaryHeadCB(FeatureNode from) { return false; }
+		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
+		{
+			relcnt ++;
+			return false;
+		}
 	}
 
 	public String toString()
@@ -110,6 +138,10 @@ public class ParseStats
 		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
 		       " of " + fourth_parse_confidence.getCount() + " parses";
 		str += ", stddev: " + fourth_parse_confidence.getStdDev();
+		str += "\nRelations per parse: " + relations.getMean() +
+		       " stddev: " + relations.getStdDev();
+		str += "\nTree depth per parse: " + tree_depth.getMean() +
+		       " stddev: " + tree_depth.getStdDev();
 
 		str += "\n";
 		return str;
