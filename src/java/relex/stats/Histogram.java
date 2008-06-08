@@ -76,14 +76,15 @@ public class Histogram implements TruthValue
 		if (b < 0)
 		{
 			underflow ++;
-			return;
 		}
-		if (b >= nbins)
+		else if (b >= nbins)
 		{
 			overflow ++;
-			return;
 		}
-		bins[b] ++;
+		else
+		{
+			bins[b] ++;
+		}
 
 		if (value < all_time_low) all_time_low = value;
 		if (value > all_time_high) all_time_high = value;

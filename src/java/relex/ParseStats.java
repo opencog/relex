@@ -50,7 +50,7 @@ public class ParseStats
 		count = 0;
 		word_count = new Histogram(1,31);
 
-		max_parses = 10;
+		max_parses = 30;
 		parse_count = new Histogram(0,max_parses);
 		failed_parses = 0;
 
