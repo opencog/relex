@@ -28,6 +28,7 @@ public class Histogram implements TruthValue
 	private double min_value;
 	private double max_value;
 	private double rate;
+	private double delta;
 	private int[] bins;
 	int underflow;
 	int overflow;
@@ -46,6 +47,7 @@ public class Histogram implements TruthValue
 		}
 
 		rate = nbins / (max_value - min_value);
+		delta = 1.0 / rate;
 	}
 
 	public Histogram(int _nbins, double low, double high)
@@ -89,7 +91,6 @@ public class Histogram implements TruthValue
 	{
 		int cnt = 0;
 		double avg = 0.0;
-		double delta = 1.0 / rate;
 		for (int i=0; i<nbins; i++)
 		{
 			avg += delta * (i + 0.5) * bins[i];
@@ -105,11 +106,12 @@ public class Histogram implements TruthValue
 
 	public double getLowestBin()
 	{
+		if (underflow != 0) return min_value;
 		for (int i=0; i<nbins; i++)
 		{
 			if (bins[i] != 0)
 			{
-				return ((double) i) / rate + min_value;
+				return ((double) i) * delta + min_value;
 			}
 		}
 		return max_value;
@@ -117,14 +119,24 @@ public class Histogram implements TruthValue
 
 	public double getHighestBin()
 	{
+		if (overflow != 0) return max_value;
 		for (int i=nbins-1; i>=0; i--)
 		{
 			if (bins[i] != 0)
 			{
-				return ((double) i+1) / rate + min_value;
+				return ((double) i+1) * delta + min_value;
 			}
 		}
 		return min_value;
+	}
+
+	public int getOverflow()
+	{
+		return overflow;
+	}
+	public int getUnderflow()
+	{
+		return underflow;
 	}
 }
 

@@ -30,6 +30,7 @@ public class ParseStats
 {
 	private int count;
 	private Histogram parse_count;
+	private int max_parses;
 	private Histogram word_count;
 	private int failed_parses;
 	private Histogram first_parse_confidence;
@@ -41,7 +42,9 @@ public class ParseStats
 	{
 		count = 0;
 		word_count = new Histogram(1,31);
-		parse_count = new Histogram(0,10);
+
+		max_parses = 10;
+		parse_count = new Histogram(0,max_parses);
 		failed_parses = 0;
 
 		first_parse_confidence = new Histogram(20, 0.0, 1.0);
@@ -81,12 +84,18 @@ public class ParseStats
 	{
 		double failed = 100.0 * ((double) failed_parses) / ((double) count);
 		int pf = (int) Math.floor(failed+0.5);
+
+		double overflow = 100.0 * ((double) parse_count.getOverflow()) / ((double) count);
+		int ovfl = (int) Math.floor(overflow+0.5);
+
 		String str = "";
 		str += "\nTotal sentences: " + count;
 		str += "\nFailed parses: " + failed_parses;
 		str += " Percent failed: " + pf + "%";
 		str += "\nWords per sentence: " + word_count.getMean();
 		str += "\nParses per sentence: " + parse_count.getMean();
+		str += "\nsentences with more than " + max_parses + " parses: " +
+		       parse_count.getOverflow() + " as percent: " + ovfl;
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
 		       " of " + first_parse_confidence.getCount() + " parses";
 		str += "\nFirst parse hi/lo: " + first_parse_confidence.getHighestBin() +
