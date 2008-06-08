@@ -32,6 +32,8 @@ import relex.tree.PhraseTree;
 public class RelationChunker extends LexicalChunker
 {
 	static final int debug = 0;
+	static final int minwords = 3;
+	static final int maxwords = 5;
 	
 	public void findChunks(ParsedSentence parse)
 	{
@@ -70,7 +72,8 @@ public class RelationChunker extends LexicalChunker
 
 			PhraseTree pt = new PhraseTree(fm);
 			int breadth = pt.getBreadth();
-			if (breadth < 2) return false; // don't report single words.
+			if (breadth < minwords) return false; // don't report short chunks;
+			if (breadth > maxwords) return false; // don't report long chunks;
 
 			int degree = pt.getDegree();
 			if (degree <= 2) return false;  // don't report repeats!

@@ -405,7 +405,8 @@ public class PhraseTree
 	}
 
 	/**
-	 * Return the breadth of the tree
+	 * Return the breadth of the tree. This is equal to the number of
+	 * number of words in the tree.
 	 */
 	public static int getBreadth(FeatureNode word)
 	{
