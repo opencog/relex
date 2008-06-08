@@ -102,5 +102,29 @@ public class Histogram implements TruthValue
 	{
 		return 1.0;
 	}
+
+	public double getLowestBin()
+	{
+		for (int i=0; i<nbins; i++)
+		{
+			if (bins[i] != 0)
+			{
+				return ((double) i) / rate + min_value;
+			}
+		}
+		return max_value;
+	}
+
+	public double getHighestBin()
+	{
+		for (int i=nbins-1; i>=0; i--)
+		{
+			if (bins[i] != 0)
+			{
+				return ((double) i+1) / rate + min_value;
+			}
+		}
+		return min_value;
+	}
 }
 

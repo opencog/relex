@@ -554,7 +554,7 @@ public class RelationExtractor
 				}
 
 				// Print out the stats every now and then.
-				if (sentence_count%10 == 0)
+				if (sentence_count%5 == 0)
 				{
 					System.out.println ("\n" + re.stats.toString());
 				}

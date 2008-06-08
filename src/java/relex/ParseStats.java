@@ -16,7 +16,9 @@
 
 package relex;
 
+import java.lang.Math;
 import java.lang.String;
+
 import relex.stats.Histogram;
 
 /**
@@ -33,6 +35,7 @@ public class ParseStats
 	private Histogram first_parse_confidence;
 	private Histogram second_parse_confidence;
 	private Histogram third_parse_confidence;
+	private Histogram fourth_parse_confidence;
 
 	public ParseStats()
 	{
@@ -44,15 +47,16 @@ public class ParseStats
 		first_parse_confidence = new Histogram(20, 0.0, 1.0);
 		second_parse_confidence = new Histogram(20, 0.0, 1.0);
 		third_parse_confidence = new Histogram(20, 0.0, 1.0);
+		fourth_parse_confidence = new Histogram(20, 0.0, 1.0);
 	}
 
 	public void bin(RelexInfo ri)
 	{
 		count ++;
 		int nparses = ri.parsedSentences.size();
-		if (nparses <= 0) return;
-
 		parse_count.bin(nparses);
+
+		if (nparses <= 0) return;
 
 		ParsedSentence fs = ri.parsedSentences.get(0);
 		word_count.bin(fs.getNumWords());
@@ -68,22 +72,31 @@ public class ParseStats
 			second_parse_confidence.bin(ri.parsedSentences.get(1).getTruthValue().getConfidence());
 		if (3 <= nparses)
 			third_parse_confidence.bin(ri.parsedSentences.get(2).getTruthValue().getConfidence());
+		if (4 <= nparses)
+			fourth_parse_confidence.bin(ri.parsedSentences.get(3).getTruthValue().getConfidence());
 
 	}
 
 	public String toString()
 	{
+		double failed = 100.0 * ((double) failed_parses) / ((double) count);
+		int pf = (int) Math.floor(failed+0.5);
 		String str = "";
 		str += "\nTotal sentences: " + count;
 		str += "\nFailed parses: " + failed_parses;
+		str += " Percent failed: " + pf + "%";
 		str += "\nWords per sentence: " + word_count.getMean();
 		str += "\nParses per sentence: " + parse_count.getMean();
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
 		       " of " + first_parse_confidence.getCount() + " parses";
+		str += "\nFirst parse hi/lo: " + first_parse_confidence.getHighestBin() +
+		       " / " + first_parse_confidence.getLowestBin();
 		str += "\nConfidence of second parse: " + second_parse_confidence.getMean() +
 		       " of " + second_parse_confidence.getCount() + " parses";
 		str += "\nConfidence of third parse: " + third_parse_confidence.getMean() +
 		       " of " + third_parse_confidence.getCount() + " parses";
+		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
+		       " of " + fourth_parse_confidence.getCount() + " parses";
 		return str;
 	}
 }
