@@ -50,7 +50,7 @@ public class ParseStats
 		count = 0;
 		word_count = new Histogram(1,31);
 
-		max_parses = 30;
+		max_parses = 10;
 		parse_count = new Histogram(0,max_parses);
 		failed_parses = 0;
 
@@ -121,7 +121,8 @@ public class ParseStats
 		str += "\nFailed parses: " + failed_parses;
 		str += " Percent failed: " + pf + "%";
 		str += "\nWords per sentence: " + word_count.getMean();
-		str += "\nParses per sentence: " + parse_count.getMean();
+		str += "\nParses per sentence: " + parse_count.getMean() +
+		       " stddev: " + parse_count.getStdDev();
 		str += "\nsentences with more than " + max_parses + " parses: " +
 		       parse_count.getOverflow() + " as percent: " + ovfl + "%";
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
