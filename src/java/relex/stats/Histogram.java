@@ -140,12 +140,12 @@ public class Histogram implements TruthValue
 
 	public double getMedian()
 	{
-		int half = cnt / 2;
+		int half = (int) (cnt / 2.0);
 		int lt = underflow;
 		if (lt >= half) return min_value;
 		for (int i = 0; i<nbins; i++)
 		{
-			lt += bin[i];
+			lt += bins[i];
 			if (lt >= half) return (((double)i) + 0.5) * delta + min_value;
 		}
 		return max_value;
