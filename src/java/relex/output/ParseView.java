@@ -27,8 +27,6 @@ import relex.feature.FeatureNodeCallback;
  * As the same sentence can have multiple parses, this
  * class only displays a single, particular parse.
  *
- * This class is a part of the Cerego graph visualization project.
- *
  * The name of this class is likely to change to some better name,
  * suggestions welcome.
  *

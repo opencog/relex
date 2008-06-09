@@ -26,9 +26,6 @@ import relex.feature.FeatureNode;
  * format can be choosen to be "plain" human-readable
  * output, and XML output.
  *
- * This class is a part of the Cerego graph visualization
- * project.
- *
  * This class makes heavy use of String. If performance needs to be
  * improved, then a conversion to StringBuff should be considered.
  *
