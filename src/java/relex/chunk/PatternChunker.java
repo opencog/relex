@@ -125,6 +125,9 @@ public class PatternChunker extends LexicalChunker
 		{
 			boolean rc = PatternMatch.match(str, pt, callback);
 			if (rc) return;
+
+			// Accept the chunk as a whole, only if the callback 
+			// accepted all parts of it.
 			add(callback.curr_chunk);
 		}
 	}
