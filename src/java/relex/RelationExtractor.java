@@ -34,6 +34,8 @@ import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
 import relex.corpus.EntityMaintainerFactory;
 // import relex.corpus.QuotesParensSentenceDetector;
+import relex.corpus.DocSplitter;
+import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
