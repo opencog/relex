@@ -118,8 +118,9 @@ public class ParseStats
 
 		String str = "";
 		str += "\nTotal sentences: " + count;
-		str += "\nFailed parses: " + failed_parses;
-		str += " Percent failed: " + pf + "%";
+		str += "\nFailed parses: " + failed_parses +
+		       " Percent failed: " + pf + "%" +
+		       " (these are parses with one or more words skipped)";
 		str += "\nWords per sentence: " + word_count.getMean();
 		str += "\nParses per sentence mode: " + parse_count.getMode() +
 		       " median: " + parse_count.getMedian() +
@@ -127,6 +128,14 @@ public class ParseStats
 		       " stddev: " + parse_count.getStdDev();
 		str += "\nsentences with more than " + max_parses + " parses: " +
 		       parse_count.getOverflow() + " as percent: " + ovfl + "%";
+		str += "\nRelations per parse mode: " + relations.getMode() +
+		       " median: " + relations.getMedian() +
+		       " mean: " +  relations.getMean() +
+		       " stddev: " + relations.getStdDev();
+		str += "\nTree depth per parse mode: " + tree_depth.getMode() +
+		       " median: " + tree_depth.getMedian() +
+		       " mean: " +  tree_depth.getMean() +
+		       " stddev: " + tree_depth.getStdDev();
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
 		       " of " + first_parse_confidence.getCount() + " parses";
 		str += "\nFirst parse hi/lo: " + first_parse_confidence.getAllTimeHigh() +
@@ -141,10 +150,6 @@ public class ParseStats
 		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
 		       " of " + fourth_parse_confidence.getCount() + " parses";
 		str += ", stddev: " + fourth_parse_confidence.getStdDev();
-		str += "\nRelations per parse: " + relations.getMean() +
-		       " stddev: " + relations.getStdDev();
-		str += "\nTree depth per parse: " + tree_depth.getMean() +
-		       " stddev: " + tree_depth.getStdDev();
 
 		str += "\n";
 		return str;
