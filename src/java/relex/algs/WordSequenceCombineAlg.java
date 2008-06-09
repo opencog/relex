@@ -113,6 +113,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		rightNode.set("orig_str", new FeatureNode(bigNameWithSpaces));
 		rightNode.set("collocation_end", rightNode);
 		rightNode.set("collocation_start", leftNode);
+		rightNode.set("start_char", leftNode.get("start_char"));
 
 		// use morephology on the right node, just in case.
 		MorphyAlg m = new MorphyAlg();
