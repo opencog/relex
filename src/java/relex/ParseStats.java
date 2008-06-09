@@ -122,33 +122,33 @@ public class ParseStats
 		       " Percent failed: " + pf + "%" +
 		       " (these are parses with one or more words skipped)";
 		str += "\nWords per sentence: " + word_count.getMean();
-		str += "\nParses per sentence mode: " + parse_count.getMode() +
+		str += "\nParses per sentence, mode: " + parse_count.getMode() +
 		       " median: " + parse_count.getMedian() +
 		       " mean: " +  parse_count.getMean() +
 		       " stddev: " + parse_count.getStdDev();
 		str += "\nsentences with more than " + max_parses + " parses: " +
 		       parse_count.getOverflow() + " as percent: " + ovfl + "%";
-		str += "\nRelations per parse mode: " + relations.getMode() +
+		str += "\nRelations per parse, mode: " + relations.getMode() +
 		       " median: " + relations.getMedian() +
 		       " mean: " +  relations.getMean() +
 		       " stddev: " + relations.getStdDev();
-		str += "\nTree depth per parse mode: " + tree_depth.getMode() +
+		str += "\nTree depth per parse, mode: " + tree_depth.getMode() +
 		       " median: " + tree_depth.getMedian() +
 		       " mean: " +  tree_depth.getMean() +
 		       " stddev: " + tree_depth.getStdDev();
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
-		       " of " + first_parse_confidence.getCount() + " parses";
+		       " (out of " + first_parse_confidence.getCount() + " parses)";
 		str += "\nFirst parse hi/lo: " + first_parse_confidence.getAllTimeHigh() +
 		       " / " + first_parse_confidence.getAllTimeLow();
 		str += " stddev: " + first_parse_confidence.getStdDev();
 		str += "\nConfidence of second parse: " + second_parse_confidence.getMean() +
-		       " of " + second_parse_confidence.getCount() + " parses";
+		       " (out of " + second_parse_confidence.getCount() + " parses)";
 		str += ", stddev: " + second_parse_confidence.getStdDev();
 		str += "\nConfidence of third parse: " + third_parse_confidence.getMean() +
-		       " of " + third_parse_confidence.getCount() + " parses";
+		       " (out of " + third_parse_confidence.getCount() + " parses)";
 		str += ", stddev: " + third_parse_confidence.getStdDev();
 		str += "\nConfidence of fourth parse: " + fourth_parse_confidence.getMean() +
-		       " of " + fourth_parse_confidence.getCount() + " parses";
+		       " (out of " + fourth_parse_confidence.getCount() + " parses)";
 		str += ", stddev: " + fourth_parse_confidence.getStdDev();
 
 		str += "\n";
