@@ -24,6 +24,17 @@ import java.util.*;
  *     She yelled, "Go to hell!"
  * will be split up into "She yelled, BLOCK1"
  * and "Go to hell!"
+ *
+ * XXX This is currently broken as it fails to handle possesives correctly,
+ * e.g. 
+ *    John's sleeve was dirty. 
+ * breaks up into 
+ *     John BLOCK 
+ * and 
+ *     s sleeve was dirty.
+ * This needs to be fixed.
+ *
+ * This class also doesn't handle non-ASCII UTF8 quotes.
  */
 public class QuotesParensSentenceDetector
 {

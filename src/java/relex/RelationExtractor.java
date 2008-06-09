@@ -33,7 +33,7 @@ import relex.chunk.PhraseChunker;
 import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
 import relex.corpus.EntityMaintainerFactory;
-import relex.corpus.QuotesParensSentenceDetector;
+// import relex.corpus.QuotesParensSentenceDetector;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
 import relex.feature.LinkView;
@@ -355,8 +355,10 @@ public class RelationExtractor
 
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		// DocSplitter ds = DocSplitterFactory.create();
-		QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
+		DocSplitter ds = DocSplitterFactory.create();
+
+		// QuotesParens is currently broken, it fails to handle possesives.
+		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
 		ParseView ceregoView = new ParseView();
 		OpenCogXML opencog = new OpenCogXML();
