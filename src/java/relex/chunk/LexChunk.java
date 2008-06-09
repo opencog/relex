@@ -62,10 +62,15 @@ public class LexChunk extends Chunk
 			// Compare string values .. 
 			FeatureNode sfthis = fthis.get("orig_str");
 			FeatureNode sfoth = foth.get("orig_str");
-			if (sfthis == null || sfoth == null) return false;
-			String sthis = sfthis.getValue();
-			String soth = sfoth.getValue();
-			if (!sthis.equals(soth)) return false;
+
+			// If they are *both* null, that's OK, e.g. "New York"
+			if (!(sfthis == null && sfoth == null))
+			{
+				if (sfthis == null || sfoth == null) return false;
+				String sthis = sfthis.getValue();
+				String soth = sfoth.getValue();
+				if (!sthis.equals(soth)) return false;
+			}
 
 			// Make sure that the location in the sentence matches also.
 			FeatureNode tstart = fthis.get("start_char");
