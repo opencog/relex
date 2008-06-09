@@ -26,8 +26,8 @@ import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.feature.LinkableView;
 
-public class WordSequenceCombineAlg extends TemplateMatchingAlg {
-
+public class WordSequenceCombineAlg extends TemplateMatchingAlg
+{
 	static String nameLabelRegex = "G[a-z\\*]*"; // a-z or '*'
 
 	static String entityOrIdiomLabelRegex = "ID[A-Z]*[a-z\\*]*";
@@ -41,7 +41,8 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 	/*
 	 * Finds the next node
 	 */
-	FeatureNode nextNode(FeatureNode node, int dir, String labelRegex) {
+	FeatureNode nextNode(FeatureNode node, int dir, String labelRegex)
+	{
 		LinkableView linkable = new LinkableView(node);
 		for (int i = 0; i < linkable.numLinks(dir); i++) { // iterate right
 															// links
@@ -51,21 +52,24 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 				return (dir == directionLeft ? link.getLeft() : link.getRight());
 		}
 		return null;
-
 	}
 
-	boolean isRightMost(FeatureNode node, String labelRegex) {
+	boolean isRightMost(FeatureNode node, String labelRegex)
+	{
 		return nextNode(node, directionRight, labelRegex) == null;
 	}
 
-	FeatureNode getLeftMost(FeatureNode node, String labelRegex) {
+	FeatureNode getLeftMost(FeatureNode node, String labelRegex)
+	{
 		FeatureNode next = nextNode(node, directionLeft, labelRegex);
 		if (next == null)
 			return node;
 		return getLeftMost(next, labelRegex);
 	}
 
-	String collectNames(FeatureNode current, FeatureNode rightNode, String labelRegex, boolean shouldEraseStrAndRef) {
+	String collectNames(FeatureNode current, FeatureNode rightNode,
+	                    String labelRegex, boolean shouldEraseStrAndRef)
+	{
 		String name = current.get("str").getValue();
 		// use the original string in case it has been changed
 		if (current.get("orig_str") != null) {
@@ -82,10 +86,12 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg {
 		if (current == rightNode)
 			return name;
 		return name + "_"
-				+ collectNames(nextNode(current, directionRight, labelRegex), rightNode, labelRegex, shouldEraseStrAndRef);
+				+ collectNames(nextNode(current, directionRight, labelRegex),
+		                     rightNode, labelRegex, shouldEraseStrAndRef);
 	}
 
-	protected void applyTo(FeatureNode node, RelexContext context) {
+	protected void applyTo(FeatureNode node, RelexContext context)
+	{
 		FeatureNode rightNode = getTemplate().val("right");
 		if (rightNode != LinkView.getRight(node))
 			throw new RuntimeException("variable 'right' is not properly assigned");
