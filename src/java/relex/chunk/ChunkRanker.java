@@ -30,12 +30,10 @@ import relex.stats.SimpleTruthValue;
 
 public class ChunkRanker
 {
-	private int numParses;
 	private ArrayList<LexChunk> chunks;
 	
-	public ChunkRanker(int np)
+	public ChunkRanker()
 	{
-		numParses = np;
 		chunks = new ArrayList<LexChunk>();
 	}
 
@@ -55,6 +53,11 @@ public class ChunkRanker
 	 */
 	public void add(LexChunk ch, TruthValue weight)
 	{
+		add(ch, weight, 1.0);
+	}
+
+	public void add(LexChunk ch, TruthValue weight, double twiddle)
+	{
 		boolean not_found = true;
 		for (LexChunk c : chunks)
 		{
@@ -69,23 +72,31 @@ public class ChunkRanker
 
 		if (not_found)
 		{
-			ch.setTruthValue(new SimpleTruthValue());
+			// Technically, we should say "ch = ch.clone()" here ...
+			ch.setTruthValue(new SimpleTruthValue(0.0, 0.0));
 			chunks.add(ch);
 		}
 
+		// update the confidence of the chunk
 		TruthValue tv = ch.getTruthValue();
 		SimpleTruthValue stv = (SimpleTruthValue) tv;
 		double confidence = stv.getConfidence();
 
-		confidence += weight.getConfidence()/numParses;
+		confidence += twiddle * weight.getConfidence();
 
 		stv.setConfidence(confidence);
+	}
+
+	public void add(ArrayList<LexChunk> lst, TruthValue weight, double twiddle)
+	{
+		for (LexChunk ch : lst)
+			add(ch, weight, twiddle);
 	}
 
 	public void add(ArrayList<LexChunk> lst, TruthValue weight)
 	{
 		for (LexChunk ch : lst)
-			add(ch, weight);
+			add(ch, weight, 1.0);
 	}
 
 	/**

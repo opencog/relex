@@ -418,14 +418,21 @@ public class RelationExtractor
 	
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
-				ChunkRanker ranker = new ChunkRanker(np);
+
+				// chunk ranking stuff
+				ChunkRanker ranker = new ChunkRanker();
+				double parse_weight = 1.0 / ((double) np);
+				double votes = 1.0e-20;
+				if (commandMap.get("--pa") != null) votes += 1.0;
+				if (commandMap.get("--pb") != null) votes += 3.0;
+				if (commandMap.get("--pc") != null) votes += 1.0;
+				votes = 1.0 / votes;
+				votes *= parse_weight;
 
 				// Print output
 				int numParses = 0;
 				for (ParsedSentence parse: ri.parsedSentences)
 				{
-					ChunkRanker rollup = new ChunkRanker(1);
-
 					System.out.println(sentence);
 					System.out.println("\n====\n");
 					System.out.println("Parse " + (numParses+1) + 
@@ -479,7 +486,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PhraseChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks(), parse.getTruthValue());
+						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
 					}
 					if (commandMap.get("--pb") != null)
 					{
@@ -487,7 +494,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PatternChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks(), parse.getTruthValue());
+						ranker.add(chunker.getChunks(), parse.getTruthValue(), 3.0*votes);
 					}
 					if (commandMap.get("--pc") != null)
 					{
@@ -495,12 +502,8 @@ public class RelationExtractor
 						LexicalChunker chunker = new RelationChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						rollup.add(chunker.getChunks(), parse.getTruthValue());
+						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
 					}
-
-					// Now roll them up. Need to do this in two stages
-					// to get the probability calculations correct.
-					ranker.add(rollup.getChunks(), parse.getTruthValue());
 
 					if (commandMap.get("-c") != null)
 					{

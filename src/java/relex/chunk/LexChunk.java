@@ -47,6 +47,7 @@ public class LexChunk extends Chunk
 	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares 
 	 * structure to determine if they have congruent structure.
 	 * For lexical object, this means "the same words", and nothing more.
+	 * In particular, equality of the associated truth values is ignored.
 	 */
 	public boolean equals(Object other)
 	{
