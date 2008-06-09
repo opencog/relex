@@ -24,7 +24,7 @@ import java.lang.Math;
  */
 public class Histogram implements TruthValue
 {
-	// strict histogrammng stuff
+	// strict histograming stuff
 	private int nbins;
 	private double min_value;
 	private double max_value;
@@ -33,6 +33,8 @@ public class Histogram implements TruthValue
 	private int[] bins;
 	int underflow;
 	int overflow;
+
+	boolean integer_bins;
 
 	double all_time_high;
 	double all_time_low;
@@ -54,6 +56,7 @@ public class Histogram implements TruthValue
 			bins[i] = 0;
 		}
 
+		integer_bins = false;
 		rate = nbins / (max_value - min_value);
 		delta = 1.0/rate;
 
@@ -69,6 +72,7 @@ public class Histogram implements TruthValue
 	public Histogram(int binmin, int binmax)
 	{
 		init(binmax-binmin, (double) binmin, (double) binmax);
+		integer_bins = true;
 	}
 
 	public void bin(double value)
@@ -143,10 +147,13 @@ public class Histogram implements TruthValue
 		int half = (int) (cnt / 2.0);
 		int lt = underflow;
 		if (lt >= half) return min_value;
+
+		double midpoint = 0.5;
+		if (integer_bins) midpoint = 0.0;
 		for (int i = 0; i<nbins; i++)
 		{
 			lt += bins[i];
-			if (lt >= half) return (((double)i) + 0.5) * delta + min_value;
+			if (lt >= half) return (((double)i) + midpoint) * delta + min_value;
 		}
 		return max_value;
 	}
@@ -163,7 +170,9 @@ public class Histogram implements TruthValue
 				pcnt = bins[i];
 			}
 		}
-		return (((double)peak) + 0.5) * delta + min_value;
+		double midpoint = 0.5;
+		if (integer_bins) midpoint = 0.0;
+		return (((double)peak) + midpoint) * delta + min_value;
 	}
 
 }
