@@ -110,7 +110,7 @@ public class PatternChunker extends LexicalChunker
 			matcher("(VP r (PP a (NP a (ADJP a (PP a (NP r))))))");
 
 			// Sentence phrases:
-			matcher("(NP (NP a) (PP a (NP *)))");
+			matcher("(NP (NP a2) (PP a (NP *)))");
 			matcher("(NP (NP (NP a) a) (PP r (NP r)))");
 
 			matcher("(S (VP a (NP a)))");
@@ -123,7 +123,9 @@ public class PatternChunker extends LexicalChunker
 
 		private void matcher(String str)
 		{
-			PatternMatch.match(str, pt, callback);
+			boolean rc = PatternMatch.match(str, pt, callback);
+			if (rc) return;
+			add(callback.curr_chunk);
 		}
 	}
 
@@ -155,7 +157,6 @@ public class PatternChunker extends LexicalChunker
 			if (0 < debug) System.out.println("========== match! "+ pattern + " == " + pt.toString());
 
 			curr_chunk = new LexChunk();
-			add(curr_chunk);
 			saw_copula = false;
 		}
 		public Boolean PMCallback(String pattern, PhraseTree pt)
@@ -164,8 +165,18 @@ public class PatternChunker extends LexicalChunker
 				System.out.println("=== >" + pattern + "< == >" + 
                               PhraseTree.toString(pt.getCursor()) +
 				                  "< phr=" + pt.toString());
+
+			// "a" means "accept"
 			if (pattern.equals("a"))
 			{
+				chunkWords(pt.getCursor(), curr_chunk);
+			}
+
+			// "a2" means "accept, if two words or more"
+			// Terminate search if its less than two words.
+			else if (pattern.equals("a2"))
+			{
+				if (1 >= pt.getBreadth()) return true;
 				chunkWords(pt.getCursor(), curr_chunk);
 			}
 
