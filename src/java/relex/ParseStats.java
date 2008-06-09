@@ -121,7 +121,9 @@ public class ParseStats
 		str += "\nFailed parses: " + failed_parses;
 		str += " Percent failed: " + pf + "%";
 		str += "\nWords per sentence: " + word_count.getMean();
-		str += "\nParses per sentence: " + parse_count.getMean() +
+		str += "\nParses per sentence mode: " + parse_count.getMode() +
+		       " median: " + parse_count.getMedian() +
+		       " mean: " +  parse_count.getMean() +
 		       " stddev: " + parse_count.getStdDev();
 		str += "\nsentences with more than " + max_parses + " parses: " +
 		       parse_count.getOverflow() + " as percent: " + ovfl + "%";

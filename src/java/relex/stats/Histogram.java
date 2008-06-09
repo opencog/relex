@@ -29,6 +29,7 @@ public class Histogram implements TruthValue
 	private double min_value;
 	private double max_value;
 	private double rate;
+	private double delta;
 	private int[] bins;
 	int underflow;
 	int overflow;
@@ -54,6 +55,7 @@ public class Histogram implements TruthValue
 		}
 
 		rate = nbins / (max_value - min_value);
+		delta = 1.0/rate;
 
 		all_time_high = -1.0e38;
 		all_time_low = +1.0e38;
@@ -135,5 +137,34 @@ public class Histogram implements TruthValue
 	{
 		return underflow;
 	}
+
+	public double getMedian()
+	{
+		int half = cnt / 2;
+		int lt = underflow;
+		if (lt >= half) return min_value;
+		for (int i = 0; i<nbins; i++)
+		{
+			lt += bin[i];
+			if (lt >= half) return (((double)i) + 0.5) * delta + min_value;
+		}
+		return max_value;
+	}
+
+	public double getMode()
+	{
+		int pcnt = underflow;
+		int peak = -1;
+		for (int i = 0; i<nbins; i++)
+		{
+			if (bins[i] > pcnt)
+			{
+				peak = i;
+				pcnt = bins[i];
+			}
+		}
+		return (((double)peak) + 0.5) * delta + min_value;
+	}
+
 }
 
