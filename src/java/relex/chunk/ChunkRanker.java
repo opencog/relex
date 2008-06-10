@@ -100,12 +100,43 @@ public class ChunkRanker
 	}
 
 	/**
+	 * Sort the chunks in order of decreasing confidence.
+	 * Uses a simple-minded bubble sort.
+	 */
+	public void sort()
+	{
+		int len = chunks.size();
+		for (int i=0; i<len; i++)
+		{
+			LexChunk chi = chunks.get(i);
+			TruthValue tv = chi.getTruthValue();
+			SimpleTruthValue stv = (SimpleTruthValue) tv;
+			double ci = stv.getConfidence();
+			for (int j=i+1; j<len; j++)
+			{
+				LexChunk chj = chunks.get(j);
+				tv = chj.getTruthValue();
+				stv = (SimpleTruthValue) tv;
+				double cj = stv.getConfidence();
+				if (ci < cj)
+				{
+					chunks.set(i, chj);
+					chunks.set(j, chi);
+					chi = chj;
+					ci = cj;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Ad-hoc printed representation of the ranked contents.
 	 * Meant to be human readable, and nothing more.
 	 * May change from one Relex version to another, not stable.
 	 */
 	public String toString()
 	{
+		sort();
 		String str = "";
 		for (LexChunk ch: chunks)
 		{
