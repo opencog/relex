@@ -50,6 +50,8 @@ import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
+import relex.stats.TruthValue;
+import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseMarkup;
 
 /**
@@ -253,6 +255,26 @@ public class RelationExtractor
 		System.out.println("\n======\n");
 	}
 
+	// Punish chunks whose length is other than 3.
+	private static void discriminate(ChunkRanker ranker)
+	{
+		ArrayList<LexChunk> chunks = ranker.getChunks();
+		for (LexChunk ch : chunks)
+		{
+			int sz = ch.size();
+			double weight = sz-3;
+			if (weight < 0) weight = - weight;
+			weight = 1.0 - 0.2 * weight;
+
+			// twiddle the confidence of the chunk
+			TruthValue tv = ch.getTruthValue();
+			SimpleTruthValue stv = (SimpleTruthValue) tv;
+			double confidence = stv.getConfidence();
+			confidence *= weight;
+			stv.setConfidence(confidence);
+		}
+	}
+
 	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
@@ -424,7 +446,7 @@ public class RelationExtractor
 				double parse_weight = 1.0 / ((double) np);
 				double votes = 1.0e-20;
 				if (commandMap.get("--pa") != null) votes += 1.0;
-				if (commandMap.get("--pb") != null) votes += 3.0;
+				if (commandMap.get("--pb") != null) votes += 2.0;
 				if (commandMap.get("--pc") != null) votes += 1.0;
 				votes = 1.0 / votes;
 				votes *= parse_weight;
@@ -494,7 +516,7 @@ public class RelationExtractor
 						LexicalChunker chunker = new PatternChunker();
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), 3.0*votes);
+						ranker.add(chunker.getChunks(), parse.getTruthValue(), 2.0*votes);
 					}
 					if (commandMap.get("--pc") != null)
 					{
@@ -550,6 +572,7 @@ public class RelationExtractor
 
 				if (0 < ranker.getChunks().size())
 				{
+					discriminate(ranker);
 					System.out.println("\nLexical Chunks:\n" +
 					             ranker.toString());
 				}
