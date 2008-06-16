@@ -10,10 +10,7 @@
 # [-o (show opencog XML output)] [-v verbose]
 # [-n parse-number] [--maxParses N] [--maxParseSeconds N]
 
-VM_OPTS="\
-	-Xmx1024m \
-	-Djava.library.path=/usr/lib:/usr/local/lib \
-	"
+VM_OPTS="-Xmx1024m"
 
 # By default these resources are read from the jar file or from 
 # the default paths (the same defined below)
@@ -29,6 +26,7 @@ bin:\
 /usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/local/share/java/link-grammar-4.3.5.jar:\
+/usr/share/java/link-grammar-4.3.5.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
 /usr/share/java/xercesImpl.jar:\
