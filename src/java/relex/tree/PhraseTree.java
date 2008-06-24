@@ -410,6 +410,8 @@ public class PhraseTree
 	 */
 	public static int getBreadth(FeatureNode word)
 	{
+		if (word == null) return 0;
+
 		int cnt = -1;  // don't count the phrase type as part of the breadth
 		FeatureNode fn = word.get("phr-head");
 		while (fn != null)
