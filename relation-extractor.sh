@@ -10,6 +10,8 @@
 # [-o (show opencog XML output)] [-v verbose]
 # [-n parse-number] [--maxParses N] [--maxParseSeconds N]
 
+export LANG=en_US.UTF-8
+
 VM_OPTS="-Xmx1024m"
 
 # By default these resources are read from the jar file or from 
