@@ -56,14 +56,14 @@ import relex.tree.PhraseMarkup;
 
 /**
  * The RelationExtractor class provides the central processing
- * point for parsing sentences and extracting semantic 
+ * point for parsing sentences and extracting semantic
  * relationships from them.  The main() proceedure is usable
  * as a stand-alone document analyzer; it supports several
  * flags modifying the displayed output.
  *
  * The primarey interface is the processSentence() method,
  * which accepts one sentence at a time, parses it, and extracts
- * relationships from it. This method is stateful: it also 
+ * relationships from it. This method is stateful: it also
  * performs anaphora resolution.
  */
 public class RelationExtractor
@@ -77,14 +77,14 @@ public class RelationExtractor
 	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
 
 	/** The LinkParserClient to be used - this class isn't thread safe! */
-	private RelexContext context; 
-	
+	private RelexContext context;
+
 	/** Syntax processing */
 	private LinkParser parser;
 
 	/** Semantic processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
-	
+
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 
@@ -102,14 +102,14 @@ public class RelationExtractor
 	public RelationExtractor(boolean useSocket)
 	{
 		parser = new LinkParser();
-		
+
 		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
 		lpc.init();
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(lpc, morphy);
-		
+
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-		
+
 		setMaxParses(DEFAULT_MAX_PARSES);
 		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
@@ -161,7 +161,7 @@ public class RelationExtractor
 		hobbs = new Hobbs(antecedents);
 	}
 
-	public RelexInfo processSentence(String sentence) 
+	public RelexInfo processSentence(String sentence)
 	{
 		return processSentence(sentence, null);
 	}
@@ -172,7 +172,7 @@ public class RelationExtractor
 		starttime = System.currentTimeMillis();
 		if (entityMaintainer == null)
 		{
-			entityMaintainer = new EntityMaintainer(sentence, 
+			entityMaintainer = new EntityMaintainer(sentence,
 		                               new ArrayList<EntityInfo>());
 		}
 
@@ -187,7 +187,7 @@ public class RelationExtractor
 			// The actual relation extraction is done here.
 			sentenceAlgorithmApplier.applyAlgs(parse, context);
 
-			// Strip out the entity markup, so that when the 
+			// Strip out the entity markup, so that when the
 			// sentence is printed, we don't print gunk.
 			entityMaintainer.repairSentence(parse.getLeft());
 
@@ -279,9 +279,9 @@ public class RelationExtractor
 	/**
 	 * Main entry point
 	 */
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
-		String callString = "RelationExtractor" + 
+		String callString = "RelationExtractor" +
 			" [-a (perform anaphora resolution)]" +
 			" [-c (show plain output)]" +
 			" [-f (show frame output)]" +
@@ -331,10 +331,10 @@ public class RelationExtractor
 		// Check for optional command line arguments.
 		try
 		{
-			maxParses = commandMap.get("-n") != null ? 
+			maxParses = commandMap.get("-n") != null ?
 				Integer.parseInt(commandMap.get("-n").toString()) : 1;
 
-			sentence = commandMap.get("-s") != null ? 
+			sentence = commandMap.get("-s") != null ?
 				commandMap.get("-s").toString() : null;
 
 			maxParseSeconds = commandMap.get("--maxParseSeconds") != null ?
@@ -393,14 +393,14 @@ public class RelationExtractor
 		int sentence_count = 0;
 		while(true)
 		{
-			// If no sentence specified on the command line 
+			// If no sentence specified on the command line
 			// (with the "-s" flag), then read it from stdin.
 			while (sentence == null)
 			{
 				System.out.print("% ");
 				try {
 					sentence = stdin.readLine();
-					if ((sentence == null) || "END.".equals(sentence)) 
+					if ((sentence == null) || "END.".equals(sentence))
 					{
 						System.out.println("Bye.");
 						if (commandMap.get("-o") != null)
@@ -416,7 +416,7 @@ public class RelationExtractor
 					System.err.println("Error reading sentence from the standard input!");
 				}
 
-				// Buffer up input text, and wait for a whole, 
+				// Buffer up input text, and wait for a whole,
 				// complete sentence before continuing.
 				ds.addText(sentence + " ");
 				sentence = ds.getNextSentence();
@@ -437,7 +437,7 @@ public class RelationExtractor
 
 				sentence_count ++;
 				re.stats.bin(ri);
-	
+
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
 
@@ -457,7 +457,7 @@ public class RelationExtractor
 				{
 					System.out.println(sentence);
 					System.out.println("\n====\n");
-					System.out.println("Parse " + (numParses+1) + 
+					System.out.println("Parse " + (numParses+1) +
 					             " of " + ri.parsedSentences.size());
 
 					if (commandMap.get("-r") != null)
@@ -466,7 +466,7 @@ public class RelationExtractor
 						System.out.println(RawView.printZHeads(parse.getLeft()));
 						System.out.println("\n======\n");
 					}
-	
+
 					if (commandMap.get("-t") != null)
 						System.out.println("\n" + parse.getPhraseString());
 
@@ -501,7 +501,7 @@ public class RelationExtractor
 						System.out.println(SimpleView.printRelations(parse));
 						System.out.println("\n======\n");
 					}
-	
+
 					if (commandMap.get("--pa") != null)
 					{
 						System.out.println("Phrase tree-based lexical chunks:");
@@ -588,7 +588,7 @@ public class RelationExtractor
 				{
 					System.out.println ("\n" + re.stats.toString());
 				}
-	
+
 				sentence = ds.getNextSentence();
 			}
 			if (commandMap.get("-s") != null) break;
