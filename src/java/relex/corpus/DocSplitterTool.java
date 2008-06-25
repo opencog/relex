@@ -13,39 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package relex;
+package relex.corpus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 
+import relex.CommandLineArgParser;
+
 /**
- * The DocSplitterTool class provides the central processing
- * point for parsing sentences and extracting semantic
- * relationships from them.  The main() proceedure is usable
- * as a stand-alone document analyzer; it supports several
- * flags modifying the displayed output.
- *
- * The primarey interface is the processSentence() method,
- * which accepts one sentence at a time, parses it, and extracts
- * relationships from it. This method is stateful: it also
- * performs anaphora resolution.
+ * The DocSplitterTool class provides a command-line tool
+ * for splitting up a generic corpus into sentences, outputing one
+ * sentece per line.
  */
 public class DocSplitterTool
 {
-	public static final int verbosity = 1;
-
-	/* ---------------------------------------------------------- */
-	/* Constructors, etc. */
-
-	public DocSplitterTool()
-	{
-	}
-
-	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
 	 */
@@ -55,7 +39,7 @@ public class DocSplitterTool
 			" [-n (use the OpenNLP-based splitter)]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-n");
-		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
+		Map<String,String> commandMap = CommandLineArgParser.parse(args, null, flags);
 
 		String sentence = null;
 
@@ -73,6 +57,7 @@ public class DocSplitterTool
 		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
 		int sentence_count = 0;
+		int line_count = 0;
 		while(true)
 		{
 			// If no sentence specified on the command line
@@ -80,11 +65,17 @@ public class DocSplitterTool
 			while (sentence == null)
 			{
 				System.out.print("% ");
-				try {
+				try
+				{
 					sentence = stdin.readLine();
-				} catch (IOException e) {
+					line_count++;
+				}
+				catch (IOException e)
+				{
 					System.err.println("Error reading sentence from the standard input!");
 				}
+
+				if (sentence == null) return;
 
 				// Buffer up input text, and wait for a whole,
 				// complete sentence before continuing.
@@ -94,6 +85,7 @@ public class DocSplitterTool
 
 			while (sentence != null)
 			{
+				sentence_count ++;
 				System.out.println("SENTENCE: ["+sentence+"]");
 
 				sentence = ds.getNextSentence();
