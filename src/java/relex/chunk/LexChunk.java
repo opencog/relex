@@ -83,16 +83,9 @@ public class LexChunk extends Chunk
 		return true;
 	}
 
-	/**
-	 * A very simple output routine. It is meant to provide
-	 * common-sense, human readable output, rahter than a fixed,
-	 * computer-paraable format. It is subject to change from one
-	 * relex release to another.
-	 */
-	public String toString()
+	public String getChunkString()
 	{
-		// First, print out the phrase itself.
-		String str = "Phrase: (";
+		String str = "";
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
@@ -104,10 +97,12 @@ public class LexChunk extends Chunk
 				str += sf.getValue();
 			}
 		}
-		str += ")";
+		return str;
+	}
 
-		// Next, print out the character ranges.
-		str += "      Character ranges: ";
+	public String getCharRanges()
+	{
+		String str = "";
 		int chunk_start = -1;
 		int chunk_end = -1;
 		for (int i=0; i<chunk.size(); i++)
@@ -150,6 +145,25 @@ public class LexChunk extends Chunk
 		{
 			str += "["+ chunk_start + "-" + chunk_end + "]";
 		}
+		return str;
+	}
+
+	/**
+	 * A very simple output routine. It is meant to provide
+	 * common-sense, human readable output, rahter than a fixed,
+	 * computer-paraable format. It is subject to change from one
+	 * relex release to another.
+	 */
+	public String toString()
+	{
+		// First, print out the phrase itself.
+		String str = "Phrase: (";
+		str += getChunkString();
+		str += ")";
+
+		// Next, print out the character ranges.
+		str += "      Character ranges: ";
+		str += getCharRanges();
 		return str;
 	}
 }
