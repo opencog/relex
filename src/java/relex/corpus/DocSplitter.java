@@ -1,4 +1,3 @@
-package relex.corpus;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.corpus;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.corpus;
 
 import java.util.List;
 
@@ -50,58 +51,59 @@ public interface DocSplitter
 	String DEFAULT_ENGLISH_FILENAME =
 	        "data/sentence-detector/EnglishSD.bin.gz";
 
-  /**
-   * Sets up
-   * @param emf for example, data/sentence-detector/EnglishSD.bin.gz
-   * @see #DEFAULT_ENGLISH_FILENAME
-   */
-  void setEnglishModelFilename(String emf);
-
-  /**
-   * Gets the setting
-   * @return file path
-   */
-  String getEnglishModelFilename();
+	/**
+	 * Sets up
+	 * @param emf for example, data/sentence-detector/EnglishSD.bin.gz
+	 * @see #DEFAULT_ENGLISH_FILENAME
+	 */
+	void setEnglishModelFilename(String emf);
 
 	/**
-	 * Used to prevent overzelous sentence detectors which have recognizable idiosyncracies
-   * @param s ...
-   * @param start ...
-   * @param end ...
-   * @return false if break is unacceptable
-   */
-  boolean acceptableBreak(String s, int start, int end);
+	 * Gets the setting
+	 * @return file path
+	 */
+	String getEnglishModelFilename();
+
+	/**
+	 * Used to prevent overzelous sentence detectors which have 
+	 * recognizable idiosyncracies
+	 * @param s ...
+	 * @param start ...
+	 * @param end ...
+	 * @return false if break is unacceptable
+	 */
+	boolean acceptableBreak(String s, int start, int end);
 
 	/**
 	 * Adds more text to the buffer.
 	 * This allows this class to be used in FIFO mode: text is added with
 	 * this call, and sentences are extracted with the getNextSentence() call.
-   * @param newText text to be added
-   */
-  void addText(String newText);
+	 * @param newText text to be added
+	 */
+	void addText(String newText);
 
 	/**
 	 * Clears out the sentence buffer.
 	 */
-  void clearBuffer();
+	void clearBuffer();
 
 	/**
 	 * Gets the next sentence out of the buffered text.
 	 * @return null if there are no complete sentences in the buffer.
 	 */
-  String getNextSentence();
-
-	/**
-	 * Splits a document text string into sentences.
-   * @param docText text to be split
-   * @return a list of sentence start and end-points
-   */
-  List<TextInterval> process(String docText);
+	String getNextSentence();
 
 	/**
 	 * Splits a document text string into sentences.
 	 * @param docText text to be split
-   * @return a list of sentence strings.
+	 * @return a list of sentence start and end-points
 	 */
-  List<String> split(String docText);
+	List<TextInterval> process(String docText);
+
+	/**
+	 * Splits a document text string into sentences.
+	 * @param docText text to be split
+	 * @return a list of sentence strings.
+	 */
+	List<String> split(String docText);
 }
