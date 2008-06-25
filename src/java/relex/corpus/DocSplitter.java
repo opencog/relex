@@ -35,35 +35,9 @@ import java.util.List;
  * complete sentence yet, by calling getNextSentence().  Calls
  * to each of these routines can be arbitrarily alternated, with
  * sentence fragments buffered up.
- *
- * This is a convenience wrapper around the opennlp toolkit;
- * it fixes some bugs encountered there, and provides a more
- * convenient interface.
- *
- * Refactored, expanded version of ord.disco.taca.SentenceAnnotator
- *
- * XXX known bugs:
- * fails to recognize exclamation mark as end of sentence, unless
- * it is preceeded by white space.
  */
 public interface DocSplitter
 {
-	String DEFAULT_ENGLISH_FILENAME =
-	        "data/sentence-detector/EnglishSD.bin.gz";
-
-	/**
-	 * Sets up
-	 * @param emf for example, data/sentence-detector/EnglishSD.bin.gz
-	 * @see #DEFAULT_ENGLISH_FILENAME
-	 */
-	void setEnglishModelFilename(String emf);
-
-	/**
-	 * Gets the setting
-	 * @return file path
-	 */
-	String getEnglishModelFilename();
-
 	/**
 	 * Used to prevent overzelous sentence detectors which have 
 	 * recognizable idiosyncracies

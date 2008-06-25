@@ -63,6 +63,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 		// The NLP toolkit seems to work fine with Dr., Mrs. etc.
 		// but chokes on Ms.
 		capitalizedUnacceptableSentenceEnds = new HashSet<String>();
+		capitalizedUnacceptableSentenceEnds.add("Ms.");
 		capitalizedUnacceptableSentenceEnds.add("MS.");
 		capitalizedUnacceptableSentenceEnds.add("MR.");
 	}
@@ -107,6 +108,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	}
 
 	/* --------------------------------------------------------------- */
+
 	public void setEnglishModelFilename(String emf)
 	{
 		englishModelFilename = emf;
