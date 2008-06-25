@@ -27,7 +27,7 @@ import org.linkgrammar.LinkGrammar;
 
 public class LinkParserJNINewClient extends LinkParserClient
 {
-	private static final int verbosity = 1;
+	private static final int verbosity = 0;
 
 	private static LinkParserJNINewClient singletonInstance = null;
 
@@ -71,7 +71,7 @@ public class LinkParserJNINewClient extends LinkParserClient
 
 	public void init(String linkGrammarDictionariesPath) {
 		super.init(linkGrammarDictionariesPath);
-		if (verbosity > 3) System.out.println("LinkParserJNINewClient: initializing.");
+		if (verbosity > 3) System.err.println("Info: LinkParserJNINewClient: initializing.");
 		LinkGrammar.init();
 	}
 
@@ -80,7 +80,7 @@ public class LinkParserJNINewClient extends LinkParserClient
 		Long starttime;
 		if (verbosity > 0)
 		{
-			if (verbosity > 3) System.out.println("parsing:" + sentence + "[end_sentence]");
+			if (verbosity > 3) System.err.println("Info: parsing:" + sentence + "[end_sentence]");
 			starttime = System.currentTimeMillis();
 		}
 		LinkGrammar.parse(sentence);
@@ -88,8 +88,8 @@ public class LinkParserJNINewClient extends LinkParserClient
 		{
 			Long now = System.currentTimeMillis();
 			Long elapsed = now - starttime;
-			System.out.println("Link parse time: " + elapsed + " milliseconds");
-			if (verbosity > 3) System.out.println("parsing LinkGrammar.completed.");
+			System.err.println("Info: Link parse time: " + elapsed + " milliseconds");
+			if (verbosity > 3) System.err.println("Info: Parsing LinkGrammar.completed.");
 		}
 	}
 
