@@ -36,9 +36,13 @@ public class DocSplitterTool
 	public static void main(String[] args)
 	{
 		String callString = "DocSplitterTool" +
+			" [-h (show help)]";
 			" [-n (use the OpenNLP-based splitter)]";
+			" [-q (use the Quotes-Parens splitter)]";
 		HashSet<String> flags = new HashSet<String>();
+		flags.add("-h");
 		flags.add("-n");
+		flags.add("-q");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, null, flags);
 
 		String sentence = null;
@@ -49,7 +53,7 @@ public class DocSplitterTool
 			return;
 		}
 
-		// If sentence is not passed at command line, read from standard input:
+		// Read text from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		DocSplitter ds = DocSplitterFactory.create();
 
@@ -60,8 +64,8 @@ public class DocSplitterTool
 		int line_count = 0;
 		while(true)
 		{
-			// If no sentence specified on the command line
-			// (with the "-s" flag), then read it from stdin.
+			// Read lines from stdin until enough has been read to form
+			// one (or more) entire sentence(s).
 			while (sentence == null)
 			{
 				System.out.print("% ");
