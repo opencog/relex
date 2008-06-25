@@ -7,8 +7,8 @@ import java.io.InputStream;
 import net.didion.jwnl.JWNL;
 import relex.frame.Frame;
 
-public class MorphyFactory {
-	
+public class MorphyFactory
+{
 	public static final String MORPHY_IMPLEMENTATION_PROPERTY = "relex.morphy.Morphy";
 	public static final String DEFAULT_SINGLE_THREAD_IMPLEMENTATION = "relex.morphy.MorphyJWNL";
 	public static final String DEFAULT_MULTI_THREAD_IMPLEMENTATION = "relex.morphy.MapMorphy";
@@ -18,33 +18,42 @@ public class MorphyFactory {
 	private static final String JWNL_DIR_PROPERTIES_XML = "./data/wordnet";
 
 	/**
-	 * Obtains a Morphy instance. If the system property MORPHY_IMPLEMENTATION_PROPERTY
-	 * is defined, try to instantiate the class specified by it; if not, uses
-	 * the given class name.  
+	 * Obtains a Morphy instance. If the system property 
+	 * MORPHY_IMPLEMENTATION_PROPERTY is defined, try to instantiate
+	 * the class specified by it; if not, uses the given class name.  
 	 * 
 	 * @param defaultImplementation
 	 * @return
 	 */
-	public static Morphy getImplementation(String defaultImplementation)	{
+	public static Morphy getImplementation(String defaultImplementation)
+	{
 		Morphy instance = null; 
-		String implementationClassname = System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
-			if (implementationClassname == null) implementationClassname = defaultImplementation;
-			try {
-				Class<?> cl = Class.forName(implementationClassname);
-				instance = (Morphy)cl.newInstance();
-				instance.initialize();
-			}
-			catch (Exception ex) {
-				throw new RuntimeException("Unable to initialize Morphy algorithm:" + ex.toString(),ex);
-			}
+		String implementationClassname = 
+			System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
+		if (implementationClassname == null)
+			implementationClassname = defaultImplementation;
+		try
+		{
+			Class<?> cl = Class.forName(implementationClassname);
+			instance = (Morphy)cl.newInstance();
+			instance.initialize();
+		}
+		catch (Exception ex)
+		{
+			throw new RuntimeException(
+				"Error: Unable to initialize Morphy algorithm:" + 
+				ex.toString(),ex);
+		}
 		return instance;
 	}
 	
 	/**
-	 * By default returns the thread-safe Morphy, if there's no system property defined. 
+	 * By default returns the thread-safe Morphy, if there's no
+	 * system property defined. 
 	 * @return
 	 */
-	public static Morphy getImplementation(){
+	public static Morphy getImplementation()
+	{
 		return getImplementation(DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 	}
 	
@@ -52,8 +61,10 @@ public class MorphyFactory {
 	 * Used by JWNL-based Morphy implementations. 
 	 * @return 
 	 */
-	public static boolean initializeJWNL() {
-		try {
+	public static boolean initializeJWNL()
+	{
+		try
+		{
 			JWNL.initialize(
 					getJWNLConfigFileStream(
 							WORDNET_PROPERTY, 
@@ -63,7 +74,8 @@ public class MorphyFactory {
 			);
 			return true;
 		}
-		catch (Exception ex){
+		catch (Exception ex)
+		{
 			return false;
 		}
 	}
@@ -71,41 +83,50 @@ public class MorphyFactory {
 	/**
 	 * Determine the file that will be used. 
 	 * 
-	 * <ul>
-	 * <li>First try to load the the file in the directory defined by the system property.</li> 
-	 * <li>Then try to load the file as a resource in the jar file.</li>  
-	 * <li>Finally, tries the default location (equivalent to -Dproperty=default)</li>
-	 * </ul>
+	 * First try to load the the file in the directory defined by 
+	 * the system property. Then try to load the file as a resource
+	 * in the jar file. Finally, tries the default location 
+	 * (equivalent to -Dproperty=default)
+	 *
 	 * @param propertyName TODO
 	 * 
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	private static InputStream getJWNLConfigFileStream(String propertyName, String file, String defaultDir) throws FileNotFoundException{
+	private static InputStream getJWNLConfigFileStream (
+		            String propertyName,
+	               String file,
+	               String defaultDir)
+	throws FileNotFoundException
+	{
 			InputStream in = null; 
 			String property = System.getProperty(propertyName);
 			
-			if (property!=null) {
+			if (property != null)
+			{
 				in = new FileInputStream(property);
-				if (in!=null) {
-					System.out.println("Using file defined in " +propertyName +":"+property);
+				if (in != null)
+				{
+					System.err.println("Info: Using file defined in " +
+						propertyName + ":" + property);
 					return in;
 				}
 			}
 			
-			in = Frame.class.getResourceAsStream("/"+file);
-			if (in!=null) {
-				System.out.println("Using " + file +" from resource (jar file).");
+			in = Frame.class.getResourceAsStream("/" + file);
+			if (in != null)
+			{
+				System.err.println("Info: Using " + file +" from resource (jar file).");
 				return in;
 			}
 			
 			String defaultFile = defaultDir+"/"+file;
 			in = new FileInputStream(defaultFile);
-			if (in!=null) {
-				System.out.println("Using default "+defaultFile);
+			if (in != null)
+			{
+				System.err.println("Info: Using default "+ defaultFile);
 				return in;
 			}
-			
-			throw new RuntimeException("Error loading "+file+" file.");
+			throw new RuntimeException("Error loading " + file + " file.");
 	}
 }

@@ -101,12 +101,12 @@ public class Frame
 			if (rule.satisfiedByRelex(relex,varMapList)) {
 				fireRules.put(rule,varMapList);
 				varMapList = new VarMapList();
-				if (VERBOSE) System.out.println("\nRULE PASSES: " + rule.getRuleStr());
+				if (VERBOSE) System.err.println("\nRULE PASSES: " + rule.getRuleStr());
 			}
 		}
 
 		// Fire off the matching rules to create set of frame relationship results
-		if (VERBOSE) System.out.println("\nFiring Rules NEW count: " + fireRules.size() + "\n");
+		if (VERBOSE) System.err.println("\nFiring Rules NEW count: " + fireRules.size() + "\n");
 		//for (Rule rule: fireRules) {
 		for (Rule rule: fireRules.keySet()) {
 			relationships.addAll(rule.fire(fireRules.get(rule),VERBOSE));
@@ -174,21 +174,21 @@ public class Frame
 			if (dir!=null) {
 				in = new FileInputStream(dir+"/"+file);
 				if (in!=null) {
-					System.out.println("Using frame directory defined in frame.datapath:"+dir);
+					System.err.println("Info: Using frame directory defined in frame.datapath:"+dir);
 					return new BufferedReader(new InputStreamReader(in));
 				}
 			}
 			
 			in = Frame.class.getResourceAsStream("/"+file);
 			if (in!=null) {
-				System.out.println("Using " + file +" from resource (jar file).");
+				System.err.println("Info: Using " + file +" from resource (jar file).");
 				return new BufferedReader(new InputStreamReader(in));
 			}
 			
 			String defaultFile = defaultDir+"/"+file;
 			in = new FileInputStream(defaultFile);
-			if (in!=null) {
-				System.out.println("Using default "+defaultFile);
+			if (in != null) {
+				System.err.println("Info: Using default " + defaultFile);
 				return new BufferedReader(new InputStreamReader(in));
 			}
 			
@@ -250,20 +250,20 @@ public class Frame
 			}
 			conceptVarMap = newConceptVarMap;
 			if (VERBOSE) {
-				System.out.println("\nCONCEPT VAR LEGAL VALUES:");
+				System.err.println("\nCONCEPT VAR LEGAL VALUES:");
 				for (String key: conceptVarMap.keySet()) {
-					System.out.println("\n" + key + ":");
+					System.err.println("\n" + key + ":");
 					ArrayList<String> values = conceptVarMap.get(key);
 					for (String value: values) {
-						System.out.println("   - " + value);
+						System.err.println("   - " + value);
 					}
 				}
 			}
 			return msg + "Frame concept variables have been loaded.\n";
 		} catch (Exception e) {
 			String msg = "Error processing Frame concept vars file - file not loaded";
-			System.out.println(msg);
-			System.out.println(e);
+			System.err.println(msg);
+			System.err.println(e);
 			e.printStackTrace();
 			return "\n" + msg + "\n" + e;
 		}
@@ -310,7 +310,7 @@ public class Frame
 				}
 				else {
 					msg += "\n**** Warning: IMPROPERLY FORMED RULE ENCOUNTERED. ****\nRule: " + line.trim() + "\n";
-					System.out.println("**** IMPROPERLY FORMED RULE ENCOUNTERED at line " + i + ". ****\nRule: " + line.trim() + "\n");
+					System.err.println("**** IMPROPERLY FORMED RULE ENCOUNTERED at line " + i + ". ****\nRule: " + line.trim() + "\n");
 				}
 			}
 			rules = newRules;
@@ -340,7 +340,7 @@ public class Frame
 				if (checkedVars.add(varName) && !varName.startsWith("$var")) {
 					if (conceptVarMap.get(varName.toLowerCase())==null) {
 						msg += "\nWarning: No definition found for concept variable " + varName;
-						System.out.println("Warning: No definition found for concept variable " + varName);
+						System.err.println("Warning: No definition found for concept variable " + varName);
 					}
 				}
 			}
@@ -349,8 +349,8 @@ public class Frame
 			return msg + "\nFrame mapping rules have been loaded.\n";
 	 	} catch (Exception e) {
 			String msg = "Error processing Frame mapping rules file - file not loaded";
-			System.out.println(msg);
-			System.out.println(e);
+			System.err.println(msg);
+			System.err.println(e);
 			e.printStackTrace();
 			return "\n" + msg + "\n" + e;
 		}
