@@ -36,8 +36,8 @@ public class DocSplitterTool
 	public static void main(String[] args)
 	{
 		String callString = "DocSplitterTool" +
-			" [-h (show help)]";
-			" [-n (use the OpenNLP-based splitter)]";
+			" [-h (show help)]" +
+			" [-n (use the OpenNLP-based splitter)]" +
 			" [-q (use the Quotes-Parens splitter)]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-h");
@@ -68,7 +68,6 @@ public class DocSplitterTool
 			// one (or more) entire sentence(s).
 			while (sentence == null)
 			{
-				System.out.print("% ");
 				try
 				{
 					sentence = stdin.readLine();
@@ -90,7 +89,7 @@ public class DocSplitterTool
 			while (sentence != null)
 			{
 				sentence_count ++;
-				System.out.println("SENTENCE: ["+sentence+"]");
+				System.out.println(sentence);
 
 				sentence = ds.getNextSentence();
 			}
