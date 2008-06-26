@@ -56,16 +56,18 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	private static final String DEFAULT_ENGLISH_FILENAME =
 	        "data/sentence-detector/EnglishSD.bin.gz";
 
-	private static HashSet<String> capitalizedUnacceptableSentenceEnds;
+	private static HashSet<String> unacceptableSentenceEnds;
 
 	static
 	{
 		// The NLP toolkit seems to work fine with Dr., Mrs. etc.
 		// but chokes on Ms.
-		capitalizedUnacceptableSentenceEnds = new HashSet<String>();
-		capitalizedUnacceptableSentenceEnds.add("Ms.");
-		capitalizedUnacceptableSentenceEnds.add("MS.");
-		capitalizedUnacceptableSentenceEnds.add("MR.");
+		// Unfortunately, MS can mean "Multiple Sclerosis", and
+		// sentences can end with MS.
+		unacceptableSentenceEnds = new HashSet<String>();
+		unacceptableSentenceEnds.add("Ms.");
+		// unacceptableSentenceEnds.add("MS.");
+		unacceptableSentenceEnds.add("Mr.");
 	}
 
 	private static SentenceDetector detector;
@@ -127,11 +129,12 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	public boolean acceptableBreak(String s, int start, int end)
 	{
 		// if the string ends with "Ms." preceeded by whitespace
-		for (String endString : capitalizedUnacceptableSentenceEnds)
+		for (String endString : unacceptableSentenceEnds)
 		{
 			int len = endString.length();
-			if (end >= start + len && s.substring(end - len, end).toUpperCase().equals(endString)
-			    && (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) 
+			if (end >= start + len && 
+			    s.substring(end - len, end).equals(endString) &&
+			    (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) 
 			{
 				return false;
 			}
