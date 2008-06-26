@@ -179,7 +179,11 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 		if (0 == sentenceEnds.length) return null;
 
 		start = 0;
-		end = sentenceEnds[0];
+		for (int sentenceEnd : sentenceEnds)
+		{
+			end = sentenceEnd;
+			if (foundSentence(buffer)) break;
+		}
 		if (!foundSentence(buffer)) return null;
 
 		buffer = buffer.substring(trimmedEnd);
@@ -240,7 +244,6 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 			int prevstart = start;
 			start = end; // from previous loop iteration
 			end = sentenceEnd;
-
 			if (!foundSentence(docText))
 			{
 				// go back to previous start
