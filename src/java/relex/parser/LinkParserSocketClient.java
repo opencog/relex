@@ -1,4 +1,3 @@
-package relex.parser;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.parser;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.parser;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,10 @@ public class LinkParserSocketClient extends LinkParserClient
 		if (response != null)
 			restoreCommands.add(command);
 		return response;
+	}
+
+	public String getVersion() {
+		return exec(LinkParserProtocol.MSG_GET_VERSION);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {

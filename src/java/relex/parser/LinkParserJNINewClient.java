@@ -1,4 +1,3 @@
-package relex.parser;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.parser;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.parser;
 
 import org.linkgrammar.LinkGrammar;
 
@@ -41,6 +42,13 @@ public class LinkParserJNINewClient extends LinkParserClient
 
 	public static LinkParserJNINewClient getSingletonInstance() {
 		return singletonInstance;
+	}
+
+	public String getVersion() {
+		// XXX hack alert -- this requires link-grammar version 4.3.6 or
+		// newer! So, for now, fake it.
+		// LinkGrammar.getVersion();
+		return "link-grammar-4.3.5";
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {

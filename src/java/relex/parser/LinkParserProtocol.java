@@ -1,4 +1,3 @@
-package relex.parser;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,8 @@ package relex.parser;
  * limitations under the License.
  */
 
+package relex.parser;
+
 import relex.util.socket.ProcessProtocol;
 
 public class LinkParserProtocol extends ProcessProtocol
@@ -27,6 +28,8 @@ public class LinkParserProtocol extends ProcessProtocol
 	public static final String END_CHAR = "\0";
 
 	// VERBOSE version
+	public static final String MSG_GET_VERSION = "[getVersion]\0";
+
 	public static final String MSG_SET_MAX_PARSE_SECONDS = "[setMaxParseSeconds]\0";
 
 	public static final String MSG_SET_MAX_COST = "[setMaxCost]\0";
@@ -193,6 +196,8 @@ public class LinkParserProtocol extends ProcessProtocol
 			return makeMessage(client.getLinkLLabel(Integer.parseInt(arg)));
 		} else if (message.equals(MSG_GET_LINK_R_LABEL)) {
 			return makeMessage(client.getLinkRLabel(Integer.parseInt(arg)));
+		} else if (message.equals(MSG_GET_VERSION)) {
+			return makeMessage(client.getVersion());
 		} else if (message.equals(MSG_INIT)) {
 			if (null == arg || "".equals(arg))
 				client.init(System.getProperty("relex.linkparserpath"));

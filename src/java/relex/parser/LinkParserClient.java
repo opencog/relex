@@ -81,6 +81,8 @@ public abstract class LinkParserClient
 		if (linkGrammarDictionariesPath != null) LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
 	}
 
+	abstract public String getVersion();
+
 	abstract public boolean isPastTenseForm(String word);
 
 	abstract public boolean isEntity(String word);
