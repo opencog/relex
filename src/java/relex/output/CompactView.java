@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import relex.feature.FeatureNode;
+import relex.feature.FeatureNodeCallback;
+import relex.feature.LinkForeach;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
 import relex.RelexInfo;
@@ -135,7 +137,7 @@ public class CompactView
 		// Show the Link-grammar links
 		if (do_show_links)
 		{
-      	str += "      <links>" + printLinks(parse) +
+      	str += "      <links>\n" + printLinks(parse) +
 			       "      </links>\n";
 		}
 		str += "    </parse>\n";
@@ -214,9 +216,27 @@ public class CompactView
 	 */
 	private String printLinks(ParsedSentence parse)
 	{
-		String str = "";
-		return str;
+		LinkCB cb = new LinkCB();
+		cb.str = "";
+		LinkForeach.foreach(parse.getLeft(), cb);
+		return cb.str;
 	}
+
+	private class LinkCB implements FeatureNodeCallback
+	{
+		String str;
+		public Boolean FNCallback(FeatureNode fn)
+		{
+			str += fn.get("LAB").getValue() + "(";
+			FeatureNode fl = fn.get("F_L");
+			str += fl.get("index_in_sentence").getValue();
+			str += ", ";
+			FeatureNode fr = fn.get("F_R");
+			str += fr.get("index_in_sentence").getValue();
+			str += ")\n";
+			return false;
+		}
+	};
 
 	// -----------------------------------------------------------------
 	/**
