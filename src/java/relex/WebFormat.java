@@ -193,7 +193,7 @@ public class WebFormat
 	{
 		String callString = "WebFormat" +
 			" [-f (show frame output)]" +
-			" [-g (use GATE entity detector)]" +
+			" [-g (do not use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (do not show parse links)]" +
 			" [-m (do not show parse metadata)]" +
@@ -265,7 +265,7 @@ public class WebFormat
 		cv.setVersion(version);
 
 		EntityMaintainerFactory gem = null;
-		if (commandMap.get("-g") != null)
+		if (commandMap.get("-g") == null)
 		{
 			re.starttime = System.currentTimeMillis();
 			gem = EntityMaintainerFactory.get();
