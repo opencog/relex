@@ -220,13 +220,22 @@ public class CompactView
 		                                FeatureNode srcNode,
 		                                FeatureNode tgtNode)
 		{
+			String srcName = srcNode.get("name").getValue();
+			String tgtName = "";
+			FeatureNode tgt = tgtNode.get("name");
+			if (tgt != null)
+			{
+				tgtName = tgt.getValue();
+			}
+
 			srcNode = srcNode.get("nameSource");
-			String srcName = srcNode.get("index_in_sentence").getValue();
+			String srcIdx = srcNode.get("index_in_sentence").getValue();
 
 			tgtNode = tgtNode.get("nameSource");
-			String tgtName = tgtNode.get("index_in_sentence").getValue();
+			String tgtIdx = tgtNode.get("index_in_sentence").getValue();
 
-			str += relName + "(" + srcName + ", " + tgtName + ")\n";
+			str += relName + "(" + srcName + "[" + srcIdx + "], " +
+			       tgtName + "[" + tgtIdx + "])\n";
 			return false;
 		}
 
