@@ -23,14 +23,6 @@ import java.util.HashSet;
 import java.util.Map;
 
 import relex.algs.SentenceAlgorithmApplier;
-import relex.anaphora.Antecedents;
-import relex.anaphora.Hobbs;
-import relex.chunk.ChunkRanker;
-import relex.chunk.LexChunk;
-import relex.chunk.LexicalChunker;
-import relex.chunk.PatternChunker;
-import relex.chunk.PhraseChunker;
-import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
 import relex.corpus.EntityMaintainerFactory;
 // import relex.corpus.QuotesParensSentenceDetector;
@@ -63,8 +55,7 @@ import relex.tree.PhraseMarkup;
  *
  * The primarey interface is the processSentence() method,
  * which accepts one sentence at a time, parses it, and extracts
- * relationships from it. This method is stateful: it also
- * performs anaphora resolution.
+ * relationships from it.
  */
 public class WebFormat
 {
@@ -88,11 +79,6 @@ public class WebFormat
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 
-	/** Anaphora resolution */
-	public Antecedents antecedents;
-	private Hobbs hobbs;
-	public boolean do_anaphora_resolution;
-
 	/** Statistics */
 	private ParseStats stats;
 
@@ -115,9 +101,6 @@ public class WebFormat
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
 
 		phraseMarkup = new PhraseMarkup();
-		antecedents = new Antecedents();
-		hobbs = new Hobbs(antecedents);
-		do_anaphora_resolution = false;
 
 		stats = new ParseStats();
 	}
@@ -146,20 +129,6 @@ public class WebFormat
 	}
 
 	/* ---------------------------------------------------------- */
-
-	/**
-	 * Clear out the cache of old sentences.
-	 *
-	 * The Anaphora resolver keeps a list of sentences previously seen,
-	 * so that anaphora resolution can be done. When starting the parse
-	 * of a new text, this cache needs to be cleaned out. This is the
-	 * way to do so.
-	 */
-	public void clear()
-	{
-		antecedents.clear();
-		hobbs = new Hobbs(antecedents);
-	}
 
 	public RelexInfo processSentence(String sentence)
 	{
@@ -198,13 +167,6 @@ public class WebFormat
 			parse.simpleRankParse();
 		}
 
-		// Perform anaphora resolution
-		if (do_anaphora_resolution)
-		{
-			hobbs.addParse(ri);
-			hobbs.resolve(ri);
-		}
-		if (verbosity > 0) reportTime("Relex processing: ");
 		return ri;
 	}
 
@@ -236,45 +198,6 @@ public class WebFormat
 	// Provide some basic timing info
 	Long starttime;
 
-	private void reportTime(String msg)
-	{
-		Long now = System.currentTimeMillis();
-		Long elapsed = now - starttime;
-		starttime = now;
-		System.out.println(msg + elapsed + " millseconds");
-	}
-
-	/* --------------------------------------------------------- */
-
-	private static void prt_chunks(ArrayList<LexChunk> chunks)
-	{
-		for (LexChunk ch : chunks)
-		{
-			System.out.println(ch.toString());
-		}
-		System.out.println("\n======\n");
-	}
-
-	// Punish chunks whose length is other than 3.
-	private static void discriminate(ChunkRanker ranker)
-	{
-		ArrayList<LexChunk> chunks = ranker.getChunks();
-		for (LexChunk ch : chunks)
-		{
-			int sz = ch.size();
-			double weight = sz-3;
-			if (weight < 0) weight = - weight;
-			weight = 1.0 - 0.2 * weight;
-
-			// twiddle the confidence of the chunk
-			TruthValue tv = ch.getTruthValue();
-			SimpleTruthValue stv = (SimpleTruthValue) tv;
-			double confidence = stv.getConfidence();
-			confidence *= weight;
-			stv.setConfidence(confidence);
-		}
-	}
-
 	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
@@ -282,45 +205,23 @@ public class WebFormat
 	public static void main(String[] args)
 	{
 		String callString = "WebFormat" +
-			" [-a (perform anaphora resolution)]" +
-			" [-c (show plain output)]" +
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
 			" [-n parse-number]" +
-			" [-o (show opencog XML output)]" +
-			" [--pa (show phrase-based lexical chunks)]" +
-			" [--pb (show pattern-based lexical chunks)]" +
-			" [--pc (show relational lexical chunks)]" +
-			" [-q (do NOT show relations)]" +
-			" [-r (show raw output)]" +
-			" [-s Sentence (in quotes)]" +
 			" [-t (show parse tree)]" +
-			" [-v verbose]" +
-			" [-x (show cerego XML output)]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
-		flags.add("-a");
-		flags.add("-c");
 		flags.add("-f");
 		flags.add("-g");
 		flags.add("-h");
 		flags.add("-l");
 		flags.add("-m");
-		flags.add("-o");
-		flags.add("--pa");
-		flags.add("--pb");
-		flags.add("--pc");
-		flags.add("-q");
-		flags.add("-r");
 		flags.add("-t");
-		flags.add("-v");
-		flags.add("-x");
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
-		opts.add("-s");
 		opts.add("--maxParseSeconds");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
@@ -333,9 +234,6 @@ public class WebFormat
 		{
 			maxParses = commandMap.get("-n") != null ?
 				Integer.parseInt(commandMap.get("-n").toString()) : 1;
-
-			sentence = commandMap.get("-s") != null ?
-				commandMap.get("-s").toString() : null;
 
 			maxParseSeconds = commandMap.get("--maxParseSeconds") != null ?
 				Integer.parseInt(commandMap.get("--maxParseSeconds").toString()) : 60;
@@ -354,19 +252,10 @@ public class WebFormat
 			return;
 		}
 
-		// If generating OpenCog XML, delimit non-xml output.
-		if (commandMap.get("-o") != null)
-			System.out.print("data\n<!-- ");
-
 		WebFormat re = new WebFormat(false);
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
-
-		if (commandMap.get("-a") != null)
-		{
-			re.do_anaphora_resolution = true;
-		}
 
 		EntityMaintainerFactory gem = null;
 		if (commandMap.get("-g") != null)
@@ -374,7 +263,6 @@ public class WebFormat
 			re.starttime = System.currentTimeMillis();
 			gem = EntityMaintainerFactory.get();
 			gem.makeEntityMaintainer(""); // force initialization to measure initialization time
-			re.reportTime("Entity Detection Initialization: ");
 		}
 
 		// If sentence is not passed at command line, read from standard input:
@@ -430,7 +318,6 @@ public class WebFormat
 				{
 					re.starttime = System.currentTimeMillis();
 					em = gem.makeEntityMaintainer(sentence);
-					re.reportTime("Gate processing: ");
 				}
 
 				RelexInfo ri = re.processSentence(sentence,em);
@@ -440,16 +327,6 @@ public class WebFormat
 
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
-
-				// chunk ranking stuff
-				ChunkRanker ranker = new ChunkRanker();
-				double parse_weight = 1.0 / ((double) np);
-				double votes = 1.0e-20;
-				if (commandMap.get("--pa") != null) votes += 1.0;
-				if (commandMap.get("--pb") != null) votes += 2.0;
-				if (commandMap.get("--pc") != null) votes += 1.0;
-				votes = 1.0 / votes;
-				votes *= parse_weight;
 
 				// Print output
 				int numParses = 0;
@@ -495,59 +372,10 @@ public class WebFormat
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
-					if (commandMap.get("-q") == null)
-					{
-						System.out.println("\n======\n");
-						System.out.println(SimpleView.printRelations(parse));
-						System.out.println("\n======\n");
-					}
-
-					if (commandMap.get("--pa") != null)
-					{
-						System.out.println("Phrase tree-based lexical chunks:");
-						LexicalChunker chunker = new PhraseChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
-					}
-					if (commandMap.get("--pb") != null)
-					{
-						System.out.println("Pattern-matching lexical chunks:");
-						LexicalChunker chunker = new PatternChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), 2.0*votes);
-					}
-					if (commandMap.get("--pc") != null)
-					{
-						System.out.println("Relation-based lexical chunks:");
-						LexicalChunker chunker = new RelationChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
-					}
-
-					if (commandMap.get("-c") != null)
-					{
-						ceregoView.setParse(parse);
-						ceregoView.showXML(false);
-						System.out.println(ceregoView.printCerego());
-						System.out.println("\n======\n");
-					}
-					if (commandMap.get("-x") != null)
-					{
-						System.out.print("-->\n");
-						ceregoView.setParse(parse);
-						ceregoView.showXML(true);
-						System.out.println(ceregoView.printCerego());
-						System.out.println("\n<!-- ======\n");
-					}
 					if (commandMap.get("-f") != null)
 					{
-						re.starttime = System.currentTimeMillis();
 						String fin = SimpleView.printRelationsAlt(parse);
 						String[] fout = frame.process(fin);
-						re.reportTime("Frame processing: ");
 						for (int i=0; i < fout.length; i++) {
 							System.out.println(fout[i]);
 						}
@@ -555,43 +383,12 @@ public class WebFormat
 						System.out.println("\nFraming rules applied:\n");
 						System.out.println(frame.printAppliedRules());
 					}
-					if (commandMap.get("-o") != null)
-					{
-						System.out.print("-->\n");
-						opencog.setParse(parse);
-						System.out.println(opencog.toString());
-
-						char[] eot = new char[1];
-						eot[0] = 0x4;
-						System.out.println(new String (eot));
-						System.out.println("data\n<!-- ======\n");
-					}
 
 					if (++numParses >= maxParses) break;
 				}
 
-				if (0 < ranker.getChunks().size())
-				{
-					discriminate(ranker);
-					System.out.println("\nLexical Chunks:\n" +
-					             ranker.toString());
-				}
-
-				if (re.do_anaphora_resolution)
-				{
-					System.out.println("\nAntecedent candidates:\n"
-					                   + re.antecedents.toString());
-				}
-
-				// Print out the stats every now and then.
-				if (sentence_count%5 == 0)
-				{
-					System.out.println ("\n" + re.stats.toString());
-				}
-
 				sentence = ds.getNextSentence();
 			}
-			if (commandMap.get("-s") != null) break;
 		}
 	}
 }
