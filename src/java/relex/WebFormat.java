@@ -264,32 +264,22 @@ public class WebFormat
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		DocSplitter ds = DocSplitterFactory.create();
 
-		// QuotesParens is currently broken, it fails to handle possesives.
-		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
-
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
+
+		System.out.println(CompactView.header());
 
 		int sentence_count = 0;
 		while(true)
 		{
-			// If no sentence specified on the command line
-			// (with the "-s" flag), then read it from stdin.
+			// Read text from stdin.
 			while (sentence == null)
 			{
-				System.out.print("% ");
 				try {
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
 					{
-						System.out.println("Bye.");
-						if (commandMap.get("-o") != null)
-						{
-							System.out.print("-->\n");
-							char[] eot = new char[1];
-							eot[0] = 0x4;
-							System.out.println(new String (eot));
-						}
+						System.out.println(CompactView.footer());
 						return;
 					}
 				} catch (IOException e) {
@@ -304,7 +294,6 @@ public class WebFormat
 
 			while (sentence != null)
 			{
-				System.out.println("SENTENCE: ["+sentence+"]");
 				EntityMaintainer em = null;
 				if (gem != null)
 				{

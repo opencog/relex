@@ -33,6 +33,18 @@ public class CompactView
    {
 		return "";
    }
+
+	public static String header()
+	{
+		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1\">\n";
+		str += "  <parser>link-grammar-4.3.5\trelex-0.9.0</parser>\n";
+		return str;
+	}
+	public static String footer()
+	{
+		return "</nlparse>";
+	}
 	/**
 	 * Print out RelEx relations. All relations shown
 	 * in a binary form.
