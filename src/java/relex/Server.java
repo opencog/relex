@@ -16,10 +16,16 @@ package relex;
  */
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+// import relex.output.SimpleView;
+// import relex.frame.Frame;
+import relex.output.OpenCogXML;
 
 public class Server
 {
@@ -32,6 +38,9 @@ public class Server
 
 	public static void main(String[] args)
 	{
+		RelationExtractor r = new RelationExtractor(false);
+		// Frame frame = new Frame();
+		OpenCogXML opencog = new OpenCogXML();
 		Server s = new Server();
 		ServerSocket listen_sock = null;
 		try {
@@ -45,8 +54,10 @@ public class Server
 		{
 			Socket out_sock = null;
 			OutputStream outs = null;
+			InputStream ins = null;
 			try {
 				out_sock = listen_sock.accept();
+				ins = out_sock.getInputStream();
 				outs = out_sock.getOutputStream();
 			} catch (IOException e) {
 				System.out.println("Accept failed");
@@ -54,12 +65,42 @@ public class Server
 			}
 
 System.out.println("duude got accept");
+			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 			PrintWriter out = new PrintWriter(outs, true);
-	
-			// doc = new StringTextDocument("Hello world");
-			// s.rf.process(doc);
 
-			out.close();
+			try {
+	 			while(out_sock.isConnected()) {
+					String line = in.readLine();
+					if (line == null)
+						break;
+					RelexInfo ri = r.processSentence(line);
+					if (ri.parsedSentences.size() == 0)
+					{
+						out.println("no parses");
+						continue;
+					}
+					ParsedSentence p = ri.parsedSentences.get(0);
+
+					/*
+					out.println(p.getPhraseString());
+
+					String fin = SimpleView.printRelationsAlt(p);
+					String[] fout = frame.process(fin);
+					for (int i=0; i < fout.length; i++) {
+						out.println(fout[i]);
+					}
+					*/
+					
+					opencog.setParse(p);
+					out.println(opencog.toString());
+				}
+
+				out.close();
+			} catch (IOException e) {
+				System.out.println("Processing input failed");
+				continue;
+			}
+
 			try {
 				out_sock.close();
 			} catch (IOException e) {
