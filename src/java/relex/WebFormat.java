@@ -30,20 +30,15 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
-import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
-import relex.output.OpenCogXML;
-import relex.output.ParseView;
-import relex.output.RawView;
+import relex.output.CompactView;
 import relex.output.SimpleView;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
-import relex.stats.TruthValue;
-import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseMarkup;
 
 /**
@@ -272,9 +267,6 @@ public class WebFormat
 		// QuotesParens is currently broken, it fails to handle possesives.
 		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
-		ParseView ceregoView = new ParseView();
-		OpenCogXML opencog = new OpenCogXML();
-
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
 
@@ -337,40 +329,17 @@ public class WebFormat
 					System.out.println("Parse " + (numParses+1) +
 					             " of " + ri.parsedSentences.size());
 
-					if (commandMap.get("-r") != null)
-					{
-						System.out.println("\n====\n");
-						System.out.println(RawView.printZHeads(parse.getLeft()));
-						System.out.println("\n======\n");
-					}
-
 					if (commandMap.get("-t") != null)
 						System.out.println("\n" + parse.getPhraseString());
 
-					// Don't print the link string if xml output is enabled.
-					// XML parsers choke on it.
-					if ((commandMap.get("-l") != null) &&
-					    (commandMap.get("-o") == null))
-						System.out.println("\n" + parse.getLinkString());
-
-					if (commandMap.get("-m") != null)
-					{
-						System.out.println(parse.getMetaData().toString() + "\n");
-					}
+					System.out.println(parse.getMetaData().toString() + "\n");
 
 					// Print simple parse ranking
-					Double confidence = parse.getTruthValue().getConfidence();
-					String pconfidence = confidence.toString().substring(0,6);
-					System.out.println("Parse confidence: " + pconfidence);
 					System.out.println(
 						"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
 						" DIS=" + parse.getDisjunctCost() +
 						" AND=" + parse.getAndCost() +
 						" LEN=" + parse.getLinkCost() + ")");
-
-					// Verbose graph.
-					if (commandMap.get("-v") != null)
-						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
 					if (commandMap.get("-f") != null)
 					{
