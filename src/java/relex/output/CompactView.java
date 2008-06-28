@@ -33,18 +33,25 @@ import relex.RelexInfo;
 public class CompactView
 {
 	private boolean do_show_constituents;
+	private boolean do_show_metadata;
 	private int parse_count;
 	private int max_parses;
 
 	public CompactView()
 	{
 		do_show_constituents = true;
+		do_show_metadata = true;
 		max_parses = 4;
 	}
 
 	public void showConstituents(boolean sc)
 	{
 		do_show_constituents = sc;
+	}
+
+	public void showMetadata(boolean sc)
+	{
+		do_show_metadata = sc;
 	}
 
 	public void setMaxParses(int max)
@@ -94,17 +101,23 @@ public class CompactView
 		String str = "    <parse id=\"" + parse_count + "\">\n";
 
 		// Print link-grammar's parse ranking.
-      str += "      <lg-rank ";
-		str += "num_skipped_words=\"" + parse.getNumSkippedWords() + "\" ";
-		str += "disjunct_cost=\"" + parse.getDisjunctCost() + "\" ";
-		str += "and_cost=\"" + parse.getAndCost() + "\" ";
-		str += "link_cost=\"" + parse.getLinkCost() + "\" ";
-		str += "/>\n";
+		if (do_show_metadata)
+		{
+      	str += "      <lg-rank ";
+			str += "num_skipped_words=\"" + parse.getNumSkippedWords() + "\" ";
+			str += "disjunct_cost=\"" + parse.getDisjunctCost() + "\" ";
+			str += "and_cost=\"" + parse.getAndCost() + "\" ";
+			str += "link_cost=\"" + parse.getLinkCost() + "\" ";
+			str += "/>\n";
+		}
+
+		// Show the Penn tree-bank style constituent tree.
 		if (do_show_constituents)
 		{
       	str += "      <constituents>" + parse.getPhraseString() +
 			       "      </constituents>\n";
 		}
+		str += printRelations(parse);
 		str += "    </parse>\n";
 		return str;
    }
@@ -116,48 +129,14 @@ public class CompactView
 	 * Example:
 	 *   _subj(throw, John)
 	 *   _obj(throw, ball)
-	 *   tense(throw, past)
-	 *   DEFINITE-FLAG(ball, T)
-	 *   noun_number(ball, singular)
 	 */
-	public static String printRelations(ParsedSentence parse)
-	{
-		return printRelations(parse, null);
-	}
-	public static String printRelations(ParsedSentence parse,
-	                                    HashMap<FeatureNode,String> map)
+	private String printRelations(ParsedSentence parse)
 	{
 		Visit v = new Visit();
-		v.id_map = map;
-		v.str = "";
+		v.id_map = null;
+		v.str = "      <relations>\n";
 		parse.foreach(v);
-		return v.str;
-	}
-
-	/**
-	 * Print out RelEx relations, alternate format.
-	 * Unary relations, including booleans, doen't show
-	 * the attribute name.
-	 *
-	 * Example:
-	 *   _subj(throw, John)
-	 *   _obj(throw, ball)
-	 *   past(throw)
-	 *   definite(ball)
-	 *   singular(ball)
-	 */
-	public static String printRelationsAlt(ParsedSentence parse)
-	{
-		return printRelationsAlt(parse, null);
-	}
-	public static String printRelationsAlt(ParsedSentence parse,
-	                                    HashMap<FeatureNode,String> map)
-	{
-		Visit v = new Visit();
-		v.id_map = map;
-		v.unaryStyle = true;
-		v.str = "";
-		parse.foreach(v);
+		v.str += "      </relations>\n";
 		return v.str;
 	}
 
@@ -195,30 +174,6 @@ public class CompactView
 
 		public Boolean UnaryRelationCB(FeatureNode srcNode, String attrName)
 		{
-			FeatureNode attr = srcNode.get(attrName);
-			if (!attr.isValued()) return false;
-			String value = attr.getValue();
-			String srcName = srcNode.get("name").getValue();
-
-			if (id_map != null)
-			{
-				srcName = id_map.get(srcNode);
-			}
-			if (unaryStyle)
-			{
-				if (attrName.endsWith("-FLAG"))
-					value = attrName.replaceAll("-FLAG","").toLowerCase();
-
-				if (attrName.equals("HYP"))
-					value = attrName.toLowerCase();
-
-				str += value + "(" + srcName + ")\n";
-			}
-			else
-			{
-				str += attrName + "(" + srcName + ", " + value + ")\n";
-			}
-
 			return false;
 		}
 	}

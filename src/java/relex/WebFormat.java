@@ -196,7 +196,7 @@ public class WebFormat
 			" [-g (use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
-			" [-m (show parse metadata)]" +
+			" [-m (do not show parse metadata)]" +
 			" [-n parse-number]" +
 			" [-t (do not show constituent tree)]" +
 			" [--maxParseSeconds N]";
@@ -218,6 +218,7 @@ public class WebFormat
 
 		CompactView cv = new CompactView();
 
+		if (commandMap.get("-m") != null) cv.showMetadata(false);
 		if (commandMap.get("-t") != null) cv.showConstituents(false);
 
 		// Check for optional command line arguments.
