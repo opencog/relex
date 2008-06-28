@@ -33,6 +33,7 @@ public class CompactView
 {
 	private boolean do_show_constituents;
 	private boolean do_show_metadata;
+	private boolean do_show_links;
 	private int parse_count;
 	private int max_parses;
 
@@ -42,6 +43,7 @@ public class CompactView
 	{
 		do_show_constituents = true;
 		do_show_metadata = true;
+		do_show_links = true;
 		max_parses = 4;
 	}
 
@@ -53,6 +55,11 @@ public class CompactView
 	public void showMetadata(boolean sc)
 	{
 		do_show_metadata = sc;
+	}
+
+	public void showLinks(boolean sc)
+	{
+		do_show_links = sc;
 	}
 
 	public void setMaxParses(int max)
@@ -124,6 +131,13 @@ public class CompactView
 
 		// Print the dependency relations
 		str += printRelations(parse);
+
+		// Show the Link-grammar links
+		if (do_show_links)
+		{
+      	str += "      <links>" + printLinks(parse) +
+			       "      </links>\n";
+		}
 		str += "    </parse>\n";
 		return str;
    }
@@ -190,6 +204,17 @@ public class CompactView
 			node = node.get("NEXT");
 		}
 		str += "      </features>\n";
+		return str;
+	}
+
+	// -----------------------------------------------------------------
+	/**
+	 *  Print the link-grammar links
+	 *  LAB, F_L, F_R
+	 */
+	private String printLinks(ParsedSentence parse)
+	{
+		String str = "";
 		return str;
 	}
 

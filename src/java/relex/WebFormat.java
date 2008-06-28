@@ -195,7 +195,7 @@ public class WebFormat
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
 			" [-h (show this help)]" +
-			" [-l (show parse links)]" +
+			" [-l (do not show parse links)]" +
 			" [-m (do not show parse metadata)]" +
 			" [-n max number of parses to display]" +
 			" [-t (do not show constituent tree)]" +
@@ -218,6 +218,7 @@ public class WebFormat
 
 		CompactView cv = new CompactView();
 
+		if (commandMap.get("-l") != null) cv.showLinks(false);
 		if (commandMap.get("-m") != null) cv.showMetadata(false);
 		if (commandMap.get("-t") != null) cv.showConstituents(false);
 
