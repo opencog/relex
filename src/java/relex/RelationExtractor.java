@@ -289,7 +289,7 @@ public class RelationExtractor
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
-			" [-n parse-number]" +
+			" [-n max number of parses to display]" +
 			" [-o (show opencog XML output)]" +
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +

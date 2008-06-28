@@ -37,6 +37,8 @@ public class CompactView
 	private int parse_count;
 	private int max_parses;
 
+	private boolean notfirst;
+
 	public CompactView()
 	{
 		do_show_constituents = true;
@@ -117,10 +119,59 @@ public class CompactView
       	str += "      <constituents>" + parse.getPhraseString() +
 			       "      </constituents>\n";
 		}
+
+		// Print the lists of features
+		str += printFeatures(parse);
+
+		// Print the dependency relations
 		str += printRelations(parse);
 		str += "    </parse>\n";
 		return str;
    }
+
+	private String getf(FeatureNode f, String fn)
+	{
+		f = f.get(fn);
+		if (f == null) return "";
+		if (notfirst) return "|" + f.getValue();
+		notfirst = true;	
+		return f.getValue();
+	}
+
+	/**
+	 *  Print the CoNLL-style lemmas, parts of speech, and feature lists
+	 */
+	private String printFeatures(ParsedSentence parse)
+	{
+		String str = "      <features>\n";
+
+		int word_count = 1;
+		FeatureNode node = parse.getLeft();
+		node = node.get("NEXT");
+		while (node != null)
+		{
+			str += word_count + "\t";
+
+			str += node.get("orig_str").getValue() + "\t";
+			str += node.get("str").getValue() + "\t";
+			str += node.get("POS").getValue() + "\t";
+
+			FeatureNode ref = node.get("ref");
+			str += getf(ref, "tense");
+			str += getf(ref, "noun_number");
+			str += getf(ref, "gender");
+			str += getf(ref, "QUERY-TYPE");
+
+			notfirst = false;
+
+			str += "\n";
+			// Iterate to the next word
+			node = node.get("NEXT");
+			word_count ++;
+		}
+		str += "      </features>\n";
+		return str;
+	}
 
 	/**
 	 * Print out RelEx relations. All relations shown

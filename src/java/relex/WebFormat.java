@@ -197,7 +197,7 @@ public class WebFormat
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
 			" [-m (do not show parse metadata)]" +
-			" [-n parse-number]" +
+			" [-n max number of parses to display]" +
 			" [-t (do not show constituent tree)]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
