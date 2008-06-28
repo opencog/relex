@@ -17,7 +17,6 @@ package relex.output;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
@@ -129,6 +128,8 @@ public class CompactView
 		return str;
    }
 
+	// -----------------------------------------------------------------
+
 	private String getfeat(FeatureNode f, String fn)
 	{
 		f = f.get(fn);
@@ -156,13 +157,11 @@ public class CompactView
 	{
 		String str = "      <features>\n";
 
-		int word_count = 1;
 		FeatureNode node = parse.getLeft();
 		node = node.get("NEXT");
 		while (node != null)
 		{
-			str += word_count + "\t";
-
+			str += node.get("index_in_sentence").getValue() + "\t";
 			str += node.get("orig_str").getValue() + "\t";
 			str += node.get("str").getValue() + "\t";
 			str += node.get("POS").getValue() + "\t";
@@ -189,12 +188,12 @@ public class CompactView
 			str += "\n";
 			// Iterate to the next word
 			node = node.get("NEXT");
-			word_count ++;
 		}
 		str += "      </features>\n";
 		return str;
 	}
 
+	// -----------------------------------------------------------------
 	/**
 	 * Print out RelEx relations. All relations shown
 	 * in a binary form.
@@ -206,7 +205,6 @@ public class CompactView
 	private String printRelations(ParsedSentence parse)
 	{
 		Visit v = new Visit();
-		v.id_map = null;
 		v.str = "      <relations>\n";
 		parse.foreach(v);
 		v.str += "      </relations>\n";
@@ -215,9 +213,6 @@ public class CompactView
 
 	private static class Visit implements RelationCallback
 	{
-		// Map associating a feature-node to a unique ID string.
-		public HashMap<FeatureNode,String> id_map = null;
-
 		public Boolean unaryStyle = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
@@ -225,23 +220,13 @@ public class CompactView
 		                                FeatureNode srcNode,
 		                                FeatureNode tgtNode)
 		{
-			String srcName = srcNode.get("name").getValue();
-			FeatureNode tgt = tgtNode.get("name");
-			if (tgt == null)
-			{
-				System.out.println("Error: No target! rel=" + relName +
-				                   " and src=" + srcName);
-				return false;
-			}
-			String tgtName = tgt.getValue();
+			srcNode = srcNode.get("nameSource");
+			String srcName = srcNode.get("index_in_sentence").getValue();
 
-			if (id_map != null)
-			{
-				srcName = id_map.get(srcNode);
-				tgtName = id_map.get(tgtNode);
-			}
+			tgtNode = tgtNode.get("nameSource");
+			String tgtName = tgtNode.get("index_in_sentence").getValue();
+
 			str += relName + "(" + srcName + ", " + tgtName + ")\n";
-
 			return false;
 		}
 
