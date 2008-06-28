@@ -199,6 +199,7 @@ public class WebFormat
 			" [-m (do not show parse metadata)]" +
 			" [-n max number of parses to display]" +
 			" [-t (do not show constituent tree)]" +
+			" [--url source URL]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-f");
@@ -210,8 +211,10 @@ public class WebFormat
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("--maxParseSeconds");
+		opts.add("--url");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
+		String url = null;
 		String sentence = null;
 		int maxParses = 30;
 		int maxParseSeconds = 60;
@@ -230,6 +233,7 @@ public class WebFormat
 
 			maxParseSeconds = commandMap.get("--maxParseSeconds") != null ?
 				Integer.parseInt(commandMap.get("--maxParseSeconds").toString()) : 60;
+			url = commandMap.get("--url");
 		}
 		catch (Exception e)
 		{
@@ -246,6 +250,7 @@ public class WebFormat
 		}
 
 		cv.setMaxParses(maxParses);
+		cv.setSourceURL(url);
 
 		WebFormat re = new WebFormat(false);
 		re.setAllowSkippedWords(true);

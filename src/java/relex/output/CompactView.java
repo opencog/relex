@@ -36,8 +36,10 @@ public class CompactView
 	private boolean do_show_constituents;
 	private boolean do_show_metadata;
 	private boolean do_show_links;
+	private int sentence_count;
 	private int parse_count;
 	private int max_parses;
+	private String sourceURL;
 
 	private boolean notfirst;
 
@@ -46,7 +48,9 @@ public class CompactView
 		do_show_constituents = true;
 		do_show_metadata = true;
 		do_show_links = true;
+		sentence_count = 0;
 		max_parses = 4;
+		sourceURL = null;
 	}
 
 	public void showConstituents(boolean sc)
@@ -69,10 +73,18 @@ public class CompactView
 		max_parses = max;
 	}
 
+	public void setSourceURL(String url)
+	{
+		sourceURL = url;
+	}
+
 	public String header()
 	{
+		sentence_count = 0;
+
 		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1\">\n";
+
 		// hack alert -- get the real version number!
 		str += "  <parser>link-grammar-4.3.5\trelex-0.9.0</parser>\n";
 
@@ -80,7 +92,10 @@ public class CompactView
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 		str += "  <date>" + sdf.format(now) + "</date>\n";
 
-		str += "  <source url=\"xxx broken fixme\">";
+		if (sourceURL != null)
+		{
+			str += "  <source url=\"" + sourceURL + "\" />";
+		}
 		return str;
 	}
 
@@ -90,12 +105,13 @@ public class CompactView
 	}
 
 	public String toString(RelexInfo ri)
-   {
+	{
+		sentence_count ++;
 		parse_count = 0;
 
-		String str = "  <sentence id=\"xxx fix me\"";
+		String str = "  <sentence id=\"" + sentence_count + "\"";
 		str += " parses=\"" + ri.parsedSentences.size() + "\">\n";
-      str += "  " + ri.getSentence() + "\n";
+		str += "  " + ri.getSentence() + "\n";
 		for (ParsedSentence parse: ri.parsedSentences)
 		{
 			str += toString(parse);
@@ -103,17 +119,17 @@ public class CompactView
 		}
 		str += "  </sentence>";
 		return str;
-   }
+	}
 
 	public String toString(ParsedSentence parse)
-   {
+	{
 		parse_count ++;
 		String str = "    <parse id=\"" + parse_count + "\">\n";
 
 		// Print link-grammar's parse ranking.
 		if (do_show_metadata)
 		{
-      	str += "      <lg-rank ";
+			str += "      <lg-rank ";
 			str += "num_skipped_words=\"" + parse.getNumSkippedWords() + "\" ";
 			str += "disjunct_cost=\"" + parse.getDisjunctCost() + "\" ";
 			str += "and_cost=\"" + parse.getAndCost() + "\" ";
@@ -124,7 +140,7 @@ public class CompactView
 		// Show the Penn tree-bank style constituent tree.
 		if (do_show_constituents)
 		{
-      	str += "      <constituents>" + parse.getPhraseString() +
+			str += "      <constituents>" + parse.getPhraseString() +
 			       "      </constituents>\n";
 		}
 
@@ -137,12 +153,12 @@ public class CompactView
 		// Show the Link-grammar links
 		if (do_show_links)
 		{
-      	str += "      <links>\n" + printLinks(parse) +
+			str += "      <links>\n" + printLinks(parse) +
 			       "      </links>\n";
 		}
 		str += "    </parse>\n";
 		return str;
-   }
+	}
 
 	// -----------------------------------------------------------------
 
