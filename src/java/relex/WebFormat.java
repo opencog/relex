@@ -243,6 +243,8 @@ public class WebFormat
 			return;
 		}
 
+		cv.setMaxParses(maxParses);
+
 		WebFormat re = new WebFormat(false);
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
@@ -265,7 +267,6 @@ public class WebFormat
 
 		System.out.println(cv.header());
 
-		int sentence_count = 0;
 		while(true)
 		{
 			// Read text from stdin.
@@ -299,26 +300,11 @@ public class WebFormat
 
 				RelexInfo ri = re.processSentence(sentence,em);
 
-				sentence_count ++;
-
-				int np = ri.parsedSentences.size();
-				if (np > maxParses) np = maxParses;
-
 				System.out.println (cv.toString(ri));
 
 				// Print output
-				int numParses = 0;
 				for (ParsedSentence parse: ri.parsedSentences)
 				{
-					System.out.println(parse.getMetaData().toString() + "\n");
-
-					// Print simple parse ranking
-					System.out.println(
-						"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
-						" DIS=" + parse.getDisjunctCost() +
-						" AND=" + parse.getAndCost() +
-						" LEN=" + parse.getLinkCost() + ")");
-
 					if (commandMap.get("-f") != null)
 					{
 						String fin = SimpleView.printRelationsAlt(parse);
@@ -330,8 +316,6 @@ public class WebFormat
 						System.out.println("\nFraming rules applied:\n");
 						System.out.println(frame.printAppliedRules());
 					}
-
-					if (++numParses >= maxParses) break;
 				}
 
 				sentence = ds.getNextSentence();

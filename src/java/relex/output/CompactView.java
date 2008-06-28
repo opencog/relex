@@ -34,15 +34,22 @@ public class CompactView
 {
 	private boolean do_show_constituents;
 	private int parse_count;
+	private int max_parses;
 
 	public CompactView()
 	{
 		do_show_constituents = true;
+		max_parses = 4;
 	}
 
 	public void showConstituents(boolean sc)
 	{
 		do_show_constituents = sc;
+	}
+
+	public void setMaxParses(int max)
+	{
+		max_parses = max;
 	}
 
 	public String header()
@@ -75,6 +82,7 @@ public class CompactView
 		for (ParsedSentence parse: ri.parsedSentences)
 		{
 			str += toString(parse);
+			if (parse_count > max_parses) break;
 		}
 		str += "  </sentence>";
 		return str;
@@ -85,6 +93,13 @@ public class CompactView
 		parse_count ++;
 		String str = "    <parse id=\"" + parse_count + "\">\n";
 
+		// Print link-grammar's parse ranking.
+      str += "      <lg-rank ";
+		str += "num_skipped_words=\"" + parse.getNumSkippedWords() + "\" ";
+		str += "disjunct_cost=\"" + parse.getDisjunctCost() + "\" ";
+		str += "and_cost=\"" + parse.getAndCost() + "\" ";
+		str += "link_cost=\"" + parse.getLinkCost() + "\" ";
+		str += "/>\n";
 		if (do_show_constituents)
 		{
       	str += "      <constituents>" + parse.getPhraseString() +
