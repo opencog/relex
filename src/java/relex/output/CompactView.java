@@ -40,6 +40,7 @@ public class CompactView
 	private int parse_count;
 	private int max_parses;
 	private String sourceURL;
+	private String version;
 
 	private boolean notfirst;
 
@@ -51,6 +52,7 @@ public class CompactView
 		sentence_count = 0;
 		max_parses = 4;
 		sourceURL = null;
+		version = "relex";
 	}
 
 	public void showConstituents(boolean sc)
@@ -78,6 +80,11 @@ public class CompactView
 		sourceURL = url;
 	}
 
+	public void setVersion(String v)
+	{
+		version = v;
+	}
+
 	public String header()
 	{
 		sentence_count = 0;
@@ -85,8 +92,7 @@ public class CompactView
 		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1\">\n";
 
-		// hack alert -- get the real version number!
-		str += "  <parser>link-grammar-4.3.5\trelex-0.9.0</parser>\n";
+		str += "  <parser>" + version + "</parser>\n";
 
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");

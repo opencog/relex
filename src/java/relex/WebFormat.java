@@ -257,6 +257,13 @@ public class WebFormat
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 
+		// XXX hack alert -- we should be getting the relex
+		// version string from the build environment somehow,
+		// instead of hard-coding it.
+		String version = re.context.getLinkParserClient().getVersion();
+		version += "\trelex-0.9.0";
+		cv.setVersion(version);
+
 		EntityMaintainerFactory gem = null;
 		if (commandMap.get("-g") != null)
 		{
