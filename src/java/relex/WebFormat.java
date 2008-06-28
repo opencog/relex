@@ -74,9 +74,6 @@ public class WebFormat
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 
-	/** Statistics */
-	private ParseStats stats;
-
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
 
@@ -96,8 +93,6 @@ public class WebFormat
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
 
 		phraseMarkup = new PhraseMarkup();
-
-		stats = new ParseStats();
 	}
 
 	/* ---------------------------------------------------------- */
@@ -157,9 +152,6 @@ public class WebFormat
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
-
-			// Assign a simple parse-ranking score, based on LinkGrammar data.
-			parse.simpleRankParse();
 		}
 
 		return ri;
@@ -224,6 +216,8 @@ public class WebFormat
 		int maxParses = 30;
 		int maxParseSeconds = 60;
 
+		CompactView cv = new CompactView();
+
 		// Check for optional command line arguments.
 		try
 		{
@@ -267,7 +261,7 @@ public class WebFormat
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
 
-		System.out.println(CompactView.header());
+		System.out.println(cv.header());
 
 		int sentence_count = 0;
 		while(true)
@@ -279,7 +273,7 @@ public class WebFormat
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
 					{
-						System.out.println(CompactView.footer());
+						System.out.println(cv.footer());
 						return;
 					}
 				} catch (IOException e) {
@@ -304,17 +298,16 @@ public class WebFormat
 				RelexInfo ri = re.processSentence(sentence,em);
 
 				sentence_count ++;
-				re.stats.bin(ri);
 
 				int np = ri.parsedSentences.size();
 				if (np > maxParses) np = maxParses;
+
+				System.out.println (cv.toString(ri));
 
 				// Print output
 				int numParses = 0;
 				for (ParsedSentence parse: ri.parsedSentences)
 				{
-					System.out.println(sentence);
-					System.out.println("\n====\n");
 					System.out.println("Parse " + (numParses+1) +
 					             " of " + ri.parsedSentences.size());
 

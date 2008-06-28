@@ -15,11 +15,14 @@
  */
 package relex.output;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
+import relex.RelexInfo;
 
 /**
  * Implements the so-called "compact view", as documented at
@@ -29,22 +32,45 @@ import relex.ParsedSentence;
  */
 public class CompactView
 {
-	public static String toString(ParsedSentence parse)
-   {
-		return "";
-   }
-
-	public static String header()
+	public String header()
 	{
 		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1\">\n";
+		// hack alert -- get the real version number!
 		str += "  <parser>link-grammar-4.3.5\trelex-0.9.0</parser>\n";
+
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+		str += "  <date>" + sdf.format(now) + "</date>\n";
+
+		str += "  <source url=\"xxx broken fixme\">";
 		return str;
 	}
-	public static String footer()
+
+	public String footer()
 	{
 		return "</nlparse>";
 	}
+
+	public String toString(RelexInfo ri)
+   {
+		String str = "  <sentence>\n";
+      str += "  " + ri.getSentence() + "\n";
+		for (ParsedSentence parse: ri.parsedSentences)
+		{
+			str += toString(parse);
+		}
+		str += "  </sentence>";
+		return str;
+   }
+
+	public String toString(ParsedSentence parse)
+   {
+		String str = "    <parse>\n";
+		str += "    </parse>\n";
+		return str;
+   }
+
 	/**
 	 * Print out RelEx relations. All relations shown
 	 * in a binary form.

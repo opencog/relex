@@ -64,6 +64,11 @@ public class RelexInfo implements Serializable
 	{
 		return sentenceID;
 	}
+
+	public String getSentence()
+	{
+		return originalSentence;
+	}
 	
 	public String toString()
 	{
