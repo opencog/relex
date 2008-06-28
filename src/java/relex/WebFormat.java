@@ -198,7 +198,7 @@ public class WebFormat
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
 			" [-n parse-number]" +
-			" [-t (show parse tree)]" +
+			" [-t (do not show constituent tree)]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-f");
@@ -217,6 +217,8 @@ public class WebFormat
 		int maxParseSeconds = 60;
 
 		CompactView cv = new CompactView();
+
+		if (commandMap.get("-t") != null) cv.showConstituents(false);
 
 		// Check for optional command line arguments.
 		try
@@ -308,12 +310,6 @@ public class WebFormat
 				int numParses = 0;
 				for (ParsedSentence parse: ri.parsedSentences)
 				{
-					System.out.println("Parse " + (numParses+1) +
-					             " of " + ri.parsedSentences.size());
-
-					if (commandMap.get("-t") != null)
-						System.out.println("\n" + parse.getPhraseString());
-
 					System.out.println(parse.getMetaData().toString() + "\n");
 
 					// Print simple parse ranking

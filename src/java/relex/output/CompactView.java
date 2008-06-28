@@ -32,6 +32,19 @@ import relex.RelexInfo;
  */
 public class CompactView
 {
+	private boolean do_show_constituents;
+	private int parse_count;
+
+	public CompactView()
+	{
+		do_show_constituents = true;
+	}
+
+	public void showConstituents(boolean sc)
+	{
+		do_show_constituents = sc;
+	}
+
 	public String header()
 	{
 		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -54,7 +67,10 @@ public class CompactView
 
 	public String toString(RelexInfo ri)
    {
-		String str = "  <sentence>\n";
+		parse_count = 0;
+
+		String str = "  <sentence id=\"xxx fix me\"";
+		str += " parses=\"" + ri.parsedSentences.size() + "\">\n";
       str += "  " + ri.getSentence() + "\n";
 		for (ParsedSentence parse: ri.parsedSentences)
 		{
@@ -66,7 +82,14 @@ public class CompactView
 
 	public String toString(ParsedSentence parse)
    {
-		String str = "    <parse>\n";
+		parse_count ++;
+		String str = "    <parse id=\"" + parse_count + "\">\n";
+
+		if (do_show_constituents)
+		{
+      	str += "      <constituents>" + parse.getPhraseString() +
+			       "      </constituents>\n";
+		}
 		str += "    </parse>\n";
 		return str;
    }
