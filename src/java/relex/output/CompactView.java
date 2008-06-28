@@ -129,13 +129,24 @@ public class CompactView
 		return str;
    }
 
-	private String getf(FeatureNode f, String fn)
+	private String getfeat(FeatureNode f, String fn)
 	{
 		f = f.get(fn);
 		if (f == null) return "";
 		if (notfirst) return "|" + f.getValue();
 		notfirst = true;	
 		return f.getValue();
+	}
+
+	private String getflag(FeatureNode f, String fn)
+	{
+		f = f.get(fn);
+		if (f == null) return "";
+
+		fn = fn.replaceAll("-FLAG","").toLowerCase();
+		if (notfirst) return "|" + fn;
+		notfirst = true;	
+		return fn;
 	}
 
 	/**
@@ -157,10 +168,21 @@ public class CompactView
 			str += node.get("POS").getValue() + "\t";
 
 			FeatureNode ref = node.get("ref");
-			str += getf(ref, "tense");
-			str += getf(ref, "noun_number");
-			str += getf(ref, "gender");
-			str += getf(ref, "QUERY-TYPE");
+			str += getfeat(ref, "tense");
+			str += getfeat(ref, "noun_number");
+			str += getfeat(ref, "gender");
+			str += getfeat(ref, "QUERY-TYPE");
+
+			str += getflag(ref, "DATE-FLAG");
+			str += getflag(ref, "DEFINITE-FLAG");
+			str += getflag(ref, "EMOTICON-FLAG");
+			str += getflag(ref, "ENTITY-FLAG");
+			str += getflag(ref, "IDIOM-FLAG");
+			str += getflag(ref, "LOCATION-FLAG");
+			str += getflag(ref, "MONEY-FLAG");
+			str += getflag(ref, "ORGANIZATION-FLAG");
+			str += getflag(ref, "PERSON-FLAG");
+			str += getflag(ref, "POLYWORD-FLAG");
 
 			notfirst = false;
 
