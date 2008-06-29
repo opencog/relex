@@ -47,7 +47,7 @@ public class LinkParserJNINewClient extends LinkParserClient
 	public String getVersion() {
 		// XXX hack alert -- this requires link-grammar version 4.3.6 or
 		// newer! So, for now, fake it.
-		// LinkGrammar.getVersion();
+		// return LinkGrammar.getVersion();
 		return "link-grammar-4.3.5";
 	}
 
