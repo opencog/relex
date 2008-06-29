@@ -61,8 +61,9 @@ public class TwoWordCombineToLeftAlg extends TemplateMatchingAlg
         // leftNode.set("orig_str", new FeatureNode(original));
         leftNode.set("collocation_end", rightNode);
         leftNode.set("collocation_start", leftNode);
+
         //erase the other word strings
-        rightNode.set("str", null);
+        rightNode.set("str", new FeatureNode(""));
         // rightNode.set("orig_str", null);
     }
 }
