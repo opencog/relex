@@ -303,11 +303,19 @@ public class CompactView
 				tgtName = tgt.getValue();
 			}
 
+			String srcIdx = "-1";
 			srcNode = srcNode.get("nameSource");
-			String srcIdx = srcNode.get("index_in_sentence").getValue();
+			if (srcNode != null)
+			{ 
+				srcIdx = srcNode.get("index_in_sentence").getValue();
+			}
 
+			String tgtIdx = "-1";
 			tgtNode = tgtNode.get("nameSource");
-			String tgtIdx = tgtNode.get("index_in_sentence").getValue();
+			if (tgtNode != null)
+			{ 
+				tgtIdx = tgtNode.get("index_in_sentence").getValue();
+			}
 
 			str += relName + "(" + srcName + "[" + srcIdx + "], " +
 			       tgtName + "[" + tgtIdx + "])\n";
