@@ -201,25 +201,33 @@ public class CompactView
 		{
 			str += node.get("index_in_sentence").getValue() + "\t";
 			str += node.get("orig_str").getValue() + "\t";
-			str += node.get("str").getValue() + "\t";
+
+			if (null ==  node.get("str")) {
+				str += "\t";
+			} else {
+				str += node.get("str").getValue() + "\t";
+			}
 			str += node.get("POS").getValue() + "\t";
 
 			FeatureNode ref = node.get("ref");
-			str += getfeat(ref, "tense");
-			str += getfeat(ref, "noun_number");
-			str += getfeat(ref, "gender");
-			str += getfeat(ref, "QUERY-TYPE");
+			if (ref != null)
+			{
+				str += getfeat(ref, "tense");
+				str += getfeat(ref, "noun_number");
+				str += getfeat(ref, "gender");
+				str += getfeat(ref, "QUERY-TYPE");
 
-			str += getflag(ref, "DATE-FLAG");
-			str += getflag(ref, "DEFINITE-FLAG");
-			str += getflag(ref, "EMOTICON-FLAG");
-			str += getflag(ref, "ENTITY-FLAG");
-			str += getflag(ref, "IDIOM-FLAG");
-			str += getflag(ref, "LOCATION-FLAG");
-			str += getflag(ref, "MONEY-FLAG");
-			str += getflag(ref, "ORGANIZATION-FLAG");
-			str += getflag(ref, "PERSON-FLAG");
-			str += getflag(ref, "POLYWORD-FLAG");
+				str += getflag(ref, "DATE-FLAG");
+				str += getflag(ref, "DEFINITE-FLAG");
+				str += getflag(ref, "EMOTICON-FLAG");
+				str += getflag(ref, "ENTITY-FLAG");
+				str += getflag(ref, "IDIOM-FLAG");
+				str += getflag(ref, "LOCATION-FLAG");
+				str += getflag(ref, "MONEY-FLAG");
+				str += getflag(ref, "ORGANIZATION-FLAG");
+				str += getflag(ref, "PERSON-FLAG");
+				str += getflag(ref, "POLYWORD-FLAG");
+			}
 
 			notfirst = false;
 
