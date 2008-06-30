@@ -177,6 +177,7 @@ public class WebFormat
 			System.err.println("Sentence too long!: " + sentence);
 			parses = new ArrayList<ParsedSentence>();
 		}
+		sentence = entityMaintainer.getOriginalSentence();
 		RelexInfo ri = new RelexInfo(sentence, parses);
 		return ri;
 	}
