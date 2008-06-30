@@ -499,7 +499,8 @@ PROPER_NAME_AND_ENTITIES_AND_IDIOMS
 =
 ;
 ; Fix up entities and idioms -- 
-; Necessary because the WordSequenceCombineAlg changes replaces <str> with a new node
+; Necessary because the WordSequenceCombineAlg changes replaces <str> 
+; with a new node
 ;
 #TemplateActionAlg
 PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
@@ -564,6 +565,19 @@ COMBINE_AS_MANY
 #TemplateActionAlg
 POLYWORD_AS_MANY
 <LAB> = AM
+=
+<F_R ref POLYWORD-FLAG> = T
+;
+; "How much does the book cost?" combines "how_much"
+;
+#TwoWordCombineToRightAlg
+COMBINE_HOW_MUCH
+<LAB> = H
+=
+;
+#TemplateActionAlg
+POLYWORD_HOW_MUCH
+<LAB> = H
 =
 <F_R ref POLYWORD-FLAG> = T
 ;
@@ -1246,14 +1260,14 @@ HEAD_TO_SUBJ_AND_OBJ2
 ;
 #TemplateActionAlg
 HEAD-QUESTION-WORD
-;//Who does John think the man I love wants?
+;  Who does John think the man I love wants?
 <LAB> = \Rw\.*|Q
 =
 <F_L head-question-word> += <F_R head-word>
 ;
 #TemplateActionAlg
 HEAD-QUESTION-WHICH
-;//Which cat/one does he think John wants?
+;  Which cat/one does he think John wants?
 <LAB> = \D\.\.w\.*
 <F_R head-question-word> != %
 =
@@ -1261,7 +1275,7 @@ HEAD-QUESTION-WHICH
 ;
 #TemplateActionAlg
 HEAD-QUESTION-WHICH
-;//Which cat/one does he think John wants?
+;  Which cat/one does he think John wants?
 <LAB> = \D\.\.w\.*
 <F_R head-question-word> = %
 =
@@ -1286,8 +1300,8 @@ HEAD_TO_CLAUSE_AND_WALL
 <LAB> = \W\.*|\C\.*|\RS\.*|\Qd\.*
 <LAB> != \C[ie]|\Ct\.*
 <LAB> != \W[qs]\.*
-;dont change the head-word for a verb that takes a clausal complement (Ce)
-;also dont propogate head to "than" (Ct)
+; Don't change the head-word for a verb that takes a clausal complement (Ce)
+; Also dont propogate head to "than" (Ct)
 =
 <F_L head-word> += <F_R head-word>
 ;
@@ -1349,7 +1363,7 @@ DECLARATIVE_QUESTION1
 <F_L punc> = <F_R str>
 ;
 ; Declarative questions, such as "Fred is dead?"
-; we are asking for the truth of thw question, and "dead" is hypothetical.
+; We are asking for the truth of the question, and "dead" is hypothetical.
 ;
 #TemplateActionAlg
 DECLARATIVE_QUESTION2
@@ -1383,7 +1397,8 @@ WHEN
 <F_L head-question-word ref links _%atTime> = <F_L ref>
 ;
 #TemplateActionAlg
-; This algoritm was modified to exclude cases where there isn a todo link followed by a verb
+; This algoritm was modified to exclude cases where there isn a todo 
+; link followed by a verb
 ; This case is dealt with in WHERE_HACK_FOR_QP
 WHERE1
 <LAB> = Q
@@ -1421,7 +1436,7 @@ HOW
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
 <F_L head-question-word ref links how> = <F_L ref>
-<F_L head-question-word ref linkSources how> = <F_L>
+;
 ;
 #TemplateActionAlg
 WHY
@@ -1433,13 +1448,23 @@ WHY
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = why
 <F_L head-question-word ref links _%because> = <F_L ref>
+; 
+; How-much/how-many questions: "How much does the book weigh?"
+; Replace the object _obj(weigh, how_much) with _obj(weight, $qVar)
 ;
+#TemplateActionAlg
+HOW_MUCH
+<LAB> = \B.m
+<F_L str> = how_much
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = how_much
 ;
-;  SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want to do?"
-; Prevents "do" from having an object.  instead turns the head verb into a query variable.
-; So for above sentences, we would be looking for any event with "subj" relation to Ben
-;
-;
+; SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want
+; to do?" Prevents "do" from having an object.  Instead, turns the head
+; verb into a query variable.  So, for the above sentences, we would be
+; looking for any event with a "subj" relation to Ben.
 ;
 #TemplateActionAlg
 DO_QUESTION1
