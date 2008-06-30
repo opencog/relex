@@ -1451,6 +1451,12 @@ WHY
 ; 
 ; How-much/how-many questions: "How much does the book weigh?"
 ; Replace the object _obj(weigh, how_much) with _obj(weight, $qVar)
+; Hmm. This is not really correct. it fails to deal with the more
+; general pattern:
+; How quickly did you read the book?
+; How many times did I tell you to stop?
+; How safe is that vehicle?
+; How big a dog did you chase?
 ;
 #TemplateActionAlg
 HOW_MUCH
@@ -1460,6 +1466,20 @@ HOW_MUCH
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how_much
+;
+; "How many dogs did you chase?" "How many dogs chased you?"
+; "How many tails does a cat have?" "How much cofee did you drink?"
+; "How many times did I tell you to stop?"
+;
+#TemplateActionAlg
+HOW_MUCH2
+<LAB> = \Dm.*
+<F_L str> = how_much|how_many
+=
+<F_L ref name> = %
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = how_much
+<F_L ref POLYWORD-FLAG> = %
 ;
 ; SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want
 ; to do?" Prevents "do" from having an object.  Instead, turns the head
