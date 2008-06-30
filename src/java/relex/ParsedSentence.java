@@ -66,7 +66,7 @@ public class ParsedSentence extends Atom implements Serializable
 	// A string containing the Penn tree-bank style markup,
 	// aka "phrase structure" markup, for example
 	// (S (NP I) (VP am (NP a big robot)) .)
-	private String phraseSring;
+	private String phraseString;
 
 	private String errorString;
 
@@ -87,7 +87,7 @@ public class ParsedSentence extends Atom implements Serializable
 		original = originalString;
 		linkString = null;
 		errorString = "";
-		phraseSring = null;
+		phraseString = null;
 		leafConstituents = new ArrayList<FeatureNode>();
 	}
 
@@ -128,11 +128,11 @@ public class ParsedSentence extends Atom implements Serializable
 	}
 
 	public String getPhraseString() {
-		return phraseSring;
+		return phraseString;
 	}
 
 	public void setPhraseString(String str) {
-		phraseSring = str;
+		phraseString = str;
 	}
 
 	public void setErrorString(String eString) {
