@@ -154,7 +154,7 @@ public class WebFormat
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
 
-			// Repair the entity-mangled tree-bank string
+			// Repair the entity-mangled tree-bank string.
 			PhraseTree pt = new PhraseTree(parse.getLeft());
 			parse.setPhraseString(pt.toString());
 		}
