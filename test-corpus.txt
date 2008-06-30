@@ -1,10 +1,12 @@
+How many of my cats have tails?
+How many cats have tails?
+END.
 How long was the book?
 How safe is that vehicle?
 How many times did that happen?
 How much does the book weigh?
 How much does the book cost?
 How quickly did you read the book?
-END.
 How high is the building?
 How big was the book?
 How did the accident happen?

@@ -1464,7 +1464,7 @@ HOW_MUCH
 ;
 ; "How many dogs did you chase?" "How many dogs chased you?"
 ; "How many tails does a cat have?" "How much cofee did you drink?"
-; "How many times did I tell you to stop?"
+; "How many times did I tell you to stop?" 
 ;
 #TemplateActionAlg
 HOW_MUCH2
@@ -1475,6 +1475,7 @@ HOW_MUCH2
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how_much
 <F_L ref POLYWORD-FLAG> = %
+<F_R head-word ref HYP> = T
 ;
 ; "How tall is that building?" "How long is that book?"
 ; "How safe is that vehicle?" "How quickly did you read the book?"
