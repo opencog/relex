@@ -1,15 +1,16 @@
+How long was the book?
+How safe is that vehicle?
 How many times did that happen?
-How big was the book?
 How much does the book weigh?
 How much does the book cost?
-The book costs ten dollars.
-The book weighs ten pounds.
-END.
-How safe is that vehicle?
 How quickly did you read the book?
+END.
+How high is the building?
+How big was the book?
 How did the accident happen?
 When did the accident happen?
-END.
+The book costs ten dollars.
+The book weighs ten pounds.
 How many tons does a truck weigh?
 How many times did I tell you to stop?
 How much coffee did you drink?
