@@ -94,43 +94,59 @@ public class EntityInfo implements Serializable
 		return id;
 	}
 	
-	public String getOriginalSentence() {
+	public String getOriginalSentence()
+	{
 		return originalSentence;
 	}	
 
-	public int getFirstCharIndex() {
+	public int getFirstCharIndex()
+	{
 		return firstCharIndex;
 	}
 
-	public int getLastCharIndex() {
+	public int getLastCharIndex()
+	{
 		return lastCharIndex;
 	}
 
-	public void setLastCharIndex(int i) {
+	public void setLastCharIndex(int i)
+	{
 		lastCharIndex = i;
 	}
 
-	public String getOriginalString() {
+	public String getOriginalString()
+	{
 		return originalSentence.substring(firstCharIndex, lastCharIndex);
 	}
 
-	public String idStringPrefix() {
+	public String idStringPrefix()
+	{
 		String prefix = (String)attributes.get(ID_PREFIX);
 		if (prefix == null)
+		{
 			if (type.equals(EntityType.PUNCTUATION.name()))
-				prefix = getPunctuationPrefix();
+			{
+			 	prefix = getPunctuationPrefix();
+			}
 			else
+			{
 				prefix = defaultPrefixes.get(type);
+			}
+		}
 		if (prefix == null)
+		{
 			prefix = DEFAULT_PREFIX;
+		}
 		return prefix;
 	}
 	
-	public String getType()	{
+	public String getType()
+	{
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(String type)
+	{
 		this.type = type;
 	}
 
