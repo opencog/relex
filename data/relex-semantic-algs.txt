@@ -1466,6 +1466,7 @@ HOW_MUCH
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how_much
+<F_L ref POLYWORD-FLAG> = %
 ;
 ; "How many dogs did you chase?" "How many dogs chased you?"
 ; "How many tails does a cat have?" "How much cofee did you drink?"
