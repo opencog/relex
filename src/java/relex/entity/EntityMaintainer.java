@@ -35,15 +35,16 @@ public class EntityMaintainer implements Serializable
 	/**
 	 * This number is derived from the LinkParser dictionary -- 
 	 * it only accepts suffixes up to "60." To increase this 
-	 * number, you need to add more words to the Link parser 
-	 * dictionary, like "genericID61, dateID61, etc."
+	 * number, you need to add more words to the Link Parser 
+	 * dictionary, like "genericID61", "dateID61", etc.
 	 */
 	public static int MAX_NUM_ENTITIES = 60;
 
 	// The original sentence string
 	private String originalSentence;
 
-	public String getOriginalSentence() {
+	public String getOriginalSentence()
+	{
 		return originalSentence;
 	}
 
@@ -51,7 +52,8 @@ public class EntityMaintainer implements Serializable
 	// except all entities are replaced with ID strings
 	private String convertedSentence;
 
-	public String getConvertedSentence() {
+	public String getConvertedSentence()
+	{
 		return convertedSentence;
 	}
 
@@ -74,6 +76,7 @@ public class EntityMaintainer implements Serializable
 
 	static
 	{
+		// Emoticons -- smiley faces, right :-)
 		// Partial list, only of the basics, taken from wikipedia
 		// This could be improved on by automatically generating
 		// these with and without noses, etc. 
@@ -405,30 +408,40 @@ public class EntityMaintainer implements Serializable
 	public void repairSentence(FeatureNode leftNode)
 	{
 		int charDelta = 0;
-		try {
-		for (LinkableView word = new LinkableView(leftNode); word != null; word = (word
-				.getNext() == null ? null : new LinkableView(word.getNext())))
+		try
 		{
-			int previousWhiteSpace = previouslyInsertedWhitespace(word
-					.getStartChar());
-			String wordName = word.getWordString();
-			word.setStartChar(word.getStartChar() + charDelta
-					- previousWhiteSpace);
-			// word.setExpandedStartChar(word.getExpandedStartChar()+charDelta);
-			if (isEntityID(wordName)) {
-				EntityInfo entInfo = getEntityInfo(wordName);
-				String origName = entInfo.getOriginalString();
-				charDelta += origName.length() - wordName.length();
-				try {
-					SemanticView semView = new SemanticView(word.fn()
-							.get("ref"));
-					semView.setName(origName);// .replaceAll("\\s","_"))
-				} catch (Exception e) {
+			for (LinkableView word = new LinkableView(leftNode);
+			     word != null;
+			     word = (word.getNext() == null ?
+			                  null : new LinkableView(word.getNext())))
+			{
+				int previousWhiteSpace = 
+				      previouslyInsertedWhitespace(word.getStartChar());
+
+				String wordName = word.getWordString();
+
+				word.setStartChar(word.getStartChar() + charDelta
+						- previousWhiteSpace);
+
+				// word.setExpandedStartChar(word.getExpandedStartChar()+charDelta);
+
+				if (isEntityID(wordName))
+				{
+					EntityInfo entInfo = getEntityInfo(wordName);
+					String origName = entInfo.getOriginalString();
+					charDelta += origName.length() - wordName.length();
+					try
+					{
+						SemanticView semView = new SemanticView(word.fn()
+								.get("ref"));
+						semView.setName(origName);// .replaceAll("\\s","_"))
+					}
+					catch (Exception e) {}
 				}
+
+				word.setEndChar(word.getEndChar() + charDelta - previousWhiteSpace);
+				// word.setExpandedEndChar(word.getExpandedEndChar()+charDelta);
 			}
-			word.setEndChar(word.getEndChar() + charDelta - previousWhiteSpace);
-			// word.setExpandedEndChar(word.getExpandedEndChar()+charDelta);
-		}
 		}
 		catch (Exception e)
 		{
@@ -440,8 +453,8 @@ public class EntityMaintainer implements Serializable
 	}
 
 	/**
-	 * <p>Return all <code>EntityInfo</code>s ordered by their starting character
-	 * position.</code>.
+	 * Return all EntityInfo's ordered by their starting character
+	 * position.
 	 */
 	public List<EntityInfo> getEntities()
 	{
@@ -455,20 +468,25 @@ public class EntityMaintainer implements Serializable
 	 */
 	public void prepareSentence(FeatureNode leftNode)
 	{
-		for (LinkableView word = new LinkableView(leftNode); word != null; word = (word
-				.getNext() == null ? null : new LinkableView(word.getNext())))
+		for (LinkableView word = new LinkableView(leftNode); 
+		     word != null; 
+		     word = (word.getNext() == null ? 
+		                null : new LinkableView(word.getNext())))
 		{
 			String wordName = word.getWordString();
-			if (isEntityID(wordName)) {
+			if (isEntityID(wordName))
+			{
 				EntityInfo entInfo = getEntityInfo(wordName);
 				entInfo.setProperties(word.fn());
 			}
 		}
 	}
 
-	public String toString(){
+	public String toString()
+	{
 		StringBuilder sb = new StringBuilder();
-		for (EntityInfo info: orderedEntityInfos){
+		for (EntityInfo info: orderedEntityInfos)
+		{
 			String name = info.getOriginalSentence().substring(
 					info.getFirstCharIndex(), 
 					info.getLastCharIndex());
@@ -477,18 +495,19 @@ public class EntityMaintainer implements Serializable
 		return sb.toString();
 	}
 	
+	/**
+	 * Arg0: a sentence with an entity Arg1: the first character of the
+	 * entity Arg2: the last character of the entity Example:
+	 * java relex.entity.EntityMaintainer "Does Mike think it will work?" 5 8
+	 * Expected output: Does genericID1 think it will work?
+	 */
 	public static void main(String[] args)
 	{
-		/*
-		 * Arg0: a sentence with an entity Arg1: the first character of the
-		 * entity Arg2: the last character of the entity Example:
-		 * java relex.entity.EntityMaintainer "Does Mike think it will work?" 5 8
-		 * Expected output: Does genericID1 think it will work?
-		 */
 		String sentence = args[0];
 		ArrayList<EntityInfo> list = new ArrayList<EntityInfo>();
 		int arg = 1;
-		while (args.length >= arg + 2) {
+		while (args.length >= arg + 2)
+		{
 			EntityInfo eInfo = new EntityInfo(sentence,
 								   Integer.parseInt(args[arg]),
 								   Integer.parseInt(args[arg + 1]));
