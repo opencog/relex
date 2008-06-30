@@ -241,7 +241,7 @@ public class EntityMaintainer implements Serializable
 			}
 
 			// Insert the ID string of the entity.
-			curIndex = eInfo.getLastCharIndex();
+			curIndex = eInfo.getLastCharIndex() + 1;
 			convertedSentence += makeID(eInfo);
 
 			// Insert trailing white space after eInfo if it is 
@@ -259,6 +259,7 @@ public class EntityMaintainer implements Serializable
 		// Copy the remaining portion (if any) of the original string.
 		if (curIndex < originalSentence.length())
 			convertedSentence += originalSentence.substring(curIndex);
+
 		// System.out.println("CONVERSION\n" + originalSentence + "\n" +
 		// convertedSentence);
 	}
@@ -381,11 +382,13 @@ public class EntityMaintainer implements Serializable
 
 	// --------------------------------------------------------
 
-	public boolean isEntityID(String e) {
+	public boolean isEntityID(String e)
+	{
 		return iDs2Entities.containsKey(e);
 	}
 
-	public EntityInfo getEntityInfo(String entityID) {
+	public EntityInfo getEntityInfo(String entityID)
+	{
 		return iDs2Entities.get(entityID);
 	}
 
