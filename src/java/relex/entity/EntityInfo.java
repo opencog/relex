@@ -116,7 +116,8 @@ public class EntityInfo implements Serializable
 
 	public String getOriginalString()
 	{
-		return originalSentence.substring(firstCharIndex, lastCharIndex);
+		// Entity is *INCLUSIVE* of the last char index!
+		return originalSentence.substring(firstCharIndex, lastCharIndex+1);
 	}
 
 	public String idStringPrefix()
