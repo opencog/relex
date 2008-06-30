@@ -40,6 +40,7 @@ import relex.parser.LinkParserClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
 import relex.tree.PhraseMarkup;
+import relex.tree.PhraseTree;
 
 /**
  * The WebFormat class provides the central processing
@@ -152,6 +153,10 @@ public class WebFormat
 
 			// Also do a Penn tree-bank style phrase structure markup.
 			phraseMarkup.markup(parse);
+
+			// Repair the entity-mangled tree-bank string
+			PhraseTree pt = new PhraseTree(parse.getLeft());
+			parse.setPhraseString(pt.toString());
 		}
 
 		return ri;
