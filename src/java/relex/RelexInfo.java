@@ -33,8 +33,9 @@ public class RelexInfo implements Serializable
 {
 	private static final long serialVersionUID = -3047552550351161106L;
 	
-	public String originalSentence;
+	private String originalSentence;
 	private ArrayList<ParsedSentence> parses;
+	private int numParses;
 
 	private String sentenceID;
 	
@@ -42,6 +43,7 @@ public class RelexInfo implements Serializable
 	{
 		originalSentence = null;
 		parses = null;
+		numParses = 0;
 	}
 
 	public RelexInfo(String os, ArrayList<ParsedSentence> pl)
@@ -49,6 +51,7 @@ public class RelexInfo implements Serializable
 		originalSentence = os;
 		parses = pl;
 		assign_id();
+		numParses = pl.size();
 	}
 
 	/**
@@ -97,14 +100,24 @@ public class RelexInfo implements Serializable
 		return parses;
 	}
 
+	public void setNumParses(int np)
+	{
+		numParses = np;
+	}
+
+	public int getNumParses()
+	{
+		return numParses;
+	}
+
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		int numParses = 0;
+		int pn = 0;
 		for (ParsedSentence parse: parses)
 		{
-			sb.append("Parse " + ((numParses++)+1) + 
-			          " of " + parses.size()).append("\n");
+			pn++;
+			sb.append("Parse " + pn + " of " + parses.size() + "\n");
 			sb.append(SimpleView.printRelations(parse)).append("\n");
 		}
 		return sb.toString();

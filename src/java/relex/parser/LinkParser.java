@@ -197,6 +197,7 @@ public class LinkParser extends Parser
 		}
 
 		ri.setParses(parses);
+		ri.setNumParses(lpc.getNumLinkages());
 		
 		if (verbosity > 0)
 		{
