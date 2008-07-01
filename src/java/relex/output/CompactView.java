@@ -179,8 +179,12 @@ public class CompactView
 
 	private String getflag(FeatureNode f, String fn)
 	{
-		f = f.get(fn);
-		if (f == null) return "";
+		FeatureNode ff = f.get(fn);
+		if (ff == null) 
+		{
+			ff = f.get(fn.replaceAll("-FLAG","").toLowerCase() + "-FLAG");
+		}
+		if (ff == null) return "";
 
 		fn = fn.replaceAll("-FLAG","").toLowerCase();
 		if (notfirst) return "|" + fn;
