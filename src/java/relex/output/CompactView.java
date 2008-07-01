@@ -90,7 +90,7 @@ public class CompactView
 		sentence_count = 0;
 
 		String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1\">\n";
+		str += "<nlparse xmlns=\"http://opencog.org/RelEx/0.1.1\">\n";
 
 		str += "  <parser>" + version + "</parser>\n";
 
