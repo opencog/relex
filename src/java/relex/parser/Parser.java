@@ -1,4 +1,3 @@
-package relex.parser;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,24 +14,24 @@ package relex.parser;
  * limitations under the License.
  */
 
-import java.util.ArrayList;
+package relex.parser;
 
-import relex.ParsedSentence;
+import relex.RelexInfo;
 
 /**
  * The interface to
  */
-public abstract class Parser {
-
+public abstract class Parser
+{
 	/**
 	 * Given a sentence, returns a list of parses, ordered by likelihood
 	 * 
 	 * @param sentence
 	 * @param LinkParserClient The client to be used for link-grammar processing
-	 * @return a list of parses, ordered by likelihood
+	 * @return a list of parses and supporting information.
 	 *
 	 */
-	public abstract ArrayList<ParsedSentence> parse(String sentence, LinkParserClient lpc);
+	public abstract RelexInfo parse(String sentence, LinkParserClient lpc);
 
 	/**
 	 * Given a sentence, returns a string representation of a parse of that sentence.

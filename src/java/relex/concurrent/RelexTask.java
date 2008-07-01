@@ -1,6 +1,21 @@
+/*
+ * Copyright 2008 Novamente LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package relex.concurrent;
 
-import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 
@@ -17,7 +32,8 @@ import relex.tree.PhraseMarkup;
  *  
  * @author muriloq
  */
-public class RelexTask implements Callable<RelexTaskResult> {
+public class RelexTask implements Callable<RelexTaskResult>
+{
 	public static final int DEBUG = 0;
 	// arguments 
 	private int index;
@@ -54,18 +70,18 @@ public class RelexTask implements Callable<RelexTaskResult> {
 			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
 			String convertedSentence = entityMaintainer.getConvertedSentence();
 			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
-			ArrayList<ParsedSentence> parses = null;
+			RelexInfo ri = null;
 			try {
-				parses = lp.parse(convertedSentence, context.getLinkParserClient());
+				ri = lp.parse(convertedSentence, context.getLinkParserClient());
 			} catch (RuntimeException ex) {
-				parses = new ArrayList<ParsedSentence>();
+				ri = new RelexInfo();
+				ri.setSentence(sentence);
 			}
 			
-			RelexInfo ri = new RelexInfo(sentence, parses);
 			if (DEBUG > 0) System.out.println("[" + index + "] End parsing");
 
 			int i = 0;
-			for (ParsedSentence parse : parses) {
+			for (ParsedSentence parse : ri.getParses()) {
 				try {
 					// Markup feature node graph with entity info,
 					// so that the relex algs (next step) can see them.
@@ -85,7 +101,7 @@ public class RelexTask implements Callable<RelexTaskResult> {
 				}
 				if (DEBUG > 0) 
 					System.out.println("[" + index+ "] end post-processing sentence " + 
-							(i++) + "/"+ parses.size());
+							(i++) + "/"+ ri.getParses().size());
 			}
 			return new RelexTaskResult(index, sentence, entityMaintainer, ri);
 		} finally {

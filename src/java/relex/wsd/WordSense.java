@@ -73,7 +73,7 @@ public class WordSense
 		// Immediately rule out any that do not have matching
 		// parts of speech.
 		//
-		for (ParsedSentence exparse : example.parsedSentences)
+		for (ParsedSentence exparse : example.getParses())
 		{
 			FeatureNode xmp_fn = exparse.findWord(example_word);
 			if (null == xmp_fn) continue;
@@ -81,7 +81,7 @@ public class WordSense
 
 			TruthValue xmp_tv = exparse.getTruthValue();
 			double xmp_conf = xmp_tv.getConfidence();
-			for (ParsedSentence tgparse : target.parsedSentences)
+			for (ParsedSentence tgparse : target.getParses())
 			{
 				FeatureNode tgt_fn = tgparse.findWord(target_word);
 				if (null == tgt_fn) continue;

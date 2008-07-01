@@ -78,7 +78,7 @@ public class Hobbs
 
 	public void resolve(RelexInfo ri)
 	{
-		ArrayList<ParsedSentence> plist = ri.parsedSentences;
+		ArrayList<ParsedSentence> plist = ri.getParses();
 		if (0 >= plist.size()) return;
 
 		// XXX at the moment, ignore all but the first parse.
@@ -209,10 +209,10 @@ public class Hobbs
 			RelexInfo ri = sentences.get(i);
 
 			// Whoops . sentence had zero parses!
-			if (ri.parsedSentences.size() == 0) continue;
+			if (ri.getParses().size() == 0) continue;
 
 			// XXX ignore all but the first parse right now
-			ParsedSentence ps = ri.parsedSentences.get(0);
+			ParsedSentence ps = ri.getParses().get(0);
 			PhraseTree head = ps.getPhraseTree();
 			StepFour(head);
 		}

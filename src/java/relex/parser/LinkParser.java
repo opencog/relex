@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import relex.ParsedSentence;
+import relex.RelexInfo;
 import relex.RelexProperties;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
@@ -35,7 +36,10 @@ public class LinkParser extends Parser
 
 	private static final boolean storePhraseString = true;
 
-	public String simpleParse(String sentence, LinkParserClient lpc) {
+	private RelexInfo ri;
+
+	public String simpleParse(String sentence, LinkParserClient lpc)
+	{
 		lpc.execParse(sentence);
 		if (lpc.getNumLinkages() > 0) {
 			lpc.makeLinkage(0);
@@ -44,7 +48,8 @@ public class LinkParser extends Parser
 		return null;
 	}
 
-	public String cleanSentenceString(String sentence) {
+	public String cleanSentenceString(String sentence)
+	{
 		String sen = sentence.replace('[', '(');
 		sen = sen.replace(']', ')');
 		sen = sen.replace('"', ' ');
@@ -56,10 +61,12 @@ public class LinkParser extends Parser
 	 * The ParsedSentence has ConstituentNodes for every tokenized word. It 
 	 * does not have a Tree structure or Linkage structure.
 	 */
-	private ArrayList<ParsedSentence> tokenizeAndParseSentence(String sentence, LinkParserClient lpc)
+	private void tokenizeAndParseSentence(String sentence, LinkParserClient lpc)
 	{
 		Long starttime;
 		if (verbosity > 0) starttime = System.currentTimeMillis();
+
+		ri = new RelexInfo();
 
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
@@ -70,17 +77,18 @@ public class LinkParser extends Parser
 		int numParses = lpc.getNumLinkages();
 		if (verbosity >= 5) System.out.println("found " + numParses + " parse(s)");
 		
-		ArrayList<ParsedSentence> parsedSentences = new ArrayList<ParsedSentence>();
+		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
 		if ((numParses < 1) || 
 		    (!lpc.getAllowSkippedWords() && lpc.getNumSkippedWords() > 0))
 		{
 			System.err.println("Warning: No parses found for:\n" +
 			     sentence);
-			return parsedSentences;
+			return;
 		}
 
-		for (int i = 0; i < numParses && i < lpc.getMaxParses(); i++) {
+		for (int i = 0; i < numParses && i < lpc.getMaxParses(); i++)
+		{
 			if (verbosity >= 5) System.out.println("making linkage for parse " + i);
 			lpc.makeLinkage(i);
 			
@@ -107,7 +115,8 @@ public class LinkParser extends Parser
 			HashMap<String,Integer> timesTokenSeen = new HashMap<String,Integer>();
 			// System.out.println("LINKPARSER NUMWORDS=" + numWords + "
 			// SKIPPED=" + cNumSkippedWords());
-			for (int w = 0; w < numWords; w++) {
+			for (int w = 0; w < numWords; w++)
+			{
 				String wordString = lpc.getWord(w);
 				if (verbosity >= 5) System.out.println(" Processing Word " + wordString);
 
@@ -127,7 +136,8 @@ public class LinkParser extends Parser
 					
 					// set "wall" to point to the left wall
 					fnv.fn().set("wall", leftWall);
-					if (lastFN != null) {
+					if (lastFN != null)
+					{
 						LinkableView.setNext(lastFN, fnv.fn());
 						fnv.setPrev(lastFN);
 					}
@@ -140,21 +150,27 @@ public class LinkParser extends Parser
 					String sentenceString = sentence.toLowerCase();
 					Integer timesSeenInt = timesTokenSeen.get(tokenString);
 					int timesSeen = (timesSeenInt == null ? 0 : timesSeenInt.intValue());
-					for (int x = 0; x <= timesSeen; x++) { // "x<=" means we will do at least once
+
+					// "x<=" means we will do at least once
+					for (int x = 0; x <= timesSeen; x++)
+					{
 						startChar = sentenceString.indexOf(tokenString,startChar);
 					}
+
 					timesTokenSeen.put(tokenString, new Integer(timesSeen + 1));
 					int endChar = (startChar >= 0 ? startChar + tokenString.length() : -1);
 					// System.out.println("INFO IS " + startChar + "," + endChar);
 					fnv.setCharIndices(startChar, endChar, w);
+
 					// Increment index to start looking for next tokenString after the current one.
 					// Use "max" to prevent decreasing index in the case the tokenString end is -1
 					startChar = Math.max(startChar, endChar);
 					lastFN = fnv.fn();
 				}
-
 			}
+
 			if (verbosity >= 5) System.out.println("Done with parse " + i);
+
 			// set meta data
 			FeatureNode meta = new FeatureNode();
 			meta.set("num_skipped_words", new FeatureNode(Integer.toString(
@@ -168,6 +184,7 @@ public class LinkParser extends Parser
 			meta.set("num_violations", new FeatureNode(Integer.toString(
 			                           lpc.getLinkageNumViolations())));
 			s.setMetaData(meta);
+
 			// add linkage and tree structure
 			if (verbosity >= 5) System.out.println("Adding Linkage Structure");
 			addLinkageStructure(s, ignoreFirst, ignoreLast, lpc);
@@ -176,8 +193,10 @@ public class LinkParser extends Parser
 			if (verbosity >= 5) System.out.println("Ready To Finish");
 			
 			// add to return list
-			parsedSentences.add(s);
+			parses.add(s);
 		}
+
+		ri.setParses(parses);
 		
 		if (verbosity > 0)
 		{
@@ -186,27 +205,33 @@ public class LinkParser extends Parser
 			System.out.println("Parse setup time: " + elapsed + " milliseconds");
 		}
 		if (verbosity >= 5) System.out.println("Done with tokenizeAndParse");
-		return parsedSentences;
 	}
 
-	private void addLinkageStructure(ParsedSentence s, boolean ignoreFirst, boolean ignoreLast, LinkParserClient lpc) {
+	private void addLinkageStructure(ParsedSentence s,
+	                                 boolean ignoreFirst, boolean ignoreLast,
+	                                 LinkParserClient lpc)
+	{
 		int length = lpc.getNumWords();
 		int numLinks = lpc.getNumLinks();
 		s.setLinkString(lpc.getLinkString());
 		
-		for (int i = 0; i < numLinks; i++) {
+		for (int i = 0; i < numLinks; i++)
+		{
 			boolean bad = false;
 			int left = lpc.getLinkLWord(i);
 			int right = lpc.getLinkRWord(i);
-			if (ignoreLast && (right == length - 1)) {
+			if (ignoreLast && (right == length - 1))
+			{
 				bad = true;
 			}
-			if (ignoreFirst) {
+			if (ignoreFirst)
+			{
 				if (left == 0) bad = true;
 				--left;
 				--right;
 			}
-			if (!bad) {
+			if (!bad)
+			{
 				/*
 				 * System.out.println("ADDING LINK " + left + "," + right);
 				 * System.out.println("labels: " + cLinkLLabel(i) + ":" +
@@ -226,7 +251,8 @@ public class LinkParser extends Parser
 	/**
 	 * Uses the Penn-tree-bank style "phrase structure".
 	 */
-	private void addTreeStructure(ParsedSentence s, LinkParserClient lpc) {
+	private void addTreeStructure(ParsedSentence s, LinkParserClient lpc)
+	{
 		String treeString = lpc.getConstituentString();
 		s.setPhraseString(treeString);
 	}
@@ -236,13 +262,22 @@ public class LinkParser extends Parser
 	 * 
 	 * @param sentence
 	 * @param lpc 
-	 * @return only a single parse for now. Need to add more parses by modifying calls to tokenizeAndParseSentence
+	 * @return list of parses.
 	 */
-	public ArrayList<ParsedSentence> parse(String sentence, LinkParserClient lpc) {
-		return tokenizeAndParseSentence(sentence, lpc);
+	public ArrayList<ParsedSentence> parsel(String sentence, LinkParserClient lpc)
+	{
+		tokenizeAndParseSentence(sentence, lpc);
+		return ri.getParses();
 	}
 
-	public static String retrievePathName() {
+	public RelexInfo parse(String sentence, LinkParserClient lpc)
+	{
+		tokenizeAndParseSentence(sentence, lpc);
+		return ri;
+	}
+
+	public static String retrievePathName()
+	{
 		return RelexProperties.getProperty("relex.parser.LinkParser.pathname");
 	}
 
@@ -252,12 +287,12 @@ public class LinkParser extends Parser
 		LinkParserJNINewClient lpc = LinkParserJNINewClient.getSingletonInstance();
 		lpc.init();
 		LinkParser lp = new LinkParser();
-		ArrayList<ParsedSentence> v = lp.parse(
+		ArrayList<ParsedSentence> v = lp.parsel(
 			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.", lpc);
 		System.out.println("FOUND " + v.size() + " sentence(s)");
 		System.out.println("HAD is past: " + lpc.isPastTenseForm("had"));
 		System.out.println("HAVE is past: " + lpc.isPastTenseForm("have"));
-		v = lp.parse("Mike saw the man with the telescope.", lpc);
+		v = lp.parsel("Mike saw the man with the telescope.", lpc);
 		if (v.size() > 0) {
 			ParsedSentence sentence = v.get(0);
 			System.out.println("ParsedSentence.getLinkString():\n"+ sentence.getLinkString());

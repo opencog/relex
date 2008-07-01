@@ -34,24 +34,35 @@ public class RelexInfo implements Serializable
 	private static final long serialVersionUID = -3047552550351161106L;
 	
 	public String originalSentence;
-	public ArrayList<ParsedSentence> parsedSentences;
+	private ArrayList<ParsedSentence> parses;
 
 	private String sentenceID;
 	
-	public RelexInfo(String _originalSentence, 
-	                 ArrayList<ParsedSentence> _parsedSentences)
+	public RelexInfo()
 	{
-		originalSentence = _originalSentence;
-		parsedSentences = _parsedSentences;
+		originalSentence = null;
+		parses = null;
+	}
 
-		// Assign a unique sentence ID to each sentence; this is required
-		// for OpenCog output, where each sentence and parse needs to be 
-		// tagged.
+	public RelexInfo(String os, ArrayList<ParsedSentence> pl)
+	{
+		originalSentence = os;
+		parses = pl;
+		assign_id();
+	}
+
+	/**
+	 * Assign a unique sentence ID to each sentence; this is required
+	 * for OpenCog output, where each sentence and parse needs to be 
+	 * tagged.
+	 */
+	private void assign_id()
+	{
 		UUID guid = UUID.randomUUID();
 		sentenceID = "sentence_" + guid;
 
 		int n = 0;
-		for (ParsedSentence parse: parsedSentences)
+		for (ParsedSentence parse: parses)
 		{
 			String id = sentenceID + "_parse_" + n;
 			parse.setIDString(id);
@@ -65,19 +76,35 @@ public class RelexInfo implements Serializable
 		return sentenceID;
 	}
 
+	public void setSentence(String s)
+	{
+		originalSentence = s;
+	}
+	
 	public String getSentence()
 	{
 		return originalSentence;
 	}
 	
+	public void setParses (ArrayList<ParsedSentence> pl)
+	{
+		parses = pl;
+		assign_id();
+	}
+
+	public ArrayList<ParsedSentence> getParses()
+	{
+		return parses;
+	}
+
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
 		int numParses = 0;
-		for (ParsedSentence parse: parsedSentences)
+		for (ParsedSentence parse: parses)
 		{
 			sb.append("Parse " + ((numParses++)+1) + 
-			          " of " + parsedSentences.size()).append("\n");
+			          " of " + parses.size()).append("\n");
 			sb.append(SimpleView.printRelations(parse)).append("\n");
 		}
 		return sb.toString();

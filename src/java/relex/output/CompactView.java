@@ -116,9 +116,9 @@ public class CompactView
 		parse_count = 0;
 
 		String str = "  <sentence index=\"" + sentence_count + "\"";
-		str += " parses=\"" + ri.parsedSentences.size() + "\">\n";
+		str += " parses=\"" + ri.getParses().size() + "\">\n";
 		str += "  " + ri.getSentence() + "\n";
-		for (ParsedSentence parse: ri.parsedSentences)
+		for (ParsedSentence parse: ri.getParses())
 		{
 			str += toString(parse);
 			if (parse_count > max_parses) break;

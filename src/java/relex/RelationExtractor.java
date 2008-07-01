@@ -179,7 +179,7 @@ public class RelationExtractor
 
 		RelexInfo ri = parseSentence(sentence, entityMaintainer);
 
-		for (ParsedSentence parse : ri.parsedSentences)
+		for (ParsedSentence parse : ri.getParses())
 		{
 			// Markup feature node graph with entity info,
 			// so that the relex algs (next step) can see them.
@@ -226,15 +226,14 @@ public class RelationExtractor
 		}
 		if (sentence == null) return null;
 
-		ArrayList<ParsedSentence> parses = null;
+		String orig_sentence = entityMaintainer.getOriginalSentence();
+		RelexInfo ri = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			parses = parser.parse(sentence, context.getLinkParserClient());
+			ri = parser.parse(sentence, context.getLinkParserClient());
 		} else {
-			System.err.println("Sentence too long!: " + sentence);
-			parses = new ArrayList<ParsedSentence>();
+			ri = new RelexInfo();
 		}
-		sentence = entityMaintainer.getOriginalSentence();
-		RelexInfo ri = new RelexInfo(sentence, parses);
+		ri.setSentence(orig_sentence);
 		return ri;
 	}
 
@@ -444,7 +443,7 @@ public class RelationExtractor
 				sentence_count ++;
 				re.stats.bin(ri);
 
-				int np = ri.parsedSentences.size();
+				int np = ri.getParses().size();
 				if (np > maxParses) np = maxParses;
 
 				// chunk ranking stuff
@@ -459,12 +458,12 @@ public class RelationExtractor
 
 				// Print output
 				int numParses = 0;
-				for (ParsedSentence parse: ri.parsedSentences)
+				for (ParsedSentence parse: ri.getParses())
 				{
 					System.out.println(sentence);
 					System.out.println("\n====\n");
 					System.out.println("Parse " + (numParses+1) +
-					             " of " + ri.parsedSentences.size());
+					             " of " + ri.getParses().size());
 
 					if (commandMap.get("-r") != null)
 					{

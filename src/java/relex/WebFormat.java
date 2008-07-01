@@ -138,7 +138,7 @@ public class WebFormat
 
 		RelexInfo ri = parseSentence(sentence, entityMaintainer);
 
-		for (ParsedSentence parse : ri.parsedSentences)
+		for (ParsedSentence parse : ri.getParses())
 		{
 			// Markup feature node graph with entity info,
 			// so that the relex algs (next step) can see them.
@@ -175,15 +175,14 @@ public class WebFormat
 		}
 		if (sentence == null) return null;
 
-		ArrayList<ParsedSentence> parses = null;
+		String orig_sentence = entityMaintainer.getOriginalSentence();
+		RelexInfo ri = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			parses = parser.parse(sentence, context.getLinkParserClient());
+			ri = parser.parse(sentence, context.getLinkParserClient());
 		} else {
-			System.err.println("Sentence too long!: " + sentence);
-			parses = new ArrayList<ParsedSentence>();
+			ri = new RelexInfo();
 		}
-		sentence = entityMaintainer.getOriginalSentence();
-		RelexInfo ri = new RelexInfo(sentence, parses);
+		ri.setSentence(orig_sentence);
 		return ri;
 	}
 
@@ -323,7 +322,7 @@ public class WebFormat
 				System.out.println (cv.toString(ri));
 
 				// Print output
-				for (ParsedSentence parse: ri.parsedSentences)
+				for (ParsedSentence parse: ri.getParses())
 				{
 					if (commandMap.get("-f") != null)
 					{

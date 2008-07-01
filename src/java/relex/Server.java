@@ -74,12 +74,12 @@ System.out.println("duude got accept");
 					if (line == null)
 						break;
 					RelexInfo ri = r.processSentence(line);
-					if (ri.parsedSentences.size() == 0)
+					if (ri.getParses().size() == 0)
 					{
 						out.println("no parses");
 						continue;
 					}
-					ParsedSentence p = ri.parsedSentences.get(0);
+					ParsedSentence p = ri.getParses().get(0);
 
 					/*
 					out.println(p.getPhraseString());

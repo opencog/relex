@@ -65,12 +65,12 @@ public class ParseStats
 	public void bin(RelexInfo ri)
 	{
 		count ++;
-		int nparses = ri.parsedSentences.size();
+		int nparses = ri.getParses().size();
 		parse_count.bin(nparses);
 
 		if (nparses <= 0) return;
 
-		ParsedSentence fs = ri.parsedSentences.get(0);
+		ParsedSentence fs = ri.getParses().get(0);
 		word_count.bin(fs.getNumWords());
 
 		// If the first parse has skipped words, the parse is "failed"
@@ -81,11 +81,11 @@ public class ParseStats
 			first_parse_confidence.bin(fs.getTruthValue().getConfidence());
 
 		if (2 <= nparses)
-			second_parse_confidence.bin(ri.parsedSentences.get(1).getTruthValue().getConfidence());
+			second_parse_confidence.bin(ri.getParses().get(1).getTruthValue().getConfidence());
 		if (3 <= nparses)
-			third_parse_confidence.bin(ri.parsedSentences.get(2).getTruthValue().getConfidence());
+			third_parse_confidence.bin(ri.getParses().get(2).getTruthValue().getConfidence());
 		if (4 <= nparses)
-			fourth_parse_confidence.bin(ri.parsedSentences.get(3).getTruthValue().getConfidence());
+			fourth_parse_confidence.bin(ri.getParses().get(3).getTruthValue().getConfidence());
 
 		// Count average number of relations per sentence.
 		// But only for the first, most high-confidence parse.
