@@ -115,7 +115,7 @@ public class CompactView
 		sentence_count ++;
 		parse_count = 0;
 
-		String str = "  <sentence id=\"" + sentence_count + "\"";
+		String str = "  <sentence index=\"" + sentence_count + "\"";
 		str += " parses=\"" + ri.parsedSentences.size() + "\">\n";
 		str += "  " + ri.getSentence() + "\n";
 		for (ParsedSentence parse: ri.parsedSentences)
