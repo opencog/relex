@@ -229,20 +229,35 @@ public class EntityMaintainer implements Serializable
 					new Integer(convertedSentence.length() - 1));
 			}
 
-			// If the entity is at the end of the sentence, then the 
-			// entity detector may swallow the period at the end 
-			// of the sentence. This can confuse downstream handlers,
-			// so remove the period from the entity, and put it back 
-			// at the end of the sentence.
-			if ((originalSentence.length() == curIndex) &&
+			curIndex = eInfo.getLastCharIndex();
+
+			// If the entity ends with a period, then sometimes the
+			// entity detector doesn't include the period as part of 
+			// the entity. Fix this up (as long as the period is not
+			// at the enbd of the sentence).
+			// For example: "The A.D.A. advises against this."
+			if ((originalSentence.length() > curIndex) &&
 			    (originalSentence.charAt(eInfo.getLastCharIndex()) == '.'))
 			{
-				eInfo.setLastCharIndex(eInfo.getLastCharIndex()-1);
+				eInfo.setLastCharIndex(eInfo.getLastCharIndex()+1);
+				curIndex++;
 			}
 
 			// Insert the ID string of the entity.
-			curIndex = eInfo.getLastCharIndex() + 1;
 			convertedSentence += makeID(eInfo);
+
+			// If the entity is at the end of the sentence, then the 
+			// entity detector may swallow the period at the end 
+			// of the sentence. This can confuse downstream handlers,
+			// so add a new period to end the sentence.
+			// For example: "It is located in Wshington, D.C."
+			if ((originalSentence.length() == curIndex) &&
+			    (originalSentence.charAt(eInfo.getLastCharIndex()-1) == '.'))
+			{
+				convertedSentence += '.';
+				insertedWhitespaceCharIndexes.add(
+					new Integer(convertedSentence.length() - 1));
+			}
 
 			// Insert trailing white space after eInfo if it is 
 			// not followed by a legal string

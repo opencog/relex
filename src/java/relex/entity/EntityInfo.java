@@ -37,6 +37,12 @@ import relex.feature.FeatureNode;
  * just after the entity, so that 
  *    lastCharIndex = firstCharIndex + entity.length() 
  * holds true.
+ *
+ * Test sentences that need to be handled correctly:
+ *    The National Audio-Visual Conservation Center is in Culpeper,
+ *    Virginia, near Washington, D.C.
+ *
+ *    The A.D.A. advises against this.
  */
 
 public class EntityInfo implements Serializable
@@ -63,7 +69,8 @@ public class EntityInfo implements Serializable
 	
 	private static final long serialVersionUID = 344692623956286950L;
 	
-	private static Map<String, String> defaultPrefixes = new HashMap<String, String>();
+	private static Map<String, String> defaultPrefixes = 
+		new HashMap<String, String>();
 	static
 	{
 		defaultPrefixes.put("GENERIC", DEFAULT_PREFIX);
@@ -79,7 +86,8 @@ public class EntityInfo implements Serializable
 	private int firstCharIndex;
 	private int lastCharIndex;
 	private String type = "ENTITY";
-	private Map<String, Object> attributes = Collections.synchronizedMap(new HashMap<String, Object>());	
+	private Map<String, Object> attributes = 
+		Collections.synchronizedMap(new HashMap<String, Object>());	
 	private ArrayList<String> nodeProperties = new ArrayList<String>(1);
 	
 	private String getPunctuationPrefix()
@@ -116,8 +124,7 @@ public class EntityInfo implements Serializable
 
 	public String getOriginalString()
 	{
-		// Entity is *INCLUSIVE* of the last char index!
-		return originalSentence.substring(firstCharIndex, lastCharIndex+1);
+		return originalSentence.substring(firstCharIndex, lastCharIndex);
 	}
 
 	public String idStringPrefix()
@@ -157,12 +164,10 @@ public class EntityInfo implements Serializable
 	}
 	
 	/**
-	 * <p>
-	 * Set an attribute which will also be added as a <code>FeatureNode</code>
-	 * property. Whenever, an attribute of the <code>EntityInfo</code> needs
-	 * to be propagated to the <code>FeatureNode</code> structure, this method 
-	 * should be used instead of <code>getAttributes().put(name, value)</code>. 
-	 * </p>
+	 * Set an attribute which will also be added as a FeatureNode
+	 * property. Whenever, an attribute of the EntityInfo needs
+	 * to be propagated to the FeatureNode structure, this method 
+	 * should be used instead of getAttributes().put(name, value). 
 	 * 
 	 * @param name The name of the attribute.
 	 * @param value
@@ -186,9 +191,8 @@ public class EntityInfo implements Serializable
 	}
 
 	/** 
-	 * <p>Return a list of names of attributes that are propagated as <code>FeatureNode</code>s
-	 * in a call to <code>setProperties(FeatureNode)</code>.
-	 * </p>
+	 * Return a list of names of attributes that are propagated as 
+	 * FeatureNode's in a call to setProperties(FeatureNode).
 	 */
 	public List<String> getNodePropertyNames()
 	{
