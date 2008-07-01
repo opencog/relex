@@ -452,7 +452,7 @@ public class EntityMaintainer implements Serializable
 					{
 						SemanticView semView = new SemanticView(word.fn()
 								.get("ref"));
-						semView.setName(origName);// .replaceAll("\\s","_"))
+						semView.setName(origName);
 					}
 					catch (Exception e) {}
 				}

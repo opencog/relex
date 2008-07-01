@@ -1,4 +1,3 @@
-package relex.corpus;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.corpus;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.corpus;
 
 import gate.Annotation;
 import gate.AnnotationSet;
@@ -131,14 +132,13 @@ public class GateEntityDetector extends EntityMaintainerFactory
 	}
 	
 	/**
-	 * <p>
-	 * Return a map of name/value parameters used to initialize <code>Annie</code>. If you
-	 * wish to add custom configuration parameters to GATE, put them in this time after
-	 * construction time, but before any other processing. The keys to this map are classname
-	 * of processing resources (e.g. "gate.creole.gazetteer.DefaultGazetteer") and the values
-	 * are maps representing configuration parameters (GATE's FeatureMap) for each 
-	 * processing resource.
-	 * </p>
+	 * Return a map of name/value parameters used to initialize Annie.
+	 * If you wish to add custom configuration parameters to GATE, put
+	 * them in this time after construction time, but before any other
+	 * processing. The keys to this map are classname of processing
+	 * resources (e.g. "gate.creole.gazetteer.DefaultGazetteer") and
+	 * the values are maps representing configuration parameters
+	 * (GATE's FeatureMap) for each processing resource.
 	 */
 	public Map<String, Map<Object, Object>> getAnnieParams()
 	{
@@ -201,7 +201,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 		if (DEBUG>0) System.out.println("Original text is:\n"+documentText);
 		initialize();
 		
-		// Ugly hack; since Annie think "Don" is a person's name.
+		// Ugly hack; since Annie thinks "Don" is a person's name.
 		String fixed = documentText.replaceAll("Don't", "Do not").replaceAll("don't", "do not");
 		if (DEBUG>0) System.out.println("Fixed text is :\n"+fixed);
 		doc =  Factory.newDocument(fixed);
@@ -234,8 +234,9 @@ public class GateEntityDetector extends EntityMaintainerFactory
 			em = findEntitiesInText(annoset, sentence);
 			releaseResources();
 		}
-		catch(GateException e){
-			if (DEBUG>0) System.out.println(e.getMessage());
+		catch(GateException e)
+		{
+			if (DEBUG>0) System.err.println(e.getMessage());
 		}
 		return em;
 	}
@@ -301,7 +302,9 @@ public class GateEntityDetector extends EntityMaintainerFactory
 				}
 			}
 			return new EntityMaintainer(sentence, eInfos);
-		} catch (RuntimeException e){
+		}
+		catch (RuntimeException e)
+		{
 			e.printStackTrace();
 			throw e;
 		}
