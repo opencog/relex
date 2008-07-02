@@ -1900,15 +1900,16 @@ PRECEEDING_PREP_CLAUSE_OBJECT
 SPECIAL_PREP_RULE
 ; NOTE special prep rule is not working when the prep is modified: 
 ;    "Mike is in the room on Tuesday..."
-; This is used for "John is in the room" to change subj to prepSubj
+; This is used for "John is in the room" to change subj to psubj
 ; "The garage is next to the house".
+; "The book is on the table."
 <LAB> = \Pp\.*
 <F_L str> = be
 <F_R ref links _subj> != %
 <F_R ref links _obj> != %
 =
 <F_R ref SPECIAL-PREP-FLAG> = T
-<F_R ref links _prepSubj> = <F_R ref links _subj> 
+<F_R ref links _psubj> = <F_R ref links _subj> 
 <F_R ref links _pobj> = <F_R ref links _obj>
 <F_R ref links _subj> = %
 <F_R ref links _obj> = %
@@ -1934,7 +1935,7 @@ SPECIAL_PREP_RULE_WHERE_WHERE
 <F_L str> = where
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
-<F_L ref links _prepSubj> = <F_R ref links _subj>
+<F_L ref links _psubj> = <F_R ref links _subj>
 <F_L ref links _pobj name> = _$qVar
 <F_L ref links _pobj nameSource> = %
 <F_L ref links _pobj nameSource> = <F_L>
@@ -1948,7 +1949,7 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 <F_L str> = when
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
-<F_L ref links _prepSubj> = <F_R ref links _subj>
+<F_L ref links _psubj> = <F_R ref links _subj>
 <F_L ref links _pobj name> = _$qVar
 <F_L ref links _pobj nameSource> = %
 <F_L ref links _pobj nameSource> = <F_L>

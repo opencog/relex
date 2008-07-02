@@ -227,7 +227,7 @@ public class ParseView {
 		declRel("_iobj",         "ind-obj",      true);
 		declRel("_subj",         "subject",      true);
 		declRel("_pobj",         "prep-object",  true);
-		declRel("_prepSubj",     "prep-subject", true);
+		declRel("_psubj",        "prep-subject", true);
 
 		// Non-Implodables
 		declRel("_to-do",         "action",         false);
@@ -298,7 +298,7 @@ public class ParseView {
 		declRel("_iobj",         "IndirectObject",       true);
 		declRel("_subj",         "Subject",              true);
 		declRel("_pobj",         "PrepositionalObject",  true);
-		declRel("_prepSubj",     "PrepositionalSubject", true);
+		declRel("_psubj",        "PrepositionalSubject", true);
 
 		// Non-Implodables
 		declRel("_to-do",         "Action",         false);

@@ -61,7 +61,7 @@ public class RelationChunker extends LexicalChunker
 		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
 		{
 			// if (relation.equals("_subj")) return false;
-			// if (relation.equals("_prepSubj")) return false;
+			// if (relation.equals("_psubj")) return false;
 
 			FeatureNode fm = from.get("nameSource");
 

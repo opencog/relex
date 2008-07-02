@@ -1,3 +1,6 @@
+The book is on the table.
+END.
+The coin is put in the slot.
 The garage is next to the house.
 John is in the room.
 END.
