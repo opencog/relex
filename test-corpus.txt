@@ -1,6 +1,7 @@
-The book is on the table.
+He knew that I was angry.
 END.
-The coin is put in the slot.
+He knew I was angry.
+The book is on the table.
 The garage is next to the house.
 John is in the room.
 END.

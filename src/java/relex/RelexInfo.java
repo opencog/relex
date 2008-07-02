@@ -42,7 +42,7 @@ public class RelexInfo implements Serializable
 	public RelexInfo()
 	{
 		originalSentence = null;
-		parses = null;
+		parses = new ArrayList<ParsedSentence>(); // empty list
 		numParses = 0;
 	}
 
