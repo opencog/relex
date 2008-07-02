@@ -1042,7 +1042,7 @@ INDIR_OBJ1
 <LAB> != \O\.i\.*
 <F_L OBJ-LINK-TAG> != O|UNSET
 =
-<F_L obj2> += <F_R ref>
+<F_L iobj> += <F_R ref>
 ;
 #TemplateActionAlg
 REL_OBJ
@@ -1066,7 +1066,7 @@ REL_INDIR_OBJ
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
-<F_R obj2> += <F_L ref>
+<F_R iobj> += <F_L ref>
 ;
 #TemplateActionAlg
 DIR_OBJ2
@@ -1084,7 +1084,7 @@ DIR_OBJ2
 <LAB> != \O\.i\.*
 <F_L OBJ-LINK-TAG> != O-n|UNSET
 =
-<F_L obj2> += <F_R ref>
+<F_L iobj> += <F_R ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1553,16 +1553,16 @@ OBJ_TO_LINKS_GERUND
 #TemplateActionAlg
 OBJ2_TO_LINKS
 <HEAD-FLAG> = T
-<obj2> != %
+<iobj> != %
 =
-<ref links _obj2> = <obj2>
+<ref links _iobj> = <iobj>
 ;
 #TemplateActionAlg
 OBJ2_TO_LINKS_GERUND
 <POS> = noun
-<obj2> != %
+<iobj> != %
 =
-<ref links _obj2> = <obj2>
+<ref links _iobj> = <iobj>
 ;
 #TemplateActionAlg
 PREPOSITION_MARKING
