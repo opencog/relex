@@ -76,7 +76,7 @@ public class RawView
 		ignores.add("ref");
 		ignores.add("subj");
 		ignores.add("obj");
-		ignores.add("obj2");
+		ignores.add("iobj");
 		// ignores.add("that");
 		ignores.add("this");
 		ignores.add("wall");
@@ -91,7 +91,7 @@ public class RawView
 		ArrayList<String> order = new ArrayList<String>();
 		order.add("_subj");
 		order.add("_obj");
-		order.add("_obj2");
+		order.add("_iobj");
 		order.add("name");
 		order.add("tense");
 		order.add("PREP-FLAG");

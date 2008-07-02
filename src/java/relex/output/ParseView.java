@@ -222,9 +222,9 @@ public class ParseView {
 		rel_implode = new HashMap<String,HashMap<String,String>>();
 
 		// Implodables
-		declRel("_appo",         "appo",         true);
+		declRel("_appo",         "appostive",    true);
 		declRel("_obj",          "object",       true);
-		declRel("_obj2",         "ind-obj",      true);
+		declRel("_iobj",         "ind-obj",      true);
 		declRel("_subj",         "subject",      true);
 		declRel("_prepObj",      "prep-object",  true);
 		declRel("_prepSubj",     "prep-subject", true);
@@ -295,7 +295,7 @@ public class ParseView {
 		// Implodables
 		declRel("_appo",         "Appositive",           true);
 		declRel("_obj",          "Object",               true);
-		declRel("_obj2",         "IndirectObject",       true);
+		declRel("_iobj",         "IndirectObject",       true);
 		declRel("_subj",         "Subject",              true);
 		declRel("_prepObj",      "PrepositionalObject",  true);
 		declRel("_prepSubj",     "PrepositionalSubject", true);
