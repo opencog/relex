@@ -1010,9 +1010,9 @@ GER_OBJ
 ;
 #TemplateActionAlg
 PASS_OBJ
-;//Pv and Mh GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
-;//We dont do linking until the arguments are filled (to be AND safe)
-;//"He was chased."
+; Pv and Mh GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
+; We don't do linking until the arguments are filled (to be AND safe)
+;  "He was chased."
 <LAB> = \Pv\.*
 =
 <F_R OBJ-LINK-TAG> = Pv
@@ -1059,7 +1059,7 @@ REL_OBJ
 ;
 #TemplateActionAlg
 REL_INDIR_OBJ
-;//If O or MvPv have already filled the object, B identifies indirect
+;//If O or Mv/Pv have already filled the object, B identifies indirect
 ;//"This is the car I gave the man." (O fills before B)
 ;//"This is the car the man was given." (Pv filles vefore B)
 <LAB> = \B\.*|\BW\.*
@@ -1093,7 +1093,12 @@ DIR_OBJ2
 ;
 #TemplateActionAlg
 PASSIVE_OBJ_LINK
-;//"He was eaten."
+;
+; Hmm, shouldn't this be identified as "nsubjpass", passive nominal
+; subject? I guess, for now, its ok to confuse passive subjects with
+; objects...
+; "He was eaten."
+; "Rocks were thrown at the windows" -- rocks is nsubjpass
 <LAB> = \Pv\.*
 =
 <F_R obj> = <F_L subj>
@@ -1896,8 +1901,7 @@ SPECIAL_PREP_RULE
 ; NOTE special prep rule is not working when the prep is modified: 
 ;    "Mike is in the room on Tuesday..."
 ; This is used for "John is in the room" to change subj to prepSubj
-; XXX this is no longer working, obsoleted by general relations, not just prepositionals.
-; XXX this should probably be removed completely.
+; "The garage is next to the house".
 <LAB> = \Pp\.*
 <F_L str> = be
 <F_R ref links _subj> != %
@@ -1905,7 +1909,7 @@ SPECIAL_PREP_RULE
 =
 <F_R ref SPECIAL-PREP-FLAG> = T
 <F_R ref links _prepSubj> = <F_R ref links _subj> 
-<F_R ref links _prepObj> = <F_R ref links _obj>
+<F_R ref links _pobj> = <F_R ref links _obj>
 <F_R ref links _subj> = %
 <F_R ref links _obj> = %
 ;
@@ -1931,10 +1935,10 @@ SPECIAL_PREP_RULE_WHERE_WHERE
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
 <F_L ref links _prepSubj> = <F_R ref links _subj>
-<F_L ref links _prepObj name> = _$qVar
-<F_L ref links _prepObj nameSource> = %
-<F_L ref links _prepObj nameSource> = <F_L>
-<F_L ref links _prepObj QUERY-TYPE> = where
+<F_L ref links _pobj name> = _$qVar
+<F_L ref links _pobj nameSource> = %
+<F_L ref links _pobj nameSource> = <F_L>
+<F_L ref links _pobj QUERY-TYPE> = where
 <F_L ref tense> = <F_R ref tense>
 <F_L head-word> = <F_L>
 ;
@@ -1945,10 +1949,10 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
 <F_L ref links _prepSubj> = <F_R ref links _subj>
-<F_L ref links _prepObj name> = _$qVar
-<F_L ref links _prepObj nameSource> = %
-<F_L ref links _prepObj nameSource> = <F_L>
-<F_L ref links _prepObj QUERY-TYPE> = when
+<F_L ref links _pobj name> = _$qVar
+<F_L ref links _pobj nameSource> = %
+<F_L ref links _pobj nameSource> = <F_L>
+<F_L ref links _pobj QUERY-TYPE> = when
 <F_L ref tense> = <F_R ref tense>
 <F_L head-word> = <F_L>
 ;
