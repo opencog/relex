@@ -2341,16 +2341,23 @@ APPO_RIGHT
 ;<F_R background wall> = <F_R wall>
 ;<F_R background BACKGROUND-FLAG> = T
 ;
+; If its on the left, we'll call it a noun-modifier instead of an 
+; appostive.  Thus, "Senator Smith" gets marked as _nn(Smith, Senator)
+; while "Smith, a Senator" gets marked as _appo(Smith, Senator). The
+; reason for this somwhat inconsistent usage is because other phrases,
+; such as "goal line", get marked as _nn(line, goal). So it would seem
+; to make more sense to use _nn here ... but this is certainly debatable
+; and subject to change.
+; So: per WP: "a non-restrictive appositive must be preceded or set off 
+; by commas, a restrictive appositive is not", we use appo only for the
+; non-restrictive appo.
+;
 #TemplateActionAlg
 APPO_LEFT
 <LAB> = \GN\.*
 =
-<F_R ref links _appo> += <F_L ref>
-;<F_L background ref name> = _inheritance
-;<F_L background ref links _arg0> = <F_R ref>
-;<F_L background ref links _arg1> = <F_L ref>
-;<F_L background wall> = <F_L wall>
-;<F_L background BACKGROUND-FLAG> = T
+<F_R ref links _nn> += <F_L ref>
+;<F_R ref links _appo> += <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
