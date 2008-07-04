@@ -1,14 +1,11 @@
-He knew that I was angry.
+The garage is next to the house.
 END.
+He knew that I was angry.
 He knew I was angry.
 The book is on the table.
-The garage is next to the house.
 John is in the room.
-END.
 Rocks were thrown at the windows.
 Bills on ports and immigration were submitted by Senator Brownback, Republican of Kansas.
-END.
-
 The National Audio-Visual Conservation Center is in Culpeper, Virginia, near Washington, D.C.
 This is another sentence.
 END.
@@ -17,10 +14,7 @@ And so am I.
 END.
 The A.D.A. advises against this.
 This major law, known as the A.D.A., also affects the design of public buildings.
-END.
-END.
 Kenny sure is a bastard.
-END.
 How many of my cats have tails?
 How many cats have tails?
 How long was the book?
