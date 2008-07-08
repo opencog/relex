@@ -123,7 +123,7 @@ public class RelexInfo implements Serializable
 		String[] words = new String[nw];
 		for (int i=0; i < nw; i++)
 		{
-			words[i] = p.getWord(i);
+			words[i] = p.getOrigWord(i);
 		}
 		return words;
 	}

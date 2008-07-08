@@ -158,11 +158,23 @@ public class ParsedSentence extends Atom implements Serializable
 	}
 
 	/**
-	 * Return the i'th word in the sentence, as a string
+	 * Return the i'th lemmatized word in the sentence, as a string.
+	 * This is the "root form" of the word, and not the original word.
 	 */
 	public String getWord(int i)
 	{
 		return LinkableView.getWordString(getWordAsNode(i));
+	}
+
+	/**
+	 * Return the i'th word in the sentence, as a string
+	 * This is the original form of the word, and not its lemma.
+	 */
+	public String getOrigWord(int i)
+	{
+		FeatureNode fn = getWordAsNode(i).get("orig_str");
+		if (fn == null) return null;
+		return fn.getValue();
 	}
 
 	public void addWord(FeatureNode w)
