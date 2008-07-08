@@ -110,6 +110,24 @@ public class RelexInfo implements Serializable
 		return numParses;
 	}
 
+	/**
+	 * Return an array of the words in the sentence
+	 */
+	public String[] getWords()
+	{
+		if (numParses == 0) return null;
+
+		// Otherwise, the words from the first parse will do.
+		ParsedSentence p = parses.get(0);
+		int nw = p.getNumWords();
+		String[] words = new String[nw];
+		for (int i=0; i < nw; i++)
+		{
+			words[i] = p.getWord(i);
+		}
+		return words;
+	}
+
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
