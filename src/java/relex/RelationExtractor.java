@@ -331,20 +331,20 @@ public class RelationExtractor
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
 		String sentence = null;
-		int maxParses = 30;
-		int maxParseSeconds = 60;
+		int maxParses = 1;
+		int maxParseSeconds = 6;
 
 		// Check for optional command line arguments.
 		try
 		{
-			maxParses = commandMap.get("-n") != null ?
-				Integer.parseInt(commandMap.get("-n").toString()) : 1;
+			String opt = commandMap.get("-s");
+			if (opt != null) sentence = opt;
 
-			sentence = commandMap.get("-s") != null ?
-				commandMap.get("-s").toString() : null;
+			opt = commandMap.get("-n");
+			if (opt != null) maxParses = Integer.parseInt(opt);
 
-			maxParseSeconds = commandMap.get("--maxParseSeconds") != null ?
-				Integer.parseInt(commandMap.get("--maxParseSeconds").toString()) : 60;
+			opt = commandMap.get("--maxParseSeconds");
+			if (opt != null) maxParseSeconds = Integer.parseInt(opt);
 		}
 		catch (Exception e)
 		{
