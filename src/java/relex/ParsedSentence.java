@@ -365,6 +365,19 @@ public class ParsedSentence extends Atom implements Serializable
 		stv.setConfidence(weight);
 	}
 	
+	/**
+	 * Take the current parse confidence, and rescale it by the 
+	 * indicated amount.  The method simpleRankParse() must have
+	 * been previously called to perform the initial ranking.
+	 */
+	public void rescaleRank(double weight)
+	{
+		SimpleTruthValue stv = (SimpleTruthValue) truth_value;
+		double confidence = stv.getConfidence();
+		confidence *= weight;
+		stv.setConfidence(confidence);
+	}
+
 	public int hashCode()
 	{
 		if (original == null)
