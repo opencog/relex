@@ -199,9 +199,10 @@ public class RelationExtractor
 			PhraseTree pt = new PhraseTree(parse.getLeft());
 			parse.setPhraseString(pt.toString());
 
-			// Assign a simple parse-ranking score, based on LinkGrammar data.
-			parse.simpleRankParse();
 		}
+
+		// Assign a simple parse-ranking score, based on LinkGrammar data.
+		ri.simpleParseRank();
 
 		// Perform anaphora resolution
 		if (do_anaphora_resolution)

@@ -340,12 +340,15 @@ public class ParsedSentence extends Atom implements Serializable
 	 * The ranking will be stored as the "confidence" of the 
 	 * TruthValue associated with this parse.
 	 *
+	 * @returns the score that was assigned.
+	 *
 	 * A classic example of competing parses for a sentence is:
 	 * (S (NP I) (VP saw (NP the man) (PP with (NP the binoculars))) .)
 	 * (S (NP I) (VP saw (NP (NP the man) (PP with (NP the binoculars)))) .)
 	 * The ranker below gives both about equal scores.
+	 *
 	 */
-	public void simpleRankParse()
+	public double simpleRankParse()
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
 		truth_value = stv;
@@ -363,6 +366,7 @@ public class ParsedSentence extends Atom implements Serializable
 		weight = Math.exp(-weight);
 
 		stv.setConfidence(weight);
+		return weight;
 	}
 	
 	/**

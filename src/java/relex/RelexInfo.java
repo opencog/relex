@@ -128,6 +128,36 @@ public class RelexInfo implements Serializable
 		return words;
 	}
 
+	/**
+ 	 * Assign a simple parse-ranking score, based on LinkGrammar data.
+ 	 */
+	public void simpleParseRank()
+	{
+		for (ParsedSentence parse : parses)
+		{
+			parse.simpleRankParse();
+		}
+	}
+
+	/**
+	 * Normalize the parse ranking, so that the highest-ranked
+	 * parse has a confidence of 1.0
+	 */
+	public void normalizeParseRank()
+	{
+		double highest_rank = -1000.0;
+		for (ParsedSentence parse : parses)
+		{
+			double rank = parse.getTruthValue().getConfidence();
+			if (highest_rank < rank) highest_rank = rank;
+		}
+		highest_rank = 1.0 / highest_rank;
+		for (ParsedSentence parse : parses)
+		{
+			parse.rescaleRank(highest_rank);
+		}
+	}
+
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
