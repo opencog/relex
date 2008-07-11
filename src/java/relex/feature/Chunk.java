@@ -18,6 +18,9 @@ package relex.feature;
 
 import java.util.ArrayList;
 
+import relex.stats.SimpleTruthValue;
+import relex.stats.TruthValue;
+
 /**
  * Holder of lists of feature nodes.
  *
@@ -88,5 +91,18 @@ public class Chunk extends Atom
 			if(chunk.get(i) != oth.chunk.get(i)) return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Twiddle the confidence of the chunk.
+	 * Multiply the confidence value of the chunk by the weight.
+	 */
+	public void rescaleConfidence(double weight)
+	{
+		TruthValue tv = this.getTruthValue();
+		SimpleTruthValue stv = (SimpleTruthValue) tv;
+		double confidence = stv.getConfidence();
+		confidence *= weight;
+		stv.setConfidence(confidence);
 	}
 }
