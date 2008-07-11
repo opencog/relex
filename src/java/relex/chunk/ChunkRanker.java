@@ -120,6 +120,23 @@ public class ChunkRanker
 	}
 
 	/**
+	 * Punish chunks whose length is other than 3.
+	 */
+	public void length_punish()
+	{
+		for (LexChunk ch : chunks)
+		{
+			int sz = ch.size();
+			double weight = sz-3;
+			if (weight < 0) weight = - weight;
+			weight = 1.0 - 0.2 * weight;
+
+			// twiddle the confidence of the chunk
+			ch.rescaleConfidence(weight);
+		}
+	}
+
+	/**
 	 * Ad-hoc printed representation of the ranked contents.
 	 * Meant to be human readable, and nothing more.
 	 * May change from one Relex version to another, not stable.
