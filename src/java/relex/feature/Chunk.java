@@ -94,6 +94,16 @@ public class Chunk extends Atom
 	}
 
 	/**
+	 * return the confidence of the chunk.
+	 */
+	public double getConfidence()
+	{
+		TruthValue tv = this.getTruthValue();
+		SimpleTruthValue stv = (SimpleTruthValue) tv;
+		return stv.getConfidence();
+	}
+
+	/**
 	 * Twiddle the confidence of the chunk.
 	 * Multiply the confidence value of the chunk by the weight.
 	 */
@@ -103,6 +113,19 @@ public class Chunk extends Atom
 		SimpleTruthValue stv = (SimpleTruthValue) tv;
 		double confidence = stv.getConfidence();
 		confidence *= weight;
+		stv.setConfidence(confidence);
+	}
+
+	/**
+	 * Increment the confidence of the chunk.
+	 * Add the weight to the confidence value of the chunk.
+	 */
+	public void incrementConfidence(double weight)
+	{
+		TruthValue tv = this.getTruthValue();
+		SimpleTruthValue stv = (SimpleTruthValue) tv;
+		double confidence = stv.getConfidence();
+		confidence += weight;
 		stv.setConfidence(confidence);
 	}
 }

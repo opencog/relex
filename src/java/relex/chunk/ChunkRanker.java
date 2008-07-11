@@ -78,13 +78,7 @@ public class ChunkRanker
 		}
 
 		// update the confidence of the chunk
-		TruthValue tv = ch.getTruthValue();
-		SimpleTruthValue stv = (SimpleTruthValue) tv;
-		double confidence = stv.getConfidence();
-
-		confidence += twiddle * weight.getConfidence();
-
-		stv.setConfidence(confidence);
+		ch.incrementConfidence(twiddle * weight.getConfidence());
 	}
 
 	public void add(ArrayList<LexChunk> lst, TruthValue weight, double twiddle)
@@ -109,15 +103,11 @@ public class ChunkRanker
 		for (int i=0; i<len; i++)
 		{
 			LexChunk chi = chunks.get(i);
-			TruthValue tv = chi.getTruthValue();
-			SimpleTruthValue stv = (SimpleTruthValue) tv;
-			double ci = stv.getConfidence();
+			double ci = chi.getConfidence();
 			for (int j=i+1; j<len; j++)
 			{
 				LexChunk chj = chunks.get(j);
-				tv = chj.getTruthValue();
-				stv = (SimpleTruthValue) tv;
-				double cj = stv.getConfidence();
+				double cj = chj.getConfidence();
 				if (ci < cj)
 				{
 					chunks.set(i, chj);
@@ -140,11 +130,7 @@ public class ChunkRanker
 		String str = "";
 		for (LexChunk ch: chunks)
 		{
-			TruthValue tv = ch.getTruthValue();
-			SimpleTruthValue stv = (SimpleTruthValue) tv;
-			double confidence = stv.getConfidence();
-
-			str += "Confidence: " + confidence;
+			str += "Confidence: " + ch.getConfidence();
 			str += " " + ch.toString() + "\n";
 		}
 		return str;
