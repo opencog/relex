@@ -11,6 +11,9 @@ while (<>)
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
 
+	# remove the text xml
+	s/<text xml:space="preserve">//;
+
 	# remove triple and double quotes (wiki bold, italic)
 	s/\'\'\'//g;
 	s/\'\'//g;
@@ -22,6 +25,19 @@ while (<>)
 	# Ignore headers
 	if (/^==.+==$/) { next; }
 	
+	# remove quotes
+	s/&quot;//g;
+
+	# kill wikilinks of the form [[the real link|The Stand-In Text]]
+	#s/\[\[[\w ]+?\|(.+?)\]\]/$1/g;
+
+	#s/\[\[([\w ']+?)\]\]/$1/g;
+
+	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
+	s/\[\S+ (.+?)\]/$1/g;
+
+	# kill bullets
+	s/^\* //;
 
 	chop;
 	print "its >>$_<<\n";
