@@ -7,6 +7,8 @@ while (<>)
 {
 	if (/<text /) { $have_text = 1; }
 	if (/<\/text>/) { $have_text = 0; }
+	if (/&lt;gallery&gt;/) { $have_text = 0; }
+	if (/&lt;\/gallery&gt;/) { $have_text = 1; }
 
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
@@ -18,9 +20,11 @@ while (<>)
 	s/\'\'\'//g;
 	s/\'\'//g;
 
-	# ignore everything of the form [[en:title]] 
+	# Ignore everything of the form [[en:title]] 
 	if (/^\[\[\w[\w-]+?:.+?\]\]$/) { next; }
-	if (/^\{\{\w+\}\}$/) { next; }
+
+	# Ignore templates i.e. {{template gorp}}
+	if (/^\s*\{\{\w+?\}\}$/) { next; }
 
 	# Ignore headers
 	if (/^==.+==$/) { next; }
@@ -28,16 +32,22 @@ while (<>)
 	# remove quotes
 	s/&quot;//g;
 
-	# kill wikilinks of the form [[the real link|The Stand-In Text]]
-	#s/\[\[[\w ]+?\|(.+?)\]\]/$1/g;
+	# Kill image tags of the form [[Image:Chemin.png|thumb|300px|blah]]
+	s/\[\[Image:.+?\]\]//g;
 
-	#s/\[\[([\w ']+?)\]\]/$1/g;
+	# kill wikilinks of the form [[the real link|The Stand-In Text]]
+	s/\[\[[:\-\w ]+?\|(.+?)\]\]/$1/g;
+
+	# Kill ordinary links -- [[Stuf more stuff]]
+	s/\[\[([\w ']+?)\]\]/$1/g;
 
 	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
 	# kill bullets
-	s/^\* //;
+	s/^\*\*\*//;
+	s/^\*\*//;
+	s/^\*//;
 
 	chop;
 	print "its >>$_<<\n";
