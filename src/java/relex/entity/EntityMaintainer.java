@@ -310,27 +310,26 @@ public class EntityMaintainer implements Serializable
 	 * uses a LISP-like structure for the Penn-treebank markup,
 	 * and stray parens in the original sentence mess it up.
 	 */
-	private void escapeParens()
+	private void escapePunct(char punct)
 	{
 		int start = 0;
 		while (true)
 		{
-			start = originalSentence.indexOf('(', start);
+			start = originalSentence.indexOf(punct, start);
 			if (start < 0) break;
 
 			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
 			addEntity(ei);
 			start++;
 		}
-		while (true)
-		{
-			start = originalSentence.indexOf(')', start);
-			if (start < 0) break;
+	}
 
-			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
-			addEntity(ei);
-			start++;
-		}
+	private void escapeParens()
+	{
+		escapePunct('(');
+		escapePunct(')');
+		escapePunct('[');
+		escapePunct(']');
 	}
 
 	// --------------------------------------------------------

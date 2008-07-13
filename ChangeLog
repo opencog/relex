@@ -1,3 +1,5 @@
+New in version 0.10.1:
+ * remove cleanSentenceString(), replace with entity id's.
 
 New in version 0.8.4:
  * Convert DocSplitter to factory, so that the OpenNLP install is optional.

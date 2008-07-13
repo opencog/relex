@@ -97,6 +97,10 @@ public class EntityInfo implements Serializable
 			id = "lparenID";
 		else if (')' == originalSentence.charAt(firstCharIndex))
 			id = "rparenID";
+		else if ('[' == originalSentence.charAt(firstCharIndex))
+			id = "lbracketID";
+		else if (']' == originalSentence.charAt(firstCharIndex))
+			id = "rbracketID";
 		else
 			id = "punctuationID";
 		return id;

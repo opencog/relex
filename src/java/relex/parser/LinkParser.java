@@ -48,14 +48,6 @@ public class LinkParser extends Parser
 		return null;
 	}
 
-	public String cleanSentenceString(String sentence)
-	{
-		String sen = sentence.replace('[', '(');
-		sen = sen.replace(']', ')');
-		sen = sen.replace('"', ' ');
-		return sen;
-	}
-
 	/**
 	 * Creates a ParsedSentence from a String representation of the sentence. 
 	 * The ParsedSentence has ConstituentNodes for every tokenized word. It 
@@ -71,7 +63,7 @@ public class LinkParser extends Parser
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
 		if (verbosity >= 5) System.out.println("about to parse [" + sentence + "]");
-		lpc.execParse(cleanSentenceString(sentence));
+		lpc.execParse(sentence);
 		if (verbosity >= 5) System.out.println("parsed [" + sentence + "]");
 		
 		int numParses = lpc.getNumLinkages();
