@@ -193,7 +193,9 @@ public class RelationExtractor
 		RelexInfo ri = null;
 		try
 		{
+			if (verbosity > 0) starttime = System.currentTimeMillis();
 			ri = parseSentence(sentence, entityMaintainer);
+			if (verbosity > 0) reportTime("Link-parsering: ");
 
 			for (ParsedSentence parse : ri.getParses())
 			{
