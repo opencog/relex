@@ -18,29 +18,16 @@ package relex;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 
-import relex.algs.SentenceAlgorithmApplier;
-import relex.concurrent.RelexContext;
 import relex.corpus.EntityMaintainerFactory;
-// import relex.corpus.QuotesParensSentenceDetector;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
 import relex.frame.Frame;
-import relex.morphy.Morphy;
-import relex.morphy.MorphyFactory;
 import relex.output.CompactView;
 import relex.output.SimpleView;
-import relex.parser.LinkParser;
-import relex.parser.LinkParserClient;
-import relex.parser.LinkParserJNINewClient;
-import relex.parser.LinkParserSocketClient;
-import relex.tree.PhraseMarkup;
-import relex.tree.PhraseTree;
 
 /**
  * The WebFormat class provides the central processing
@@ -53,144 +40,8 @@ import relex.tree.PhraseTree;
  * which accepts one sentence at a time, parses it, and extracts
  * relationships from it.
  */
-public class WebFormat
+public class WebFormat extends RelationExtractor
 {
-	public static final int verbosity = 1;
-
-	public static final int DEFAULT_MAX_PARSES = 100;
-	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
-	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
-	public static final int DEFAULT_MAX_PARSE_COST = 1000;
-	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
-
-	/** The LinkParserClient to be used - this class isn't thread safe! */
-	private RelexContext context;
-
-	/** Syntax processing */
-	private LinkParser parser;
-
-	/** Semantic processing */
-	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
-
-	/** Penn tree-bank style phrase structure markup. */
-	private PhraseMarkup phraseMarkup;
-
-	/* ---------------------------------------------------------- */
-	/* Constructors, etc. */
-
-	public WebFormat(boolean useSocket)
-	{
-		parser = new LinkParser();
-
-		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
-		lpc.init();
-		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
-		context = new RelexContext(lpc, morphy);
-
-		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-
-		setMaxParses(DEFAULT_MAX_PARSES);
-		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
-		setMaxCost(DEFAULT_MAX_PARSE_COST);
-
-		phraseMarkup = new PhraseMarkup();
-	}
-
-	/* ---------------------------------------------------------- */
-	/* Control parameters, etc. */
-	/**
-	 * Set the max number of parses.
-	 * This will NOT reduce processing time; all parses are still computed,
-	 * but only this many are returned.
-	 */
-	public void setMaxParses(int maxParses) {
-		context.getLinkParserClient().setMaxParses(maxParses);
-	}
-
-	public void setMaxCost(int maxCost) {
-		context.getLinkParserClient().setMaxCost(maxCost);
-	}
-
-	public void setAllowSkippedWords(boolean allow) {
-		context.getLinkParserClient().setAllowSkippedWords(allow);
-	}
-
-	public void setMaxParseSeconds(int maxParseSeconds) {
-		context.getLinkParserClient().setMaxParseSeconds(maxParseSeconds);
-	}
-
-	/* ---------------------------------------------------------- */
-
-	public RelexInfo processSentence(String sentence)
-	{
-		return processSentence(sentence, null);
-	}
-
-	public RelexInfo processSentence(String sentence,
-	                                 EntityMaintainer entityMaintainer)
-	{
-		starttime = System.currentTimeMillis();
-		if (entityMaintainer == null)
-		{
-			entityMaintainer = new EntityMaintainer(sentence,
-		                               new ArrayList<EntityInfo>());
-		}
-
-		RelexInfo ri = parseSentence(sentence, entityMaintainer);
-
-		for (ParsedSentence parse : ri.getParses())
-		{
-			// Markup feature node graph with entity info,
-			// so that the relex algs (next step) can see them.
-			entityMaintainer.prepareSentence(parse.getLeft());
-
-			// The actual relation extraction is done here.
-			sentenceAlgorithmApplier.applyAlgs(parse, context);
-
-			// Strip out the entity markup, so that when the
-			// sentence is printed, we don't print gunk.
-			entityMaintainer.repairSentence(parse.getLeft());
-
-			// Also do a Penn tree-bank style phrase structure markup.
-			phraseMarkup.markup(parse);
-
-			// Repair the entity-mangled tree-bank string.
-			PhraseTree pt = new PhraseTree(parse.getLeft());
-			parse.setPhraseString(pt.toString());
-		}
-
-		return ri;
-	}
-
-	/**
-	 * Parses a sentence, using the parser. The private ArrayList of
-	 * currentParses is filled with the ParsedSentences Uses an optional
-	 * EntityMaintainer to work on a converted sentence.
-	 */
-	private RelexInfo
-	parseSentence(String sentence, EntityMaintainer entityMaintainer)
-	{
-		if (entityMaintainer != null) {
-			sentence = entityMaintainer.getConvertedSentence();
-		}
-		if (sentence == null) return null;
-
-		String orig_sentence = entityMaintainer.getOriginalSentence();
-		RelexInfo ri = null;
-		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			ri = parser.parse(sentence, context.getLinkParserClient());
-		} else {
-			ri = new RelexInfo();
-		}
-		ri.setSentence(orig_sentence);
-		return ri;
-	}
-
-	/* ---------------------------------------------------------- */
-	// Provide some basic timing info
-	Long starttime;
-
-	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
 	 */
@@ -257,7 +108,7 @@ public class WebFormat
 		cv.setMaxParses(maxParses);
 		cv.setSourceURL(url);
 
-		WebFormat re = new WebFormat(false);
+		WebFormat re = new WebFormat();
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
@@ -265,7 +116,7 @@ public class WebFormat
 		// XXX hack alert -- we should be getting the relex
 		// version string from the build environment somehow,
 		// instead of hard-coding it.
-		String version = re.context.getLinkParserClient().getVersion();
+		String version = re.getVersion();
 		version += "\trelex-0.9.0";
 		cv.setVersion(version);
 

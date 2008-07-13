@@ -100,7 +100,15 @@ public class RelationExtractor
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
 
+	public RelationExtractor()
+	{
+		init(false);
+	}
 	public RelationExtractor(boolean useSocket)
+	{
+		init(useSocket);
+	}
+	private void init(boolean useSocket)
 	{
 		parser = new LinkParser();
 
@@ -121,6 +129,11 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 
 		stats = new ParseStats();
+	}
+
+	String getVersion()
+	{
+		return context.getLinkParserClient().getVersion();
 	}
 
 	/* ---------------------------------------------------------- */
