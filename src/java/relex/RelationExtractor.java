@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeMap;
 
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
@@ -129,6 +130,8 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 
 		stats = new ParseStats();
+		sumtime = new TreeMap<String,Long>();
+		cnttime = new TreeMap<String,Long>(); 
 	}
 
 	String getVersion()
@@ -195,7 +198,7 @@ public class RelationExtractor
 		{
 			if (verbosity > 0) starttime = System.currentTimeMillis();
 			ri = parseSentence(sentence, entityMaintainer);
-			if (verbosity > 0) reportTime("Link-parsering: ");
+			if (verbosity > 0) reportTime("Link-parsing: ");
 
 			for (ParsedSentence parse : ri.getParses())
 			{
@@ -265,13 +268,30 @@ public class RelationExtractor
 	/* ---------------------------------------------------------- */
 	// Provide some basic timing info
 	Long starttime;
+	TreeMap<String,Long> sumtime; 
+	TreeMap<String,Long> cnttime; 
 
 	private void reportTime(String msg)
 	{
 		Long now = System.currentTimeMillis();
 		Long elapsed = now - starttime;
 		starttime = now;
-		System.err.println(msg + elapsed + " millseconds");
+
+		Long sum = sumtime.get(msg);
+		Long cnt = cnttime.get(msg);
+		if (sum == null)
+		{
+			sum = 0L;
+			cnt = 0L;
+		}
+		cnt ++;
+		sum += elapsed;
+		sumtime.put(msg, sum);
+		cnttime.put(msg, cnt);
+
+		Long avg = sum / cnt;
+		System.err.println(msg + elapsed + " milliseconds (avg=" 
+			+ avg + " millisecs, cnt=" + cnt + ")");
 	}
 
 	/* --------------------------------------------------------- */
