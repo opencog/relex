@@ -248,22 +248,27 @@ public class PhraseTree
 		while (fn != null)
 		{
 			fn_type = fn.get("phr-type");
-			if (fn_type != null) {
+			if (fn_type != null)
+			{
 				str += " " + fn_type.getValue();
 			}
 
 			FeatureNode fn_word = fn.get("phr-word");
-			if (fn_word != null) {
+			if (fn_word != null)
+			{
 				fn_word = fn_word.get("orig_str");
 				// fn_word can be null, when entity names are united.
 				// For example, "New York" -> null + "New_York"
-				if (fn_word != null) {
-					str += " " + fn_word.getValue();
+				if (fn_word != null)
+				{
+					// Must not allow parents in the constituent string.
+					str += " " + fn_word.getValue().replace('(','{').replace(')','}');
 				}
 			}
 
 			FeatureNode head = fn.get("phr-head");
-			if (head != null) {
+			if (head != null)
+			{
 				str += " ";
 				str = _toString(head, str);
 			}
