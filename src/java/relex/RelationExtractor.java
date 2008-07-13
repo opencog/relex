@@ -190,38 +190,46 @@ public class RelationExtractor
 		                               new ArrayList<EntityInfo>());
 		}
 
-		RelexInfo ri = parseSentence(sentence, entityMaintainer);
-
-		for (ParsedSentence parse : ri.getParses())
+		RelexInfo ri = null;
+		try
 		{
-			// Markup feature node graph with entity info,
-			// so that the relex algs (next step) can see them.
-			entityMaintainer.prepareSentence(parse.getLeft());
+			ri = parseSentence(sentence, entityMaintainer);
 
-			// The actual relation extraction is done here.
-			sentenceAlgorithmApplier.applyAlgs(parse, context);
+			for (ParsedSentence parse : ri.getParses())
+			{
+				// Markup feature node graph with entity info,
+				// so that the relex algs (next step) can see them.
+				entityMaintainer.prepareSentence(parse.getLeft());
 
-			// Strip out the entity markup, so that when the
-			// sentence is printed, we don't print gunk.
-			entityMaintainer.repairSentence(parse.getLeft());
+				// The actual relation extraction is done here.
+				sentenceAlgorithmApplier.applyAlgs(parse, context);
 
-			// Also do a Penn tree-bank style phrase structure markup.
-			phraseMarkup.markup(parse);
+				// Strip out the entity markup, so that when the
+				// sentence is printed, we don't print gunk.
+				entityMaintainer.repairSentence(parse.getLeft());
 
-			// Repair the entity-mangled tree-bank string.
-			PhraseTree pt = new PhraseTree(parse.getLeft());
-			parse.setPhraseString(pt.toString());
+				// Also do a Penn tree-bank style phrase structure markup.
+				phraseMarkup.markup(parse);
 
+				// Repair the entity-mangled tree-bank string.
+				PhraseTree pt = new PhraseTree(parse.getLeft());
+				parse.setPhraseString(pt.toString());
+			}
+
+			// Assign a simple parse-ranking score, based on LinkGrammar data.
+			ri.simpleParseRank();
+
+			// Perform anaphora resolution
+			if (do_anaphora_resolution)
+			{
+				hobbs.addParse(ri);
+				hobbs.resolve(ri);
+			}
 		}
-
-		// Assign a simple parse-ranking score, based on LinkGrammar data.
-		ri.simpleParseRank();
-
-		// Perform anaphora resolution
-		if (do_anaphora_resolution)
+		catch(Exception e)
 		{
-			hobbs.addParse(ri);
-			hobbs.resolve(ri);
+			System.err.println("Failed to process sentence: " + sentence);
+			System.err.println(e.toString());
 		}
 		if (verbosity > 0) reportTime("Relex processing: ");
 		return ri;
@@ -261,7 +269,7 @@ public class RelationExtractor
 		Long now = System.currentTimeMillis();
 		Long elapsed = now - starttime;
 		starttime = now;
-		System.out.println(msg + elapsed + " millseconds");
+		System.err.println(msg + elapsed + " millseconds");
 	}
 
 	/* --------------------------------------------------------- */
