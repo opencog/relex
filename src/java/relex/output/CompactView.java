@@ -192,6 +192,15 @@ public class CompactView
 		return fn;
 	}
 
+	private String getstr(FeatureNode node)
+	{
+		if (null ==  node) {
+			return "\t";
+		} else {
+			return node.getValue() + "\t";
+		}
+	}
+
 	/**
 	 *  Print the CoNLL-style lemmas, parts of speech, and feature lists
 	 */
@@ -204,13 +213,10 @@ public class CompactView
 		while (node != null)
 		{
 			str += node.get("index_in_sentence").getValue() + "\t";
-			str += node.get("orig_str").getValue() + "\t";
 
-			if (null ==  node.get("str")) {
-				str += "\t";
-			} else {
-				str += node.get("str").getValue() + "\t";
-			}
+			str += getstr(node.get("orig_str"));
+			str += getstr(node.get("str"));
+
 			str += node.get("POS").getValue() + "\t";
 
 			FeatureNode ref = node.get("ref");
