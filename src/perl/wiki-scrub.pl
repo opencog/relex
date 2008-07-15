@@ -141,7 +141,12 @@ while (<>)
 	s/&lt;\/tt&gt;//g;
 	s/&lt;div .+?&gt;//g;
 	s/&lt;\/div&gt;//g;
+	s/&lt;font .+?&gt;//g;
+	s/&lt;\/font&gt;//g;
+	s/&lt;span .+?&gt;//g;
+	s/&lt;\/span&gt;//g;
 	s/&lt;br&gt;//g;
+	s/&lt;\/br&gt;//g;
 	s/&lt;br clear.*?&gt;//g;
 	s/&lt;includeonly&gt;//g;
 	s/&lt;\/includeonly&gt;//g;
