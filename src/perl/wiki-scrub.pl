@@ -1,8 +1,18 @@
 #! /usr/bin/env perl
 #
+#  wiki-scrub.pl
+#
 # Ad-hoc script to scrub wikipedia xml dumps, outputing only valid
 # english-language sentences.  This  script removes wiki markup, URL's
-# tables, images, & etc.
+# tables, images, & etc.  It currently seems to be pretty darned
+# bullet-proof, although it might handle multi-line refs incorrectly.
+#
+# The output is in the form of one big single file; it should be
+# straight-forward to modify this script to dump output into individual
+# files.
+#
+# Copyright (c) 2008 Linas Vepstas <linas@linas.org>
+#
 
 # Need to specify the binmodes, in order for \w to match utf8 chars
 use utf8;
