@@ -22,10 +22,11 @@ binmode STDOUT, ':encoding(UTF-8)';
 $have_text = 0;
 $have_infobox = 0;
 $have_table = 0;
+$have_ptable = 0;
 $notfirst = 0;
 while (<>)
 {
-	if (/<text /) { $have_text = 1; }
+	if (/<text xml:space/) { $have_text = 1; }
 	if (/<\/text>/) { $have_text = 0; }
 
 	chop;
@@ -54,6 +55,14 @@ while (<>)
 		next;
 	}
 	if ($have_table) { next; }
+
+	if (/&lt;table/) { $have_text = 0; $have_ptable++; }
+	if (/&lt;\/table/) {
+		$have_ptable --;
+		if (0 == $have_ptable) { $have_text = 1; }
+		next;
+	}
+	if ($have_ptable) { next; }
 
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Do this before processing multi-line templates
@@ -140,6 +149,8 @@ while (<>)
 	s/&lt;\/b&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
+	s/&lt;big&gt;//g;
+	s/&lt;\/big&gt;//g;
 	s/&lt;div .+?&gt;//g;
 	s/&lt;\/div&gt;//g;
 	s/&lt;font .+?&gt;//g;
@@ -154,6 +165,11 @@ while (<>)
 	s/&lt;noinclude&gt;//g;
 	s/&lt;\/noinclude&gt;//g;
 	s/__NOTOC__//g;
+	s/&lt;tr&gt;//g;
+	s/&lt;\/tr&gt;//g;
+	s/&lt;td&gt;//g;
+	s/&lt;\/td&gt;//g;
+	s/&lt;\/td .+?&gt;//g;
 
 	# restore ordinary markup
 	s/&amp;/&/g;
@@ -162,6 +178,7 @@ while (<>)
 	s/&lt;/</g;
 	s/&gt;/>/g;
 	s/&deg;/°/g;
+	s/&bull;/•/g;
 
 	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
