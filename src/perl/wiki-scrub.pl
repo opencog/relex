@@ -11,6 +11,7 @@ binmode STDOUT, ':encoding(UTF-8)';
 
 $have_text = 0;
 $have_infobox = 0;
+$have_table = 0;
 while (<>)
 {
 	if (/<text /) { $have_text = 1; }
@@ -30,8 +31,14 @@ while (<>)
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
 
 	# kill tables. These start with {| and end with |}
-	if (/^\{\|/) { $have_text = 0; }
-	if (/^\|\}/) { $have_text = 1; next; }
+	# tables may be nested.
+	if (/^\{\|/) { $have_text = 0; $have_table++; }
+	if (/^\|\}/) {
+		$have_table --;
+		if (0 == $have_table) { $have_text = 1; }
+		next;
+	}
+	if ($have_table) { next; }
 
 	# kill infoxes. These may have embedded templates.
 	if (/\s*\{\{(Infobox|Taxobox)/) { $have_text = 0; $have_infobox = 1; next;}
@@ -64,8 +71,8 @@ while (<>)
 	s/&lt;math&gt;.+?&lt;\/math&gt;//g;
 
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
-	# pages)
-	if (/^\[\[\w[\w-]+?:.+?\]\]$/) { next; }
+	# pages) These sometimes have {{Link FA|en}} after them.
+	if (/^\[\[\w[\w-]+?:.+?\]\]( \{\{Link FA\|\w+\}\})*$/) { next; }
 
 	# Ignore templates e.g. {{template gorp}}
 	# These may sit alone, or be in a bullted list.
@@ -94,6 +101,8 @@ while (<>)
 	s/&lt;references\/&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
+	s/&lt;div .+?&gt;//g;
+	s/&lt;\/div&gt;//g;
 
 	# restore ordinary markup
 	s/&amp;/&/g;
