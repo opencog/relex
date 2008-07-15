@@ -50,6 +50,7 @@ while (<>)
 
 	# kill photo galleries
 	if (/&lt;gallery&gt;/) { $have_text = 0; }
+	if (/&lt;gallery .+?&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
 
 	# remove stuff that's commented out. Don't be greedy(?)!
@@ -154,28 +155,67 @@ while (<>)
 	# ignore misc html markup
 	s/&lt;references\s*\/&gt;//g;
 	s/&lt;i&gt;//g;
+	s/&lt;i .+?&gt;//g;
 	s/&lt;\/i&gt;//g;
+	s/&lt;p&gt;//g;
+	s/&lt;p .+?&gt;//g;
+	s/&lt;\/p&gt;//g;
 	s/&lt;b&gt;//g;
+	s/&lt;b .+?&gt;//g;
 	s/&lt;\/b&gt;//g;
+	s/&lt;s&gt;//g;
+	s/&lt;\/s&gt;//g;
+	s/&lt;u&gt;//g;
+	s/&lt;\/u&gt;//g;
+	s/&lt;em&gt;//g;
+	s/&lt;\/em&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
+	s/&lt;pre&gt;//g;
+	s/&lt;\/pre&gt;//g;
 	s/&lt;big&gt;//g;
 	s/&lt;\/big&gt;//g;
+	s/&lt;small&gt;//g;
+	s/&lt;\/small&gt;//g;
+	s/&lt;center&gt;//g;
+	s/&lt;\/center&gt;//g;
+	s/&lt;inputbox&gt;//g;
+	s/&lt;\/inputbox&gt;//g;
+	s/&lt;charinsert&gt;//g;
+	s/&lt;\/charinsert&gt;//g;
+	s/&lt;timeline&gt;//g;
+	s/&lt;\/timeline&gt;//g;
+	s/&lt;cite&gt;//g;
+	s/&lt;\/cite&gt;//g;
+	s/&lt;Cite&gt;//g;
+	s/&lt;\/Cite&gt;//g;
+	s/&lt;blockquote&gt;//g;
+	s/&lt;\/blockquote&gt;//g;
 	s/&lt;div .+?&gt;//g;
 	s/&lt;\/div&gt;//g;
 	s/&lt;font .+?&gt;//g;
 	s/&lt;\/font&gt;//g;
+	s/&lt;FONT .+?&gt;//g;
+	s/&lt;\/FONT&gt;//g;
 	s/&lt;span .+?&gt;//g;
 	s/&lt;\/span&gt;//g;
 	s/&lt;br&gt;//g;
+	s/&lt;BR&gt;//g;
 	s/&lt;\/br&gt;//g;
 	s/&lt;br\/&gt;//g;
-	s/&lt;br clear.*?&gt;//g;
+	s/&lt;br \/&gt;//g;
+	s/&lt;br .*?&gt;//g;
+	s/&lt;hr&gt;//g;
+	s/&lt;hr .+?&gt;//g;
 	s/&lt;includeonly&gt;//g;
 	s/&lt;\/includeonly&gt;//g;
 	s/&lt;noinclude&gt;//g;
 	s/&lt;\/noinclude&gt;//g;
 	s/__NOTOC__//g;
+	s/&lt;ul&gt;//g;
+	s/&lt;\/ul&gt;//g;
+	s/&lt;li&gt;//g;
+	s/&lt;\/li&gt;//g;
 	s/&lt;tr&gt;//g;
 	s/&lt;\/tr&gt;//g;
 	s/&lt;td&gt;//g;
@@ -190,6 +230,7 @@ while (<>)
 	s/&gt;/>/g;
 	s/&deg;/°/g;
 	s/&bull;/•/g;
+	s/&nbsp;/ /g;
 
 	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
