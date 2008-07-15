@@ -50,6 +50,14 @@ while (<>)
 	}
 	if ($have_infobox) { next; }
 
+	# remove single-line math markup. Don't be greedy(?)!
+	# Do this before multi-line math markup.
+	s/&lt;math&gt;.+?&lt;\/math&gt;//g;
+
+	# kill multi-line math markup
+	if (/&lt;math&gt;/) { $have_text = 0; }
+	if (/&lt;\/math&gt;/) { $have_text = 1; next; }
+
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
 
@@ -66,9 +74,6 @@ while (<>)
 
 	# remove stuff that's commented out. Don't be greedy(?)!
 	s/&lt;!--.+?--&gt;//g;
-
-	# remove math markup. Don't be greedy(?)!
-	s/&lt;math&gt;.+?&lt;\/math&gt;//g;
 
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages) These sometimes have {{Link FA|en}} after them.
@@ -88,11 +93,11 @@ while (<>)
 	s/\[\[Image:.+?\]\]//g;
 
 	# kill wikilinks of the form [[the real link#ugh|The Stand-In Text]]
-	# also [[Wikipedia:spical/blah|The Stand-In Text]]
-	s/\[\[[#:,\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
+	# also [[Wikipedia:special/blah|The Stand-In Text]]
+	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
 
 	# Kill ordinary links -- [[Stuf more stuff]]
-	s/\[\[([:,\/\-\w '\(\)]+?)\]\]/$1/g;
+	s/\[\[([:,\.\/\-\w '\(\)]+?)\]\]/$1/g;
 
 	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
@@ -103,6 +108,9 @@ while (<>)
 	s/&lt;\/tt&gt;//g;
 	s/&lt;div .+?&gt;//g;
 	s/&lt;\/div&gt;//g;
+	s/&lt;br&gt;//g;
+	s/&lt;br clear.*?&gt;//g;
+	s/__NOTOC__//g;
 
 	# restore ordinary markup
 	s/&amp;/&/g;
