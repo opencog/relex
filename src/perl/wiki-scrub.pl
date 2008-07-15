@@ -32,7 +32,7 @@ while (<>)
 
 	# kill tables. These start with {| and end with |}
 	# tables may be nested.
-	if (/^\{\|/) { $have_text = 0; $have_table++; }
+	if (/^:*\{\|/) { $have_text = 0; $have_table++; }
 	if (/^\|\}/) {
 		$have_table --;
 		if (0 == $have_table) { $have_text = 1; }
@@ -41,7 +41,9 @@ while (<>)
 	if ($have_table) { next; }
 
 	# kill infoxes. These may have embedded templates.
-	if (/\s*\{\{(Infobox|infobox|Taxobox|taxobox)/) { $have_text = 0; $have_infobox = 1; next;}
+	# for the case of {{cite}}, this is too greedy, as it kills too much
+	# text -- there may be valid stuff before and after ... 
+	if (/\s*\{\{\s*(Infobox|infobox|Taxobox|taxobox|US state|navbox|yearbox|centurybox|cite|Football|ExamplesSidebar)/) { $have_text = 0; $have_infobox = 1; next;}
 	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
 		$have_infobox--; 
@@ -70,7 +72,7 @@ while (<>)
 	s/\'\'//g;
 
 	# remove refs, assumed to sit on one line. Don't be greedy(?)!
-	s/&lt;ref&gt;.+?&lt;\/ref&gt;//g;
+	s/&lt;ref.+?&lt;\/ref&gt;//g;
 
 	# remove stuff that's commented out. Don't be greedy(?)!
 	s/&lt;!--.+?--&gt;//g;
@@ -114,6 +116,10 @@ while (<>)
 	s/&lt;\/div&gt;//g;
 	s/&lt;br&gt;//g;
 	s/&lt;br clear.*?&gt;//g;
+	s/&lt;includeonly&gt;//g;
+	s/&lt;\/includeonly&gt;//g;
+	s/&lt;noinclude&gt;//g;
+	s/&lt;\/noinclude&gt;//g;
 	s/__NOTOC__//g;
 
 	# restore ordinary markup
@@ -122,6 +128,7 @@ while (<>)
 	# s/&minus;/-/g;
 	s/&lt;/</g;
 	s/&gt;/>/g;
+	s/&deg;/°/g;
 
 	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
