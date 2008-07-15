@@ -12,6 +12,7 @@ binmode STDOUT, ':encoding(UTF-8)';
 $have_text = 0;
 $have_infobox = 0;
 $have_table = 0;
+$notfirst = 0;
 while (<>)
 {
 	if (/<text /) { $have_text = 1; }
@@ -40,17 +41,24 @@ while (<>)
 	}
 	if ($have_table) { next; }
 
-	# kill infoxes. These may have embedded templates.
-	# for the case of {{cite}}, this is too greedy, as it kills too much
-	# text -- there may be valid stuff before and after ... 
-	if (/\s*\{\{\s*(Infobox|infobox|Taxobox|taxobox|US state|navbox|yearbox|centurybox|cite|Football|ExamplesSidebar)/) { $have_text = 0; $have_infobox = 1; next;}
+	# Ignore single-line templates e.g. {{template gorp}}
+	# Do this before processing multi-line templates
+	s/\{\{.+?\}\}//g;
+
+	# kill infoxes and other multi-line templates. These may have
+	# embedded templates.
+	# Don't be greedy -- some of these, like {{cite}}, have valid text
+	# both before and after.
+	if (/\{\{/) { $have_infobox = 1; $notfirst = 0; }
+	s/\{\{.+$//;
 	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
 		$have_infobox--; 
-		if (0 == $have_infobox) {$have_text = 1;}
-		next;
+		if (0 == $have_infobox) {
+			s/.*\}\}//;
+		}
 	}
-	if ($have_infobox) { next; }
+	if ($have_infobox) { if ($notfirst) {next;} $notfirst = 1; }
 
 	# remove single-line math markup. Don't be greedy(?)!
 	# Do this before multi-line math markup.
@@ -80,10 +88,6 @@ while (<>)
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages) These sometimes have {{Link FA|en}} after them.
 	if (/^\[\[\w[\w-]+?:.+?\]\]( \{\{Link FA\|\w+\}\})*$/) { next; }
-
-	# Ignore templates e.g. {{template gorp}}
-	# These may sit alone, or be in a bullted list.
-	s/\{\{.+?\}\}//g;
 
 	# Ignore headers
 	if (/^==.+==\s*$/) { next; }
