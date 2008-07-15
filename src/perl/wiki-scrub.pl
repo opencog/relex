@@ -169,6 +169,7 @@ while (<>)
 	s/&lt;\/span&gt;//g;
 	s/&lt;br&gt;//g;
 	s/&lt;\/br&gt;//g;
+	s/&lt;br\/&gt;//g;
 	s/&lt;br clear.*?&gt;//g;
 	s/&lt;includeonly&gt;//g;
 	s/&lt;\/includeonly&gt;//g;
