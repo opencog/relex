@@ -21,6 +21,10 @@ while (<>)
 	# remove the text xml
 	s/.*<text xml:space="preserve">//;
 
+	# kill redirect pages
+	if (/#REDIRECT/) { $have_text = 0; next; }
+	if (/#redirect/) { $have_text = 0; next; }
+
 	# kill photo galleries
 	if (/&lt;gallery&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
@@ -50,11 +54,14 @@ while (<>)
 	s/\'\'\'//g;
 	s/\'\'//g;
 
-	# kill refs, assumed to sit on one line.
-	s/&lt;ref&gt;.*&lt;\/ref&gt;//g;
+	# remove refs, assumed to sit on one line.
+	s/&lt;ref&gt;.+&lt;\/ref&gt;//g;
 
-	# kill stuff that's commented out.
-	s/&lt;!--.*--&gt;//g;
+	# remove stuff that's commented out.
+	s/&lt;!--.+--&gt;//g;
+
+	# remove math markup
+	s/&lt;math&gt;.+&lt;\/math&gt;//g;
 
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages)
@@ -65,7 +72,7 @@ while (<>)
 	if (/^\**\s*\{\{.+?\}\}$/) { next; }
 
 	# Ignore headers
-	if (/^==.+==$/) { next; }
+	if (/^==.+==\s*$/) { next; }
 	
 	# remove quotes
 	s/&quot;//g;
@@ -83,18 +90,23 @@ while (<>)
 	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
+	# restore ordinary markup
 	s/&amp;/&/g;
 	s/&ndash;/-/g;
+	s/&lt;/</g;
+	s/&gt;/>/g;
 
 	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
 	if (/^\*/ && !/\.$/) { $_ = $_ . "."; }
+	if (/^#/ && !/\.$/) { $_ = $_ . "."; }
 	if (/^:/ && !/\.$/) { $_ = $_ . "."; }
 
 	# kill bullets
 	s/^\*\*\*//;
 	s/^\*\*//;
 	s/^\*//;
+	s/^#//;
 	s/^:::::://;
 	s/^::::://;
 	s/^:::://;
