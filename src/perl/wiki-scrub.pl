@@ -49,7 +49,7 @@ while (<>)
 	# kill tables. These start with {| and end with |}
 	# tables may be nested.
 	if (/^:*\{\|/) { $have_text = 0; $have_table++; }
-	if (/^\|\}/) {
+	if ($have_table && /^\|\}\s*/) {
 		$have_table --;
 		if (0 == $have_table) { $have_text = 1; }
 		next;
