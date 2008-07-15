@@ -27,7 +27,17 @@ $notfirst = 0;
 while (<>)
 {
 	if (/<text xml:space/) { $have_text = 1; }
-	if (/<\/text>/) { $have_text = 0; }
+
+	# End of a wiki page.
+	# If there are any badly-formed tables, etc. then reset the state
+	# variables as we exit from a wiki page.
+	if (/<\/text>/) {
+		$have_text = 0;
+		$have_infobox = 0;
+		$have_table = 0;
+		$have_ptable = 0;
+		$notfirst = 0;
+	}
 
 	chop;
 
