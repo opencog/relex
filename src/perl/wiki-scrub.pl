@@ -29,6 +29,7 @@ while (<>)
 	if (/^\{\|/) { $have_text = 0; }
 	if (/^\|\}/) { $have_text = 1; next; }
 
+	# kill infoxes. These may have embedded templates.
 	if (/\s*\{\{Infobox/) { $have_text = 0; $have_infobox = 1; next;}
 	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
@@ -49,12 +50,19 @@ while (<>)
 	s/\'\'\'//g;
 	s/\'\'//g;
 
+	# kill refs, assumed to sit on one line.
+	s/&lt;ref&gt;.*&lt;\/ref&gt;//g;
+
+	# kill stuff that's commented out.
+	s/&lt;!--.*--&gt;//g;
+
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages)
 	if (/^\[\[\w[\w-]+?:.+?\]\]$/) { next; }
 
-	# Ignore templates i.e. {{template gorp}}
-	if (/^\s*\{\{.+?\}\}$/) { next; }
+	# Ignore templates e.g. {{template gorp}}
+	# These may sit alone, or be in a bullted list.
+	if (/^\**\s*\{\{.+?\}\}$/) { next; }
 
 	# Ignore headers
 	if (/^==.+==$/) { next; }
