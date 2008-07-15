@@ -49,13 +49,19 @@ while (<>)
 	# embedded templates.
 	# Don't be greedy -- some of these, like {{cite}}, have valid text
 	# both before and after.
-	if (/\{\{/) { $have_infobox = 1; $notfirst = 0; }
-	s/\{\{.+$//;
-	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
 		$have_infobox--; 
 		if (0 == $have_infobox) {
 			s/.*\}\}//;
+		}
+	}
+	if (/\{\{/) {
+		if ($have_infobox) {
+			$have_infobox++;
+		} else {
+			$have_infobox = 1;
+			$notfirst = 0;
+			s/\{\{.+$//;
 		}
 	}
 	if ($have_infobox) { if ($notfirst) {next;} $notfirst = 1; }
@@ -81,6 +87,13 @@ while (<>)
 
 	# remove refs, assumed to sit on one line. Don't be greedy(?)!
 	s/&lt;ref.+?&lt;\/ref&gt;//g;
+
+	# multi-line refs seem to only have {{cite}} inside of them.
+	# The below seems to work, but should probably be convertedto work 
+	# like multi-line templates.
+	s/&lt;ref&gt;//g;
+	s/&lt;\/ref&gt;//g;
+	s/&lt;ref name.+?\/&gt;//g;
 
 	# remove stuff that's commented out. Don't be greedy(?)!
 	s/&lt;!--.+?--&gt;//g;
