@@ -41,7 +41,7 @@ while (<>)
 	if ($have_table) { next; }
 
 	# kill infoxes. These may have embedded templates.
-	if (/\s*\{\{(Infobox|Taxobox)/) { $have_text = 0; $have_infobox = 1; next;}
+	if (/\s*\{\{(Infobox|infobox|Taxobox|taxobox)/) { $have_text = 0; $have_infobox = 1; next;}
 	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
 		$have_infobox--; 
@@ -81,7 +81,7 @@ while (<>)
 
 	# Ignore templates e.g. {{template gorp}}
 	# These may sit alone, or be in a bullted list.
-	if (/^\**\s*\{\{.+?\}\}$/) { next; }
+	s/\{\{.+?\}\}//g;
 
 	# Ignore headers
 	if (/^==.+==\s*$/) { next; }
@@ -103,7 +103,11 @@ while (<>)
 	s/\[\S+ (.+?)\]/$1/g;
 
 	# ignore misc html markup
-	s/&lt;references\/&gt;//g;
+	s/&lt;references\s*\/&gt;//g;
+	s/&lt;i&gt;//g;
+	s/&lt;\/i&gt;//g;
+	s/&lt;b&gt;//g;
+	s/&lt;\/b&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
 	s/&lt;div .+?&gt;//g;
