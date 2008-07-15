@@ -41,6 +41,10 @@ while (<>)
 	if (/&lt;gallery&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
 
+	# remove stuff that's commented out. Don't be greedy(?)!
+	# do this before start of artcle processing ... 
+	s/&lt;!--.+?--&gt;//g;
+
 	# kill tables. These start with {| and end with |}
 	# tables may be nested.
 	if (/^:*\{\|/) { $have_text = 0; $have_table++; }
@@ -104,9 +108,6 @@ while (<>)
 	s/&lt;ref&gt;//g;
 	s/&lt;\/ref&gt;//g;
 	s/&lt;ref name.+?&gt;//g;
-
-	# remove stuff that's commented out. Don't be greedy(?)!
-	s/&lt;!--.+?--&gt;//g;
 
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages) These sometimes have {{Link FA|en}} after them.
