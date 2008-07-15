@@ -34,7 +34,7 @@ while (<>)
 	if (/^\|\}/) { $have_text = 1; next; }
 
 	# kill infoxes. These may have embedded templates.
-	if (/\s*\{\{Infobox/) { $have_text = 0; $have_infobox = 1; next;}
+	if (/\s*\{\{(Infobox|Taxobox)/) { $have_text = 0; $have_infobox = 1; next;}
 	if ($have_infobox && /\{\{/) { $have_infobox++; }
 	if ($have_infobox && /\}\}/) { 
 		$have_infobox--; 
@@ -54,14 +54,14 @@ while (<>)
 	s/\'\'\'//g;
 	s/\'\'//g;
 
-	# remove refs, assumed to sit on one line.
-	s/&lt;ref&gt;.+&lt;\/ref&gt;//g;
+	# remove refs, assumed to sit on one line. Don't be greedy(?)!
+	s/&lt;ref&gt;.+?&lt;\/ref&gt;//g;
 
-	# remove stuff that's commented out.
-	s/&lt;!--.+--&gt;//g;
+	# remove stuff that's commented out. Don't be greedy(?)!
+	s/&lt;!--.+?--&gt;//g;
 
-	# remove math markup
-	s/&lt;math&gt;.+&lt;\/math&gt;//g;
+	# remove math markup. Don't be greedy(?)!
+	s/&lt;math&gt;.+?&lt;\/math&gt;//g;
 
 	# Ignore everything of the form ^[[en:title]] (these are tranlsated
 	# pages)
@@ -90,9 +90,15 @@ while (<>)
 	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
+	# ignore misc html markup
+	s/&lt;references\/&gt;//g;
+	s/&lt;tt&gt;//g;
+	s/&lt;\/tt&gt;//g;
+
 	# restore ordinary markup
 	s/&amp;/&/g;
 	s/&ndash;/-/g;
+	# s/&minus;/-/g;
 	s/&lt;/</g;
 	s/&gt;/>/g;
 
