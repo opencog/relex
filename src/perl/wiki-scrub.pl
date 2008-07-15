@@ -1,6 +1,8 @@
 #! /usr/bin/env perl
 #
-# Very simple script to scrub wikipedia xml dumps
+# Ad-hoc script to scrub wikipedia xml dumps, outputing only valid
+# english-language sentences.  This  script removes wiki markup, URL's
+# tables, images, & etc.
 
 $have_text = 0;
 $have_infobox = 0;
@@ -23,8 +25,10 @@ while (<>)
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
 
+	chop;
+
 	# remove the text xml
-	s/<text xml:space="preserve">//;
+	s/.*<text xml:space="preserve">//;
 
 	# remove bogus markup
 	s/&lt;nowiki&gt;//g;
@@ -61,6 +65,11 @@ while (<>)
 	s/&amp;/&/g;
 	s/&ndash;/-/g;
 
+	# Make sure bulleted lists have a period at the end of them.
+	# But do try to avoid double-periods.
+	if (/^\*/ && !/\.$/) { $_ = $_ . "."; }
+	if (/^:/ && !/\.$/) { $_ = $_ . "."; }
+
 	# kill bullets
 	s/^\*\*\*//;
 	s/^\*\*//;
@@ -72,6 +81,5 @@ while (<>)
 	s/^:://;
 	s/^://;
 
-	chop;
 	print "$_\n";
 }
