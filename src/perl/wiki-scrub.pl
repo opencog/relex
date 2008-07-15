@@ -93,7 +93,7 @@ while (<>)
 	# like multi-line templates.
 	s/&lt;ref&gt;//g;
 	s/&lt;\/ref&gt;//g;
-	s/&lt;ref name.+?\/&gt;//g;
+	s/&lt;ref name.+?&gt;//g;
 
 	# remove stuff that's commented out. Don't be greedy(?)!
 	s/&lt;!--.+?--&gt;//g;
