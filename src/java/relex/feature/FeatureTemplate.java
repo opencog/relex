@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,13 +14,15 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.feature;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class FeatureTemplate {
-
+public class FeatureTemplate
+{
 	private static String NULL_STRING = "%";
 
 	private ArrayList<FeaturePathAndTarget> pathsAndTargs;
@@ -34,7 +35,8 @@ public class FeatureTemplate {
 	 * 
 	 * Also "\." is replaced with "[a-z\*]"
 	 */
-	private boolean matchesVal(String test, String val) {
+	private boolean matchesVal(String test, String val)
+	{
 		if (test.charAt(0) == '\\') {
 			test = test.substring(1);
 			if (test.charAt(0) != '\\') {
@@ -47,7 +49,8 @@ public class FeatureTemplate {
 		return test.equals(val);
 	}
 
-	private boolean matchesString(FeatureNode target, String pathTarget) {
+	private boolean matchesString(FeatureNode target, String pathTarget)
+	{
 		// if path target is a variable name, set that variable name to the
 		// FeatureNode target
 		if (pathTarget.charAt(0) == '$') {
@@ -66,12 +69,14 @@ public class FeatureTemplate {
 		return false;
 	}
 
-	public FeatureNode val(String varName) {
+	public FeatureNode val(String varName)
+	{
 		return vars.get(varName);
 	}
 
 	// Iterate through the pathAndTargs, making sure each matches f
-	public boolean match(FeatureNode f) {
+	public boolean match(FeatureNode f)
+	{
 		boolean matched = true;
 		Iterator<FeaturePathAndTarget> i = pathsAndTargs.iterator();
 		vars.clear();
@@ -89,7 +94,8 @@ public class FeatureTemplate {
 		return matched;
 	}
 
-	private boolean match(FeatureNode f, FeaturePathAndTarget pathAndTarget) {
+	private boolean match(FeatureNode f, FeaturePathAndTarget pathAndTarget)
+	{
 		// get the target of the path in F
 		FeaturePath path = pathAndTarget.getPath();
 		FeatureNode fTarget = f.pathTarget(path);
@@ -122,7 +128,8 @@ public class FeatureTemplate {
 		return true;
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer sb = new StringBuffer();
 		Iterator<FeaturePathAndTarget> i = pathsAndTargs.iterator();
 		if (i.hasNext())
@@ -138,17 +145,20 @@ public class FeatureTemplate {
 		return sb.toString();
 	}
 
-	public FeatureTemplate() {
+	public FeatureTemplate()
+	{
 		pathsAndTargs = new ArrayList<FeaturePathAndTarget>();
 		vars = new HashMap<String, FeatureNode>();
 	}
 
-	public FeatureTemplate(ArrayList<FeaturePathAndTarget> pathAndTargVec) {
+	public FeatureTemplate(ArrayList<FeaturePathAndTarget> pathAndTargVec)
+	{
 		this();
 		pathsAndTargs.addAll(pathAndTargVec);
 	}
 
-	public FeatureTemplate(String str) {
+	public FeatureTemplate(String str)
+	{
 		this();
 		String[] lines = str.split("\\n");
 		for (int i = 0; i < lines.length; i++) {
@@ -158,8 +168,8 @@ public class FeatureTemplate {
 		}
 	}
 
-	public static void main(String[] args) {
-
+	public static void main(String[] args)
+	{
 		/*
 		 * FeaturePath abc = new FeaturePath("<a b c>"); FeaturePath xyz = new
 		 * FeaturePath("<x y z>"); FeaturePath var = new FeaturePath("<x y
