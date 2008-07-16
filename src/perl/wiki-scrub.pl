@@ -211,6 +211,7 @@ while (<>)
 	s/&lt;\/includeonly&gt;//g;
 	s/&lt;noinclude&gt;//g;
 	s/&lt;\/noinclude&gt;//g;
+	s/&lt;Typo .+?\/&gt;//g;
 	s/__NOTOC__//g;
 	s/&lt;ul&gt;//g;
 	s/&lt;\/ul&gt;//g;
