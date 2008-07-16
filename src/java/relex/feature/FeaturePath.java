@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,8 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.feature;
+
 import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
@@ -24,42 +25,53 @@ import java.util.ArrayList;
  *
  * Or it can be a simple path with a target string: <a b c> = hello
  */
-public class FeaturePath {
-	
+public class FeaturePath
+{
 	/**
 	 * The sequence of feature names in the path.
 	 */
 	private ArrayList<String> path;
 
-	protected FeaturePath() {
+	protected FeaturePath()
+	{
 		path = new ArrayList<String>();
 	}
 
-	public FeaturePath(String str) {
+	public FeaturePath(String str)
+	{
 		this();
-		if (str.charAt(0) != '<') throw new RuntimeException("invalid feature path init string: " + str);
-		if (str.indexOf('>') < 0) throw new RuntimeException("invalid feature path init string: " + str);
+		if (str.charAt(0) != '<')
+			throw new RuntimeException("invalid feature path init string: " + str);
+
+		if (str.indexOf('>') < 0)
+			throw new RuntimeException("invalid feature path init string: " + str);
+
 		StringTokenizer st = new StringTokenizer(str.substring(1, str.indexOf('>')));
 		while (st.hasMoreTokens()) path.add(st.nextToken());
 	}
 
-	public FeaturePath(FeaturePath other) {
+	public FeaturePath(FeaturePath other)
+	{
 		this(other.toString());
 	}
 
-	public int size() {
+	public int size()
+	{
 		return path.size();
 	}
 
-	public String lastStep() {
+	public String lastStep()
+	{
 		return path.get(path.size() - 1).toString();
 	}
 
-	public void removeLastStep() {
+	public void removeLastStep()
+	{
 		path.remove(path.size() - 1);
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer sb = new StringBuffer("<");
 		Iterator<String> i = iterator();
 		sb.append(i.next());
@@ -68,12 +80,14 @@ public class FeaturePath {
 		return sb.toString();
 	}
 
-	public Iterator<String> iterator() {
+	public Iterator<String> iterator()
+	{
 		return path.iterator();
 	}
 
 	// unit-test function
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		FeaturePath fp = new FeaturePath("<a b c d>");
 		System.out.println(fp);
 		FeaturePath fp2 = new FeaturePath(fp);
