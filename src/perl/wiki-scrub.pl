@@ -23,6 +23,7 @@ $have_text = 0;
 $have_infobox = 0;
 $have_table = 0;
 $have_ptable = 0;
+$have_cmnt = 0;
 $notfirst = 0;
 while (<>)
 {
@@ -36,6 +37,7 @@ while (<>)
 		$have_infobox = 0;
 		$have_table = 0;
 		$have_ptable = 0;
+		$have_cmnt = 0;
 		$notfirst = 0;
 	}
 
@@ -48,14 +50,16 @@ while (<>)
 	if (/#REDIRECT/) { $have_text = 0; next; }
 	if (/#redirect/) { $have_text = 0; next; }
 
+	# Remove stuff that's commented out. Don't be greedy(?)!
+	# Do this before most other processing.
+	s/&lt;!--.+?--&gt;//g;
+	if (/&lt;!--/) { $have_text = 0; next; }
+	if (/--&gt;/) { $have_text = 1; next; }
+
 	# kill photo galleries
 	if (/&lt;gallery&gt;/) { $have_text = 0; }
 	if (/&lt;gallery .+?&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
-
-	# remove stuff that's commented out. Don't be greedy(?)!
-	# do this before start of artcle processing ... 
-	s/&lt;!--.+?--&gt;//g;
 
 	# kill tables. These start with {| and end with |}
 	# tables may be nested.
@@ -110,10 +114,6 @@ while (<>)
 
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
-
-	# remove bogus markup
-	s/&lt;nowiki&gt;//g;
-	s/&lt;\/nowiki&gt;//g;
 
 	# remove triple and double quotes (wiki bold, italic)
 	s/\'\'\'//g;
@@ -172,12 +172,14 @@ while (<>)
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
 	s/&lt;pre&gt;//g;
+	s/&lt;pre .+?&gt;//g;
 	s/&lt;\/pre&gt;//g;
 	s/&lt;big&gt;//g;
 	s/&lt;\/big&gt;//g;
 	s/&lt;small&gt;//g;
 	s/&lt;\/small&gt;//g;
 	s/&lt;center&gt;//g;
+	s/&lt;Center&gt;//g;
 	s/&lt;\/center&gt;//g;
 	s/&lt;inputbox&gt;//g;
 	s/&lt;\/inputbox&gt;//g;
@@ -186,8 +188,10 @@ while (<>)
 	s/&lt;timeline&gt;//g;
 	s/&lt;\/timeline&gt;//g;
 	s/&lt;cite&gt;//g;
+	s/&lt;cite .+?&gt;//g;
 	s/&lt;\/cite&gt;//g;
 	s/&lt;Cite&gt;//g;
+	s/&lt;Cite .+?&gt;//g;
 	s/&lt;\/Cite&gt;//g;
 	s/&lt;blockquote&gt;//g;
 	s/&lt;\/blockquote&gt;//g;
@@ -212,14 +216,20 @@ while (<>)
 	s/&lt;noinclude&gt;//g;
 	s/&lt;\/noinclude&gt;//g;
 	s/&lt;Typo .+?\/&gt;//g;
+	s/&lt;nowiki&gt;//g;
+	s/&lt;nowiki \/&gt;//g;
+	s/&lt;\/nowiki&gt;//g;
 	s/__NOTOC__//g;
 	s/&lt;ul&gt;//g;
 	s/&lt;\/ul&gt;//g;
 	s/&lt;li&gt;//g;
+	s/&lt;li .?&gt;//g;
 	s/&lt;\/li&gt;//g;
 	s/&lt;tr&gt;//g;
+	s/&lt;tr .+?&gt;//g;
 	s/&lt;\/tr&gt;//g;
 	s/&lt;td&gt;//g;
+	s/&lt;td .+?&gt;//g;
 	s/&lt;\/td&gt;//g;
 	s/&lt;\/td .+?&gt;//g;
 
