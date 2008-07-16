@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.feature;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.feature;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ import java.util.Set;
  * implement LISP-like cons, pair, car and cdr primitves to avoid
  * this confusion.
  */
-public class FeatureNode implements Serializable {
-
+public class FeatureNode implements Serializable
+{
 	private static final long serialVersionUID = -1498736655984934453L;
 
 	// Width of output of toString(), before it is truncated with "..."
@@ -71,17 +72,19 @@ public class FeatureNode implements Serializable {
 	/**
 	 * By default, feature structures have no string value
 	 */
-	public FeatureNode() {
+	public FeatureNode()
+	{
 		parents = new HashSet<FeatureNode>();
 		kv_pairs = new HashMap<String,FeatureNode>();
 		value = null;
 	}
 
 	/**
-	 * If str can be interpretted as a FeatureAction, it is.
+	 * If str can be interpreted as a FeatureAction, it is.
 	 * Otherwise, str is interpreted as the value of this FeatureNode.
 	 */
-	public FeatureNode(String str) {
+	public FeatureNode(String str)
+	{
 		this();
 		if (str.length() > 0 && str.charAt(0) == '<') {
 			String[] lines = str.split("\\n");
@@ -94,21 +97,24 @@ public class FeatureNode implements Serializable {
 		}
 	}
 
-	protected Iterator<FeatureNode> getParents() {
+	protected Iterator<FeatureNode> getParents()
+	{
 		return parents.iterator();
 	}
 
 	/**
 	 * @return true if the node value is simply a string.
 	 */
-	public boolean isValued() {
+	public boolean isValued()
+	{
 		return kv_pairs == null;
 	}
 
 	/**
 	 * Force node to store a hash of key-value pairs
 	 */
-	public void forceFeatures() {
+	public void forceFeatures()
+	{
 		if (value != null)
 			throw new RuntimeException(
 					"Must set value to null before forcing features.");
@@ -119,7 +125,8 @@ public class FeatureNode implements Serializable {
 	/**
 	 * Force node to store a single string value.
 	 */
-	public void forceValue(String val) {
+	public void forceValue(String val)
+	{
 		if (kv_pairs != null) {
 			if (getFeatureNames().size() > 0)
 				throw new RuntimeException(
@@ -132,7 +139,8 @@ public class FeatureNode implements Serializable {
 	/**
 	 * @return true if this feature structure has no values or features
 	 */
-	public boolean isEmpty() {
+	public boolean isEmpty()
+	{
 		if (isValued())
 			return value == null;
 		return kv_pairs.size() == 0;
@@ -145,7 +153,8 @@ public class FeatureNode implements Serializable {
 	 * @param value
 	 *            the value of this feature node
 	 */
-	public void setValue(String value) {
+	public void setValue(String value)
+	{
 		if (!isValued())
 			throw new RuntimeException(
 					"Cannot set the value of a non-valued FeatureNode");
@@ -157,7 +166,8 @@ public class FeatureNode implements Serializable {
 	/**
 	 * @return the value of this FeatureNode, or null if it has none
 	 */
-	public String getValue() {
+	public String getValue()
+	{
 		if (!isValued())
 			throw new RuntimeException("non-valued FeatureNodes have no string value");
 		return value;
@@ -171,7 +181,8 @@ public class FeatureNode implements Serializable {
 	 *         null, if the thing associated with the key is
 	 *         a non-string-valued FeatureNode.
 	 */
-	public String featureValue(String key) {
+	public String featureValue(String key)
+	{
 		FeatureNode f = get(key);
 		if (f == null)
 			return null;
@@ -184,7 +195,8 @@ public class FeatureNode implements Serializable {
 	 * @param key
 	 * @return the new FeatureNode
 	 */
-	public FeatureNode add(String key) {
+	public FeatureNode add(String key)
+	{
 		if (isValued())
 			throw new RuntimeException(
 					"Cannot add a key for a string-valued FeatureNode");
@@ -196,7 +208,8 @@ public class FeatureNode implements Serializable {
 	/**
 	 * Substitutes oldF with newF in any of the feature targets of this node.
 	 */
-	public void substitute(FeatureNode oldF, FeatureNode newF) {
+	public void substitute(FeatureNode oldF, FeatureNode newF)
+	{
 		if (oldF == newF)
 			return;
 		Iterator<String> i = getFeatureNames().iterator();
@@ -213,7 +226,8 @@ public class FeatureNode implements Serializable {
 	 * calling this method, "this" is not guaranteed to be a legitimate part of
 	 * the entire feature structure you were dealing with.
 	 */
-	public void mergeWith(FeatureNode other) {
+	public void mergeWith(FeatureNode other)
+	{
 		if (other == this)
 			return;
 		if (other.isEmpty()) {
@@ -278,7 +292,8 @@ public class FeatureNode implements Serializable {
 
 	}
 
-	public void replaceSelfWith(FeatureNode other) {
+	public void replaceSelfWith(FeatureNode other)
+	{
 		if (other == this)
 			return;
 		// Create a new hashset to avoid ConcurrentModificationException.
@@ -305,7 +320,8 @@ public class FeatureNode implements Serializable {
 	 * @param target
 	 *            the FeatureNode to set it to.
 	 */
-	public void set(String key, FeatureNode target) {
+	public void set(String key, FeatureNode target)
+	{
 		if (isValued())
 			throw new RuntimeException("Cannot set key-value pair for a string-valued FeatureNode");
 		if (key == null)
@@ -332,7 +348,8 @@ public class FeatureNode implements Serializable {
 	 * @param key
 	 * @return the value of the feature, or null if it has no value
 	 */
-	public FeatureNode get(String key) {
+	public FeatureNode get(String key)
+	{
 		if (isValued())
 			throw new RuntimeException("String-valued FeatureNodes have no keys.");
 		if (key == null)
@@ -341,7 +358,8 @@ public class FeatureNode implements Serializable {
 	}
 
 	// Like "get" but makes the feature node if it doesn't exist.
-	public FeatureNode getOrMake(String key) {
+	public FeatureNode getOrMake(String key)
+	{
 		FeatureNode ret = get(key);
 		if (ret == null) {
 			ret = new FeatureNode();
@@ -355,7 +373,8 @@ public class FeatureNode implements Serializable {
 	 *
 	 * @return the set of feature names
 	 */
-	public Set<String> getFeatureNames() {
+	public Set<String> getFeatureNames()
+	{
 		if (isValued())
 			throw new RuntimeException("valued FeatureNodes have no features");
 		return kv_pairs.keySet();
@@ -440,7 +459,8 @@ public class FeatureNode implements Serializable {
 	 */
 	private HashMap<FeatureNode,Integer>
 		makeIndices(HashMap<FeatureNode,Integer> indices, HashSet<FeatureNode> alreadyVisited,
-			FeatureNameFilter filter) {
+			FeatureNameFilter filter)
+	{
 		if (alreadyVisited.contains(this)) {
 			if (!indices.keySet().contains(this))
 				indices.put(this, indices.size());
@@ -464,7 +484,8 @@ public class FeatureNode implements Serializable {
 	 *
 	 * @return
 	 */
-	public String toString(FeatureNameFilter filter) {
+	public String toString(FeatureNameFilter filter)
+	{
 		if (isValued())
 			return "<<" + getValue() + ">>";
 		StringBuffer sb = new StringBuffer();
@@ -618,7 +639,8 @@ public class FeatureNode implements Serializable {
 	}
 
 	// Test method
-	static public void main(String[] args) {
+	static public void main(String[] args)
+	{
 		FeatureNode three = new FeatureNode("3");
 		FeatureNode root = new FeatureNode();
 		root.add("a").add("b").add("c").set("d", three);
