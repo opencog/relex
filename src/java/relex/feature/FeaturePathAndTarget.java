@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,7 @@ package relex.feature;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package relex.feature;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,7 +42,8 @@ public class FeaturePathAndTarget {
 		pathSeparators.add("!=");
 	}
 
-	public FeaturePathAndTarget(String str) {
+	public FeaturePathAndTarget(String str)
+	{
 		// split the string around the = character
 		String[] items = str.split("[ ]*" + pathSeparatorRegex() + "[ ]*");
 //		System.out.println("\n"+str);
@@ -51,9 +52,10 @@ public class FeaturePathAndTarget {
 //		}
 		if (items.length != 2)
 			throw new RuntimeException(
-					"invalid path and target string, need exactly one pathSeparator, but found "
-							+ items.length + "\n" + str
-							+ "\nRegular expression was:"
+				"Error: relex: invalid path and target string, " +
+				"need exactly one pathSeparator, but found "
+							+ items.length + "\n\t" + str
+							+ "\n\tRegular expression was:"
 							+ pathSeparatorRegex());
 		setPath(items[0]);
 		setTarget(items[1]);
@@ -69,13 +71,15 @@ public class FeaturePathAndTarget {
 			String re = ".*>[ ]*\\Q" + sep + "\\E[ ]*[<$%\\w\\\\].*";
 			if (Pattern.matches(re, str)) {
 				if (!getPathSeparators().contains(sep)) {
-					throw new RuntimeException(sep + " is not a valid path separator.");
+					throw new RuntimeException("Error: relex: " + 
+						sep + " is not a valid path separator.");
 				}
 				separator = sep;
 				return;
 			}
 		}
-		throw new RuntimeException("Parsed Path And Target but could not determine separator");
+		throw new RuntimeException("Error: relex: Parsed Path And "
+			+ "Target but could not determine separator");
 	} 
 	
 	public FeaturePathAndTarget(FeaturePathAndTarget other) {
