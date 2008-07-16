@@ -64,6 +64,8 @@ public class ParseStats
 
 	public void bin(RelexInfo ri)
 	{
+		if (null == ri) return;
+
 		count ++;
 		int nparses = ri.getParses().size();
 		parse_count.bin(nparses);
