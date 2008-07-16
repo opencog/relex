@@ -7,12 +7,12 @@
 # tables, images, & etc.  It currently seems to be pretty darned
 # bullet-proof, although it might handle multi-line refs incorrectly.
 #
-# The output is in the form of one big single file; it should be
-# straight-forward to modify this script to dump output into individual
-# files.
-#
 # Copyright (c) 2008 Linas Vepstas <linas@linas.org>
 #
+#
+# directory where to dump the stripped pages.
+# this directory must already exist
+$page_out_directory = "wiki-stripped";
 
 # Need to specify the binmodes, in order for \w to match utf8 chars
 use utf8;
@@ -25,8 +25,16 @@ $have_table = 0;
 $have_ptable = 0;
 $have_cmnt = 0;
 $notfirst = 0;
+$page_title = "";
+$page_not_open = 1;
+
 while (<>)
 {
+	if (/<title>(.+?)<\/title>/) {
+		$page_title = $1;
+		close PAGE;
+		$page_not_open = 1;
+	}
 	if (/<text xml:space/) { $have_text = 1; }
 
 	# End of a wiki page.
@@ -261,5 +269,10 @@ while (<>)
 	s/^:://;
 	s/^://;
 
-	print "$_\n";
+	if ($page_not_open) {
+		$page_not_open = 0;
+		open PAGE, ">" . $page_out_directory . "/" . $page_title;
+		binmode PAGE, ':encoding(UTF-8)';
+	}
+	print PAGE "$_\n";
 }
