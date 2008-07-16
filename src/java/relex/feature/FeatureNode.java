@@ -48,7 +48,8 @@ public class FeatureNode implements Serializable
 
 	private static FeatureNameFilter DEFAULT_FEATURE_NAME_FILTER = new FeatureNameFilter();
 
-	public static FeatureNameFilter defaultFilter() {
+	public static FeatureNameFilter defaultFilter()
+	{
 		return DEFAULT_FEATURE_NAME_FILTER;
 	}
 
@@ -80,21 +81,30 @@ public class FeatureNode implements Serializable
 	}
 
 	/**
-	 * If str can be interpreted as a FeatureAction, it is.
-	 * Otherwise, str is interpreted as the value of this FeatureNode.
 	 */
 	public FeatureNode(String str)
 	{
 		this();
-		if (str.length() > 0 && str.charAt(0) == '<') {
-			String[] lines = str.split("\\n");
-			for (int i = 0; i < lines.length; i++) {
-				FeatureAction act = new FeatureAction(lines[i]);
-				act.doAction(this);
-			}
-		} else {
-			forceValue(str);
-		}
+
+	 	// If str can be interpreted as a FeatureAction, it is.
+		// Otherwise, str is interpreted as the value of this FeatureNode.
+		//
+		// But this is used only during development of new relex rules;
+		// do not do this in ordinary production code. In particular, 
+		// this code will mis-identify any lingering HTML markup, and 
+		// crash the system! (We shouldn't feed relex any HTML, but
+		// sometimes some slips through ..)
+		//
+		//if (str.length() > 0 && str.charAt(0) == '<') {
+		//	String[] lines = str.split("\\n");
+		//	for (int i = 0; i < lines.length; i++) {
+		//		FeatureAction act = new FeatureAction(lines[i]);
+		//		act.doAction(this);
+		//	}
+		//} else {
+		//	forceValue(str);
+		//}
+		forceValue(str);
 	}
 
 	protected Iterator<FeatureNode> getParents()
