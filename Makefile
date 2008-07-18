@@ -39,9 +39,12 @@ DIST_FILES = \
 	src/java/relex/tree/*.java \
 	src/java/relex/tree/README \
 	src/java/relex/util/socket/*.java \
-	src/java_test/relex/test/corpus/*.java
+	src/java_test/relex/test/corpus/*.java \
+	src/perl/README \
+	src/perl/*.pl \
+	src/perl/*.pm
 
 all:
 
 dist:
-	tar --transform "s#^#relex-0.10.0/#" -zcvf relex-0.10.0.tar.gz ${DIST_FILES}
+	tar --transform "s#^#relex-0.10.1/#" -zcvf relex-0.10.1.tar.gz ${DIST_FILES}
