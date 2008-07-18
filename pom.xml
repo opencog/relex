@@ -2,11 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>relex</groupId>
-  <artifactId>relex-maven</artifactId>
+  <artifactId>relex</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>relex-maven</name>
+  <version>0.10.1</version>
+  <name>relex</name>
   <url>http://maven.apache.org</url>
+  <build>
+    <sourceDirectory>${basedir}/src/java</sourceDirectory>
+    <testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
+  </build>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
