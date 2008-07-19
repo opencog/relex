@@ -9,6 +9,7 @@ DIST_FILES = \
 	Makefile \
 	README \
 	build.xml \
+	pom.xml \
 	relation-extractor.sh \
 	test-corpus.txt \
 	data/frame/concept_vars.txt \
