@@ -24,7 +24,22 @@
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src/java" excludes="**/*.launch, **/*.testsuite, **/*.deploy, **/*.location, **/*.execution, **/*.datapool, **/*.artifact, **/*.html, **/*.svg, **/*.swp, **/*.java"/>
+            <fileset dir="src/java"
+                     excludes="**/*.launch,
+                               **/*.testsuite,
+                               **/*.deploy,
+                               **/*.location,
+                               **/*.execution,
+                               **/*.datapool,
+                               **/*.artifact,
+                               **/*.html,
+                               **/*.svg,
+                               **/*.swp,
+                               **/*.java
+                               **/a.out,
+                               **/*.c,
+                               **/*.pl,
+                               **/x"/>
         </copy>
     </target>
     <target name="clean">
