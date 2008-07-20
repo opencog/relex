@@ -69,6 +69,7 @@
         	<fileset file="data/frame/concept_vars.txt" />
         	<fileset file="data/frame/mapping_rules.txt" />
         	<fileset file="data/wordnet/file_properties.xml" />
+        	<fileset file="data/sentence-detector/EnglishSD.bin.gz" />
         </jar>
     </target>
 

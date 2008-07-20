@@ -14,12 +14,13 @@ export LANG=en_US.UTF-8
 
 VM_OPTS="-Xmx1024m -Djava.library.path=/usr/lib:/usr/local/lib"
 
-# By default these resources are read from the jar file or from 
-# the default paths (the same defined below)
-RELEX_OPTS="\
-	-Drelex.algpath=data/relex-semantic-algs.txt \
-	-Dwordnet.configfile=data/wordnet/file_properties.xml \
-	"
+# By default, these resources are read from the relex jar file.
+# Alternately, they are taken from the default paths, which are the
+# same as those immediate below.
+# RELEX_OPTS="\
+# 	-Drelex.algpath=data/relex-semantic-algs.txt \
+# 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
+# 	"
 
 CLASSPATH="-classpath \
 bin:\
