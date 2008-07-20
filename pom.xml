@@ -20,6 +20,41 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <targetPath>./</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}/data</directory>
+        <includes>
+          <include>relex-semantic-algs.txt</include>
+        </includes>
+      </resource>
+      <resource>
+        <targetPath>./</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}/data/wordnet</directory>
+        <includes>
+          <include>file_properties.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <targetPath>./</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}/data/sentence-detector</directory>
+        <includes>
+          <include>EnglishSD.bin.gz</include>
+        </includes>
+      </resource>
+      <resource>
+        <targetPath>./</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}/data/frame</directory>
+        <includes>
+          <include>concept_vars.txt</include>
+          <include>mapping_rules.txt</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
   <dependencies>
     <dependency>
