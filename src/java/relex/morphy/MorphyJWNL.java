@@ -1,4 +1,3 @@
-package relex.morphy;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.morphy;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.morphy;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -99,8 +100,10 @@ public class MorphyJWNL implements Morphy
 	public void initialize()
 	{
 		if (!MorphyFactory.initializeJWNL()) {
-			System.err.println("Unable to initialize WordNet Java API (JWNL). "+
-					"Will use command-line interface; " +
+			System.err.println("Warning: Unable to initialize WordNet " +
+					"Java API (JWNL).\n" +
+					"\tWas -Dwordnet.configfile set correctly?\n" +
+					"\tWill use command-line interface; " +
 					"this will negatively impact performance."); 
 		} else {
 		    javaWordnetFound = true;
