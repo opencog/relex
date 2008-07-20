@@ -382,6 +382,12 @@ public class ParsedSentence extends Atom implements Serializable
 		stv.setConfidence(confidence);
 	}
 
+	public double getRank()
+	{
+		SimpleTruthValue stv = (SimpleTruthValue) truth_value;
+		return stv.getConfidence();
+	}
+
 	public int hashCode()
 	{
 		if (original == null)
