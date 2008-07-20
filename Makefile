@@ -11,6 +11,9 @@ DIST_FILES = \
 	build.xml \
 	pom.xml \
 	relation-extractor.sh \
+	link-grammar-server.sh \
+	parallel-relation-extractor.sh \
+	doc-splitter.sh \
 	test-corpus.txt \
 	data/frame/concept_vars.txt \
 	data/frame/mapping_rules.txt \
