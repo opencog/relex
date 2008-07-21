@@ -1,6 +1,7 @@
 New in version 0.10.1:
  * remove cleanSentenceString(), replace with entity id's.
  * Avoid printing parens in the constituent string.
+ * Add a pom.xml file for use with Maven.
 
 New in version 0.8.4:
  * Convert DocSplitter to factory, so that the OpenNLP install is optional.
