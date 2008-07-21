@@ -19,9 +19,16 @@
 		<param name="dictionary_element_factory" value="net.didion.jwnl.princeton.data.PrincetonWN17FileDictionaryElementFactory"/>
 		<param name="file_manager" value="net.didion.jwnl.dictionary.file_manager.FileManagerImpl">
 			<param name="file_type" value="net.didion.jwnl.princeton.file.PrincetonRandomAccessDictionaryFile"/>
-	<!--		<param name="dictionary_path" value="/opt/WordNet-2.0/dict"/> -->      	<!--  Use this in SuSE  -->
-			<param name="dictionary_path" value="/usr/share/wordnet"/>          	<!--  Use this in Ubuntu  -->
-  	<!--		<param name="dictionary_path" value="C:\Program Files\WordNet\2.0\dict"/>  --> <!--  Use this in Windows -->
+
+   <!--  Use this in SuSE  -->
+	<!--	<param name="dictionary_path" value="/opt/WordNet-2.0/dict"/> -->
+
+   <!--  Use this in Ubuntu  -->
+			<param name="dictionary_path" value="/usr/share/wordnet"/>
+
+	<!--  Use this in Windows -->
+  	<!--	<param name="dictionary_path" value="C:\Program Files\WordNet\2.0\dict"/>  -->
+
 		</param>
 	</dictionary>
 	<resource class="PrincetonResource"/>
