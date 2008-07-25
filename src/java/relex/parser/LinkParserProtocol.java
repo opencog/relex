@@ -176,6 +176,8 @@ public class LinkParserProtocol extends ProcessProtocol
 			return makeMessage(Integer.toString(client.getNumWords()));
 		} else if (message.equals(MSG_GET_WORD)) {
 			return makeMessage(client.getWord(Integer.parseInt(arg)));
+		} else if (message.equals(MSG_GET_LINKAGE_WORD)) {
+			return makeMessage(client.getLinkageWord(Integer.parseInt(arg)));
 		} else if (message.equals(MSG_GET_LINKAGE_NUM_VIOLATIONS)) {
 			return makeMessage(Integer.toString(client.getLinkageNumViolations()));
 		} else if (message.equals(MSG_GET_LINKAGE_AND_COST)) {
