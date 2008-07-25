@@ -121,7 +121,7 @@ public class LinkParser extends Parser
 					if (leftWall == null) throw new RuntimeException("Invalid parse: first word is not left wall");
 					
 					// set the word and part-of-speach
-					fnv.setWordAndPos(lpc.getWord(w));
+					fnv.setWordAndPos(wordString);
 					
 					// create a feature "this" which points to the linkable
 					fnv.fn().set("this", fnv.fn());
@@ -136,7 +136,7 @@ public class LinkParser extends Parser
 					s.addWord(fnv.fn());
 
 					// Add char-index information to the feature node
-					String tokenString = lpc.getWord(w).toLowerCase(); // normalize cases
+					String tokenString = wordString.toLowerCase(); // normalize cases
 					
 					// System.out.println("DOING INFO FOR " + tokenString);
 					String sentenceString = sentence.toLowerCase();
