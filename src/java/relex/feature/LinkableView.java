@@ -229,9 +229,47 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setWordAndPos(fn(), wordString);
 	}
 
-	public static void setWordAndPos(FeatureNode ths, String wordString) {
+	/**
+	 * This method is expecting an "inflected" link-grammar
+	 * word, such as "knows.v" or "ball.n", indicating that
+	 * the word was a verb, noun, etc.
+	 */
+	public static void setWordAndPos(FeatureNode ths, String wordString)
+	{
 		throwIfNoFN(ths);
-		setPOS(ths, POS_WORD);
+
+		int len = wordString.length();
+		if (wordString.indexOf('.') == len -2)
+		{
+			char inflection = wordString.charAt(len-1);
+			wordString = wordString.substring(0, len-2);
+System.out.println("ola " + inflection);
+			switch(inflection)
+			{
+				case 'a': setPOS(ths, "adj"); break;
+				case 'b': setPOS(ths, "noun"); break; // male or female
+				case 'f': setPOS(ths, "noun"); break; // female
+				case 'g': setPOS(ths, "verb"); break; // gerund
+				case 'l': setPOS(ths, "noun"); break; // location
+				case 'm': setPOS(ths, "noun"); break; // male
+				case 'n': setPOS(ths, "noun"); break;
+				case 'v': setPOS(ths, "verb"); break;
+				case 'w': setPOS(ths, "verb"); break; // verb, exceptions
+				case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
+				case 'y': setPOS(ths, "abbr"); break; // postfix abbreviation e.g. Ave.
+				case 'e':  // blood-relatives  and ??? !
+				case 'i':  // unites, other things ??
+				case 'k':  // ??
+				case 'p':  // units, other things ??
+				case 'q':  // question-related ??
+				case 's':  // symbol !
+				default: setPOS(ths, POS_WORD); break;
+			}
+		}
+		else
+		{
+			setPOS(ths, POS_WORD);
+		}
 		ths.set(WORD_STRING_FEATURE_NAME, new FeatureNode(wordString));
 	}
 

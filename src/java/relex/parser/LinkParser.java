@@ -109,7 +109,7 @@ public class LinkParser extends Parser
 			// SKIPPED=" + cNumSkippedWords());
 			for (int w = 0; w < numWords; w++)
 			{
-				String wordString = lpc.getWord(w);
+				String wordString = lpc.getLinkageWord(w);
 				if (verbosity >= 5) System.out.println(" Processing Word " + wordString);
 
 				if (wordString.equals("RIGHT-WALL")){
@@ -136,7 +136,7 @@ public class LinkParser extends Parser
 					s.addWord(fnv.fn());
 
 					// Add char-index information to the feature node
-					String tokenString = wordString.toLowerCase(); // normalize cases
+					String tokenString = lpc.getWord(w).toLowerCase(); // normalize cases
 					
 					// System.out.println("DOING INFO FOR " + tokenString);
 					String sentenceString = sentence.toLowerCase();
