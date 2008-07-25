@@ -459,6 +459,12 @@ ENTITY-LOCATION
 <ref location-FLAG> = T
 ;
 #TemplateActionAlg
+ENTITY-MEASURE
+<MEASURE-FLAG> = T
+=
+<ref measure-FLAG> = T
+;
+#TemplateActionAlg
 ENTITY-ORGANIZATION
 <ORGANIZATION-FLAG> = T
 =
