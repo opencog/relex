@@ -72,7 +72,7 @@ public class RelexProperties {
              catch (Exception e)
             {
                 System.err.println("Property load failed.");
-                System.err.println(e.getStackTrace().toString());
+                e.printStackTrace();
             }
         }
     }
@@ -86,7 +86,7 @@ public class RelexProperties {
                 props.store(new FileOutputStream(new File(storeFilename)),"RelexProperties");
             } catch (Exception e)
             {
-                System.err.println(e.getStackTrace().toString());
+                e.printStackTrace();
             }
         }
     }
