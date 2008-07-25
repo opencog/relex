@@ -234,7 +234,7 @@ public class RelationExtractor
 		catch(Exception e)
 		{
 			System.err.println("Failed to process sentence: " + sentence);
-			System.err.println(e.toString());
+			System.err.println(e.getStackTrace().toString());
 		}
 		if (verbosity > 0) reportTime("Relex processing: ");
 		return ri;
@@ -392,9 +392,9 @@ public class RelationExtractor
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 			System.err.println("Unrecognized parameter.");
 			System.err.println(callString);
+			System.err.println(e.getStackTrace().toString());
 			return;
 		}
 

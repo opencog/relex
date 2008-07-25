@@ -93,9 +93,9 @@ public class WebFormat extends RelationExtractor
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 			System.err.println("Unrecognized parameter.");
 			System.err.println(callString);
+			System.err.println(e.getStackTrace().toString());
 			return;
 		}
 

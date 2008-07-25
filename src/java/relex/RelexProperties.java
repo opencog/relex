@@ -1,4 +1,3 @@
-package relex;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,15 +62,17 @@ public class RelexProperties {
         String loadFilename = System.getProperty("relex.RelexProperties.loadFilename");
         if (loadFilename != null && loadFilename.length() > 0) {
             if (verbosity >=1)
-                System.out.println("RelexProperties: loading properties from " + loadFilename);
-            try {
+                System.err.println("RelexProperties: loading properties from " + loadFilename);
+            try
+            {
                 props.load(new FileInputStream(new File(loadFilename)));
                 if (verbosity >=1 )
-                    System.out.println(RelexProperties.toPropsString());
-            } catch (Exception e) {
-                if (verbosity >=1 )
-                    System.out.println("Property load failed.");
-                e.printStackTrace();
+                    System.err.println(RelexProperties.toPropsString());
+            }
+             catch (Exception e)
+            {
+                System.err.println("Property load failed.");
+                System.err.println(e.getStackTrace().toString());
             }
         }
     }
@@ -78,11 +81,12 @@ public class RelexProperties {
         String storeFilename = System.getProperty("relex.RelexProperties.storeFilename");
         if (storeFilename != null && storeFilename.length() > 0) {
             if (verbosity >=1)
-                System.out.println("RelexProperties: storing properties in " + storeFilename);
+                System.err.println("RelexProperties: storing properties in " + storeFilename);
             try {
                 props.store(new FileOutputStream(new File(storeFilename)),"RelexProperties");
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception e)
+            {
+                System.err.println(e.getStackTrace().toString());
             }
         }
     }
