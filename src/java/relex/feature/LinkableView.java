@@ -299,6 +299,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'n': setPOS(ths, "noun"); break;
 				case 'o': setPOS(ths, "noun"); break; // organizations
 				case 'p': setPOS(ths, "noun"); break; // plural (mass) nouns
+				case 'u': setPOS(ths, "noun"); break; // units of measurement
 				case 'v': setPOS(ths, "verb"); break;
 				case 'w': setPOS(ths, "verb"); break; // verb, exceptions
 				case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
@@ -309,7 +310,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'k':  // ??
 				case 'q':  // question-related ??
 				case 'r':  // ??
-				case 'u':  // units of measurement
 				default: setPOS(ths, POS_WORD); break;
 			}
 			switch(inflection)
