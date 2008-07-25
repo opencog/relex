@@ -126,6 +126,12 @@ public class LinkParserJNINewClient extends LinkParserClient
 		return LinkGrammar.getWord(w);
 	}
 
+	String getLinkageWord(int w) {
+		// stub out until versin 4.3.7 is commonly available.
+		// return LinkGrammar.getLinkageWord(w);
+		return LinkGrammar.getWord(w);
+	}
+
 	int getLinkageAndCost() {
 		return LinkGrammar.getLinkageAndCost();
 	}

@@ -52,6 +52,8 @@ public class LinkParserProtocol extends ProcessProtocol
 
 	public static final String MSG_GET_WORD = "[getWord]\0";
 
+	public static final String MSG_GET_LINKAGE_WORD = "[getLinkageWord]\0";
+
 	public static final String MSG_GET_LINKAGE_NUM_VIOLATIONS = "[getLinkageNumViolations]\0";
 
 	public static final String MSG_GET_LINKAGE_AND_COST = "[getLinkageAndCost]\0";
