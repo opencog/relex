@@ -239,11 +239,10 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		throwIfNoFN(ths);
 
 		int len = wordString.length();
-		if (wordString.indexOf('.') == len -2)
+		if ((2 < len) && (wordString.indexOf('.') == len -2))
 		{
 			char inflection = wordString.charAt(len-1);
 			wordString = wordString.substring(0, len-2);
-System.out.println("ola " + inflection);
 			switch(inflection)
 			{
 				case 'a': setPOS(ths, "adj"); break;
