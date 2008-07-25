@@ -179,6 +179,8 @@ while (<>)
 	s/&lt;\/em&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
+	s/&lt;id&gt;//g;
+	s/&lt;\/id&gt;//g;
 	s/&lt;pre&gt;//g;
 	s/&lt;pre .+?&gt;//g;
 	s/&lt;\/pre&gt;//g;
