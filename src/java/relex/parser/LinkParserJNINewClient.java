@@ -125,7 +125,8 @@ public class LinkParserJNINewClient extends LinkParserClient
 	}
 
 	String getLinkageWord(int w) {
-		// stub out until versin 4.3.7 is commonly available.
+		// XXX-- hack alert stub out until link-grammar 
+		// version 4.3.7 is commonly available.
 		// return LinkGrammar.getLinkageWord(w);
 		return LinkGrammar.getWord(w);
 	}
