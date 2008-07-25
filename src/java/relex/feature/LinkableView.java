@@ -35,6 +35,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String GENDER_FEATURE_NAME = "GENDER";
 	private static String PERSON_FLAG_NAME = "PERSON-FLAG";
+	private static String MEASURE_FLAG_NAME = "MEASURE-FLAG";
+	private static String LOCATION_FLAG_NAME = "LOCATION-FLAG";
+	private static String ORGANIZATION_FLAG_NAME = "ORGANIZATION-FLAG";
 
 	private static String POS_FEATURE_NAME = "POS";
 
@@ -213,6 +216,21 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			ths.set(featname, new FeatureNode(featval));
 	}
 
+	public static void setLocation(FeatureNode ths)
+	{
+		setFeat(ths, LOCATION_FLAG_NAME, "T");
+	}
+
+	public static void setMeasure(FeatureNode ths)
+	{
+		setFeat(ths, MEASURE_FLAG_NAME, "T");
+	}
+
+	public static void setOrganization(FeatureNode ths)
+	{
+		setFeat(ths, ORGANIZATION_FLAG_NAME, "T");
+	}
+
 	public void setPerson() {
 		setPerson(fn());
 	}
@@ -279,24 +297,29 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'l': setPOS(ths, "noun"); break; // location
 				case 'm': setPOS(ths, "noun"); break; // male
 				case 'n': setPOS(ths, "noun"); break;
+				case 'o': setPOS(ths, "noun"); break; // organizations
+				case 'p': setPOS(ths, "noun"); break; // plural (mass) nouns
 				case 'v': setPOS(ths, "verb"); break;
 				case 'w': setPOS(ths, "verb"); break; // verb, exceptions
 				case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
 				case 'y': setPOS(ths, "abbr"); break; // postfix abbreviation e.g. Ave.
+				case 'd':  // ??
 				case 'e':  // blood-relatives  and ??? !
-				case 'i':  // unites, other things ??
+				case 'i':  // ??
 				case 'k':  // ??
-				case 'p':  // units, other things ??
 				case 'q':  // question-related ??
-				case 's':  // symbol !
+				case 'r':  // ??
+				case 'u':  // units of measurement
 				default: setPOS(ths, POS_WORD); break;
 			}
 			switch(inflection)
 			{
 				case 'b':  setPerson(ths); break; // male or female
 				case 'f':  setPerson(ths); setGender(ths, "feminine"); break;
-				case 'l':  break; // location
+				case 'l':  setLocation(ths); break;
 				case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
+				case 'o':  setOrganization(ths); break;
+				case 'u':  setMeasure(ths); break; // u == unit
 			}
 		}
 		else
