@@ -33,6 +33,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String RIGHT_LINK_PREFIX = "linkR";
 
+	private static String GENDER_FEATURE_NAME = "GENDER";
+	private static String PERSON_FLAG_NAME = "PERSON-FLAG";
+
 	private static String POS_FEATURE_NAME = "POS";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
@@ -200,17 +203,41 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		ths.set(s, link);
 	}
 
+	private static void setFeat(FeatureNode ths, String featname, String featval)
+	{
+		throwIfNoFN(ths);
+		FeatureNode f = ths.get(featname);
+		if (f != null)
+			f.setValue(featval);
+		else
+			ths.set(featname, new FeatureNode(featval));
+	}
+
+	public void setPerson() {
+		setPerson(fn());
+	}
+
+	public static void setPerson(FeatureNode ths)
+	{
+		setFeat(ths, PERSON_FLAG_NAME, "T");
+	}
+
+	public void setGender(String gen) {
+		setGender(fn(), gen);
+	}
+
+	public static void setGender(FeatureNode ths, String gen)
+	{
+		setFeat(ths, GENDER_FEATURE_NAME, gen);
+	}
+
 	public void setPOS(String pos) {
 		setPOS(fn(), pos);
 	}
 
-	public static void setPOS(FeatureNode ths, String pos) {
-		throwIfNoFN(ths);
-		FeatureNode f = ths.get(POS_FEATURE_NAME);
-		if (f != null)
-			f.setValue(pos);
-		else
-			ths.set(POS_FEATURE_NAME, new FeatureNode(pos));
+	public static void setPOS(FeatureNode ths, String pos)
+	{
+		setFeat(ths, POS_FEATURE_NAME, pos);
 	}
 
 	public String getPOS() {
@@ -263,6 +290,13 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'q':  // question-related ??
 				case 's':  // symbol !
 				default: setPOS(ths, POS_WORD); break;
+			}
+			switch(inflection)
+			{
+				case 'b':  setPerson(ths); break; // male or female
+				case 'f':  setPerson(ths); setGender(ths, "feminine"); break;
+				case 'l':  break; // location
+				case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
 			}
 		}
 		else
