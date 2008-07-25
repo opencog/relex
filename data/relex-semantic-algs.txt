@@ -526,11 +526,23 @@ PROPER_NAME_POS_CORRECTION
 <F_R POS> = %
 <F_R POS> = noun
 ;
+; G link are entities identified by link-grammar, that the 
+; entity detector may have missed. Tag these as entities, of some
+; unspecified type.
+;
+#TemplateActionAlg
+LG_ENTITES
+<LAB> = \G\.*
+=
+<F_R ref entity-FLAG> = T
+;
 #TemplateActionAlg
 DEFINITE_NAMES
 <LAB> = \G\.*
 =
 <F_R ref DEFINITE-FLAG> = T
+;
+; Entities are definite.
 ;
 #TemplateActionAlg
 DEFINITE_ENTITIES

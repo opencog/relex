@@ -1,3 +1,11 @@
+The nearby Smithsonian museums and the National Gallery of Art are free to all visitors.
+END.
+
+Relex provides semantic interpretations for English sentences.
+It obtains them by applying a set of patterns or rules.
+Abigail didn't like the idea; she put the kibosh on it.
+Are you going to Eeyore's birthday party?
+Bills on ports and immigration were submitted by Senator Brownback, Republican of Kansas.
 Ben, Bob and Alice ate steak.
 END.
 Here is the ball.
