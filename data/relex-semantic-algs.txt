@@ -1164,7 +1164,6 @@ OBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
 ;  Jim wants Mike to eat a cat
 ;  Jim finds Mike interesting
-; xxx seems wrong for Pa -- ???
 <LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
 <F_L obj> != %
 =
