@@ -1149,10 +1149,12 @@ INV-SUBJECT_LINKING
 ;
 #TemplateActionAlg
 PREDICATIVE_ADJECTIVE_LINKING
-; Mr. Smith is late.
+;  "Mr. Smith is late."  (as opposed to "The late Mr. Smith")
+; But Pa must connect to copula, so reject "The rose smelled sweet"
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
+<F_L str> = be
 =
 <F_R predadj> = <F_L subj>
 ;
@@ -1162,7 +1164,7 @@ OBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
 ;  Jim wants Mike to eat a cat
 ;  Jim finds Mike interesting
-; xxx seems wrong for Pa
+; xxx seems wrong for Pa -- ???
 <LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
 <F_L obj> != %
 =
