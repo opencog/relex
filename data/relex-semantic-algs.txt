@@ -309,7 +309,7 @@ TENSE_DO
 TENSE_COPULA
 ; Pp is not used if it takes a complement, so that copula is still explicit 
 ; in "John is in the park."
-; But "John is here." treats "here" like an adj
+; But "John is here." treats "here" like a predicative adjective
 <LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
 <F_L PREP-OBJ> = %
 <F_L str> = be
@@ -1132,8 +1132,7 @@ MARK_FILLER_OBJ
 SUBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
 ; Jim wants to eat a cat
-; Jim is green
-<LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
+<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 =
@@ -1149,10 +1148,21 @@ INV-SUBJECT_LINKING
 <F_L subj> = <F_R subj>
 ;
 #TemplateActionAlg
+PREDICATIVE_ADJECTIVE_LINKING
+; Mr. Smith is late.
+<LAB> = \Pa\.*
+<F_L obj> = %
+<F_L FILLER-OBJ-FLAG> != T
+=
+<F_R predadj> = <F_L subj>
+;
+;
+#TemplateActionAlg
 OBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
 ;  Jim wants Mike to eat a cat
 ;  Jim finds Mike interesting
+; xxx seems wrong for Pa
 <LAB> = \Pg\.*|\Pa\.*|\Pp\.*|\PP\.*|\I\.*
 <F_L obj> != %
 =
@@ -1586,6 +1596,13 @@ OBJ2_TO_LINKS_GERUND
 <iobj> != %
 =
 <ref links _iobj> = <iobj>
+;
+#TemplateActionAlg
+PREDADJ_TO_LINKS
+<HEAD-FLAG> = T
+<predadj> != %
+=
+<ref links _predadj> = <predadj>
 ;
 #TemplateActionAlg
 PREPOSITION_MARKING
