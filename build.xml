@@ -44,7 +44,7 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
-        <delete file="relex-0.10.1.jar"/>
+        <delete file="relex-0.10.2.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
@@ -57,12 +57,12 @@
         </javac>
     </target>
     <target name="jar">
-        <jar basedir="bin" destfile="relex-0.10.1.jar">
+        <jar basedir="bin" destfile="relex-0.10.2.jar">
             <manifest>
                 <attribute name="Implementation-Title" value="RelEx Semantic Relation Extractor"/>
                 <attribute name="Implementation-URL" value="http://opencog.org/wiki/RelEx"/>
                 <attribute name="Specification-Version" value="0.10"/>
-                <attribute name="Implementation-Version" value="0.10.1"/>
+                <attribute name="Implementation-Version" value="0.10.2"/>
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
         	<fileset file="data/relex-semantic-algs.txt" />

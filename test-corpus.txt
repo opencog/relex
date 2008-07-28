@@ -1,19 +1,27 @@
-The green ball is orange.
+John and Mary went to Brighton Beach.
 END.
+She made him happy.
+The ball was red.
+The ball might be red.
+The ball can be red.
+The ball should be red.
+END.
+
+Mr. Smith is late.
+The late Mr. Smith is here.
+The ball is broken.
+The ball is made of rubber.
+There is the ball.
+There is a ball.
+The ball is in there.
 The rose smelled sweet.
-END.
 The ball is round.
 The ball is small.
 The ball is rubber.
 The ball is missing.
-The ball is broken.
 The ball is missing its air valve.
 The ball is rolling down the hill.
-The ball is made of rubber.
 The ball is there.
-There is the ball.
-There is a ball.
-The ball is in there.
 END.
 Roderick works 12 miles away from IBM in London.
 Mr. Smith cleverly knows the right way.
