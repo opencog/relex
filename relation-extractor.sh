@@ -28,8 +28,7 @@ bin:\
 /usr/local/share/java/opennlp-tools-1.3.0.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
-/usr/local/share/java/link-grammar-4.3.5.jar:\
-/usr/share/java/link-grammar-4.3.5.jar:\
+/usr/local/share/java/link-grammar-4.3.7.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
 /usr/share/java/xercesImpl.jar:\
@@ -38,13 +37,18 @@ bin:\
 /opt/GATE-4.0/lib/jasper-compiler-jdt.jar:\
 /opt/GATE-4.0/lib/nekohtml-0.9.5.jar:\
 /opt/GATE-4.0/lib/ontotext.jar:\
+/opt/GATE-4.0/lib/stax-api-1.0.1.jar:\
+/opt/GATE-4.0/lib/PDFBox-0.7.2.jar:\
+/opt/GATE-4.0/lib/wstx-lgpl-2.0.6.jar
 "
 # wordnet doesn't work with the gate version of jwnl ...
 # /opt/GATE-4.0/lib/jwnl.jar:\
 
 # Read a sentence from stdin:
-echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
-	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f
+#echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
+#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g
+#/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g -s "Alice ate the mushroom."
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g -s "Alice ate the mushroom."
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \
