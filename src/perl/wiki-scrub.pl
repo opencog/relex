@@ -179,6 +179,14 @@ while (<>)
 	s/&lt;\/em&gt;//g;
 	s/&lt;tt&gt;//g;
 	s/&lt;\/tt&gt;//g;
+	s/&lt;title&gt;//g;
+	s/&lt;\/title&gt;//g;
+	s/&lt;comment&gt;//g;
+	s/&lt;\/comment&gt;//g;
+	s/&lt;username&gt;//g;
+	s/&lt;\/username&gt;//g;
+	s/&lt;timestamp&gt;//g;
+	s/&lt;\/timestamp&gt;//g;
 	s/&lt;id&gt;//g;
 	s/&lt;\/id&gt;//g;
 	s/&lt;pre&gt;//g;
