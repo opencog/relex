@@ -32,6 +32,8 @@ import relex.feature.LinkForeach;
 public class LinkGraphGenerator {
 	public static final boolean HIDE_LEFT_WALL = true;
 	
+	public static final String GRAPHVIZ_BIN = System.getProperty("graphviz.bin") != null ? System.getProperty("graphviz.bin") : "/usr/bin";
+	
 	public static File generateGraph(
 			String title,
 			ParsedSentence parse, 
@@ -83,6 +85,24 @@ public class LinkGraphGenerator {
 		return temp;
 	}
 
+	/**
+	 * Generate a graph in the PNG format using the DOT source code in the given
+	 * file.
+	 * 
+	 * @param temp The file containing the DOT source code
+	 */
+	public static File generateGraphImage(File temp) {
+		try {
+			String command = GRAPHVIZ_BIN + File.separator + "dot" + " -Tpng -o " + temp.getAbsolutePath().concat(".png") + " " + temp.getAbsolutePath();
+			System.out.println("Executing " + command + " ...");
+			Runtime.getRuntime().exec(command).waitFor();
+			System.out.println("OK!");
+		} catch (IOException e) {
+			System.err.println("Error generating graph " + temp + ".png");
+		} catch (InterruptedException e) {
+		}
+		return new File(temp.getAbsolutePath().concat(".png"));
+	}
 	
 }
 
