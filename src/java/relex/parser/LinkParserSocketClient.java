@@ -123,7 +123,7 @@ public class LinkParserSocketClient extends LinkParserClient
 
 	void execParse(String sentence) {
 		parseCount++;
-		if (parseCount >= parseCountBetweenKills) {
+		if ((parseCountBetweenKills != 0) && parseCount >= parseCountBetweenKills) {
 			parseCount = 0;
 			if (verbosity >= 1)
 				System.out
