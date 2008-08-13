@@ -16,6 +16,8 @@
 
 package relex.parser;
 
+import java.io.File;
+
 import org.linkgrammar.LinkGrammar;
 
 /**
@@ -74,11 +76,25 @@ public abstract class LinkParserClient
 	}
 
 	public void init(){
-		init(null);
+		init(System.getProperty("relex.linkparserpath"));
 	}
 
 	public void init(String linkGrammarDictionariesPath) {
-		if (linkGrammarDictionariesPath != null) LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
+		if (linkGrammarDictionariesPath==null) {
+			System.out.println("Using default relex.linkparserpath");
+		} else {
+			File dir = new File(linkGrammarDictionariesPath);
+			if (!dir.isDirectory() || !dir.canRead()) 
+				throw new IllegalArgumentException(linkGrammarDictionariesPath == null ? 
+						"Error reading default relex.linkparserpath" :
+						"Error reading relex.linkparserpath: "+linkGrammarDictionariesPath);
+			try {
+				System.out.println("Using relex.linkparserpath: "+dir.getCanonicalPath());
+				LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
+			} catch (Throwable t){
+				throw new IllegalArgumentException("Invalid relex.linkparserpath: "+linkGrammarDictionariesPath);			
+			}
+		}
 	}
 
 	abstract public String getVersion();

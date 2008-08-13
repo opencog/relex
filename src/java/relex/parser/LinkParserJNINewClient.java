@@ -71,10 +71,6 @@ public class LinkParserJNINewClient extends LinkParserClient
 		LinkGrammar.close();
 	}
 
-	public void init() {
-		init(null);
-	}
-
 	public void init(String linkGrammarDictionariesPath) {
 		super.init(linkGrammarDictionariesPath);
 		if (verbosity > 3) System.err.println("Info: LinkParserJNINewClient: initializing.");

@@ -99,13 +99,14 @@ public class LinkParserSocketClient extends LinkParserClient
 		exec(LinkParserProtocol.MSG_SET_MAX_COST + maxCost);
 	}
 
+	
 	public void init() {
-		init(null);
+		// we send the empty string to the link parser server so it will use its local relex.linkparserpath
+		init(""); 
 	}
 
 	// These are not added to restorecommands, so we do not use exec
 	public void init(String linkGrammarDictionariesPath) {
-		super.init(linkGrammarDictionariesPath);
 		client.process(LinkParserProtocol.MSG_INIT + linkGrammarDictionariesPath, null);
 	}
 

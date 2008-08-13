@@ -77,7 +77,7 @@
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
-            <jvmarg line="-Drelex.linkparserpath=data/linkparser"/>
+            <jvmarg line="-Drelex.linkparserpath=/usr/local/share/link-grammar"/>
             <jvmarg line="-Drelex.algpath=data/relex-semantic-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <classpath refid="relex.classpath"/>
