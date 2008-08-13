@@ -88,7 +88,7 @@
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
 			<jvmarg line="-Dgate.home=${GATE_HOME}"/>
             <classpath refid="relex.classpath"/>
-            <arg line="-n 4 -l -t -f -s -g 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
+            <arg line="-n 4 -l -t -f -g -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
         </java>
     </target>
 

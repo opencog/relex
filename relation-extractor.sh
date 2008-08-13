@@ -12,6 +12,9 @@
 
 export LANG=en_US.UTF-8
 
+# Remote debugging
+# VM_OPTS="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,server=y,suspend=y -Xmx1024m -Djava.library.path=/usr/lib:/usr/local/lib"
+
 VM_OPTS="-Xmx1024m -Djava.library.path=/usr/lib:/usr/local/lib"
 
 # By default, these resources are read from the relex jar file.
