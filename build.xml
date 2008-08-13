@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
+	<property name="GATE_HOME" value="/opt/GATE-4.0"/> 
+	
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.5"/>
@@ -12,15 +14,17 @@
         <pathelement location="/usr/local/share/java/maxent-2.4.0.jar"/>
         <pathelement location="/usr/local/share/java/trove.jar"/>
         <pathelement location="/usr/local/share/java/link-grammar-4.3.7.jar"/>
-        <pathelement location="/usr/share/java/link-grammar-4.3.7.jar"/>
-        <pathelement location="/usr/share/java/commons-logging.jar"/>
-        <pathelement location="/usr/share/java/xercesImpl.jar"/>
-        <pathelement location="/opt/GATE-4.0/bin/gate.jar"/>
-        <pathelement location="/opt/GATE-4.0/lib/jdom.jar"/>
-        <pathelement location="/opt/GATE-4.0/lib/jasper-compiler-jdt.jar"/>
-        <pathelement location="/opt/GATE-4.0/lib/nekohtml-0.9.5.jar"/>
-        <pathelement location="/opt/GATE-4.0/lib/ontotext.jar"/>
+		<pathelement location="/usr/share/java/commons-logging.jar"/>
+        <pathelement location="${GATE_HOME}/bin/gate.jar"/>
+        <pathelement location="${GATE_HOME}/lib/jdom.jar"/>
+        <pathelement location="${GATE_HOME}/lib/xercesImpl.jar"/>
+        <pathelement location="${GATE_HOME}/lib/jasper-compiler-jdt.jar"/>
+        <pathelement location="${GATE_HOME}/lib/nekohtml-0.9.5.jar"/>
+        <pathelement location="${GATE_HOME}/lib/ontotext.jar"/>
+		<pathelement location="${GATE_HOME}/lib/stax-api-1.0.1.jar"/>
+        <pathelement location="${GATE_HOME}/lib/PDFBox-0.7.2.jar"/>
     </path>
+	
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -42,6 +46,7 @@
                                **/x"/>
         </copy>
     </target>
+	
     <target name="clean">
         <delete dir="bin"/>
         <delete file="relex-0.10.2.jar"/>
@@ -56,6 +61,7 @@
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
+	
     <target name="jar">
         <jar basedir="bin" destfile="relex-0.10.2.jar">
             <manifest>
@@ -80,8 +86,9 @@
             <jvmarg line="-Drelex.linkparserpath=/usr/local/share/link-grammar"/>
             <jvmarg line="-Drelex.algpath=data/relex-semantic-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
+			<jvmarg line="-Dgate.home=${GATE_HOME}"/>
             <classpath refid="relex.classpath"/>
-            <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
+            <arg line="-n 4 -l -t -f -s -g 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
         </java>
     </target>
 
