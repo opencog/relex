@@ -203,8 +203,8 @@ public class LinkParserProtocol extends ProcessProtocol
 		} else if (message.equals(MSG_GET_VERSION)) {
 			return makeMessage(client.getVersion());
 		} else if (message.equals(MSG_INIT)) {
-			if (null == arg || "".equals(arg))
-				client.init(System.getProperty("relex.linkparserpath"));
+			if (null == arg || "".equals(arg) || "null".equals(arg))
+				client.init();
 			else
 				client.init(arg);				
 		} else if (message.equals(MSG_CLOSE)) {

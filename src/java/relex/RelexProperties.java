@@ -45,7 +45,7 @@ public class RelexProperties {
     private static void setDefaultValues() {
         // The number of parses before the socket client sends a kill signal to the server.
         // This protects from unexpected server errors due to out-of-memory from the linkparser
-        setProperty("relex.parser.LinkParserSocketClient.parseCountBetweenKills", "999999");
+        setProperty("relex.parser.LinkParserSocketClient.parseCountBetweenKills", "0");
         setProperty(
                 "relex.parser.LinkParserSocketClient.millisecondsBetweenConnectionAttempts",
                 "5000");
