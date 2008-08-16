@@ -1,3 +1,37 @@
+The cake was eaten.
+Rocks were thrown.
+Rocks were thrown with malice.
+Rocks were thrown at the house.
+END.
+I talked with Mike.
+I am talking with Mike.
+I am finishing the task.
+I finished the task.
+I am finished with the task.
+END.
+
+I am done working.
+I am finished working.
+I am through working.
+I am done with chess.
+I am through with chess.
+I am finished with chess.
+I am green with envy.
+END.
+We like candy, cookies, and cake.
+We like candy, cookies and cake.
+We like ice-cream, chocolate and vanilla.
+We are interested in encryption, anonymity and design.
+We are computer scientists interested in encryption, the limits of anonymity, and the design of networks.
+END.
+In one way it is simply an intellectual exercise; we are computer scientists interested in encryption, the limits of anonymity, and the design of networks.
+Muller doubtless means Banier, and is not quite extinct even now.
+Bills on ports and immigration were submitted by Senator Brownback, Republican of Kansas.
+The nearby Smithsonian museums and the National Gallery of Art are free to all visitors.
+END.
+Cats and dogs eat cheese and bones.
+The dog, cat and mouse are natural enemies.
+The mounting debt and dearth of solutions have fueled the continuing crisis.
 John and Mary went to Brighton Beach.
 END.
 She made him happy.
