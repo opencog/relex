@@ -1117,6 +1117,7 @@ PASSIVE_OBJ_LINK
 ; objects...
 ; "He was eaten."
 ; "Rocks were thrown at the windows" -- rocks is nsubjpass
+; "I was told many lies." -- "I" is object, "lies" is indirect object.
 <LAB> = \Pv\.*
 =
 <F_R obj> = <F_L subj>

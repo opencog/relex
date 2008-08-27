@@ -1,3 +1,33 @@
+He lives there.
+He lives here.
+He is there.
+He is here.
+There he is.
+Here he is.
+There is the ball.
+Here is the ball.
+END.
+Mr. Smith is late.
+The late Mr. Smith is dead.
+We are done with chess.
+We are done fetching now.
+I am done with my example.
+I am green with envy.
+Learning time is done.
+END.
+Rocks were thrown.
+I was told many lies.
+I was given a present.
+I am finished with the task.
+I am done with the task.
+I am done.
+I am done being bullied.
+I am a loser.
+I am finished with being a loser.
+I was asked many questions.
+I was asked about the lies.
+I was told a bunch of lies.
+I was asked many questions.
 I gave him a present.
 END.
 The cake was eaten.
