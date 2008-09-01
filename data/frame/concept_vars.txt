@@ -1,4 +1,5 @@
 $qVar
+_$qVar
 _%qVar
 
 $Imperative_relation
@@ -6,6 +7,7 @@ imperative
 imperative-infinitive
 
 $atLocation
+_%atLocation
 about
 above
 across
@@ -74,6 +76,7 @@ where
 within
 
 $relTime
+_%atTime
 after
 ahead of
 at
@@ -91,18 +94,11 @@ while
 within
 
 $Number
-lots
-some
-few
-several
-many
-approximation
 numbers
 count
 number
 handful
 couple
-random
 no
 none
 one
@@ -872,17 +868,41 @@ rust
 mocha
 
 $Frequency
+all the time
+always
+annually
+at times
+bi-annually
+biennially
+bi-monthly
+constantly
 daily
+every once in a while
 fortnightly
+frequently
+from time to time
 hourly
+infrequently
+intermittently
 monthly
+never
 nightly
+occasionally
+off and on
 often
+on and off
+once in a while
+periodic
 quarterly
 rarely
+recurrently
+regularly
+repeatedly
+sometime
+sometimes
+sporadically
 weekly
 yearly
-sometimes
 
 $Time
 afternoon
@@ -2701,30 +2721,35 @@ unattractive
 unsightly
 
 $Quantity
-a bit
-a few
-a lot
+all
+any
+few
+many
+multiple
+no
+numerous
+some
+several
+
+$Quantifier
 abundance
 all
 amount
-any
 avalanche
-deluge
-few
+bit
+deluge 
 flood
 handful
-heap
+heap 
 load
+lot
 lots
-many
 measure
 mite
 modicum
 mountain
-multiple
 myriad
 number
-numerous
 oodles
 ounce
 pile
@@ -3713,6 +3738,7 @@ erect
 fashion
 fit together
 glue
+made_of
 make
 piece together
 put together
@@ -5221,5 +5247,6 @@ guilty
 not_guilty
 pronounce
 rule
+
 
 
