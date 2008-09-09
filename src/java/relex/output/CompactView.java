@@ -226,6 +226,7 @@ public class CompactView
 				str += getfeat(ref, "noun_number");
 				str += getfeat(ref, "gender");
 				str += getfeat(ref, "QUERY-TYPE");
+				str += getfeat(ref, "inflection-TAG");
 
 				str += getflag(ref, "DATE-FLAG");
 				str += getflag(ref, "DEFINITE-FLAG");

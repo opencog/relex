@@ -40,6 +40,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	private static String ORGANIZATION_FLAG_NAME = "ORGANIZATION-FLAG";
 
 	private static String POS_FEATURE_NAME = "POS";
+	private static String INFLECTION_NAME = "inflection";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
@@ -249,6 +250,15 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setFeat(ths, GENDER_FEATURE_NAME, gen);
 	}
 
+	public void setInflection(String inf) {
+		setInflection(fn(), inf);
+	}
+
+	public static void setInflection(FeatureNode ths, String inf)
+	{
+		setFeat(ths, INFLECTION_NAME, inf);
+	}
+
 	public void setPOS(String pos) {
 		setPOS(fn(), pos);
 	}
@@ -283,6 +293,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	{
 		throwIfNoFN(ths);
 
+		// Inflections may be one letter, or they may be longer.
+		// Just right now, they happen to be only one letter, 
+		// but this will soon change.
 		int len = wordString.length();
 		if ((2 < len) && (wordString.indexOf('.') == len -2))
 		{
@@ -325,6 +338,8 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 't':  // titles, roles
 				case 'u':  setMeasure(ths); break; // u == unit
 			}
+
+			setInflection(ths, "." + inflection);
 		}
 		else
 		{

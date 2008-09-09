@@ -489,6 +489,12 @@ ENTITY-EMOTICON
 <ref emoticon-FLAG> = T
 ;
 #TemplateActionAlg
+INFLACTION_TAG
+<inflection> != %
+=
+<ref inflection-TAG> = <inflection>
+;
+#TemplateActionAlg
 LABEL_IDIOMS
 <LAB> = \ID[A-Z]*[a-z]*
 =
