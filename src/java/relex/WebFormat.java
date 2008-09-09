@@ -117,7 +117,7 @@ public class WebFormat extends RelationExtractor
 		// version string from the build environment somehow,
 		// instead of hard-coding it.
 		String version = re.getVersion();
-		version += "\trelex-0.10.2";
+		version += "\trelex-0.10.3";
 		cv.setVersion(version);
 
 		EntityMaintainerFactory gem = null;
