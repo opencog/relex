@@ -112,13 +112,19 @@ public class LinkParser extends Parser
 				String wordString = lpc.getLinkageWord(w);
 				if (verbosity >= 5) System.out.println(" Processing Word " + wordString);
 
-				if (wordString.equals("RIGHT-WALL")){
+				if (wordString.equals("RIGHT-WALL"))
+				{
 					ignoreLast = true;
-				} else {
+				}
+				else
+				{
 					LinkableView fnv = new LinkableView(new FeatureNode());
 					if (wordString.equals("LEFT-WALL")) leftWall = fnv.fn();
-					// LEFT-WALL should always be first word, so throw an exception if it was not
-					if (leftWall == null) throw new RuntimeException("Invalid parse: first word is not left wall");
+					// LEFT-WALL should always be first word, so throw an 
+					// exception if it was not.
+					if (leftWall == null)
+						throw new RuntimeException("Invalid parse: " +
+							"first word is not left wall");
 					
 					// set the word and part-of-speach
 					fnv.setWordAndPos(wordString);
