@@ -154,8 +154,9 @@ public class LinkParser extends Parser
 					// System.out.println("INFO IS " + startChar + "," + endChar);
 					fnv.setCharIndices(startChar, endChar, w);
 
-					// Increment index to start looking for next tokenString after the current one.
-					// Use "max" to prevent decreasing index in the case the tokenString end is -1
+					// Increment index to start looking for next tokenString
+					// after the current one. Use "max" to prevent decreasing
+					// index in the case the tokenString end is -1
 					startChar = Math.max(startChar, endChar);
 					lastFN = fnv.fn();
 				}
