@@ -90,20 +90,20 @@ class RelScheme
 				value = attrName.toLowerCase();
 
 			// Special treatment for part-of-speech.
-			String link_start = "  <InheritanceLink>\n";
-			String link_end   = "  </InheritanceLink>\n";
+			String link_start = "  (InheritanceLink ";
+			String link_end   = "  )";
 			if (attrName.equals("pos"))
 			{
-				link_start = "  <PartOfSpeechLink>\n";
-				link_end   = "  </PartOfSpeechLink>\n";
+				link_start = "  (PartOfSpeechLink ";
+				link_end   = "  )\n";
 			}
 
 			// All of the other cases.
-			outstr += "  <DefinedLinguisticConceptNode name=\"" + value + "\"/>\n";
+			outstr += "  (DefinedLinguisticConceptNode \"" + value + "\")\n";
 
 			outstr += link_start;
-			outstr += "    <Element class=\"ConceptNode\" name=\"" + guid + "\"/>\n";
-			outstr += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"" + value + "\"/>\n";
+			outstr += "    (ConceptNode \"" + guid + "\")\n";
+			outstr += "    (DefinedLinguisticConceptNode name=\"" + value + "\")\n";
 			outstr += link_end;
 
 			return false;
@@ -117,19 +117,17 @@ class RelScheme
 			FeatureNode tgtName = tgtNode.get("name");
 			if (tgtName == null) return false;
 
-			outstr += "<!-- " + relName + " (" + srcName + ", " + tgtName + ") -->\n";
+			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
 			String src_guid = id_map.get(srcNode);
 			String tgt_guid = id_map.get(tgtNode);
 
-			outstr += "  <DefinedLinguisticRelationshipNode name=\"" + relName + "\"/>\n";
-
-			outstr += "  <EvaluationLink>\n";
-			outstr += "    <Element class=\"DefinedLinguisticRelationshipNode\" name=\"" + relName + "\"/>\n";
-			outstr += "    <ListLink>\n";
-			outstr += "      <Element class=\"ConceptNode\" name=\"" + src_guid + "\"/>\n";
-			outstr += "      <Element class=\"ConceptNode\" name=\"" + tgt_guid + "\"/>\n";
-			outstr += "    </ListLink>\n";
-			outstr += "  </EvaluationLink>\n";
+			outstr += "  (EvaluationLink\n";
+			outstr += "    (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
+			outstr += "    (ListLink\n";
+			outstr += "      (ConceptNode name=\"" + src_guid + "\")\n";
+			outstr += "      (ConceptNode name=\"" + tgt_guid + "\")\n";
+			outstr += "    )\n";
+			outstr += "  )\n";
 
 			return false;
 		}
@@ -181,17 +179,15 @@ class RelScheme
 			id_map.put(refNode, guid_name);
 
 			// The word node proper, the concept for which it stands, and a link.
-			refs += "  <WordNode name=\"" + word + "\"/>\n";
-			refs += "  <ConceptNode name=\"" + guid_name + "\"/>\n";
-			refs += "  <ReferenceLink>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
-			refs += "    <Element class=\"WordNode\" name=\"" + word + "\"/>\n";
-			refs += "  </ReferenceLink>\n";
+			refs += "  (ReferenceLink\n";
+			refs += "    (ConceptNode \"" + guid_name + "\")\n";
+			refs += "    (WordNode \"" + word + "\")\n";
+			refs += "  )\n";
 
-			refs += "  <ParseInstanceLink>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + guid_name + "\"/>\n";
-			refs += "    <Element class=\"ConceptNode\" name=\"" + parse_id + "\"/>\n";
-			refs += "  </ParseInstanceLink>\n";
+			refs += "  (ParseInstanceLink\n";
+			refs += "    (ConceptNode \"" + guid_name + "\")\n";
+			refs += "    (ConceptNode \"" + parse_id + "\")\n";
+			refs += "  )\n";
 		}
 
 		return refs;
@@ -201,26 +197,13 @@ class RelScheme
 
 	private String printRank()
 	{
-		String ret = "";
-		ret += "  <ConceptNode name = \"";
-		ret += sent.getIDString();
-		ret += "\" strength = \"1.0\" confidence = \"";
+		String ret = 
+		"  (ParseLink\n" +
+		"    (ConceptNode \"" + sent.getIDString() + "\" (stv 1.0 "; 
+
 		Double confidence = sent.getTruthValue().getConfidence();
-		ret += confidence.toString().substring(0,6);
-		ret += "\" />\n";
-
-		ret += "  <SentenceNode name = \"";
-		ret += sent.getRI().getID();
-		ret += "\" />\n";
-
-		ret += "  <ParseLink>\n";
-		ret += "    <Element class=\"ConceptNode\" name = \"";
-		ret += sent.getIDString();
-		ret += "\" />\n";
-		ret += "    <Element class=\"SentenceNode\" name = \"";
-		ret += sent.getRI().getID();
-		ret += "\" />\n";
-		ret += "  </ParseLink>\n";
+		ret += confidence.toString().substring(0,6) + "))\n" +
+		"    (SentenceNode \"" + sent.getRI().getID() + "\")\n)\n";
 		return ret;
 	}
 
