@@ -198,7 +198,7 @@ public class RelationExtractor
 		{
 			if (verbosity > 0) starttime = System.currentTimeMillis();
 			ri = parseSentence(sentence, entityMaintainer);
-			if (verbosity > 0) reportTime("Link-parsing: ");
+			if (verbosity > 0) reportTime("; Link-parsing: ");
 
 			for (ParsedSentence parse : ri.getParses())
 			{
@@ -236,7 +236,7 @@ public class RelationExtractor
 			System.err.println("Failed to process sentence: " + sentence);
 			e.printStackTrace();
 		}
-		if (verbosity > 0) reportTime("Relex processing: ");
+		if (verbosity > 0) reportTime("; RelEx processing: ");
 		return ri;
 	}
 
@@ -473,7 +473,7 @@ public class RelationExtractor
 				{
 					re.starttime = System.currentTimeMillis();
 					em = gem.makeEntityMaintainer(sentence);
-					re.reportTime("Gate processing: ");
+					re.reportTime("; Gate processing: ");
 				}
 
 				RelexInfo ri = re.processSentence(sentence,em);
@@ -498,10 +498,13 @@ public class RelationExtractor
 				int numParses = 0;
 				for (ParsedSentence parse: ri.getParses())
 				{
-					System.out.println(sentence);
-					System.out.println("\n====\n");
-					System.out.println("Parse " + (numParses+1) +
-					             " of " + ri.getParses().size());
+					if (commandMap.get("-o") == null)
+					{
+						System.out.println(sentence);
+						System.out.println("\n====\n");
+						System.out.println("Parse " + (numParses+1) +
+					             	" of " + ri.getParses().size());
+					}
 
 					if (commandMap.get("-r") != null)
 					{
@@ -524,21 +527,25 @@ public class RelationExtractor
 						System.out.println(parse.getMetaData().toString() + "\n");
 					}
 
-					// Print simple parse ranking
-					Double confidence = parse.getTruthValue().getConfidence();
-					String pconfidence = confidence.toString().substring(0,6);
-					System.out.println("Parse confidence: " + pconfidence);
-					System.out.println(
-						"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
-						" DIS=" + parse.getDisjunctCost() +
-						" AND=" + parse.getAndCost() +
-						" LEN=" + parse.getLinkCost() + ")");
+					if (commandMap.get("-o") == null)
+					{
+						// Print simple parse ranking
+						Double confidence = parse.getTruthValue().getConfidence();
+						String pconfidence = confidence.toString().substring(0,6);
+						System.out.println("Parse confidence: " + pconfidence);
+						System.out.println(
+							"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
+							" DIS=" + parse.getDisjunctCost() +
+							" AND=" + parse.getAndCost() +
+							" LEN=" + parse.getLinkCost() + ")");
+					}
 
 					// Verbose graph.
 					if (commandMap.get("-v") != null)
 						System.out.println("\n" + parse.getLeft().toString(LinkView.getFilter()));
 
-					if (commandMap.get("-q") == null)
+					if ((commandMap.get("-q") == null) &&
+					    (commandMap.get("-o") == null))
 					{
 						System.out.println("\n======\n");
 						System.out.println(SimpleView.printRelations(parse));
