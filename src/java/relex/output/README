@@ -28,9 +28,18 @@ RelationView.java:
 	quite complex and daunting. Only ParseView is public;
 	the other two are helper classes.
 
+OpenCogScheme.java:
+RelScheme.java:
+	Generates OpenCog Scheme. Only the OpenCog class is 
+	public; the other two are helpers. RelScheme generates
+	output that corresponds to the basic RelEx feature 
+	graph, while FrameScheme generates output for the 
+	frame relations.
+
 OpenCogXML.java:
 RelXML.java:
 FrameXML.java:
+	Obsolescent; use OpenCogScheme (above) instead.
 	Generates OpenCog XML. Only the OpenCog class is 
 	public; the other two are helpers. RelXML generates
 	output that corresponds to the basic RelEx feature 
