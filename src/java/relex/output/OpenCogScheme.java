@@ -22,8 +22,8 @@ import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 
 /**
- * The OpenCogXML object outputs a ParsedSentence in the Novamente
- * OpenCog-style XML format. The actual format used, and its rational,
+ * The OpenCogScheme object outputs a ParsedSentence in the Novamente
+ * OpenCog-style Scheme format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
  * source code directory src/nlp/wsd/README.
  *
@@ -32,25 +32,25 @@ import relex.feature.FeatureNode;
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
-public class OpenCogXML
+public class OpenCogScheme
 {
 	private HashMap<FeatureNode,String> id_map = null;
-	private RelXML rel_xml;
-	private FrameXML frame_xml;
+	private RelScheme rel_scheme;
+	// private FrameScheme frame_scheme;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
-	public OpenCogXML()
+	public OpenCogScheme()
 	{
-		rel_xml = new RelXML();
-		frame_xml = new FrameXML();
+		rel_scheme = new RelScheme();
+		// frame_scheme = new FrameScheme();
 	}
 
 	public void setParse(ParsedSentence sent)
 	{
 		id_map = new HashMap<FeatureNode,String>();
-		rel_xml.setParse(sent, id_map);
-		frame_xml.setParse(sent, id_map);
+		rel_scheme.setParse(sent, id_map);
+		// frame_scheme.setParse(sent, id_map);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -58,12 +58,10 @@ public class OpenCogXML
 	{
 		String ret = "";
 
-		ret += "<list>\n";
-		ret += rel_xml.toString();
-		ret += frame_xml.toString();
-		ret += "</list>\n";
+		ret += rel_scheme.toString();
+		// ret += frame_scheme.toString();
 
 		return ret;
 	}
 
-} // end OpenCogXML
+} // end OpenCogScheme
