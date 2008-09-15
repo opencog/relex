@@ -80,7 +80,7 @@ class RelScheme
 			if (!attr.isValued()) return false;
 			String value = attr.getValue();
 
-			outstr += "<!-- " + attrName + " (" + srcName + ", " + value + ") -->\n";
+			outstr += "; " + attrName + " (" + srcName + ", " + value + ")\n";
 			String guid = id_map.get(srcNode);
 
 			// Flags are assumed to be true, so value is the flag name.
@@ -90,20 +90,18 @@ class RelScheme
 				value = attrName.toLowerCase();
 
 			// Special treatment for part-of-speech.
-			String link_start = "  (InheritanceLink ";
-			String link_end   = "  )";
+			String link_start = "(InheritanceLink\n";
+			String link_end   = ")\n";
 			if (attrName.equals("pos"))
 			{
-				link_start = "  (PartOfSpeechLink ";
-				link_end   = "  )\n";
+				link_start = "(PartOfSpeechLink\n";
+				link_end   = ")\n";
 			}
 
 			// All of the other cases.
-			outstr += "  (DefinedLinguisticConceptNode \"" + value + "\")\n";
-
 			outstr += link_start;
-			outstr += "    (ConceptNode \"" + guid + "\")\n";
-			outstr += "    (DefinedLinguisticConceptNode name=\"" + value + "\")\n";
+			outstr += "   (ConceptNode \"" + guid + "\")\n";
+			outstr += "   (DefinedLinguisticConceptNode name=\"" + value + "\")\n";
 			outstr += link_end;
 
 			return false;
@@ -121,13 +119,13 @@ class RelScheme
 			String src_guid = id_map.get(srcNode);
 			String tgt_guid = id_map.get(tgtNode);
 
-			outstr += "  (EvaluationLink\n";
-			outstr += "    (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
-			outstr += "    (ListLink\n";
+			outstr += "(EvaluationLink\n";
+			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
+			outstr += "   (ListLink\n";
 			outstr += "      (ConceptNode name=\"" + src_guid + "\")\n";
 			outstr += "      (ConceptNode name=\"" + tgt_guid + "\")\n";
-			outstr += "    )\n";
-			outstr += "  )\n";
+			outstr += "   )\n";
+			outstr += ")\n";
 
 			return false;
 		}
@@ -179,15 +177,15 @@ class RelScheme
 			id_map.put(refNode, guid_name);
 
 			// The word node proper, the concept for which it stands, and a link.
-			refs += "  (ReferenceLink\n";
-			refs += "    (ConceptNode \"" + guid_name + "\")\n";
-			refs += "    (WordNode \"" + word + "\")\n";
-			refs += "  )\n";
+			refs += "(ReferenceLink\n";
+			refs += "   (ConceptNode \"" + guid_name + "\")\n";
+			refs += "   (WordNode \"" + word + "\")\n";
+			refs += ")\n";
 
-			refs += "  (ParseInstanceLink\n";
-			refs += "    (ConceptNode \"" + guid_name + "\")\n";
-			refs += "    (ConceptNode \"" + parse_id + "\")\n";
-			refs += "  )\n";
+			refs += "(ParseInstanceLink\n";
+			refs += "   (ConceptNode \"" + guid_name + "\")\n";
+			refs += "   (ConceptNode \"" + parse_id + "\")\n";
+			refs += ")\n";
 		}
 
 		return refs;
@@ -198,12 +196,12 @@ class RelScheme
 	private String printRank()
 	{
 		String ret = 
-		"  (ParseLink\n" +
-		"    (ConceptNode \"" + sent.getIDString() + "\" (stv 1.0 "; 
+		"(ParseLink\n" +
+		"   (ConceptNode \"" + sent.getIDString() + "\" (stv 1.0 "; 
 
 		Double confidence = sent.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6) + "))\n" +
-		"    (SentenceNode \"" + sent.getRI().getID() + "\")\n)\n";
+		"   (SentenceNode \"" + sent.getRI().getID() + "\")\n)\n";
 		return ret;
 	}
 
