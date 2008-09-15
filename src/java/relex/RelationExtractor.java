@@ -43,7 +43,7 @@ import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
-import relex.output.OpenCogXML;
+import relex.output.OpenCogScheme;
 import relex.output.ParseView;
 import relex.output.RawView;
 import relex.output.SimpleView;
@@ -404,9 +404,9 @@ public class RelationExtractor
 			return;
 		}
 
-		// If generating OpenCog XML, delimit non-xml output.
+		// If generating OpenCog Scheme, delimit output.
 		if (commandMap.get("-o") != null)
-			System.out.print("data\n<!-- ");
+			System.out.print("scm\n");
 
 		RelationExtractor re = new RelationExtractor(false);
 		re.setAllowSkippedWords(true);
@@ -435,7 +435,7 @@ public class RelationExtractor
 		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
 		ParseView ceregoView = new ParseView();
-		OpenCogXML opencog = new OpenCogXML();
+		OpenCogScheme opencog = new OpenCogScheme();
 
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
@@ -447,19 +447,12 @@ public class RelationExtractor
 			// (with the "-s" flag), then read it from stdin.
 			while (sentence == null)
 			{
-				System.out.print("% ");
+				System.out.print("; ");
 				try {
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
 					{
 						System.out.println("Bye.");
-						if (commandMap.get("-o") != null)
-						{
-							System.out.print("-->\n");
-							char[] eot = new char[1];
-							eot[0] = 0x4;
-							System.out.println(new String (eot));
-						}
 						return;
 					}
 				} catch (IOException e) {
@@ -607,14 +600,8 @@ public class RelationExtractor
 					}
 					if (commandMap.get("-o") != null)
 					{
-						System.out.print("-->\n");
 						opencog.setParse(parse);
 						System.out.println(opencog.toString());
-
-						char[] eot = new char[1];
-						eot[0] = 0x4;
-						System.out.println(new String (eot));
-						System.out.println("data\n<!-- ======\n");
 					}
 
 					if (++numParses >= maxParses) break;
