@@ -85,15 +85,14 @@ class OpenCogSchemeLink
 
 			String li = fl.get("index_in_sentence").getValue();
 			int lindex = Integer.parseInt(li);
-			//str += word_list.get(lindex) + "\")\n" +
-			//	"      (ConceptNode \"";
+			str += word_list.get(lindex) + "\")\n" +
+				"      (ConceptNode \"";
 
 
 			FeatureNode fr = fn.get("F_R");
 			String ri = fr.get("index_in_sentence").getValue();
 			int rindex = Integer.parseInt(ri);
-			//str += word_list.get(rindex) + "\")\n   )\n)\n";
-str += li + " , " + ri + "\n";
+			str += word_list.get(rindex) + "\")\n   )\n)\n";
 			return false;
 		}
 	};

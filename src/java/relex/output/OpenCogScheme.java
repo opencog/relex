@@ -95,6 +95,7 @@ public class OpenCogScheme
 	{
 		String str = "";
 		word_list = new ArrayList<String>();
+		word_list.add("LEFT-WALL");
 
 		FeatureNode fn = parse.getLeft();
 		fn = fn.get("NEXT");
@@ -124,7 +125,7 @@ public class OpenCogScheme
 		String str = "(SentenceLink\n" +
 		             "   (SentenceNode \"" + ri.getID() + "\")\n"; 
 
-		for (int i=0; i<word_list.size(); i++)
+		for (int i=1; i<word_list.size(); i++)
 		{
 			str += "   (ConceptNode \"" + word_list.get(i) + "\")\n"; 
 		}

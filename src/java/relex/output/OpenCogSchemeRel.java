@@ -166,7 +166,7 @@ class OpenCogSchemeRel
 		String refs = "";
 		FeatureNode fn = parse.getLeft();
 		fn = fn.get("NEXT");
-		int word_index = 0;
+		int word_index = 1;
 		while (fn != null)
 		{
 			FeatureNode refNode = fn.get("ref");
