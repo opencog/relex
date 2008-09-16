@@ -16,7 +16,7 @@
 
 package relex.output;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
@@ -40,7 +40,7 @@ class OpenCogSchemeLink
 	private ParsedSentence sent;
 
 	// Map associating a feature-node to a unique ID string.
-	private HashMap<FeatureNode,String> id_map = null;
+	private ArrayList<String> word_list = null;
 
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -50,10 +50,10 @@ class OpenCogSchemeLink
 		sent = null;
 	}
 
-	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
+	public void setParse(ParsedSentence s, ArrayList<String> wl)
 	{
 		sent = s;
-		id_map = im;
+		word_list = wl;
 	}
 
 	// -----------------------------------------------------------------
@@ -76,24 +76,24 @@ class OpenCogSchemeLink
 		{
 			str +=
 				"(EvaluationLink\n" + 
-				"   (LinkGrammarRelationshipNode " +
-				fn.get("LAB").getValue() + ")\n" +
+				"   (LinkGrammarRelationshipNode \"" +
+				fn.get("LAB").getValue() + "\")\n" +
 				"   (ListLink\n" +
-				"      (ConceptNode ";
+				"      (ConceptNode \"";
 
 			FeatureNode fl = fn.get("F_L");
 
-			// A unique UUID for each word instance.
-			// fn = fn.get("ref");
-			// if (fn == null) continue;
-			// FeatureNode refNode = fn;
-			// String guid_name = id_map.get(refNode);
+			String li = fl.get("index_in_sentence").getValue();
+			int lindex = Integer.parseInt(li);
+			//str += word_list.get(lindex) + "\")\n" +
+			//	"      (ConceptNode \"";
 
-			str += fl.get("index_in_sentence").getValue();
-			str += ", ";
+
 			FeatureNode fr = fn.get("F_R");
-			str += fr.get("index_in_sentence").getValue();
-			str += ")\n";
+			String ri = fr.get("index_in_sentence").getValue();
+			int rindex = Integer.parseInt(ri);
+			//str += word_list.get(rindex) + "\")\n   )\n)\n";
+str += li + " , " + ri + "\n";
 			return false;
 		}
 	};

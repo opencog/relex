@@ -43,6 +43,7 @@ public class OpenCogScheme
 
 	private ArrayList<String> word_list = null;
 	private HashMap<FeatureNode,String> id_map = null;
+	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	// private OpenCogSchemeFrame frame_scheme;
 
@@ -51,6 +52,7 @@ public class OpenCogScheme
 	public OpenCogScheme()
 	{
 		rel_scheme = new OpenCogSchemeRel();
+		link_scheme = new OpenCogSchemeLink();
 		// frame_scheme = new OpenCogSchemeFrame();
 	}
 
@@ -64,6 +66,7 @@ public class OpenCogScheme
 			orig_sentence += printSentence();
 		}
 
+		link_scheme.setParse(parse, word_list);
 		id_map = new HashMap<FeatureNode,String>();
 		rel_scheme.setParse(parse, word_list, id_map);
 		// frame_scheme.setParse(parse, id_map);
@@ -75,6 +78,7 @@ public class OpenCogScheme
 		String ret = "";
 
 		ret += orig_sentence;
+		ret += link_scheme.toString();
 		ret += rel_scheme.toString();
 		// ret += frame_scheme.toString();
 
