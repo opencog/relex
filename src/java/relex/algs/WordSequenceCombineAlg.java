@@ -133,9 +133,10 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		// ??? Really ??? the combined thing will have underscores ... 
 		// Does wordnet really have morphology for these things?
 		// Shouldn't we have done morphology earlier, and not now?
-		FeatureNode orig = rightNode.get("orig_str");
-		MorphyAlg m = new MorphyAlg();
-		m.applyTo(rightNode, context);
-		rightNode.set("orig_str", orig);
+		// Yeah, I don't think so. This just doesn't make sense.
+		// FeatureNode orig = rightNode.get("str");
+		// MorphyAlg m = new MorphyAlg();
+		// m.applyTo(rightNode, context);
+		// rightNode.set("str", orig);
 	}
 }
