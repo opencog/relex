@@ -24,7 +24,7 @@ import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 
 /**
- * The RelScheme object outputs a ParsedSentence in the Novamente
+ * The OpenCogSchemeRel object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
  * source code directory src/nlp/wsd/README.
@@ -144,7 +144,7 @@ class OpenCogSchemeRel
 
 	/* ----------------------------------------------------------- */
 	/**
-	 * Print the word referents, Novamente-style.
+	 * Print the word referents.
 	 */
 	private String printWordRefs()
 	{
