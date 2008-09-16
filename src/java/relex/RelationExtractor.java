@@ -542,9 +542,9 @@ public class RelationExtractor
 
 					// Verbose graph.
 					if (commandMap.get("-v") != null)
-						// System.out.println("\n" + 
-						// 	parse.getLeft().toString(LinkView.getFilter()));
-						System.out.println("\n" + parse.fullParseString());
+						// System.out.println("\n" + parse.fullParseString());
+						System.out.println("\n" + 
+						 	parse.getLeft().toString(LinkView.getFilter()));
 
 					if ((commandMap.get("-q") == null) &&
 					    (commandMap.get("-o") == null))
