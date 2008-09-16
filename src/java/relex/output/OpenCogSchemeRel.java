@@ -37,23 +37,23 @@ import relex.feature.RelationCallback;
 class OpenCogSchemeRel
 {
 	// The sentence being examined.
-	private ParsedSentence sent;
+	private ParsedSentence parse;
 
 	// Map associating a feature-node to a unique ID string.
-	private HashMap<FeatureNode,String> id_map = null;
+	private HashMap<FeatureNode,String> lemma_id_map = null;
 
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
 	public OpenCogSchemeRel()
 	{
-		sent = null;
+		parse = null;
 	}
 
 	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
 	{
-		sent = s;
-		id_map = im;
+		parse = s;
+		lemma_id_map = im;
 	}
 
 	/* ----------------------------------------------------------- */
@@ -81,7 +81,7 @@ class OpenCogSchemeRel
 			String value = attr.getValue();
 
 			outstr += "; " + attrName + " (" + srcName + ", " + value + ")\n";
-			String guid = id_map.get(srcNode);
+			String guid = lemma_id_map.get(srcNode);
 
 			// Flags are assumed to be true, so value is the flag name.
 			if (attrName.endsWith("-FLAG"))
@@ -116,8 +116,8 @@ class OpenCogSchemeRel
 			if (tgtName == null) return false;
 
 			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
-			String src_guid = id_map.get(srcNode);
-			String tgt_guid = id_map.get(tgtNode);
+			String src_guid = lemma_id_map.get(srcNode);
+			String tgt_guid = lemma_id_map.get(tgtNode);
 
 			outstr += "(EvaluationLink\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
@@ -138,7 +138,7 @@ class OpenCogSchemeRel
 	public String printRelations()
 	{
 		prtRelation prt = new prtRelation();
-		sent.foreach(prt);
+		parse.foreach(prt);
 		return prt.outstr;
 	}
 
@@ -148,12 +148,12 @@ class OpenCogSchemeRel
 	 */
 	private String printWordRefs()
 	{
-		String parse_id = sent.getIDString();
+		String parse_id = parse.getIDString();
 		String refs = "";
-		int numWords = sent.getNumWords();
+		int numWords = parse.getNumWords();
 		for (int i = 1; i < numWords; i++)
 		{
-			FeatureNode fn = sent.getWordAsNode(i);
+			FeatureNode fn = parse.getWordAsNode(i);
 
 			// There is no "name" for the given index, if it was
 			// merged into a colocation. For example "New York", the
@@ -174,7 +174,7 @@ class OpenCogSchemeRel
 
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
-			id_map.put(refNode, guid_name);
+			lemma_id_map.put(refNode, guid_name);
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "(ReferenceLink\n";
@@ -197,11 +197,11 @@ class OpenCogSchemeRel
 	{
 		String ret = 
 		"(ParseLink\n" +
-		"   (ConceptNode \"" + sent.getIDString() + "\" (stv 1.0 "; 
+		"   (ConceptNode \"" + parse.getIDString() + "\" (stv 1.0 "; 
 
-		Double confidence = sent.getTruthValue().getConfidence();
+		Double confidence = parse.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6) + "))\n" +
-		"   (SentenceNode \"" + sent.getRI().getID() + "\")\n)\n";
+		"   (SentenceNode \"" + parse.getRI().getID() + "\")\n)\n";
 		return ret;
 	}
 
