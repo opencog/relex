@@ -45,7 +45,7 @@ public class OpenCogScheme
 	private HashMap<FeatureNode,String> id_map = null;
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
-	// private OpenCogSchemeFrame frame_scheme;
+	private OpenCogSchemeFrame frame_scheme;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -53,7 +53,7 @@ public class OpenCogScheme
 	{
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
-		// frame_scheme = new OpenCogSchemeFrame();
+		frame_scheme = new OpenCogSchemeFrame();
 	}
 
 	public void setParse(ParsedSentence _parse)
@@ -69,7 +69,7 @@ public class OpenCogScheme
 		link_scheme.setParse(parse, word_list);
 		id_map = new HashMap<FeatureNode,String>();
 		rel_scheme.setParse(parse, word_list, id_map);
-		// frame_scheme.setParse(parse, id_map);
+		frame_scheme.setParse(parse, id_map);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -80,7 +80,7 @@ public class OpenCogScheme
 		ret += orig_sentence;
 		ret += link_scheme.toString();
 		ret += rel_scheme.toString();
-		// ret += frame_scheme.toString();
+		ret += frame_scheme.toString();
 
 		return ret;
 	}

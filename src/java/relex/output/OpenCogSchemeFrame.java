@@ -22,11 +22,11 @@ import relex.frame.Frame;
 import relex.ParsedSentence;
 
 /**
- * Implements OpenCog XML output of the semantic frames.
+ * Implements OpenCog Scheme output of the semantic frames.
  *
  * Copyright (c) 2008 Linas Vepstas <linas@linas.org>
  */
-public class OpenCogXMLFrame
+public class OpenCogSchemeFrame
 {
 	// The sentence being examined.
 	private ParsedSentence sent;
@@ -39,7 +39,7 @@ public class OpenCogXMLFrame
 	/* ------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 
-	public OpenCogXMLFrame()
+	public OpenCogSchemeFrame()
 	{
 		sent = null;
 		id_map = null;
@@ -89,7 +89,7 @@ public class OpenCogXMLFrame
 			String cpt2 = null;
 
 			// Echo the parsed string 
-			ret += "<!-- " + frm + ":" + felt + "(" + cpt1 + ") -->\n";
+			ret += "; " + frm + ":" + felt + "(" + cpt1 + ")\n";
 
 			// Are there two concepts, or just one?
 			int comma = cpt1.indexOf(',');
@@ -114,67 +114,54 @@ public class OpenCogXMLFrame
 				if (cpt2.charAt(0) == '#') cpt2_is_ling = true;
 			}
 
-			// First, make sure the nodes are in the system.
-			ret += "  <DefinedFrameNode name=\"#" + frm + "\"/>\n";
-			ret += "  <DefinedFrameElementNode name=\"#" + 
-			          frm + ":" + felt + "\"/>\n";
-
-			// Next, make sure they are linked together.
-			ret += "  <FrameElementLink>\n";
-			ret += "    <Element class=\"DefinedFrameNode\" name=\"#" +
-                     frm + "\"/>\n";
-			ret += "    <Element class=\"DefinedFrameElementNode\" name=\"#" +
-                     frm + ":" + felt + "\"/>\n";
-			ret += "  </FrameElementLink>\n";
+			// Link together.
+			ret += "(FrameElementLink\n" +
+			       "   (DefinedFrameNode \"#" + frm + "\")\n" +
+			       "   (DefinedFrameElementNode \"#" +
+                     frm + ":" + felt + "\")\n)\n";
 
 			// Now, for the specific mappings
-			ret += "  <InheritanceLink>\n";
+			ret += "(InheritanceLink\n";
 			if (cpt1_is_ling)
 			{
-				ret += "    <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
+				ret += "   (DefinedLinguisticConceptNode \"" + 
+				            cpt1 + "\")\n";
 			}
 			else
 			{
-				ret += "    <Element class=\"ConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
+				ret += "   (ConceptNode \"" + cpt1 + "\")\n";
 			}
-			ret += "    <Element class=\"DefinedFrameNode\" name=\"#" +
-                     frm + "\"/>\n";
-			ret += "  </InheritanceLink>\n";
+			ret += "   (DefinedFrameNode \"#" + frm + "\")\n)\n";
 
 			// If no second concept, then we are done.
 			if (cpt2 == null) continue;
 
 			// Finally link the frame element
-			ret += "  <EvaluationLink>\n";
-			ret += "    <Element class=\"DefinedFrameElementNode\" name=\"#" +
-                     frm + ":" + felt + "\"/>\n";
+			ret += "(EvaluationLink\n";
+			ret += "   (DefinedFrameElementNode \"#" +
+                     frm + ":" + felt + "\")\n";
 
 			// Embedded: Link first and second concepts together.
-			ret += "    <ListLink>\n";
+			ret += "   (ListLink\n";
 			if (cpt1_is_ling)
 			{
-				ret += "      <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
+				ret += "      (DefinedLinguisticConceptNode \"" + 
+				            cpt1 + "\")\n";
 			}
 			else
 			{
-				ret += "      <Element class=\"ConceptNode\" name=\"" + 
-				            cpt1 + "\"/>\n";
+				ret += "      (ConceptNode \"" + cpt1 + "\")\n";
 			}
 			if (cpt2_is_ling)
 			{
-				ret += "      <Element class=\"DefinedLinguisticConceptNode\" name=\"" + 
-				            cpt2 + "\"/>\n";
+				ret += "      (DefinedLinguisticConceptNode \"" + 
+				            cpt2 + "\")\n";
 			}
 			else
 			{
-				ret += "      <Element class=\"ConceptNode\" name=\"" + 
-				            cpt2 + "\"/>\n";
+				ret += "      (ConceptNode \"" + cpt2 + "\")\n";
 			}
-			ret += "    </ListLink>\n";
-			ret += "  </EvaluationLink>\n";
+			ret += "   )\n)\n";
 		}
 		return ret;
 	}
