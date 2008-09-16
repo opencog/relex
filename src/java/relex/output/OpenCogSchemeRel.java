@@ -16,6 +16,7 @@
 
 package relex.output;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -40,8 +41,8 @@ class OpenCogSchemeRel
 	private ParsedSentence parse;
 
 	// Map associating a feature-node to a unique ID string.
-	private HashMap<FeatureNode,String> word_id_map = null;
-	private HashMap<FeatureNode,String> lemma_id_map = null;
+	private ArrayList<String> word_list = null;
+	private HashMap<FeatureNode,String> id_map = null;
 
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -51,11 +52,13 @@ class OpenCogSchemeRel
 		parse = null;
 	}
 
-	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
+	public void setParse(ParsedSentence s,
+	                     ArrayList<String> wl,
+	                     HashMap<FeatureNode,String> im)
 	{
 		parse = s;
-		lemma_id_map = im;
-		word_id_map = new  HashMap<FeatureNode,String>(); // XXXX
+		word_list = wl;
+		id_map = im;
 	}
 
 	/* ----------------------------------------------------------- */
@@ -83,7 +86,7 @@ class OpenCogSchemeRel
 			String value = attr.getValue();
 
 			outstr += "; " + attrName + " (" + srcName + ", " + value + ")\n";
-			String guid = lemma_id_map.get(srcNode);
+			String guid = id_map.get(srcNode);
 
 			// Flags are assumed to be true, so value is the flag name.
 			if (attrName.endsWith("-FLAG"))
@@ -118,8 +121,8 @@ class OpenCogSchemeRel
 			if (tgtName == null) return false;
 
 			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
-			String src_guid = lemma_id_map.get(srcNode);
-			String tgt_guid = lemma_id_map.get(tgtNode);
+			String src_guid = id_map.get(srcNode);
+			String tgt_guid = id_map.get(tgtNode);
 
 			outstr += "(EvaluationLink\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
@@ -163,44 +166,44 @@ class OpenCogSchemeRel
 		String refs = "";
 		FeatureNode fn = parse.getLeft();
 		fn = fn.get("NEXT");
+		int word_index = 0;
 		while (fn != null)
 		{
-			String word = getstr(fn.get("orig_str"));
-			String lemma = getstr(fn.get("str"));
-
-			// A unique UUID for each word instance.
-			UUID guid = UUID.randomUUID();
-			String guid_word = word + "@" + guid;
-			guid = UUID.randomUUID();
-			String guid_lemma = lemma + "@" + guid;
-
-			// Remember the word-to guid map; we'll need it for later
-			// in this sentence.
-			word_id_map.put(fn, guid_word);
-
 			FeatureNode refNode = fn.get("ref");
 			if (refNode != null)
 			{
-				lemma_id_map.put(refNode, guid_lemma);
+				String lemma = getstr(fn.get("str"));
+
+				// A unique UUID for each word instance.
+				UUID guid = UUID.randomUUID();
+				String guid_lemma = lemma + "@" + guid;
+
+				// Remember the word-to guid map; we'll need it for
+				// printing relations, and printing frames,
+				id_map.put(refNode, guid_lemma);
+
+				// The lemma instance, and the associated word.
+				refs += "(ReferenceLink\n";
+				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
+				refs += "   (WordNode \"" + lemma + "\")\n";
+				refs += ")\n";
+
+				// The lemma instance, and its associated word instance
+				String guid_word = word_list.get(word_index);
+				refs += "(LemmaLink\n";
+				refs += "   (ConceptNode \"" + guid_word + "\")\n";
+				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
+				refs += ")\n";
+
+				// The parse instance associated with this lemma instance.
+				refs += "(ParseInstanceLink\n";
+				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
+				refs += "   (ConceptNode \"" + parse_id + "\")\n";
+				refs += ")\n";
 			}
 
-			// The word node proper, the concept for which it stands, and a link.
-			refs += "(ReferenceLink\n";
-			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-			refs += "   (WordNode \"" + lemma + "\")\n";
-			refs += ")\n";
-
-			refs += "(LemmaLink\n";
-			refs += "   (ConceptNode \"" + guid_word + "\")\n";
-			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-			refs += ")\n";
-
-			refs += "(ParseInstanceLink\n";
-			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-			refs += "   (ConceptNode \"" + parse_id + "\")\n";
-			refs += ")\n";
-
 			fn = fn.get("NEXT");
+			word_index ++;
 		}
 
 		return refs;
@@ -210,9 +213,9 @@ class OpenCogSchemeRel
 
 	private String printRank()
 	{
-		String ret = 
+		String ret =
 		"(ParseLink\n" +
-		"   (ConceptNode \"" + parse.getIDString() + "\" (stv 1.0 "; 
+		"   (ConceptNode \"" + parse.getIDString() + "\" (stv 1.0 ";
 
 		Double confidence = parse.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6) + "))\n" +

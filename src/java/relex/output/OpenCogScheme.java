@@ -65,7 +65,7 @@ public class OpenCogScheme
 		}
 
 		id_map = new HashMap<FeatureNode,String>();
-		rel_scheme.setParse(parse, id_map);
+		rel_scheme.setParse(parse, word_list, id_map);
 		// frame_scheme.setParse(parse, id_map);
 	}
 
@@ -83,6 +83,10 @@ public class OpenCogScheme
 
 	/* -------------------------------------------------------------------- */
 
+	/**
+	 * Print the word instances of the original sentence, associating
+	 * each instance to its WordNode.
+	 */
 	public String printWords()
 	{
 		String str = "";
@@ -108,7 +112,8 @@ public class OpenCogScheme
 	}
 
 	/**
-	 * print the original sentence, only
+	 * Print the original sentence, as made up out of word instances,
+	 * maintaining the proper word order in the sentence.
 	 */
 	public String printSentence()
 	{
