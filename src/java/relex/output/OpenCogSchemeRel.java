@@ -40,6 +40,7 @@ class OpenCogSchemeRel
 	private ParsedSentence parse;
 
 	// Map associating a feature-node to a unique ID string.
+	private HashMap<FeatureNode,String> word_id_map = null;
 	private HashMap<FeatureNode,String> lemma_id_map = null;
 
 	/* ----------------------------------------------------------- */
@@ -54,6 +55,7 @@ class OpenCogSchemeRel
 	{
 		parse = s;
 		lemma_id_map = im;
+		word_id_map = new  HashMap<FeatureNode,String>(); // XXXX
 	}
 
 	/* ----------------------------------------------------------- */
@@ -143,6 +145,15 @@ class OpenCogSchemeRel
 	}
 
 	/* ----------------------------------------------------------- */
+	private String getstr(FeatureNode node)
+	{
+		if (null ==  node) {
+			return "";
+		} else {
+			return node.getValue();
+		}
+	}
+
 	/**
 	 * Print the word referents.
 	 */
@@ -150,42 +161,43 @@ class OpenCogSchemeRel
 	{
 		String parse_id = parse.getIDString();
 		String refs = "";
-		int numWords = parse.getNumWords();
-		for (int i = 1; i < numWords; i++)
+		FeatureNode fn = parse.getLeft();
+		fn = fn.get("NEXT");
+		while (fn != null)
 		{
-			FeatureNode fn = parse.getWordAsNode(i);
+			FeatureNode refNode = fn.get("ref");
 
-			// There is no "name" for the given index, if it was
-			// merged into a colocation. For example "New York", the
-			// word "New" will not have an orig_str, while that for
-			// "York" will be "New_York".
-			if (fn == null) continue;
-			fn = fn.get("ref");
-			if (fn == null) continue;
-			FeatureNode refNode = fn;
-			fn = fn.get("name");
-			if (fn == null) continue;
-
-			String word = fn.getValue();
+			String word = getstr(fn.get("orig_str"));
+			String lemma = getstr(fn.get("str"));
 
 			// A unique UUID for each word instance.
 			UUID guid = UUID.randomUUID();
-			String guid_name = word + "@" + guid;
+			String guid_word = word + "@" + guid;
+			guid = UUID.randomUUID();
+			String guid_lemma = lemma + "@" + guid;
 
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
-			lemma_id_map.put(refNode, guid_name);
+			word_id_map.put(fn, guid_word);
+			lemma_id_map.put(fn, guid_lemma);
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "(ReferenceLink\n";
-			refs += "   (ConceptNode \"" + guid_name + "\")\n";
+			refs += "   (ConceptNode \"" + guid_word + "\")\n";
 			refs += "   (WordNode \"" + word + "\")\n";
 			refs += ")\n";
 
+			refs += "(ReferenceLink\n";
+			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
+			refs += "   (WordNode \"" + lemma + "\")\n";
+			refs += ")\n";
+
 			refs += "(ParseInstanceLink\n";
-			refs += "   (ConceptNode \"" + guid_name + "\")\n";
+			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
 			refs += "   (ConceptNode \"" + parse_id + "\")\n";
 			refs += ")\n";
+
+			fn = fn.get("NEXT");
 		}
 
 		return refs;
