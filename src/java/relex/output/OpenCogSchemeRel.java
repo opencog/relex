@@ -186,11 +186,6 @@ class OpenCogSchemeRel
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "(ReferenceLink\n";
-			refs += "   (ConceptNode \"" + guid_word + "\")\n";
-			refs += "   (WordNode \"" + word + "\")\n";
-			refs += ")\n";
-
-			refs += "(ReferenceLink\n";
 			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
 			refs += "   (WordNode \"" + lemma + "\")\n";
 			refs += ")\n";

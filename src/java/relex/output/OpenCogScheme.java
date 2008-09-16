@@ -16,9 +16,12 @@
 
 package relex.output;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import relex.ParsedSentence;
+import relex.RelexInfo;
 import relex.feature.FeatureNode;
 
 /**
@@ -34,6 +37,11 @@ import relex.feature.FeatureNode;
  */
 public class OpenCogScheme
 {
+	private RelexInfo ri = null;
+	private ParsedSentence parse = null;
+	private String orig_sentence = null;
+
+	private ArrayList<String> word_list = null;
 	private HashMap<FeatureNode,String> id_map = null;
 	private OpenCogSchemeRel rel_scheme;
 	// private OpenCogSchemeFrame frame_scheme;
@@ -46,11 +54,19 @@ public class OpenCogScheme
 		// frame_scheme = new OpenCogSchemeFrame();
 	}
 
-	public void setParse(ParsedSentence sent)
+	public void setParse(ParsedSentence _parse)
 	{
+		parse = _parse;
+		if (parse.getRI() != ri)
+		{
+			ri = parse.getRI();
+			orig_sentence = printWords();
+			orig_sentence += printSentence();
+		}
+
 		id_map = new HashMap<FeatureNode,String>();
-		rel_scheme.setParse(sent, id_map);
-		// frame_scheme.setParse(sent, id_map);
+		rel_scheme.setParse(parse, id_map);
+		// frame_scheme.setParse(parse, id_map);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -58,10 +74,54 @@ public class OpenCogScheme
 	{
 		String ret = "";
 
+		ret += orig_sentence;
 		ret += rel_scheme.toString();
 		// ret += frame_scheme.toString();
 
 		return ret;
+	}
+
+	/* -------------------------------------------------------------------- */
+
+	public String printWords()
+	{
+		String str = "";
+		word_list = new ArrayList<String>();
+
+		FeatureNode fn = parse.getLeft();
+		fn = fn.get("NEXT");
+		while (fn != null)
+		{
+			String word = fn.get("orig_str").getValue();
+			UUID guid = UUID.randomUUID();
+			String guid_word = word + "@" + guid;
+			word_list.add(guid_word);
+
+			str += "(ReferenceLink\n" +
+			       "   (ConceptNode \"" + guid_word + "\")\n" +
+			       "   (WordNode \"" + word + "\")\n" +
+			       ")\n";
+
+			fn = fn.get("NEXT");
+		}
+		return str;
+	}
+
+	/**
+	 * print the original sentence, only
+	 */
+	public String printSentence()
+	{
+		String str = "(SentenceLink\n" +
+		             "   (SentenceNode \"" + ri.getID() + "\")\n"; 
+
+		for (int i=0; i<word_list.size(); i++)
+		{
+			str += "   (ConceptNode \"" + word_list.get(i) + "\")\n"; 
+		}
+
+		str += ")\n";
+		return str;
 	}
 
 } // end OpenCogScheme
