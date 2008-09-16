@@ -112,13 +112,14 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		FeatureNode leftNode = getLeftMost(rightNode, allLabelRegex);
 
 		String bigName = collectNames(leftNode, rightNode, allLabelRegex, true);
-		rightNode.get("ref").set("name", new FeatureNode(bigName));
+		FeatureNode bigNameF = new FeatureNode(bigName);
+		rightNode.get("ref").set("name", bigNameF);
 		
 		// See email message "Relex fixes: definites and conjoined 
 		// prepositions" from Mike Ross
 		// rightNode.get("ref").set("specific", new FeatureNode("T"));
 		
-		rightNode.set("str", new FeatureNode(bigName)); // bigNameWithSpaces));
+		rightNode.set("str", bigNameF);
 
 		// Set original string too, since the big name is created using original
 		// strings (if possible) -- err, no, we really need the original
