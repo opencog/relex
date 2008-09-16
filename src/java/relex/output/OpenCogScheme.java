@@ -80,7 +80,7 @@ public class OpenCogScheme
 		ret += orig_sentence;
 		ret += link_scheme.toString();
 		ret += rel_scheme.toString();
-		ret += frame_scheme.toString();
+		// ret += frame_scheme.toString();
 
 		return ret;
 	}
