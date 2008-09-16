@@ -131,13 +131,22 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		rightNode.set("start_char", leftNode.get("start_char"));
 
 		// Use morphology on the right node, just in case.
-		// ??? Really ??? the combined thing will have underscores ... 
-		// Does wordnet really have morphology for these things?
-		// Shouldn't we have done morphology earlier, and not now?
-		// Yeah, I don't think so. This just doesn't make sense.
-		// FeatureNode orig = rightNode.get("str");
+		// Err .. maybe not. What does this acheive?
+		//
+		// The combined string will have underscores in it, and that's OK.
+		// WordNet does contain underscored entities in it, so it does
+		// make sense to look these up, in principle. On the other hand,
+		// these combined strings are either entities (place names like
+		// "New York") or idioms ("en masse") and so finding the lemma
+		// for such things just doesn't really make sense. Worse, the
+		// Morphy algs does damage: it will take a corectly capitalized
+		// "New York" and turn it into the mis-capitalized "New york".
+		// So we're not going to do this, at least, not without a good
+		// explanation.
+		//
+		// FeatureNode orig = rightNode.get("orig_str");
 		// MorphyAlg m = new MorphyAlg();
 		// m.applyTo(rightNode, context);
-		// rightNode.set("str", orig);
+		// rightNode.set("orig_str", orig);
 	}
 }
