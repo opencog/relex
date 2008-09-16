@@ -107,7 +107,7 @@ public class MorphyFactory
 				in = new FileInputStream(property);
 				if (in != null)
 				{
-					System.err.println("; Info: Using file defined in " +
+					System.err.println("Info: Using file defined in " +
 						propertyName + ":" + property);
 					return in;
 				}
@@ -116,7 +116,7 @@ public class MorphyFactory
 			in = Frame.class.getResourceAsStream("/" + file);
 			if (in != null)
 			{
-				System.err.println("; Info: Using " + file +" from resource (jar file).");
+				System.err.println("Info: Using " + file +" from resource (jar file).");
 				return in;
 			}
 			
@@ -124,7 +124,7 @@ public class MorphyFactory
 			in = new FileInputStream(defaultFile);
 			if (in != null)
 			{
-				System.err.println("; Info: Using default "+ defaultFile);
+				System.err.println("Info: Using default "+ defaultFile);
 				return in;
 			}
 			throw new RuntimeException("Error loading " + file + " file.");

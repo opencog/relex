@@ -81,7 +81,7 @@ public abstract class LinkParserClient
 
 	public void init(String linkGrammarDictionariesPath) {
 		if (linkGrammarDictionariesPath==null) {
-			System.out.println("; Info: Using default relex.linkparserpath");
+			System.err.println("Info: Using default relex.linkparserpath");
 		} else {
 			File dir = new File(linkGrammarDictionariesPath);
 			if (!dir.isDirectory() || !dir.canRead()) 
@@ -89,7 +89,7 @@ public abstract class LinkParserClient
 						"Error reading default relex.linkparserpath" :
 						"Error reading relex.linkparserpath: "+linkGrammarDictionariesPath);
 			try {
-				System.out.println("; Info: Using relex.linkparserpath: "+dir.getCanonicalPath());
+				System.err.println("Info: Using relex.linkparserpath: "+dir.getCanonicalPath());
 				LinkGrammar.setDictionariesPath(linkGrammarDictionariesPath);
 			} catch (Throwable t){
 				throw new IllegalArgumentException("Invalid relex.linkparserpath: "+linkGrammarDictionariesPath);			

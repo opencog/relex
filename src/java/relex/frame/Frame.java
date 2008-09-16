@@ -174,21 +174,21 @@ public class Frame
 			if (dir != null) {
 				in = new FileInputStream(dir+"/"+file);
 				if (in != null) {
-					System.err.println("; Info: Using frame directory defined in frame.datapath:"+dir);
+					System.err.println("Info: Using frame directory defined in frame.datapath:"+dir);
 					return new BufferedReader(new InputStreamReader(in));
 				}
 			}
 			
 			in = Frame.class.getResourceAsStream("/"+file);
 			if (in != null) {
-				System.err.println("; Info: Using " + file +" from resource (jar file).");
+				System.err.println("Info: Using " + file +" from resource (jar file).");
 				return new BufferedReader(new InputStreamReader(in));
 			}
 			
 			String defaultFile = defaultDir+"/"+file;
 			in = new FileInputStream(defaultFile);
 			if (in != null) {
-				System.err.println("; Info: Using default " + defaultFile);
+				System.err.println("Info: Using default " + defaultFile);
 				return new BufferedReader(new InputStreamReader(in));
 			}
 			
