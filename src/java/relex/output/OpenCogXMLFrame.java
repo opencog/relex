@@ -26,7 +26,7 @@ import relex.ParsedSentence;
  *
  * Copyright (c) 2008 Linas Vepstas <linas@linas.org>
  */
-public class OpenCogFrameXML
+public class OpenCogXMLFrame
 {
 	// The sentence being examined.
 	private ParsedSentence sent;
@@ -39,7 +39,7 @@ public class OpenCogFrameXML
 	/* ------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 
-	public FrameXML()
+	public OpenCogXMLFrame()
 	{
 		sent = null;
 		id_map = null;

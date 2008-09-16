@@ -34,7 +34,7 @@ import relex.feature.RelationCallback;
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
-class OpenCogRelXML
+class OpenCogXMLRel
 {
 	// The sentence being examined.
 	private ParsedSentence sent;
@@ -45,7 +45,7 @@ class OpenCogRelXML
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
-	public RelXML()
+	public OpenCogXMLRel()
 	{
 		sent = null;
 	}
