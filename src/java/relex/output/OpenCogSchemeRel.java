@@ -165,8 +165,6 @@ class OpenCogSchemeRel
 		fn = fn.get("NEXT");
 		while (fn != null)
 		{
-			FeatureNode refNode = fn.get("ref");
-
 			String word = getstr(fn.get("orig_str"));
 			String lemma = getstr(fn.get("str"));
 
@@ -179,7 +177,12 @@ class OpenCogSchemeRel
 			// Remember the word-to guid map; we'll need it for later
 			// in this sentence.
 			word_id_map.put(fn, guid_word);
-			lemma_id_map.put(fn, guid_lemma);
+
+			FeatureNode refNode = fn.get("ref");
+			if (refNode != null)
+			{
+				lemma_id_map.put(refNode, guid_lemma);
+			}
 
 			// The word node proper, the concept for which it stands, and a link.
 			refs += "(ReferenceLink\n";
@@ -190,6 +193,11 @@ class OpenCogSchemeRel
 			refs += "(ReferenceLink\n";
 			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
 			refs += "   (WordNode \"" + lemma + "\")\n";
+			refs += ")\n";
+
+			refs += "(LemmaLink\n";
+			refs += "   (ConceptNode \"" + guid_word + "\")\n";
+			refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
 			refs += ")\n";
 
 			refs += "(ParseInstanceLink\n";
