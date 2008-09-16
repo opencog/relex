@@ -233,7 +233,7 @@ public class ParsedSentence extends Atom implements Serializable
 
 	/**
 	 * Shows the full feature structure of the parse as it can be found by
-	 * tracing links from the left-most word. Islands will be missed
+	 * tracing links from the left-most word. Islands will be missed.
 	 */
 	public String fullParseString()
 	{
