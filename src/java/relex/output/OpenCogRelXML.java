@@ -24,7 +24,7 @@ import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 
 /**
- * The RelXML object outputs a ParsedSentence in the Novamente
+ * The OpenCogRelXML object outputs a ParsedSentence in the Novamente
  * OpenCog-style XML format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
  * source code directory src/nlp/wsd/README.
@@ -34,7 +34,7 @@ import relex.feature.RelationCallback;
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
-class RelXML
+class OpenCogRelXML
 {
 	// The sentence being examined.
 	private ParsedSentence sent;

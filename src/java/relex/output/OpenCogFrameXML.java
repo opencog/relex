@@ -26,7 +26,7 @@ import relex.ParsedSentence;
  *
  * Copyright (c) 2008 Linas Vepstas <linas@linas.org>
  */
-public class FrameXML
+public class OpenCogFrameXML
 {
 	// The sentence being examined.
 	private ParsedSentence sent;

@@ -35,15 +35,15 @@ import relex.feature.FeatureNode;
 public class OpenCogXML
 {
 	private HashMap<FeatureNode,String> id_map = null;
-	private RelXML rel_xml;
-	private FrameXML frame_xml;
+	private OpenCogRelXML rel_xml;
+	private OpenCogFrameXML frame_xml;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	public OpenCogXML()
 	{
-		rel_xml = new RelXML();
-		frame_xml = new FrameXML();
+		rel_xml = new OpenCogRelXML();
+		frame_xml = new OpenCogFrameXML();
 	}
 
 	public void setParse(ParsedSentence sent)
