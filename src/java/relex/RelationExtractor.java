@@ -198,7 +198,7 @@ public class RelationExtractor
 		{
 			if (verbosity > 0) starttime = System.currentTimeMillis();
 			ri = parseSentence(sentence, entityMaintainer);
-			if (verbosity > 0) reportTime("; Link-parsing: ");
+			if (verbosity > 0) reportTime("Link-parsing: ");
 
 			for (ParsedSentence parse : ri.getParses())
 			{
@@ -236,7 +236,7 @@ public class RelationExtractor
 			System.err.println("Failed to process sentence: " + sentence);
 			e.printStackTrace();
 		}
-		if (verbosity > 0) reportTime("; RelEx processing: ");
+		if (verbosity > 0) reportTime("RelEx processing: ");
 		return ri;
 	}
 
@@ -473,7 +473,7 @@ public class RelationExtractor
 				{
 					re.starttime = System.currentTimeMillis();
 					em = gem.makeEntityMaintainer(sentence);
-					re.reportTime("; Gate processing: ");
+					re.reportTime("Gate processing: ");
 				}
 
 				RelexInfo ri = re.processSentence(sentence,em);
