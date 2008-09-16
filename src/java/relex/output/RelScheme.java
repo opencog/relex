@@ -101,7 +101,7 @@ class RelScheme
 			// All of the other cases.
 			outstr += link_start;
 			outstr += "   (ConceptNode \"" + guid + "\")\n";
-			outstr += "   (DefinedLinguisticConceptNode name=\"" + value + "\")\n";
+			outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
 			outstr += link_end;
 
 			return false;
@@ -122,8 +122,8 @@ class RelScheme
 			outstr += "(EvaluationLink\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
 			outstr += "   (ListLink\n";
-			outstr += "      (ConceptNode name=\"" + src_guid + "\")\n";
-			outstr += "      (ConceptNode name=\"" + tgt_guid + "\")\n";
+			outstr += "      (ConceptNode \"" + src_guid + "\")\n";
+			outstr += "      (ConceptNode \"" + tgt_guid + "\")\n";
 			outstr += "   )\n";
 			outstr += ")\n";
 
