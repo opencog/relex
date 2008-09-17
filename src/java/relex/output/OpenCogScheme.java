@@ -82,6 +82,8 @@ public class OpenCogScheme
 		ret += rel_scheme.toString();
 		// ret += frame_scheme.toString();
 
+		// Don't repeat the orig sentence, until we get a new sentence.
+		orig_sentence = "";
 		return ret;
 	}
 
