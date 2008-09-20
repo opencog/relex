@@ -118,10 +118,19 @@ public class LinkParserSocketClient extends LinkParserClient
 		return Boolean.valueOf(exec(LinkParserProtocol.MSG_IS_ENTITY + word)).booleanValue();
 	}
 
-	public void close() {
+	public void killServer() {
 		client.process(LinkParserProtocol.MSG_KILL_SYSTEM, null);
 	}
 
+	public void close()	{
+		try {
+			client.closeConnection();
+		}
+		catch (java.io.IOException ex) {
+			ex.printStackTrace(System.err);
+		}
+	}
+	
 	void execParse(String sentence) {
 		parseCount++;
 		if ((parseCountBetweenKills != 0) && parseCount >= parseCountBetweenKills) {

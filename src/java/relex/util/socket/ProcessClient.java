@@ -65,13 +65,14 @@ public class ProcessClient {
 		}
 	}
 
-	private void closeConnection() throws IOException {
+	public void closeConnection() throws IOException {
 		if (verbosity > 0)
 			System.out.println("CLOSING CONNECTION");
 		if (out != null)
 			out.close();
 		if (in != null)
-			in.close();
+			try { in.close(); }
+			catch (IOException e) { /* swallow exception so that we absolutely call pSocket.close below */}		
 		if (pSocket != null)
 			pSocket.close();
 	}
