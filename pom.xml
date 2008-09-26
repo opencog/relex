@@ -4,7 +4,7 @@
   <groupId>org.opencog</groupId>
   <artifactId>relex</artifactId>
   <packaging>jar</packaging>
-  <version>0.10.3</version>
+  <version>0.11.0</version>
   <name>relex</name>
   <description>RelEx semantic relationship extractor</description>
   <url>http://maven.apache.org</url>
