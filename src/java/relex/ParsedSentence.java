@@ -109,7 +109,7 @@ public class ParsedSentence extends Atom implements Serializable
 
 	/* Obsolete, do not use */
 	public RelexInfo getRI() {
-		return (RelexInfo) sentence;
+		return new RelexInfo(sentence);
 	}
 
 	/* Obsolete, do not use */

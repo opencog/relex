@@ -15,10 +15,79 @@
  */
 package relex;
 
+import java.util.ArrayList;
+
 /* Obsolete interface name, do not use; use Sentence instead. */
+/*
+ * Java, the programing language, is lame. The very existance
+ * of the utter stupidity in this file demonstrates one central
+ * problem with the lameness of Java langauge design. I really
+ * don't understand why so many people think that Java is cool!
+ * Why is that?
+ */
 
 public class RelexInfo extends Sentence
 {
 	private static final long serialVersionUID = -2047552550351161106L;
+	private Sentence s;
+	RelexInfo(Sentence _s)
+	{
+		s = _s;
+	}
+
+	public String getID()
+	{
+		return s.getID();
+	}
+
+	public void setSentence(String snt)
+	{
+		s.setSentence(snt);
+	}
+	
+	public String getSentence()
+	{
+		return s.getSentence();
+	}
+	
+	public void setParses (ArrayList<ParsedSentence> pl)
+	{
+		s.setParses(pl);
+	}
+
+	public ArrayList<ParsedSentence> getParses()
+	{
+		return s.getParses();
+	}
+
+	public void setNumParses(int np)
+	{
+		s.setNumParses(np);
+	}
+
+	public int getNumParses()
+	{
+		return s.getNumParses();
+	}
+
+	public String[] getWords()
+	{
+		return s.getWords();
+	}
+
+	public void simpleParseRank()
+	{
+		s.simpleParseRank();
+	}
+
+	public void normalizeParseRank()
+	{
+		s.normalizeParseRank();
+	}
+
+	public String toString()
+	{
+		return s.toString();
+	}
 }
 
