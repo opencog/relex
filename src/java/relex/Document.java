@@ -18,6 +18,7 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import relex.feature.Atom;
 
@@ -43,16 +44,17 @@ public class Document extends Atom implements Serializable
 	public Document()
 	{
 		sentences = null;
+
+		// Assign a unique document ID to each document;
+		// this is required for OpenCog output, where each
+		// document and needs to be tagged.
+		UUID guid = UUID.randomUUID();
+		idString = "document_" + guid;
 	}
 
 	public String getIDString()
 	{
 		return idString;
-	}
-
-	public void setIDString(String str)
-	{
-		idString = str;
 	}
 
 	public void addSentence(Sentence sntc)
