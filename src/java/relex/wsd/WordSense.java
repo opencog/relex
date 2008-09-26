@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import relex.ParsedSentence;
 import relex.RelationExtractor;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
 import relex.feature.RelationCallback;
@@ -41,16 +41,16 @@ public class WordSense
 {
 	public final int verbosity = 1;
 	public SimpleTruthValue wordSenseMatch(String word,
-	                                       RelexInfo example,
-	                                       RelexInfo target)
+	                                       Sentence example,
+	                                       Sentence target)
 	{
 		return wordSenseMatch(word, example, word, target);
 	}
 
 	public SimpleTruthValue wordSenseMatch(String example_word,
-	                                       RelexInfo example,
+	                                       Sentence example,
 	                                       String target_word,
-	                                       RelexInfo target)
+	                                       Sentence target)
 	{
 		SimpleTruthValue stv = new SimpleTruthValue();
 
@@ -330,8 +330,8 @@ public class WordSense
 		WordSense ws = new WordSense();
 
 		SimpleTruthValue stv;
-		RelexInfo ri_example;
-		RelexInfo ri_target;
+		Sentence ri_example;
+		Sentence ri_target;
 		for (TestPair tp : tpl)
 		{
 			ri_example = re.processSentence(tp.example_sentence);

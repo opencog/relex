@@ -1,4 +1,3 @@
-package relex;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,13 +74,13 @@ System.out.println("duude got accept");
 					String line = in.readLine();
 					if (line == null)
 						break;
-					RelexInfo ri = r.processSentence(line);
-					if (ri.getParses().size() == 0)
+					Sentence sntc = r.processSentence(line);
+					if (sntc.getParses().size() == 0)
 					{
 						out.println("no parses");
 						continue;
 					}
-					ParsedSentence p = ri.getParses().get(0);
+					ParsedSentence p = sntc.getParses().get(0);
 
 					/*
 					out.println(p.getPhraseString());

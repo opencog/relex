@@ -168,12 +168,12 @@ public class WebFormat extends RelationExtractor
 					em = gem.makeEntityMaintainer(sentence);
 				}
 
-				RelexInfo ri = re.processSentence(sentence,em);
+				Sentence sntc = re.processSentence(sentence,em);
 
-				System.out.println (cv.toString(ri));
+				System.out.println (cv.toString(sntc));
 
 				// Print output
-				for (ParsedSentence parse: ri.getParses())
+				for (ParsedSentence parse: sntc.getParses())
 				{
 					if (commandMap.get("-f") != null)
 					{

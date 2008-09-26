@@ -178,12 +178,12 @@ public class RelationExtractor
 		hobbs = new Hobbs(antecedents);
 	}
 
-	public RelexInfo processSentence(String sentence)
+	public Sentence processSentence(String sentence)
 	{
 		return processSentence(sentence, null);
 	}
 
-	public RelexInfo processSentence(String sentence,
+	public Sentence processSentence(String sentence,
 	                                 EntityMaintainer entityMaintainer)
 	{
 		starttime = System.currentTimeMillis();
@@ -193,14 +193,14 @@ public class RelationExtractor
 		                               new ArrayList<EntityInfo>());
 		}
 
-		RelexInfo ri = null;
+		Sentence sntc = null;
 		try
 		{
 			if (verbosity > 0) starttime = System.currentTimeMillis();
-			ri = parseSentence(sentence, entityMaintainer);
+			sntc = parseSentence(sentence, entityMaintainer);
 			if (verbosity > 0) reportTime("Link-parsing: ");
 
-			for (ParsedSentence parse : ri.getParses())
+			for (ParsedSentence parse : sntc.getParses())
 			{
 				// Markup feature node graph with entity info,
 				// so that the relex algs (next step) can see them.
@@ -222,13 +222,13 @@ public class RelationExtractor
 			}
 
 			// Assign a simple parse-ranking score, based on LinkGrammar data.
-			ri.simpleParseRank();
+			sntc.simpleParseRank();
 
 			// Perform anaphora resolution
 			if (do_anaphora_resolution)
 			{
-				hobbs.addParse(ri);
-				hobbs.resolve(ri);
+				hobbs.addParse(sntc);
+				hobbs.resolve(sntc);
 			}
 		}
 		catch(Exception e)
@@ -237,7 +237,7 @@ public class RelationExtractor
 			e.printStackTrace();
 		}
 		if (verbosity > 0) reportTime("RelEx processing: ");
-		return ri;
+		return sntc;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class RelationExtractor
 	 * currentParses is filled with the ParsedSentences Uses an optional
 	 * EntityMaintainer to work on a converted sentence.
 	 */
-	private RelexInfo
+	private Sentence
 	parseSentence(String sentence, EntityMaintainer entityMaintainer)
 	{
 		if (entityMaintainer != null) {
@@ -254,15 +254,15 @@ public class RelationExtractor
 		if (sentence == null) return null;
 
 		String orig_sentence = entityMaintainer.getOriginalSentence();
-		RelexInfo ri = null;
+		Sentence sent = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			ri = parser.parse(sentence, context.getLinkParserClient());
+			sent = parser.parse(sentence, context.getLinkParserClient());
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
-			ri = new RelexInfo();
+			sent = new Sentence();
 		}
-		ri.setSentence(orig_sentence);
-		return ri;
+		sent.setSentence(orig_sentence);
+		return sent;
 	}
 
 	/* ---------------------------------------------------------- */
@@ -476,12 +476,12 @@ public class RelationExtractor
 					re.reportTime("Gate processing: ");
 				}
 
-				RelexInfo ri = re.processSentence(sentence,em);
+				Sentence sntc = re.processSentence(sentence,em);
 
 				sentence_count ++;
-				re.stats.bin(ri);
+				re.stats.bin(sntc);
 
-				int np = ri.getParses().size();
+				int np = sntc.getParses().size();
 				if (np > maxParses) np = maxParses;
 
 				// chunk ranking stuff
@@ -496,14 +496,14 @@ public class RelationExtractor
 
 				// Print output
 				int numParses = 0;
-				for (ParsedSentence parse: ri.getParses())
+				for (ParsedSentence parse: sntc.getParses())
 				{
 					if (commandMap.get("-o") == null)
 					{
 						System.out.println(sentence);
 						System.out.println("\n====\n");
 						System.out.println("Parse " + (numParses+1) +
-					             	" of " + ri.getParses().size());
+					             	" of " + sntc.getParses().size());
 					}
 
 					if (commandMap.get("-r") != null)

@@ -18,7 +18,7 @@ package relex.anaphora;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.tree.PhraseTree;
@@ -38,7 +38,8 @@ public class Hobbs
 	public static final int DEBUG = 0;
 	
 	// Buffer of sentences previously seen.
-	private ArrayList<RelexInfo> sentences;
+	// XXX replace by Document
+	private ArrayList<Sentence> sentences;
 
 	// Where anaphora/antecedent collections are kept.
 	Antecedents antecedents;
@@ -62,23 +63,23 @@ public class Hobbs
 
 	public Hobbs(Antecedents ant)
 	{
-		sentences = new ArrayList<RelexInfo>();
+		sentences = new ArrayList<Sentence>();
 		antecedents = ant;
 		anaphore = null;
 		num_proposals = 0;
 	}
 
-	public void addParse(RelexInfo ri)
+	public void addParse(Sentence sntc)
 	{
 		// Add at the head of the list
-		sentences.add(0, ri);
+		sentences.add(0, sntc);
 		int sz = sentences.size();
 		if (sz > max_sentences) sentences.remove(max_sentences);
 	}
 
-	public void resolve(RelexInfo ri)
+	public void resolve(Sentence sntc)
 	{
-		ArrayList<ParsedSentence> plist = ri.getParses();
+		ArrayList<ParsedSentence> plist = sntc.getParses();
 		if (0 >= plist.size()) return;
 
 		// XXX at the moment, ignore all but the first parse.
@@ -206,13 +207,13 @@ public class Hobbs
 		{
 			if (num_proposals > max_proposals) break;
 
-			RelexInfo ri = sentences.get(i);
+			Sentence sntc = sentences.get(i);
 
 			// Whoops . sentence had zero parses!
-			if (ri.getParses().size() == 0) continue;
+			if (sntc.getParses().size() == 0) continue;
 
 			// XXX ignore all but the first parse right now
-			ParsedSentence ps = ri.getParses().get(0);
+			ParsedSentence ps = sntc.getParses().get(0);
 			PhraseTree head = ps.getPhraseTree();
 			StepFour(head);
 		}

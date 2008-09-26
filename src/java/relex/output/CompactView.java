@@ -23,7 +23,7 @@ import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkForeach;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
-import relex.RelexInfo;
+import relex.Sentence;
 
 /**
  * Implements the so-called "compact view", as documented at
@@ -110,15 +110,15 @@ public class CompactView
 		return "</nlparse>";
 	}
 
-	public String toString(RelexInfo ri)
+	public String toString(Sentence sntc)
 	{
 		sentence_count ++;
 		parse_count = 0;
 
 		String str = "  <sentence index=\"" + sentence_count + "\"";
-		str += " parses=\"" + ri.getNumParses() + "\">\n";
-		str += "  " + ri.getSentence() + "\n";
-		for (ParsedSentence parse: ri.getParses())
+		str += " parses=\"" + sntc.getNumParses() + "\">\n";
+		str += "  " + sntc.getSentence() + "\n";
+		for (ParsedSentence parse: sntc.getParses())
 		{
 			str += toString(parse);
 			if (parse_count > max_parses) break;
