@@ -447,7 +447,8 @@ public class RelationExtractor
 		if (commandMap.get("-f") != null) frame = new Frame();
 
 		int sentence_count = 0;
-		while(true)
+		boolean more_input = true;
+		while(more_input)
 		{
 			// If no sentence specified on the command line
 			// (with the "-s" flag), then read it from stdin.
@@ -458,6 +459,7 @@ public class RelationExtractor
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
 					{
+						more_input = false;
 						break;
 					}
 				} catch (IOException e) {
