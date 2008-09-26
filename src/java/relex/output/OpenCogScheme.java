@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import relex.ParsedSentence;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.feature.FeatureNode;
 
 /**
@@ -37,7 +37,7 @@ import relex.feature.FeatureNode;
  */
 public class OpenCogScheme
 {
-	private RelexInfo ri = null;
+	private Sentence sntc = null;
 	private ParsedSentence parse = null;
 	private String orig_sentence = null;
 
@@ -59,9 +59,9 @@ public class OpenCogScheme
 	public void setParse(ParsedSentence _parse)
 	{
 		parse = _parse;
-		if (parse.getRI() != ri)
+		if (parse.getSentence() != sntc)
 		{
-			ri = parse.getRI();
+			sntc = parse.getSentence();
 			orig_sentence = printWords();
 			orig_sentence += printSentence();
 		}
@@ -125,7 +125,7 @@ public class OpenCogScheme
 	public String printSentence()
 	{
 		String str = "(SentenceLink\n" +
-		             "   (SentenceNode \"" + ri.getID() + "\")\n"; 
+		             "   (SentenceNode \"" + sntc.getID() + "\")\n"; 
 
 		for (int i=1; i<word_list.size(); i++)
 		{
