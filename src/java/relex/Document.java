@@ -45,12 +45,19 @@ public class Document extends Atom implements Serializable
 		sentences = null;
 	}
 
-	public String getIDString() {
+	public String getIDString()
+	{
 		return idString;
 	}
 
-	public void setIDString(String str) {
+	public void setIDString(String str)
+	{
 		idString = str;
+	}
+
+	public void addSentence(Sentence sntc)
+	{
+		sentences.add(sntc);
 	}
 
 } // end Document

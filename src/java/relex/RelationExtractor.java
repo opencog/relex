@@ -91,9 +91,13 @@ public class RelationExtractor
 	private PhraseMarkup phraseMarkup;
 
 	/** Anaphora resolution */
+	// XXX these should probably be moved to class Document!
 	public Antecedents antecedents;
 	private Hobbs hobbs;
 	public boolean do_anaphora_resolution;
+
+	/** Document - holder of sentences */
+	Document doco;
 
 	/** Statistics */
 	private ParseStats stats;
@@ -128,6 +132,8 @@ public class RelationExtractor
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
 		do_anaphora_resolution = false;
+
+		doco = new Document();
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -477,6 +483,7 @@ public class RelationExtractor
 				}
 
 				Sentence sntc = re.processSentence(sentence,em);
+				re.doco.addSentence(sntc);
 
 				sentence_count ++;
 				re.stats.bin(sntc);
