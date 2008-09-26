@@ -210,7 +210,7 @@ class OpenCogXMLRel
 		ret += "\" />\n";
 
 		ret += "  <SentenceNode name = \"";
-		ret += sent.getRI().getID();
+		ret += sent.getSentence().getID();
 		ret += "\" />\n";
 
 		ret += "  <ParseLink>\n";
@@ -218,7 +218,7 @@ class OpenCogXMLRel
 		ret += sent.getIDString();
 		ret += "\" />\n";
 		ret += "    <Element class=\"SentenceNode\" name = \"";
-		ret += sent.getRI().getID();
+		ret += sent.getSentence().getID();
 		ret += "\" />\n";
 		ret += "  </ParseLink>\n";
 		return ret;
