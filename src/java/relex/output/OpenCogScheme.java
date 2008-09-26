@@ -129,6 +129,7 @@ public class OpenCogScheme
 		             "   (SentenceNode \"" + sntc.getID() + "\")\n" +
 		             "   (ListLink\n";
 
+		// Loop starts at 1, since we skip LEFT-WALL
 		for (int i=1; i<word_list.size(); i++)
 		{
 			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n";
@@ -150,7 +151,7 @@ public class OpenCogScheme
 		             "   (ListLink\n";
 
 		ArrayList<Sentence> sentence_list = doco.getSentences();
-		for (int i=1; i<sentence_list.size(); i++)
+		for (int i=0; i<sentence_list.size(); i++)
 		{
 			str += "      (SentenceNode \"" + 
 			       sentence_list.get(i).getID() + "\")\n";
