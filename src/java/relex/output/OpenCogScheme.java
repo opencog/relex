@@ -152,7 +152,8 @@ public class OpenCogScheme
 		ArrayList<Sentence> sentence_list = doco.getSentences();
 		for (int i=1; i<sentence_list.size(); i++)
 		{
-			str += "      (SentenceNode \"" + sentence_list.get(i) + "\")\n";
+			str += "      (SentenceNode \"" + 
+			       sentence_list.get(i).getID() + "\")\n";
 		}
 
 		str += "   )\n" +
