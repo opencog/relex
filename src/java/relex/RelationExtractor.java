@@ -646,6 +646,12 @@ public class RelationExtractor
 			}
 			if (commandMap.get("-s") != null) break;
 		}
+
+		// Dump the list of document sentences
+		if (commandMap.get("-o") != null)
+		{
+			System.out.println(opencog.printDocument(re.doco));
+		}
 	}
 }
 
