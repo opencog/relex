@@ -124,15 +124,17 @@ public class OpenCogScheme
 	 */
 	public String printSentence()
 	{
-		String str = "(SentenceLink\n" +
+		String str = "(EvaluationLink\n" +
 		             "   (SentenceNode \"" + sntc.getID() + "\")\n"; 
+		             "   (ListLink\n"; 
 
 		for (int i=1; i<word_list.size(); i++)
 		{
-			str += "   (ConceptNode \"" + word_list.get(i) + "\")\n"; 
+			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n"; 
 		}
 
-		str += ")\n";
+		str += "   )\n" +
+		       ")\n";
 		return str;
 	}
 
