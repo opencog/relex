@@ -43,7 +43,7 @@ public class Document extends Atom implements Serializable
 	// Constructor.
 	public Document()
 	{
-		sentences = null;
+		sentences = new ArrayList<Sentence>();
 
 		// Assign a unique document ID to each document;
 		// this is required for OpenCog output, where each
