@@ -454,7 +454,6 @@ public class RelationExtractor
 			// (with the "-s" flag), then read it from stdin.
 			while (sentence == null)
 			{
-				System.out.print("; ");
 				try {
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
@@ -475,7 +474,7 @@ public class RelationExtractor
 
 			while (sentence != null)
 			{
-				System.out.println("SENTENCE: ["+sentence+"]");
+				System.out.println("; SENTENCE: ["+sentence+"]");
 				EntityMaintainer em = null;
 				if (gem != null)
 				{
@@ -654,7 +653,7 @@ public class RelationExtractor
 		{
 			System.out.println(opencog.printDocument(re.doco));
 		}
-		System.out.println("Bye.");
+		System.out.println("; Bye.");
 	}
 }
 
