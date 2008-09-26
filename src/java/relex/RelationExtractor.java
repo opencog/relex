@@ -460,6 +460,7 @@ public class RelationExtractor
 					if ((sentence == null) || "END.".equals(sentence))
 					{
 						more_input = false;
+						sentence = null;
 						break;
 					}
 				} catch (IOException e) {
@@ -640,7 +641,7 @@ public class RelationExtractor
 				// Print out the stats every now and then.
 				if (sentence_count%5 == 0)
 				{
-					System.out.println ("\n" + re.stats.toString());
+					System.err.println ("\n" + re.stats.toString());
 				}
 
 				sentence = ds.getNextSentence();
