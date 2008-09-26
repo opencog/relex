@@ -22,6 +22,13 @@ import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 
 /**
+ * XXX This class is obsolete. The format that it generates is no
+ * longer compatible with what various OpenCog mind-agents are
+ * expecting as input. Use the Scheme export format instead.
+ *
+ * (Note also: the scheme importer is twice as fast as the XML
+ * importer!) The scheme input format is human readable!
+ *
  * The OpenCogXML object outputs a ParsedSentence in the Novamente
  * OpenCog-style XML format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
