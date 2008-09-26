@@ -52,7 +52,7 @@ public class Document extends Atom implements Serializable
 		idString = "document_" + guid;
 	}
 
-	public String getIDString()
+	public String getID()
 	{
 		return idString;
 	}
@@ -60,6 +60,11 @@ public class Document extends Atom implements Serializable
 	public void addSentence(Sentence sntc)
 	{
 		sentences.add(sntc);
+	}
+
+	public ArrayList<Sentence> getSentences()
+	{
+		return sentences;
 	}
 
 } // end Document

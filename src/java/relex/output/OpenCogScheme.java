@@ -20,12 +20,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import relex.Document;
 import relex.ParsedSentence;
 import relex.Sentence;
 import relex.feature.FeatureNode;
 
 /**
- * The OpenCogScheme object outputs a ParsedSentence in the 
+ * The OpenCogScheme object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
  * source code directory src/nlp/wsd/README.
@@ -125,12 +126,33 @@ public class OpenCogScheme
 	public String printSentence()
 	{
 		String str = "(EvaluationLink\n" +
-		             "   (SentenceNode \"" + sntc.getID() + "\")\n"; 
-		             "   (ListLink\n"; 
+		             "   (SentenceNode \"" + sntc.getID() + "\")\n" +
+		             "   (ListLink\n";
 
 		for (int i=1; i<word_list.size(); i++)
 		{
-			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n"; 
+			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n";
+		}
+
+		str += "   )\n" +
+		       ")\n";
+		return str;
+	}
+
+	/**
+	 * Print the original document, as made up out of sentences,
+	 * maintaining the proper sentence order in the document.
+	 */
+	public String printDocument(Document doco)
+	{
+		String str = "(EvaluationLink\n" +
+		             "   (DocumentNode \"" + doco.getID() + "\")\n" +
+		             "   (ListLink\n";
+
+		ArrayList<Sentence> sentence_list = doco.getSentences();
+		for (int i=1; i<sentence_list.size(); i++)
+		{
+			str += "      (SentenceNode \"" + sentence_list.get(i) + "\")\n";
 		}
 
 		str += "   )\n" +
