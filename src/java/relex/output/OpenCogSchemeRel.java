@@ -219,7 +219,7 @@ class OpenCogSchemeRel
 
 		Double confidence = parse.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6) + "))\n" +
-		"   (SentenceNode \"" + parse.getRI().getID() + "\")\n)\n";
+		"   (SentenceNode \"" + parse.getSentence().getID() + "\")\n)\n";
 		return ret;
 	}
 
