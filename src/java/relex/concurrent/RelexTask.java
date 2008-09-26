@@ -20,7 +20,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 
 import relex.ParsedSentence;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.entity.EntityMaintainer;
 import relex.parser.LinkParser;
@@ -70,18 +70,18 @@ public class RelexTask implements Callable<RelexTaskResult>
 			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
 			String convertedSentence = entityMaintainer.getConvertedSentence();
 			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
-			RelexInfo ri = null;
+			Sentence sntc = null;
 			try {
-				ri = lp.parse(convertedSentence, context.getLinkParserClient());
+				sntc = lp.parse(convertedSentence, context.getLinkParserClient());
 			} catch (RuntimeException ex) {
-				ri = new RelexInfo();
-				ri.setSentence(sentence);
+				sntc = new Sentence();
+				sntc.setSentence(sentence);
 			}
 			
 			if (DEBUG > 0) System.out.println("[" + index + "] End parsing");
 
 			int i = 0;
-			for (ParsedSentence parse : ri.getParses()) {
+			for (ParsedSentence parse : sntc.getParses()) {
 				try {
 					// Markup feature node graph with entity info,
 					// so that the relex algs (next step) can see them.
@@ -101,9 +101,9 @@ public class RelexTask implements Callable<RelexTaskResult>
 				}
 				if (DEBUG > 0) 
 					System.out.println("[" + index+ "] end post-processing sentence " + 
-							(i++) + "/"+ ri.getParses().size());
+							(i++) + "/"+ sntc.getParses().size());
 			}
-			return new RelexTaskResult(index, sentence, entityMaintainer, ri);
+			return new RelexTaskResult(index, sentence, entityMaintainer, sntc);
 		} finally {
 			if (DEBUG > 0)
 				System.out.println("[" + index + "] End processing");
@@ -116,7 +116,8 @@ public class RelexTask implements Callable<RelexTaskResult>
 		}
 	}
 	
-	public String toString(){
-		return index+": "+sentence;
+	public String toString()
+	{
+		return index + ": " + sentence;
 	}
 }
