@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import relex.ParsedSentence;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.RelexProperties;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
@@ -36,7 +36,7 @@ public class LinkParser extends Parser
 
 	private static final boolean storePhraseString = true;
 
-	private RelexInfo ri;
+	private Sentence sntc;
 
 	public String simpleParse(String sentence, LinkParserClient lpc)
 	{
@@ -58,7 +58,7 @@ public class LinkParser extends Parser
 		Long starttime;
 		if (verbosity > 0) starttime = System.currentTimeMillis();
 
-		ri = new RelexInfo();
+		sntc = new Sentence();
 
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
@@ -195,8 +195,8 @@ public class LinkParser extends Parser
 			parses.add(s);
 		}
 
-		ri.setParses(parses);
-		ri.setNumParses(lpc.getNumLinkages());
+		sntc.setParses(parses);
+		sntc.setNumParses(lpc.getNumLinkages());
 		
 		if (verbosity > 0)
 		{
@@ -267,13 +267,13 @@ public class LinkParser extends Parser
 	public ArrayList<ParsedSentence> parsel(String sentence, LinkParserClient lpc)
 	{
 		tokenizeAndParseSentence(sentence, lpc);
-		return ri.getParses();
+		return sntc.getParses();
 	}
 
-	public RelexInfo parse(String sentence, LinkParserClient lpc)
+	public Sentence parse(String sentence, LinkParserClient lpc)
 	{
 		tokenizeAndParseSentence(sentence, lpc);
-		return ri;
+		return sntc;
 	}
 
 	public static String retrievePathName()
