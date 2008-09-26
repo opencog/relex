@@ -458,8 +458,7 @@ public class RelationExtractor
 					sentence = stdin.readLine();
 					if ((sentence == null) || "END.".equals(sentence))
 					{
-						System.out.println("Bye.");
-						return;
+						break;
 					}
 				} catch (IOException e) {
 					System.err.println("Error reading sentence from the standard input!");
@@ -652,6 +651,7 @@ public class RelationExtractor
 		{
 			System.out.println(opencog.printDocument(re.doco));
 		}
+		System.out.println("Bye.");
 	}
 }
 

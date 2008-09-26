@@ -215,7 +215,7 @@ class OpenCogSchemeRel
 	{
 		String ret =
 		"(ParseLink\n" +
-		"   (ConceptNode \"" + parse.getIDString() + "\" (stv 1.0 ";
+		"   (ParseNode \"" + parse.getIDString() + "\" (stv 1.0 ";
 
 		Double confidence = parse.getTruthValue().getConfidence();
 		ret += confidence.toString().substring(0,6) + "))\n" +
