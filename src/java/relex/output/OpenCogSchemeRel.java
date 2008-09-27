@@ -198,7 +198,7 @@ class OpenCogSchemeRel
 				// The parse instance associated with this lemma instance.
 				refs += "(ParseInstanceLink\n";
 				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-				refs += "   (ConceptNode \"" + parse_id + "\")\n";
+				refs += "   (ParseNode \"" + parse_id + "\")\n";
 				refs += ")\n";
 			}
 
