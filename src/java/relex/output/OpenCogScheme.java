@@ -125,7 +125,7 @@ public class OpenCogScheme
 	 */
 	public String printSentence()
 	{
-		String str = "(EvaluationLink\n" +
+		String str = "(ReferenceLink\n" +
 		             "   (SentenceNode \"" + sntc.getID() + "\")\n" +
 		             "   (ListLink\n";
 
@@ -146,7 +146,7 @@ public class OpenCogScheme
 	 */
 	public String printDocument(Document doco)
 	{
-		String str = "(EvaluationLink\n" +
+		String str = "(ReferenceLink\n" +
 		             "   (DocumentNode \"" + doco.getID() + "\")\n" +
 		             "   (ListLink\n";
 

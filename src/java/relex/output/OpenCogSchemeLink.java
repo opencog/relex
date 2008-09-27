@@ -103,7 +103,7 @@ class OpenCogSchemeLink
 	public String toString()
 	{
 		String ret = "";
-		ret += "(EvaluationLink\n" +
+		ret += "(ReferenceLink\n" +
 		       "   (ParseNode \"" + parse.getIDString() + "\")\n" +
 		       "   (ListLink\n";
 		ret += printLinks();
