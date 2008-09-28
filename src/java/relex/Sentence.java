@@ -67,7 +67,7 @@ public class Sentence implements Serializable
 	private void assign_id()
 	{
 		UUID guid = UUID.randomUUID();
-		sentenceID = "sentence_" + guid;
+		sentenceID = "sentence@" + guid;
 
 		int n = 0;
 		for (ParsedSentence parse: parses)
