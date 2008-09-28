@@ -38,7 +38,6 @@ import relex.feature.FeatureNode;
  */
 public class OpenCogScheme
 {
-	private Sentence sntc = null;
 	private ParsedSentence parse = null;
 	private String orig_sentence = null;
 
@@ -55,17 +54,14 @@ public class OpenCogScheme
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
 		frame_scheme = new OpenCogSchemeFrame();
+		orig_sentence = "";
 	}
 
 	public void setParse(ParsedSentence _parse)
 	{
 		parse = _parse;
-		if (parse.getSentence() != sntc)
-		{
-			sntc = parse.getSentence();
-			orig_sentence = printWords();
-			orig_sentence += printSentence();
-		}
+		orig_sentence += printWords();
+		orig_sentence += printSentence();
 
 		link_scheme.setParse(parse, word_list);
 		id_map = new HashMap<FeatureNode,String>();
@@ -126,7 +122,7 @@ public class OpenCogScheme
 	public String printSentence()
 	{
 		String str = "(ReferenceLink\n" +
-		             "   (SentenceNode \"" + sntc.getID() + "\")\n" +
+		             "   (ParseNode \"" + parse.getIDString() + "\")\n" +
 		             "   (ListLink\n";
 
 		// Loop starts at 1, since we skip LEFT-WALL

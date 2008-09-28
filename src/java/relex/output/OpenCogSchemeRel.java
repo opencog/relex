@@ -162,7 +162,6 @@ class OpenCogSchemeRel
 	 */
 	private String printWordRefs()
 	{
-		String parse_id = parse.getIDString();
 		String refs = "";
 		FeatureNode fn = parse.getLeft();
 		fn = fn.get("NEXT");
@@ -193,12 +192,6 @@ class OpenCogSchemeRel
 				refs += "(LemmaLink\n";
 				refs += "   (ConceptNode \"" + guid_word + "\")\n";
 				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-				refs += ")\n";
-
-				// The parse instance associated with this lemma instance.
-				refs += "(ParseInstanceLink\n";
-				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-				refs += "   (ParseNode \"" + parse_id + "\")\n";
 				refs += ")\n";
 			}
 
