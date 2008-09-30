@@ -18,7 +18,6 @@ package relex.output;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
@@ -173,25 +172,15 @@ class OpenCogSchemeRel
 			{
 				String lemma = getstr(fn.get("str"));
 
-				// A unique UUID for each word instance.
-				UUID guid = UUID.randomUUID();
-				String guid_lemma = lemma + "@" + guid;
-
 				// Remember the word-to guid map; we'll need it for
 				// printing relations, and printing frames,
-				id_map.put(refNode, guid_lemma);
-
-				// The lemma instance, and the associated word.
-				refs += "(ReferenceLink\n";
-				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
-				refs += "   (WordNode \"" + lemma + "\")\n";
-				refs += ")\n";
-
-				// The lemma instance, and its associated word instance
 				String guid_word = word_list.get(word_index);
+				id_map.put(refNode, guid_word);
+
+				// The word instance, and its associated lemma form
 				refs += "(LemmaLink\n";
 				refs += "   (ConceptNode \"" + guid_word + "\")\n";
-				refs += "   (ConceptNode \"" + guid_lemma + "\")\n";
+				refs += "   (WordNode \"" + lemma + "\")\n";
 				refs += ")\n";
 			}
 
