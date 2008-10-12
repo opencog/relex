@@ -68,7 +68,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 	public RelexTaskResult call() {
 		try {
 			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
-			String convertedSentence = entityMaintainer.getConvertedSentence();
+			String convertedSentence = entityMaintainer.getConvertedSentence().replace('\n', ' ').replace('\r', ' ');
 			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
 			RelexInfo ri = null;
 			try {
