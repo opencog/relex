@@ -43,7 +43,8 @@ OpenCogSchemeFrame.java:
 OpenCogXML.java:
 OpenCogXMLRel.java:
 OpenCogXMLFrame.java:
-	Obsolescent; use OpenCogScheme (above) instead.
+	Obsolete; use OpenCogScheme (above) instead.
+   OpenCog no longer understands this format.
 	Generates OpenCog XML. Only the OpenCog class is 
 	public; the other two are helpers. XMLRel generates
 	output that corresponds to the basic RelEx feature 

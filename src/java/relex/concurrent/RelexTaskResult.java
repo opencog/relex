@@ -18,7 +18,7 @@ package relex.concurrent;
 
 import java.io.Serializable;
 
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.entity.EntityMaintainer;
 
 public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable {
@@ -27,14 +27,17 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 	
 	public Integer index;
 	public String sentence; 
-	public RelexInfo result;
+	public Sentence result;
 	public EntityMaintainer entityMaintainer;
 	
-	public RelexTaskResult(int index, String sentence, EntityMaintainer entityMaintainer, RelexInfo ri){
+	public RelexTaskResult(int index, String sentence,
+	                       EntityMaintainer entityMaintainer,
+	                       Sentence sntc)
+	{
 		this.index = index;
 		this.sentence = sentence;
 		this.entityMaintainer = entityMaintainer;
-		this.result = ri;
+		this.result = sntc;
 	}
 	
 	public int compareTo(RelexTaskResult that) {

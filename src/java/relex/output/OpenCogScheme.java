@@ -20,12 +20,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import relex.Document;
 import relex.ParsedSentence;
-import relex.RelexInfo;
+import relex.Sentence;
 import relex.feature.FeatureNode;
 
 /**
- * The OpenCogScheme object outputs a ParsedSentence in the 
+ * The OpenCogScheme object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
  * source code directory src/nlp/wsd/README.
@@ -37,7 +38,6 @@ import relex.feature.FeatureNode;
  */
 public class OpenCogScheme
 {
-	private RelexInfo ri = null;
 	private ParsedSentence parse = null;
 	private String orig_sentence = null;
 
@@ -54,17 +54,14 @@ public class OpenCogScheme
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
 		frame_scheme = new OpenCogSchemeFrame();
+		orig_sentence = "";
 	}
 
 	public void setParse(ParsedSentence _parse)
 	{
 		parse = _parse;
-		if (parse.getRI() != ri)
-		{
-			ri = parse.getRI();
-			orig_sentence = printWords();
-			orig_sentence += printSentence();
-		}
+		orig_sentence += printWords();
+		orig_sentence += printSentence();
 
 		link_scheme.setParse(parse, word_list);
 		id_map = new HashMap<FeatureNode,String>();
@@ -124,15 +121,40 @@ public class OpenCogScheme
 	 */
 	public String printSentence()
 	{
-		String str = "(SentenceLink\n" +
-		             "   (SentenceNode \"" + ri.getID() + "\")\n"; 
+		String str = "(ReferenceLink\n" +
+		             "   (ParseNode \"" + parse.getIDString() + "\")\n" +
+		             "   (ListLink\n";
 
+		// Loop starts at 1, since we skip LEFT-WALL
 		for (int i=1; i<word_list.size(); i++)
 		{
-			str += "   (ConceptNode \"" + word_list.get(i) + "\")\n"; 
+			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n";
 		}
 
-		str += ")\n";
+		str += "   )\n" +
+		       ")\n";
+		return str;
+	}
+
+	/**
+	 * Print the original document, as made up out of sentences,
+	 * maintaining the proper sentence order in the document.
+	 */
+	public String printDocument(Document doco)
+	{
+		String str = "(ReferenceLink\n" +
+		             "   (DocumentNode \"" + doco.getID() + "\")\n" +
+		             "   (ListLink\n";
+
+		ArrayList<Sentence> sentence_list = doco.getSentences();
+		for (int i=0; i<sentence_list.size(); i++)
+		{
+			str += "      (SentenceNode \"" + 
+			       sentence_list.get(i).getID() + "\")\n";
+		}
+
+		str += "   )\n" +
+		       ")\n";
 		return str;
 	}
 

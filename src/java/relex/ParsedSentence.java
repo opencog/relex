@@ -55,7 +55,7 @@ public class ParsedSentence extends Atom implements Serializable
 	private String idString;
 
 	// Back-pointer to collection of other parses for this sentence
-	private RelexInfo sentence;
+	private Sentence sentence;
 
 	// String containing the original sentence
 	private String original;
@@ -107,12 +107,22 @@ public class ParsedSentence extends Atom implements Serializable
 		return idString;
 	}
 
+	/* Obsolete, do not use */
 	public RelexInfo getRI() {
+		return new RelexInfo(sentence);
+	}
+
+	/* Obsolete, do not use */
+	public void setRI(RelexInfo s) {
+		sentence = s;
+	}
+
+	public Sentence getSentence() {
 		return sentence;
 	}
 
-	public void setRI(RelexInfo ri) {
-		sentence = ri;
+	public void setSentence(Sentence s) {
+		sentence = s;
 	}
 
 	public void setIDString(String str) {

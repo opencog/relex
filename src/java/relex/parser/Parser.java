@@ -16,7 +16,7 @@
 
 package relex.parser;
 
-import relex.RelexInfo;
+import relex.Sentence;
 
 /**
  * The interface to
@@ -31,7 +31,7 @@ public abstract class Parser
 	 * @return a list of parses and supporting information.
 	 *
 	 */
-	public abstract RelexInfo parse(String sentence, LinkParserClient lpc);
+	public abstract Sentence parse(String sentence, LinkParserClient lpc);
 
 	/**
 	 * Given a sentence, returns a string representation of a parse of that sentence.

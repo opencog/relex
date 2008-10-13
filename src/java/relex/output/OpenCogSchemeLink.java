@@ -75,25 +75,25 @@ class OpenCogSchemeLink
 		public Boolean FNCallback(FeatureNode fn)
 		{
 			str +=
-				"   (EvaluationLink\n" + 
-				"      (LinkGrammarRelationshipNode \"" +
+				"(EvaluationLink\n" + 
+				"   (LinkGrammarRelationshipNode \"" +
 				fn.get("LAB").getValue() + "\")\n" +
-				"      (ListLink\n" +
-				"         (ConceptNode \"";
+				"   (ListLink\n" +
+				"      (ConceptNode \"";
 
 			FeatureNode fl = fn.get("F_L");
 
 			String li = fl.get("index_in_sentence").getValue();
 			int lindex = Integer.parseInt(li);
 			str += word_list.get(lindex) + "\")\n" +
-				"         (ConceptNode \"";
+				"      (ConceptNode \"";
 
 
 			FeatureNode fr = fn.get("F_R");
 			String ri = fr.get("index_in_sentence").getValue();
 			int rindex = Integer.parseInt(ri);
 			str += word_list.get(rindex) + "\")\n" +
-				"      )\n   )\n";
+				"   )\n)\n";
 			return false;
 		}
 	};
@@ -103,10 +103,7 @@ class OpenCogSchemeLink
 	public String toString()
 	{
 		String ret = "";
-		ret += "(LinkGrammarLinkageLink\n";
-		ret += "   (ConceptNode \"" + parse.getIDString() + "\")\n";
 		ret += printLinks();
-		ret += ")\n";
 		return ret;
 	}
 
