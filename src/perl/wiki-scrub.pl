@@ -2,18 +2,28 @@
 #
 #  wiki-scrub.pl
 #
-# Ad-hoc script to scrub wikipedia xml dumps, outputing only valid
-# english-language sentences.  This  script removes wiki markup, URL's
+# Ad-hoc script to scrub wikipedia xml dumps, outputting only valid
+# English-language sentences.  This  script removes wiki markup, URL's
 # tables, images, & etc.  It currently seems to be pretty darned
 # bullet-proof, although it might handle multi-line refs incorrectly.
+# 
+# Example usage:
+# cat simplewiki-20080629.xml.bz2 | bunzip2 | ./wiki-scrub.pl
+# 
+# This script creates individual files, one per article, placing these
+# in a directory "wiki-scrubbed", which must already exist. This
+# directory name is user-configurable, see immediately below.
 #
 # Copyright (c) 2008 Linas Vepstas <linas@linas.org>
 #
+#--------------------------------------------------------------------
 #
-# directory where to dump the stripped pages.
+# Directory where to dump the stripped pages.
 # this directory must already exist
+
 $page_out_directory = "wiki-stripped";
 
+#--------------------------------------------------------------------
 # Need to specify the binmodes, in order for \w to match utf8 chars
 use utf8;
 binmode STDIN, ':encoding(UTF-8)'; 
