@@ -19,7 +19,7 @@ binmode STDOUT, ':encoding(UTF-8)';
 
 use UUID;
 
-print "scm\n";
+# print "scm\n";
 
 my $in_sentence = 0;
 my $in_parse = 0;
@@ -185,5 +185,5 @@ foreach $sent_inst (@sent_list)
 print "\t)\n";
 print ")\n";
 
-print ".\n";
-print "exit\n";
+# print ".\n";
+# print "exit\n";
