@@ -2,13 +2,18 @@
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
 
-RelEx is a syntactic relationship extractor; it will parse
-English language sentences and return the  relationships
-between different parts of the sentence.
+RelEx is a syntactic relationship extractor; it will parse English
+language sentences and return the dependency relationships between
+different parts of the sentence.
 
-There are two parts: the command-line version, and an
-graphical visualizer. Build and install for the command 
-line version is discussed first.
+There are multiple inter-related parts to relex. The core component
+extracts the dependency relationships. Additional parts perform
+functions such as anaphora resolution, provide frame relation output,
+provide output in various formats, including a "compact format" and
+a format suitable for input to OpenCog. There are also a small
+assortment of perl scripts for cleaning up web pages, & etc.
+
+Build and install of the core package is discussed first.
 
 Dependencies
 -------------
