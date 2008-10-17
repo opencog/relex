@@ -2,11 +2,13 @@
                    Miscellaneous Utilities
                    -----------------------
 
-The wiki-scrub.pl file will take a wikipedia page, marked up in the
+The wiki-scrub.pl utility will take a wikipedia page, marked up in the
 standard Wikipedia XML format, and remove all markup, leaving only
 plain text. The goal is to have generate text that can be input into
 Relex.
 
-The xxx utility will convert the compact file format into the opencog
-format.
+The cff-to-opencog.pl utility will convert the relex compact file format
+(written out by relex.WebFormat via output/CompactView.java), and
+convert it into the opencog format (compatible with what
+output/OpenCogScheme.java would produce).
 
