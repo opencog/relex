@@ -19,25 +19,24 @@ use UUID;
 
 print "scm\n";
 
-$raw_sentence = 0;
-$in_parse = 0;
-$in_features = 0;
-$in_links = 0;
+my $in_sentence = 0;
+my $in_parse = 0;
+my $in_features = 0;
+my $in_links = 0;
 
-$parse_inst = "";
-@word_list = ();
-
-$sent_inst = "";
+my $sent_inst = "";
+my $parse_inst = "";
+my @word_list = ();
 
 while (<>)
 {
-	if (/<sentence /) { $raw_sentence = 1;  next; }
+	if (/<sentence /) { $in_sentence = 1;  next; }
 	if (/<features>/) { $in_features = 1; next; }
 	if (/<links>/) { $in_links = 1; next; }
 
-	if ($raw_sentence)
+	if ($in_sentence)
 	{
-		$raw_sentence = 0;
+		$in_sentence = 0;
 		chop;
 		print "; SENTENCE: [$_]\n";
 
@@ -45,7 +44,7 @@ while (<>)
 		UUID::unparse($uuid, $uuidstr);
 		$sent_inst = "sentence@" . $uuidstr;
 	}
-	if (/<parse id="(\d)"/)
+	if (/<parse id="(\d+)">/)
 	{
 		$in_parse = 1;
 		$parse_id = $1;  # matches the \d
@@ -55,7 +54,6 @@ while (<>)
 		UUID::unparse($uuid, $uuidstr);
 		$parse_inst = "sentence@" . $uuidstr . "_parse_" . $parse_id;
 
-# XXXXXXXXX Need to have stv for parse ranking
 		print "(ParseLink\n";
 		print "\t(ParseNode \"$parse_inst\")\n";
 		print "\t(SentenceNode \"$sent_inst\")\n";
@@ -63,6 +61,18 @@ while (<>)
 
 		# zero out the word list
 		@word_list = ();
+	}
+	if (/<lg-rank num_skipped_words="(\d+)" disjunct_cost="(\d+)" and_cost="(\d+)" link_cost="(\d+)"/)
+	{
+		my $nsw = $1;
+		my $djc = $2;
+		my $ac = $3;
+		my $lc = $4;
+		# This should use the exact same formula as in ParsedSentence.java
+		# method simpleRankParse().
+		my $rank = 0.4 * $nsw + 0.2 * $djc + 0.06 * $ac + $0.012 * $lc;
+		$rank = exp (-$rank);
+		print "(ParseNode \"$parse_inst\" (stv 1.0 $rank))\n";
 	}
 	if (/<\/parse>/)
 	{
