@@ -49,7 +49,7 @@ public class Document extends Atom implements Serializable
 		// this is required for OpenCog output, where each
 		// document and needs to be tagged.
 		UUID guid = UUID.randomUUID();
-		idString = "document_" + guid;
+		idString = "document@" + guid;
 	}
 
 	public String getID()
