@@ -160,7 +160,7 @@ while (<>)
 		my $rinst = $word_list[$right_idx-1];
 
 		print "(EvaluationLink\n";
-		print "\t(LinkLinguisticRelationshipNode \"$rel_type\")\n";
+		print "\t(DefinedLinguisticRelationshipNode \"$rel_type\")\n";
 		print "\t(ListLink\n";
 		print "\t\t(ConceptNode \"$linst\")\n";
 		print "\t\t(ConceptNode \"$rinst\")\n";
