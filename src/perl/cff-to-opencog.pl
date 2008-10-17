@@ -26,6 +26,8 @@ $in_features = 0;
 $parse_inst = "";
 @word_list = ();
 
+$sent_inst = "";
+
 while (<>)
 {
 	if (/<sentence /) { $raw_sentence = 1;  next; }
@@ -34,6 +36,10 @@ while (<>)
 		$raw_sentence = 0;
 		chop;
 		print "; SENTENCE: [$_]\n";
+
+		UUID::generate($uuid);
+		UUID::unparse($uuid, $uuidstr);
+		$sent_inst = "sentence@" . $uuidstr;
 	}
 	if (/<parse id="(\d)"/)
 	{
@@ -44,6 +50,12 @@ while (<>)
 		UUID::generate($uuid);
 		UUID::unparse($uuid, $uuidstr);
 		$parse_inst = "sentence@" . $uuidstr . "_parse_" . $parse_id;
+
+# XXXXXXXXX Need to have stv for parse ranking
+		print "(ParseLink\n";
+		print "\t(ParseNode \"$parse_inst\")\n";
+		print "\t(SentenceNode \"$sent_inst\")\n";
+		print ")\n";
 
 		# zero out the word list
 		@word_list = ();
