@@ -23,6 +23,7 @@ my $in_sentence = 0;
 my $in_parse = 0;
 my $in_features = 0;
 my $in_links = 0;
+my $in_relations = 0;
 
 my $sent_inst = "";
 my $parse_inst = "";
@@ -33,6 +34,7 @@ while (<>)
 	if (/<sentence /) { $in_sentence = 1;  next; }
 	if (/<features>/) { $in_features = 1; next; }
 	if (/<links>/) { $in_links = 1; next; }
+	if (/<relations>/) { $in_relations = 1; next; }
 
 	if ($in_sentence)
 	{
@@ -74,14 +76,11 @@ while (<>)
 		$rank = exp (-$rank);
 		print "(ParseNode \"$parse_inst\" (stv 1.0 $rank))\n";
 	}
-	if (/<\/parse>/)
-	{
-		$in_parse = 0;
-	}
-	if (/<\/links>/)
-	{
-		$in_links = 0;
-	}
+
+	if (/<\/parse>/) { $in_parse = 0; next; }
+	if (/<\/links>/) { $in_links = 0; next; }
+	if (/<\/relations>/) { $in_relations = 0; next; }
+
 	if (/<\/features>/)
 	{
 		$in_features = 0;
@@ -145,5 +144,21 @@ while (<>)
 		print "\t\t(ConceptNode \"$rinst\")\n";
 		print "\t)\n";
 		print ")\n";
+	}
+	if ($in_relations)
+	{
+		my ($rel_type, $left_idx, $right_idx) = /(\w+\d*)\(\w+\[(\d+)\], \w+\[(\d+)\]\)/;
+
+		my $linst = $word_list[$left_idx-1];
+		my $rinst = $word_list[$right_idx-1];
+
+		print "(EvaluationLink\n";
+		print "\t(LinkLinguisticRelationshipNode \"$rel_type\")\n";
+		print "\t(ListLink\n";
+		print "\t\t(ConceptNode \"$linst\")\n";
+		print "\t\t(ConceptNode \"$rinst\")\n";
+		print "\t)\n";
+		print ")\n";
+
 	}
 }
