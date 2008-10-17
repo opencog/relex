@@ -23,6 +23,9 @@ $raw_sentence = 0;
 $in_parse = 0;
 $in_features = 0;
 
+$parse_inst = "";
+@word_list = ();
+
 while (<>)
 {
 	if (/<sentence /) { $raw_sentence = 1;  next; }
@@ -32,21 +35,36 @@ while (<>)
 		chop;
 		print "; SENTENCE: [$_]\n";
 	}
-	if (/<parse id/)
+	if (/<parse id="(\d)"/)
 	{
 		$in_parse = 1;
+		$parse_id = $1;  # matches the \d
+		$parse_id -= 1;  # start counting at zero, not 1.
+
+		UUID::generate($uuid);
+		UUID::unparse($uuid, $uuidstr);
+		$parse_inst = "sentence@" . $uuidstr . "_parse_" . $parse_id;
+
+		# zero out the word list
+		@word_list = ();
 	}
 	if (/<\/parse>/)
 	{
 		$in_parse = 0;
 	}
-	if (/<features>/)
-	{
-		$in_features = 1;
-	}
 	if (/<\/features>/)
 	{
 		$in_features = 0;
+		# Spew out the sentence
+		print "(ReferenceLink\n";
+		print "\t(ParseNode \"$parse_inst\")\n";
+		print "\t(ListLink\n";
+		foreach $word_inst (@word_list)
+		{
+			print "\t\t(ConceptNode \"$word_inst\")\n";
+		}
+		print "\t)\n";
+		print ")\n";
 	}
 	if ($in_features)
 	{
@@ -54,6 +72,8 @@ while (<>)
 		UUID::generate($uuid);
 		UUID::unparse($uuid, $uuidstr);
 		$word_inst = $word . "@" . $uuidstr;
+
+		push (@word_list, $word_inst);
 
 		print "(ReferenceLink\n";
 		print "\t(ConceptNode \"$word_inst\")\n";
@@ -78,5 +98,10 @@ while (<>)
 			print "\t(DefinedLinguisticConceptNode \"$f\")\n";
 			print ")\n";
 		}
+	}
+
+	if (/<features>/)
+	{
+		$in_features = 1;
 	}
 }
