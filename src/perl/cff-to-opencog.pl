@@ -15,7 +15,68 @@ use utf8;
 binmode STDIN, ':encoding(UTF-8)'; 
 binmode STDOUT, ':encoding(UTF-8)';
 
+use UUID;
+
+print "scm\n";
+
+$raw_sentence = 0;
+$in_parse = 0;
+$in_features = 0;
+
 while (<>)
 {
-	print $_;
+	if (/<sentence /) { $raw_sentence = 1;  next; }
+	if ($raw_sentence)
+	{
+		$raw_sentence = 0;
+		chop;
+		print "; SENTENCE: [$_]\n";
+	}
+	if (/<parse id/)
+	{
+		$in_parse = 1;
+	}
+	if (/<\/parse>/)
+	{
+		$in_parse = 0;
+	}
+	if (/<features>/)
+	{
+		$in_features = 1;
+	}
+	if (/<\/features>/)
+	{
+		$in_features = 0;
+	}
+	if ($in_features)
+	{
+		($n, $word, $lemma, $pos, $feat) = split;
+		UUID::generate($uuid);
+		UUID::unparse($uuid, $uuidstr);
+		$word_inst = $word . "@" . $uuidstr;
+
+		print "(ReferenceLink\n";
+		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(WordNode \"$word\")\n";
+		print ")\n";
+
+		print "(LemmaLink\n";
+		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(WordNode \"$lemma\")\n";
+		print ")\n";
+
+		print "(PartOfSpeechLink\n";
+		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(DefinedLinguisticConceptNode \"$pos\")\n";
+		print ")\n";
+
+		@feats = split (/\|/, $feat);
+		foreach $f (@feats)
+		{
+			print "(InheritanceLink\n";
+			print "\t(ConceptNode \"$word_inst\")\n";
+			print "\t(DefinedLinguisticConceptNode \"$f\")\n";
+			print ")\n";
+		}
+	}
 }
