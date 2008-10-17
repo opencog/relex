@@ -22,6 +22,7 @@ print "scm\n";
 $raw_sentence = 0;
 $in_parse = 0;
 $in_features = 0;
+$in_links = 0;
 
 $parse_inst = "";
 @word_list = ();
@@ -31,6 +32,9 @@ $sent_inst = "";
 while (<>)
 {
 	if (/<sentence /) { $raw_sentence = 1;  next; }
+	if (/<features>/) { $in_features = 1; next; }
+	if (/<links>/) { $in_links = 1; next; }
+
 	if ($raw_sentence)
 	{
 		$raw_sentence = 0;
@@ -63,6 +67,10 @@ while (<>)
 	if (/<\/parse>/)
 	{
 		$in_parse = 0;
+	}
+	if (/<\/links>/)
+	{
+		$in_links = 0;
 	}
 	if (/<\/features>/)
 	{
@@ -111,9 +119,21 @@ while (<>)
 			print ")\n";
 		}
 	}
-
-	if (/<features>/)
+	if ($in_links)
 	{
-		$in_features = 1;
+		my ($link_type, $left_idx, $right_idx) = /(\w+)\((\d+), (\d+)\)/;
+
+		my $linst = "";
+		if (0 == $left_idx) { $linst = "LEFT-WALL"; }
+		else { $linst = $word_list[$left_idx-1]; }
+		my $rinst = $word_list[$right_idx-1];
+
+		print "(EvaluationLink\n";
+		print "\t(LinkGrammarRelationshipNode \"$link_type\")\n";
+		print "\t(ListLink\n";
+		print "\t\t(ConceptNode \"$linst\")\n";
+		print "\t\t(ConceptNode \"$rinst\")\n";
+		print "\t)\n";
+		print ")\n";
 	}
 }
