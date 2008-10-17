@@ -81,7 +81,7 @@ while (<>)
 		# method simpleRankParse().
 		my $rank = 0.4 * $nsw + 0.2 * $djc + 0.06 * $ac + $0.012 * $lc;
 		$rank = exp (-$rank);
-		print "(ParseNode \"$parse_inst\" (stv 1.0 $rank))\n";
+		print "(ParseNode \"$parse_inst\" (cog-new-stv 1.0 $rank))\n";
 	}
 
 	if (/<\/parse>/) { $in_parse = 0; next; }
