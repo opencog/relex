@@ -84,6 +84,11 @@ public class EntityMaintainer implements Serializable
 		// More generally, we should have a "bogus punctutation entity"
 		// for any sort of markup that is not recognized here.
 		//
+		// Some of these have leading or trailing whitespace ... 
+		// these are typically ones that have numbers, that's so that
+		// number expressions don't get mangled; others which might get
+		// mistaken for initials.
+		//
 		emolist.add(":-)");
 		emolist.add(":-(");
 		emolist.add(":)");
@@ -121,7 +126,7 @@ public class EntityMaintainer implements Serializable
 		emolist.add(";O");
 		emolist.add(";D");
 		emolist.add("B-)");
-		emolist.add("T.T");
+		emolist.add(" T.T "); // XXX Danger, may be initials
 		emolist.add("`:-)");
 		emolist.add(":P");
 		emolist.add("O:-)");
@@ -129,35 +134,35 @@ public class EntityMaintainer implements Serializable
 		emolist.add(">_<");
 		emolist.add("<_<");
 		emolist.add(">_>");
-		emolist.add("Oo");
+		emolist.add(" Oo "); 
 		emolist.add(">:D");
-		emolist.add("e.e");
+		emolist.add(" e.e "); // XXX Danger, may be initials
 		emolist.add("-.-*");
 		emolist.add("~.^");
 		emolist.add("(-_-)");
 		emolist.add("(-.-)");
 		emolist.add("-.-'");
-		emolist.add("E.E");
+		emolist.add(" E.E "); // XXX Danger, may be initials
 		emolist.add("-.O");
 		emolist.add("*o*");
 		emolist.add("=^.^=");
-		emolist.add("8)");
-		emolist.add("8D");
+		emolist.add(" 8)");  // XXX Danger! may be legit non-smiley
+		emolist.add(" 8D "); // XXX Danger! may be legit non-smiley
 		emolist.add(">O");
 		emolist.add("(:-D");
 		emolist.add("c^:3");
 		emolist.add("~:>");
 		emolist.add("x-(");
 		emolist.add(";:^)B>");
-		emolist.add("O.O");
-		emolist.add("o.o");
-		emolist.add("O.o");
-		emolist.add("o.O");
-		emolist.add("8|");
+		emolist.add(" O.O "); // XXX Danger, may be initials
+		emolist.add(" o.o ");
+		emolist.add(" O.o ");
+		emolist.add(" o.O ");
+		emolist.add(" 8| ");   // XXX Daner, may be numerical expr.
 		emolist.add(">8V-()<");
-		emolist.add("=3");
+		emolist.add(" =3 ");  // XXX Danger, may be part of formula
 		emolist.add("-:3");
-		emolist.add("<3");
+		emolist.add(" <3 ");  // XXX Danger, may be part of formula
 		emolist.add("<><");
 		emolist.add("<@:)");
 		emolist.add(":3=");
