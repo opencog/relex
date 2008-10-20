@@ -149,7 +149,7 @@ while (<>)
 	}
 	if ($in_links)
 	{
-		my ($link_type, $left_idx, $right_idx) = /(\w+)\((\d+), (\d+)\)/;
+		my ($link_type, $left_idx, $right_idx) = /([\w\*]+)\((\d+), (\d+)\)/;
 
 		my $linst = "";
 		if (0 == $left_idx) { $linst = "LEFT-WALL"; }
