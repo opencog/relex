@@ -90,8 +90,9 @@ while (<>)
 		my $lc = $4;
 		# This should use the exact same formula as in ParsedSentence.java
 		# method simpleRankParse().
-		my $rank = 0.4 * $nsw + 0.2 * $djc + 0.06 * $ac + $0.012 * $lc;
+		my $rank = 0.4 * $nsw + 0.2 * $djc + 0.06 * $ac + 0.012 * $lc;
 		$rank = exp (-$rank);
+		if ($rank < 1.0e-18) { $rank = 0.0; }
 		print "(ParseNode \"$parse_inst\" (cog-new-stv 1.0 $rank))\n";
 	}
 
