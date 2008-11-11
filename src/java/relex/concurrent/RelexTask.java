@@ -95,7 +95,8 @@ public class RelexTask implements Callable<RelexTaskResult>
 					entityMaintainer.repairSentence(parse.getLeft());
 
 					// Also do a Penn tree-bank style phrase structure markup.
-					phraseMarkup.markup(parse);
+					if (phraseMarkup != null)
+						phraseMarkup.markup(parse);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

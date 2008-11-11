@@ -26,6 +26,8 @@ import relex.feature.LinkableView;
 public class EntityAlg extends TemplateMatchingAlg {
 
 	protected void applyTo(FeatureNode node, RelexContext context) {
+		if (getTemplate().match(node) == null)
+			return;
 		LinkableView linkable = new LinkableView(node);
 		String word = linkable.getWordString();
 		if (word.length() >= 1) {

@@ -66,12 +66,15 @@ public abstract class SentenceAlgorithm
 				if (printResult)
 					System.out.println(sentence);
 				
-				FeatureNode f = c.get(SIGNATURE_FEATURE_NAME);
-				if (f == null) {
-					f = new FeatureNode(getSignature());
-					c.set(SIGNATURE_FEATURE_NAME, f);
-				} else {
-					f.forceValue(f.getValue() + " " + getSignature());
+				if (!c.isValued())
+				{
+					FeatureNode f = c.get(SIGNATURE_FEATURE_NAME);
+					if (f == null) {
+						f = new FeatureNode(getSignature());
+						c.set(SIGNATURE_FEATURE_NAME, f);
+					} else {
+						f.forceValue(f.getValue() + " " + getSignature());
+					}
 				}
 			}
 		}

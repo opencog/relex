@@ -33,6 +33,9 @@ public class TwoWordCombineToRightAlg extends TemplateMatchingAlg
 {
     protected void applyTo(FeatureNode node, RelexContext context)
     {
+    	if (getTemplate().match(node) == null)
+    		return;
+    	
         FeatureNode leftNode = LinkView.getLeft(node);
         FeatureNode rightNode = LinkView.getRight(node);
 

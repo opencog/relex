@@ -20,6 +20,7 @@ package relex.algs;
  * This algorithm combines sequences of words which should be a single word 
  * (proper names, and idioms like "at hand")
  */
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import relex.concurrent.RelexContext;
@@ -103,7 +104,11 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 
 	protected void applyTo(FeatureNode node, RelexContext context)
 	{
-		FeatureNode rightNode = getTemplate().val("right");
+		Map<String, FeatureNode> vars = getTemplate().match(node); 
+		if (vars == null)
+			return;
+		FeatureNode rightNode = getTemplate().val("right", vars);
+		
 		if (rightNode != LinkView.getRight(node))
 			throw new RuntimeException("variable 'right' is not properly assigned");
 		if (!isRightMost(rightNode, allLabelRegex))
@@ -128,7 +133,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		// rightNode.set("orig_str", new FeatureNode(bigNameWithSpaces));
 		rightNode.set("collocation_end", rightNode);
 		rightNode.set("collocation_start", leftNode);
-		rightNode.set("start_char", leftNode.get("start_char"));
+		rightNode.get("start_char").setValue(leftNode.get("start_char").getValue());
 
 		// Use morphology on the right node, just in case.
 		// Err .. maybe not. What does this acheive?

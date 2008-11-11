@@ -27,6 +27,9 @@ public class VerbTenseAlg extends TemplateMatchingAlg
 {
 	protected void applyTo(FeatureNode node, RelexContext context)
 	{
+		if (getTemplate().match(node) == null)
+			return;
+		
 		LinkableView verb = new LinkableView(node);
 		String word = verb.getWordString();
 		if (context.getLinkParserClient().isPastTenseForm(word))

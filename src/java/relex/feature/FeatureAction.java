@@ -16,8 +16,10 @@
 
 package relex.feature;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class FeatureAction extends FeaturePathAndTarget
@@ -25,7 +27,8 @@ public class FeatureAction extends FeaturePathAndTarget
 	static private HashSet<String> actionSeparators;
 
 	static private FeatureTemplate blankTemplate = new FeatureTemplate();
-
+	static private Map<String, FeatureNode> emptyVarSet = new HashMap<String, FeatureNode>();
+	
 	static {
 		actionSeparators = new HashSet<String>();
 		actionSeparators.add("=");
@@ -124,7 +127,7 @@ public class FeatureAction extends FeaturePathAndTarget
 		leftParent.set(leftFeature, null);
 	}
 
-	public void doAction(FeatureNode f, FeatureTemplate template)
+	public void doAction(FeatureNode f, FeatureTemplate template, Map<String, FeatureNode> vars)
 	{
 		FeatureNode left = f.pathTarget(getPath());
 		FeatureNode right = null;
@@ -135,7 +138,7 @@ public class FeatureAction extends FeaturePathAndTarget
 			// interpret val as a variable name or a plain string
 			String str = getTargetString();
 			if (str.charAt(0) == '$') {
-				right = template.val(str.substring(1, str.length()));
+				right = template.val(str.substring(1, str.length()), vars);
 			} else if (str.equals("%")) { // str.charAt(0)=='%') {
 				doActionClear(f, left);
 				return;
@@ -156,7 +159,7 @@ public class FeatureAction extends FeaturePathAndTarget
 	}
 
 	public void doAction(FeatureNode f) {
-		doAction(f, blankTemplate);
+		doAction(f, blankTemplate, emptyVarSet);
 	}
 
 	public String toString() {

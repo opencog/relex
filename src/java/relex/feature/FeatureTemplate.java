@@ -19,6 +19,7 @@ package relex.feature;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class FeatureTemplate
@@ -27,7 +28,7 @@ public class FeatureTemplate
 
 	private ArrayList<FeaturePathAndTarget> pathsAndTargs;
 
-	private HashMap<String,FeatureNode> vars;
+//	private HashMap<String,FeatureNode> vars;
 
 	/**
 	 * if test begins with "\" it is interpretted as a regular expression
@@ -49,7 +50,7 @@ public class FeatureTemplate
 		return test.equals(val);
 	}
 
-	private boolean matchesString(FeatureNode target, String pathTarget)
+	private boolean matchesString(FeatureNode target, String pathTarget, Map<String,FeatureNode> vars)
 	{
 		// if path target is a variable name, set that variable name to the
 		// FeatureNode target
@@ -69,32 +70,34 @@ public class FeatureTemplate
 		return false;
 	}
 
-	public FeatureNode val(String varName)
+	public FeatureNode val(String varName, Map<String,FeatureNode> vars)
 	{
 		return vars.get(varName);
 	}
 
 	// Iterate through the pathAndTargs, making sure each matches f
-	public boolean match(FeatureNode f)
+	public Map<String,FeatureNode> match(FeatureNode f)
 	{
 		boolean matched = true;
 		Iterator<FeaturePathAndTarget> i = pathsAndTargs.iterator();
-		vars.clear();
+		Map<String,FeatureNode> vars = new HashMap<String,FeatureNode>();
+		// vars.clear();
 		while (matched && i.hasNext()) {
 			FeaturePathAndTarget pathAndTarget = i.next();
 			if (pathAndTarget.getSeparator().equals("=")) {
-				matched = match(f, pathAndTarget);
+				matched = match(f, pathAndTarget, vars);
 			}
 			if (pathAndTarget.getSeparator().equals("!=")) {
-				matched = !match(f, pathAndTarget);
+				matched = !match(f, pathAndTarget, vars);
 			}
 		}
-		if (!matched)
+/*		if (!matched)
 			vars.clear();
-		return matched;
+		return matched; */
+		return matched ? vars : null;
 	}
 
-	private boolean match(FeatureNode f, FeaturePathAndTarget pathAndTarget)
+	private boolean match(FeatureNode f, FeaturePathAndTarget pathAndTarget, Map<String,FeatureNode> vars)
 	{
 		// get the target of the path in F
 		FeaturePath path = pathAndTarget.getPath();
@@ -120,7 +123,7 @@ public class FeatureTemplate
 				// only empty string would match null
 				return (fTarget.isEmpty() || (fTarget.isValued() && fTarget
 						.getValue().length() == 0));
-			if (!matchesString(fTarget, pathTarg)) {
+			if (!matchesString(fTarget, pathTarg, vars)) {
 				return false;
 			}
 		}
@@ -128,7 +131,7 @@ public class FeatureTemplate
 		return true;
 	}
 
-	public String toString()
+	public String toString(Map<String,FeatureNode> vars)
 	{
 		StringBuffer sb = new StringBuffer();
 		Iterator<FeaturePathAndTarget> i = pathsAndTargs.iterator();
@@ -148,7 +151,7 @@ public class FeatureTemplate
 	public FeatureTemplate()
 	{
 		pathsAndTargs = new ArrayList<FeaturePathAndTarget>();
-		vars = new HashMap<String, FeatureNode>();
+		//vars = new HashMap<String, FeatureNode>();
 	}
 
 	public FeatureTemplate(ArrayList<FeaturePathAndTarget> pathAndTargVec)
@@ -205,9 +208,11 @@ public class FeatureTemplate
 		while (i.hasNext()) {
 			val.forceValue(i.next());
 			System.out.println("Testing with " + val);
-			if (template.match(f)) {
+			Map<String,FeatureNode> vars = template.match(f);
+			//if (template.match(f)) {
+			if (vars != null) {
 				System.out.println("MATCHED");
-				System.out.println("VAR = " + template.val("VAR"));
+				System.out.println("VAR = " + template.val("VAR", vars));
 			} else {
 				System.out.println("FAILED MATCH"); // Want this for the last value!
 			}
