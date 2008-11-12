@@ -23,7 +23,7 @@ import org.linkgrammar.LinkGrammar;
  * The LinkGrammar.class is not internally organized in a very good OOP way.
  * This should be fixed.
  *
- * This class is for use with link-grammar versions 4.2.6 and later
+ * This class is for use with link-grammar versions 4.3.7 and later
  */
 
 public class LinkParserJNINewClient extends LinkParserClient
