@@ -109,7 +109,6 @@ while (<>)
 		print "\t(ListLink\n";
 		foreach $word_inst (@word_list)
 		{
-			$word_inst =~ s/\\/\\\\/g; # escape backslashes
 			print "\t\t(ConceptNode \"$word_inst\")\n";
 		}
 		print "\t)\n";
@@ -118,7 +117,12 @@ while (<>)
 	if ($in_features)
 	{
 		($n, $word, $lemma, $pos, $feat) = split;
-		$word =~ s/\\/\\\\/g;  # escape backslashes
+
+		# We need to double-escape backslashes; once for scheme, which
+		# swallows pairs of them, and once again for SQL, which swallows
+		# more pairs. This results with a single backslash in the SQL DB.
+		$word =~ s/\\/\\\\\\\\/g;
+		$lemma =~ s/\\/\\\\\\\\/g;
 		UUID::generate($uuid);
 		UUID::unparse($uuid, $uuidstr);
 		$word_inst = $word . "@" . $uuidstr;
