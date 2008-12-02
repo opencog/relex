@@ -15,7 +15,7 @@
         <pathelement location="/usr/local/share/java/maxent-2.4.0.jar"/>
         <pathelement location="/usr/local/share/java/trove.jar"/>
         <pathelement location="/usr/local/share/java/link-grammar-4.3.9.jar"/>
-        <pathelement location="/usr/share/java/link-grammar-4.3.9.jar"/>
+        <pathelement location="/usr/share/java/linkgrammar-4.4.0.jar"/>
         <pathelement location="/usr/share/java/commons-logging.jar"/>
         <pathelement location="${GATE_HOME}/bin/gate.jar"/>
         <pathelement location="${GATE_HOME}/lib/jdom.jar"/>
