@@ -24,8 +24,9 @@ import org.linkgrammar.LinkGrammar;
  * The abstract interface to the C linkparser. Extensions of this class can link
  * directly to the linkparser through JNI, or through some other call method
  * such as Sockets
+ * 
+ * @deprecated
  */
-
 public abstract class LinkParserClient
 {
 	// ServerParams are parameters that are used by the link parser c code

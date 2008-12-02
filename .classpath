@@ -10,10 +10,10 @@
 	<classpathentry kind="lib" path="C:/tools/gate/lib/stax-api-1.0.1.jar"/>
 	<classpathentry kind="lib" path="C:/tools/gate/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="C:/tools/gate/bin/gate.jar" sourcepath="C:/tools/gate/src"/>
-	<classpathentry kind="lib" path="D:/work/disco/trunk/lib/link-grammar.jar"/>
 	<classpathentry kind="lib" path="D:/work/disco/trunk/lib/wordnet/jwnl.jar"/>
 	<classpathentry kind="lib" path="D:/work/disco/trunk/lib/opennlp/maxent-2.4.0.jar" sourcepath="D:/work/maxent-2.4.0/src/java"/>
 	<classpathentry kind="lib" path="D:/work/disco/trunk/lib/opennlp/opennlp-tools-1.3.0.jar"/>
 	<classpathentry kind="lib" path="D:/work/disco/trunk/lib/opennlp/trove.jar"/>
+	<classpathentry kind="lib" path="/LinkGrammar/bin"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

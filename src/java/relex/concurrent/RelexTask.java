@@ -23,7 +23,6 @@ import relex.ParsedSentence;
 import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.entity.EntityMaintainer;
-import relex.parser.LinkParser;
 import relex.tree.PhraseMarkup;
 
 /**
@@ -40,8 +39,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 	private String sentence;
 	private EntityMaintainer entityMaintainer;
 	
-	// Reusable, shared processors
-	private LinkParser lp; 
+	// Reusable, shared processors 
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 	private PhraseMarkup phraseMarkup;
 
@@ -50,14 +48,12 @@ public class RelexTask implements Callable<RelexTaskResult>
 	private BlockingQueue<RelexContext> pool;
 	
 	public RelexTask(int index, String sentence,
-			EntityMaintainer entityMaintainer,
-			LinkParser lp, 
+			EntityMaintainer entityMaintainer, 
 			SentenceAlgorithmApplier sentenceAlgorithmApplier,
 			PhraseMarkup phraseMarkup,
 			RelexContext context, BlockingQueue<RelexContext> pool){
 		this.index = index;
-		this.entityMaintainer = entityMaintainer;
-		this.lp = lp; 
+		this.entityMaintainer = entityMaintainer; 
 		this.sentenceAlgorithmApplier = sentenceAlgorithmApplier;
 		this.phraseMarkup = phraseMarkup;
 		this.context = context;
@@ -72,7 +68,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
 			Sentence sntc = null;
 			try {
-				sntc = lp.parse(convertedSentence, context.getLinkParserClient());
+				sntc = context.getParser().parse(convertedSentence);//, context.getLinkParserClient());
 			} catch (RuntimeException ex) {
 				sntc = new Sentence();
 				sntc.setSentence(sentence);

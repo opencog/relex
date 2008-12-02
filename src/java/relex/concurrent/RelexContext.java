@@ -17,20 +17,27 @@
 package relex.concurrent;
 
 import relex.morphy.Morphy;
-import relex.parser.LinkParserClient;
+import relex.parser.IParser;
 
-public class RelexContext {
-	private LinkParserClient linkParserClient; 
+public class RelexContext 
+{
+//	private LinkParserClient linkParserClient;
+	private IParser parser;
 	private Morphy morphy;
 	
-	public LinkParserClient getLinkParserClient() {
+/*	public LinkParserClient getLinkParserClient() {
 		return linkParserClient;
-	}
+	} 
 
 	public void setLinkParserClient(LinkParserClient linkParserClient) {
 		this.linkParserClient = linkParserClient;
-	}
+	} */ 
 
+	public IParser getParser()
+	{
+		return parser;
+	}
+	
 	public Morphy getMorphy() {
 		return morphy;
 	}
@@ -42,9 +49,9 @@ public class RelexContext {
 	public RelexContext() {
 	}
 
-	public RelexContext(LinkParserClient lpc, Morphy morphy) {
-		super();
-		this.linkParserClient= lpc;
+	public RelexContext(IParser parser, Morphy morphy) {
+		//this.linkParserClient= lpc;
+		this.parser = parser;
 		this.morphy = morphy;
 	}
 	

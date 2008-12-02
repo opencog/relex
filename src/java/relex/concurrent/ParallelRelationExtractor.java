@@ -37,9 +37,7 @@ import relex.corpus.EntityMaintainerFactory;
 import relex.entity.EntityMaintainer;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
-import relex.parser.LinkParser;
-import relex.parser.LinkParserClient;
-import relex.parser.LinkParserSocketClient;
+import relex.parser.RemoteLGParser;
 import relex.tree.PhraseMarkup;
 
 public class ParallelRelationExtractor {
@@ -70,7 +68,7 @@ public class ParallelRelationExtractor {
 	
 	// Thread-safe processors
 	/** Syntactic processing */
-	private LinkParser linkParser;
+//	private LinkParser linkParser;
 	
 	/** Semantic (RelEx) processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
@@ -82,7 +80,7 @@ public class ParallelRelationExtractor {
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
 		entityDetector = EntityMaintainerFactory.get();
-		linkParser = new LinkParser();
+//		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
@@ -100,9 +98,12 @@ public class ParallelRelationExtractor {
 		morphy.initialize();
 		
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
-			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
-			 lpc.setAllowSkippedWords(true);
-			 RelexContext context = new RelexContext(lpc, morphy);
+//			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
+//			 lpc.setAllowSkippedWords(true);
+			 RemoteLGParser parser = new RemoteLGParser();
+			 parser.setHostname(DEFAULT_HOST);
+			 parser.setPort(FIRST_PORT+i);
+			 RelexContext context = new RelexContext(parser, morphy);
 			 try {
 				pool.put(context);
 			} catch (InterruptedException e) {
@@ -138,7 +139,6 @@ public class ParallelRelationExtractor {
 		Callable<RelexTaskResult> callable = 
 			new RelexTask(count++, sentence, 
 					entityMaintainer, 
-					linkParser, 
 					sentenceAlgorithmApplier, 
 					phraseMarkup, context, pool);
 		Future<RelexTaskResult> submit = exec.submit(callable);

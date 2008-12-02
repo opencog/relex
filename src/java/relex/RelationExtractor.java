@@ -47,10 +47,14 @@ import relex.output.OpenCogScheme;
 import relex.output.ParseView;
 import relex.output.RawView;
 import relex.output.SimpleView;
+import relex.parser.IParser;
+import relex.parser.LGParser;
 import relex.parser.LinkParser;
 import relex.parser.LinkParserClient;
 import relex.parser.LinkParserJNINewClient;
 import relex.parser.LinkParserSocketClient;
+import relex.parser.LocalLGParser;
+import relex.parser.RemoteLGParser;
 import relex.stats.TruthValue;
 import relex.stats.SimpleTruthValue;
 import relex.tree.PhraseMarkup;
@@ -82,7 +86,7 @@ public class RelationExtractor
 	private RelexContext context;
 
 	/** Syntax processing */
-	private LinkParser parser;
+	private LGParser parser;
 
 	/** Semantic processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
@@ -115,12 +119,13 @@ public class RelationExtractor
 	}
 	private void init(boolean useSocket)
 	{
-		parser = new LinkParser();
+//		parser = new LinkParser();
 
-		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
-		lpc.init();
+//		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
+//		lpc.init();
+		parser = useSocket ? new RemoteLGParser() : new LocalLGParser();
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
-		context = new RelexContext(lpc, morphy);
+		context = new RelexContext(parser, morphy);
 
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
 
@@ -142,7 +147,7 @@ public class RelationExtractor
 
 	String getVersion()
 	{
-		return context.getLinkParserClient().getVersion();
+		return "don't know"; //context.getLinkParserClient().getVersion();
 	}
 
 	/* ---------------------------------------------------------- */
@@ -153,19 +158,22 @@ public class RelationExtractor
 	 * but only this many are returned.
 	 */
 	public void setMaxParses(int maxParses) {
-		context.getLinkParserClient().setMaxParses(maxParses);
+		parser.getConfig().setMaxLinkages(maxParses); //context.getLinkParserClient().setMaxParses(maxParses);
 	}
 
 	public void setMaxCost(int maxCost) {
-		context.getLinkParserClient().setMaxCost(maxCost);
+	//	context.getLinkParserClient().setMaxCost(maxCost);
+		parser.getConfig().setMaxCost(maxCost);
 	}
 
 	public void setAllowSkippedWords(boolean allow) {
-		context.getLinkParserClient().setAllowSkippedWords(allow);
+		//context.getLinkParserClient().setAllowSkippedWords(allow);
+		parser.getConfig().setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {
-		context.getLinkParserClient().setMaxParseSeconds(maxParseSeconds);
+		// context.getLinkParserClient().setMaxParseSeconds(maxParseSeconds);
+		parser.getConfig().setMaxParseSeconds(maxParseSeconds);
 	}
 
 	/* ---------------------------------------------------------- */
@@ -262,7 +270,7 @@ public class RelationExtractor
 		String orig_sentence = entityMaintainer.getOriginalSentence();
 		Sentence sent = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			sent = parser.parse(sentence, context.getLinkParserClient());
+			sent = context.getParser().parse(sentence); //parser.parse(sentence, context.getLinkParserClient());
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
 			sent = new Sentence();

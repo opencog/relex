@@ -25,6 +25,8 @@ import relex.util.socket.ProcessClient;
  * This class serves as a wrapper to the C linkparser library.
  * Because it is using C, the class is not internally organized
  * in a very good OOP way. -- Someday, this should be fixed.
+ * 
+ * @deprecated
  */
 public class LinkParserSocketClient extends LinkParserClient
 {

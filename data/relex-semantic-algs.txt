@@ -253,10 +253,10 @@ VTALG4
 =
 <F_R VTAlg_flag> = F
 ;
-#VerbTenseAlg
-VERB_TENSE
-<VTAlg_flag> = T
-=
+;#VerbTenseAlg
+;VERB_TENSE
+;<VTAlg_flag> = T
+;=
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -427,11 +427,11 @@ BASIC_REF
 ;
 ; ENTITY PROCESSING
 ;
-#EntityAlg
-ENTITY
+;#EntityAlg
+;ENTITY
 ; sets ENTITY-FLAG = T for words which are names, places, etc.
-<str> != %
-=
+;<str> != %
+;=
 ;
 ; Entities need to be identified as nouns, so that later
 ; relex rules, which look for nouns, treat them appropriately.

@@ -18,6 +18,9 @@ package relex.parser;
 
 import relex.util.socket.ProcessProtocol;
 
+/**
+ * @deprecated
+ */
 public class LinkParserProtocol extends ProcessProtocol
 {
 	private static final int verbosity = 1;

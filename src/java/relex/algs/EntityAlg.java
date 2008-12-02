@@ -28,14 +28,15 @@ public class EntityAlg extends TemplateMatchingAlg {
 	protected void applyTo(FeatureNode node, RelexContext context) {
 		if (getTemplate().match(node) == null)
 			return;
-		LinkableView linkable = new LinkableView(node);
+		throw new UnsupportedOperationException("EntityAlg is obsolete, please remove from relex-semantic-algs.txt");		
+/*		LinkableView linkable = new LinkableView(node);
 		String word = linkable.getWordString();
 		if (word.length() >= 1) {
-			boolean ise = context.getLinkParserClient().isEntity(word);
+			boolean ise = linkable.hasEntityFlag(); // context.getLinkParserClient().isEntity(word);
 			if (Character.isUpperCase(word.charAt(0)) || ise) {
 				node.set("ENTITY-FLAG", new FeatureNode("T"));
 			}
-		}
+		} */
 	}
 
 }

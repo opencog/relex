@@ -30,11 +30,11 @@ public class VerbTenseAlg extends TemplateMatchingAlg
 		if (getTemplate().match(node) == null)
 			return;
 		
-		LinkableView verb = new LinkableView(node);
-		String word = verb.getWordString();
-		if (context.getLinkParserClient().isPastTenseForm(word))
-			verb.setTenseVal("past");
+//		LinkableView verb = new LinkableView(node);
+//		String word = verb.getWordString();
+//		if (context.getLinkParserClient().isPastTenseForm(word))
+	//		verb.setTenseVal("past");
+		throw new UnsupportedOperationException("VerbTenseAlg is obsolete, please remove from relex-semantic-algs.txt");
 	}
 
 }
-

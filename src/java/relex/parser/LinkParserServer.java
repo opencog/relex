@@ -20,6 +20,9 @@ import java.io.IOException;
 
 import relex.util.socket.ProcessServer;
 
+/**
+ * @deprecated
+ */
 public class LinkParserServer
 {
 	public static int verbosity = 0;

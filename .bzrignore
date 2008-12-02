@@ -2,3 +2,4 @@ bin
 data/sentence-detector/EnglishSD.bin.gz
 relex-*.jar
 relex-*.tar.gz*
+delme.java

@@ -24,6 +24,8 @@ import org.linkgrammar.LinkGrammar;
  * This should be fixed.
  *
  * This class is for use with link-grammar versions 4.3.7 and later
+ * 
+ * @deprecated
  */
 
 public class LinkParserJNINewClient extends LinkParserClient

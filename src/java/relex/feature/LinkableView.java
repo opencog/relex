@@ -378,7 +378,15 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	public void setTenseVal(String tenseString) {
 		setTenseString(fn(), tenseString);
 	}
-
+	
+	public void setEntityFlag() {
+		fn().set("ENTITY-FLAG", new FeatureNode("T"));
+	}
+	
+	public boolean hasEntityFlag()	{
+		return fn().get("ENTITY-FLAG") != null;
+	}
+	
 	public static void setTenseString(FeatureNode ths, String tenseString) {
 		throwIfNoFN(ths);
 		FeatureNode f = ths.get(TENSE_FEATURE_NAME);

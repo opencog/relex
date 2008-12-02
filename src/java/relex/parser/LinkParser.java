@@ -29,6 +29,8 @@ import relex.feature.LinkableView;
 /**
  * This class provides another level of abstraction over the linkparser client,
  * allowing communication with ParsedSentence objects.
+ * 
+ * @deprecated 
  */
 public class LinkParser extends Parser
 {

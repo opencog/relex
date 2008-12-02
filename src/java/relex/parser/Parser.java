@@ -20,6 +20,8 @@ import relex.Sentence;
 
 /**
  * The interface to
+ * 
+ * @deprecated
  */
 public abstract class Parser
 {
