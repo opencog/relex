@@ -16,26 +16,31 @@ public class LocalLGParser extends LGParser
 {
 	private static final int verbosity = 0;
 	
-	private boolean initialized = false;
+	private ThreadLocal<Boolean> initialized = new ThreadLocal<Boolean>()
+	{
+		protected Boolean initialValue()
+		{
+			return Boolean.FALSE;
+		}
+	};
 	
 	public void init()
 	{
-		if (initialized) // allow for reinitialized after config changes.
-			LinkGrammar.close();
+		if (!initialized.get())
+			LinkGrammar.init();
 		LGService.configure(config);
-		LinkGrammar.init();
-		initialized = true;
+		initialized.set(Boolean.TRUE);
 	}
 
 	public void close()
 	{
 		LinkGrammar.close();
-		initialized = false;
+		initialized.set(Boolean.FALSE);
 	}
 	
 	public Sentence parse(String sentence) throws ParseException
 	{
-		if (!initialized)
+		if (!initialized.get())
 			init();
 		Long starttime;
 		if (verbosity > 0) starttime = System.currentTimeMillis();
