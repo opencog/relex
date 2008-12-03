@@ -114,11 +114,8 @@ public class RelationExtractor
 	}
 	private void init(boolean useSocket)
 	{
-//		parser = new LinkParser();
-
-//		LinkParserClient lpc = (useSocket) ? new LinkParserSocketClient() : LinkParserJNINewClient.getSingletonInstance();
-//		lpc.init();
 		parser = useSocket ? new RemoteLGParser() : new LocalLGParser();
+		parser.getConfig().setStoreConstituentString(true);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(parser, morphy);
 
@@ -142,7 +139,9 @@ public class RelationExtractor
 
 	String getVersion()
 	{
-		return "don't know"; //context.getLinkParserClient().getVersion();
+		// return parser.getVersion();
+		// Temporary hack unil the new bindings are fixed up.
+		return "XXX Broken -- FIXME";
 	}
 
 	/* ---------------------------------------------------------- */
@@ -152,22 +151,20 @@ public class RelationExtractor
 	 * This will NOT reduce processing time; all parses are still computed,
 	 * but only this many are returned.
 	 */
-	public void setMaxParses(int maxParses) {
-		parser.getConfig().setMaxLinkages(maxParses); //context.getLinkParserClient().setMaxParses(maxParses);
+	public void setMaxParses(int maxParses)
+	{
+		parser.getConfig().setMaxLinkages(maxParses);
 	}
 
 	public void setMaxCost(int maxCost) {
-	//	context.getLinkParserClient().setMaxCost(maxCost);
 		parser.getConfig().setMaxCost(maxCost);
 	}
 
 	public void setAllowSkippedWords(boolean allow) {
-		//context.getLinkParserClient().setAllowSkippedWords(allow);
 		parser.getConfig().setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {
-		// context.getLinkParserClient().setMaxParseSeconds(maxParseSeconds);
 		parser.getConfig().setMaxParseSeconds(maxParseSeconds);
 	}
 
@@ -265,7 +262,7 @@ public class RelationExtractor
 		String orig_sentence = entityMaintainer.getOriginalSentence();
 		Sentence sent = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
-			sent = context.getParser().parse(sentence); //parser.parse(sentence, context.getLinkParserClient());
+			sent = parser.parse(sentence);
 		} else {
 			System.err.println("Sentence too long!: " + sentence);
 			sent = new Sentence();
@@ -485,7 +482,6 @@ public class RelationExtractor
 					em = gem.makeEntityMaintainer(sentence);
 					re.reportTime("Gate processing: ");
 				}
-
 				Sentence sntc = re.processSentence(sentence,em);
 				re.doco.addSentence(sntc);
 
