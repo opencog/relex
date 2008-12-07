@@ -222,36 +222,37 @@ POS_PUNCTUATION2
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; PAST-TENSE TENSE
-;
+; As of Dec 2008, this is no longer used, as tense tagging is now done
+; at graph creation time.
 ;
 ; VTAlg flag only set for verbs which are possible past-tense forms
-#TemplateActionAlg
-VTALG1
-;<F_R POS> = verb
-<lab_R> = S|RS|SFsi|SF
-=
-<F_R VTAlg_flag> = T
-;
-#TemplateActionAlg
-VTALG2
-;<F_L POS> = verb
-<lab_L> = SI|SFI|SI*j|SXI
-=
-<F_L VTAlg_flag> = T
-;
-#TemplateActionAlg
-VTALG3
-<POS> = verb
-<str> = did|didn't|had|hadn't|was|wasn't|were|weren't
-=
-<VTAlg_flag> = T
-;
-#TemplateActionAlg
-VTALG4
-<LAB> = PP|PPf
-<F_R str> = had|hadn't
-=
-<F_R VTAlg_flag> = F
+; #TemplateActionAlg
+; VTALG1
+; ;<F_R POS> = verb
+; <lab_R> = S|RS|SFsi|SF
+; =
+; <F_R VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG2
+; ;<F_L POS> = verb
+; <lab_L> = SI|SFI|SI*j|SXI
+; =
+; <F_L VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG3
+; <POS> = verb
+; <str> = did|didn't|had|hadn't|was|wasn't|were|weren't
+; =
+; <VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG4
+; <LAB> = PP|PPf
+; <F_R str> = had|hadn't
+; =
+; <F_R VTAlg_flag> = F
 ;
 ;#VerbTenseAlg
 ;VERB_TENSE
@@ -427,11 +428,7 @@ BASIC_REF
 ;
 ; ENTITY PROCESSING
 ;
-;#EntityAlg
-;ENTITY
-; sets ENTITY-FLAG = T for words which are names, places, etc.
-;<str> != %
-;=
+; As of Dec 2008, the ENTITY-FLAG is set at the graph creation time.
 ;
 ; Entities need to be identified as nouns, so that later
 ; relex rules, which look for nouns, treat them appropriately.
