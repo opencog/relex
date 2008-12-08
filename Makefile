@@ -50,4 +50,4 @@ DIST_FILES = \
 all:
 
 dist:
-	tar --transform "s#^#relex-0.10.2/#" -zcvf relex-0.10.2.tar.gz ${DIST_FILES}
+	tar --transform "s#^#relex-0.98.0/#" -zcvf relex-0.98.0.tar.gz ${DIST_FILES}
