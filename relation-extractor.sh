@@ -7,7 +7,7 @@
 # Flags:
 # RelationExtractor [-s Sentence (in quotes)] [-h (show this help)] 
 # [-t (show parse tree)] [-l (show parse links)] 
-# [-o (show opencog XML output)] [-v verbose]
+# [-o (show opencog S-exp output)] [-v verbose]
 # [-n parse-number] [--maxParses N] [--maxParseSeconds N]
 
 export LANG=en_US.UTF-8
@@ -52,6 +52,7 @@ bin:\
 #echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
 #	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g
 #/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g -s "Alice ate the mushroom."
+
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g -s "Alice ate the mushroom."
 
 # Alternately, the sentence can be specified on the command line:
