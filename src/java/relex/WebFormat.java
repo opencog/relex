@@ -113,12 +113,8 @@ public class WebFormat extends RelationExtractor
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 
-		// XXX hack alert -- we should be getting the relex
-		// version string from the build environment somehow,
-		// instead of hard-coding it.
-		String version = re.getVersion();
-		version += "\trelex-0.98.0";
-		cv.setVersion(version);
+		// Pass along the version string.
+		cv.setVersion(re.getVersion());
 
 		EntityMaintainerFactory gem = null;
 		if (commandMap.get("-g") == null)

@@ -139,7 +139,10 @@ public class RelationExtractor
 
 	String getVersion()
 	{
-		return parser.getVersion();
+		// XXX hack alert -- we should be getting the relex
+		// version string from the build environment somehow,
+		// instead of hard-coding it here. 
+		return parser.getVersion() + "\trelex-0.98.0";
 	}
 
 	/* ---------------------------------------------------------- */
@@ -416,6 +419,7 @@ public class RelationExtractor
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
+		System.out.println("; Version: " + re.getVersion());
 
 		if (commandMap.get("-a") != null)
 		{
