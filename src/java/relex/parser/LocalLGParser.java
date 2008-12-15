@@ -244,7 +244,12 @@ public class LocalLGParser extends LGParser
 			}
 		}
 	}
-	
+
+	public String getVersion()
+	{
+		return LinkGrammar.getVersion();
+	}
+	 
 	public static void main(String[] args)
 	{
 		LocalLGParser lp = new LocalLGParser();

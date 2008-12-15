@@ -22,6 +22,7 @@ import relex.feature.LinkableView;
 
 public class RemoteLGParser extends LGParser
 {
+	private String parserVersion;
 	private String hostname;
 	private int port;
 	private int parseRetryCount = 2;
@@ -34,6 +35,7 @@ public class RemoteLGParser extends LGParser
 		JSONReader reader = new JSONReader();
 		Map top = (Map)reader.read(json);
 		ParseResult result = new ParseResult();
+		result.setParserVersion((String)top.get("version"));
 		result.setWords(((List<String>)(top.get("tokens"))).toArray(new String[0]));
 		boolean [] A = new boolean[result.getWords().length];
 		for (Long idx : ((List<Long>)top.get("entity")))
@@ -224,8 +226,11 @@ public class RemoteLGParser extends LGParser
 		return new String(buf, 0, length);
 	}
 	
-	private String callParser(String text) throws InterruptedException, IOException
+	private String callParser(String request) throws InterruptedException, IOException
 	{
+		if (hostname == null || hostname.length() == 0 || port <= 1024)
+			throw new ParseException("No hostname for remote parser or invalid port number < 1024");
+		
 		//
 		// Connect:
 		//
@@ -261,7 +266,7 @@ public class RemoteLGParser extends LGParser
 		{
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new InputStreamReader(socket.getInputStream());			
-			out.print(makeLGRequest(text));
+			out.print(request);
 			out.print('\n');
 			out.flush();
 			return readResponse(in);
@@ -274,13 +279,18 @@ public class RemoteLGParser extends LGParser
 		}
 	}
 	
+	private String parseRequest(String text) throws InterruptedException, IOException
+	{
+		return callParser(makeLGRequest(text));
+	}
+	
 	public Sentence parse(String sentence)
 	{
 		try
 		{
 			String parserResponse = null;
 			for (int i = 0; i < parseRetryCount && parserResponse == null; i++)
-				try { parserResponse = callParser(sentence); }
+				try { parserResponse = parseRequest(sentence); }
 				catch (IOException ex) { ex.printStackTrace(); /* retry... */}
 			if (parserResponse == null)
 				throw new ParseException("Failed to parse sentence " + sentence);
@@ -294,6 +304,30 @@ public class RemoteLGParser extends LGParser
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public String getVersion()
+	{
+		if (parserVersion == null)
+		{
+			try
+			{
+				String json = callParser("get:version\0");
+				JSONReader reader = new JSONReader();
+				Map top = (Map)reader.read(json);
+				parserVersion = (String)top.get("version");
+			}
+			catch (IOException ex)
+			{
+				parserVersion = "unavailable";
+			}
+			catch (InterruptedException ex)
+			{
+				throw new ParseException("Thread interrupted.", ex);
+			}
+		}
+		return parserVersion;
+	}
+	
 	public String getHostname()
 	{
 		return hostname;

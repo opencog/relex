@@ -87,17 +87,17 @@ public class JSONReader
             case '}': token = OBJECT_END; break;
             case ':': token = COLON; break;
             case 't':
-                if (next() != 'r' || next() != 'u' || next() != 'e')
+                if (c != 'r' || next() != 'u' || next() != 'e')
                 	throw new RuntimeException("Invalid JSON token: expected 'true' keyword.");
                 token = Boolean.TRUE;
                 break;
             case'f':
-                if (next() != 'a' || next() != 'l' || next() != 's' || next() != 'e')
+                if (c != 'a' || next() != 'l' || next() != 's' || next() != 'e')
                 	throw new RuntimeException("Invalid JSON token: expected 'false' keyword.");
                 token = Boolean.FALSE;
                 break;
             case 'n':
-                if (next() != 'u' || next() != 'l' || next() != 'l')
+                if (c != 'u' || next() != 'l' || next() != 'l')
                 	throw new RuntimeException("Invalid JSON token: expected 'null' keyword.");
                 token = null;
                 break;

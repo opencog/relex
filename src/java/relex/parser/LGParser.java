@@ -15,4 +15,6 @@ public abstract class LGParser implements IParser
 	{
 		this.config = config;
 	}	
+	
+	public abstract String getVersion();
 }

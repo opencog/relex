@@ -139,9 +139,7 @@ public class RelationExtractor
 
 	String getVersion()
 	{
-		// return parser.getVersion();
-		// Temporary hack unil the new bindings are fixed up.
-		return "XXX Broken -- FIXME";
+		return parser.getVersion();
 	}
 
 	/* ---------------------------------------------------------- */
