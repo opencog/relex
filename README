@@ -29,23 +29,17 @@ Building command-line RelEx
 ---------------------------
 
 - Link Grammar Parser
- X  XXX the sentences below are wrong, version 4.3.5 or later is needed.
-X	Ubunut/Debian users can install the linkparser with apt-get:
-X
-X		apt-get install liblink-grammar4 link-grammar-dictionaries-en
-X
- X  XXX the sentences above are wrong, version 4.3.5 or later is needed.
-
-	Other users:
 	Compile and install the Link Grammar Parser. This parser is
 	described at http://www.link.cs.cmu.edu/link/, and sources
 	are available for download at
 	http://www.abisource.com/projects/link-grammar/#download
 
+   Link-grammar version 4.4.1 or later is needed.
+
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
 
-	If the link-grammar is installed in an unusual location,
+	If the parser is installed in an unusual location,
 	be sure to modify -Djava.library.path appropriately in 
 	relation-extractor.sh.
 
@@ -59,7 +53,7 @@ X
 	of adjectives, adverbs and infinitve forms of verbs.
 
 	Download, unpack and install WordNet 3.0.  The install directory
-	then needs to be specified in data/wordnet/file_properties-linux.xml,
+	then needs to be specified in data/wordnet/file_properties.xml,
 	with the name="dictionary_path" property in this file.
 
 	Some typical install locations are:
@@ -197,7 +191,7 @@ is data/relex-semantic-algs.txt.
 	Dependencies:
 	- relex.parser.LinkParserJNINewClient: liblink-grammar.so,
 	  liblink-grammar-java.so, and the linkparser data files 
-	  (by default, in /usr/share/link-grammar/data/)
+	  (by default, in /usr/share/link-grammar/en/)
 	- relex.morphy.Morphy: jwnl.jar, commons-logging.jar, WordNet
 	  data files (external)
 
