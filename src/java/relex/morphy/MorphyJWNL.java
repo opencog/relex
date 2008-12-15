@@ -103,6 +103,7 @@ public class MorphyJWNL implements Morphy
 			System.err.println("Warning: Unable to initialize WordNet " +
 					"Java API (JWNL).\n" +
 					"\tWas -Dwordnet.configfile set correctly?\n" +
+					"\tDoes the wordnet.configfile contain the  right paths?\n" +
 					"\tWill use command-line interface; " +
 					"this will negatively impact performance."); 
 		} else {
