@@ -109,7 +109,7 @@ while (<>)
 		print "\t(ListLink\n";
 		foreach $word_inst (@word_list)
 		{
-			print "\t\t(ConceptNode \"$word_inst\")\n";
+			print "\t\t(WordInstanceNode \"$word_inst\")\n";
 		}
 		print "\t)\n";
 		print ")\n";
@@ -130,17 +130,17 @@ while (<>)
 		push (@word_list, $word_inst);
 
 		print "(ReferenceLink\n";
-		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(WordNode \"$word\")\n";
 		print ")\n";
 
 		print "(LemmaLink\n";
-		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(WordNode \"$lemma\")\n";
 		print ")\n";
 
 		print "(PartOfSpeechLink\n";
-		print "\t(ConceptNode \"$word_inst\")\n";
+		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(DefinedLinguisticConceptNode \"$pos\")\n";
 		print ")\n";
 
@@ -148,7 +148,7 @@ while (<>)
 		foreach $f (@feats)
 		{
 			print "(InheritanceLink\n";
-			print "\t(ConceptNode \"$word_inst\")\n";
+			print "\t(WordInstanceNode \"$word_inst\")\n";
 			print "\t(DefinedLinguisticConceptNode \"$f\")\n";
 			print ")\n";
 		}
@@ -165,8 +165,8 @@ while (<>)
 		print "(EvaluationLink\n";
 		print "\t(LinkGrammarRelationshipNode \"$link_type\")\n";
 		print "\t(ListLink\n";
-		print "\t\t(ConceptNode \"$linst\")\n";
-		print "\t\t(ConceptNode \"$rinst\")\n";
+		print "\t\t(WordInstanceNode \"$linst\")\n";
+		print "\t\t(WordInstanceNode \"$rinst\")\n";
 		print "\t)\n";
 		print ")\n";
 	}
@@ -180,8 +180,8 @@ while (<>)
 		print "(EvaluationLink\n";
 		print "\t(DefinedLinguisticRelationshipNode \"$rel_type\")\n";
 		print "\t(ListLink\n";
-		print "\t\t(ConceptNode \"$linst\")\n";
-		print "\t\t(ConceptNode \"$rinst\")\n";
+		print "\t\t(WordInstanceNode \"$linst\")\n";
+		print "\t\t(WordInstanceNode \"$rinst\")\n";
 		print "\t)\n";
 		print ")\n";
 
