@@ -79,14 +79,14 @@ class OpenCogSchemeLink
 				"   (LinkGrammarRelationshipNode \"" +
 				fn.get("LAB").getValue() + "\")\n" +
 				"   (ListLink\n" +
-				"      (ConceptNode \"";
+				"      (WordInstanceNode \"";
 
 			FeatureNode fl = fn.get("F_L");
 
 			String li = fl.get("index_in_sentence").getValue();
 			int lindex = Integer.parseInt(li);
 			str += word_list.get(lindex) + "\")\n" +
-				"      (ConceptNode \"";
+				"      (WordInstanceNode \"";
 
 
 			FeatureNode fr = fn.get("F_R");

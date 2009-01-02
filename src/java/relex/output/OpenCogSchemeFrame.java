@@ -129,7 +129,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "   (ConceptNode \"" + cpt1 + "\")\n";
+				ret += "   (WordInstanceNode \"" + cpt1 + "\")\n";
 			}
 			ret += "   (DefinedFrameNode \"#" + frm + "\")\n)\n";
 
@@ -150,7 +150,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"" + cpt1 + "\")\n";
+				ret += "      (WordInstanceNode \"" + cpt1 + "\")\n";
 			}
 			if (cpt2_is_ling)
 			{
@@ -159,7 +159,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"" + cpt2 + "\")\n";
+				ret += "      (WordInstanceNode \"" + cpt2 + "\")\n";
 			}
 			ret += "   )\n)\n";
 		}

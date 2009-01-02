@@ -104,7 +104,7 @@ class OpenCogSchemeRel
 
 			// All of the other cases.
 			outstr += link_start;
-			outstr += "   (ConceptNode \"" + guid + "\")\n";
+			outstr += "   (WordInstanceNode \"" + guid + "\")\n";
 			outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
 			outstr += link_end;
 
@@ -126,8 +126,8 @@ class OpenCogSchemeRel
 			outstr += "(EvaluationLink\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
 			outstr += "   (ListLink\n";
-			outstr += "      (ConceptNode \"" + src_guid + "\")\n";
-			outstr += "      (ConceptNode \"" + tgt_guid + "\")\n";
+			outstr += "      (WordInstanceNode \"" + src_guid + "\")\n";
+			outstr += "      (WordInstanceNode \"" + tgt_guid + "\")\n";
 			outstr += "   )\n";
 			outstr += ")\n";
 
@@ -179,7 +179,7 @@ class OpenCogSchemeRel
 
 				// The word instance, and its associated lemma form
 				refs += "(LemmaLink\n";
-				refs += "   (ConceptNode \"" + guid_word + "\")\n";
+				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
 				refs += "   (WordNode \"" + lemma + "\")\n";
 				refs += ")\n";
 			}

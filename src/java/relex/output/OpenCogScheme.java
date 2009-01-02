@@ -106,7 +106,7 @@ public class OpenCogScheme
 			word_list.add(guid_word);
 
 			str += "(ReferenceLink\n" +
-			       "   (ConceptNode \"" + guid_word + "\")\n" +
+			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
 			       "   (WordNode \"" + word + "\")\n" +
 			       ")\n";
 
@@ -128,7 +128,7 @@ public class OpenCogScheme
 		// Loop starts at 1, since we skip LEFT-WALL
 		for (int i=1; i<word_list.size(); i++)
 		{
-			str += "      (ConceptNode \"" + word_list.get(i) + "\")\n";
+			str += "      (WordInstanceNode \"" + word_list.get(i) + "\")\n";
 		}
 
 		str += "   )\n" +
