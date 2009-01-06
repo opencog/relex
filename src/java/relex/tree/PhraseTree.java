@@ -261,7 +261,7 @@ public class PhraseTree
 				// For example, "New York" -> null + "New_York"
 				if (fn_word != null)
 				{
-					// Must not allow parents in the constituent string.
+					// Must not allow words that are parenthesis in the constituent string.
 					str += " " + fn_word.getValue().replace('(','{').replace(')','}');
 				}
 			}
