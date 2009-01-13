@@ -55,6 +55,7 @@ public class LinkParserProtocol extends ProcessProtocol
 
 	public static final String MSG_GET_WORD = "[getWord]\0";
 
+	public static final String MSG_GET_LINKAGE_DISJUNCT = "[getLinkageDisjunct]\0";
 	public static final String MSG_GET_LINKAGE_WORD = "[getLinkageWord]\0";
 
 	public static final String MSG_GET_LINKAGE_NUM_VIOLATIONS = "[getLinkageNumViolations]\0";
@@ -179,6 +180,8 @@ public class LinkParserProtocol extends ProcessProtocol
 			return makeMessage(Integer.toString(client.getNumWords()));
 		} else if (message.equals(MSG_GET_WORD)) {
 			return makeMessage(client.getWord(Integer.parseInt(arg)));
+		} else if (message.equals(MSG_GET_LINKAGE_DISJUNCT)) {
+			return makeMessage(client.getLinkageDisjunct(Integer.parseInt(arg)));
 		} else if (message.equals(MSG_GET_LINKAGE_WORD)) {
 			return makeMessage(client.getLinkageWord(Integer.parseInt(arg)));
 		} else if (message.equals(MSG_GET_LINKAGE_NUM_VIOLATIONS)) {

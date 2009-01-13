@@ -195,6 +195,10 @@ public class LinkParserSocketClient extends LinkParserClient
 		return exec(LinkParserProtocol.MSG_GET_LINKAGE_WORD + w);
 	}
 
+	String getLinkageDisjunct(int w) {
+		return exec(LinkParserProtocol.MSG_GET_LINKAGE_DISJUNCT + w);
+	}
+
 	int getLinkageAndCost() {
 		return Integer
 				.parseInt(exec(LinkParserProtocol.MSG_GET_LINKAGE_AND_COST));

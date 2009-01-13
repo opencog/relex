@@ -121,6 +121,8 @@ public abstract class LinkParserClient
 
 	abstract String getWord(int w);
 
+	abstract String getLinkageDisjunct(int w);
+
 	abstract String getLinkageWord(int w);
 
 	abstract int getLinkageAndCost();

@@ -122,6 +122,11 @@ public class LinkParserJNINewClient extends LinkParserClient
 		return LinkGrammar.getWord(w);
 	}
 
+	String getLinkageDisjunct(int w) {
+		// new link-grammar API, added in link-grammar version 4.4.2
+		return LinkGrammar.getLinkageDisjunct(w);
+	}
+
 	String getLinkageWord(int w) {
 		// new link-grammar API, added in link-grammar version 4.3.7
 		return LinkGrammar.getLinkageWord(w);
