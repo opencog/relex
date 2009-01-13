@@ -23,6 +23,7 @@
  * -- basic loop that applied rules to the relex input.
  *
  * Some notes about the rules file format:
+ * -- ;; is a comment delimiter; everything after ;; is ignored.
  * -- assuming ^ (AND) precedence over OR
  * -- nested parens not implemented
  * -- no extraneous text in frame mapping rules once rules start
@@ -54,7 +55,6 @@ import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//TODO handle comments in mapping rules file?
 //TODO handling commas in relex output (take out?), e.g, 14,000
 
 /**
@@ -65,10 +65,12 @@ public class Frame
 {
 	static /*final*/ boolean VERBOSE = false;
 
-	public static final String MAPPING_RULES_DIR	= "data/frame";
-	public static final String CONCEPT_VARS_DIR 	= MAPPING_RULES_DIR;
-	public static final String MAPPING_RULES_FILE	= "mapping_rules.txt";
-	public static final String CONCEPT_VARS_FILE	= "concept_vars.txt";
+	public static final String MAPPING_RULES_DIR = "data/frame";
+	public static final String CONCEPT_VARS_DIR = MAPPING_RULES_DIR;
+	public static final String MAPPING_RULES_FILE = "mapping_rules.txt";
+	public static final String CONCEPT_VARS_FILE = "concept_vars.txt";
+
+	public static final String COMMENT_DELIM = ";;";
 
 	static boolean is_inited = false;
 	static ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -221,6 +223,12 @@ public class Frame
 				BufferedReader in = new BufferedReader(getReader(CONCEPT_VARS_FILE, CONCEPT_VARS_DIR));
 				String line;
 				while ((line = in.readLine()) != null) {
+					// ignore comments
+					int cmnt = line.indexOf(COMMENT_DELIM);
+					if (-1 < cmnt)
+					{
+						line = line.substring(cmnt);
+					}
 					fileStr.append(line + "\n");
 				}
 				in.close();
@@ -283,7 +291,14 @@ public class Frame
 				BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
 				String line;
 				StringBuilder sb = new StringBuilder();
-				while ((line = in.readLine()) != null) {
+				while ((line = in.readLine()) != null)
+				{
+					// ignore comments
+					int cmnt = line.indexOf(COMMENT_DELIM);
+					if (-1 < cmnt)
+					{
+						line = line.substring(cmnt);
+					}
 					sb.append(line + "\n");
 				}
 				in.close();

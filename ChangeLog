@@ -1,3 +1,12 @@
+New in version 0.98.1:
+ * Expose the new link-grammar "disjunct string" API.
+ * Add comment delimiters to the frame rules file.
+
+New in version 0.98.0:
+ * Bumper version number, in preparation for a 1.0 release.
+ * New JSON interface to the link-grammar perser, for improved server
+   performance.
+
 New in version 0.10.1:
  * remove cleanSentenceString(), replace with entity id's.
  * Avoid printing parens in the constituent string.

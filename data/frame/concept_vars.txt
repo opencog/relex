@@ -1,3 +1,7 @@
+;;
+;; frame mapping concepts
+;; developed by David Noziglia, spring 2008
+;;
 $qVar
 _$qVar
 _%qVar

@@ -1,3 +1,7 @@
+;;
+;; Frame Mapping Rules
+;; Developed by David Noziglia, spring 2008
+;;
 # IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Existance:Entity(be,$var0)
 # IF _predobj(be,$atLocation) THEN ^1_Existence:Place($atLocation,$atLocation)
 # IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Attributes:Entity(be,$var0)
