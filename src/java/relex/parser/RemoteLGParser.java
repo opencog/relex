@@ -54,6 +54,7 @@ public class RemoteLGParser extends LGParser
 			linkage.setLinkCost(((Number)x.get("linkageCost")).intValue());
 			linkage.setNumViolations(((Number)x.get("numViolations")).intValue());
 			linkage.setWords(((List<String>)(x.get("words"))).toArray(new String[0]));
+			linkage.setDisjuncts(((List<String>)(x.get("disjuncts"))).toArray(new String[0]));
 			linkage.setLinkedWordCount(linkage.getWords().length); // TODO?? is this right?
 			for (Map y : (List<Map>)x.get("links"))
 			{
