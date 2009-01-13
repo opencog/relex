@@ -16,12 +16,9 @@
 
 /**
  * Frame.java
- *
  */
 
 package relex.frame;
-
-//TODO handling commas in relex output (take out?), e.g, 14,000
 
 /**
  * Main class--Converts RelEx output to Frame relationships
@@ -31,10 +28,14 @@ public class Frame extends FrameProcessor
 {
 	static /*final*/ boolean VERBOSE = false;
 
-	public static final String MAPPING_RULES_DIR = "data/frame";
-	public static final String CONCEPT_VARS_DIR = MAPPING_RULES_DIR;
-	public static final String MAPPING_RULES_FILE = "mapping_rules.txt";
-	public static final String CONCEPT_VARS_FILE = "concept_vars.txt";
+	private static final String MAPPING_RULES_DIR = "data/frame";
+	private static final String MAPPING_RULES_FILE = "mapping_rules.txt";
+	private static final String CONCEPT_VARS_FILE = "concept_vars.txt";
+
+	public Frame()
+	{
+		set_data_files(MAPPING_RULES_DIR, CONCEPT_VARS_FILE, MAPPING_RULES_FILE);
+	}
 
 
 	/**

@@ -65,12 +65,11 @@ public class FrameProcessor
 {
 	static /*final*/ boolean VERBOSE = false;
 
-	public static final String MAPPING_RULES_DIR = "data/frame";
-	public static final String CONCEPT_VARS_DIR = MAPPING_RULES_DIR;
-	public static final String MAPPING_RULES_FILE = "mapping_rules.txt";
-	public static final String CONCEPT_VARS_FILE = "concept_vars.txt";
+	private String data_dir;
+	private String mapping_rules_file;
+	private String concept_vars_file;
 
-	public static final String COMMENT_DELIM = ";;";
+	private static final String COMMENT_DELIM = ";;";
 
 	static boolean is_inited = false;
 	static ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -82,6 +81,15 @@ public class FrameProcessor
 
 	public FrameProcessor()
 	{
+		concept_vars_file = null;
+		mapping_rules_file = null;
+	}
+
+	public void set_data_files(String ddir, String cvf, String mrf)
+	{
+		data_dir = ddir;
+		concept_vars_file = cvf;
+		mapping_rules_file = mrf;
 		loadDataFiles();
 	}
 
@@ -149,7 +157,7 @@ public class FrameProcessor
 		return sb.toString();
 	}
 
-	private static String loadDataFiles()
+	private String loadDataFiles()
 	{
 		if (!is_inited)
 		{
@@ -172,7 +180,7 @@ public class FrameProcessor
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	private static BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException
+	private BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException
 	{
 			InputStream in = null; 
 			String dir = System.getProperty("frame.datapath");
@@ -210,13 +218,13 @@ public class FrameProcessor
 	 * 
 	 * @return
 	 */
-	private static String loadConceptVars()
+	private String loadConceptVars()
 	{
 		try {
 			String msg = "";
 			StringBuilder fileStr = new StringBuilder();
 			try {
-				BufferedReader in = new BufferedReader(getReader(CONCEPT_VARS_FILE, CONCEPT_VARS_DIR));
+				BufferedReader in = new BufferedReader(getReader(concept_vars_file, data_dir));
 				String line;
 				while ((line = in.readLine()) != null) {
 					// ignore comments
@@ -279,12 +287,12 @@ public class FrameProcessor
 		}
 	}
 
-	private static String loadMappingRules()
+	private String loadMappingRules()
 	{
 		try {
 			String relexRulesStr = "";
 			try {
-				BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
+				BufferedReader in = new BufferedReader(getReader(mapping_rules_file, data_dir));
 				String line;
 				StringBuilder sb = new StringBuilder();
 				while ((line = in.readLine()) != null)
