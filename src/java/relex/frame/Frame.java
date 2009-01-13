@@ -70,6 +70,7 @@ public class Frame
 	public static final String MAPPING_RULES_FILE	= "mapping_rules.txt";
 	public static final String CONCEPT_VARS_FILE	= "concept_vars.txt";
 
+	static boolean is_inited = false;
 	static ArrayList<Rule> rules = new ArrayList<Rule>();
 
 	// A map of the collective concept variables and their legal values
@@ -77,9 +78,8 @@ public class Frame
 
 	public HashMap<Rule, VarMapList> fireRules = new HashMap<Rule,VarMapList>();
 
-	// static initializer -- load mapping rules and concept vars
-	// only once, when class is loaded
-	static {
+	public Frame()
+	{
 		loadDataFiles();
 	}
 
@@ -147,11 +147,16 @@ public class Frame
 		return sb.toString();
 	}
 
-	public static String loadDataFiles()
+	private static String loadDataFiles()
 	{
-		String feedback = loadConceptVars();
-		feedback += loadMappingRules();
-		return feedback;
+		if (!is_inited)
+		{
+			String feedback = loadConceptVars();
+			feedback += loadMappingRules();
+			is_inited = true;
+			return feedback;
+		}
+		return "";
 	}
 	
 
@@ -167,7 +172,8 @@ public class Frame
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	private static BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException{
+	private static BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException
+	{
 			InputStream in = null; 
 			String dir = System.getProperty("frame.datapath");
 			

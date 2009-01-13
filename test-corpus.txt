@@ -1,5 +1,11 @@
-Edwin Ruthvin Reynolds was a U.S. Representative from New York.
+It was a long way home.
 END.
+Berlin is in Germany.
+Berlin is a city in Germany.
+Yarn is spun from fibers.
+Yarn is made of fibers.
+Pottery is made from clay.
+The color of the sky is blue.
 The capital of Germany is Berlin.
 Berlin is the capital of Germany.
 END.

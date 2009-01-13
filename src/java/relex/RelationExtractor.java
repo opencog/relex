@@ -443,7 +443,8 @@ public class RelationExtractor
 		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
 		ParseView ceregoView = new ParseView();
-		OpenCogScheme opencog = new OpenCogScheme();
+		OpenCogScheme opencog = null;
+		if (commandMap.get("-o") != null) opencog = new OpenCogScheme();
 
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
