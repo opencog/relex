@@ -110,6 +110,11 @@ public class OpenCogScheme
 			       "   (WordNode \"" + word + "\")\n" +
 			       ")\n";
 
+			str += "(WordInstanceLink\n" +
+			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
+			       "   (ParseNode \"" + parse.getIDString() + "\")\n" +
+			       ")\n";
+
 			fn = fn.get("NEXT");
 		}
 		return str;
