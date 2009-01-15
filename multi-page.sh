@@ -33,7 +33,7 @@ bin:\
 ../../share/java/jwnl.jar:\
 ../../share/java/commons-logging.jar:\
 ../../share/java/gnu-getopt.jar:\
-../../share/java/link-grammar-4.4.1.jar:\
+../../share/java/link-grammar-4.4.2.jar:\
 ../../share/java/xercesImpl.jar:\
 ../../share/java/gate.jar:\
 ../../share/java/jdom.jar:\
