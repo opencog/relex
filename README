@@ -77,9 +77,6 @@ Building command-line RelEx
 	provides a jwnl.jar, but the GATE version of jwnl.jar is not
 	compatible (welcome to java DLL hell).
 
-	RelEx works with jwnl-1.3rc3 but problems have been reported
-	with jwnl-1.4-rc1. 
-
 - GATE
 	GATE, the "General Architecture for Text Engineering", 
 	http://www.gate.ac.uk/ provides a large framework which
