@@ -113,6 +113,15 @@ while (<>)
 		}
 		print "\t)\n";
 		print ")\n";
+
+		# Spew links for individual words, too.
+		foreach $word_inst (@word_list)
+		{
+			print "(WordInstanceLink\n";
+			print "\t(WordInstanceNode \"$word_inst\")\n";
+			print "\t(ParseNode \"$parse_inst\")\n";
+			print ")\n";
+		}
 	}
 	if ($in_features)
 	{
