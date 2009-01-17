@@ -656,6 +656,10 @@ public class RelationExtractor
 			System.out.println(opencog.printDocument(re.doco));
 		}
 		System.out.println("; Bye.");
+		if (commandMap.get("-o") != null)
+		{
+			System.out.println(".\nexit");
+		}
 	}
 }
 
