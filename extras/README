@@ -1,0 +1,10 @@
+
+                         Extras
+                         ------
+
+Code in this directory requires the installation of additional jar 
+files in order to be buildable.  As this is burdensome for many
+users, it is confined to a separate directory.
+
+The OWLformat.java class generates OWL semantic web format output
+for relex relations.
