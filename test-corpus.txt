@@ -1,19 +1,18 @@
-Lisbon is the capital of Portugaul.
 The capital of Germany is Berlin.
-The color of the sky is blue.
 END.
+Berlin is in Germany.
+Berlin is a city in Germany.
 The heart is in the chest.
 The heart is inside the chest.
 The garage is behind the house.
-END.
-He works for the Southern Union Railroad.
-Berlin is in Germany.
-Berlin is a city in Germany.
+Lisbon is the capital of Portugaul.
+The capital of Germany is Berlin.
+The color of the sky is blue.
+Pottery is made from clay.
 Yarn is spun from fibers.
 Yarn is made of fibers.
-Pottery is made from clay.
-The capital of Germany is Berlin.
-Berlin is the capital of Germany.
+END.
+He works for the Southern Union Railroad.
 END.
 How do you do it?
 He was going to go home.
