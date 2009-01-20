@@ -27,26 +27,9 @@
         <pathelement location="${GATE_HOME}/lib/PDFBox-0.7.2.jar"/>
     </path>
 	
+    <!-- Steps to take on initialization -->
     <target name="init">
         <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src/java"
-                     excludes="**/*.launch,
-                               **/*.testsuite,
-                               **/*.deploy,
-                               **/*.location,
-                               **/*.execution,
-                               **/*.datapool,
-                               **/*.artifact,
-                               **/*.html,
-                               **/*.svg,
-                               **/*.swp,
-                               **/*.java
-                               **/a.out,
-                               **/*.c,
-                               **/*.pl,
-                               **/x"/>
-        </copy>
     </target>
 	
     <target name="clean">
