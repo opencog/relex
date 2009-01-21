@@ -39,12 +39,20 @@
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
+
+
+    <!-- conditional compilation,  check for OWL -->
+    <available classname="org.semanticweb.owl.model.OWLClass" property="OWL.present"/>
+    <target name="no-owl" unless="OWL.present">
+       <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
+    </target>
+
+    <target depends="init, no-owl" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">
             <src path="src/java"/>
-            <exclude name="**/OWLView.java" />
+            <exclude name="**/OWLView.java" unless="OWL.present" />
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
