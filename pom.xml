@@ -4,7 +4,7 @@
   <groupId>org.opencog</groupId>
   <artifactId>relex</artifactId>
   <packaging>jar</packaging>
-  <version>0.98.0</version>
+  <version>0.98.1</version>
   <name>relex</name>
   <description>RelEx semantic relationship extractor</description>
   <url>http://maven.apache.org</url>
@@ -67,12 +67,12 @@
     <dependency>
       <groupId>org.opencog</groupId>
       <artifactId>linkgrammar</artifactId>
-      <version>4.4.1</version>
+      <version>4.4.2</version>
     </dependency>
     <dependency>
       <groupId>net.didion</groupId>
       <artifactId>jwnl</artifactId>
-      <version>1.3.3</version>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.opennlp</groupId>
