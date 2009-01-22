@@ -1,5 +1,6 @@
 New in version 0.98.1: (Jaunary 2009)
- * Expose the new link-grammar "disjunct string" API.
+ * Expose the new link-grammar "disjunct string" API
+   (this requires link-grammar version4.4.2).
  * Add comment delimiters to the frame rules file.
  * Fix, now supports jwnl-1.4rc2
  * Add initial OWL-format output.
