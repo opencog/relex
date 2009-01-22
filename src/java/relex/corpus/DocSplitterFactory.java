@@ -13,7 +13,8 @@
  */
 package relex.corpus;
 
-// @SuppressWarnings({"CallToPrintStackTrace", "UseOfSystemOutOrSystemErr"})
+@SuppressWarnings("unchecked")
+
 public class DocSplitterFactory
 {
 	private static final Class<? extends DocSplitter> clazz;
@@ -22,20 +23,24 @@ public class DocSplitterFactory
 		try
 		{
 			Class.forName("opennlp.tools.lang.english.SentenceDetector");
-			clazz0=DocSplitterOpenNLPImpl.class;
+			// clazz0 = DocSplitterOpenNLPImpl.class;
+			Class<?> c = Class.forName("DocSplitterOpenNLPImpl");
+
+			// It seems to be impossible to perform this cast and not get
+			// a type-safety warning,
+			clazz0 = (Class<DocSplitter>) c;
 		}
 		catch(Throwable t)
 		{
 			System.err.println(
 				"\nWARNING:\n" +
-				"\tIt appears the the OpenNLP tools are not installed\n" +
-				"\tor are not correctly specified in the java classpath.\n" +
-				"\tThe OpenNLP tools are used to perform sentence detection,\n" +
-				"\tand RelEx will have trouble handling multiple sentences.\n" +
-				"\tPlease see the README file for install info.\n");
-			clazz0=DocSplitterFallbackImpl.class;
+				"\tIt appears the the OpenNLP tools are not installed or are not\n" +
+				"\tcorrectly specified in the java classpath. The OpenNLP tools are\n" +
+				"\tused to perform sentence detection. Without them, ReleEx must be\n" +
+				"\tgven one sentence per line. Please see the README file for info.\n");
+			clazz0 = DocSplitterFallbackImpl.class;
 		}
-		clazz=clazz0;
+		clazz = clazz0;
 
 	}
 	public static DocSplitter create()
