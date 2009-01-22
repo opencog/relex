@@ -28,6 +28,7 @@ The following packages are required to be installed:
 
 Building command-line RelEx
 ---------------------------
+The following packages are required pre-requisites for building RelEx.
 
 - Link Grammar Parser
 	Compile and install the Link Grammar Parser. This parser is
@@ -77,14 +78,36 @@ Building command-line RelEx
 	provides a jwnl.jar, but the GATE version of jwnl.jar is not
 	compatible (welcome to java DLL hell).
 
+- Trove
+	Some users may require GNU Trove to run RelEx, although this may
+	depend on the JDK installed.  GNU Trove is an implementation of 
+	the java.util class heirarchy, which may or may not be included
+	in the installed JDK.  If needed, download trove from:
+
+	http://trove4j.sourceforge.net/
+
+	Using trove may improve performance and/or decrease memory
+	usage, as compared to the standard JDK implementation of 
+	the java.util heirarchy.
+
+Optional packages
+-----------------
+The following packages are optional. If they are found, then
+addtional parts of RelEx will be built, enabling additional 
+function.
+
 - GATE
+   If GATE is found, then GATE-based entity detection will be enabled.
+   Please note that it is not clear whether GATE provides significantly
+   better entity detection than the Link Grammar parser itself.
+
 	GATE, the "General Architecture for Text Engineering", 
-	http://www.gate.ac.uk/ provides a large framework which
-	RelEx does not use. However, it does provide a good entity
-	detector, which RelEx does employ. "Entities" are the 
-	names of people, corporations and institutions, as well 
-	as time, date and money expressions. Factoring these out
-	explicitly makes parsing and relation extraction simpler.
+	http://www.gate.ac.uk/ is a large, complex framework. RelEx does
+	not need the framework. However, GATE does provide a good entity
+	detector, which RelEx can employ. An "entity" is the name of a 
+   person, corporation or institutions, or a time, date or money
+   expression. The term "entity detection" refers to the task of
+   identifying such quantites in parsed text.
 
 	Download GATE 4.0 from http://gate.ac.uk/download/index.html
 
@@ -99,15 +122,6 @@ Building command-line RelEx
 
 	Other users may need to get xerces from 
 	http://xerces.apache.org/xerces2-j/
-
-	GATE is used solely to perform entity resolution; that is, 
-	to determine substrings that correspond to names, dates, 
-	addresses, money amounts, etc. The use of GATE is optional,
-	however, without it, the parser has trouble with dates, 
-	money amounts etc. GATE is also needed to identify the gender
-	(male, female) of people names; the gender is needed for 
-	anaphora resolution (so that "she" is matched nly to female 
-	names).
 
 	Alternatives to GATE may be used by providing a replacement
 	for the relex/corpus/GateEntityMaintainer.java file.
@@ -131,18 +145,6 @@ Building command-line RelEx
 	which provides a simple, easy-to-use wrapper for splitting a
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
-
-- Trove
-	Some users may require GNU Trove to run RelEx, although this may
-	depend on the JDK installed.  GNU Trove is an implementation of 
-	the java.util class heirarchy, which may or may not be included
-	in the installed JDK.  If needed, download trove from:
-
-	http://trove4j.sourceforge.net/
-
-	Using trove may improve performance and/or decrease memory
-	usage, as compared to the standard JDK implementation of 
-	the java.util heirarchy.
 
 - GraphViz
 	XXX current distro does not use graphviz; ignore the following.

@@ -47,12 +47,18 @@
        <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
     </target>
 
-    <target depends="init, no-owl" name="build-project">
+    <available classname="gate.creole.ANNIEConstants" property="GATE.present"/>
+    <target name="no-gate" unless="GATE.present">
+       <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
+    </target>
+
+    <target depends="init, no-gate, no-owl" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">
             <src path="src/java"/>
             <exclude name="**/OWLView.java" unless="OWL.present" />
+            <exclude name="**/GateEntityDetector.java" unless="GATE.present" />
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
