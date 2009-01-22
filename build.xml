@@ -6,6 +6,8 @@
     <property name="GATE_HOME" value="/opt/GATE-4.0"/>
     <property name="PREFIX" value="/usr/share/java"/>
     <property name="ALTPREFIX" value="/usr/local/share/java"/>
+
+    <property name="INSTALLDIR" value="/usr/local/share/java"/>
  
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
@@ -58,23 +60,25 @@
     <target name="build-subprojects"/>
 
 
-    <!-- conditional compilation,  check for OWL -->
+    <!-- conditional compilation, check for OWL -->
     <available classname="org.semanticweb.owl.model.OWLClass" property="OWL.present"/>
     <target name="no-owl" unless="OWL.present">
        <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
     </target>
 
+    <!-- conditional compilation, check for GATE -->
     <available classname="gate.creole.ANNIEConstants" property="GATE.present"/>
     <target name="no-gate" unless="GATE.present">
        <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
     </target>
 
+    <!-- conditional compilation, check for OpenNLP -->
     <available classname="opennlp.tools.sentdetect.SentenceDetector" property="OpenNLP.present"/>
     <target name="no-opennlp" unless="OpenNLP.present">
        <echo message="Will not build OpenNLP-based sentence detector; OpenNLP classes not found."/>
     </target>
 
-    <target depends="init, no-gate, no-owl, no-opennlp" name="build-project">
+    <target name="build-project" depends="init, no-gate, no-owl, no-opennlp">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">
@@ -86,7 +90,8 @@
         </javac>
     </target>
 
-    <target name="jar">
+    <!-- Build a jar file, for public consumption -->
+    <target name="jar" depends="build-project">
         <jar basedir="bin" destfile="relex-${REVISION}.jar">
             <manifest>
                 <attribute name="Implementation-Title" value="RelEx Semantic Relation Extractor"/>
@@ -101,6 +106,11 @@
             <fileset file="data/wordnet/file_properties.xml" />
             <fileset file="data/sentence-detector/EnglishSD.bin.gz" />
         </jar>
+    </target>
+
+    <target name="install" depends="jar">
+        <mkdir dir="${INSTALLDIR}"/>
+        <copy file="relex-${REVISION}.jar" todir="${INSTALLDIR}"/>
     </target>
 
     <target name="dist">
@@ -132,13 +142,7 @@
         <delete file="r.tar"/>
     </target>
 
-    <target name="install">
-        <mkdir dir="/usr/local/share/java"/>
-        <copy file="relex-${REVISION}.jar" todir="/usr/local/share/java">
-        </copy>
-    </target>
-
-    <target name="run">
+    <target name="run" depends="build-project">
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
@@ -146,7 +150,7 @@
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <jvmarg line="-Dgate.home=${GATE_HOME}"/>
             <classpath refid="relex.classpath"/>
-            <arg line="-n 4 -l -t -f -g -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
+            <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
         </java>
     </target>
 
