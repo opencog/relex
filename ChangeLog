@@ -1,11 +1,12 @@
-New in version 0.98.1:
+New in version 0.98.1: (Jaunary 2009)
  * Expose the new link-grammar "disjunct string" API.
  * Add comment delimiters to the frame rules file.
  * Fix, now supports jwnl-1.4rc2
  * Add initial OWL-format output.
  * Make install/use of GATE and OpenNLP optional.
+ * Cleanup README to be clearer on how to use RelEx.
 
-New in version 0.98.0:
+New in version 0.98.0:  (December 2008) 
  * Bumper version number, in preparation for a 1.0 release.
  * New JSON interface to the link-grammar perser, for improved server
    performance.

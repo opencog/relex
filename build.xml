@@ -120,6 +120,15 @@
     <!-- tar file for general distribution -->
     <target name="dist">
         <tar destfile="r.tar">
+            <!-- the shell and perl scripts need to be executable -->
+            <tarfileset dir="." prefix="relex-${REVISION}/" excludes=".bzr*/**" mode="755">
+                <include name="batch-process.sh"/>
+                <include name="doc-splitter.sh"/>
+                <include name="link-grammar-server.sh"/>
+                <include name="parallel-relation-extractor.sh"/>
+                <include name="relation-extractor.sh"/>
+                <include name="src/perl/*.pl"/>
+            </tarfileset>
             <tarfileset dir="." prefix="relex-${REVISION}/" excludes=".bzr*/**">
                 <include name="AUTHORS"/>
                 <include name="ChangeLog"/>
@@ -127,10 +136,6 @@
                 <include name="README"/>
                 <include name="build.xml"/>
                 <include name="pom.xml"/>
-                <include name="relation-extractor.sh"/>
-                <include name="link-grammar-server.sh"/>
-                <include name="parallel-relation-extractor.sh"/>
-                <include name="doc-splitter.sh"/>
                 <include name="test-corpus.txt"/>
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
@@ -140,7 +145,6 @@
                 <include name="src/java/relex/anaphora/test-corpus.txt"/>
                 <include name="**/README"/>
                 <include name="**/*.java"/>
-                <include name="src/perl/*.pl"/>
             </tarfileset>
         </tar>
         <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
