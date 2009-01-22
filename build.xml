@@ -103,6 +103,35 @@
         </jar>
     </target>
 
+    <target name="dist">
+        <tar destfile="r.tar">
+            <tarfileset dir="." prefix="relex-${REVISION}/" excludes=".bzr*/**">
+                <include name="AUTHORS"/>
+                <include name="ChangeLog"/>
+                <include name="LICENSE"/>
+                <include name="README"/>
+                <include name="build.xml"/>
+                <include name="pom.xml"/>
+                <include name="relation-extractor.sh"/>
+                <include name="link-grammar-server.sh"/>
+                <include name="parallel-relation-extractor.sh"/>
+                <include name="doc-splitter.sh"/>
+                <include name="test-corpus.txt"/>
+                <include name="data/frame/concept_vars.txt"/>
+                <include name="data/frame/mapping_rules.txt"/>
+                <include name="data/relex-semantic-algs.txt"/>
+                <include name="data/sentence-detector/EnglishSD.bin.gz"/>
+                <include name="data/wordnet/file_properties.xml"/>
+                <include name="src/java/relex/anaphora/test-corpus.txt"/>
+                <include name="**/README"/>
+                <include name="**/*.java"/>
+                <include name="src/perl/*.pl"/>
+            </tarfileset>
+        </tar>
+        <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
+        <delete file="r.tar"/>
+    </target>
+
     <target name="install">
         <mkdir dir="/usr/local/share/java"/>
         <copy file="relex-${REVISION}.jar" todir="/usr/local/share/java">
