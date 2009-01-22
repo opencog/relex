@@ -96,6 +96,26 @@ The following packages are optional. If they are found, then
 addtional parts of RelEx will be built, enabling additional 
 function.
 
+- OpenNLP
+	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
+   to find sentence boundaries in free text. Without OpenNLP, the input
+   to RelEx must be organized so that there's only one sentence per line.
+
+	The OpenNLP home page is at http://opennlp.sourceforge.net/
+	Download and install OpenNLP tools, and verify that the 
+	installed files are correctly identified in both build.xml
+	and in relation-extractor.sh.
+
+	OpenNLP also requires the installation of maxent from
+	http://maxent.sourceforge.net/  
+
+	You'll need maxent-2.4.0.jar and opennlp-tools-1.3.0.jar.
+	
+	The OpenNLP package is used solely in corpus/DocSplitter.java,
+	which provides a simple, easy-to-use wrapper for splitting a
+	document into sentences. Replace this file if an alternate
+	sentence detector is desired.
+
 - GATE
    If GATE is found, then GATE-based entity detection will be enabled.
    Please note that it is not clear whether GATE provides significantly
@@ -126,44 +146,6 @@ function.
 	Alternatives to GATE may be used by providing a replacement
 	for the relex/corpus/GateEntityMaintainer.java file.
 
-- OpenNLP
-	OpenNLP provides a number of natural language processing tools.
-	RelEx uses OpenNLP for sentence detection, giving RelEx the
-	ability to input texts containing multiple sentences.
-
-	The OpenNLP home page is at http://opennlp.sourceforge.net/
-	Download and install OpenNLP tools, and verify that the 
-	installed files are correctly identified in both build.xml
-	and in relation-extractor.sh.
-
-	OpenNLP also requires the installation of maxent from
-	http://maxent.sourceforge.net/  
-
-	You'll need maxent-2.4.0.jar and opennlp-tools-1.3.0.jar.
-	
-	The OpenNLP package is used solely in corpus/DocSplitter.java,
-	which provides a simple, easy-to-use wrapper for splitting a
-	document into sentences. Replace this file if an alternate
-	sentence detector is desired.
-
-- GraphViz
-	XXX current distro does not use graphviz; ignore the following.
-
-	GraphViz is needed to generate dependency relation graphs.
-	These are output as PNG graphics files, illustrating the
-	parsed sentence.
-
-	GraphViz is installable as an Ubuntu package; rpms are available
-	for Fedora and other distros. If needed, source can be downloaded
-	from http://www.graphviz.org/ If installing from source, be sure
-	that the executables (dot, neato, fdp, twopi, circo) are in the
-	system path. The manner in whcih they are called can be modified
-	by referring to the Java class relex.uima.RelexEngine
-
-	The default viewer for PNG images when running RelexEngine from
-	the command-line is eog ("Eye of Gnome"). 
-
-	XXX current distro does not use graphviz; ignore the above.
 
 Building
 --------
