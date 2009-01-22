@@ -51,15 +51,6 @@
         <mkdir dir="bin"/>
     </target>
 
-    <target name="clean">
-        <delete dir="bin"/>
-        <delete file="relex-${REVISION}.jar"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-
-
     <!-- conditional compilation, check for OWL -->
     <available classname="org.semanticweb.owl.model.OWLClass" property="OWL.present"/>
     <target name="no-owl" unless="OWL.present">
@@ -90,6 +81,18 @@
         </javac>
     </target>
 
+    <!-- misc build targets -->
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+
+    <!-- cleanup -->
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete file="relex-${REVISION}.jar"/>
+    </target>
+    <target name="cleanall" depends="clean"/>
+    <target name="realclean" depends="clean"/>
+
     <!-- Build a jar file, for public consumption -->
     <target name="jar" depends="build-project">
         <jar basedir="bin" destfile="relex-${REVISION}.jar">
@@ -108,11 +111,13 @@
         </jar>
     </target>
 
+    <!-- install on user's system -->
     <target name="install" depends="jar">
         <mkdir dir="${INSTALLDIR}"/>
         <copy file="relex-${REVISION}.jar" todir="${INSTALLDIR}"/>
     </target>
 
+    <!-- tar file for general distribution -->
     <target name="dist">
         <tar destfile="r.tar">
             <tarfileset dir="." prefix="relex-${REVISION}/" excludes=".bzr*/**">
@@ -142,6 +147,7 @@
         <delete file="r.tar"/>
     </target>
 
+    <!-- demo example run -->
     <target name="run" depends="build-project">
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
