@@ -52,24 +52,24 @@
     </target>
 
     <!-- conditional compilation, check for OWL -->
-    <available classname="org.semanticweb.owl.model.OWLClass" property="OWL.present"/>
-    <target name="no-owl" unless="OWL.present">
+    <available classname="org.semanticweb.owl.model.OWLClass" classpathref="relex.classpath" property="OWL.present"/>
+    <target name="look-for-owl" unless="OWL.present">
        <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
     </target>
 
     <!-- conditional compilation, check for GATE -->
-    <available classname="gate.creole.ANNIEConstants" property="GATE.present"/>
-    <target name="no-gate" unless="GATE.present">
+    <available classname="gate.creole.ANNIEConstants" classpathref="relex.classpath" property="GATE.present"/>
+    <target name="look-for-gate" unless="GATE.present">
        <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
     </target>
 
     <!-- conditional compilation, check for OpenNLP -->
-    <available classname="opennlp.tools.sentdetect.SentenceDetector" property="OpenNLP.present"/>
-    <target name="no-opennlp" unless="OpenNLP.present">
+    <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP.present"/>
+    <target name="look-for-opennlp" unless="OpenNLP.present">
        <echo message="Will not build OpenNLP-based sentence detector; OpenNLP classes not found."/>
     </target>
 
-    <target name="build-project" depends="init, no-gate, no-owl, no-opennlp">
+    <target name="build-project" depends="init, look-for-gate, look-for-owl, look-for-opennlp">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">
