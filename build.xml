@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
     <property name="VERSION" value="0.98"/>
-    <property name="REVISION" value="0.98.1"/>
+    <property name="REVISION" value="0.98.2"/>
 
     <property name="GATE_HOME" value="/opt/GATE-4.0"/>
     <property name="PREFIX" value="/usr/share/java"/>
