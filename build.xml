@@ -155,6 +155,7 @@
                 <include name="src/java/relex/anaphora/test-corpus.txt"/>
                 <include name="**/README"/>
                 <include name="**/*.java"/>
+                <include name="**/*.java.in"/>
             </tarfileset>
         </tar>
         <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
