@@ -69,7 +69,17 @@
        <echo message="Will not build OpenNLP-based sentence detector; OpenNLP classes not found."/>
     </target>
 
-    <target name="build-project" depends="init, look-for-gate, look-for-owl, look-for-opennlp">
+    <!-- Create a java source file containing the version number by replacing @REVISION@ -->
+    <target name="build-version">
+       <echo message="Building RelEx version ${REVISION}"/>
+       <copy file="src/java/relex/Version.java.in" tofile="src/java/relex/Version.java">
+           <filterset>
+               <filter token="REVISION" value="${REVISION}"/>
+           </filterset>
+       </copy>
+    </target>
+
+    <target name="build-project" depends="init, build-version, look-for-gate, look-for-owl, look-for-opennlp">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">

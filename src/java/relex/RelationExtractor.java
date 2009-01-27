@@ -139,10 +139,7 @@ public class RelationExtractor
 
 	String getVersion()
 	{
-		// XXX hack alert -- we should be getting the relex
-		// version string from the build environment somehow,
-		// instead of hard-coding it here. 
-		return parser.getVersion() + "\trelex-0.98.0";
+		return parser.getVersion() + "\t" + Version.getVersion();
 	}
 
 	/* ---------------------------------------------------------- */

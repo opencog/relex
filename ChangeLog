@@ -1,5 +1,6 @@
 New in version 0.98.2 (xxx 2009)
  * Fix error in optional GATE/OpenNLP build.
+ * Add support for automatically-propagated RelEx version number.
 
 New in version 0.98.1: (Jaunary 2009)
  * Expose the new link-grammar "disjunct string" API
