@@ -1,5 +1,6 @@
-The capital of Germany is Berlin.
+The sky was blue.  She looked out across the horizon.
 END.
+The capital of Germany is Berlin.
 Berlin is in Germany.
 Berlin is a city in Germany.
 The heart is in the chest.

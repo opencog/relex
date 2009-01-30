@@ -1,3 +1,6 @@
+New in version 0.98.3 (??? 2009)
+ * Fix bug, where the OpenNLP doc splitter was not being found.
+
 New in version 0.98.2 (January 2009)
  * Fix error in optional GATE/OpenNLP build.
  * Add support for automatically-propagated RelEx version number.

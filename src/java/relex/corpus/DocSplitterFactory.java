@@ -24,7 +24,7 @@ public class DocSplitterFactory
 		{
 			Class.forName("opennlp.tools.lang.english.SentenceDetector");
 			// clazz0 = DocSplitterOpenNLPImpl.class;
-			Class<?> c = Class.forName("DocSplitterOpenNLPImpl");
+			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLPImpl");
 
 			// It seems to be impossible to perform this cast and not get
 			// a type-safety warning,
