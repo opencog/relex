@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 0.98.2 ???uary 2009
+                      Version 0.98.3 ???uary 2009
 
 RelEx is a syntactic relationship extractor; it will parse English
 language sentences and return the dependency relationships between
@@ -119,6 +119,16 @@ function.
 	which provides a simple, easy-to-use wrapper for splitting a
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
+
+- Apache commons logging
+   The OpenNLP package requires that the Apache commons logging
+   jar file be installed. In Debian/Ubuntu, this is supplied by
+   the "libcommons-logging-java" package.
+
+- xercesImpl.jar
+   The OpenNLP package requires that the Xerces2 XML parser package 
+   be installed. In Debian/Ubunutu, this is supplied by the 
+   "libxerces2-java" package.
 
 - GATE
    If GATE is found, then GATE-based entity detection will be enabled.
