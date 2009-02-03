@@ -40,7 +40,7 @@ The following packages are required pre-requisites for building RelEx.
 	are available for download at
 	http://www.abisource.com/projects/link-grammar/#download
 
-   Link-grammar version 4.4.1 or later is needed.
+   Link-grammar version 4.4.2 or later is needed.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.

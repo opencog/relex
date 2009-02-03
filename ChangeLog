@@ -1,5 +1,6 @@
 New in version 0.98.3 (??? 2009)
  * Fix bug, where the OpenNLP doc splitter was not being found.
+ * Clarify installation instructions.
 
 New in version 0.98.2 (January 2009)
  * Fix error in optional GATE/OpenNLP build.
@@ -15,9 +16,9 @@ New in version 0.98.1: (Jaunary 2009)
  * Cleanup README to be clearer on how to use RelEx.
 
 New in version 0.98.0:  (December 2008) 
- * Bumper version number, in preparation for a 1.0 release.
+ * Bump version number, in preparation for a 1.0 release.
  * New JSON interface to the link-grammar perser, for improved server
-   performance.
+   performance (from Borislav Iordanov).
 
 New in version 0.10.1:
  * remove cleanSentenceString(), replace with entity id's.
