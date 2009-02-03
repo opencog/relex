@@ -486,7 +486,7 @@ ENTITY-EMOTICON
 <ref emoticon-FLAG> = T
 ;
 #TemplateActionAlg
-INFLACTION_TAG
+INFLECTION_TAG
 <inflection> != %
 =
 <ref inflection-TAG> = <inflection>
@@ -558,6 +558,32 @@ DEFINITE_ENTITIES
 <ENTITY-FLAG> = T
 =
 <ref DEFINITE-FLAG> = T
+;
+; Dates, appearing in IN links, e.g. "in the 1940's"
+#TemplateActionAlg
+IN_DATES
+<LAB> = IN
+=
+<F_R ref date-FLAG> = T
+;
+; Time: It lasted five years
+#TemplateActionAlg
+TIME_EXP
+<LAB> = OT|TQ
+=
+<F_R ref time-FLAG> = T
+;
+#TemplateActionAlg
+TIME_EXP2
+<LAB> = BT
+=
+<F_L ref time-FLAG> = T
+;
+#TemplateActionAlg
+DISTANCE_EXP
+<LAB> = OD
+=
+<F_R ref distance-FLAG> = T
 ;
 ; -------------------------------------------
 ; Combine particles and other things.
