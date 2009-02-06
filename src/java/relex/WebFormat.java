@@ -138,6 +138,10 @@ public class WebFormat extends RelationExtractor
 		Frame frame = null;
 		if (commandMap.get("-f") != null) frame = new Frame();
 
+		// Collect statistics
+		int sentence_count = 0;
+		ParseStats stats = new ParseStats();
+
 		System.out.println(cv.header());
 
 		while(true)
@@ -173,9 +177,9 @@ public class WebFormat extends RelationExtractor
 
 				Sentence sntc = re.processSentence(sentence,em);
 
+				// Print output
 				System.out.println (cv.toString(sntc));
 
-				// Print output
 				for (ParsedSentence parse: sntc.getParses())
 				{
 					if (commandMap.get("-f") != null)
@@ -189,6 +193,15 @@ public class WebFormat extends RelationExtractor
 						System.out.println("\nFraming rules applied:\n");
 						System.out.println(frame.printAppliedRules());
 					}
+				}
+
+				// Collect statistics
+				sentence_count ++;
+				stats.bin(sntc);
+
+				if (sentence_count%20 == 0)
+				{
+					System.err.println ("\n" + stats.toString());
 				}
 
 				sentence = ds.getNextSentence();
