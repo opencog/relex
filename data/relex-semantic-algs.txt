@@ -2279,6 +2279,10 @@ POSSR_TO_DET
 ; 
 ;  COMPARATIVES
 ;
+; XXX This sort of works, but is also broken, on the following sentences:
+; Use more pressure if the bleeding has not stopped after twenty minutes.
+; Cornwallis was expecting more troops to arrive on British ships.
+;
 #TemplateActionAlg
 COMPARATIVE_RELATION1
 ; Marks the comparative subject with a reference to the relation word
