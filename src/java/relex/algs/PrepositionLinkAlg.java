@@ -16,7 +16,6 @@ package relex.algs;
  */
 
 import java.util.Iterator;
-import java.util.Map;
 
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
@@ -57,14 +56,10 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 
 	protected void applyTo(FeatureNode node, RelexContext context)
 	{
-		Map<String, FeatureNode> vars = getTemplate().match(node); 
-		if (vars == null)
-			return;
-
-		FeatureNode modified = getTemplate().val("modified", vars);
-		FeatureNode prepStringValue = getTemplate().val("prep", vars);
-		FeatureNode prep_obj = getTemplate().val("prep_obj", vars);
-		FeatureNode prep_source = getTemplate().val("prep_source", vars);
+		FeatureNode modified = getTemplate().val("modified");
+		FeatureNode prepStringValue = getTemplate().val("prep");
+		FeatureNode prep_obj = getTemplate().val("prep_obj");
+		FeatureNode prep_source = getTemplate().val("prep_source");
 
 		/*
 		 * System.out.println("\nCalling PrepositionLinkAlg:");

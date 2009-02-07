@@ -41,8 +41,6 @@ public class TenseConjoinAlg extends TemplateMatchingAlg {
 	}
 
 	protected void applyTo(FeatureNode node, RelexContext context) {
-		if (getTemplate().match(node) == null)
-			return;
 		FeatureNode tenseNode = node.get("tense");
 		tenseNode.set("name", new FeatureNode(recursiveTenseExtract(tenseNode)));
 	}

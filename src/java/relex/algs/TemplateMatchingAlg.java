@@ -43,7 +43,7 @@ public abstract class TemplateMatchingAlg extends SentenceAlgorithm {
 	 * @return
 	 */
 	protected boolean canApplyTo(FeatureNode node) {
-		return true; // template.match(node) != null;
+		return template.match(node);
 	} // end canApplyTo
 
 	protected String getSignature() {

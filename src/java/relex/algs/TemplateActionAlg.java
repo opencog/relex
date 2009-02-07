@@ -17,7 +17,6 @@ package relex.algs;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
@@ -33,14 +32,10 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 	private ArrayList<FeatureAction> featureActions;
 
 	protected void applyTo(FeatureNode node, RelexContext context) {
-		Map<String, FeatureNode> vars = getTemplate().match(node); 
-		if (vars == null)
-			return;
-		
 		Iterator<FeatureAction> i = featureActions.iterator();
 		while (i.hasNext()) {
 			FeatureAction act = i.next();
-			act.doAction(node, getTemplate(), vars);
+			act.doAction(node, getTemplate());
 		}
 	}
 
