@@ -33,6 +33,7 @@ bin:\
 /usr/local/share/java/jwnl.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
+/usr/local/share/java/linkgrammar-4.4.2.jar:\
 /usr/share/java/linkgrammar-4.4.2.jar:\
 /usr/share/java/xercesImpl.jar:\
 /opt/GATE-4.0/bin/gate.jar:\
