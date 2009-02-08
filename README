@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 0.98.3 ???uary 2009
+                      Version 0.98.3 February 2009
 
 RelEx is a syntactic relationship extractor; it will parse English
 language sentences and return the dependency relationships between
@@ -82,18 +82,6 @@ The following packages are required pre-requisites for building RelEx.
 	provides a jwnl.jar, but the GATE version of jwnl.jar is not
 	compatible (welcome to java DLL hell).
 
-- Trove
-	Some users may require GNU Trove to run RelEx, although this may
-	depend on the JDK installed.  GNU Trove is an implementation of 
-	the java.util class heirarchy, which may or may not be included
-	in the installed JDK.  If needed, download trove from:
-
-	http://trove4j.sourceforge.net/
-
-	Using trove may improve performance and/or decrease memory
-	usage, as compared to the standard JDK implementation of 
-	the java.util heirarchy.
-
 Optional packages
 -----------------
 The following packages are optional. If they are found, then
@@ -119,6 +107,18 @@ function.
 	which provides a simple, easy-to-use wrapper for splitting a
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
+
+- Trove
+	Some users may require the GNU Trove to enable OpenNLP, although
+	this depends on the JDK installed.  GNU Trove is an implementation
+	of the java.util class heirarchy, which may or may not be included
+	in the installed JDK.  If needed, download trove from:
+
+	http://trove4j.sourceforge.net/
+
+	Since trove is optimized, using it may improve performance and/or
+   decrease memory usage, as compared to the standard Sun JDK
+   implementation of the java.util heirarchy.
 
 - Apache commons logging
    The OpenNLP package requires that the Apache commons logging

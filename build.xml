@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
     <property name="VERSION" value="0.98"/>
-    <property name="REVISION" value="0.98.2"/>
+    <property name="REVISION" value="0.98.3"/>
 
-    <property name="GATE_HOME" value="/opt/GATE-4.0"/>
     <property name="PREFIX" value="/usr/share/java"/>
     <property name="ALTPREFIX" value="/usr/local/share/java"/>
+    <property name="GATE_HOME" value="/opt/GATE-4.0"/>
 
     <property name="INSTALLDIR" value="/usr/local/share/java"/>
  
@@ -16,26 +16,35 @@
 
     <path id="relex.classpath">
         <pathelement location="bin"/>
+        <!-- Mandatory packages -->
+        <pathelement location="${PREFIX}/linkgrammar-4.4.2.jar"/>
         <pathelement location="${PREFIX}/gnu-getopt.jar"/>
-        <pathelement location="${PREFIX}/opennlp-tools-1.3.0.jar"/>
         <pathelement location="${PREFIX}/jwnl.jar"/>
         <pathelement location="${PREFIX}/jwnl-1.4rc2.jar"/>
         <pathelement location="${PREFIX}/jwnl-1.3.3.jar"/>
+
+        <!-- Packages required by optional OpenNLP -->
+        <pathelement location="${PREFIX}/opennlp-tools-1.3.0.jar"/>
         <pathelement location="${PREFIX}/maxent-2.4.0.jar"/>
         <pathelement location="${PREFIX}/trove.jar"/>
-        <pathelement location="${PREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${PREFIX}/xercesImpl.jar"/>
         <pathelement location="${PREFIX}/commons-logging.jar"/>
 
+        <!-- Mandatory packages -->
+        <pathelement location="${ALTPREFIX}/linkgrammar-4.4.2.jar"/>
         <pathelement location="${ALTPREFIX}/gnu-getopt.jar"/>
-        <pathelement location="${ALTPREFIX}/opennlp-tools-1.3.0.jar"/>
         <pathelement location="${ALTPREFIX}/jwnl.jar"/>
         <pathelement location="${ALTPREFIX}/jwnl-1.4rc2.jar"/>
         <pathelement location="${ALTPREFIX}/jwnl-1.3.3.jar"/>
+
+        <!-- Packages required by optional OpenNLP -->
+        <pathelement location="${ALTPREFIX}/opennlp-tools-1.3.0.jar"/>
         <pathelement location="${ALTPREFIX}/maxent-2.4.0.jar"/>
         <pathelement location="${ALTPREFIX}/trove.jar"/>
-        <pathelement location="${ALTPREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
         <pathelement location="${ALTPREFIX}/commons-logging.jar"/>
 
+        <!-- GATE - optional for entity recognition -->
         <pathelement location="${GATE_HOME}/bin/gate.jar"/>
         <pathelement location="${GATE_HOME}/lib/jdom.jar"/>
         <pathelement location="${GATE_HOME}/lib/xercesImpl.jar"/>
