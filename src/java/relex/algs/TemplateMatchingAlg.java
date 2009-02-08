@@ -1,6 +1,5 @@
-package relex.algs;
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +14,9 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
+import java.util.Map;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureTemplate;
 
@@ -27,30 +29,34 @@ public abstract class TemplateMatchingAlg extends SentenceAlgorithm {
 
 	private String signature;
 
-	protected FeatureTemplate getTemplate() {
+	protected FeatureTemplate getTemplate()
+	{
 		return template;
 	}
 
-	protected void setTemplate(FeatureTemplate t) {
+	protected void setTemplate(FeatureTemplate t)
+	{
 		template = t;
 	}
 
 	/**
 	 * Tests if ConstituentNode is a superset of template
 	 * 
-	 * 
 	 * @param node
-	 * @return
+	 * @return map of matching nodes
 	 */
-	protected boolean canApplyTo(FeatureNode node) {
+	protected Map<String,FeatureNode> canApplyTo(FeatureNode node)
+	{
 		return template.match(node);
-	} // end canApplyTo
+	}
 
-	protected String getSignature() {
+	protected String getSignature()
+	{
 		return signature;
 	}
 
-	public int init(String str) {
+	public int init(String str)
+	{
 		if (!Character.isLetter(str.charAt(0)))
 			throw new RuntimeException("TemplateMatchingAlg string must start with a letter.\n" + str);
 		// get signature

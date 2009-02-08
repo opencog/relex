@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package relex.algs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
@@ -25,18 +28,21 @@ import relex.morphy.Morphed;
  */
 public class MorphyAlg extends SentenceAlgorithm
 {
-	protected int init(String s) {
+	protected int init(String s)
+	{
 		if (s.length() > 0)
 			throw new RuntimeException(
 				"MorphyAlg should always be initialized with empty string.");
 		return 0;
 	}
 
-	protected String getSignature() {
+	protected String getSignature()
+	{
 		return "MORPHY_ALG";
 	}
 
-	protected void applyTo(FeatureNode node, RelexContext context)
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
 	{
 		LinkableView w = new LinkableView(node);
 		String original = w.getWordString();
@@ -62,7 +68,10 @@ public class MorphyAlg extends SentenceAlgorithm
 		}
 	}
 
-	protected boolean canApplyTo(FeatureNode node) {
-		return (!node.isValued()) && (node.get("str") != null);
+	protected Map<String,FeatureNode> canApplyTo(FeatureNode node) 
+	{
+		if ((!node.isValued()) && (node.get("str") != null))
+			return new HashMap<String,FeatureNode>();
+		return null;
 	}
 }

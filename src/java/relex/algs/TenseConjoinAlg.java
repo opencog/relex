@@ -1,4 +1,3 @@
-package relex.algs;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,10 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
+import java.util.Map;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 
@@ -24,9 +27,10 @@ import relex.feature.FeatureNode;
  * previous name. Returns the conjoined list of names, separated by '_'
  * character.
  */
-public class TenseConjoinAlg extends TemplateMatchingAlg {
-
-	String recursiveTenseExtract(FeatureNode node) {
+public class TenseConjoinAlg extends TemplateMatchingAlg
+{
+	String recursiveTenseExtract(FeatureNode node)
+	{
 		// return at end of recursion
 		if (node == null) return "";
 		// set val to the current value
@@ -40,7 +44,9 @@ public class TenseConjoinAlg extends TemplateMatchingAlg {
 		return val;
 	}
 
-	protected void applyTo(FeatureNode node, RelexContext context) {
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
+	{
 		FeatureNode tenseNode = node.get("tense");
 		tenseNode.set("name", new FeatureNode(recursiveTenseExtract(tenseNode)));
 	}

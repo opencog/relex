@@ -1,6 +1,5 @@
-package relex.algs;
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +14,10 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
 import java.util.Iterator;
+import java.util.Map;
 
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
@@ -54,12 +56,13 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		}
 	}
 
-	protected void applyTo(FeatureNode node, RelexContext context)
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
 	{
-		FeatureNode modified = getTemplate().val("modified");
-		FeatureNode prepStringValue = getTemplate().val("prep");
-		FeatureNode prep_obj = getTemplate().val("prep_obj");
-		FeatureNode prep_source = getTemplate().val("prep_source");
+		FeatureNode modified = getTemplate().val("modified", vars);
+		FeatureNode prepStringValue = getTemplate().val("prep", vars);
+		FeatureNode prep_obj = getTemplate().val("prep_obj", vars);
+		FeatureNode prep_source = getTemplate().val("prep_source", vars);
 
 		/*
 		 * System.out.println("\nCalling PrepositionLinkAlg:");

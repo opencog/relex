@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package relex.algs;
  * (proper names, and idioms like "at hand")
  */
 import java.util.regex.Pattern;
+import java.util.Map;
 
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
@@ -101,9 +102,10 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		                     rightNode, labelRegex, shouldEraseStrAndRef);
 	}
 
-	protected void applyTo(FeatureNode node, RelexContext context)
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
 	{
-		FeatureNode rightNode = getTemplate().val("right");
+		FeatureNode rightNode = getTemplate().val("right", vars);
 		if (rightNode != LinkView.getRight(node))
 			throw new RuntimeException("variable 'right' is not properly assigned");
 		if (!isRightMost(rightNode, allLabelRegex))

@@ -1,8 +1,3 @@
-Water should not be used.
-END.
-Use more pressure if the bleeding has not stopped after twenty minutes.
-Cornwallis was expecting more troops to arrive on British ships.
-END.
 Water should be used.
 Water should not be used.
 Lake or ocean water should not be used.
@@ -11,6 +6,9 @@ Medical experts say the first step in treating a wound is to use clean water.
 To clean the area around the wound, experts suggest using a clean cloth and soap.
 They say there is no need to use products like hydrogen peroxide or iodine.
 It is important to remove all dirt and other material from the wound.
+END.
+Use more pressure if the bleeding has not stopped after twenty minutes.
+Cornwallis was expecting more troops to arrive on British ships.
 END.
 How many years did it last?
 It lasted 5 minutes.

@@ -1,6 +1,5 @@
-package relex.algs;
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +14,11 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
@@ -31,11 +33,13 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 	 */
 	private ArrayList<FeatureAction> featureActions;
 
-	protected void applyTo(FeatureNode node, RelexContext context) {
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
+	{
 		Iterator<FeatureAction> i = featureActions.iterator();
 		while (i.hasNext()) {
 			FeatureAction act = i.next();
-			act.doAction(node, getTemplate());
+			act.doAction(node, getTemplate(), vars);
 		}
 	}
 

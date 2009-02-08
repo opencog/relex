@@ -1,6 +1,5 @@
-package relex.algs;
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +14,22 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
+import java.util.Map;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 
 /**
  * Throws a runtime exception if an error is encountered
  */
-public class ErrorAlg extends TemplateMatchingAlg {
-
-	protected void applyTo(FeatureNode node, RelexContext context) {
-		throw new RuntimeException("ErrorAlg with template:\n" + getTemplate() + "\n\napplied to FeatureNode:\n" + node);
+public class ErrorAlg extends TemplateMatchingAlg
+{
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
+	{
+		throw new RuntimeException("ErrorAlg with template:\n" + 
+			getTemplate() + "\n\napplied to FeatureNode:\n" + node);
 	}
-
 }

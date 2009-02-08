@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Novamente LLC
+ * Copyright 2008,2009 Novamente LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
@@ -42,7 +43,8 @@ public abstract class SentenceAlgorithm
 		Iterator<FeatureNode> i = iteratorFromLeft(sentence);
 		while (i.hasNext()) {
 			FeatureNode c = i.next();
-			if (canApplyTo(c)) {
+			Map<String,FeatureNode> vars = canApplyTo(c);
+			if (null != vars) {
 				boolean printResult = false;
 				if (VERBOSE)
 					System.out.print(" " + getSignature());
@@ -56,7 +58,7 @@ public abstract class SentenceAlgorithm
 					}
 				} // end if(INTERACTIVE)
 				try {
-					applyTo(c, context);
+					applyTo(c, context, vars);
 				} catch (Exception e) {
 					sentence.setErrorString(this + "\n" + e.toString());
 					// System.out.println(sentence);
@@ -113,8 +115,9 @@ public abstract class SentenceAlgorithm
 
 	protected abstract String getSignature();
 
-	protected abstract void applyTo(FeatureNode node, RelexContext context);
+	protected abstract void applyTo(FeatureNode node, RelexContext context,
+	                                Map<String,FeatureNode> vars);
 
-	protected abstract boolean canApplyTo(FeatureNode node);
+	protected abstract Map<String,FeatureNode> canApplyTo(FeatureNode node);
 
 }

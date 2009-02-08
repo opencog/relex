@@ -20,6 +20,8 @@
  */
 package relex.algs;
 
+import java.util.Map;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
@@ -31,39 +33,39 @@ import relex.feature.LinkView;
  */
 public class TwoWordCombineToRightAlg extends TemplateMatchingAlg
 {
-    protected void applyTo(FeatureNode node, RelexContext context)
-    {
-        FeatureNode leftNode = LinkView.getLeft(node);
-        FeatureNode rightNode = LinkView.getRight(node);
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
+	{
+		FeatureNode leftNode = LinkView.getLeft(node);
+		FeatureNode rightNode = LinkView.getRight(node);
 
-        // find the strings and originals
-        String leftString = leftNode.featureValue("str");
-        // String leftOriginal = leftNode.featureValue("orig_str");
-        // if (leftOriginal == null)
-        //     leftOriginal = leftString;
+		// find the strings and originals
+		String leftString = leftNode.featureValue("str");
+		// String leftOriginal = leftNode.featureValue("orig_str");
+		// if (leftOriginal == null)
+		//	 leftOriginal = leftString;
 
-        String rightString = rightNode.featureValue("str");
-        // String rightOriginal = rightNode.featureValue("orig_str");
-        // if (rightOriginal == null)
-        //     rightOriginal = rightString;
+		String rightString = rightNode.featureValue("str");
+		// String rightOriginal = rightNode.featureValue("orig_str");
+		// if (rightOriginal == null)
+		//	 rightOriginal = rightString;
 
-        // make the combined strings
-        // String original = leftOriginal + " " + rightOriginal;
-        String str = leftString + "_" + rightString;
+		// make the combined strings
+		// String original = leftOriginal + " " + rightOriginal;
+		String str = leftString + "_" + rightString;
 
-        // set the values
-        rightNode.get("ref").set("name", new FeatureNode(str));
-        rightNode.set("str", new FeatureNode(str));
-        // rightNode.set("orig_str", new FeatureNode(original));
-        rightNode.set("collocation_end", leftNode);
-        rightNode.set("collocation_start", rightNode);
+		// set the values
+		rightNode.get("ref").set("name", new FeatureNode(str));
+		rightNode.set("str", new FeatureNode(str));
+		// rightNode.set("orig_str", new FeatureNode(original));
+		rightNode.set("collocation_end", leftNode);
+		rightNode.set("collocation_start", rightNode);
    
-        // Erase the other word strings
-        leftNode.set("str", new FeatureNode(""));
-        // leftNode.set("orig_str", null);
-        
-        // System.out.println("RIGHT NODE SET TO " + str);
-    }
-
+		// Erase the other word strings
+		leftNode.set("str", new FeatureNode(""));
+		// leftNode.set("orig_str", null);
+		
+		// System.out.println("RIGHT NODE SET TO " + str);
+	}
 }
 

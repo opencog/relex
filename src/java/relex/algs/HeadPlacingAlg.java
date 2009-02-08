@@ -1,4 +1,3 @@
-package relex.algs;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,10 @@ package relex.algs;
  * limitations under the License.
  */
 
+package relex.algs;
+
+import java.util.Map;
+
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 
@@ -22,15 +25,16 @@ import relex.feature.FeatureNode;
  * This algorithm combines sequences of words which should be a single word
  * (proper names, and idioms like "at hand")
  */
-public class HeadPlacingAlg extends TemplateMatchingAlg {
-
+public class HeadPlacingAlg extends TemplateMatchingAlg
+{
 	static String subjectLabelRegex = "S[a-z\\*]*"; // a-z or '*'
 
 	static String headLabelRegex = "[CW][a-z\\*]*"; // a-z or '*'
 
 	static String allLabelRegex = "(" + subjectLabelRegex + ")|(" + headLabelRegex + ")";
 
-	protected void applyTo(FeatureNode node, RelexContext context) {
+	protected void applyTo(FeatureNode node, RelexContext context,
+	                       Map<String,FeatureNode> vars)
+	{
 	}
-
 }
