@@ -128,7 +128,8 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		// rightNode.set("orig_str", new FeatureNode(bigNameWithSpaces));
 		rightNode.set("collocation_end", rightNode);
 		rightNode.set("collocation_start", leftNode);
-		rightNode.set("start_char", leftNode.get("start_char"));
+		// rightNode.set("start_char", leftNode.get("start_char"));
+		rightNode.get("start_char").setValue(leftNode.get("start_char").getValue());
 
 		// Use morphology on the right node, just in case.
 		// Err .. maybe not. What does this acheive?
