@@ -1,10 +1,12 @@
 /*
- * This class Converts the relation extracted using RelEx to OWL
+ * This class converts the relation extracted using RelEx to OWL
  * by Rui P. Costa (adapted from SimpleView and RelationView)
+ *
+ * Created in 2008 by "Rui Costa" <racosta@student.dei.uc.pt>, 
+ *                    "Rui Costa" * <racosta@student.dei.uc.pt>
  */
-package sw;
+package relex.output;
 
-import relex.output.*;
 import java.net.URI;
 import java.util.HashMap;
 
@@ -26,9 +28,11 @@ import org.semanticweb.owl.model.OWLOntologyChangeException;
 import org.semanticweb.owl.model.OWLOntologyManager;
 import org.semanticweb.owl.model.OWLProperty;
 import org.semanticweb.owl.util.SimpleURIMapper;
+
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
+
 import sw.viz.OWLViz;
 
 /**
