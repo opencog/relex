@@ -107,16 +107,6 @@ public class ParsedSentence extends Atom implements Serializable
 		return idString;
 	}
 
-	/* Obsolete, do not use */
-	public RelexInfo getRI() {
-		return new RelexInfo(sentence);
-	}
-
-	/* Obsolete, do not use */
-	public void setRI(RelexInfo s) {
-		sentence = s;
-	}
-
 	public Sentence getSentence() {
 		return sentence;
 	}
