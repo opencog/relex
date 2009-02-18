@@ -36,6 +36,16 @@ public class SentenceAlgorithmApplier
 			"relex.semalgpath", "relex-semantic-algs.txt");
 	}
 	
+	public void tagFeatures(ParsedSentence sentence, RelexContext context)
+	{
+		tagger.applyAlgs(sentence, context);
+	}
+
+	public void extractSemantics(ParsedSentence sentence, RelexContext context)
+	{
+		semant.applyAlgs(sentence, context);
+	}
+
 	// The apply method!
 	public void applyAlgs(ParsedSentence sentence, RelexContext context)
 	{
