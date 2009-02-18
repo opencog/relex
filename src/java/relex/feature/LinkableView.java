@@ -44,6 +44,8 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
+	private static String ORIG_WORD_STRING_FEATURE_NAME = "orig_str";
+
 	private static String POS_WORD = "WORD";
 
 	private static String TENSE_FEATURE_NAME = "tense";
@@ -355,6 +357,18 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	public static String getWordString(FeatureNode ths) {
 		throwIfNoFN(ths);
 		FeatureNode f = ths.get(WORD_STRING_FEATURE_NAME);
+		if (f != null)
+			return f.getValue().toString();
+		return null;
+	}
+
+	public String getOrigWordString() {
+		return getOrigWordString(fn());
+	}
+
+	public static String getOrigWordString(FeatureNode ths) {
+		throwIfNoFN(ths);
+		FeatureNode f = ths.get(ORIG_WORD_STRING_FEATURE_NAME);
 		if (f != null)
 			return f.getValue().toString();
 		return null;

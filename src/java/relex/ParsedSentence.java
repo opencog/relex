@@ -172,9 +172,15 @@ public class ParsedSentence extends Atom implements Serializable
 	 */
 	public String getOrigWord(int i)
 	{
-		FeatureNode fn = getWordAsNode(i).get("orig_str");
-		if (fn == null) return null;
-		return fn.getValue();
+		return LinkableView.getOrigWordString(getWordAsNode(i));
+	}
+
+	/**
+	 * Return the part-of-speech of the i'th word in the sentence
+	 */
+	public String getPOS(int i)
+	{
+		return LinkableView.getPOS(getWordAsNode(i));
 	}
 
 	public void addWord(FeatureNode w)
