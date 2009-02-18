@@ -2,6 +2,7 @@ New in version 0.98.4 (??? 2009)
  * Fix build break in optional OWL-format output.
  * Delete obsolete interface class RelexInfo.
  * Add getPOS() method to ParsedSentence.
+ * Split relex-semantic-algs.txt into two files.
 
 New in version 0.98.3 (February 2009)
  * Fix bug, where the OpenNLP doc splitter was not being found.

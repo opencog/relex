@@ -1,0 +1,1001 @@
+;
+; relex-tagging-algs.txt
+;
+; Perform part-of-speech, tense, noun-number, gender and entity tagging.
+; This tagging must be performed before relationship extraction is done.
+;
+;/////////////////////////////////////////////////////////////////////////////
+; 
+;  Part-of-speech Tagging:
+;  categories for Morphy are "noun" "verb" "adj" "adv"
+;
+;  Empty or blank node is shown by "%"
+;
+;  Regular expression is introduced by "\"
+;  In regular expressions, "\." is converted to "[a-z\*]" 
+;     (meaning any lower case or the * character)
+;     (also meaning that there is no way to represent a "." in a regular expression)
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;
+; POS TAGGING		
+;
+;
+#TemplateActionAlg
+POS_VERB
+<LAB> = \S\.*|\SF\.*|\SX\.*|\I\.*|\B\.*|\BW\.*|\P\.*|\PP\.*|\Mv\.*|\Mg\.*
+<F_R POS> = WORD
+=
+<F_R POS> = verb
+;
+#TemplateActionAlg
+POS_VERB_INVERTED
+<LAB> = \SI\.*|\O\.*|\U\.*|\PP\.*|\SXI\.*|\SFI\.*
+<F_L POS> = WORD
+=
+<F_L POS> = verb
+;
+#TemplateActionAlg
+POS_NOUN
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*
+<F_L POS> = WORD
+=
+<F_L POS> = noun
+;
+#TemplateActionAlg
+DETERMINER_FLAG
+<LAB> = \D\.*|\DD\.*
+<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that
+=
+<DETERMINER_LINK_FLAG> = T
+<F_L DETERMINER_FLAG> = T
+<F_L POS> = det
+;
+; "The Widget Company" has a DG link to "the", which is missed by rule above.
+#TemplateActionAlg
+DETERMINER_FLAG2
+<LAB> = \DG\.*
+<F_L str> = the|The
+=
+<DETERMINER_LINK_FLAG> = T
+<F_L DETERMINER_FLAG> = T
+<F_L POS> = det
+;
+#TemplateActionAlg
+POS_NOUN_DET
+<DETERMINER_LINK_FLAG> = T
+=
+<F_R POS> = noun
+;
+#TemplateActionAlg
+POS_NOUN_INVERTED
+<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*
+<F_R POS> = WORD
+=
+<F_R POS> = noun
+;
+#TemplateActionAlg
+POS_PREP
+<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
+<F_L POS> = WORD
+=
+<F_L POS> = prep
+;
+#TemplateActionAlg
+POS_PREP_INVERTED
+<LAB> = \Mp\.*|\MVp\.*|\Pp\.*
+<F_R POS> = WORD
+=
+<F_R POS> = prep
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG1
+<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
+=
+<PREP-OBJ-LINK-FLAG> = T
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG2
+<PREP-OBJ-LINK-FLAG> = T
+=
+<F_L PREP-OBJ> = T
+;
+#TemplateActionAlg
+PREP_OBJ_FLAG_INVERSE
+<LAB> = \B\.*|\BW\.*
+<F_R POS> = prep
+=
+<F_R PREP-OBJ> = T
+;
+#TemplateActionAlg
+PREP_CLAUSE_OBJ
+; States that the prep takes an object when that object is actually a clause
+; "I see the building where Joe lives"
+<LAB> = \Cs\.*|\WR\.*
+<F_L POS> = prep
+=
+<F_L PREP-OBJ> = T
+;
+#TemplateActionAlg
+POS_ADJ
+<LAB> = \A\.*|\AF\.*|\DP\.*|\D\.*
+<F_L PREP-OBJ> = %
+<F_L str> != a|A|an|An|the|The|
+<F_L DETERMINER_FLAG> != T
+=
+<F_L POS> = %
+<F_L POS> = adj
+;
+; Treat Pp like an adjective if it takes no object ("I am here.")
+; Treat Mp like it identifies adjective to left if "prep" takes 
+; no object (in_line: "The man in line is happy.")
+; Treat Ma like an adjective, e.g. "appropriate", in
+; "It was done in a manner appropriate for the occasion."
+;
+#TemplateActionAlg
+POS_ADJ_INVERTED
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*
+<F_R PREP-OBJ> = %
+=
+<F_R POS> = %
+<F_R POS> = adj
+;
+; Adverbs: 
+; "He plays better" uses MVb link.
+; "He hears more" uses the MVm link.
+#TemplateActionAlg
+POS_ADV
+<LAB> = \MVa\.*|\MVb\.*|\MVm\.*|\EB\.*
+<F_R POS> = WORD
+=
+<F_R POS> = adv
+;
+#TemplateActionAlg
+POS_ADV_INVERTED
+<LAB> = \E\.*|\EA\.*|\EE\.*
+<F_L POS> = WORD
+=
+<F_L POS> = adv
+;
+; Identify a conjuction:
+;   The word "after" in "He spoke after he ate." (subordinating 
+;        conjunction, C link)
+;   The word "yet" in "He crossed his heart, yet he lied."  
+;        (coordinating conjunction, W link)
+;   The word "than" in "He earns more than I expected."
+;        (Z link)
+#TemplateActionAlg
+POS_CONJUNCTION_INVERTED
+<LAB> = \C\.*|\W\.*|\Z\.*
+<F_L POS> = WORD
+=
+<F_L POS> = conjunction
+;
+; Override prep
+;   The second "as" in "He earns as much as I expected."
+;        (Z link), override prep identification from MV.
+; 
+#TemplateActionAlg
+POS_CONJUNCTION_INVERTED
+<LAB> = \Z\.*
+<F_L POS> = prep
+=
+<F_L POS> = conjunction
+;
+; Identify a particle: 
+;   The word "that" in "I heard that you fell."
+#TemplateActionAlg
+POS_TH_PARTICLE
+<LAB> = TH
+<F_R POS> = WORD
+=
+<F_R POS> = particle
+;
+; Identify a particle: 
+;   The word "to" in "I like to read."
+#TemplateActionAlg
+POS_I_PARTICLE
+<LAB> = I
+<F_L POS> = WORD
+=
+<F_L POS> = particle
+;
+; "Is John Barleycorn alive?"  marks the ? as "punctuation"
+; "Bling, also know as jewelry, is da bomb." has Xc and Xd.
+#TemplateActionAlg
+POS_PUNCTUATION
+<LAB> = Xc|Xp|Xi|Xe|Xx
+<F_R POS> = WORD
+=
+<F_R POS> = punctuation
+;
+#TemplateActionAlg
+POS_PUNCTUATION2
+<LAB> = Xd
+<F_L POS> = WORD
+=
+<F_L POS> = punctuation
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; PAST-TENSE TENSE
+; As of Dec 2008, this is no longer used, as tense tagging is now done
+; at graph creation time.
+;
+; VTAlg flag only set for verbs which are possible past-tense forms
+; #TemplateActionAlg
+; VTALG1
+; ;<F_R POS> = verb
+; <lab_R> = S|RS|SFsi|SF
+; =
+; <F_R VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG2
+; ;<F_L POS> = verb
+; <lab_L> = SI|SFI|SI*j|SXI
+; =
+; <F_L VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG3
+; <POS> = verb
+; <str> = did|didn't|had|hadn't|was|wasn't|were|weren't
+; =
+; <VTAlg_flag> = T
+; ;
+; #TemplateActionAlg
+; VTALG4
+; <LAB> = PP|PPf
+; <F_R str> = had|hadn't
+; =
+; <F_R VTAlg_flag> = F
+;
+;#VerbTenseAlg
+;VERB_TENSE
+;<VTAlg_flag> = T
+;=
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; MORPHOLOGY 
+; Apply word lemmas before working on tense, so that tense can 
+; make use of the root forms.
+;
+#MorphyAlg
+;
+#TemplateActionAlg
+IDENTIFY_POSSESSIVE
+<orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours
+=
+<POSSESSIVE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; MODAL TENSE
+;
+; Done after morphology so that algorithms can match to word root forms
+;
+;
+; PP links identify past participles, in perfect aspect
+; Pv links identify past participles, in passive voice
+#TemplateActionAlg
+TENSE_PERFECT
+<LAB>=\PP\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = perfect
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_PARTICIPLE
+<LAB>=\Pv\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = passive
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_DO
+<LAB>=\I\.d\.*
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = none
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_COPULA
+; Pp is not used if it takes a complement, so that copula is still explicit 
+; in "John is in the park."
+; But "John is here." treats "here" like a predicative adjective
+<LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
+<F_L PREP-OBJ> = %
+<F_L str> = be
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense prev> = <F_L tense>
+;
+#TemplateActionAlg
+TENSE_COPULA_INV
+<LAB> = \AF\.*
+<F_R str> = be
+=
+<INV-TENSE-LINK-FLAG> = T
+<F_L tense prev> = <F_R tense>
+;
+#TemplateActionAlg
+TENSE_FUTURE
+; The place holder prevents "will" from having empty tense.
+; Without that, the next verb might be affected by TENSE-LIST-CONNECT1, 
+; which would incorrectly set the following verb's prev feature to itself.
+<LAB>=\I\.*
+<F_L str> = will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense prev> = <F_L tense>
+<F_R tense val> = future
+<F_L tense PLACE-HOLDER> = T
+;
+#TemplateActionAlg
+TENSE_INFINITIVE
+<LAB>=\I\.*
+<F_L str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+=
+<F_R tense val> = infinitive
+;
+#TemplateActionAlg
+TENSE_PROGRESSIVE
+<LAB>=\Pg\.*
+<F_L str> = be
+=
+<F_R tense val> = progressive
+;
+#TemplateActionAlg
+TENSE_PASSIVE_PARTICIPLE
+; This prevents tense from being set to present; the correct tense 
+; should be "past" in most(?) all(?) cases.
+<LAB>=\Pa\.*|\Mv\.*
+<F_L str> != be
+=
+<F_R tense val> = past
+;
+#TemplateActionAlg
+INV-TENSE_NOTENSE
+; This prevents tense from being set to present.
+<LAB>=\AF\.*
+<F_R str> != be
+=
+<F_L tense val> = none
+;
+#TemplateActionAlg
+TENSE_PROGRESSIVE2
+; This prevents tense from being set to present.
+<LAB>=\Pg\.*|\Mg\.*
+<F_L str> != be
+=
+<F_R tense val> = progressive
+;
+#TemplateActionAlg
+BLANK_TENSE
+<LAB>=\Pv\.*|\Pp\.*
+=
+<F_R BLANK-TENSE-FLAG> = T
+;
+#TemplateActionAlg
+TENSE_PRESENT
+; For verbs that are not identified with future or passive, set tense to present.
+<POS> = verb
+<str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+<BLANK-TENSE-FLAG> = %
+<tense val> = %
+=
+<tense val> = present
+;
+#TemplateActionAlg
+TENSE_IMPERATIVE
+; Can overrule TENSE_PRESENT
+<LAB> = \Wi\.*
+=
+<F_R tense val> = imperative
+<F_R POS> = verb
+;
+; post-tense morphology cleanup: If the verb is "saw" and the tense is "past",
+; then we are seeing with eyes, not sawing with a saw.
+#TemplateActionAlg
+SEE_SAW
+<tense val> = past
+<str> = saw
+=
+<str> = see
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; BASIC REFERENCE
+;
+;
+#TemplateActionAlg
+BASIC_REF
+<str> = $string
+=
+<ref name> = <str>
+<ref nameSource> = <this>
+;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; ENTITY PROCESSING
+;
+; As of Dec 2008, the ENTITY-FLAG is set at the graph creation time.
+;
+; Entities need to be identified as nouns, so that later
+; relex rules, which look for nouns, treat them appropriately.
+;
+#TemplateActionAlg
+ENTITY_IS_NOUN
+<ENTITY-FLAG> = T
+=
+<POS> = %
+<POS> = noun
+;
+; The PERSON-FLAG, etc. are set by the entity detection code.
+; the following rules copy them to the ref, where they will 
+; appear in the relex output.
+#TemplateActionAlg
+ENTITY-PERSON
+<PERSON-FLAG> = T
+=
+<ref person-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-LOCATION
+<LOCATION-FLAG> = T
+=
+<ref location-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-MEASURE
+<MEASURE-FLAG> = T
+=
+<ref measure-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-ORGANIZATION
+<ORGANIZATION-FLAG> = T
+=
+<ref organization-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-DATE
+<DATE-FLAG> = T
+=
+<ref date-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-MONEY
+<MONEY-FLAG> = T
+=
+<ref money-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-EMOTICON
+<EMOTICON-FLAG> = T
+=
+<ref emoticon-FLAG> = T
+;
+#TemplateActionAlg
+INFLECTION_TAG
+<inflection> != %
+=
+<ref inflection-TAG> = <inflection>
+;
+#TemplateActionAlg
+LABEL_IDIOMS
+<LAB> = \ID[A-Z]*[a-z]*
+=
+<F_R ref IDIOM-FLAG> = T
+;
+; -----------------------------------------------------------
+; If there was no front-end entity processor, then use the link-grammar
+; output for identidying entities. These will have G links to the left.
+;
+#WordSequenceCombineAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+<F_R> = $right
+=
+;
+; Fix up entities and idioms -- 
+; Necessary because the WordSequenceCombineAlg changes replaces <str> 
+; with a new node
+;
+#TemplateActionAlg
+PROPER_NAME_AND_ENTITIES_AND_IDIOMS_CORRECTION
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+=
+<F_R ref name> = %
+<F_R ref name> = <F_R str>
+;
+; The above entity mangling sometimes leaves behind empty, non-null strings.
+; Kill these here, explicitly -- replace them with nulls.
+#TemplateActionAlg
+MERGED_EMPTY_STRING_ELIMINATION
+<LAB> = \G\.*|\ID[A-Z]*[a-z]*
+<F_L str> = %
+=
+<F_L str> = %
+;
+;
+#TemplateActionAlg
+PROPER_NAME_POS_CORRECTION
+<LAB> = \G\.*
+=
+<F_R POS> = %
+<F_R POS> = noun
+;
+; G link are entities identified by link-grammar, that the 
+; entity detector may have missed. Tag these as entities, of some
+; unspecified type.
+;
+#TemplateActionAlg
+LG_ENTITES
+<LAB> = \G\.*
+=
+<F_R ref entity-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NAMES
+<LAB> = \G\.*
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+; Entities are definite.
+;
+#TemplateActionAlg
+DEFINITE_ENTITIES
+<ENTITY-FLAG> = T
+=
+<ref DEFINITE-FLAG> = T
+;
+; Dates, appearing in IN links, e.g. "in the 1940's"
+#TemplateActionAlg
+IN_DATES
+<LAB> = IN
+=
+<F_R ref date-FLAG> = T
+;
+; Time: It lasted five years
+#TemplateActionAlg
+TIME_EXP
+<LAB> = OT|TQ
+=
+<F_R ref time-FLAG> = T
+;
+#TemplateActionAlg
+TIME_EXP2
+<LAB> = BT
+=
+<F_L ref time-FLAG> = T
+;
+#TemplateActionAlg
+DISTANCE_EXP
+<LAB> = OD
+=
+<F_R ref distance-FLAG> = T
+;
+; -------------------------------------------
+; Combine particles and other things.
+; For example, "Please go away" creates the polyword "go_away".
+; Note that part of speech is still identified as "verb", which 
+; in this case should be taken to mean "phrasal verb".
+;
+#TwoWordCombineToLeftAlg
+COMBINE_PARTICLES
+<LAB> = K
+=
+;
+#TemplateActionAlg
+POLYWORD_PARTICLES
+<LAB> = K
+=
+<F_L ref POLYWORD-FLAG> = T
+;
+; "He ate as many as I did"  combines into "as_many"
+;
+#TwoWordCombineToRightAlg
+COMBINE_AS_MANY
+<LAB> = AM
+=
+;
+#TemplateActionAlg
+POLYWORD_AS_MANY
+<LAB> = AM
+=
+<F_R ref POLYWORD-FLAG> = T
+;
+; "How much does the book cost?" combines "how_much"
+;
+#TwoWordCombineToRightAlg
+COMBINE_HOW_MUCH
+<LAB> = H
+=
+;
+#TemplateActionAlg
+POLYWORD_HOW_MUCH
+<LAB> = H
+=
+<F_R ref POLYWORD-FLAG> = T
+;
+; -------------------------------------------
+;
+#TemplateActionAlg
+DEFINITE_DETERMINED
+<LAB> = \D\.*
+<F_L orig_str> = the|The|This|this|These|these|Those|those|That|that|'s|his|His|her|Her|their|Their|my|My|our|Our|your|Your
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \DD\.*
+=
+<F_R DD-FLAG> = T
+;
+#TemplateActionAlg
+DEFINITE_NUMBERED1
+<LAB> = \D\.*
+<F_L DD-FLAG> = T
+=
+<F_R ref DEFINITE-FLAG> = T
+;
+; -----------------------------------------------------------
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = who|Who|whom|Whom
+=
+<F_R ref QUERY-TYPE> = who
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = what|What
+=
+<F_R ref QUERY-TYPE> = what
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+#TemplateActionAlg
+QUESTION1
+<LAB> = \W[sq]\.*|\Jw\.*
+<F_R str> = which|Which
+=
+<F_R ref QUERY-TYPE> = which
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref nameSource> = %
+<F_R ref nameSource> = <F_R>
+;
+;
+;//////////////////////////////////////////////////////////////////////
+;
+; RELATIVE REFERENCE (who, which, whom, that)
+;
+; The rules below mainly serve to drop the relative-reference pronouns
+; from the output, since thier referents are immediately resolved. So,
+; for example, "The dog, who barked,...", its clear that "who" refers 
+; to "dog"; this is explicit in the parse, and so "who" plays no role
+; in the relex output. 
+;
+#TemplateActionAlg
+SET_RS_FLAG
+; Puts a flag in a node to indicate that it has an RS link
+<LAB> = \RS\.*
+=
+<F_R RS-FLAG> = T
+;
+#TemplateActionAlg
+RELATIVE_REF1
+<LAB> = \R\.*
+<F_R RS-FLAG> = T
+;The dog who barked, ... (no comma between 'dog' and 'barked')
+=
+<F_R ref> = %
+;
+#TemplateActionAlg
+RELATIVE_REF2
+<LAB> = \R\.*
+<F_R RS-FLAG> = T
+;The dog who barked, ... (no comma between 'dog' and 'barked')
+=
+<F_R ref> += <F_L ref>
+;
+#TemplateActionAlg
+RELATIVE_REF1
+<LAB> = \MX.r\.*
+;The dog, who barked, ...
+=
+<F_R ref> = %
+;
+#TemplateActionAlg
+RELATIVE_REF2
+<LAB> = \MX.r\.*
+;The dog, who barked, ...
+=
+<F_R ref> += <F_L ref>
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF1
+<LAB> = \Jw\.*
+;The man, of whom I know, ...
+=
+<F_L RELATIVE-REF-LOC> = <F_R>
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF2
+<LAB> = \MX.j\.*|\Mj\.*
+<F_R RELATIVE-REF-LOC> != %
+;The man, of whom I know, ...
+=
+<F_R RELATIVE-REF-LOC ref> = %
+;
+#TemplateActionAlg
+PREP_RELATIVE_REF3
+<LAB> = \MX.j\.*|\Mj\.*
+<F_R RELATIVE-REF-LOC> != %
+;The man, of whom I know, ...
+=
+<F_R RELATIVE-REF-LOC ref> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; NOUN NUMBER
+; Determiners (D links) get priority to identify noun number.
+; Then S and O links can identify as singular or plural.  However,
+; if an S or O link identifies the noun as singular, but it has no
+; determiner, then it is "uncountable"  
+;
+; Test sentences
+; Kim eats butter and those deer at Tuesdays.
+; Deer eat mice.
+;
+;
+#TemplateActionAlg
+ENTITY_SINGULAR
+<ENTITY-FLAG> = T
+=
+<num> = %
+<num> = singular
+;
+#TemplateActionAlg
+NOUN_NUMBER
+<POS> = noun
+<str> != <orig_str>
+<num> = %
+=
+<num> = plural
+;
+#TemplateActionAlg
+SINGULAR_DET
+<LAB>=\Ds\.*
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+PLURAL_DET
+<LAB>=\Dmc\.*
+<F_R num> = %
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+UNCOUNTABLE_DET
+<LAB>=\Dmu\.*
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+DET-FLAG
+<LAB> = \D\.*|\DG\.*
+=
+<F_R DET-FLAG> = T
+;
+#TemplateActionAlg
+SINGULAR_OBJ
+<LAB> = \Os\.*|Us\.*
+<F_R DET-FLAG> = T
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+UNCOUNTABLE_OBJ
+<LAB> = \Os\.*|\Us\.*
+<F_R DET-FLAG> != T
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+PLURAL_OBJ
+<LAB> = \Op\.*|\Up\.*
+<F_R num> = %
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+SINGULAR_SUBJ
+<LAB> = \Ss\.*
+<F_L DET-FLAG> = T
+<F_L num> = %
+=
+<F_L num> = singular
+;
+#TemplateActionAlg
+SINGULAR_SUBJ_INV
+<LAB> = \SIs\.*
+<F_R DET-FLAG> = T
+<F_R num> = %
+=
+<F_R num> = singular
+;
+#TemplateActionAlg
+UNCOUNTABLE_SUBJ
+<LAB> = \Ss\.*
+<F_L DET-FLAG> != T
+<F_L num> = %
+=
+<F_L num> = uncountable
+;
+#TemplateActionAlg
+UNCOUNTABLE_SUBJ_INV
+<LAB> = \SIs\.*
+<F_R DET-FLAG> != T
+<F_R num> = %
+=
+<F_R num> = uncountable
+;
+#TemplateActionAlg
+PLURAL_SUBJ
+<LAB> = \Sp\.*
+<F_L num> = %
+<F_L str> != i|I|you|You
+=
+<F_L num> = plural
+;
+#TemplateActionAlg
+PLURAL_SUBJ
+<LAB> = \SIp\.*
+<F_R num> = %
+<F_R str> != i|I|you|You
+=
+<F_R num> = plural
+;
+#TemplateActionAlg
+SINGULAR_PRONOUNS
+<str> = I|i|Me|me|Myself|myself|He|he|She|she|Him|him|Her|her|Himself|himself|Herself|herself
+=
+<num> = singular
+<ref DEFINITE-FLAG>=T
+;
+#TemplateActionAlg
+PLURAL_PRONOUNS
+<str> = We|we|Us|us|Them|them|Ourselves|ourselves|Themselves|themselves
+=
+<num> = plural
+<ref DEFINITE-FLAG>=T
+;
+; "it" is definite, but can be singular or uncountable (but not plural).
+; (It was hot coffee. It was a book.)
+;
+#TemplateActionAlg
+IT_IS_DEFINITE
+<str> = It|it
+=
+<num> = %
+<ref DEFINITE-FLAG>=T
+;
+#TemplateActionAlg
+NUM_TO_REF
+<num> != %
+<ref noun_number> = %
+=
+<ref noun_number> = <num>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; PRONOUN IDENTIFICATION
+; Needed for Anaphora resolution
+; Perhaps this info could be obtained from the link grammar parser,
+; but it seems easier to just make an exhaustive list.
+;
+#TemplateActionAlg
+TAG_PRONOUNS
+<str> = He|he|Him|him|His|his|It|it|Its|its|She|she|Her|her|Hers|hers
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS2
+<str> = I|i|Me|me|We|we|Us|us|You|you|Them|them|They|they
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS_POSS
+<str> = their|Their|my|My|our|Our|your|Your
+=
+<ref PRONOUN-FLAG> = T
+;
+#TemplateActionAlg
+TAG_REFLEXIVE_PRONOUNS
+<str> = Himself|himself|Itself|itself|Herself|herself|Myself|myself|Ourselves|ourselves|Themselves|themselves
+=
+<ref PRONOUN-FLAG> = T
+<ref REFLEXIVE-FLAG> = T
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; GENDER IDENTIFICATION
+; Needed for Anaphora resolution
+;
+#TemplateActionAlg
+MALE_PRONOUNS
+<str> = He|he|Him|him|Himself|himself|His|his
+=
+<gend> = masculine
+;
+#TemplateActionAlg
+FEMALE_PRONOUNS
+<str> = She|she|Her|her|Hers|hers|Herself|herself
+=
+<gend> = feminine
+;
+; Sex is unknown, but personal pronouns cannot refer to inanimate objects.
+#TemplateActionAlg
+PERSON_PRONOUNS
+<str> = I|me|Me|We|we|Us|us|You|you|Them|them|They|they|Myself|myself|Ourselves|ourselves|Themselves|themselves
+=
+<gend> = person
+;
+#TemplateActionAlg
+NEUTER_PRONOUNS
+<str> = It|it|Its|its|Itself|itself
+=
+<gend> = neuter
+;
+; person == not neuter == masc or fem
+; i.e. even if we don't know sex, at least we know its a human.
+#TemplateActionAlg
+PERSON_HAS_GENDER
+<PERSON-FLAG> = T
+=
+<gend> = %
+<gend> = person
+;
+#TemplateActionAlg
+ENTITY_GENDER
+<GENDER> != %
+=
+<gend> = %
+<gend> = <GENDER>
+;
+#TemplateActionAlg
+GENDER_TO_REF
+<gend> != %
+=
+<ref gender> = %
+<ref gender> = <gend>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;/////////////////////////////// END OF FILE /////////////////////////////////
+;/////////////////////////////////////////////////////////////////////////////

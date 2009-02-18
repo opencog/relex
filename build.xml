@@ -123,6 +123,7 @@
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
             <fileset file="data/relex-semantic-algs.txt" />
+            <fileset file="data/relex-tagging-algs.txt" />
             <fileset file="data/frame/concept_vars.txt" />
             <fileset file="data/frame/mapping_rules.txt" />
             <fileset file="data/wordnet/file_properties.xml" />
@@ -159,6 +160,7 @@
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
                 <include name="data/relex-semantic-algs.txt"/>
+                <include name="data/relex-tagging-algs.txt"/>
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/wordnet/file_properties.xml"/>
                 <include name="src/java/relex/anaphora/test-corpus.txt"/>
@@ -176,7 +178,8 @@
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
-            <jvmarg line="-Drelex.algpath=data/relex-semantic-algs.txt"/>
+            <jvmarg line="-Drelex.semalgpath=data/relex-semantic-algs.txt"/>
+            <jvmarg line="-Drelex.tagalgpath=data/relex-tagging-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <jvmarg line="-Dgate.home=${GATE_HOME}"/>
             <classpath refid="relex.classpath"/>
