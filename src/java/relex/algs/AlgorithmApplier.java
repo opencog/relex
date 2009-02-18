@@ -28,10 +28,10 @@ import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
 
 /**
- * SentenceAlgorithmApplierStage is responsible for loading SentenceAlgorithms from a
+ * AlgorithmApplier is responsible for loading SentenceAlgorithms from a
  * file, and applying them to a ParsedSentence.
  */
-public class SentenceAlgorithmApplierStage
+public class AlgorithmApplier
 {
 	/** a debug variable */
 	private static int verbosity = 0;
@@ -48,7 +48,7 @@ public class SentenceAlgorithmApplierStage
 	/** The character in an algfile which preceeds a comment. */
 	private static char COMMENT_CHAR = ';';
 
-	public SentenceAlgorithmApplierStage(String prop, String filename)
+	public AlgorithmApplier(String prop, String filename)
 	{
 		read(prop, filename);
 	}
@@ -145,7 +145,7 @@ public class SentenceAlgorithmApplierStage
 				}
 			}
 			
-			in = SentenceAlgorithmApplierStage.class.getResourceAsStream(
+			in = AlgorithmApplier.class.getResourceAsStream(
 				"/" + filename);
 			if (in != null)
 			{
