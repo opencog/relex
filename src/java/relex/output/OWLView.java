@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.semanticweb.owl.apibinding.OWLManager;
 import org.semanticweb.owl.model.AddAxiom;
 import org.semanticweb.owl.model.OWLAxiomAnnotationAxiom;
@@ -32,8 +33,6 @@ import org.semanticweb.owl.util.SimpleURIMapper;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
-
-import sw.viz.OWLViz;
 
 /**
  * Implements a very simple, direct printout of the 
@@ -60,7 +59,6 @@ public class OWLformat
     private OWLIndividual sentenceInd;
     private int sentence_id;
     private OWLObjectProperty has;
-    OWLViz g;
     boolean viz = false;
     boolean viz_sentence = false;
 
@@ -70,8 +68,6 @@ public class OWLformat
 
     public OWLformat(boolean viz, boolean viz_sentence) {
         initOntology(); //Change to the constructor in order to happen just one time
-
-        g = new OWLViz(viz_sentence, viz);
         
         this.viz = viz;
         this.viz_sentence = viz_sentence;
@@ -327,21 +323,6 @@ public class OWLformat
                     OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
                     //OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
 
-                    //For vizualisation
-                    if(viz){
-                        if(viz_sentence){
-                            g.addRelation("sentence_" + sentence_id, "has", srcName, true);
-                            g.addRelationWithViz(srcName, relName, srcName,true);
-                        }
-                        g.addRelation(srcName, relName, srcName, false);                        
-                        g.addRelationWithViz(srcName, relName, srcName,false);
-                        
-                    }
-                    else{
-                        if(viz_sentence)
-                            g.addRelationWithViz("sentence_" + sentence_id, "has", srcName, true);
-                        g.addRelationWithViz(srcName, relName, srcName,false);
-                    }
 
                     manager.applyChange(new AddAxiom(ontology, addw1));
                     //manager.applyChange(new AddAxiom(ontology, addw2));
@@ -403,9 +384,6 @@ public class OWLformat
                     /*OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
                     OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
 
-                    //For visualization
-                    g.addRelation("sentence_" + sentence_id, "has", src_word.toString());
-                    g.addRelation("sentence_" + sentence_id, "has", dst_word.toString());
 
                     manager.applyChange(new AddAxiom(ontology, addw1));
                     manager.applyChange(new AddAxiom(ontology, addw2));*/
@@ -457,21 +435,6 @@ public class OWLformat
                     OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
                     //OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
 
-                    //For vizualisation
-                    if(viz){
-                        if(viz_sentence){
-                            g.addRelation("sentence_" + sentence_id, "has", srcName, true);
-                            g.addRelationWithViz("sentence_" + sentence_id, "has", srcName, true);
-                        }
-                        g.addRelation(srcName, attrName, value, false);
-                        g.addRelationWithViz(srcName, attrName, value,false);
-                    }
-                    else{
-                        if(viz_sentence)
-                            g.addRelationWithViz("sentence_" + sentence_id, "has", srcName, true);
-                        g.addRelationWithViz(srcName, attrName, value,false);
-                    }
-
                     manager.applyChange(new AddAxiom(ontology, addw1));
                     //manager.applyChange(new AddAxiom(ontology, addw2));
                 }
@@ -485,10 +448,7 @@ public class OWLformat
 		}
 	}
 
-    public void reBuildGraph(boolean isSrcSentence){
-        g.setSentenceOn(isSrcSentence);
-        g.reBuildGraph();
-    }
 }
 
 /* ============================ END OF FILE ====================== */
+
