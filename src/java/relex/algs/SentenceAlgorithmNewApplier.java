@@ -48,9 +48,9 @@ public class SentenceAlgorithmNewApplier
 	/** The character in an algfile which preceeds a comment. */
 	private static char COMMENT_CHAR = ';';
 
-	public SentenceAlgorithmNewApplier()
+	public SentenceAlgorithmNewApplier(String prop, String filename)
 	{
-		read();
+		read(prop, filename);
 	}
 	
 	private void addAlg(SentenceAlgorithm alg, String initString)
@@ -73,9 +73,9 @@ public class SentenceAlgorithmNewApplier
 	/**
 	 *  Read in the set of SentenceAlgorithms
 	 */
-	public void read()
+	public void read(String prop, String filename)
 	{
-		InputStream in = getAlgorithmsFile();
+		InputStream in = getAlgorithmsFile(prop, filename);
 		algs = new ArrayList<SentenceAlgorithm>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		
@@ -126,50 +126,52 @@ public class SentenceAlgorithmNewApplier
 	 * 
 	 * @return
 	 */
-	public static InputStream getAlgorithmsFile()
+	public static InputStream getAlgorithmsFile(String prop, String filename)
 	{
 		try
 		{
 			InputStream in = null; 
-			String algsFileName = System.getProperty("relex.algpath");
+			String algsFileName = System.getProperty(prop);
 			if (algsFileName!=null)
 			{
 				in = new FileInputStream(algsFileName);
 				if (in != null)
 				{
 					if (verbosity > 0)
-						System.err.println("Info: Using relex algorithms file defined in relex.algpath:" + algsFileName);
+						System.err.println(
+							"Info: Using relex algorithms file defined in " +
+							prop + ": " + algsFileName);
 					return in;
 				}
 			}
 			
-			in = SentenceAlgorithmNewApplier.class.getResourceAsStream("/relex-semantic-algs.txt");
+			in = SentenceAlgorithmNewApplier.class.getResourceAsStream(
+				"/" + filename);
 			if (in != null)
 			{
 				if (verbosity > 0)
-					System.err.println("Info: Using relex algorithms file defined as a resource.");
+					System.err.println(
+						"Info: Using relex algorithms file defined as a resource.");
 				return in;
 			}
 	
-			String defaultRelexSemanticAlgsFile = "./data/relex-semantic-algs.txt";
-			in = new FileInputStream(defaultRelexSemanticAlgsFile);
+			String defaultRelexAlgsFile = 
+				"./data/" + filename;
+			in = new FileInputStream(defaultRelexAlgsFile);
 			if (in != null)
 			{
 				if (verbosity > 0)
-					System.err.println("Info: Using default relex algorithms file "+defaultRelexSemanticAlgsFile);
+					System.err.println(
+						"Info: Using default relex algorithms file: " +
+						defaultRelexAlgsFile);
 				return in;
 			}
 	
-			throw new RuntimeException("Error reading semantic algorithms file.");
+			throw new RuntimeException("Error reading algorithms file.");
 		}
 		catch (FileNotFoundException exception)
 		{
 			throw new RuntimeException(exception);
 		}
-	}
-	
-	public static void main(String[] args)
-	{
-		new SentenceAlgorithmNewApplier();
 	}
 }
