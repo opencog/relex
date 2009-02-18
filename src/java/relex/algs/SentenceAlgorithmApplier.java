@@ -25,14 +25,14 @@ import relex.concurrent.RelexContext;
  */
 public class SentenceAlgorithmApplier
 {
-	private SentenceAlgorithmNewApplier tagger;
-	private SentenceAlgorithmNewApplier semant;
+	private SentenceAlgorithmApplierStage tagger;
+	private SentenceAlgorithmApplierStage semant;
 
 	public SentenceAlgorithmApplier()
 	{
-		tagger = new SentenceAlgorithmNewApplier(
+		tagger = new SentenceAlgorithmApplierStage(
 			"relex.tagalgpath", "relex-tagging-algs.txt");
-		semant = new SentenceAlgorithmNewApplier(
+		semant = new SentenceAlgorithmApplierStage(
 			"relex.semalgpath", "relex-semantic-algs.txt");
 	}
 	
