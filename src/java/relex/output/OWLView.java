@@ -40,7 +40,7 @@ import relex.ParsedSentence;
  *
  * Copyright (c) 2008 Linas Vepstas <linas@linas.org> and Rui P. Costa <b4h0pe@gmail.com>
  */
-public class OWLformat
+public class OWLView
 {
 
     private String sent;
@@ -62,11 +62,11 @@ public class OWLformat
     boolean viz = false;
     boolean viz_sentence = false;
 
-    public OWLformat() {
+    public OWLView() {
         initOntology(); //Change to the constructor in order to happen just one time
     }
 
-    public OWLformat(boolean viz, boolean viz_sentence) {
+    public OWLView(boolean viz, boolean viz_sentence) {
         initOntology(); //Change to the constructor in order to happen just one time
         
         this.viz = viz;
@@ -107,7 +107,7 @@ public class OWLformat
             printRelations(parse, null);
 
         } catch (OWLOntologyChangeException ex) {
-            Logger.getLogger(OWLformat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
         }
 	}
 
@@ -330,7 +330,7 @@ public class OWLformat
 
 
             } catch (OWLException ex) {
-                Logger.getLogger(OWLformat.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
             }
             return false;
 		}
@@ -390,7 +390,7 @@ public class OWLformat
 
 
                 } catch (OWLException ex) {
-                    Logger.getLogger(OWLformat.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 			else
@@ -440,7 +440,7 @@ public class OWLformat
                 }
 
             } catch (OWLException ex) {
-                Logger.getLogger(OWLformat.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
             }
 			}
 
