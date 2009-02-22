@@ -117,9 +117,12 @@ PREP_CLAUSE_OBJ
 =
 <F_L PREP-OBJ> = T
 ;
+; D == determiner
+; DP == possesive determiner
+; DT == time-related dterminer (e.g. next, every)
 #TemplateActionAlg
 POS_ADJ
-<LAB> = \A\.*|\AF\.*|\DP\.*|\D\.*
+<LAB> = \A\.*|\AF\.*|\DP\.*|\DT\.*|\D\.*
 <F_L PREP-OBJ> = %
 <F_L str> != a|A|an|An|the|The|
 <F_L DETERMINER_FLAG> != T
