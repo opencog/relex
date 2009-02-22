@@ -1043,6 +1043,7 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 ;
 ; ADJECTIVE MODIFICATIONS
 ;
+; DT == time-related determiner e.g. next, every
 ;
 #TemplateActionAlg
 ADJ1
