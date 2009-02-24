@@ -344,7 +344,7 @@ public class RelationExtractor
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
 			" [-n max number of parses to display]" +
-			" [-o (show opencog XML output)]" +
+			" [-o (show opencog scheme output)]" +
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
