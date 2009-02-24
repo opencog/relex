@@ -183,6 +183,15 @@ public class ParsedSentence extends Atom implements Serializable
 		return LinkableView.getPOS(getWordAsNode(i));
 	}
 
+	/**
+	 * Return the offset, in the original sentence, to the first
+	 * character of the i'th word in the sentence.
+	 */
+	public int getStartChar(int i)
+	{
+		return LinkableView.getStartChar(getWordAsNode(i));
+	}
+
 	public void addWord(FeatureNode w)
 	{
 		leafConstituents.add(w);
