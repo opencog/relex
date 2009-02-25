@@ -81,6 +81,7 @@
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
     <target name="build-version">
        <echo message="Building RelEx version ${REVISION}"/>
+       <delete file="src/java/relex/Version.java"/>
        <copy file="src/java/relex/Version.java.in" tofile="src/java/relex/Version.java">
            <filterset>
                <filter token="REVISION" value="${REVISION}"/>
