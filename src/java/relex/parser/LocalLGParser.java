@@ -135,7 +135,11 @@ public class LocalLGParser extends LGParser
 					s.addWord(fnv.fn());
 
 					// Add char-index information to the feature node
-					String tokenString = LinkGrammar.getWord(w).toLowerCase(); // normalize cases
+					// FYI, the JNI call (*env)->NewStringUTF(env, str);
+					// will return NULL if str is utf8-encoded Japanese or Chinese. Go figure.
+					String tokenString = LinkGrammar.getWord(w);
+					if (null != tokenString) tokenString = tokenString.toLowerCase(); // normalize cases
+					else tokenString = "";
 					
 					// System.out.println("DOING INFO FOR " + tokenString);
 					String sentenceString = sentence.toLowerCase();
