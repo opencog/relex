@@ -5,6 +5,7 @@ New in version 0.98.4 (??? 2009)
  * Split relex-semantic-algs.txt into two files.
  * Correctly identify time-related adjectives.
  * Fix the way that the version number is identified during build.
+ * Tag more pronouns as such.
 
 New in version 0.98.3 (February 2009)
  * Fix bug, where the OpenNLP doc splitter was not being found.
