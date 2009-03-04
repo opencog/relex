@@ -88,6 +88,12 @@ public class PhraseMarkup
 		word_index = 1;
 		sentence = sent;
 		String phraseString = sent.getPhraseString();
+
+		// The phraseString might be null if the sentence contains Japanese 
+		// or Chinese UTF8 characters.  It seems that Java does not support
+		// Japanese/Chinese automatically(!!??) and returns nulls for such
+		// strings.
+		if (null == phraseString) return;
 		FeatureNode head = sent.getLeft();
 
 		doMarkup(head, null, phraseString);

@@ -373,6 +373,7 @@ public class PhraseTree
 	 */
 	public static int getDepth(FeatureNode word)
 	{
+		if (null == word) return 0;
 		int maxdepth = 0;
 		FeatureNode fn = word.get("phr-head");
 		while (fn != null)

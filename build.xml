@@ -17,7 +17,7 @@
     <path id="relex.classpath">
         <pathelement location="bin"/>
         <!-- Mandatory packages -->
-        <pathelement location="${PREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${PREFIX}/linkgrammar.jar"/>
         <pathelement location="${PREFIX}/gnu-getopt.jar"/>
         <pathelement location="${PREFIX}/jwnl.jar"/>
         <pathelement location="${PREFIX}/jwnl-1.4rc2.jar"/>
@@ -31,7 +31,7 @@
         <pathelement location="${PREFIX}/commons-logging.jar"/>
 
         <!-- Mandatory packages -->
-        <pathelement location="${ALTPREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${ALTPREFIX}/linkgrammar.jar"/>
         <pathelement location="${ALTPREFIX}/gnu-getopt.jar"/>
         <pathelement location="${ALTPREFIX}/jwnl.jar"/>
         <pathelement location="${ALTPREFIX}/jwnl-1.4rc2.jar"/>
