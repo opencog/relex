@@ -1,3 +1,18 @@
+The capital of Germany is Berlin.
+Berlin is in Germany.
+Berlin is a city in Germany.
+The heart is in the chest.
+The heart is inside the chest.
+The garage is behind the house.
+Lisbon is the capital of Portugaul.
+The capital of Germany is Berlin.
+The color of the sky is blue.
+Pottery is made from clay.
+Yarn is spun from fibers.
+Yarn is made of fibers.
+END.
+I look around and have a bagel.
+He went to prison for breaking the law.
 Bitter gourdはにがうりだそうであってるのかはちょっと不安ですが翻訳ソフトでやくしてみました。
 Your singing is ugly.
 END.
@@ -18,19 +33,6 @@ It lasted 5 minutes.
 It all started back in the 1940's.
 END.
 The sky was blue.  She looked out across the horizon.
-END.
-The capital of Germany is Berlin.
-Berlin is in Germany.
-Berlin is a city in Germany.
-The heart is in the chest.
-The heart is inside the chest.
-The garage is behind the house.
-Lisbon is the capital of Portugaul.
-The capital of Germany is Berlin.
-The color of the sky is blue.
-Pottery is made from clay.
-Yarn is spun from fibers.
-Yarn is made of fibers.
 END.
 He works for the Southern Union Railroad.
 END.

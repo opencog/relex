@@ -94,11 +94,11 @@ class OpenCogSchemeRel
 				value = attrName.toLowerCase();
 
 			// Special treatment for part-of-speech.
-			String link_start = "(InheritanceLink\n";
+			String link_start = "(InheritanceLink (stv 1.0 1.0)\n";
 			String link_end   = ")\n";
 			if (attrName.equals("pos"))
 			{
-				link_start = "(PartOfSpeechLink\n";
+				link_start = "(PartOfSpeechLink (stv 1.0 1.0)\n";
 				link_end   = ")\n";
 			}
 
@@ -123,7 +123,7 @@ class OpenCogSchemeRel
 			String src_guid = id_map.get(srcNode);
 			String tgt_guid = id_map.get(tgtNode);
 
-			outstr += "(EvaluationLink\n";
+			outstr += "(EvaluationLink (stv 1.0 1.0)\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
 			outstr += "   (ListLink\n";
 			outstr += "      (WordInstanceNode \"" + src_guid + "\")\n";
@@ -178,7 +178,7 @@ class OpenCogSchemeRel
 				id_map.put(refNode, guid_word);
 
 				// The word instance, and its associated lemma form
-				refs += "(LemmaLink\n";
+				refs += "(LemmaLink (stv 1.0 1.0)\n";
 				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
 				refs += "   (WordNode \"" + lemma + "\")\n";
 				refs += ")\n";

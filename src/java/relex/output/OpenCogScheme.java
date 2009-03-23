@@ -105,12 +105,12 @@ public class OpenCogScheme
 			String guid_word = word + "@" + guid;
 			word_list.add(guid_word);
 
-			str += "(ReferenceLink\n" +
+			str += "(ReferenceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
 			       "   (WordNode \"" + word + "\")\n" +
 			       ")\n";
 
-			str += "(WordInstanceLink\n" +
+			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
 			       "   (ParseNode \"" + parse.getIDString() + "\")\n" +
 			       ")\n";
@@ -126,7 +126,7 @@ public class OpenCogScheme
 	 */
 	public String printSentence()
 	{
-		String str = "(ReferenceLink\n" +
+		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
 		             "   (ParseNode \"" + parse.getIDString() + "\")\n" +
 		             "   (ListLink\n";
 
@@ -147,7 +147,7 @@ public class OpenCogScheme
 	 */
 	public String printDocument(Document doco)
 	{
-		String str = "(ReferenceLink\n" +
+		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
 		             "   (DocumentNode \"" + doco.getID() + "\")\n" +
 		             "   (ListLink\n";
 
