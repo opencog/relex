@@ -1,6 +1,10 @@
+Aristotle is a man.
+Men are mortal.
+END.
 The capital of Germany is Berlin.
 Berlin is in Germany.
 Berlin is a city in Germany.
+Capitals are cities.
 The heart is in the chest.
 The heart is inside the chest.
 The garage is behind the house.
