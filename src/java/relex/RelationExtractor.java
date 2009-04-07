@@ -47,6 +47,7 @@ import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
+import relex.output.NLGInputView;
 import relex.output.OpenCogScheme;
 import relex.output.ParseView;
 import relex.output.PrologList;
@@ -395,6 +396,7 @@ public class RelationExtractor
 			" [-g (pre-process with GATE entity detector)]" +
 			" [--g-post (post-process with GATE entity detector)]" +
 			" [-h (show this help)]" +
+			" [-i (show output for generation)]" +
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
 			" [--maxParseSeconds N]" +
@@ -422,6 +424,7 @@ public class RelationExtractor
 		flags.add("-g");
 		flags.add("--g-post");
 		flags.add("-h");
+		flags.add("-i");
 		flags.add("-l");
 		flags.add("-m");
 		flags.add("-o");
@@ -645,6 +648,13 @@ public class RelationExtractor
 						System.out.println("\n====\n");
 						System.out.println("Parse " + (numParses+1) +
 					             	" of " + sntc.getParses().size());
+					}
+
+					if (commandMap.get("-i") != null)
+					{
+						System.out.println("\n=====\n");
+						System.out.println(NLGInputView.printRelations(parse));
+						System.out.println("\n=====\n");
 					}
 
 					if (commandMap.get("-r") != null)
