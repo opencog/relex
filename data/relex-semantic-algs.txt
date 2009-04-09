@@ -1049,8 +1049,8 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 ADJ1
 <LAB> = \A\.*|\DT\.*
 =
-<F_L BACKGROUND-FLAG> = T
-<F_L ref links _amod> += <F_R ref>
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _amod> += <F_L ref>
 ;
 ; Treat preps without objects as adjectives -- copula (Pp) is treated
 ; separately.
@@ -1063,8 +1063,8 @@ ADJ2
 <LAB> = \Mp\.*|\MVp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
-<F_R BACKGROUND-FLAG> = T
-<F_R ref links _amod> += <F_L ref>
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _amod> += <F_R ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1077,16 +1077,18 @@ SUPERLATIVE-1
 =
 <F_L det-obj> += <F_R ref>
 ;
-; DD -- definite determiner -- "The last six paychecks"
+; L superlative with DD definite determiner -- "The last six paychecks"
+; DD gives the head word, L gives the dependent.
+;
 #TemplateActionAlg
 SUPERLATIVE-1a
-<LAB> = \DD\.*
+<LAB> = \L\.*
 =
 <F_L det-obj> += <F_R ref>
 ;
 #TemplateActionAlg
 SUPERLATIVE-2
-<LAB> = \L\.*
+<LAB> = \DD\.*
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _amod> += <F_L det-obj>

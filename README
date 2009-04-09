@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 0.98.3 February 2009
+                      Version 0.99.0 April 2009
 
 RelEx is a syntactic relationship extractor; it will parse English
 language sentences and return the dependency relationships between
@@ -284,3 +284,6 @@ TODO - polywords, lexical units, collocations, idioms.
 ----------------
 Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
+
+Reversed:
+_amod
