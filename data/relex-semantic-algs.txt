@@ -203,7 +203,7 @@ PREDICATIVE_ADJECTIVE_LINKING
 <F_L FILLER-OBJ-FLAG> != T
 <F_L str> = be
 =
-<F_R predadj> = <F_L subj>
+<F_L subj links _predadj> = <F_R ref>
 ;
 ;
 #TemplateActionAlg
@@ -644,13 +644,6 @@ OBJ2_TO_LINKS_GERUND
 <iobj> != %
 =
 <ref links _iobj> = <iobj>
-;
-#TemplateActionAlg
-PREDADJ_TO_LINKS
-<HEAD-FLAG> = T
-<predadj> != %
-=
-<ref links _predadj> = <predadj>
 ;
 #TemplateActionAlg
 PREPOSITION_MARKING
