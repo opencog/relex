@@ -1179,8 +1179,8 @@ ADV4
 NOUN-MOD
 <LAB> = \AN\.*
 =
-<F_L ref links _nn> += <F_R ref>
-<F_L BACKGROUND-FLAG> = T
+<F_R ref links _nn> += <F_L ref>
+<F_R BACKGROUND-FLAG> = T
 ;
 ;#TemplateActionAlg
 ;NOUN-MODIF_ASSOC
@@ -1438,7 +1438,7 @@ APPO_RIGHT
 ; If its on the left, we'll call it a noun-modifier instead of an 
 ; appostive.  Thus, "Senator Smith" gets marked as _nn(Smith, Senator)
 ; while "Smith, a Senator" gets marked as _appo(Smith, Senator). The
-; reason for this somwhat inconsistent usage is because other phrases,
+; reason for this somewhat inconsistent usage is because other phrases,
 ; such as "goal line", get marked as _nn(line, goal). So it would seem
 ; to make more sense to use _nn here ... but this is certainly debatable
 ; and subject to change.
