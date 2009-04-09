@@ -285,8 +285,6 @@ TODO - polywords, lexical units, collocations, idioms.
 Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
 
-todo:
-_advmod
 
 Inconsistent:
 _nn
@@ -294,6 +292,7 @@ _nn
 Reversed:
 _amod
 _predadj
+_advmod
 
 OK:
 _appo

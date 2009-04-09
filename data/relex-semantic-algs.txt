@@ -1113,8 +1113,8 @@ ADV1
 <F_R str> != not
 <F_L head-word> != %
 =
-<F_R BACKGROUND-FLAG> = T
-<F_R ref links _advmod> += <F_L head-word ref>
+<F_L head-word BACKGROUND-FLAG> = T
+<F_L head-word ref links _advmod> += <F_R ref>
 ;
 ; Jim quickly runs.
 ; Jim is very tired.
@@ -1124,8 +1124,8 @@ ADV2
 <LAB> != \EA[my]\.*
 <F_R head-word ref> != %
 =
-<F_L BACKGROUND-FLAG> = T
-<F_L ref links _advmod> += <F_R head-word ref>
+<F_R head-word BACKGROUND-FLAG> = T
+<F_R head-word ref links _advmod> += <F_L ref>
 ;
 ; The head-word can be blank in unusual or quirky parses, for example:
 ; "There are also bogus plans" where "bogus" is the head, instead of "are".
@@ -1137,8 +1137,8 @@ ADV2_HEADLESS
 <LAB> != \EA[my]\.*
 <F_R head-word ref> = %
 =
-<F_L BACKGROUND-FLAG> = T
-<F_L ref links _advmod> += <F_R ref>
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _advmod> += <F_L ref>
 ;
 ;
 ;
@@ -1148,8 +1148,8 @@ ADV3
 ;  Jim ate a very fat chicken -- has EA(very, fat)
 <LAB> = \EE\.* | EA
 =
-<F_L BACKGROUND-FLAG> = T
-<F_L ref links _advmod> += <F_R ref>
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _advmod> += <F_L ref>
 ;
 #TemplateActionAlg
 ADV4
@@ -1159,8 +1159,8 @@ ADV4
 <F_L head-word> = %
 =
 <F_L POS> = adv
-<F_L BACKGROUND-FLAG> = T
-<F_L ref links _advmod> += <F_R head-word ref>
+<F_R head-word BACKGROUND-FLAG> = T
+<F_R head-word ref links _advmod> += <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
