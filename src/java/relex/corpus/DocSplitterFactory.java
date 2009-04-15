@@ -37,7 +37,7 @@ public class DocSplitterFactory
 				"\tIt appears that the OpenNLP tools are not installed or are not\n" +
 				"\tcorrectly specified in the java classpath. The OpenNLP tools are\n" +
 				"\tused to perform sentence detection. Without them, ReleEx must be\n" +
-				"\tgven one sentence per line. Please see the README file for info.\n");
+				"\tgiven one sentence per line. Please see the README file for info.\n");
 			clazz0 = DocSplitterFallbackImpl.class;
 		}
 		clazz = clazz0;
