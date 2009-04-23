@@ -81,34 +81,34 @@ public class Server
 			PrintWriter out = new PrintWriter(outs, true);
 
 			try {
-	 			while(out_sock.isConnected()) {
-					String line = in.readLine();
-					if (line == null)
-						break;
-					Sentence sntc = r.processSentence(line);
-					if (sntc.getParses().size() == 0)
-					{
-						out.println("; NO PARSES");
-						continue;
-					}
-					ParsedSentence parse = sntc.getParses().get(0);
-
-					/*
-					out.println(parse.getPhraseString());
-
-					String fin = SimpleView.printRelationsAlt(p);
-					String[] fout = frame.process(fin);
-					for (int i=0; i < fout.length; i++) {
-						out.println(fout[i]);
-					}
-					*/
-					
-					opencog.setParse(parse);
-					out.println(opencog.toString());
-					out.println("; END OF SENTENCE");
+				String line = in.readLine();
+				if (line == null)
+					continue;
+				System.err.println("Info: recv input: \"" + line + "\"");
+				Sentence sntc = r.processSentence(line);
+				if (sntc.getParses().size() == 0)
+				{
+					out.println("; NO PARSES");
+					continue;
 				}
+				ParsedSentence parse = sntc.getParses().get(0);
+
+				/*
+				out.println(parse.getPhraseString());
+
+				String fin = SimpleView.printRelationsAlt(p);
+				String[] fout = frame.process(fin);
+				for (int i=0; i < fout.length; i++) {
+					out.println(fout[i]);
+				}
+				*/
+					
+				opencog.setParse(parse);
+				out.println(opencog.toString());
+				out.println("; END OF SENTENCE");
 
 				out.close();
+				System.err.println("Info: Closed printer");
 			} catch (IOException e) {
 				System.err.println("Error: Processing input failed");
 				continue;
@@ -116,6 +116,7 @@ public class Server
 
 			try {
 				out_sock.close();
+				System.err.println("Info: Closed socket");
 			} catch (IOException e) {
 				System.err.println("Error: Socket close failed");
 				continue;
