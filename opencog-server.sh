@@ -7,6 +7,15 @@
 # returns opencog output. The end of the parse is demarcated with
 # an ; END OF SENTENCE token.
 #
+# It is intended that this server be used entirely from within
+# opencog, to parse text. It is not intended for general, manual use.
+#
+# Example usage:
+#    ./opencog-server.sh &
+#    telnet localhost 4444
+#    This is a test
+#    ^]q
+#
 
 export LANG=en_US.UTF-8
 

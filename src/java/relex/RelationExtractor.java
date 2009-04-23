@@ -83,7 +83,7 @@ public class RelationExtractor
 	/** Syntax processing */
 	private LGParser parser;
 
-	/** Semantic processing */
+	/** Dependency processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 
 	/** Penn tree-bank style phrase structure markup. */
