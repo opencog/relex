@@ -107,10 +107,12 @@ public class Server
 				out.println(opencog.toString());
 
 				// Add a special tag to tell the cog server that it's
-				// just recieved a brand new sentence.
+				// just recieved a brand new sentence. The OpenCog scheme
+				// code depends on this being visible, in order to find
+				// the new sentence.
 				out.println("(ListLink\n");
-				out.println("   (SentenceNode \"" + sntc.getID() + "\")\n");
 				out.println("   (ConceptNode \"# New Parsed Sentence\")\n");
+				out.println("   (SentenceNode \"" + sntc.getID() + "\")\n");
 				out.println(")\n");
 
 				out.println("; END OF SENTENCE");
