@@ -57,9 +57,10 @@ public class Server
 		try {
 			listen_sock = new ServerSocket(s.listen_port);
 		} catch (IOException e) {
-			System.out.println("Listen failed on port " + s.listen_port);
+			System.err.println("Error: Listen failed on port " + s.listen_port);
 			System.exit(-1);
 		}
+		System.err.println("Info: Listening on port " + s.listen_port);
 
 		while(true)
 		{
