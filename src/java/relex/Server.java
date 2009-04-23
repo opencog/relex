@@ -105,6 +105,14 @@ public class Server
 					
 				opencog.setParse(parse);
 				out.println(opencog.toString());
+
+				// Add a special tag to tell the cog server that it's
+				// just recieved a brand new sentence.
+				out.println("(ListLink\n");
+				out.println("   (SentenceNode \"" + sntc.getID() + "\")\n");
+				out.println("   (ConceptNode \"# New Parsed Sentence\")\n");
+				out.println(")\n");
+
 				out.println("; END OF SENTENCE");
 
 				out.close();
