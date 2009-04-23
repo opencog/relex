@@ -26,7 +26,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 // import relex.output.SimpleView;
 // import relex.frame.Frame;
-import relex.output.OpenCogXML;
+import relex.output.OpenCogScheme;
+
+/**
+ * The Server class provides a very simple socket-based parse server.
+ * It will listen for plain-text input sentences on port 4444, and will
+ * generate OpenCog output.  
+ *
+ * It is intended that this server be used by OpenCog agents to process
+ * text; the text is sent from opencog to this server, and the returned
+ * parses are then further processed by OpenCog.
+ */
 
 public class Server
 {
@@ -41,7 +51,7 @@ public class Server
 	{
 		RelationExtractor r = new RelationExtractor(false);
 		// Frame frame = new Frame();
-		OpenCogXML opencog = new OpenCogXML();
+		OpenCogScheme opencog = new OpenCogScheme();
 		Server s = new Server();
 		ServerSocket listen_sock = null;
 		try {
@@ -65,7 +75,7 @@ public class Server
 				continue;
 			}
 
-System.out.println("duude got accept");
+			System.err.println("Info: Socket accept");
 			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 			PrintWriter out = new PrintWriter(outs, true);
 
@@ -77,13 +87,13 @@ System.out.println("duude got accept");
 					Sentence sntc = r.processSentence(line);
 					if (sntc.getParses().size() == 0)
 					{
-						out.println("no parses");
+						out.println("; NO PARSES");
 						continue;
 					}
-					ParsedSentence p = sntc.getParses().get(0);
+					ParsedSentence parse = sntc.getParses().get(0);
 
 					/*
-					out.println(p.getPhraseString());
+					out.println(parse.getPhraseString());
 
 					String fin = SimpleView.printRelationsAlt(p);
 					String[] fout = frame.process(fin);
@@ -92,24 +102,24 @@ System.out.println("duude got accept");
 					}
 					*/
 					
-					opencog.setParse(p);
+					opencog.setParse(parse);
 					out.println(opencog.toString());
+					out.println("; END OF SENTENCE");
 				}
 
 				out.close();
 			} catch (IOException e) {
-				System.out.println("Processing input failed");
+				System.err.println("Error: Processing input failed");
 				continue;
 			}
 
 			try {
 				out_sock.close();
 			} catch (IOException e) {
-				System.out.println("Socket close failed");
+				System.err.println("Error: Socket close failed");
 				continue;
 			}
 		}
 	}
 }
-
 

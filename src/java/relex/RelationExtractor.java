@@ -57,7 +57,7 @@ import relex.tree.PhraseTree;
 
 /**
  * The RelationExtractor class provides the central processing
- * point for parsing sentences and extracting semantic
+ * point for parsing sentences and extracting dependency
  * relationships from them.  The main() proceedure is usable
  * as a stand-alone document analyzer; it supports several
  * flags modifying the displayed output.
