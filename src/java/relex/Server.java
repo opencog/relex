@@ -111,7 +111,7 @@ public class Server
 				// code depends on this being visible, in order to find
 				// the new sentence.
 				out.println("(ListLink");
-				out.println("   (ConceptNode \"# New Parsed Sentence\")");
+				out.println("   (AnchorNode \"# New Parsed Sentence\")");
 				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
 				out.println(")");
 
