@@ -285,13 +285,26 @@ TODO - polywords, lexical units, collocations, idioms.
 Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
 
-Inconsistent:
+
+Head word
+---------
+A core idea behind dependency grammar is that the order of a pair of 
+words in a dependency relation is important: the first word is the
+head word, the second is the dependent. This is maintained by Relex,
+but due to a bug, one relation was ordered inconsistently, and, due
+to a design consideration, three more were in reverse order from the
+conventional order used by other parsers.
+
+The buggy, inconsistent relation was:
 _nn
 
-Reversed:
+The intentianal reversed relations were:
 _amod
 _predadj
 _advmod
 
-OK:
+These have now been fixed. However, the frame relations still assume
+the reversed order; these need to be fixed. XXX TODO!
+
+The following was audited, and appears to be correct:
 _appo
