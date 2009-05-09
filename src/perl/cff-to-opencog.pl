@@ -15,7 +15,7 @@
 # Copyright (c) 2008 Linas Vepstas <linasvepstas@gmail.com>
 #
 
-$required_relex_version = "relex-0.11.0";
+$min_required_relex_version = "relex-0.11.0";
 
 #--------------------------------------------------------------------
 # Need to specify the binmodes, in order for \w to match utf8 chars
@@ -44,8 +44,24 @@ while (<>)
 {
 	if (/<parser>/)
 	{
-		if(/$required_relex_version/) {}
-		else { exit; }
+		# Compare the file version to the minimum required file version.
+		# Any files older than this will fail to generate correct OpenCog
+		# output, and so instead, we'll generate no output at all.
+		#
+		# if(/$required_relex_version/) {}
+		/relex-(\d)\.(\d+)\.(\d+)/;
+		my $major = $1;
+		my $minor = $2;
+		my $rev = $3;
+
+		$min_required_relex_version =~ /relex-(\d)\.(\d+)\.(\d+)/;
+		my $req_major = $1;
+		my $req_minor = $2;
+		my $req_rev = $3;
+
+		if ($major < $req_major) { exit 1;}
+		if ($minor < $req_minor) { exit 1;}
+		if ($rev < $req_rev) { exit 1;}
 	}
 	if (/<sentence /) { $in_sentence = 1;  next; }
 	if (/<features>/) { $in_features = 1; next; }
