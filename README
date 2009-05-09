@@ -298,13 +298,14 @@ conventional order used by other parsers.
 The buggy, inconsistent relation was:
 _nn
 
-The intentianal reversed relations were:
+The intentionally reversed relations were:
 _amod
 _predadj
 _advmod
 
-These have now been fixed. However, the frame relations still assume
-the reversed order; these need to be fixed. XXX TODO!
+These have now been fixed, as of version 0.99.0. However, the frame
+relations still assume the reversed order; these need to be fixed. 
+XXX TODO!
 
 The following was audited, and appears to be correct:
 _appo

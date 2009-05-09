@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
-    <property name="VERSION" value="0.98"/>
-    <property name="REVISION" value="0.98.4"/>
+    <property name="VERSION" value="0.99"/>
+    <property name="REVISION" value="0.99.0"/>
 
     <property name="PREFIX" value="/usr/share/java"/>
     <property name="ALTPREFIX" value="/usr/local/share/java"/>
