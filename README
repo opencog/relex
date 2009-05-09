@@ -243,6 +243,14 @@ the "cff" btach output format into OpenCog hypergraphs, which can
 then be processed by OpenCog.
 
 
+opencog-server.sh
+-----------------
+This script starts a relex server that  listens for plain-text input
+(English sentences) on port 4444. It then parses the text, and returns
+opencog output on the same socket.  This server is meant to serve the
+OpenCog chatbot directly; it is not intended for general, manual use.
+
+
 doc-splitter.sh
 ---------------
 The doc-splitter.sh file is a simple command-line utility to reformat

@@ -13,6 +13,7 @@ New in version 0.98.4 (Winter 2009)
  * Fix the way that the version number is identified during build.
  * Tag more pronouns as such.
  * Work around crash when input contains utf8-encoded Japanese/Chinese.
+ * Add opencog-server.sh for generating OpenCog output.
 
 New in version 0.98.3 (February 2009)
  * Fix bug, where the OpenNLP doc splitter was not being found.

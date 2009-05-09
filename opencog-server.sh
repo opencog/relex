@@ -2,13 +2,14 @@
 #
 # opencog-server.sh: read from socket, generate opencog output.
 #
-# This script start a relex server that listens for plain-text input
+# This script start a RelEx server that listens for plain-text input
 # (English sentences) on port 4444. It then parses the text, and 
-# returns opencog output. The end of the parse is demarcated with
-# an ; END OF SENTENCE token.
+# returns opencog output on the same socket. The end of the parse is
+# demarcated with an ; END OF SENTENCE token.
 #
-# It is intended that this server be used entirely from within
-# opencog, to parse text. It is not intended for general, manual use.
+# It is intended that this server be used entirely from within OpenCog
+# (primarily by the OpenCog chatbot), to parse text. It is not intended
+# for general, manual use.
 #
 # Example usage:
 #    ./opencog-server.sh &
