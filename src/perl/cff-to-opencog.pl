@@ -233,7 +233,7 @@ print ")\n";
 foreach $sent_inst (@sent_list)
 {
 	print "(ListLink\n";
-	print "\t(AnchorNode "# New Parsed Sentence")\n";
+	print "\t(AnchorNode \"# New Parsed Sentence\")\n";
 	print "\t(SentenceNode \"$sent_inst\")\n";
 	print ")\n";
 }
