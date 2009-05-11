@@ -228,5 +228,15 @@ foreach $sent_inst (@sent_list)
 print "\t)\n";
 print ")\n";
 
+# Make sure that the opencog input processor finds out 
+# about the sentences.
+foreach $sent_inst (@sent_list)
+{
+	print "(ListLink\n";
+	print "\t(AnchorNode "# New Parsed Sentence")\n";
+	print "\t(SentenceNode \"$sent_inst\")\n";
+	print ")\n";
+}
+
 # print ".\n";
 # print "exit\n";
