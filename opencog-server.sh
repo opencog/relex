@@ -23,6 +23,7 @@ export LANG=en_US.UTF-8
 VM_OPTS="-Xmx1024m"
 
 RELEX_OPTS="\
+	-Djava.library.path=/usr/lib:/usr/local/lib \
 	-Drelex.algpath=data/relex-semantic-algs.txt \
 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
 	"
