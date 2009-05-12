@@ -124,6 +124,7 @@
     <!-- cleanup -->
     <target name="clean">
         <delete dir="bin"/>
+        <delete dir="docs"/>
         <delete file="relex-${REVISION}.jar"/>
     </target>
     <target name="cleanall" depends="clean"/>

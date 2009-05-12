@@ -1,3 +1,6 @@
+New in version 0.99.1 (??? 2009)
+ * Add "ant help" and "ant javadoc" build targets
+
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.
    Please note that this is a MAJOR INCOMPATIBILITY from previous
