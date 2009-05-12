@@ -1,5 +1,6 @@
 New in version 0.99.1 (??? 2009)
  * Add "ant help" and "ant javadoc" build targets
+ * Upgrade to opennlp-1.4.3, maxent-2.5.2
 
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.

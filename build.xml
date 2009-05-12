@@ -24,8 +24,8 @@
         <pathelement location="${PREFIX}/jwnl-1.3.3.jar"/>
 
         <!-- Packages required by optional OpenNLP -->
-        <pathelement location="${PREFIX}/opennlp-tools-1.3.0.jar"/>
-        <pathelement location="${PREFIX}/maxent-2.4.0.jar"/>
+        <pathelement location="${PREFIX}/opennlp-tools-1.4.3.jar"/>
+        <pathelement location="${PREFIX}/maxent-2.5.2.jar"/>
         <pathelement location="${PREFIX}/trove.jar"/>
         <pathelement location="${PREFIX}/xercesImpl.jar"/>
         <pathelement location="${PREFIX}/commons-logging.jar"/>
@@ -38,8 +38,8 @@
         <pathelement location="${ALTPREFIX}/jwnl-1.3.3.jar"/>
 
         <!-- Packages required by optional OpenNLP -->
-        <pathelement location="${ALTPREFIX}/opennlp-tools-1.3.0.jar"/>
-        <pathelement location="${ALTPREFIX}/maxent-2.4.0.jar"/>
+        <pathelement location="${ALTPREFIX}/opennlp-tools-1.4.3.jar"/>
+        <pathelement location="${ALTPREFIX}/maxent-2.5.2.jar"/>
         <pathelement location="${ALTPREFIX}/trove.jar"/>
         <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
         <pathelement location="${ALTPREFIX}/commons-logging.jar"/>
