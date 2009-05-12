@@ -19,7 +19,7 @@
     <path id="relex.classpath">
         <pathelement location="bin"/>
         <!-- Mandatory packages -->
-        <pathelement location="${PREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${PREFIX}/linkgrammar.jar"/>
         <pathelement location="${PREFIX}/gnu-getopt.jar"/>
         <pathelement location="${PREFIX}/jwnl.jar"/>
         <pathelement location="${PREFIX}/jwnl-1.4rc2.jar"/>
@@ -33,7 +33,7 @@
         <pathelement location="${PREFIX}/commons-logging.jar"/>
 
         <!-- Mandatory packages -->
-        <pathelement location="${ALTPREFIX}/linkgrammar-4.4.2.jar"/>
+        <pathelement location="${ALTPREFIX}/linkgrammar.jar"/>
         <pathelement location="${ALTPREFIX}/gnu-getopt.jar"/>
         <pathelement location="${ALTPREFIX}/wordnet/jwnl.jar"/>
         <pathelement location="${ALTPREFIX}/wordnet/jwnl-1.4rc2.jar"/>
@@ -106,6 +106,20 @@
     <!-- misc build targets -->
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
+
+    <!-- healp -->
+    <target name="usage">
+        <echo message="RelEx build file (build.xml)"/>
+        <echo message=""/>
+        <echo message="Avaliable targets are:"/>
+        <echo message=""/>
+        <echo message="    build   -- generate the relex.jar file (default)"/>
+        <echo message="    install -- install jar file in ${INSTALLDIR}"/>
+        <echo message="    run     -- run a demo of the parser"/>
+        <echo message="    dist    -- create distribution (tar.gz file)"/>
+        <echo message="    clean   -- remove temporary files created by build"/>
+    </target>
+    <target depends="usage" name="help"/>
 
     <!-- cleanup -->
     <target name="clean">

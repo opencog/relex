@@ -106,6 +106,20 @@
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
 
+    <!-- healp -->
+    <target name="usage">
+        <echo message="RelEx build file (build.xml)"/>
+        <echo message=""/>
+        <echo message="Avaliable targets are:"/>
+        <echo message=""/>
+        <echo message="    build   -- generate the relex.jar file (default)"/>
+        <echo message="    install -- install jar file in ${INSTALLDIR}"/>
+        <echo message="    run     -- run a demo of the parser"/>
+        <echo message="    dist    -- create distribution (tar.gz file)"/>
+        <echo message="    clean   -- remove temporary files created by build"/>
+    </target>
+    <target depends="usage" name="help"/>
+
     <!-- cleanup -->
     <target name="clean">
         <delete dir="bin"/>
