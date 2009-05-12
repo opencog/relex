@@ -106,7 +106,7 @@
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
 
-    <!-- healp -->
+    <!-- help -->
     <target name="usage">
         <echo message="RelEx build file (build.xml)"/>
         <echo message=""/>
@@ -187,6 +187,21 @@
         </tar>
         <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
         <delete file="r.tar"/>
+    </target>
+
+    <!-- make documentation -->
+    <target name="javadoc">
+        <mkdir dir="docs" />
+        <javadoc packagenames="relex.*"
+                 sourcepath="src/java"
+                 destdir="docs"
+                 version="true"
+                 splitindex="true"
+                 noindex="false"
+                 windowtitle="RelEx"
+                 doctitle="RelEx Dependency Relation Extractor version $VERSION"
+                 bottom="Copyright &#169; 2005-2009 Mike Ross, Linas Vepstas and others."
+        />
     </target>
 
     <!-- demo example run -->
