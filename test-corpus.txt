@@ -1,3 +1,7 @@
+Dogs have four feet.
+END.
+Humans have two feet.
+END.
 That is correct, according to John.
 Jim is ahead of John.
 That is aside from other conclusions.

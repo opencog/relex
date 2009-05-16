@@ -60,6 +60,7 @@ public class MorphyAlg extends SentenceAlgorithm
 		else if (pos.equals("adv"))
 			f = m.getAdv();
 		node.set("orig_str", node.get("str"));
+
 		if (f != null) {
 			node.set("morph", f);
 			String root = f.get("root").getValue();

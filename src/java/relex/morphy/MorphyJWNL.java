@@ -203,7 +203,7 @@ public class MorphyJWNL implements Morphy
 				parseWordnetCommandOutput(i.next(), negativeVerb, m);
 			}
 		} catch (Exception e) {
-			System.out.println("Error calling wordnet command " + e);
+			System.err.println("Error: problem calling wordnet command " + e);
 			e.printStackTrace();
 		}
 		// In case root wasn't in wordnet, add it here.
@@ -299,7 +299,7 @@ public class MorphyJWNL implements Morphy
 			}
 
 		} catch (JWNLException ex) {
-			System.out.println("Error finding wordnet dictionaries" + ex);
+			System.err.println("Error: can't find wordnet dictionaries" + ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
