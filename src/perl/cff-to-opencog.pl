@@ -90,7 +90,7 @@ while (<>)
 		UUID::unparse($uuid, $uuidstr);
 		$parse_inst = "sentence@" . $uuidstr . "_parse_" . $parse_id;
 
-		print "(ParseLink\n";
+		print "(ParseLink (stv 1 1)\n";
 		print "\t(ParseNode \"$parse_inst\")\n";
 		print "\t(SentenceNode \"$sent_inst\")\n";
 		print ")\n";
@@ -120,7 +120,7 @@ while (<>)
 	{
 		$in_features = 0;
 		# Spew out the sentence
-		print "(ReferenceLink\n";
+		print "(ReferenceLink (stv 1 1)\n";
 		print "\t(ParseNode \"$parse_inst\")\n";
 		print "\t(ListLink\n";
 		foreach $word_inst (@word_list)
@@ -133,7 +133,7 @@ while (<>)
 		# Spew links for individual words, too.
 		foreach $word_inst (@word_list)
 		{
-			print "(WordInstanceLink\n";
+			print "(WordInstanceLink (stv 1 1)\n";
 			print "\t(WordInstanceNode \"$word_inst\")\n";
 			print "\t(ParseNode \"$parse_inst\")\n";
 			print ")\n";
@@ -154,17 +154,17 @@ while (<>)
 
 		push (@word_list, $word_inst);
 
-		print "(ReferenceLink\n";
+		print "(ReferenceLink (stv 1 1)\n";
 		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(WordNode \"$word\")\n";
 		print ")\n";
 
-		print "(LemmaLink\n";
+		print "(LemmaLink (stv 1 1)\n";
 		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(WordNode \"$lemma\")\n";
 		print ")\n";
 
-		print "(PartOfSpeechLink\n";
+		print "(PartOfSpeechLink (stv 1 1)\n";
 		print "\t(WordInstanceNode \"$word_inst\")\n";
 		print "\t(DefinedLinguisticConceptNode \"$pos\")\n";
 		print ")\n";
@@ -172,7 +172,7 @@ while (<>)
 		@feats = split (/\|/, $feat);
 		foreach $f (@feats)
 		{
-			print "(InheritanceLink\n";
+			print "(InheritanceLink (stv 1 1)\n";
 			print "\t(WordInstanceNode \"$word_inst\")\n";
 			print "\t(DefinedLinguisticConceptNode \"$f\")\n";
 			print ")\n";
@@ -187,7 +187,7 @@ while (<>)
 		else { $linst = $word_list[$left_idx-1]; }
 		my $rinst = $word_list[$right_idx-1];
 
-		print "(EvaluationLink\n";
+		print "(EvaluationLink (stv 1 1)\n";
 		print "\t(LinkGrammarRelationshipNode \"$link_type\")\n";
 		print "\t(ListLink\n";
 		print "\t\t(WordInstanceNode \"$linst\")\n";
@@ -202,7 +202,7 @@ while (<>)
 		my $linst = $word_list[$left_idx-1];
 		my $rinst = $word_list[$right_idx-1];
 
-		print "(EvaluationLink\n";
+		print "(EvaluationLink (stv 1 1)\n";
 		print "\t(DefinedLinguisticRelationshipNode \"$rel_type\")\n";
 		print "\t(ListLink\n";
 		print "\t\t(WordInstanceNode \"$linst\")\n";
@@ -218,7 +218,7 @@ UUID::unparse($uuid, $uuidstr);
 $doc_inst = "document@" . $uuidstr;
 
 # Spew out the document
-print "(ReferenceLink\n";
+print "(ReferenceLink (stv 1 1)\n";
 print "\t(DocumentNode \"$doc_inst\")\n";
 print "\t(ListLink\n";
 foreach $sent_inst (@sent_list)
@@ -232,7 +232,7 @@ print ")\n";
 # about the sentences.
 foreach $sent_inst (@sent_list)
 {
-	print "(ListLink\n";
+	print "(ListLink (stv 1 1)\n";
 	print "\t(AnchorNode \"# New Parsed Sentence\")\n";
 	print "\t(SentenceNode \"$sent_inst\")\n";
 	print ")\n";
