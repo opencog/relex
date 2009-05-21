@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,6 +14,7 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.feature;
 /*
  * This class allows for a view of a FeatureNode as a link
  */

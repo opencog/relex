@@ -254,13 +254,19 @@ public class LocalLGParser extends LGParser
 				 * System.err.println("labels: " + cLinkLLabel(i) + ":" +
 				 * cLinkRLabel(i) + ":" + cLinkLabel(i) + ":");
 				 */
-				new LinkView(new FeatureNode()).setLinkFeatures(
+				FeatureNode f = new FeatureNode();
+				new LinkView(f).setLinkFeatures(
 						LinkGrammar.getLinkLLabel(i), 
 						LinkGrammar.getLinkRLabel(i), 
 						LinkGrammar.getLinkLabel(i), 
 						s.getWordAsNode(left), 
 						s.getWordAsNode(right)
 				);
+				String dj = LinkGrammar.getLinkageDisjunct(i);
+				if (dj != null)
+				{
+					f.set("DISJUNCT", new FeatureNode(dj));
+				}
 			}
 		}
 	}
