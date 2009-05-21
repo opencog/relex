@@ -65,12 +65,12 @@ public class LocalLGParser extends LGParser
 
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
-		if (verbosity >= 5) System.out.println("about to parse [" + sentence + "]");
+		if (verbosity >= 5) System.err.println("about to parse [" + sentence + "]");
 		LinkGrammar.parse(sentence);
-		if (verbosity >= 5) System.out.println("parsed [" + sentence + "]");
+		if (verbosity >= 5) System.err.println("parsed [" + sentence + "]");
 		
 		int numParses = LinkGrammar.getNumLinkages();
-		if (verbosity >= 5) System.out.println("found " + numParses + " parse(s)");
+		if (verbosity >= 5) System.err.println("found " + numParses + " parse(s)");
 		
 		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
@@ -84,10 +84,10 @@ public class LocalLGParser extends LGParser
 
 		for (int i = 0; i < numParses && i < config.getMaxLinkages(); i++)
 		{
-			if (verbosity >= 5) System.out.println("making linkage for parse " + i);
+			if (verbosity >= 5) System.err.println("making linkage for parse " + i);
 			LinkGrammar.makeLinkage(i);
 			
-			if (verbosity >= 5) System.out.println("making sentence for parse " + i);
+			if (verbosity >= 5) System.err.println("making sentence for parse " + i);
 			ParsedSentence s = new ParsedSentence(sentence);
 			
 			// add words
@@ -108,12 +108,12 @@ public class LocalLGParser extends LGParser
 			 */
 			int startChar = 0;
 			HashMap<String,Integer> timesTokenSeen = new HashMap<String,Integer>();
-			// System.out.println("LINKPARSER NUMWORDS=" + numWords + "
+			// System.err.println("LINKPARSER NUMWORDS=" + numWords + "
 			// SKIPPED=" + cNumSkippedWords());
 			for (int w = 0; w < numWords; w++)
 			{
 				String wordString = LinkGrammar.getLinkageWord(w);
-				if (verbosity >= 5) System.out.println(" Processing Word " + wordString);
+				if (verbosity >= 5) System.err.println(" Processing Word " + wordString);
 
 				if (wordString.equals("RIGHT-WALL"))
 				{
@@ -157,7 +157,7 @@ public class LocalLGParser extends LGParser
 					if (null != tokenString) tokenString = tokenString.toLowerCase(); // normalize cases
 					else tokenString = "";
 					
-					// System.out.println("DOING INFO FOR " + tokenString);
+					// System.err.println("DOING INFO FOR " + tokenString);
 					String sentenceString = sentence.toLowerCase();
 					Integer timesSeenInt = timesTokenSeen.get(tokenString);
 					int timesSeen = (timesSeenInt == null ? 0 : timesSeenInt.intValue());
@@ -170,7 +170,7 @@ public class LocalLGParser extends LGParser
 
 					timesTokenSeen.put(tokenString, new Integer(timesSeen + 1));
 					int endChar = (startChar >= 0 ? startChar + tokenString.length() : -1);
-					// System.out.println("INFO IS " + startChar + "," + endChar);
+					// System.err.println("INFO IS " + startChar + "," + endChar);
 					fnv.setCharIndices(startChar, endChar, w);
 
 					// Increment index to start looking for next tokenString
@@ -181,7 +181,7 @@ public class LocalLGParser extends LGParser
 				}
 			}
 
-			if (verbosity >= 5) System.out.println("Done with parse " + i);
+			if (verbosity >= 5) System.err.println("Done with parse " + i);
 
 			// set meta data
 			FeatureNode meta = new FeatureNode();
@@ -198,14 +198,14 @@ public class LocalLGParser extends LGParser
 			s.setMetaData(meta);
 
 			// add linkage and tree structure
-			if (verbosity >= 5) System.out.println("Adding Linkage Structure");
+			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
 			addLinkageStructure(s, ignoreFirst, ignoreLast);			
 			if (config.isStoreConstituentString()) 
 			{
-				if (verbosity >= 5) System.out.println("Adding Tree Structure");
+				if (verbosity >= 5) System.err.println("Adding Tree Structure");
 				s.setPhraseString(LinkGrammar.getConstituentString());
 			}
-			if (verbosity >= 5) System.out.println("Ready To Finish");
+			if (verbosity >= 5) System.err.println("Ready To Finish");
 			
 			// add to return list
 			parses.add(s);
@@ -218,9 +218,9 @@ public class LocalLGParser extends LGParser
 		{
 			Long now = System.currentTimeMillis();
 			Long elapsed = now - starttime;
-			System.out.println("Parse setup time: " + elapsed + " milliseconds");
+			System.err.println("Parse setup time: " + elapsed + " milliseconds");
 		}
-		if (verbosity >= 5) System.out.println("Done with parse");
+		if (verbosity >= 5) System.err.println("Done with parse");
 		
 		return sntc;
 	}
@@ -250,8 +250,8 @@ public class LocalLGParser extends LGParser
 			if (!bad)
 			{
 				/*
-				 * System.out.println("ADDING LINK " + left + "," + right);
-				 * System.out.println("labels: " + cLinkLLabel(i) + ":" +
+				 * System.err.println("ADDING LINK " + left + "," + right);
+				 * System.err.println("labels: " + cLinkLLabel(i) + ":" +
 				 * cLinkRLabel(i) + ":" + cLinkLabel(i) + ":");
 				 */
 				new LinkView(new FeatureNode()).setLinkFeatures(
@@ -275,19 +275,19 @@ public class LocalLGParser extends LGParser
 		LocalLGParser lp = new LocalLGParser();
 		Sentence sntc = lp.parse(
 			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.");
-		System.out.println("FOUND " + sntc.getParses().size() + " sentence(s)");
-		System.out.println("HAD is past: " + LinkGrammar.isPastTenseForm("had"));
-		System.out.println("HAVE is past: " + LinkGrammar.isPastTenseForm("have"));
+		System.err.println("FOUND " + sntc.getParses().size() + " sentence(s)");
+		System.err.println("HAD is past: " + LinkGrammar.isPastTenseForm("had"));
+		System.err.println("HAVE is past: " + LinkGrammar.isPastTenseForm("have"));
 		sntc = lp.parse("Mike saw the man with the telescope.");
 		if (sntc.getParses().size() > 0) {
 			ParsedSentence sentence = sntc.getParses().get(0);
-			System.out.println("ParsedSentence.getLinkString():\n"+ sentence.getLinkString());
-			System.out.println("ParsedSentence.getErrorString():\n"+ sentence.getErrorString());
+			System.err.println("ParsedSentence.getLinkString():\n"+ sentence.getLinkString());
+			System.err.println("ParsedSentence.getErrorString():\n"+ sentence.getErrorString());
 		} else {
-			System.out.println("No parse found for sentence");
+			System.err.println("No parse found for sentence");
 		}
 		if (args.length > 0)
-			System.out.println(args[0] + " is past: "+ LinkGrammar.isPastTenseForm(args[0]));
+			System.err.println(args[0] + " is past: "+ LinkGrammar.isPastTenseForm(args[0]));
 		lp.close();
 	}		
 }
