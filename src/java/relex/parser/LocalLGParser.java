@@ -269,8 +269,9 @@ public class LocalLGParser extends LGParser
 
 		if (load_senses)
 		{
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < length-1; i++)
 			{
+				// We'll hang disjunct and senses right off the word node.
 				FeatureNode f = s.getWordAsNode(i);
 				String dj = LinkGrammar.getLinkageDisjunct(i);
 				if (dj != null)
@@ -278,7 +279,7 @@ public class LocalLGParser extends LGParser
 					f.set("DISJUNCT", new FeatureNode(dj));
 				}
 
-				// Get the total weight.
+				// Get the total weight of all senses, for normalization.
 				int n = 0;
 				String sense = LinkGrammar.getLinkageSense(i,n);
 				double tot = 0.0;
@@ -289,12 +290,13 @@ public class LocalLGParser extends LGParser
 					sense = LinkGrammar.getLinkageSense(i,n);
 				}
 
+				// Tag words with word-senses, Use truth values to store
+				// the weight (as a confidence value).
 				n = 0;
 				sense = LinkGrammar.getLinkageSense(i,n);
 				while (sense != null)
 				{
 					double score = LinkGrammar.getLinkageSenseScore(i,n);
-System.out.println("duuuuuude relex sense="+sense);
 					SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
 					FeatureNode sns = new FeatureNode(sense);
 					sns.setTruthValue(stv);
