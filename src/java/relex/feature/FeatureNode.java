@@ -16,7 +16,6 @@
 
 package relex.feature;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +24,7 @@ import java.util.Set;
 
 /**
  * FeatureNodes may store either a set of key-value pairs, where the
- * values are other FeatureNodes, or they may store a string value.
+ * values are other FeatureNodes, or they may store a single string.
  *
  * XXX FIXME: The FeatureNode class is nothing more than a home-grown
  * version of a standard key-value aka frame-slot class. It should
@@ -39,7 +38,7 @@ import java.util.Set;
  * implement LISP-like cons, pair, car and cdr primitves to avoid
  * this confusion.
  */
-public class FeatureNode implements Serializable
+public class FeatureNode extends Atom
 {
 	private static final long serialVersionUID = -1498736655984934453L;
 
@@ -62,10 +61,10 @@ public class FeatureNode implements Serializable
 	private HashSet<FeatureNode> parents;
 
 	/**
-	 * FeatureNodes may store either a set of key-value pairs, where the values
-	 * are other FeatureNodes, or they may store a string value. Most access
-	 * routines to this class will throw an exception if the wrong one of these
-	 * two different things is requested.
+	 * FeatureNodes may store either a set of key-value pairs, where the
+	 * values are other FeatureNodes, or they may store a single string.
+	 * Most access routines to this class will throw an exception if
+	 * the wrong one of these two different things is requested.
 	 */
 	private HashMap<String,FeatureNode> kv_pairs;
 	private String value;
