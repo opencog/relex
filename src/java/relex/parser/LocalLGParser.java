@@ -32,7 +32,7 @@ import relex.stats.SimpleTruthValue;
 public class LocalLGParser extends LGParser
 {
 	private static final int verbosity = 0;
-	
+
 	private ThreadLocal<Boolean> initialized = new ThreadLocal<Boolean>()
 	{
 		protected Boolean initialValue()
@@ -40,7 +40,7 @@ public class LocalLGParser extends LGParser
 			return Boolean.FALSE;
 		}
 	};
-	
+
 	public void init()
 	{
 		if (!initialized.get())
@@ -54,7 +54,7 @@ public class LocalLGParser extends LGParser
 		LinkGrammar.close();
 		initialized.set(Boolean.FALSE);
 	}
-	
+
 	public Sentence parse(String sentence) throws ParseException
 	{
 		if (!initialized.get())
@@ -69,13 +69,13 @@ public class LocalLGParser extends LGParser
 		if (verbosity >= 5) System.err.println("about to parse [" + sentence + "]");
 		LinkGrammar.parse(sentence);
 		if (verbosity >= 5) System.err.println("parsed [" + sentence + "]");
-		
+
 		int numParses = LinkGrammar.getNumLinkages();
 		if (verbosity >= 5) System.err.println("found " + numParses + " parse(s)");
-		
+
 		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
-		if ((numParses < 1) || 
+		if ((numParses < 1) ||
 		    (!config.isAllowSkippedWords() && LinkGrammar.getNumSkippedWords() > 0))
 		{
 			System.err.println("Warning: No parses found for:\n" +
@@ -87,10 +87,10 @@ public class LocalLGParser extends LGParser
 		{
 			if (verbosity >= 5) System.err.println("making linkage for parse " + i);
 			LinkGrammar.makeLinkage(i);
-			
+
 			if (verbosity >= 5) System.err.println("making sentence for parse " + i);
 			ParsedSentence s = new ParsedSentence(sentence);
-			
+
 			// add words
 			int numWords = LinkGrammar.getNumWords();
 			FeatureNode lastFN = null;
@@ -100,7 +100,7 @@ public class LocalLGParser extends LGParser
 			 * sentence -- this will have other consequences when we try to do
 			 * partial parses -- must take this action carefully
 			 */
-			
+
 			/*
 			 * In order to find the start character of each word/token, we need
 			 * to keep track of previous instances of the word (in case the same
@@ -124,18 +124,18 @@ public class LocalLGParser extends LGParser
 				{
 					LinkableView fnv = new LinkableView(new FeatureNode());
 					if (wordString.equals("LEFT-WALL")) leftWall = fnv.fn();
-					// LEFT-WALL should always be first word, so throw an 
+					// LEFT-WALL should always be first word, so throw an
 					// exception if it was not.
 					if (leftWall == null)
 						throw new RuntimeException("Invalid parse: " +
 							"first word is not left wall");
-					
+
 					// set the word and part-of-speach
 					fnv.setWordAndPos(wordString);
-					
+
 					// create a feature "this" which points to the linkable
 					fnv.fn().set("this", fnv.fn());
-					
+
 					// set "wall" to point to the left wall
 					fnv.fn().set("wall", leftWall);
 					if (lastFN != null)
@@ -143,12 +143,12 @@ public class LocalLGParser extends LGParser
 						LinkableView.setNext(lastFN, fnv.fn());
 						fnv.setPrev(lastFN);
 					}
-					
+
 					if (LinkGrammar.isEntity(wordString) || Character.isUpperCase(wordString.charAt(0)))
 						fnv.setEntityFlag();
 					if (LinkGrammar.isPastTenseForm(wordString))
-						fnv.setTenseVal("past");				
-					
+						fnv.setTenseVal("past");
+
 					s.addWord(fnv.fn());
 
 					// Add char-index information to the feature node
@@ -157,7 +157,7 @@ public class LocalLGParser extends LGParser
 					String tokenString = LinkGrammar.getWord(w);
 					if (null != tokenString) tokenString = tokenString.toLowerCase(); // normalize cases
 					else tokenString = "";
-					
+
 					// System.err.println("DOING INFO FOR " + tokenString);
 					String sentenceString = sentence.toLowerCase();
 					Integer timesSeenInt = timesTokenSeen.get(tokenString);
@@ -200,21 +200,21 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isLoadSense());			
-			if (config.isStoreConstituentString()) 
+			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isLoadSense());
+			if (config.isStoreConstituentString())
 			{
 				if (verbosity >= 5) System.err.println("Adding Tree Structure");
 				s.setPhraseString(LinkGrammar.getConstituentString());
 			}
 			if (verbosity >= 5) System.err.println("Ready To Finish");
-			
+
 			// add to return list
 			parses.add(s);
 		}
 
 		sntc.setParses(parses);
 		sntc.setNumParses(LinkGrammar.getNumLinkages());
-		
+
 		if (verbosity > 0)
 		{
 			Long now = System.currentTimeMillis();
@@ -222,18 +222,18 @@ public class LocalLGParser extends LGParser
 			System.err.println("Parse setup time: " + elapsed + " milliseconds");
 		}
 		if (verbosity >= 5) System.err.println("Done with parse");
-		
+
 		return sntc;
 	}
-	
-	private void addLinkageStructure(ParsedSentence s, 
-	                                 boolean ignoreFirst, 
+
+	private void addLinkageStructure(ParsedSentence s,
+	                                 boolean ignoreFirst,
 	                                 boolean ignoreLast,
 	                                 boolean load_senses)
 	{
 		int length = LinkGrammar.getNumWords();
 		int numLinks = LinkGrammar.getNumLinks();
-		s.setLinkString(LinkGrammar.getLinkString());	
+		s.setLinkString(LinkGrammar.getLinkString());
 		for (int i = 0; i < numLinks; i++)
 		{
 			boolean bad = false;
@@ -258,44 +258,49 @@ public class LocalLGParser extends LGParser
 				 */
 				FeatureNode f = new FeatureNode();
 				new LinkView(f).setLinkFeatures(
-						LinkGrammar.getLinkLLabel(i), 
-						LinkGrammar.getLinkRLabel(i), 
-						LinkGrammar.getLinkLabel(i), 
-						s.getWordAsNode(left), 
+						LinkGrammar.getLinkLLabel(i),
+						LinkGrammar.getLinkRLabel(i),
+						LinkGrammar.getLinkLabel(i),
+						s.getWordAsNode(left),
 						s.getWordAsNode(right)
 				);
+			}
+		}
 
-				if (load_senses)
+		if (load_senses)
+		{
+			for (int i = 0; i < length; i++)
+			{
+				FeatureNode f = s.getWordAsNode(i);
+				String dj = LinkGrammar.getLinkageDisjunct(i);
+				if (dj != null)
 				{
-					String dj = LinkGrammar.getLinkageDisjunct(i);
-					if (dj != null)
-					{
-						f.set("DISJUNCT", new FeatureNode(dj));
-					}
+					f.set("DISJUNCT", new FeatureNode(dj));
+				}
 
-					// Get the total weight.
-					int n = 0;
-					String sense = LinkGrammar.getLinkageSense(i,n);
-					double tot = 0.0;
-					while (sense != null)
-					{
-						tot += LinkGrammar.getLinkageSenseScore(i,n);
-						n++;
-						sense = LinkGrammar.getLinkageSense(i,n);
-					}
-
-					n = 0;
+				// Get the total weight.
+				int n = 0;
+				String sense = LinkGrammar.getLinkageSense(i,n);
+				double tot = 0.0;
+				while (sense != null)
+				{
+					tot += LinkGrammar.getLinkageSenseScore(i,n);
+					n++;
 					sense = LinkGrammar.getLinkageSense(i,n);
-					while (sense != null)
-					{
-						double score = LinkGrammar.getLinkageSenseScore(i,n);
-						SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
-						FeatureNode sns = new FeatureNode(sense);
-						sns.setTruthValue(stv);
-						f.set("DISJUNCT"+n, sns);
-						n++;
-						sense = LinkGrammar.getLinkageSense(i,n);
-					}
+				}
+
+				n = 0;
+				sense = LinkGrammar.getLinkageSense(i,n);
+				while (sense != null)
+				{
+					double score = LinkGrammar.getLinkageSenseScore(i,n);
+System.out.println("duuuuuude relex sense="+sense);
+					SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
+					FeatureNode sns = new FeatureNode(sense);
+					sns.setTruthValue(stv);
+					f.set("DISJUNCT"+n, sns);
+					n++;
+					sense = LinkGrammar.getLinkageSense(i,n);
 				}
 			}
 		}
@@ -305,7 +310,7 @@ public class LocalLGParser extends LGParser
 	{
 		return LinkGrammar.getVersion();
 	}
-	 
+
 	public static void main(String[] args)
 	{
 		LocalLGParser lp = new LocalLGParser();
@@ -325,5 +330,5 @@ public class LocalLGParser extends LGParser
 		if (args.length > 0)
 			System.err.println(args[0] + " is past: "+ LinkGrammar.isPastTenseForm(args[0]));
 		lp.close();
-	}		
+	}
 }
