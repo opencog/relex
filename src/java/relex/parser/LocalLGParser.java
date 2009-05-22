@@ -262,11 +262,28 @@ public class LocalLGParser extends LGParser
 						s.getWordAsNode(left), 
 						s.getWordAsNode(right)
 				);
+
+/*******************
+ * comment out for now, as there are no current users for this code.
+				// XXX FIXME -- do this only if the config asks
+				// for ths to be done.
 				String dj = LinkGrammar.getLinkageDisjunct(i);
 				if (dj != null)
 				{
 					f.set("DISJUNCT", new FeatureNode(dj));
 				}
+				int n = 0;
+				String sense = LinkGrammar.getLinkageSense(i,n);
+				while (sense != null)
+				{
+					// How should we store the score in the graph ??
+					double score = LinkGrammar.getLinkageSenseScore(i,n);
+System.out.println("duuude gonna "+ sense + "   " + score);
+					f.set("DISJUNCT"+n, new FeatureNode(sense));
+					n++;
+					sense = LinkGrammar.getLinkageSense(i,n);
+				}
+*******************************/
 			}
 		}
 	}
