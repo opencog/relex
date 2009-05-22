@@ -27,6 +27,7 @@ import relex.Sentence;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.feature.LinkableView;
+import relex.stats.SimpleTruthValue;
 
 public class LocalLGParser extends LGParser
 {
@@ -199,7 +200,7 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast);			
+			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isLoadSense());			
 			if (config.isStoreConstituentString()) 
 			{
 				if (verbosity >= 5) System.err.println("Adding Tree Structure");
@@ -226,8 +227,9 @@ public class LocalLGParser extends LGParser
 	}
 	
 	private void addLinkageStructure(ParsedSentence s, 
-									 boolean ignoreFirst, 
-									 boolean ignoreLast)
+	                                 boolean ignoreFirst, 
+	                                 boolean ignoreLast,
+	                                 boolean load_senses)
 	{
 		int length = LinkGrammar.getNumWords();
 		int numLinks = LinkGrammar.getNumLinks();
@@ -263,27 +265,38 @@ public class LocalLGParser extends LGParser
 						s.getWordAsNode(right)
 				);
 
-/*******************
- * comment out for now, as there are no current users for this code.
-				// XXX FIXME -- do this only if the config asks
-				// for ths to be done.
-				String dj = LinkGrammar.getLinkageDisjunct(i);
-				if (dj != null)
+				if (load_senses)
 				{
-					f.set("DISJUNCT", new FeatureNode(dj));
-				}
-				int n = 0;
-				String sense = LinkGrammar.getLinkageSense(i,n);
-				while (sense != null)
-				{
-					// How should we store the score in the graph ??
-					double score = LinkGrammar.getLinkageSenseScore(i,n);
-System.out.println("duuude gonna "+ sense + "   " + score);
-					f.set("DISJUNCT"+n, new FeatureNode(sense));
-					n++;
+					String dj = LinkGrammar.getLinkageDisjunct(i);
+					if (dj != null)
+					{
+						f.set("DISJUNCT", new FeatureNode(dj));
+					}
+
+					// Get the total weight.
+					int n = 0;
+					String sense = LinkGrammar.getLinkageSense(i,n);
+					double tot = 0.0;
+					while (sense != null)
+					{
+						tot += LinkGrammar.getLinkageSenseScore(i,n);
+						n++;
+						sense = LinkGrammar.getLinkageSense(i,n);
+					}
+
+					n = 0;
 					sense = LinkGrammar.getLinkageSense(i,n);
+					while (sense != null)
+					{
+						double score = LinkGrammar.getLinkageSenseScore(i,n);
+						SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
+						FeatureNode sns = new FeatureNode(sense);
+						sns.setTruthValue(stv);
+						f.set("DISJUNCT"+n, sns);
+						n++;
+						sense = LinkGrammar.getLinkageSense(i,n);
+					}
 				}
-*******************************/
 			}
 		}
 	}
