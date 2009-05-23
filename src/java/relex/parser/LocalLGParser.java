@@ -32,6 +32,7 @@ import relex.stats.SimpleTruthValue;
 public class LocalLGParser extends LGParser
 {
 	private static final int verbosity = 0;
+	private static final double min_score = 1.0;
 
 	private ThreadLocal<Boolean> initialized = new ThreadLocal<Boolean>()
 	{
@@ -285,7 +286,11 @@ public class LocalLGParser extends LGParser
 				double tot = 0.0;
 				while (sense != null)
 				{
-					tot += LinkGrammar.getLinkageSenseScore(i,n);
+					double score = LinkGrammar.getLinkageSenseScore(i,n);
+					if (score > min_score)
+					{
+						tot += score;
+					}
 					n++;
 					sense = LinkGrammar.getLinkageSense(i,n);
 				}
@@ -297,10 +302,13 @@ public class LocalLGParser extends LGParser
 				while (sense != null)
 				{
 					double score = LinkGrammar.getLinkageSenseScore(i,n);
-					SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
-					FeatureNode sns = new FeatureNode(sense);
-					sns.setTruthValue(stv);
-					f.set("DISJUNCT"+n, sns);
+					if (score > min_score)
+					{
+						SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
+						FeatureNode sns = new FeatureNode(sense);
+						sns.setTruthValue(stv);
+						f.set("DISJUNCT"+n, sns);
+					}
 					n++;
 					sense = LinkGrammar.getLinkageSense(i,n);
 				}
