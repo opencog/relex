@@ -58,6 +58,7 @@ public class OpenCogSchemeFrame
 	{
 		String ret = "";
 		String fin = SimpleView.printRelationsAlt(sent, id_map);
+		fin = fin.replaceAll("@[^,\\)]*","");
 		String[] fms = frame.process(fin);
 
 		for (String fm : fms) 
