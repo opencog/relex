@@ -298,7 +298,7 @@ Head word
 ---------
 A core idea behind dependency grammar is that the order of a pair of 
 words in a dependency relation is important: the first word is the
-head word, the second is the dependent. This is maintained by Relex,
+head word, the second is the dependent. This is maintained by RelEx,
 but due to a bug, one relation was ordered inconsistently, and, due
 to a design consideration, three more were in reverse order from the
 conventional order used by other parsers.
@@ -311,9 +311,9 @@ _amod
 _predadj
 _advmod
 
-These have now been fixed, as of version 0.99.0. However, the frame
-relations still assume the reversed order; these need to be fixed. 
-XXX TODO!
+These have now been fixed, as of version 0.99.1., with one exception:
+some of the _nn usages in data/frame/mapping_rules.txt might be
+reversed.
 
 The following was audited, and appears to be correct:
 _appo
