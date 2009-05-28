@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 0.99.0 April 2009
+                      Version 0.99.1 May 2009
 
 RelEx is a syntactic relationship extractor; it will parse English
 language sentences and return the dependency relationships between
@@ -40,7 +40,7 @@ The following packages are required pre-requisites for building RelEx.
 	are available for download at
 	http://www.abisource.com/projects/link-grammar/#download
 
-   Link-grammar version 4.4.2 or later is needed.
+   Link-grammar version 4.5.4 or later is needed.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
@@ -193,6 +193,7 @@ it does not include all required output. For example, if the same word
 appears in a sentence twice, the demo output will not distinguish between
 these two words.
 
+
 Running RelEx
 -------------
 Several example shell scripts (MS Windows batch files) are included
@@ -311,7 +312,7 @@ _amod
 _predadj
 _advmod
 
-These have now been fixed, as of version 0.99.1., with one exception:
+These have now been fixed, as of version 0.99.1, with one exception:
 some of the _nn usages in data/frame/mapping_rules.txt might be
 reversed.
 
