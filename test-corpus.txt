@@ -1,5 +1,8 @@
-Dogs have four feet.
+John's dog bit my tire.
+That's what the man said.
+It's the truth.
 END.
+Dogs have four feet.
 Humans have two feet.
 END.
 That is correct, according to John.

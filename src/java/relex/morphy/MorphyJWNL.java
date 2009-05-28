@@ -64,7 +64,10 @@ public class MorphyJWNL implements Morphy
 
 		// Hmm .. ain't ain't conjugated. 
 		// I ain't, you ain't, we ain't, they ain't changing at all.
-		irregularVerbContractions.put("ain't", "am");
+		irregularVerbContractions.put("ain't", "be");
+
+		// "That's what he said..."
+		irregularVerbContractions.put("'s", "be");
 
 		possessiveAdjRoots.put("my", "me");
 		possessiveNounRoots.put("mine", "me");
