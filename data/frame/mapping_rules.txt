@@ -137,7 +137,7 @@
 # IF _nn($Luck,$var0) ^ noun($var0) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
 # IF _amod($var0,$Luck) ^ noun($var0) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
 
-# IF _predadj($var1,$var0) ^ NOT $var0=$Locative_relation THEN ^1_Attributes:Attribute($var0,$var0) ^1_Attributes:Entity($var1,$var1)
+# IF _predadj($var1,$var0) ^ NOT $var0=$Locative_relation THEN ^1_Attributes:Attribute($var0,$var0) ^1_Attributes:Entity($var0,$var1)
 # IF _predadj($var1,$var0) ^ $var0=$Locative_relation THEN 1_Locative_relation:Figure($var1,$var1) ^1_Locative_relation:Ground($var0,$var0)
 # IF _predadj($var0,$Number) ^ uncountable($var0) THEN ^1_Quantity:Quantity($Number,$Number) ^1_Quantity:Mass($Number,$var0)
 # IF _predadj(amount,$Dimension) THEN ^1_Quantity:Quantity($Dimension,$Dimension) ^1_Quantity:Mass($Dimension,amount)
