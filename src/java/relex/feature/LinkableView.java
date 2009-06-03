@@ -296,13 +296,13 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		throwIfNoFN(ths);
 
 		// Inflections may be one letter, or they may be longer.
-		// Just right now, they happen to be only one letter, 
-		// but this will soon change.
+		// Link-grammar calls these "word subscripts"; perhaps we should
+		// stop mis-using the term "inflection" here ... 
 		int len = wordString.length();
-		if ((2 < len) && (wordString.indexOf('.') == len -2))
+		int dot = wordString.lastIndexOf('.');
+		if ((2 < len) && (dot == len-2))
 		{
 			char inflection = wordString.charAt(len-1);
-			wordString = wordString.substring(0, len-2);
 			switch(inflection)
 			{
 				case 'a': setPOS(ths, "adj"); break;
@@ -347,7 +347,15 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		{
 			setPOS(ths, POS_WORD);
 		}
-		ths.set(WORD_STRING_FEATURE_NAME, new FeatureNode(wordString));
+		if ((0 < dot) && (dot != len-1))
+		{
+			wordString = wordString.substring(0, dot);
+		}
+		FeatureNode f = new FeatureNode(wordString);
+		ths.set(WORD_STRING_FEATURE_NAME, f);
+
+		// The MorphyAlg will modify the above, so make a copy of the original.
+		ths.set(ORIG_WORD_STRING_FEATURE_NAME, f);
 	}
 
 	public String getWordString() {
