@@ -309,7 +309,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'b': setPOS(ths, "noun"); break; // male or female
 				case 'e': setPOS(ths, "adv"); break; // adverbs alternate
 				case 'f': setPOS(ths, "noun"); break; // female
-				case 'g': setPOS(ths, "verb"); break; // gerund
+				case 'g': setPOS(ths, "noun"); break; // gerund -- noun or verb ??
 				case 'l': setPOS(ths, "noun"); break; // location
 				case 'm': setPOS(ths, "noun"); break; // male
 				case 'n': setPOS(ths, "noun"); break;
