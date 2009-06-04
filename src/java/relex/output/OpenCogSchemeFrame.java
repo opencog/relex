@@ -121,13 +121,18 @@ public class OpenCogSchemeFrame
 			if ((cpt2 != null) && (-1 < cpt2.indexOf('@'))) cpt2_is_word = true;
 
 			// Link together.
-			ret += "(FrameElementLink\n" +
+			ret += "(FrameElementLink (stv 1 1)\n" +
 			       "   (DefinedFrameNode \"#" + frm + "\")\n" +
 			       "   (DefinedFrameElementNode \"#" +
                      frm + ":" + felt + "\")\n)\n";
 
 			// Now, for the specific mappings
-			ret += "(InheritanceLink\n";
+			ret += "(InheritanceLink ";
+
+			// Assign a nominal truth value
+			if (cpt1_is_word) ret += "(stv 1 0.2)\n";
+			else ret += "(stv 1 1)\n";
+
 			if (cpt1_is_ling)
 			{
 				ret += "   (DefinedLinguisticConceptNode \"#" + 
@@ -147,7 +152,8 @@ public class OpenCogSchemeFrame
 			if (cpt2 == null) continue;
 
 			// Finally link the frame element
-			ret += "(EvaluationLink\n";
+			// Assign some bogus place-holder truth value.
+			ret += "(EvaluationLink (stv 1 0.2)\n";
 			ret += "   (DefinedFrameElementNode \"#" +
                      frm + ":" + felt + "\")\n";
 
