@@ -130,7 +130,7 @@ public class OpenCogSchemeFrame
 			ret += "(InheritanceLink\n";
 			if (cpt1_is_ling)
 			{
-				ret += "   (DefinedLinguisticConceptNode \"" + 
+				ret += "   (DefinedLinguisticConceptNode \"#" + 
 				            cpt1 + "\")\n";
 			}
 			else if (cpt1_is_word)
@@ -139,7 +139,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "   (ConceptNode \"" + cpt1 + "\")\n";
+				ret += "   (ConceptNode \"#" + cpt1 + "\")\n";
 			}
 			ret += "   (DefinedFrameNode \"#" + frm + "\")\n)\n";
 
@@ -155,7 +155,7 @@ public class OpenCogSchemeFrame
 			ret += "   (ListLink\n";
 			if (cpt1_is_ling)
 			{
-				ret += "      (DefinedLinguisticConceptNode \"" + 
+				ret += "      (DefinedLinguisticConceptNode \"#" + 
 				            cpt1 + "\")\n";
 			}
 			else if (cpt1_is_word)
@@ -164,11 +164,11 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"" + cpt1 + "\")\n";
+				ret += "      (ConceptNode \"#" + cpt1 + "\")\n";
 			}
 			if (cpt2_is_ling)
 			{
-				ret += "      (DefinedLinguisticConceptNode \"" + 
+				ret += "      (DefinedLinguisticConceptNode \"#" + 
 				            cpt2 + "\")\n";
 			}
 			else if (cpt2_is_word)
@@ -177,7 +177,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"" + cpt2 + "\")\n";
+				ret += "      (ConceptNode \"#" + cpt2 + "\")\n";
 			}
 			ret += "   )\n)\n";
 		}
