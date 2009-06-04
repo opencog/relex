@@ -442,10 +442,26 @@ public class RelationExtractor
 
 		ParseView ceregoView = new ParseView();
 		OpenCogScheme opencog = null;
-		if (commandMap.get("-o") != null) opencog = new OpenCogScheme();
+		if (commandMap.get("-o") != null)
+		{
+			opencog = new OpenCogScheme();
+			if (commandMap.get("-f") != null)
+			{
+				opencog.setPrintFrames(true);
+			}
+			else
+			{
+				opencog.setPrintFrames(false);
+			}
+		}
 
+		// Print normal frames, but only if -o has not been invoked.
 		Frame frame = null;
-		if (commandMap.get("-f") != null) frame = new Frame();
+		if ((commandMap.get("-f") != null) &&
+		    (commandMap.get("-o") == null))
+		{
+			frame = new Frame();
+		}
 
 		int sentence_count = 0;
 		boolean more_input = true;
@@ -602,7 +618,8 @@ public class RelationExtractor
 						System.out.println(ceregoView.printCerego());
 						System.out.println("\n<!-- ======\n");
 					}
-					if (commandMap.get("-f") != null)
+					if ((commandMap.get("-f") != null) &&
+					    (commandMap.get("-o") == null))
 					{
 						re.starttime = System.currentTimeMillis();
 						String fin = SimpleView.printRelationsAlt(parse);

@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 // import relex.output.SimpleView;
-// import relex.frame.Frame;
 import relex.output.OpenCogScheme;
 
 /**
@@ -50,8 +49,8 @@ public class Server
 	public static void main(String[] args)
 	{
 		RelationExtractor r = new RelationExtractor(false);
-		// Frame frame = new Frame();
 		OpenCogScheme opencog = new OpenCogScheme();
+		opencog.setPrintFrames(false);
 		Server s = new Server();
 		ServerSocket listen_sock = null;
 		try {

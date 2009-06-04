@@ -46,6 +46,7 @@ public class OpenCogScheme
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
+	private boolean print_frames;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -55,6 +56,12 @@ public class OpenCogScheme
 		link_scheme = new OpenCogSchemeLink();
 		frame_scheme = new OpenCogSchemeFrame();
 		orig_sentence = "";
+		print_frames = true;
+	}
+
+	public void setPrintFrames(boolean flag)
+	{
+		print_frames = flag;
 	}
 
 	public void setParse(ParsedSentence _parse)
@@ -77,7 +84,13 @@ public class OpenCogScheme
 		ret += orig_sentence;
 		ret += link_scheme.toString();
 		ret += rel_scheme.toString();
-		// ret += frame_scheme.toString();
+
+		// Frame printing is made optional, because it is so 
+		// mind-blowingly slowwww.
+		if (print_frames)
+		{
+			ret += frame_scheme.toString();
+		}
 
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";

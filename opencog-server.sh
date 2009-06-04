@@ -17,6 +17,8 @@
 #    This is a test
 #    ^]q
 #
+# To get frame output, be sure to add the -f flag to the below;
+# otherwise, no frame output will be generated.
 
 export LANG=en_US.UTF-8
 
