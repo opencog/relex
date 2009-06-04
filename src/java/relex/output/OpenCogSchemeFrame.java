@@ -110,9 +110,15 @@ public class OpenCogSchemeFrame
 			if (cpt2 != null)
 			{
 				// cpt2 = id_map.get(cpt2);
-				if (cpt2 == null) continue;
+				// if (cpt2 == null) continue;
 				if (cpt2.charAt(0) == '#') cpt2_is_ling = true;
 			}
+
+			// Are cpt1 and 2 true WordInstances, or concepts?
+			Boolean cpt1_is_word = false;
+			Boolean cpt2_is_word = false;
+			if (-1 < cpt1.indexOf('@')) cpt1_is_word = true;
+			if ((cpt2 != null) && (-1 < cpt2.indexOf('@'))) cpt2_is_word = true;
 
 			// Link together.
 			ret += "(FrameElementLink\n" +
@@ -127,9 +133,13 @@ public class OpenCogSchemeFrame
 				ret += "   (DefinedLinguisticConceptNode \"" + 
 				            cpt1 + "\")\n";
 			}
-			else
+			else if (cpt1_is_word)
 			{
 				ret += "   (WordInstanceNode \"" + cpt1 + "\")\n";
+			}
+			else
+			{
+				ret += "   (ConceptNode \"" + cpt1 + "\")\n";
 			}
 			ret += "   (DefinedFrameNode \"#" + frm + "\")\n)\n";
 
@@ -148,18 +158,26 @@ public class OpenCogSchemeFrame
 				ret += "      (DefinedLinguisticConceptNode \"" + 
 				            cpt1 + "\")\n";
 			}
-			else
+			else if (cpt1_is_word)
 			{
 				ret += "      (WordInstanceNode \"" + cpt1 + "\")\n";
+			}
+			else
+			{
+				ret += "      (ConceptNode \"" + cpt1 + "\")\n";
 			}
 			if (cpt2_is_ling)
 			{
 				ret += "      (DefinedLinguisticConceptNode \"" + 
 				            cpt2 + "\")\n";
 			}
-			else
+			else if (cpt2_is_word)
 			{
 				ret += "      (WordInstanceNode \"" + cpt2 + "\")\n";
+			}
+			else
+			{
+				ret += "      (ConceptNode \"" + cpt2 + "\")\n";
 			}
 			ret += "   )\n)\n";
 		}
