@@ -37,7 +37,9 @@ class ConditionNode extends ASTNode
 		conditionStr = condStr.trim().replace(" ","");
 		children = null;
 
-		varNamePattern = Pattern.compile("(?<!_)\\$\\w+");
+		//09/06/01 fabricio: changed to match the md5 uuid that contains "@" and "-"
+		//varNamePattern = Pattern.compile("(?<!_)\\$\\w+");
+		varNamePattern = Pattern.compile("(?<!_)\\$[\\w@-]+");
 		indexPattern = Pattern.compile("\\_\\d+\\z");
 
 		// String regex = "w+\\(";
@@ -54,7 +56,9 @@ class ConditionNode extends ASTNode
 		// Replace $varsX ($var0,$var1,$copula.) with equiv of regex wildcard,
 		// but exclude vars preceded by underscore (e.g., _$qVar)
 		// Add "$" and "%" chars for special relex variables.
-		regex = regex.replaceAll("(?<!_)\\$\\w+","[\\\\w\\$%]+");
+		//09/06/01 fabricio: changed to match the md5 uuid that contains "@" and "-"
+//		regex = regex.replaceAll("(?<!_)\\$\\w+","[\\\\w\\$%]+");
+		regex = regex.replaceAll("(?<!_)\\$\\w+","[\\\\w\\$%@-]+");
 
 		// Escape any remaining $'s, (e.g., _$qVar)
 		regex = regex.replace("$", "\\$");
@@ -62,13 +66,14 @@ class ConditionNode extends ASTNode
 		regpat = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
 
 		// Add escapes to parens.
+		//09/06/01 fabricio: changed to match the md5 uuid that contains "@" and "-"		
 		regex = conditionStr.replace("(","\\(").replace(")","\\)")
 				// Escape brackets [ ].
 				.replace("[", "\\[").replace("]", "\\]")
 				.replace("{","\\{").replace("}","\\}")
 				// Replace vars with wildcard and put in groups.
 				// Exclude vars preceded by underscore (eg, _$qVar).
-				.replaceAll("(?<!_)\\$\\w+","([\\\\w\\$%]+)")
+				.replaceAll("(?<!_)\\$\\w+","([\\\\w\\$%@-]+)")
 				// Escape any remaning $'s.
 				.replace("$", "\\$");
 
