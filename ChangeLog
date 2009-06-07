@@ -2,7 +2,7 @@ New in version 0.99.1 (XXX 2009)
  * Add "ant help" and "ant javadoc" build targets
  * Upgrade to opennlp-1.4.3, maxent-2.5.2
  * Move the old, deprecated parser API to parser-old.
- * Update for link-grammar version 4.5.6
+ * Update for link-grammar version 4.5.7
  * Fix _amod, _predadj, _advmod order in the frame rules.
  * Fix lemma form of verb 's ("That's what the man said")
  * Fix handling of word subscripts, when subscripts are multi-letter.
