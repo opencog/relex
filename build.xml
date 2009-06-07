@@ -152,9 +152,9 @@
     <target name="install" depends="jar">
         <mkdir dir="${INSTALLDIR}"/>
         <copy file="relex-${REVISION}.jar" todir="${INSTALLDIR}"/>
-        <touch file="${INSTALLDIR}/relex.jar"/>
-        <symlink action="delete" link="${INSTALLDIR}/relex.jar"/>
-        <symlink link="${INSTALLDIR}/relex.jar" resource="relex-${REVISION}.jar"/>
+        <symlink link="${INSTALLDIR}/relex.jar" 
+                 resource="relex-${REVISION}.jar"
+                 overwrite="true" failonerror="false"/>
     </target>
 
     <!-- tar file for general distribution -->
