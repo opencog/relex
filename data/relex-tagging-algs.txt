@@ -178,7 +178,7 @@ POS_ADV
 ;
 #TemplateActionAlg
 POS_ADV_INVERTED
-<LAB> = \E\.*|\EA\.*|\EE\.*|EN
+<LAB> = \E\.*|\EA\.*|\EE\.*|EN|PF
 <F_L POS> = WORD
 =
 <F_L POS> = adv
@@ -311,7 +311,7 @@ POS_HOW
 ; numerical determiners
 #TemplateActionAlg
 POS_NUMBER
-<LAB> = ND
+<LAB> = ND|NN
 <F_L POS> = WORD
 =
 <F_L POS> = det
