@@ -296,7 +296,7 @@ POS_EXCEPT
 ; 'to' is almost always a prep.
 #TemplateActionAlg
 POS_TO
-<LAB> = TO\.*
+<LAB> = \TO\.*
 <F_R POS> = WORD
 =
 <F_R POS> = prep
