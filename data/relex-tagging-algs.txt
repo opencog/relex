@@ -292,13 +292,12 @@ POS_EXCEPT
 =
 <POS> = prep
 ;
-; Alternately, "not" appears to the F_L of an N link ...
 #TemplateActionAlg
 POS_NOT
-<str> = not|Not
-<POS> = WORD
+<LAB> = N
+<F_R POS> = WORD
 =
-<POS> = adv
+<F_R POS> = adv
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
