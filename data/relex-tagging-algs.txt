@@ -70,7 +70,7 @@ POS_NOUN_DET
 ;
 #TemplateActionAlg
 POS_NOUN_INVERTED
-<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*
+<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*
 <F_R POS> = WORD
 =
 <F_R POS> = noun
