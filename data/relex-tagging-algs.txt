@@ -92,7 +92,7 @@ POS_NOUN_DET
 ;
 #TemplateActionAlg
 POS_NOUN_INVERTED
-<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*
+<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*|ND
 <F_R POS> = WORD
 =
 <F_R POS> = noun
@@ -303,7 +303,7 @@ POS_NOT
 ; 'how' -- adverb
 #TemplateActionAlg
 POS_HOW
-<LAB> = H
+<LAB> = H|Q
 <F_L POS> = WORD
 =
 <F_L POS> = adv
