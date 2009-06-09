@@ -293,6 +293,14 @@ POS_EXCEPT
 =
 <POS> = prep
 ;
+; 'to' is almost always a prep.
+#TemplateActionAlg
+POS_TO
+<LAB> = TO\.*
+<F_R POS> = WORD
+=
+<F_R POS> = prep
+;
 ; 'not' on the right side of an N link
 #TemplateActionAlg
 POS_NOT
