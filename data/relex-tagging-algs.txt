@@ -248,10 +248,11 @@ POS_I_PARTICLE
 <F_L POS> = particle
 ;
 ; particles to the right of verbs "Jules called out to Jim"
+; or nouns: "His job is picking up the trash."
 #TemplateActionAlg
 POS_K_PARTICLE
 <LAB> = K
-<F_L POS> = verb
+<F_L POS> = verb|noun
 <F_R POS> = WORD
 =
 <F_R POS> = particle
@@ -318,7 +319,7 @@ POS_NUMBER
 ;
 #TemplateActionAlg
 POS_DATE
-<LAB> = TM|TY|NItn
+<LAB> = TM|TY|NItn|NM
 <F_L POS> = WORD
 =
 <F_L POS> = det
@@ -340,6 +341,13 @@ POS_ONLY
 <F_L POS> = WORD
 =
 <F_L POS> = adj
+;
+#TemplateActionAlg
+POS_IT
+<str> = it
+<POS> = WORD
+=
+<POS> = noun
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
