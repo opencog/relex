@@ -186,6 +186,15 @@ POS_CONJUNCTION_INVERTED
 =
 <F_L POS> = conjunction
 ;
+; Closed-list "fanboys" coordinating conjunctions
+#TemplateActionAlg
+POS_CONJUNCTION_CLOSED
+<str> = for|and|nor|but|or|yet|so
+<POS> = WORD
+=
+<POS> = conjunction
+;
+;--------------------------------------------------------
 ; Identify a particle: 
 ;   The word "that" in "I heard that you fell."
 #TemplateActionAlg
