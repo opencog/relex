@@ -220,6 +220,13 @@ POS_PUNCTUATION2
 =
 <F_L POS> = punctuation
 ;
+#TemplateActionAlg
+POS_PUNCTUATION3
+<str> = .|,|?|;|:|-
+<POS> = WORD
+=
+<POS> = punctuation
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; PAST-TENSE TENSE

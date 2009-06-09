@@ -68,7 +68,7 @@ public class FeaturePathAndTarget {
 			 * spaces sep string 0 or more spaces < or $ or % or \ (for a regex)
 			 * or a word character any sequence of characters
 			 */
-			String re = ".*>[ ]*\\Q" + sep + "\\E[ ]*[<$%\\w\\\\].*";
+			String re = ".*>[ ]*\\Q" + sep + "\\E[ ]*[<$%\\.\\,\\?\\-\\:\\;\\w\\\\].*";
 			if (Pattern.matches(re, str)) {
 				if (!getPathSeparators().contains(sep)) {
 					throw new RuntimeException("Error: relex: " + 
