@@ -178,7 +178,7 @@ POS_ADV
 ;
 #TemplateActionAlg
 POS_ADV_INVERTED
-<LAB> = \E\.*|\EA\.*|\EE\.*
+<LAB> = \E\.*|\EA\.*|\EE\.*|EN
 <F_L POS> = WORD
 =
 <F_L POS> = adv
