@@ -292,12 +292,29 @@ POS_EXCEPT
 =
 <POS> = prep
 ;
+; 'not' on the right side of an N link
 #TemplateActionAlg
 POS_NOT
 <LAB> = N
 <F_R POS> = WORD
 =
 <F_R POS> = adv
+;
+; 'how' -- adverb
+#TemplateActionAlg
+POS_HOW
+<LAB> = H
+<F_L POS> = WORD
+=
+<F_L POS> = adv
+;
+; numerical determiners
+#TemplateActionAlg
+POS_NUMBER
+<LAB> = ND
+<F_L POS> = WORD
+=
+<F_L POS> = det
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
