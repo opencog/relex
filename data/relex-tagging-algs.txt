@@ -214,7 +214,7 @@ POS_CONJUNCTION_INVERTED
 ;        (Z link), override prep identification from MV.
 ; 
 #TemplateActionAlg
-POS_CONJUNCTION_INVERTED
+POS_CONJUNCTION_INVERTED2
 <LAB> = \Z\.*
 <F_L POS> = prep
 =
@@ -322,7 +322,24 @@ POS_DATE
 <F_L POS> = WORD
 =
 <F_L POS> = det
-
+;
+; Subordinating conjunctions that the above rules missed
+; some phrases that are not tagged ...
+; in_case in_case_that in_order_that while only_if now_that even_though even_if whether_or_not
+#TemplateActionAlg
+POS_CONJUNCTION_SUB
+<str> = after|because|although|if|before|since|though|unless|when|while|as|whereas|since|until
+<POS> = WORD
+=
+<POS> = conjunction
+;
+#TemplateActionAlg
+POS_ONLY
+<LAB> = R.*
+<F_L str> = only|even
+<F_L POS> = WORD
+=
+<F_L POS> = adj
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
