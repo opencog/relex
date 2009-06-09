@@ -183,6 +183,18 @@ POS_ADV_INVERTED
 =
 <F_L POS> = adv
 ;
+;--------------------------------------------------------
+; Oddball cases
+; "That is what the man said" -- tag "what" as noun; it'l get tagged 
+; with a pronoun flag later.
+#TemplateActionAlg
+POS_NOUN_COP
+<LAB> = \BI\.*
+<F_R POS> = WORD
+=
+<F_R POS> = noun
+;
+;--------------------------------------------------------
 ; Identify a conjuction:
 ;   The word "after" in "He spoke after he ate." (subordinating 
 ;        conjunction, C link)
