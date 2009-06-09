@@ -213,6 +213,17 @@ POS_I_PARTICLE
 =
 <F_L POS> = particle
 ;
+; particles to the right of verbs "Jules called out to Jim"
+#TemplateActionAlg
+POS_K_PARTICLE
+<LAB> = K
+<F_L POS> = verb
+<F_R POS> = WORD
+=
+<F_R POS> = particle
+;
+;--------------------------------------------------------
+;
 ; "Is John Barleycorn alive?"  marks the ? as "punctuation"
 ; "Bling, also know as jewelry, is da bomb." has Xc and Xd.
 #TemplateActionAlg
