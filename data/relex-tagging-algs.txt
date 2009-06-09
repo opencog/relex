@@ -280,6 +280,26 @@ POS_PUNCTUATION3
 <POS> = WORD
 =
 <POS> = punctuation
+;--------------------------------------------------------
+; Misc pos tagging
+;
+; "except" We're in agreement, except for John.
+; which might also be identified as a conjunction
+#TemplateActionAlg
+POS_EXCEPT
+<str> = except
+<POS> = WORD
+=
+<POS> = prep
+;
+; Alternately, "not" appears to the F_L of an N link ...
+#TemplateActionAlg
+POS_NOT
+<str> = not|Not
+<POS> = WORD
+=
+<POS> = adv
+
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
