@@ -43,9 +43,21 @@ POS_NOUN
 =
 <F_L POS> = noun
 ;
+;---------------------------------------------------------------
+;
+; Closed-list determiners.
+; One could argue that this list should include the below:
+;    another some any 
+;    my our thier her his its
+;    no each every certain 
+; Currently, most of the above get marked as "adjective", and that is
+; arguably more correct. To make up for this, we could add a 
+; "determiner-FLAG" to the output, for example, as shown below 
+; (in the section that is commented out).
+;
 #TemplateActionAlg
-DETERMINER_FLAG
-<LAB> = \D\.*|\DD\.*
+DETERMINER_POS
+<LAB> = \D\.*|\DD\.*|\NS\.*
 <F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that
 =
 <DETERMINER_LINK_FLAG> = T
@@ -54,13 +66,23 @@ DETERMINER_FLAG
 ;
 ; "The Widget Company" has a DG link to "the", which is missed by rule above.
 #TemplateActionAlg
-DETERMINER_FLAG2
+DETERMINER_POS2
 <LAB> = \DG\.*
 <F_L str> = the|The
 =
 <DETERMINER_LINK_FLAG> = T
 <F_L DETERMINER_FLAG> = T
 <F_L POS> = det
+;
+; The determiner flag gets output as a word-feature.
+;
+; #TemplateActionAlg
+; DETERMINER_FLAG
+; <LAB> = \D\.*|\DD\.*|\NS\.*
+; =
+; <F_L ref determiner-FLAG> = T
+;
+; ---------------------------------------------------------
 ;
 #TemplateActionAlg
 POS_NOUN_DET
