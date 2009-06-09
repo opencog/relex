@@ -311,7 +311,14 @@ POS_HOW
 ; numerical determiners
 #TemplateActionAlg
 POS_NUMBER
-<LAB> = ND|NN
+<LAB> = ND|NN|NIfn
+<F_L POS> = WORD
+=
+<F_L POS> = det
+;
+#TemplateActionAlg
+POS_DATE
+<LAB> = TM|TY|NItn
 <F_L POS> = WORD
 =
 <F_L POS> = det
