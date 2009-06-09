@@ -328,9 +328,9 @@ POS_NUMBER
 #TemplateActionAlg
 POS_DATE
 <LAB> = TM|TY|NItn|NM
-<F_L POS> = WORD
+<F_R POS> = WORD
 =
-<F_L POS> = det
+<F_R POS> = det
 ;
 ; Subordinating conjunctions that the above rules missed
 ; some phrases that are not tagged ...
