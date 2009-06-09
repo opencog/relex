@@ -335,9 +335,18 @@ POS_DATE
 ; Subordinating conjunctions that the above rules missed
 ; some phrases that are not tagged ...
 ; in_case in_case_that in_order_that while only_if now_that even_though even_if whether_or_not
+; not_only
 #TemplateActionAlg
 POS_CONJUNCTION_SUB
 <str> = after|because|although|if|before|since|though|unless|when|while|as|whereas|since|until
+<POS> = WORD
+=
+<POS> = conjunction
+;
+; well, lets tag some of the words in conjunction phrases... 
+#TemplateActionAlg
+POS_CONJUNCTION_SUB_PHRASE
+<str> = not|only
 <POS> = WORD
 =
 <POS> = conjunction
