@@ -344,7 +344,7 @@ POS_CONJUNCTION_SUB
 ;
 #TemplateActionAlg
 POS_ONLY
-<LAB> = R.*
+<LAB> = \R\.*
 <F_L str> = only|even
 <F_L POS> = WORD
 =
