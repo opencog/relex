@@ -58,6 +58,7 @@ public class MorphyJWNL implements Morphy
 	private static HashMap<String, String> possessiveAdjRoots = new HashMap<String, String>();
 	private static HashMap<String, String> possessiveNounRoots = new HashMap<String, String>();
 	private static HashMap<String, String> standardContractions = new HashMap<String, String>();
+	private static HashMap<String, String> defaultNounStems = new HashMap<String, String>();
 
 	/* static private initializer */
 	static {
@@ -90,8 +91,12 @@ public class MorphyJWNL implements Morphy
 		possessiveAdjRoots.put("your", "you");
 		possessiveNounRoots.put("yours", "you");
 
-		standardContractions.put( "'re", "are" );
-		standardContractions.put( "'m", "am" );
+		standardContractions.put("'re", "are");
+		standardContractions.put("'m", "am");
+
+		// Word-around for WordNet defaults when 
+		// multiple stems are possible.
+		defaultNounStems.put("men", "man");
 	}
 
 	private boolean javaWordnetFound = false;
@@ -130,8 +135,14 @@ public class MorphyJWNL implements Morphy
 	private String convertStandardContraction(String word)
 	{
 		String s = standardContractions.get(word);
-		if (s!=null)
-			return s;
+		if (s != null) return s;
+		return word;
+	}
+
+	private String convertNounStems(String word)
+	{
+		String s = defaultNounStems.get(word);
+		if (s != null) return s;
 		return word;
 	}
 
@@ -194,6 +205,7 @@ public class MorphyJWNL implements Morphy
 		boolean negativeVerb = !word.equals(m.getOriginal());
 
 		word = convertStandardContraction(word);
+		word = convertNounStems(word);
 
 		String[] command = new String[2];
 		command[0] = "wn"; // must be in operating system file path!
@@ -274,6 +286,7 @@ public class MorphyJWNL implements Morphy
 		boolean negativeVerb = !word.equals(m.getOriginal());
 
 		word = convertStandardContraction(word);
+		word = convertNounStems(word);
 
 		try {
 			Dictionary dict = Dictionary.getInstance();
