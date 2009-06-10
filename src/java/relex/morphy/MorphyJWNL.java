@@ -209,7 +209,7 @@ public class MorphyJWNL implements Morphy
 			e.printStackTrace();
 		}
 		// In case root wasn't in wordnet, add it here.
-		if ((negativeVerb) && m.getVerbString() == null) {
+		if (negativeVerb && m.getVerbString() == null) {
 			m.putRootNegative("verb", word);
 		}
 	}
@@ -231,7 +231,8 @@ public class MorphyJWNL implements Morphy
 		int space = rest.indexOf(" ");
 		String cat = rest.substring(0, space);
 		if (negativeVerb && !cat.equals("verb"))
-			return; // dont check for non-verb roots if we already know its a negative verb
+			return; // If it's got an n't contraction, and its not
+			        // a verb, then I don't know what it is.
 		String root = rest.substring(space + 1);
 		if (Character.isUpperCase(m.getOriginal().charAt(0))) {
 			char[] chars = root.toCharArray();
@@ -261,7 +262,8 @@ public class MorphyJWNL implements Morphy
 	{
 		String word = m.getOriginal();
 
- 		// If it is a common possessive form of personal pronoun.
+ 		// If it is a common possessive form of personal pronoun,
+ 		// then don't go any further, we're done.
 		if (loadPossessive(word, m))
 			return;
 
@@ -274,8 +276,8 @@ public class MorphyJWNL implements Morphy
 			Dictionary dict = Dictionary.getInstance();
 			IndexWord verb = dict.lookupIndexWord(POS.VERB, word);
 
-			// Dont check for non-verb roots if we already 
-			// know its a negative verb.
+			// If we've stripped an n't from something tha isn't a verb,
+			// then its ... a weird word that I certainly don't know. 
 			if (negativeVerb && verb == null) {
 				return;
 			}
@@ -307,7 +309,8 @@ public class MorphyJWNL implements Morphy
 		}
 
 		// In case root wasn't in wordnet, add it here.
-		if ((negativeVerb) && m.getVerbString() == null) {
+		// WTF -- this can never be reached, due to above test?
+		if (negativeVerb && m.getVerbString() == null) {
 			m.putRootNegative("verb", word);
 		}
 	}
