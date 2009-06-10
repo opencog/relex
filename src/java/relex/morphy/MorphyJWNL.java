@@ -138,14 +138,13 @@ public class MorphyJWNL implements Morphy
 	protected String stripNegativeContraction(String word)
 	{
 		String root = irregularVerbContractions.get(word);
-		if (root == null) {
-			int x = word.length() - 3;
-			if (x > 0 && word.substring(x).equals("n't")) {
-				root = word.substring(0, x);
-			}
+		if (root != null) return root;
+
+		int x = word.length() - 3;
+		if (x > 0 && word.substring(x).equals("n't"))
+		{
+			return word.substring(0, x);
 		}
-		if (root != null)
-			return root;
 		return word;
 	}
 
