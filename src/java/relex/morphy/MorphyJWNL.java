@@ -304,6 +304,11 @@ public class MorphyJWNL implements Morphy
 			 * We will need to hack around this on a case-by-case basis,
 			 * unfortunately. :-(
 			 *
+			 * Note also: Wordnet will not indicate that "men" is a plural form,
+			 * so, we still have no way of disambiguating the result of a parse.
+			 * i.e. although link-grammar may tell us that "men" is plural, 
+			 * wordnet will not tell us what its singular form is.
+			 *
 			MorphologicalProcessor mp = dict.getMorphologicalProcessor();
 			List<?> li = mp.lookupAllBaseForms(POS.NOUN, word);
 			for (Object iw: li) {
