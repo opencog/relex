@@ -18,11 +18,14 @@ package relex.morphy;
 
 import java.util.HashMap;
 import java.util.Iterator;
+// import java.util.List;
 
 import net.didion.jwnl.JWNLException;
 import net.didion.jwnl.data.IndexWord;
 import net.didion.jwnl.data.POS;
 import net.didion.jwnl.dictionary.Dictionary;
+
+// import net.didion.jwnl.dictionary.MorphologicalProcessor;
 
 /**
  * Return information about the base form (lemma) of a word.
@@ -274,6 +277,28 @@ public class MorphyJWNL implements Morphy
 
 		try {
 			Dictionary dict = Dictionary.getInstance();
+
+			/**************
+			 * There may be several root forms for any given word. The code
+			 * below demonstrates how to look these up in JWNL. Unfortunately
+			 * the current design of RelEx assumes that only one root form is
+			 * possible, and there's no real way of disambiguating these. 
+			 *
+			 * For example: "men" has the root form "man", of course, but also
+			 * "men", because its a synonym for "staff, workforce", in which case 
+			 * "men" is the correct singular form. This is a rare usage: we can
+			 * say "The staff is angry" but not "The men is angry" ...
+			 * We will need to hack around this on a case-by-case basis,
+			 * unfortunately. :-(
+			 *
+			MorphologicalProcessor mp = dict.getMorphologicalProcessor();
+			List<?> li = mp.lookupAllBaseForms(POS.NOUN, word);
+			for (Object iw: li) {
+				String siw = (String) iw;
+				System.out.println("duuude orig word=" + word + "lemma=" + siw);
+			}
+			****************/
+
 			IndexWord verb = dict.lookupIndexWord(POS.VERB, word);
 
 			// If we've stripped an n't from something tha isn't a verb,
