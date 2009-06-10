@@ -8,6 +8,7 @@ New in version 0.99.1 (XXX 2009)
  * Fix handling of word subscripts, when subscripts are multi-letter.
  * Fix OpenCog output for frame elements.
  * Improve POS tagging coverage.
+ * Strip the [?], [!] and [~] suffixes from link-grammar-guessed words.
 
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.

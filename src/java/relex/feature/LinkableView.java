@@ -351,6 +351,18 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		{
 			wordString = wordString.substring(0, dot);
 		}
+
+		// Words that are unknown to link grammar, or run through its
+		// spell-guesser, or otherwise guessed at, will end with either a
+		// [?] or [!] or [~]. Strip this out, as it messes with stuff.
+		if (wordString.endsWith("[?]") ||
+		    wordString.endsWith("[!]") ||
+		    wordString.endsWith("[~]"))
+		{
+			len = wordString.length(); // recompute length, due to above dots.
+			wordString = wordString.substring(0,len-3);
+		}
+
 		FeatureNode f = new FeatureNode(wordString);
 		ths.set(WORD_STRING_FEATURE_NAME, f);
 
