@@ -39,10 +39,10 @@ import relex.tree.PhraseTree;
 public class Hobbs
 {
 	public static final int DEBUG = 0;
-	
+
 	// Buffer of sentences previously seen.
 	private SentenceHistory history;
-	
+
 	// Where anaphora/antecedent collections are kept.
 	Antecedents antecedents;
 
@@ -66,18 +66,18 @@ public class Hobbs
 		antecedents = ant;
 		anaphore = null;
 		num_proposals = 0;
-		//default history
-		history=SentenceHistoryFactory.create(HistoryEnum.DEFAULT);
+		// Default history
+		history = SentenceHistoryFactory.create(HistoryEnum.DEFAULT);
 	}
-	
+
 	public void addParse(Sentence sntc)
 	{
 		history.addSentence(sntc);
 	}
-	
-	public void setHistory(SentenceHistory history)
+
+	public void setHistory(SentenceHistory sh)
 	{
-		this.history=history;
+		history = sh;
 	}
 
 	public void resolve(Sentence sntc)
@@ -210,7 +210,7 @@ public class Hobbs
 		for (int i=1; i< sentences.size(); i++)
 		{
 			if (num_proposals > max_proposals) break;
-			
+
 			Sentence sntc = sentences.get(i);
 
 			// Whoops . sentence had zero parses!
@@ -413,9 +413,9 @@ public class Hobbs
 						if (DEBUG > 0)
 						{
 							System.out.println("Found antecedent "
-						                 +  pt.toString()
-						                 + " to pronoun "
-						                 + anaphore.toString());
+							                 +  pt.toString()
+							                 + " to pronoun "
+							                 + anaphore.toString());
 
 							System.out.println("Current list:\n"
 							              + antecedents.toString(anaphore));
@@ -448,7 +448,7 @@ public class Hobbs
 			// Rightmost node left of path p contains the path_stopper
 			if (pt.contains(path_stopper)) break;
 		}
-	}	
+	}
 } // end Hobbs
 
 /* ==================== END OF FILE ================== */
