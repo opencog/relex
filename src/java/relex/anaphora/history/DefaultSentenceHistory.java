@@ -23,7 +23,6 @@ public class DefaultSentenceHistory implements SentenceHistory
 		sentences = new ArrayList<Sentence>();
 	}
 	
-	@Override
 	public void addSentence(Sentence sentence) 
 	{
 		sentences.add(0, sentence);
@@ -31,7 +30,6 @@ public class DefaultSentenceHistory implements SentenceHistory
 		if (size > max_sentences) sentences.remove(max_sentences);
 	}
 
-	@Override
 	public ArrayList<Sentence> getSentenceList() 
 	{
 		return sentences;

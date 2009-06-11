@@ -41,7 +41,6 @@ public class TimestampSentence implements Comparable<TimestampSentence>
 	  returns value less than 0 if first date is before another date and returns
 	  0 if both dates are equal.
 	 */
-	@Override
 	public int compareTo(TimestampSentence o) 
 	{
 		return this.getTimestamp().compareTo(o.getTimestamp()); 
