@@ -159,7 +159,7 @@ public class ParsedSentence extends Atom implements Serializable
 	{
 		return word_list;
 	}
-	public void setWord_list(ArrayList<String> wl)
+	public void setWordList(ArrayList<String> wl)
 	{
 		word_list = wl;
 	}
