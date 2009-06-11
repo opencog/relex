@@ -9,6 +9,7 @@ New in version 0.99.1 (XXX 2009)
  * Fix OpenCog output for frame elements.
  * Improve POS tagging coverage.
  * Strip the [?], [!] and [~] suffixes from link-grammar-guessed words.
+ * Add refined sentence history support for anaphora resolution.
 
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.

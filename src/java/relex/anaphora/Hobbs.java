@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import relex.Sentence;
 import relex.ParsedSentence;
+import relex.anaphora.history.SentenceHistory;
+import relex.anaphora.history.SentenceHistoryFactory;
+import relex.anaphora.history.SentenceHistoryFactory.HistoryEnum;
 import relex.feature.FeatureNode;
 import relex.tree.PhraseTree;
 
@@ -38,14 +41,10 @@ public class Hobbs
 	public static final int DEBUG = 0;
 	
 	// Buffer of sentences previously seen.
-	// XXX replace by Document
-	private ArrayList<Sentence> sentences;
-
+	private SentenceHistory history;
+	
 	// Where anaphora/antecedent collections are kept.
 	Antecedents antecedents;
-
-	// The max number of sentences to keep in the history buffer.
-	static int max_sentences = 20;
 
 	// The max number of antecedent proposals to make.
 	static int max_proposals = 10;
@@ -57,24 +56,28 @@ public class Hobbs
 	// Pointer to anaphore of the currently-parsed sentence.
 	private PhraseTree anaphore;
 	private int num_proposals;
+
 	private static Integer ana_id = 1;
 
 	protected Hobbs() {}
 
 	public Hobbs(Antecedents ant)
 	{
-		sentences = new ArrayList<Sentence>();
 		antecedents = ant;
 		anaphore = null;
 		num_proposals = 0;
+		//default history
+		history=SentenceHistoryFactory.create(HistoryEnum.DEFAULT);
 	}
-
+	
 	public void addParse(Sentence sntc)
 	{
-		// Add at the head of the list
-		sentences.add(0, sntc);
-		int sz = sentences.size();
-		if (sz > max_sentences) sentences.remove(max_sentences);
+		history.addSentence(sntc);
+	}
+	
+	public void setHistory(SentenceHistory history)
+	{
+		this.history=history;
 	}
 
 	public void resolve(Sentence sntc)
@@ -203,10 +206,11 @@ public class Hobbs
 		}
 
 		// Step 4b: Iterate over earlier sentences.
+		ArrayList<Sentence> sentences = history.getSentenceList();
 		for (int i=1; i< sentences.size(); i++)
 		{
 			if (num_proposals > max_proposals) break;
-
+			
 			Sentence sntc = sentences.get(i);
 
 			// Whoops . sentence had zero parses!
@@ -444,8 +448,7 @@ public class Hobbs
 			// Rightmost node left of path p contains the path_stopper
 			if (pt.contains(path_stopper)) break;
 		}
-	}
-
+	}	
 } // end Hobbs
 
 /* ==================== END OF FILE ================== */
