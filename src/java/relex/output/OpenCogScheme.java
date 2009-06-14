@@ -43,12 +43,15 @@ public class OpenCogScheme
 
 	private ArrayList<String> word_list = null;
 	private HashMap<FeatureNode,String> id_map = null;
+	private HashMap<String,String> uuid_to_base_map = null;
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
 	private OpenCogSchemeAnaphora anaphora_scheme;
-	private boolean print_frames;
-	private boolean print_anaphora;
+	private boolean link_on = false;
+	private boolean relex_on = false;
+	private boolean frame_on = false;
+	private boolean anaphora_on = false;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -59,19 +62,19 @@ public class OpenCogScheme
 		frame_scheme = new OpenCogSchemeFrame();
 		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
-		print_frames = true;
-		print_anaphora = true;
 	}
 
-	public void setPrintFrames(boolean flag)
-	{
-		print_frames = flag;
-	}
-	
-	public void setPrintAnaphora(boolean flag)
-	{
-		print_anaphora = flag;
-	}
+	public void setFrameOn(boolean t) { frame_on = t; }
+	public boolean getFrameOn() { return frame_on; }
+
+	public void setLinkOn(boolean t) { link_on = t; }
+	public boolean getLinkOn() { return link_on; }
+
+	public void setRelExOn(boolean t) { relex_on = t; }
+	public boolean getRelExOn() { return relex_on; }
+
+	public void setAnaphoraOn(boolean flag) { anaphora_on = flag; }
+	public boolean getAnaphoraOn() { return anaphora_on; }
 
 	public void setParse(ParsedSentence _parse)
 	{
@@ -80,9 +83,12 @@ public class OpenCogScheme
 		orig_sentence += printSentence();
 
 		link_scheme.setParse(parse, word_list);
+
 		id_map = new HashMap<FeatureNode,String>();
-		rel_scheme.setParse(parse, word_list, id_map);
-		frame_scheme.setParse(parse, id_map);
+		uuid_to_base_map = new HashMap<String,String>();
+		rel_scheme.setParse(parse, word_list, id_map, uuid_to_base_map);
+		frame_scheme.setParse(parse, id_map, uuid_to_base_map);
+
 		anaphora_scheme.clear();
 		anaphora_scheme.setSentence(parse, word_list);
 	}
@@ -93,21 +99,12 @@ public class OpenCogScheme
 		String ret = "";
 
 		ret += orig_sentence;
-		ret += link_scheme.toString();
-		ret += rel_scheme.toString();
 
-		// Frame printing is made optional, because it is so 
-		// mind-blowingly slowwww.
-		if (print_frames)
-		{
-			ret += frame_scheme.toString();
-		}
+		if (link_on) ret += link_scheme.toString();
+		if (relex_on) ret += rel_scheme.toString();
+		if (frame_on) ret += frame_scheme.toString();
+		if (anaphora_on) ret += anaphora_scheme.toString(); 
 		
-		if(print_anaphora)
-		{
-			ret += anaphora_scheme.toString();
-		}
-
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";
 		return ret;

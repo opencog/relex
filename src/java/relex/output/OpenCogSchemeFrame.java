@@ -33,7 +33,8 @@ public class OpenCogSchemeFrame
 
 	// The id_map, previously created, for OpenCog id's
 	private HashMap<FeatureNode,String> id_map = null;
-
+	private HashMap<String,String> uuid_to_root_map = null;
+	
 	private Frame frame;
 
 	/* ------------------------------------------------------------- */
@@ -46,20 +47,23 @@ public class OpenCogSchemeFrame
 		frame = new Frame();
 	}
 
-	public void setParse(ParsedSentence s, HashMap<FeatureNode,String> im)
+	public void setParse(ParsedSentence s,
+			HashMap<FeatureNode,String> im,
+			HashMap<String,String> id_to_base)
 	{
 		sent = s;
 		id_map = im;
+		uuid_to_root_map = id_to_base;
 	}
-
+		
 	/* ------------------------------------------------------------- */
-
+	
 	private String printFrames()
 	{
 		String ret = "";
 		String fin = SimpleView.printRelationsAlt(sent, id_map);
-		String[] fms = frame.process(fin);
-
+		String[] fms = frame.process(fin); //,uuid_to_root_map);
+		
 		for (String fm : fms) 
 		{
 			// First, parse out the framenet string 
@@ -97,10 +101,14 @@ public class OpenCogSchemeFrame
 			{
 				cpt2 = cpt1.substring(comma+1);
 				cpt1 = cpt1.substring(0, comma);
+				//System.err.println("cpt1: " + cpt1);
+				//System.err.println("cpt2: " + cpt2);
 			}
 			if (cpt1 == null) continue;
-			// cpt1 = id_map.get(cpt1);
-			if (cpt1 == null) continue;
+			//if (id_map != null) {
+			//	cpt1 = id_map.get(cpt1);
+			//	if (cpt1 == null) continue;
+			//}
 
 			// Is cpt1 a "DefinedLinguisticConceptNode"?
 			Boolean cpt1_is_ling = false;

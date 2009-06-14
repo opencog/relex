@@ -42,6 +42,7 @@ class OpenCogSchemeRel
 	// Map associating a feature-node to a unique ID string.
 	private ArrayList<String> word_list = null;
 	private HashMap<FeatureNode,String> id_map = null;
+	private HashMap<String,String> uuid_to_base_map = null;
 
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -53,11 +54,14 @@ class OpenCogSchemeRel
 
 	public void setParse(ParsedSentence s,
 	                     ArrayList<String> wl,
-	                     HashMap<FeatureNode,String> im)
+	                     HashMap<FeatureNode,String> im,
+	                     HashMap<String,String> idToBase
+	                     )
 	{
 		parse = s;
 		word_list = wl;
 		id_map = im;
+		uuid_to_base_map = idToBase;
 	}
 
 	/* ----------------------------------------------------------- */
@@ -176,6 +180,7 @@ class OpenCogSchemeRel
 				// printing relations, and printing frames,
 				String guid_word = word_list.get(word_index);
 				id_map.put(refNode, guid_word);
+				uuid_to_base_map.put(guid_word, lemma);
 
 				// The word instance, and its associated lemma form
 				refs += "(LemmaLink (stv 1.0 1.0)\n";
