@@ -60,7 +60,7 @@ public class Rule
 	 * Fire this rule and return a Set of Frame Relationships (as Strings)
 	 * with variable substitutions.
 	 */
-	public HashSet<String> fire(VarMapList varMapList, boolean verbose)
+	public HashSet<String> fire(VarMapList varMapList, boolean verbose, HashMap<String,String> uuid_to_base)
 	{
 		if (varMapList==null) {
 			println("ENCOUNTERED NULL ruleVarMapList");
@@ -146,7 +146,8 @@ public class Rule
 						// Prefix $'s with \ (for potential $'s in value, 
 						// such as _$qVar).
 						value = value.replace("$", "\\$");
-						substRelationship = substRelationship.replaceAll("(?<!_)\\$" + var.substring(1) + "(?i)", value);
+						String varsub = var.replace("$", "\\$");;
+						substRelationship = substRelationship.replaceAll("(?<!_)" + varsub + "(?i)", value);
 					}
 					if (VERBOSE) println("sub: " + substRelationship);
 					relationsSet.add(substRelationship);
@@ -363,12 +364,12 @@ public class Rule
 	 * (regardless of variable substitution issues), then checks variable
 	 * matching.
 	 */
-	synchronized boolean satisfiedByRelex(String relex)
+	synchronized boolean satisfiedByRelex(String relex, HashMap<String,String> uuid_to_base)
 	{
 		ruleNegationVarMapList = null;
-		if (conditionSyntaxTree.matchesRelex(relex)) {
+		if (conditionSyntaxTree.matchesRelex(relex, uuid_to_base)) {
 			//check var matching
-			if (conditionSyntaxTree.processVariableMatch(relex)) {
+			if (conditionSyntaxTree.processVariableMatch(relex, uuid_to_base)) {
 				ruleVarMapList = conditionSyntaxTree.getVarMapList();
 				//reconcile NOT conditions, negation var map list
 				if (reconcileNegationVars()) {
@@ -388,9 +389,9 @@ public class Rule
 	 * the current results
 	 */
 	public synchronized boolean 
-	satisfiedByRelex(String relex, VarMapList varMapList)
+	satisfiedByRelex(String relex, VarMapList varMapList, HashMap<String,String> uuid_to_base)
 	{
-		if (satisfiedByRelex(relex)) {
+		if (satisfiedByRelex(relex, uuid_to_base)) {
 			for (VarMap varMap : ruleVarMapList) {
 				varMapList.add((VarMap)varMap.clone());
 			}
@@ -410,6 +411,7 @@ public class Rule
 	 */
 	boolean reconcileNegationVars()
 	{
+		System.out.println("==Reconcile negation vars:");
 		//no negation vars, so return true
 		if (ruleNegationVarMapList==null || ruleNegationVarMapList.isEmpty()) {
 			return true;
@@ -512,7 +514,7 @@ public class Rule
 			return true;
 		}
 		if (VERBOSE) 
-			System.out.println("\nchecking concept var for legal vaue: " + concept);
+			System.out.println("\nchecking concept var for legal value: " + concept);
 
 		boolean legal = false;
 		//handle $Number variable special case
@@ -528,6 +530,13 @@ public class Rule
 		}
 		else {
 */
+			// remove trailling UUID if it exists
+			int atIndex = word.lastIndexOf('@');
+			String baseWord;
+			if (atIndex > 0)
+				baseWord = word.substring(0,atIndex);
+			else
+				baseWord = word;
 			ArrayList<String> legalValues = Frame.conceptVarMap.get(concept.toLowerCase());
 			if (legalValues==null) {
 				if (VERBOSE)
@@ -535,7 +544,7 @@ public class Rule
 				return false;
 			}
 			for (String value: legalValues) {
-				if (value.equalsIgnoreCase(word)) {
+				if (value.equalsIgnoreCase(baseWord)) {
 					legal = true;
 					break;
 				}
@@ -543,14 +552,14 @@ public class Rule
 //		}
 		if (legal==false) {
 			if (VERBOSE)
-				System.out.println("'"+word+"'" +
+				System.out.println("'"+baseWord+"'" +
 					" is NOT a legal value for " + concept);
 			//goto the next matching line
 			//continue matchingLine;
 		}
 		else {
 			if (VERBOSE)
-				System.out.println("'"+word+"'" +
+				System.out.println("==>'"+baseWord+"'" +
 					" IS a legal value for " + concept);
 		}
 

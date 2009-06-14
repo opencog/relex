@@ -17,6 +17,7 @@ package relex.frame;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 
 /**
  * Abstract base class for a node of Abstract Syntax Tree
@@ -28,10 +29,18 @@ abstract class ASTNode
 	//ArrayList<ASTNode> children = new ArrayList<ASTNode>();
 	ArrayList<ASTNode> children;
 	VarMapList nodeVarMapList;
-
-	abstract boolean matchesRelex(String relex);
+	
+	boolean matchesRelex(String relex) {
+		return matchesRelex(relex,null);
+	}
+	abstract boolean matchesRelex(String relex, HashMap<String,String> uuidToBase);
+	
+	boolean processVariableMatch(String relex) {
+		return processVariableMatch(relex, null);
+	}
+	abstract boolean processVariableMatch(String relex, HashMap<String,String> uuid_to_base);
+	
 	abstract HashSet<String> getRelationNames();
-	abstract boolean processVariableMatch(String relex);
 	abstract String print();
 
 	void addChild(ASTNode node) {
@@ -48,7 +57,7 @@ abstract class ASTNode
 	VarMapList getVarMapList() {
 		return nodeVarMapList;
 	}
-
+	
 //		void clearVarMapList() {
 //			//clear for self and for each child
 //			nodeVarMapList.clear();

@@ -15,6 +15,7 @@
  */
 package relex.frame;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -56,15 +57,15 @@ class NotNode extends ASTNode
 		return children.get(0).getRelationNames();
 	}
 
-	boolean matchesRelex(String relex) {
+	boolean matchesRelex(String relex, HashMap<String, String> uuidToBase) {
 		//if no matches, we return true (since it's a negative condition)
 		//if there is a match, but no vars, return false
 		//if there is a match, but has vars, then return true because exclusion of rule based on
 		//	this NOT condition will depend on variable match
 		ASTNode childNode = children.get(0);
-		if (childNode.matchesRelex(relex)) {
+		if (childNode.matchesRelex(relex, uuidToBase)) {
 			//there is a match
-			if (childNode.processVariableMatch(relex)) {
+			if (childNode.processVariableMatch(relex, uuidToBase)) {
 				//if no vars then we have a definite match so return false
 				nodeVarMapList = childNode.getVarMapList();
 				if (nodeVarMapList==null || nodeVarMapList.size()==0) {
@@ -91,7 +92,7 @@ class NotNode extends ASTNode
 	 * is applied against the ruleVarMapList in satisfiedByRelex().
 	 * Always returns true.
 	 */
-	boolean processVariableMatch(String relex)
+	boolean processVariableMatch(String relex, HashMap<String, String> uuidToBase)
 	{
 		// nodeVarMapList has already been set in matchesRelex()
 		// Add nodeVarMapList to ruleNegationVarMapList

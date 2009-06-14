@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
  */
 public class FrameProcessor
 {
-	static /*final*/ boolean VERBOSE = false;
+	static /*final*/ boolean VERBOSE;
 
 	private String data_dir;
 	private String mapping_rules_file;
@@ -93,13 +93,18 @@ public class FrameProcessor
 		loadDataFiles();
 	}
 
+	synchronized public String[] process(String relex)
+	{
+		return process(relex,null);
+	}
+	
 	/**
 	 * Convert a string of RelEx relationships to Frame relationships
 	 *
 	 * @param relex
 	 * @return a String array of Frame relationships
 	 */
-	synchronized public String[] process(String relex)
+	synchronized public String[] process(String relex, HashMap<String,String> uuid_to_root)
 	{
 		relex = relex.replace(" ", "").replace("\t", "");
 		//ArrayList<Rule> fireRules = new ArrayList<Rule>();
@@ -108,18 +113,20 @@ public class FrameProcessor
 		Collection<String> relationships = new LinkedHashSet<String>();
 		VarMapList varMapList = new VarMapList();
 		for (Rule rule: rules) {
-			if (rule.satisfiedByRelex(relex,varMapList)) {
+			if (rule.satisfiedByRelex(relex,varMapList, uuid_to_root)) {
 				fireRules.put(rule,varMapList);
 				varMapList = new VarMapList();
-				if (VERBOSE) System.err.println("\nRULE PASSES: " + rule.getRuleStr());
+				if (VERBOSE)
+					System.err.println("\nRULE PASSES: " + rule.getRuleStr());
 			}
 		}
 
 		// Fire off the matching rules to create set of frame relationship results
-		if (VERBOSE) System.err.println("\nFiring Rules NEW count: " + fireRules.size() + "\n");
+		if (VERBOSE)
+			System.err.println("\nFiring Rules NEW count: " + fireRules.size() + "\n");
 		//for (Rule rule: fireRules) {
 		for (Rule rule: fireRules.keySet()) {
-			relationships.addAll(rule.fire(fireRules.get(rule),VERBOSE));
+			relationships.addAll(rule.fire(fireRules.get(rule),VERBOSE,uuid_to_root));
 		}
 
 		//println("\nRELEX SENTENCE:\n\n" + relex.trim());

@@ -16,6 +16,7 @@
 package relex.frame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -49,11 +50,11 @@ class OrNode extends ASTNode {
 	 * all matching child nodes (childNodeMatches) to be used later for
 	 * variable substitution and validation
 	 */
-	boolean matchesRelex(String relex) {
+	boolean matchesRelex(String relex, HashMap<String, String> uuidToBase) {
 		childNodeMatches = null;
 		boolean pass = false;
 		for (ASTNode childNode: children) {
-			if (childNode.matchesRelex(relex)) {
+			if (childNode.matchesRelex(relex, uuidToBase)) {
 				pass = true;
 				if (childNodeMatches==null) {
 					childNodeMatches = new ArrayList<ASTNode>();
@@ -67,13 +68,13 @@ class OrNode extends ASTNode {
 	/**
 	 * Creates VarMapList with VarMaps from each valid condition
 	 */
-	boolean processVariableMatch(String relex) {
+	boolean processVariableMatch(String relex, HashMap<String, String> uuidToBase) {
 		nodeVarMapList = null;
 		boolean pass = false;
 		//create VarMapsList with VarMaps from each valid condition
 		VarMapList newList = new VarMapList();
 		for (ASTNode childNode: childNodeMatches) {
-			if (childNode.processVariableMatch(relex)) {
+			if (childNode.processVariableMatch(relex,uuidToBase)) {
 				pass = true;
 				if (childNode.getVarMapList()!=null) {
 					newList.addAll(childNode.getVarMapList());

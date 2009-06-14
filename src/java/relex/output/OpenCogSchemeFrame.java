@@ -62,7 +62,7 @@ public class OpenCogSchemeFrame
 	{
 		String ret = "";
 		String fin = SimpleView.printRelationsAlt(sent, id_map);
-		String[] fms = frame.process(fin); //,uuid_to_root_map);
+		String[] fms = frame.process(fin,uuid_to_root_map);
 		
 		for (String fm : fms) 
 		{

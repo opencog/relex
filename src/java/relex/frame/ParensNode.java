@@ -15,6 +15,7 @@
  */
 package relex.frame;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -34,9 +35,9 @@ class ParensNode extends ASTNode {
 	/**
 	 * @return true if each child node matches given relex
 	 */
-	boolean matchesRelex(String relex) {
+	boolean matchesRelex(String relex, HashMap<String, String> uuidToBase) {
 		for (ASTNode childNode: children) {
-			if (!childNode.matchesRelex(relex)) {
+			if (!childNode.matchesRelex(relex, uuidToBase)) {
 				return false;
 			}
 		}
@@ -44,11 +45,11 @@ class ParensNode extends ASTNode {
 	}
 
 
-	boolean processVariableMatch(String relex) {
+	boolean processVariableMatch(String relex, HashMap<String, String> uuidToBase) {
 		nodeVarMapList = null;
 		//parens only has 1 child, right?
 		ASTNode childNode = children.get(0);
-		if (childNode.processVariableMatch(relex)) {
+		if (childNode.processVariableMatch(relex,uuidToBase)) {
 			nodeVarMapList = childNode.getVarMapList();
 			return true;
 		}
