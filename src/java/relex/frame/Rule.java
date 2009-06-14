@@ -411,7 +411,6 @@ public class Rule
 	 */
 	boolean reconcileNegationVars()
 	{
-		System.out.println("==Reconcile negation vars:");
 		//no negation vars, so return true
 		if (ruleNegationVarMapList==null || ruleNegationVarMapList.isEmpty()) {
 			return true;

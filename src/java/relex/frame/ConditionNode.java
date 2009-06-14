@@ -120,7 +120,7 @@ class ConditionNode extends ASTNode
 		String relexBase = relex;
 		if (uuidToBase != null) {
 			for (String uuid : uuidToBase.keySet()) {
-				relexBase = relexBase.replaceAll(uuid, uuidToBase.get(uuid));
+				relexBase = relexBase.replace(uuid, uuidToBase.get(uuid));
 			}
 		}
 
@@ -197,7 +197,8 @@ class ConditionNode extends ASTNode
 				int sizeDiff = uuidToBase.get(uuid).length() - uuid.length();
 				int found = 0; // Number of tokens with same uuid
 				// Compile regular expression
-		        Pattern pattern = Pattern.compile(uuid);
+				// Q and E quotes the uuid exactly
+		        Pattern pattern = Pattern.compile("\\Q" + uuid + "\\E");
 		        // Replace all occurrences of pattern in input
 		        Matcher matcher = pattern.matcher(relexBase);
 		        ArrayList<PosUUIDPair> newPairs = new ArrayList<PosUUIDPair>();
@@ -226,7 +227,7 @@ class ConditionNode extends ASTNode
     			 	String t = new String(relexBase.substring(indexToUUID.get(j).pos,java.lang.Math.min(lineEnd,relexBase.length()-1)));
     			 	al.add(t);
 		        }*/
-    			relexBase = relexBase.replaceAll(uuid,uuidToBase.get(uuid));
+    			relexBase = relexBase.replace(uuid,uuidToBase.get(uuid));
     			/*for (int j = 0; j < indexToUUID.size(); j++) {
     				System.out.print("word " + indexToUUID.get(j).UUID + " @pos " + indexToUUID.get(j).pos + " [\"" + al.get(j) + "\"]");
     				System.out.print(" -> @pos " + newPairs.get(j).pos);
