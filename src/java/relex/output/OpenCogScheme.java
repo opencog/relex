@@ -46,7 +46,9 @@ public class OpenCogScheme
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
+	private OpenCogSchemeAnaphora anaphora_scheme;
 	private boolean print_frames;
+	private boolean print_anaphora;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -55,13 +57,20 @@ public class OpenCogScheme
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
 		frame_scheme = new OpenCogSchemeFrame();
+		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
 		print_frames = true;
+		print_anaphora = true;
 	}
 
 	public void setPrintFrames(boolean flag)
 	{
 		print_frames = flag;
+	}
+	
+	public void setPrintAnaphora(boolean flag)
+	{
+		print_anaphora = flag;
 	}
 
 	public void setParse(ParsedSentence _parse)
@@ -74,6 +83,8 @@ public class OpenCogScheme
 		id_map = new HashMap<FeatureNode,String>();
 		rel_scheme.setParse(parse, word_list, id_map);
 		frame_scheme.setParse(parse, id_map);
+		anaphora_scheme.clear();
+		anaphora_scheme.setSentence(parse, word_list);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -90,6 +101,11 @@ public class OpenCogScheme
 		if (print_frames)
 		{
 			ret += frame_scheme.toString();
+		}
+		
+		if(print_anaphora)
+		{
+			ret += anaphora_scheme.toString();
 		}
 
 		// Don't repeat the orig sentence, until we get a new sentence.
