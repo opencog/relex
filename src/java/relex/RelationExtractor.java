@@ -447,11 +447,11 @@ public class RelationExtractor
 			opencog = new OpenCogScheme();
 			if (commandMap.get("-f") != null)
 			{
-				opencog.setPrintFrames(true);
+				opencog.setFrameOn(true);
 			}
 			else
 			{
-				opencog.setPrintFrames(false);
+				opencog.setFrameOn(false);
 			}
 		}
 
