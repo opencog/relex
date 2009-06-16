@@ -18,6 +18,7 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import relex.feature.Atom;
 import relex.feature.FeatureForeach;
@@ -262,6 +263,26 @@ public class ParsedSentence extends Atom implements Serializable
 		word_cb cb = new word_cb(word);
 		FeatureForeach.foreachWord(getLeft(), cb);
 		return cb.found;
+	}
+
+	/**
+	 * addWordUUIDs -- Add UUID tags to all word nodes in the parse. 
+	 * These UUID tags are used by opencog, and by other parts
+	 * (e.g. the anaphora resolution code) to uniquely identify
+	 * individual word instances across multiple parses of 
+	 * multiple sentences of multiple documents or conversations.
+	 */
+	public void addWordUUIDs()
+	{
+		FeatureNode fn = getLeft();
+		fn = fn.get("NEXT");
+		while (fn != null)
+		{
+			String word = fn.get("orig_str").getValue();
+			UUID guid = UUID.randomUUID();
+			String guid_word = word + "@" + guid;
+			fn.add("uuid", guid_word);
+		}
 	}
 
 	/* -------------------------------------------------------------------- */
