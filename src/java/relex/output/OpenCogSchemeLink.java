@@ -81,7 +81,7 @@ class OpenCogSchemeLink
 
 
 			FeatureNode fr = fn.get("F_R");
-			str += fr.get("uuid") + "\")\n" +
+			str += fr.get("uuid").getValue() + "\")\n" +
 				"   )\n)\n";
 			return false;
 		}
