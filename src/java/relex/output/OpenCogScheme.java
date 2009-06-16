@@ -43,10 +43,10 @@ public class OpenCogScheme
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
 	private OpenCogSchemeAnaphora anaphora_scheme;
-	private boolean link_on = true;
-	private boolean relex_on = true;
-	private boolean frame_on = true;
-	private boolean anaphora_on = true;
+	private boolean do_show_linkage = false;
+	private boolean do_show_relex = false;
+	private boolean do_show_frames = false;
+	private boolean do_show_anaphora = false;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -59,17 +59,17 @@ public class OpenCogScheme
 		orig_sentence = "";
 	}
 
-	public void setFrameOn(boolean t) { frame_on = t; }
-	public boolean getFrameOn() { return frame_on; }
+	public void setShowLinkage(boolean t) { do_show_linkage = t; }
+	public boolean getShowLinkage() { return do_show_linkage; }
 
-	public void setLinkOn(boolean t) { link_on = t; }
-	public boolean getLinkOn() { return link_on; }
+	public void setShowRelex(boolean t) { do_show_relex = t; }
+	public boolean getShowRelex() { return do_show_relex; }
 
-	public void setRelExOn(boolean t) { relex_on = t; }
-	public boolean getRelExOn() { return relex_on; }
+	public void setShowFrames(boolean t) { do_show_frames = t; }
+	public boolean getShowFrames() { return do_show_frames; }
 
-	public void setAnaphoraOn(boolean flag) { anaphora_on = flag; }
-	public boolean getAnaphoraOn() { return anaphora_on; }
+	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
+	public boolean getShowAnaphora() { return do_show_anaphora; }
 
 	public void setParse(ParsedSentence _parse)
 	{
@@ -93,10 +93,10 @@ public class OpenCogScheme
 
 		ret += orig_sentence;
 
-		if (link_on) ret += link_scheme.toString();
-		if (relex_on) ret += rel_scheme.toString();
-		if (frame_on) ret += frame_scheme.toString();
-		if (anaphora_on) ret += anaphora_scheme.toString(); 
+		if (do_show_linkage) ret += link_scheme.toString();
+		if (do_show_relex) ret += rel_scheme.toString();
+		if (do_show_frames) ret += frame_scheme.toString();
+		if (do_show_anaphora) ret += anaphora_scheme.toString(); 
 		
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";

@@ -445,13 +445,22 @@ public class RelationExtractor
 		if (commandMap.get("-o") != null)
 		{
 			opencog = new OpenCogScheme();
+			if (commandMap.get("-l") != null)
+			{
+				opencog.setShowLinkage(true);
+			}
+			opencog.setShowRelex(true);
+			if (commandMap.get("-q") != null)
+			{
+				opencog.setShowRelex(false);
+			}
 			if (commandMap.get("-f") != null)
 			{
-				opencog.setFrameOn(true);
+				opencog.setShowFrames(true);
 			}
-			else
+			if (commandMap.get("-a") != null)
 			{
-				opencog.setFrameOn(false);
+				opencog.setShowAnaphora(true);
 			}
 		}
 
@@ -648,7 +657,8 @@ public class RelationExtractor
 					             ranker.toString());
 				}
 
-				if (re.do_anaphora_resolution)
+				if (re.do_anaphora_resolution &&
+				    (commandMap.get("-o") == null))
 				{
 					System.out.println("\nAntecedent candidates:\n"
 					                   + re.antecedents.toString());

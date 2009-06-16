@@ -92,15 +92,15 @@ public class Server
 		}
 		if (frame_on) {
 			System.err.println("Info: Frame output on.");
-			opencog.setFrameOn(frame_on);
+			opencog.setShowFrames(frame_on);
 		}
 		if (relex_on) {
 			System.err.println("Info: RelEx output on.");
-			opencog.setRelExOn(relex_on);
+			opencog.setShowRelex(relex_on);
 		}
 		if (link_on) {
 			System.err.println("Info: Link grammar output on.");
-			opencog.setLinkOn(link_on);
+			opencog.setShowLinkage(link_on);
 		}
 
 		try {
