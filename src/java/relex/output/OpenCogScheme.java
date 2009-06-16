@@ -46,7 +46,7 @@ public class OpenCogScheme
 	private boolean link_on = true;
 	private boolean relex_on = true;
 	private boolean frame_on = true;
-	private boolean anaphora_on = false;
+	private boolean anaphora_on = true;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */

@@ -16,9 +16,8 @@
 
 package relex.output;
 
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import relex.ParsedSentence;
 import relex.Sentence;
@@ -26,6 +25,8 @@ import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.anaphora.history.SentenceHistoryFactory;
 import relex.anaphora.history.SentenceHistoryFactory.HistoryEnum;
+import relex.feature.FeatureNode;
+
 
 /**
  * Implements opencog scheme output from hobbs anaphora resolution.
@@ -39,7 +40,7 @@ public class OpenCogSchemeAnaphora
 	// The sentence being examined.
 	private Sentence sentence;
 
-	private static final String anaphoraStr="possible_anaphora";
+	private static final String predicateName = "possible_anaphora";
 
 	private Antecedents antecedents;
 	private Hobbs hobbs;
@@ -71,62 +72,31 @@ public class OpenCogSchemeAnaphora
 	{
 		hobbs.addParse(sentence);
 		hobbs.resolve(sentence);
-		String candidates = antecedents.toString();
-		return convertCandidatesToOpencogScheme(candidates);
-	}
 
-	/**
-	 * converts the hobbs output (like:
-	 * _ante_candidate(it_1, apple) {0}
-	 * _ante_candidate(it_1, mushroom) {1}
-	 * to scheme output, assuming that the anaphora candidates are
-	 * separate by a line break (\n)
-	 */
-	private String convertCandidatesToOpencogScheme(String candidates)
-	{
-		StringTokenizer tokens = new StringTokenizer(candidates,"\n");
-		String schemeOutput = "";
-		while(tokens.hasMoreTokens())
+		String str = new String();
+		HashMap<FeatureNode,ArrayList<FeatureNode>> ante_map = 
+		        antecedents.getAntecedents();
+
+		for (FeatureNode anap: ante_map.keySet())
 		{
-			String token = tokens.nextToken();
-			schemeOutput += convertCandidate(token);
+			String anap_str = anap.get("str").getValue();
+			String anap_guid = anap.get("uuid").getValue();
+			for (FeatureNode tgt: ante_map.get(anap))
+			{
+				String tgt_str = tgt.get("str").getValue();
+				String tgt_guid = tgt.get("uuid").getValue();
+				str += 
+				   "; ante(" + anap_str + ", " + tgt_str + ")\n" +
+				   "(EvaluationLink \n" +
+				   "    (ConceptNode \"" + predicateName + "\" \n" +
+				   "        (ListLink \n" +
+				   "             (WordInstanceNode \"" + anap_guid + "\" )\n"+
+				   "             (WordInstanceNode \"" + tgt_guid + "\" )\n"+
+				   "         )\n" +
+				   "     )\n" +
+				   ")\n";
+			}
 		}
-		return schemeOutput;
-	}
-
-	/**
-	 *
-	 * @param the line to be converted, assumed to be like:
-	 *         _ante_candidate(it_1, apple) {0}
-	 * @return scheme output according to Linas suggestion
-	 */
-	private String convertCandidate(String token)
-	{
-		String patternStr = "_ante_candidate\\((.*),\\s+(.*)\\)";
-		Pattern pattern = Pattern.compile(patternStr);
-	    Matcher matcher = pattern.matcher(token);
-	    boolean matchFound = matcher.find();
-
-	    if (matchFound)
-		 {
-	    	//the first term (the pronoun)
-	    	String item1 =  matcher.group(1);
-	    	//the second term (the term that the first one apparently refers to)
-	    	String item2 = matcher.group(2);
-
-			String str="";
-
-			str += "(EvaluationLink \n" +
-		       	   "    (ConceptNode \"" + anaphoraStr + "\" \n" +
-		       	   "        (ListLink \n" +
-		       	   "             (WordInstanceNode \""+item1+"\" )\n"+
-		       	   "             (WordInstanceNode \""+item2+"\" )\n"+
-		       	   "         )\n" +
-		       	   "     )\n" +
-		       	   ")\n";
-
-			return str;
-	    }
-		return "";
+		return str;
 	}
 }
