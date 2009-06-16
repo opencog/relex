@@ -419,7 +419,10 @@ public class RelationExtractor
 		re.setMaxParseSeconds(maxParseSeconds);
 		System.out.println("; Version: " + re.getVersion());
 
-		if (commandMap.get("-a") != null)
+		// Don't run anaphora if -o is set, this will be done in a
+		// distinct stage that wipes out the first run.
+		if ((commandMap.get("-a") != null) &&
+		    (commandMap.get("-o") == null))
 		{
 			re.do_anaphora_resolution = true;
 		}
