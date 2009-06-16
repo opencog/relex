@@ -88,7 +88,9 @@ public class OpenCogSchemeAnaphora
 				String tgt_guid = tgt.get("uuid").getValue();
 
 				// Set a truth value with strength of 1.0 and
-				// a confidence of 1/n where n=2,3,4... etc.
+				// a confidence of 1/(n+1) where n=1,2,3... etc.
+				// Here, n is the "Hobbs distance", so that n=1 is the
+				// closest anaphoric reference, n=2 is the next, etc.
 				rank += 1.0;
 				double confidence = 1.0 / rank;
 
