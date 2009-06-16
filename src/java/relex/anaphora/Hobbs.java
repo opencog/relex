@@ -58,7 +58,7 @@ public class Hobbs
 	private int num_proposals;
 
 	private static Integer ana_id = 1;
-	
+
 	// The ParsedSentence being evaluated
 	private ParsedSentence currentParsedSentence = null;
 
@@ -172,10 +172,10 @@ public class Hobbs
 			// "NP". So don't print any warnings, but also, don't do anything.
 			return;
 		}
-		
+
 		// Add the word+uuid value to the feature node
-		getWordFromWordList(pt);		
-		
+		getWordFromWordList(pt);
+
 		anaphore = pt; // The "dominating NP" of the pronoun
 		num_proposals = 0;
 
@@ -233,21 +233,27 @@ public class Hobbs
 	}
 
 	/**
-	 * Add the feature word_uuid to the PhraseTree according to the word_list value.
-	 * The goal of this is to store in the antecedents structure the correct (i.e. with the uuid value)
-	 * value to the node, so it will be easy to create the opencog anaphora output.
-	 * If the currentParsedSentence is null or its word_list is null, nothing is done. so, code
-	 * that doesn't use the uuid will work as well.
-	 *  
+	 * Add the feature word_uuid to the PhraseTree according to the
+	 * word_list value.  The goal of this is to store in the antecedents
+	 * structure the correct (i.e. with the uuid value) value to the node,
+	 * so it will be easy to create the opencog anaphora output. If the
+	 * currentParsedSentence is null or its word_list is null, nothing is
+	 * done. so, code that doesn't use the uuid will work as well.
+	 *
 	 * @param pt a PhraseTree that is either the anaphora or the candidate
 	 */
-	private void getWordFromWordList(PhraseTree pt) {
-		if(currentParsedSentence != null){
-			if(currentParsedSentence.getWordList() != null){
-				if(pt.getPhraseLeader() == null){
+	private void getWordFromWordList(PhraseTree pt)
+	{
+		if (currentParsedSentence != null)
+		{
+			if (currentParsedSentence.getWordList() != null)
+			{
+				if (pt.getPhraseLeader() == null)
+				{
 					return;
 				}
-				int index =  Integer.parseInt(pt.getPhraseLeader().get("index_in_sentence").getValue());
+				int index =  Integer.parseInt(pt.getPhraseLeader()
+				           .get("index_in_sentence").getValue());
 				String word = currentParsedSentence.getWordList().get(index);
 				//pt.getPhraseLeader().get("str").setValue(word);
 				pt.getPhraseLeader().add("word_uuid").forceValue(word);
@@ -443,7 +449,7 @@ public class Hobbs
 
 						// Add the word+uuid value to the feature node
 						getWordFromWordList(pt);
-						
+
 						antecedents.add(anaphore, pt);
 						if (DEBUG > 0)
 						{
