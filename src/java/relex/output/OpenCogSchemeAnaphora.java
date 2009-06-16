@@ -39,6 +39,8 @@ public class OpenCogSchemeAnaphora {
 	// The sentence being examined.
 	private Sentence sentence;
 	
+	private static final String anaphoraStr="possible_anaphora";
+	
 	private Antecedents antecedents;
 	private Hobbs hobbs;
 	
@@ -104,7 +106,7 @@ public class OpenCogSchemeAnaphora {
 	    	String item2 = matcher.group(2);
 	    		
 			String str="";
-			String anaphoraStr="possible_anaphora";
+
 			str += "(EvaluationLink \n" +
 		       	   "    (ConceptNode \"" + anaphoraStr + "\" \n" +
 		       	   "        (ListLink \n" +
