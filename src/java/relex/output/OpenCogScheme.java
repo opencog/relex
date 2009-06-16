@@ -47,7 +47,7 @@ public class OpenCogScheme
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
 	private OpenCogSchemeAnaphora anaphora_scheme;
-	private boolean link_on = false;
+	private boolean link_on = true;
 	private boolean relex_on = false;
 	private boolean frame_on = false;
 	private boolean anaphora_on = false;
@@ -78,8 +78,6 @@ public class OpenCogScheme
 	public void setParse(ParsedSentence _parse)
 	{
 		parse = _parse;
-
-		parse.addWordUUIDs();
 
 		orig_sentence += printWords();
 		orig_sentence += printSentence();

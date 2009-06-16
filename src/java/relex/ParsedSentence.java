@@ -266,15 +266,16 @@ public class ParsedSentence extends Atom implements Serializable
 	}
 
 	/**
-	 * addWordUUIDs -- Add UUID tags to all word nodes in the parse. 
+	 * assign_id -- Add UUID tags to all word nodes in the parse. 
 	 * These UUID tags are used by opencog, and by other parts
 	 * (e.g. the anaphora resolution code) to uniquely identify
 	 * individual word instances across multiple parses of 
 	 * multiple sentences of multiple documents or conversations.
 	 */
-	public void addWordUUIDs()
+	public void assign_id()
 	{
 		FeatureNode fn = getLeft();
+		fn.add("uuid", "LEFT-WALL@" + getIDString());
 		fn = fn.get("NEXT");
 		while (fn != null)
 		{

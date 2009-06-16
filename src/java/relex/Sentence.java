@@ -62,7 +62,7 @@ public class Sentence implements Serializable
 	/**
 	 * Assign a unique sentence ID to each sentence; this is required
 	 * for OpenCog output, where each sentence and parse needs to be 
-	 * tagged.
+	 * tagged. In addition, each word is tagged with UUID's as well.
 	 */
 	private void assign_id()
 	{
@@ -75,6 +75,7 @@ public class Sentence implements Serializable
 			String id = sentenceID + "_parse_" + n;
 			parse.setIDString(id);
 			parse.setSentence(this);
+			parse.assign_id();
 			n++;
 		}
 	}
