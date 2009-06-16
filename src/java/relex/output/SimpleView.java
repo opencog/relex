@@ -81,12 +81,23 @@ public class SimpleView
 		return v.str;
 	}
 
+	public static String printRelationsUUID(ParsedSentence parse)
+	{
+		Visit v = new Visit();
+		v.show_uuid = true;
+		v.unaryStyle = true;
+		v.str = "";
+		parse.foreach(v);
+		return v.str;
+	}
+
 	private static class Visit implements RelationCallback
 	{
 		// Map associating a feature-node to a unique ID string.
 		public HashMap<FeatureNode,String> id_map = null;
 
-		public Boolean unaryStyle = false;
+		public boolean unaryStyle = false;
+		public boolean show_uuid = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
@@ -108,6 +119,11 @@ public class SimpleView
 				srcName = id_map.get(srcNode);
 				tgtName = id_map.get(tgtNode);
 			}
+			if (show_uuid)
+			{
+				srcName = srcNode.get("nameSource").get("uuid").getValue();
+				tgtName = tgtNode.get("nameSource").get("uuid").getValue();
+			}
 			str += relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
@@ -123,6 +139,10 @@ public class SimpleView
 			if (id_map != null)
 			{
 				srcName = id_map.get(srcNode);
+			}
+			if (show_uuid)
+			{
+				srcName = srcNode.get("nameSource").get("uuid").getValue();
 			}
 			if (unaryStyle)
 			{
