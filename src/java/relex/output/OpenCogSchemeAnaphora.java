@@ -30,58 +30,65 @@ import relex.anaphora.history.SentenceHistoryFactory.HistoryEnum;
 
 /**
  * Implements opencog scheme output from hobbs anaphora resolution.
- * 
+ *
  * @author fabricio <fabricio@vettalabs.com>
- * 
+ *
  */
 public class OpenCogSchemeAnaphora {
 
 	// The sentence being examined.
 	private Sentence sentence;
-	
+
 	private static final String anaphoraStr="possible_anaphora";
-	
+
 	private Antecedents antecedents;
 	private Hobbs hobbs;
-	
-	public OpenCogSchemeAnaphora(){
+
+	public OpenCogSchemeAnaphora()
+	{
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
 		hobbs.setHistory(SentenceHistoryFactory.create(HistoryEnum.DEFAULT));
 	}
-	
-	public void setSentence(ParsedSentence s, ArrayList<String> word_list){
+
+	public void setSentence(ParsedSentence s, ArrayList<String> word_list)
+	{
 		s.setWordList(word_list);
 		this.sentence=s.getSentence();
 	}
-	
+
 	public void clear()
 	{
-		antecedents.clear();//cleans the old anaphora candidates
+		// Clears out the old anaphora candidates
+		antecedents.clear();
 	}
-	
-	public String toString(){
+
+	public String toString()
+	{
 		return printAnaphora();
 	}
 
-	private String printAnaphora() {
+	private String printAnaphora()
+	{
 		hobbs.addParse(sentence);
 		hobbs.resolve(sentence);
-		String candidates = antecedents.toString();		
+		String candidates = antecedents.toString();
 		return convertCandidatesToOpencogScheme(candidates);
 	}
 
 	/**
-	 * converts the hobbs output (like: 
+	 * converts the hobbs output (like:
 	 * _ante_candidate(it_1, apple) {0}
 	 * _ante_candidate(it_1, mushroom) {1}
 	 * to scheme output, assuming that the anaphora candidates are
 	 * separate by a line break (\n)
 	 */
-	private String convertCandidatesToOpencogScheme(String candidates) {
+	private String convertCandidatesToOpencogScheme(String candidates)
+	{
 		StringTokenizer tokens = new StringTokenizer(candidates,"\n");
-		String schemeOutput="";
-		while(tokens.hasMoreTokens()){
+		String schemeOutput = "";
+		while(tokens.hasMoreTokens())
+		{
 			String token = tokens.nextToken();
 			schemeOutput += convertCandidate(token);
 		}
@@ -89,22 +96,25 @@ public class OpenCogSchemeAnaphora {
 	}
 
 	/**
-	 * 
-	 * @param the line to be converted, assumed to be like: _ante_candidate(it_1, apple) {0}
+	 *
+	 * @param the line to be converted, assumed to be like:
+	 *         _ante_candidate(it_1, apple) {0}
 	 * @return scheme output according to Linas suggestion
 	 */
-	private String convertCandidate(String token) {
+	private String convertCandidate(String token)
+	{
 		String patternStr = "_ante_candidate\\((.*),\\s+(.*)\\)";
 		Pattern pattern = Pattern.compile(patternStr);
 	    Matcher matcher = pattern.matcher(token);
 	    boolean matchFound = matcher.find();
-	    
-	    if (matchFound) {
+
+	    if (matchFound)
+		 {
 	    	//the first term (the pronoun)
 	    	String item1 =  matcher.group(1);
 	    	//the second term (the term that the first one apparently refers to)
 	    	String item2 = matcher.group(2);
-	    		
+
 			String str="";
 
 			str += "(EvaluationLink \n" +
@@ -115,7 +125,7 @@ public class OpenCogSchemeAnaphora {
 		       	   "         )\n" +
 		       	   "     )\n" +
 		       	   ")\n";
-			
+
 			return str;
 	    }
 		return "";
