@@ -48,7 +48,7 @@ public class OpenCogScheme
 	private OpenCogSchemeFrame frame_scheme;
 	private OpenCogSchemeAnaphora anaphora_scheme;
 	private boolean link_on = true;
-	private boolean relex_on = false;
+	private boolean relex_on = true;
 	private boolean frame_on = false;
 	private boolean anaphora_on = false;
 
@@ -86,7 +86,7 @@ public class OpenCogScheme
 
 		id_map = new HashMap<FeatureNode,String>();
 		uuid_to_base_map = new HashMap<String,String>();
-		rel_scheme.setParse(parse, word_list, id_map, uuid_to_base_map);
+		rel_scheme.setParse(parse, id_map, uuid_to_base_map);
 		frame_scheme.setParse(parse, id_map, uuid_to_base_map);
 
 		anaphora_scheme.clear();
