@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *	 http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,11 @@
 
 package relex.parser;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
+//import java.io.Reader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -222,7 +223,8 @@ public class RemoteLGParser extends LGParser
 			return "text:" + text + "\0";
 	}
 	
-	private String readResponse(Reader in) throws IOException
+/*	
+	private String readResponse(BufferedReader in) throws IOException
 	{
 		int length = 0;
 		char [] buf = new char[1024];
@@ -242,7 +244,7 @@ public class RemoteLGParser extends LGParser
 		}		
 		return new String(buf, 0, length);
 	}
-	
+	*/
 	private String callParser(String request) throws InterruptedException, IOException
 	{
 		if (hostname == null || hostname.length() == 0 || port <= 1024)
@@ -278,15 +280,15 @@ public class RemoteLGParser extends LGParser
 		// Call parser:
 		//
 		PrintWriter out = null; 
-		Reader in = null;
+		BufferedReader in = null;
 		try
 		{
 			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new InputStreamReader(socket.getInputStream());			
-			out.print(request);
-			out.print('\n');
-			out.flush();
-			return readResponse(in);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));			
+            out.print(request);
+            out.print('\n');
+            out.flush();			
+			return in.readLine();//readResponse(in);
 		}
 		finally
 		{
