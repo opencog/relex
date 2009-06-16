@@ -17,6 +17,7 @@ package relex.output;
 
 import java.util.HashMap;
 
+import relex.feature.FeatureNode;
 import relex.frame.Frame;
 import relex.ParsedSentence;
 
@@ -30,7 +31,7 @@ public class OpenCogSchemeFrame
 	// The sentence being examined.
 	private ParsedSentence sent;
 
-	// The id_map, previously created, for OpenCog id's
+	// The id_map translates UUID back to words.
 	private HashMap<String,String> uuid_to_root_map = null;
 	
 	private Frame frame;
@@ -44,11 +45,18 @@ public class OpenCogSchemeFrame
 		frame = new Frame();
 	}
 
-	public void setParse(ParsedSentence s,
-			HashMap<String,String> id_to_base)
+	public void setParse(ParsedSentence s)
 	{
 		sent = s;
-		uuid_to_root_map = id_to_base;
+		uuid_to_root_map = new HashMap<String,String>();
+		FeatureNode fn = s.getLeft();
+		while (fn != null)
+		{
+			String lemma = fn.get("str").getValue();
+			String uuid = fn.get("uuid").getValue();
+			uuid_to_root_map.put(uuid, lemma);
+			fn = fn.get("NEXT");
+		}
 	}
 		
 	/* ------------------------------------------------------------- */

@@ -16,8 +16,6 @@
 
 package relex.output;
 
-import java.util.HashMap;
-
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
@@ -38,9 +36,6 @@ class OpenCogSchemeRel
 	// The sentence being examined.
 	private ParsedSentence parse;
 
-	// Map associating a feature-node to a unique ID string.
-	private HashMap<String,String> uuid_to_base_map = null;
-
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
@@ -49,12 +44,9 @@ class OpenCogSchemeRel
 		parse = null;
 	}
 
-	public void setParse(ParsedSentence s,
-	                     HashMap<String,String> idToBase
-	                     )
+	public void setParse(ParsedSentence s)
 	{
 		parse = s;
-		uuid_to_base_map = idToBase;
 	}
 
 	/* ----------------------------------------------------------- */
@@ -172,7 +164,6 @@ class OpenCogSchemeRel
 				// Remember the word-to guid map; we'll need it for
 				// printing relations, and printing frames,
 				String guid_word = fn.get("uuid").getValue();
-				uuid_to_base_map.put(guid_word, lemma);
 
 				// The word instance, and its associated lemma form
 				refs += "(LemmaLink (stv 1.0 1.0)\n";

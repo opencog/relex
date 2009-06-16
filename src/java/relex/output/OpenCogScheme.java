@@ -17,7 +17,6 @@
 package relex.output;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import relex.Document;
 import relex.ParsedSentence;
@@ -41,7 +40,6 @@ public class OpenCogScheme
 	private String orig_sentence = null;
 
 	private ArrayList<String> word_list = null;
-	private HashMap<String,String> uuid_to_base_map = null;
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
@@ -82,10 +80,8 @@ public class OpenCogScheme
 		orig_sentence += printSentence();
 
 		link_scheme.setParse(parse);
-
-		uuid_to_base_map = new HashMap<String,String>();
-		rel_scheme.setParse(parse, uuid_to_base_map);
-		frame_scheme.setParse(parse, uuid_to_base_map);
+		rel_scheme.setParse(parse);
+		frame_scheme.setParse(parse);
 
 		anaphora_scheme.clear();
 		anaphora_scheme.setSentence(parse, word_list);
