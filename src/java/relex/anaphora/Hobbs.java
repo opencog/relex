@@ -38,7 +38,7 @@ import relex.tree.PhraseTree;
 
 public class Hobbs
 {
-	public static final int DEBUG = 0;
+	public static final int DEBUG = 1;
 
 	// Buffer of sentences previously seen.
 	private SentenceHistory history;
@@ -47,7 +47,7 @@ public class Hobbs
 	Antecedents antecedents;
 
 	// The max number of antecedent proposals to make.
-	static int max_proposals = 10;
+	static int max_proposals = 20;
 
 	// Fidelity to the original Hobbs algo:
 	// Set to false to stick closer to the original paper.
@@ -173,9 +173,6 @@ public class Hobbs
 			return;
 		}
 
-		// Add the word+uuid value to the feature node
-		getWordFromWordList(pt);
-
 		anaphore = pt; // The "dominating NP" of the pronoun
 		num_proposals = 0;
 
@@ -229,35 +226,6 @@ public class Hobbs
 			currentParsedSentence = sntc.getParses().get(0);
 			PhraseTree head = currentParsedSentence.getPhraseTree();
 			StepFour(head);
-		}
-	}
-
-	/**
-	 * Add the feature word_uuid to the PhraseTree according to the
-	 * word_list value.  The goal of this is to store in the antecedents
-	 * structure the correct (i.e. with the uuid value) value to the node,
-	 * so it will be easy to create the opencog anaphora output. If the
-	 * currentParsedSentence is null or its word_list is null, nothing is
-	 * done. so, code that doesn't use the uuid will work as well.
-	 *
-	 * @param pt a PhraseTree that is either the anaphora or the candidate
-	 */
-	private void getWordFromWordList(PhraseTree pt)
-	{
-		if (currentParsedSentence != null)
-		{
-			if (currentParsedSentence.getWordList() != null)
-			{
-				if (pt.getPhraseLeader() == null)
-				{
-					return;
-				}
-				int index =  Integer.parseInt(pt.getPhraseLeader()
-				           .get("index_in_sentence").getValue());
-				String word = currentParsedSentence.getWordList().get(index);
-				//pt.getPhraseLeader().get("str").setValue(word);
-				pt.getPhraseLeader().add("word_uuid").forceValue(word);
-			}
 		}
 	}
 
@@ -446,9 +414,6 @@ public class Hobbs
 					{
 						num_proposals++;
 						if (num_proposals > max_proposals) return;
-
-						// Add the word+uuid value to the feature node
-						getWordFromWordList(pt);
 
 						antecedents.add(anaphore, pt);
 						if (DEBUG > 0)

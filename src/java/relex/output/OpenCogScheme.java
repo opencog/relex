@@ -39,7 +39,6 @@ public class OpenCogScheme
 	private ParsedSentence parse = null;
 	private String orig_sentence = null;
 
-	private ArrayList<String> word_list = null;
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
 	private OpenCogSchemeFrame frame_scheme;
@@ -84,7 +83,7 @@ public class OpenCogScheme
 		frame_scheme.setParse(parse);
 
 		anaphora_scheme.clear();
-		anaphora_scheme.setSentence(parse, word_list);
+		anaphora_scheme.setSentence(parse);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -113,8 +112,6 @@ public class OpenCogScheme
 	public String printWords()
 	{
 		String str = "";
-		word_list = new ArrayList<String>();
-		word_list.add("LEFT-WALL");
 
 		FeatureNode fn = parse.getLeft();
 		fn = fn.get("NEXT");
@@ -122,7 +119,6 @@ public class OpenCogScheme
 		{
 			String word = fn.get("orig_str").getValue();
 			String guid_word = fn.get("uuid").getValue();
-			word_list.add(guid_word);
 
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +

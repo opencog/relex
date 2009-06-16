@@ -34,7 +34,7 @@ public class Antecedents
 
 	// Map of anaphora to a list of candidate antecedents.
 	// What's actually stored are the pointers to the
-	// phrases for each. To get the actual words, use the 
+	// phrases for each. To get the actual words, use the
 	// getPhraseLeader() function.
 	private HashMap<PhraseTree, ArrayList<PhraseTree>> ante_map;
 
@@ -73,7 +73,7 @@ public class Antecedents
 	/**
 	 * getAntecedents -- return the collection of antecedents
 	 * Returns a map of prononous to antecedent lists.
-	 * The antecedents are ordered from most likely to 
+	 * The antecedents are ordered from most likely to
 	 * least likely.
 	 */
 	private ArrayList<FeatureNode> getAntecedent(PhraseTree anaph)
@@ -94,7 +94,7 @@ public class Antecedents
 
 	public HashMap<FeatureNode,ArrayList<FeatureNode>> getAntecedents()
 	{
-		HashMap<FeatureNode,ArrayList<FeatureNode>> fmap = 
+		HashMap<FeatureNode,ArrayList<FeatureNode>> fmap =
 			new HashMap<FeatureNode,ArrayList<FeatureNode>>();
 		for (PhraseTree anaph : ante_map.keySet())
 		{
@@ -122,7 +122,7 @@ public class Antecedents
 
 	/**
 	 * Reject antecedents whose number does not agree with
-	 * the anaphora. noun_number is always valued as 
+	 * the anaphora. noun_number is always valued as
 	 * "singular", "plural" or "uncountable".
 	 * Retun true to reject.
 	 */
@@ -153,7 +153,7 @@ public class Antecedents
 
 	/**
 	 * Reject antecedents whose gender does not agree with
-	 * the anaphora. gender is always valued as 
+	 * the anaphora. gender is always valued as
 	 * "masculine", "feminine" or "neuter"
 	 * Retun true to reject.
 	 */
@@ -166,7 +166,7 @@ public class Antecedents
 		String sprn = prn.getValue();
 
 		// If antecedents don't have gender indicated,
-		// assume they are neuter. These can only match 
+		// assume they are neuter. These can only match
 		// non-sex pronouns.
 		FeatureNode ant = ante.get("gender");
 		if (ant == null)
@@ -183,9 +183,9 @@ public class Antecedents
 	}
 
 	/**
-	 * Phrases like (NP (NP the boxes) and (NP the cup)) 
+	 * Phrases like (NP (NP the boxes) and (NP the cup))
 	 * will not have a leader. Reject it, and, instead,
-	 * try to pick up the individual parts. 
+	 * try to pick up the individual parts.
 	 * XXX but this is wrong/messy:
 	 * "Alice held a lamp and and ashtray. They were ugly"
 	 */
@@ -225,18 +225,12 @@ public class Antecedents
 
 	/* ----------------------------------------------------------- */
 
-	// Return string associated to phrase -- 
-	// return the uuid string if its been assigned.
+	// Return string associated to phrase
 	private String getword(PhraseTree pt)
 	{
 		FeatureNode ph = pt.getPhraseLeader();
 		if (ph == null) return "";
 
-		// Return word_uuid, if it has been assigned.
-		FeatureNode fn = ph.get("word_uuid");
-		if (fn != null) return fn.getValue();
-	
-		// If no uuid, then just the plain string.
 		ph = ph.get("str");
 		if (ph == null) return "";
 		return ph.getValue();
@@ -245,7 +239,7 @@ public class Antecedents
 	/**
 	 * toString() -- utility print shows antecedent candidates
 	 *
-	 * The integer printed in the square brackets is the 
+	 * The integer printed in the square brackets is the
 	 * "Hobbs score" for the candidate: the lower, the more likely.
 	 */
 	public String toString(PhraseTree prn)

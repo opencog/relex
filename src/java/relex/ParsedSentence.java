@@ -80,11 +80,6 @@ public class ParsedSentence extends Atom implements Serializable
 	// following arcs from the others.
 	private ArrayList<FeatureNode> leafConstituents;
 
-	// An ArrayList of words formated according to opencog output
-	// (i.e. the words contains the uuid hash). The index in the
-	// array is the corresponding position of the word in the sentence.
-	private ArrayList<String> word_list = null;
-
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
@@ -147,22 +142,6 @@ public class ParsedSentence extends Atom implements Serializable
 
 	public String getErrorString() {
 		return errorString;
-	}
-
-	/**
-	 * Return an ArrayList of words formated according to OpenCog
-	 * output (i.e. the words contains the uuid hash). The index
-	 * in the array is the corresponding position of the word in
-	 * the sentence. To get the raw word, without the UUID tag,
-	 * use the getWord() call below.
-	 */
-	public ArrayList<String> getWordList()
-	{
-		return word_list;
-	}
-	public void setWordList(ArrayList<String> wl)
-	{
-		word_list = wl;
 	}
 
 	/* -------------------------------------------------------------------- */

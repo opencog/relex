@@ -16,7 +16,6 @@
 
 package relex.output;
 
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,10 +31,11 @@ import relex.anaphora.history.SentenceHistoryFactory.HistoryEnum;
  * Implements opencog scheme output from hobbs anaphora resolution.
  *
  * @author fabricio <fabricio@vettalabs.com>
+ * @author Linas Vepstas <linasvepstas@gmail.com>
  *
  */
-public class OpenCogSchemeAnaphora {
-
+public class OpenCogSchemeAnaphora
+{
 	// The sentence being examined.
 	private Sentence sentence;
 
@@ -51,10 +51,9 @@ public class OpenCogSchemeAnaphora {
 		hobbs.setHistory(SentenceHistoryFactory.create(HistoryEnum.DEFAULT));
 	}
 
-	public void setSentence(ParsedSentence s, ArrayList<String> word_list)
+	public void setSentence(ParsedSentence s)
 	{
-		s.setWordList(word_list);
-		this.sentence=s.getSentence();
+		sentence = s.getSentence();
 	}
 
 	public void clear()
