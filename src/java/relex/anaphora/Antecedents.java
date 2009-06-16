@@ -229,6 +229,11 @@ public class Antecedents
 	{
 		FeatureNode ph = pt.getPhraseLeader();
 		if (ph == null) return "";
+
+		// Try getting the word_uuid first
+		FeatureNode fn = ph.get("word_uuid");
+		if(fn != null) return fn.getValue();
+	
 		ph = ph.get("str");
 		if (ph == null) return "";
 		return ph.getValue();
