@@ -16,8 +16,6 @@
 
 package relex.output;
 
-import java.util.ArrayList;
-
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
@@ -39,9 +37,6 @@ class OpenCogSchemeLink
 	// The sentence being examined.
 	private ParsedSentence parse;
 
-	// Map associating a feature-node to a unique ID string.
-	private ArrayList<String> word_list = null;
-
 	/* ----------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
 	// Constructor.
@@ -50,10 +45,9 @@ class OpenCogSchemeLink
 		parse = null;
 	}
 
-	public void setParse(ParsedSentence s, ArrayList<String> wl)
+	public void setParse(ParsedSentence s)
 	{
 		parse = s;
-		word_list = wl;
 	}
 
 	// -----------------------------------------------------------------
@@ -82,17 +76,12 @@ class OpenCogSchemeLink
 				"      (WordInstanceNode \"";
 
 			FeatureNode fl = fn.get("F_L");
-
-			String li = fl.get("index_in_sentence").getValue();
-			int lindex = Integer.parseInt(li);
-			str += word_list.get(lindex) + "\")\n" +
+			str += fl.get("uuid").getValue() + "\")\n" +
 				"      (WordInstanceNode \"";
 
 
 			FeatureNode fr = fn.get("F_R");
-			String ri = fr.get("index_in_sentence").getValue();
-			int rindex = Integer.parseInt(ri);
-			str += word_list.get(rindex) + "\")\n" +
+			str += fr.get("uuid") + "\")\n" +
 				"   )\n)\n";
 			return false;
 		}

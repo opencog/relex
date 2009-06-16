@@ -82,7 +82,7 @@ public class OpenCogScheme
 		orig_sentence += printWords();
 		orig_sentence += printSentence();
 
-		link_scheme.setParse(parse, word_list);
+		link_scheme.setParse(parse);
 
 		id_map = new HashMap<FeatureNode,String>();
 		uuid_to_base_map = new HashMap<String,String>();
