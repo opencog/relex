@@ -214,6 +214,12 @@ public class FeatureNode extends Atom
 		return f;
 	}
 
+	public void add(String key, String value)
+	{
+		FeatureNode fn = add(key);
+		fn.forceValue(value);
+	}
+
 	/**
 	 * Substitutes oldF with newF in any of the feature targets of this node.
 	 */
