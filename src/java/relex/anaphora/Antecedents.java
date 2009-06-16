@@ -44,12 +44,12 @@ public class Antecedents
 	}
 
 	/**
-	 * add -- add a pronoun/antecedent pair to the list
+	 * add -- Add a pronoun/antecedent pair to the list
 	 * @return: true if the pair was added to the list.
 	 */
 	public boolean add(PhraseTree anaph, PhraseTree ante)
 	{
-		// filter return of true rejects the antecedent
+		// A return of true from the filter rejects the antecedent.
 		if (applyFilters(anaph, ante)) return false;
 
 		ArrayList<PhraseTree> ante_list = ante_map.get(anaph);
@@ -63,7 +63,7 @@ public class Antecedents
 	}
 
 	/**
-	 * clear() -- remove all pronoun/antecedent pairs from the list
+	 * clear() -- Remove all pronoun/antecedent pairs from the list
 	 */
 	public void clear()
 	{
@@ -225,15 +225,18 @@ public class Antecedents
 
 	/* ----------------------------------------------------------- */
 
+	// Return string associated to phrase -- 
+	// return the uuid string if its been assigned.
 	private String getword(PhraseTree pt)
 	{
 		FeatureNode ph = pt.getPhraseLeader();
 		if (ph == null) return "";
 
-		// Try getting the word_uuid first
+		// Return word_uuid, if it has been assigned.
 		FeatureNode fn = ph.get("word_uuid");
-		if(fn != null) return fn.getValue();
+		if (fn != null) return fn.getValue();
 	
+		// If no uuid, then just the plain string.
 		ph = ph.get("str");
 		if (ph == null) return "";
 		return ph.getValue();
