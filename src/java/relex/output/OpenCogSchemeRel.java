@@ -85,7 +85,7 @@ class OpenCogSchemeRel
 			String value = attr.getValue();
 
 			outstr += "; " + attrName + " (" + srcName + ", " + value + ")\n";
-			String guid = id_map.get(srcNode);
+			String guid = srcNode.get("nameSource").get("uuid").getValue();
 
 			// Flags are assumed to be true, so value is the flag name.
 			if (attrName.endsWith("-FLAG"))
@@ -120,8 +120,8 @@ class OpenCogSchemeRel
 			if (tgtName == null) return false;
 
 			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
-			String src_guid = id_map.get(srcNode);
-			String tgt_guid = id_map.get(tgtNode);
+			String src_guid = srcNode.get("nameSource").get("uuid").getValue();
+			String tgt_guid = tgtNode.get("nameSource").get("uuid").getValue();
 
 			outstr += "(EvaluationLink (stv 1.0 1.0)\n";
 			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
