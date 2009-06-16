@@ -87,13 +87,12 @@ public class OpenCogSchemeAnaphora
 				String tgt_guid = tgt.get("uuid").getValue();
 				str += 
 				   "; ante(" + anap_str + ", " + tgt_str + ")\n" +
-				   "(EvaluationLink \n" +
-				   "    (ConceptNode \"" + predicateName + "\" \n" +
-				   "        (ListLink \n" +
-				   "             (WordInstanceNode \"" + anap_guid + "\" )\n"+
-				   "             (WordInstanceNode \"" + tgt_guid + "\" )\n"+
-				   "         )\n" +
-				   "     )\n" +
+				   "(EvaluationLink (stv 1 0.2)\n" +
+				   "   (ConceptNode \"" + predicateName + "\")\n" +
+				   "   (ListLink \n" +
+				   "      (WordInstanceNode \"" + anap_guid + "\" )\n"+
+				   "      (WordInstanceNode \"" + tgt_guid + "\" )\n"+
+				   "   )\n" +
 				   ")\n";
 			}
 		}
