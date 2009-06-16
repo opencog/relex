@@ -282,6 +282,7 @@ public class ParsedSentence extends Atom implements Serializable
 			UUID guid = UUID.randomUUID();
 			String guid_word = word + "@" + guid;
 			fn.add("uuid", guid_word);
+			fn = fn.get("NEXT");
 		}
 	}
 
