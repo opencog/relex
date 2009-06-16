@@ -53,29 +53,45 @@ public class Server
 		boolean frame_on = false;
 		boolean relex_on = false;
 		boolean link_on = false;
+		boolean anaphora_on = false;
 		boolean verbose = false;
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
-			" --relex \t RelEx output to OpenCog scm format (default)\n" +
-			" --frame \t Frame output to OpenCog scm format. \n" +
-			"         \t ( You can specify both the above )\n" +
-			" --verbose \t Print parse/frame output to server stdout.\n";
+			" --relex    \t Output RelEx relations (default)\n" +
+			" --link     \t Output Link Grammar Linkages\n" +
+			" --frame    \t Output Semantic Frames\n" +
+			" --anaphora \t Output anaphore references\n" +
+			" --verbose  \t Print parse/frame output to server stdout.\n";
 
-		for (int i = 0; i < args.length; i++) {
-			if (args[i].equals("--frame"))  {
+		for (int i = 0; i < args.length; i++)
+		{
+			if (args[i].equals("--anaphora"))
+			{
+				anaphora_on = true;
+			}
+			else if (args[i].equals("--frame"))
+			{
 				frame_on = true;
-			} else if (args[i].equals("--relex"))  {
-				// default
-				relex_on = true;
-			} else if (args[i].equals("--link"))  {
-				// default
-				link_on = true;
-			} else if (args[i].equals("--help") ) {
+			}
+			else if (args[i].equals("--help") )
+			{
 				System.out.println(usageString);
 				System.exit(0);
-			} else if (args[i].equals("--verbose") ) {
+			}
+			else if (args[i].equals("--link"))
+			{
+				link_on = true;
+			}
+			else if (args[i].equals("--relex"))
+			{
+				relex_on = true;
+			}
+			else if (args[i].equals("--verbose") )
+			{
 				System.err.println("Info: Verbose server mode set.");
 				verbose = true;
-			} else {
+			}
+			else
+			{
 				System.err.println("Error: Unknown option " + args[i]);
 				System.err.println(usageString);
 				System.exit(1);
@@ -86,21 +102,30 @@ public class Server
 		Server s = new Server();
 		ServerSocket listen_sock = null;
 
-		if (!frame_on && !relex_on && !link_on) {
+		if (!frame_on && !relex_on && !link_on)
+		{
 			// By default just export RelEx output, not frames
 			relex_on = true;
 		}
-		if (frame_on) {
+		if (anaphora_on)
+		{
+			System.err.println("Info: Anaphora output on.");
+			opencog.setShowAnaphora(anaphora_on);
+		}
+		if (frame_on)
+		{
 			System.err.println("Info: Frame output on.");
 			opencog.setShowFrames(frame_on);
 		}
-		if (relex_on) {
-			System.err.println("Info: RelEx output on.");
-			opencog.setShowRelex(relex_on);
-		}
-		if (link_on) {
+		if (link_on)
+		{
 			System.err.println("Info: Link grammar output on.");
 			opencog.setShowLinkage(link_on);
+		}
+		if (relex_on)
+		{
+			System.err.println("Info: RelEx output on.");
+			opencog.setShowRelex(relex_on);
 		}
 
 		try {
