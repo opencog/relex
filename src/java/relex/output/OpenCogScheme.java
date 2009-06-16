@@ -18,7 +18,6 @@ package relex.output;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 import relex.Document;
 import relex.ParsedSentence;
@@ -79,6 +78,9 @@ public class OpenCogScheme
 	public void setParse(ParsedSentence _parse)
 	{
 		parse = _parse;
+
+		parse.addWordUUIDs();
+
 		orig_sentence += printWords();
 		orig_sentence += printSentence();
 
@@ -127,8 +129,7 @@ public class OpenCogScheme
 		while (fn != null)
 		{
 			String word = fn.get("orig_str").getValue();
-			UUID guid = UUID.randomUUID();
-			String guid_word = word + "@" + guid;
+			String guid_word = fn.get("uuid").getValue();
 			word_list.add(guid_word);
 
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
