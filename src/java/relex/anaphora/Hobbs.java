@@ -38,7 +38,7 @@ import relex.tree.PhraseTree;
 
 public class Hobbs
 {
-	public static final int DEBUG = 1;
+	public static final int DEBUG = 0;
 
 	// Buffer of sentences previously seen.
 	private SentenceHistory history;
@@ -56,8 +56,6 @@ public class Hobbs
 	// Pointer to anaphore of the currently-parsed sentence.
 	private PhraseTree anaphore;
 	private int num_proposals;
-
-	private static Integer ana_id = 1;
 
 	// The ParsedSentence being evaluated
 	private ParsedSentence currentParsedSentence = null;
@@ -98,43 +96,18 @@ public class Hobbs
 		{
 	 		// Set the currentParsedSentence to get the word from its word_list
 	 		currentParsedSentence = ps;
-			relabel(prn);
 			scan(prn);
 		}
 	}
 
 	/* ---------------------------------------------------------- */
-	/**
-	 * Give the string names of the prnouns unique ids.
-	 *
-	 * This is a strange hack used for relationship printing.
-	 * Each pronoun in each sentence potentially refers to
-	 * a different thing, and so, we want too make sure
-	 * each pronoun gets a unique id. Now, I could put
-	 * these unique id's into thier own node, but the
-	 * relation printing code is ignorant of that. So
-	 * we'll just brute-force change the string name.
-	 *
-	 * This idea is subject to redesign/rethinking.
-	 */
-	private void relabel(PhraseTree ana)
-	{
-		FeatureNode name = ana.get("str");
-		if (name == null)
-		{
-			System.err.println(
-			     "Error: can't find str featurenode during anaphora resolution");
-			return;
-		}
-		String str = name.getValue();
-		str += "_" + ana_id;
-		name.setValue(str);
 
-		ana_id ++;
-	}
+	// Return a string that uniquely labels this word instance.
+	// Every word/phrase *must* get its own, unique ID.
+	// Seems simplest ot use the pre-assigned UUID's for this purpose.
 	private String getlabel(PhraseTree ana)
 	{
-		FeatureNode name = ana.get("str");
+		FeatureNode name = ana.get("uuid");
 		return name.getValue();
 	}
 
@@ -418,12 +391,12 @@ public class Hobbs
 						antecedents.add(anaphore, pt);
 						if (DEBUG > 0)
 						{
-							System.out.println("Found antecedent "
+							System.err.println("Found antecedent "
 							                 +  pt.toString()
 							                 + " to pronoun "
 							                 + anaphore.toString());
 
-							System.out.println("Current list:\n"
+							System.err.println("Current list:\n"
 							              + antecedents.toString(anaphore));
 						}
 						if (stop_at_np) pt.setMark(marker);
