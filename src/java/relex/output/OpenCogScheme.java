@@ -149,10 +149,13 @@ public class OpenCogScheme
 		             "   (ParseNode \"" + parse.getIDString() + "\")\n" +
 		             "   (ListLink\n";
 
-		// Loop starts at 1, since we skip LEFT-WALL
-		for (int i=1; i<word_list.size(); i++)
+		FeatureNode fn = parse.getLeft();
+		fn = fn.get("NEXT"); // skip LEFT-WALL
+		while (fn != null)
 		{
-			str += "      (WordInstanceNode \"" + word_list.get(i) + "\")\n";
+			String guid = fn.get("uuid").getValue();
+			str += "      (WordInstanceNode \"" + guid + "\")\n";
+			fn = fn.get("NEXT");
 		}
 
 		str += "   )\n" +
