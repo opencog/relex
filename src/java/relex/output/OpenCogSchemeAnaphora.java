@@ -40,7 +40,7 @@ public class OpenCogSchemeAnaphora
 	// The sentence being examined.
 	private Sentence sentence;
 
-	private static final String predicateName = "possible_anaphora";
+	private static final String predicateName = "anaphoric reference";
 
 	private Antecedents antecedents;
 	private Hobbs hobbs;
@@ -81,13 +81,20 @@ public class OpenCogSchemeAnaphora
 		{
 			String anap_str = anap.get("str").getValue();
 			String anap_guid = anap.get("uuid").getValue();
+			double rank = 1.0;
 			for (FeatureNode tgt: ante_map.get(anap))
 			{
 				String tgt_str = tgt.get("str").getValue();
 				String tgt_guid = tgt.get("uuid").getValue();
+
+				// Set a truth value with strength of 1.0 and
+				// a confidence of 1/n where n=2,3,4... etc.
+				rank += 1.0;
+				double confidence = 1.0 / rank;
+
 				str += 
 				   "; ante(" + anap_str + ", " + tgt_str + ")\n" +
-				   "(EvaluationLink (stv 1 0.2)\n" +
+				   "(EvaluationLink (stv 1 " + confidence +")\n" +
 				   "   (ConceptNode \"" + predicateName + "\")\n" +
 				   "   (ListLink \n" +
 				   "      (WordInstanceNode \"" + anap_guid + "\" )\n"+
