@@ -41,7 +41,6 @@ public class OpenCogScheme
 	private String orig_sentence = null;
 
 	private ArrayList<String> word_list = null;
-	private HashMap<FeatureNode,String> id_map = null;
 	private HashMap<String,String> uuid_to_base_map = null;
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
@@ -49,7 +48,7 @@ public class OpenCogScheme
 	private OpenCogSchemeAnaphora anaphora_scheme;
 	private boolean link_on = true;
 	private boolean relex_on = true;
-	private boolean frame_on = false;
+	private boolean frame_on = true;
 	private boolean anaphora_on = false;
 
 	/* -------------------------------------------------------------------- */
@@ -84,10 +83,9 @@ public class OpenCogScheme
 
 		link_scheme.setParse(parse);
 
-		id_map = new HashMap<FeatureNode,String>();
 		uuid_to_base_map = new HashMap<String,String>();
-		rel_scheme.setParse(parse, id_map, uuid_to_base_map);
-		frame_scheme.setParse(parse, id_map, uuid_to_base_map);
+		rel_scheme.setParse(parse, uuid_to_base_map);
+		frame_scheme.setParse(parse, uuid_to_base_map);
 
 		anaphora_scheme.clear();
 		anaphora_scheme.setSentence(parse, word_list);

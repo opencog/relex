@@ -17,7 +17,6 @@ package relex.output;
 
 import java.util.HashMap;
 
-import relex.feature.FeatureNode;
 import relex.frame.Frame;
 import relex.ParsedSentence;
 
@@ -32,7 +31,6 @@ public class OpenCogSchemeFrame
 	private ParsedSentence sent;
 
 	// The id_map, previously created, for OpenCog id's
-	private HashMap<FeatureNode,String> id_map = null;
 	private HashMap<String,String> uuid_to_root_map = null;
 	
 	private Frame frame;
@@ -43,16 +41,13 @@ public class OpenCogSchemeFrame
 	public OpenCogSchemeFrame()
 	{
 		sent = null;
-		id_map = null;
 		frame = new Frame();
 	}
 
 	public void setParse(ParsedSentence s,
-			HashMap<FeatureNode,String> im,
 			HashMap<String,String> id_to_base)
 	{
 		sent = s;
-		id_map = im;
 		uuid_to_root_map = id_to_base;
 	}
 		
@@ -61,7 +56,7 @@ public class OpenCogSchemeFrame
 	private String printFrames()
 	{
 		String ret = "";
-		String fin = SimpleView.printRelationsAlt(sent, id_map);
+		String fin = SimpleView.printRelationsUUID(sent);
 		String[] fms = frame.process(fin,uuid_to_root_map);
 		
 		for (String fm : fms) 
@@ -105,10 +100,6 @@ public class OpenCogSchemeFrame
 				//System.err.println("cpt2: " + cpt2);
 			}
 			if (cpt1 == null) continue;
-			//if (id_map != null) {
-			//	cpt1 = id_map.get(cpt1);
-			//	if (cpt1 == null) continue;
-			//}
 
 			// Is cpt1 a "DefinedLinguisticConceptNode"?
 			Boolean cpt1_is_ling = false;
@@ -117,8 +108,6 @@ public class OpenCogSchemeFrame
 
 			if (cpt2 != null)
 			{
-				// cpt2 = id_map.get(cpt2);
-				// if (cpt2 == null) continue;
 				if (cpt2.charAt(0) == '#') cpt2_is_ling = true;
 			}
 
