@@ -165,6 +165,7 @@
                 <include name="batch-process.sh"/>
                 <include name="doc-splitter.sh"/>
                 <include name="link-grammar-server.sh"/>
+                <include name="opencog-server.sh"/>
                 <include name="parallel-relation-extractor.sh"/>
                 <include name="relation-extractor.sh"/>
                 <include name="src/perl/*.pl"/>
