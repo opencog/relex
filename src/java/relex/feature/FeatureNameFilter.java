@@ -103,6 +103,10 @@ public class FeatureNameFilter
 			featureOrder.add("");
 		}
 	}
+
+	protected Set<String> getIgnoreSet(){
+		return ignoreSet;
+	}
 }
 
 // ================================= End of File ===============================

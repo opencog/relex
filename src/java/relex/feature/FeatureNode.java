@@ -622,7 +622,11 @@ public class FeatureNode extends Atom
 	}
 
 	/*
-	 * XXX FIXME: replace with a foreach(). Iterators are bad, foreaches are good!
+ 	 * features() -- returns a list of the features minus those specified by a filter
+ 	 * @return an iterator to an ArrayList containing those features of this FeatureNode not in the filter's ignore list
+ 	 * @param filter the FeatureNameFilter
+	 * This routine returns the feature node's features without
+	 * the features specified by the filter pa
 	 */
 	public Iterator<String> features(FeatureNameFilter filter)
 	{
@@ -630,9 +634,9 @@ public class FeatureNode extends Atom
 		HashSet<String> featureNamesCopy = new HashSet<String>(getFeatureNames());
 
 		ArrayList<String> ignored = new ArrayList<String>();
-		Iterator<String> i = filter.ignoreSet.iterator();
-		while (i.hasNext())
-			filter.transferMultiNames(ignored, featureNamesCopy, i.next());
+		for(String aFilter: filter.getIgnoreSet()){
+			filter.transferMultiNames(ignored, featureNamesCopy, aFilter);
+		}
 		filter.transfer(output, featureNamesCopy);
 		return output.iterator();
 	}
