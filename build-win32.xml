@@ -26,8 +26,8 @@
         <pathelement location="${PREFIX}/jwnl-1.3.3.jar"/>
 
         <!-- Packages required by optional OpenNLP -->
-        <pathelement location="${PREFIX}/opennlp-tools-1.3.0.jar"/>
-        <pathelement location="${PREFIX}/maxent-2.4.0.jar"/>
+        <pathelement location="${PREFIX}/opennlp-tools-1.4.3.jar"/>
+        <pathelement location="${PREFIX}/maxent-2.5.2.jar"/>
         <pathelement location="${PREFIX}/trove.jar"/>
         <pathelement location="${PREFIX}/xercesImpl.jar"/>
         <pathelement location="${PREFIX}/commons-logging.jar"/>
@@ -35,16 +35,16 @@
         <!-- Mandatory packages -->
         <pathelement location="${ALTPREFIX}/linkgrammar.jar"/>
         <pathelement location="${ALTPREFIX}/gnu-getopt.jar"/>
-        <pathelement location="${ALTPREFIX}/wordnet/jwnl.jar"/>
-        <pathelement location="${ALTPREFIX}/wordnet/jwnl-1.4rc2.jar"/>
-        <pathelement location="${ALTPREFIX}/wordnet/jwnl-1.3.3.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl-1.4rc2.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl-1.3.3.jar"/>
 
         <!-- Packages required by optional OpenNLP -->
-        <pathelement location="${ALTPREFIX}/opennlp/opennlp-tools-1.3.0.jar"/>
-        <pathelement location="${ALTPREFIX}/opennlp/maxent-2.4.0.jar"/>
-        <pathelement location="${ALTPREFIX}/opennlp/trove.jar"/>
-        <pathelement location="${ALTPREFIX}/apache/xercesImpl.jar"/>
-        <pathelement location="${ALTPREFIX}/apache/commons-logging.jar"/>
+        <pathelement location="${ALTPREFIX}/opennlp-tools-1.4.3.jar"/>
+        <pathelement location="${ALTPREFIX}/maxent-2.5.2.jar"/>
+        <pathelement location="${ALTPREFIX}/trove.jar"/>
+        <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
+        <pathelement location="${ALTPREFIX}/commons-logging.jar"/>
 
         <!-- GATE - optional for entity recognition -->
         <pathelement location="${GATE_HOME}/bin/gate.jar"/>
@@ -83,8 +83,9 @@
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
     <target name="build-version">
        <echo message="Building RelEx version ${REVISION}"/>
-       <delete file="src/java/relex/Version.java"/>
-       <copy file="src/java/relex/Version.java.in" tofile="src/java/relex/Version.java">
+       <copy file="src/java/relex/Version.java.in"
+             tofile="src/java/relex/Version.java"
+             overwrite="yes">
            <filterset>
                <filter token="REVISION" value="${REVISION}"/>
            </filterset>
@@ -107,7 +108,7 @@
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
 
-    <!-- healp -->
+    <!-- help -->
     <target name="usage">
         <echo message="RelEx build file (build.xml)"/>
         <echo message=""/>
@@ -149,10 +150,13 @@
         </jar>
     </target>
 
-    <!-- install on user's system -->
+    <!-- Install on user's system -->
     <target name="install" depends="jar">
         <mkdir dir="${INSTALLDIR}"/>
         <copy file="relex-${REVISION}.jar" todir="${INSTALLDIR}"/>
+        <symlink link="${INSTALLDIR}/relex.jar" 
+                 resource="relex-${REVISION}.jar"
+                 overwrite="true" failonerror="false"/>
     </target>
 
     <!-- tar file for general distribution -->
@@ -189,6 +193,21 @@
         </tar>
         <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
         <delete file="r.tar"/>
+    </target>
+
+    <!-- make documentation -->
+    <target name="javadoc">
+        <mkdir dir="docs" />
+        <javadoc packagenames="relex.*"
+                 sourcepath="src/java"
+                 destdir="docs"
+                 version="true"
+                 splitindex="true"
+                 noindex="false"
+                 windowtitle="RelEx"
+                 doctitle="RelEx Dependency Relation Extractor version $VERSION"
+                 bottom="Copyright &#169; 2005-2009 Mike Ross, Linas Vepstas and others."
+        />
     </target>
 
     <!-- demo example run -->
