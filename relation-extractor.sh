@@ -28,7 +28,11 @@ VM_OPTS="-Xmx1024m -Djava.library.path=/usr/lib:/usr/local/lib"
 CLASSPATH="-classpath \
 bin:\
 /usr/local/share/java/jwnl.jar:\
+/usr/local/share/java/jwnl-1.4rc2.jar:\
+/usr/local/share/java/jwnl-1.3.3.jar:\
+/usr/local/share/java/opennlp-tools-1.4.3.jar:\
 /usr/local/share/java/opennlp-tools-1.3.0.jar:\
+/usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/local/share/java/linkgrammar.jar:\
@@ -50,10 +54,10 @@ bin:\
 
 # Read a sentence from stdin:
 #echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
-#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g
-#/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -g -s "Alice ate the mushroom."
+#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l	-t -f -r-a -g
+#/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -a -g -s "Alice ate the mushroom."
 
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -s "Alice ate the mushroom."
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -a -s "Alice ate the mushroom."
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \
@@ -61,7 +65,7 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -s
 
 # Alternately, a collection of sentences can be read from a file:
 # cat trivial-corpus.txt | \
-#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t
+#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l	-t -a
 
 # A collection of sentences can be read from a file and sent to the 
 # opencog server (assumed to be at port 17001 on localhost).

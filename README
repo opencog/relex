@@ -115,7 +115,7 @@ function.
 	OpenNLP also requires the installation of maxent from
 	http://maxent.sourceforge.net/  
 
-	You'll need maxent-2.4.0.jar and opennlp-tools-1.3.0.jar.
+	You'll need maxent-2.5.2.jar and opennlp-tools-1.4.3.jar.
 	
 	The OpenNLP package is used solely in corpus/DocSplitter.java,
 	which provides a simple, easy-to-use wrapper for splitting a
