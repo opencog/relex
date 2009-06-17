@@ -1,4 +1,4 @@
-New in version 0.99.1 (XXX 2009)
+New in version 0.99.1 (17 June 2009)
  * Add "ant help" and "ant javadoc" build targets
  * Upgrade to opennlp-1.4.3, maxent-2.5.2
  * Move the old, deprecated parser API to parser-old.
@@ -10,6 +10,8 @@ New in version 0.99.1 (XXX 2009)
  * Improve POS tagging coverage.
  * Strip the [?], [!] and [~] suffixes from link-grammar-guessed words.
  * Add refined sentence history support for anaphora resolution.
+ * Export anaphoric reference output to OpenCog.
+
 
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.
