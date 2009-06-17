@@ -1,21 +1,33 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 0.99.1 May 2009
+                      Version 1.0.0 June 2009
 
-RelEx is a syntactic relationship extractor; it will parse English
-language sentences and return the dependency relationships between
-different parts of the sentence.
+RelEx is a syntactic dependency extractor and semantic framing generator;
+it will parse English language sentences and return the dependency 
+relationships between different parts of the sentence, and also provide
+semantic framing tags based on syntax and semantic categories.
 
-There are multiple inter-related parts to relex. The core component
+There are multiple inter-related parts to RelEx. The core component
 extracts the dependency relationships. Additional parts perform
-functions such as anaphora resolution, provide frame relation output,
+functions such as anaphora resolution, provide semantic frame output,
 provide output in various formats, including a format suitable for 
 later batch post-processing, another format suitable for input to 
 OpenCog, and an W3C OWL format. There are also a small assortment of
-perl scripts for cleaning up web pages, & etc.
+perl scripts for cleaning up web pages, &c.
 
-Build and install of the core package is discussed first.
+The main RelEx website is at 
+
+    http://opencog.org/wiki/RelEx
+
+It provides broader overview, as well as detailed documentation.
+
+The source download and project management site is at
+
+   https://launchpad.net/relex
+
+Build and install of the core package is discussed below.
+
 
 Dependencies
 -------------
@@ -29,6 +41,7 @@ installed:
  - OpenNLP tools (optional)
  - GATE 4.0 or later (optional)
  - W3C OWL (optional)
+
 
 Pre-requiste dependencies
 --------------------------
@@ -81,6 +94,7 @@ The following packages are required pre-requisites for building RelEx.
 	specified in the build.xml file. Note that GATE (below) also
 	provides a jwnl.jar, but the GATE version of jwnl.jar is not
 	compatible (welcome to java DLL hell).
+
 
 Optional packages
 -----------------
