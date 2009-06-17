@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
-    <property name="VERSION" value="0.99"/>
-    <property name="REVISION" value="0.99.1"/>
+    <property name="VERSION" value="1.0"/>
+    <property name="REVISION" value="1.0.0"/>
 
     <property name="DISCO_HOME" value="d:/work/disco/trunk"/>
     <property name="GATE_HOME" value="c:/tools/gate"/>

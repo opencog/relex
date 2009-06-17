@@ -1,4 +1,4 @@
-New in version 0.99.1 (17 June 2009)
+New in version 1.0.0 (17 June 2009)
  * Add "ant help" and "ant javadoc" build targets
  * Upgrade to opennlp-1.4.3, maxent-2.5.2
  * Move the old, deprecated parser API to parser-old.
@@ -12,14 +12,13 @@ New in version 0.99.1 (17 June 2009)
  * Add refined sentence history support for anaphora resolution.
  * Export anaphoric reference output to OpenCog.
 
-
 New in version 0.99.0 (May 2009)
  * Fix/reverse the usage of the head-word in certain relations.
    Please note that this is a MAJOR INCOMPATIBILITY from previous
 	versions! Please note that the frame relations are BROKEN as
 	a result of this change; they will be fixed later!
 
-New in version 0.98.4 (Winter 2009)
+New in version 0.98.4 (March 2009)
  * Fix build break in optional OWL-format output.
  * Delete obsolete interface class RelexInfo.
  * Add getPOS() method to ParsedSentence.
