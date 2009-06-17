@@ -545,6 +545,7 @@ public class RelationExtractor
 					if (commandMap.get("-r") != null)
 					{
 						System.out.println("\n====\n");
+						System.out.println("Dependency graph:\n");
 						System.out.println(RawView.printZHeads(parse.getLeft()));
 						System.out.println("\n======\n");
 					}
@@ -586,6 +587,7 @@ public class RelationExtractor
 					    (commandMap.get("-o") == null))
 					{
 						System.out.println("\n======\n");
+						System.out.println("Dependency relations:\n");
 						System.out.println(SimpleView.printRelations(parse));
 						System.out.println("\n======\n");
 					}
