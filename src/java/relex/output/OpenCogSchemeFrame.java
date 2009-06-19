@@ -52,9 +52,13 @@ public class OpenCogSchemeFrame
 		FeatureNode fn = s.getLeft();
 		while (fn != null)
 		{
-			String lemma = fn.get("str").getValue();
-			String uuid = fn.get("uuid").getValue();
-			uuid_to_root_map.put(uuid, lemma);
+			FeatureNode fs = fn.get("str");
+			if (null != fs)
+			{
+				String lemma = fs.getValue();
+				String uuid = fn.get("uuid").getValue();
+				uuid_to_root_map.put(uuid, lemma);
+			}
 			fn = fn.get("NEXT");
 		}
 	}

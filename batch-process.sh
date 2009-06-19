@@ -28,14 +28,16 @@ RELEX_OPTS="\
 
 CLASSPATH="-classpath \
 bin:\
+/usr/local/share/java/opennlp-tools-1.4.3.jar:\
 /usr/local/share/java/opennlp-tools-1.3.0.jar:\
+/usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/local/share/java/jwnl.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
-/usr/local/share/java/linkgrammar-4.4.2.jar:\
-/usr/share/java/linkgrammar-4.4.2.jar:\
+/usr/local/share/java/linkgrammar.jar:\
+/usr/share/java/linkgrammar.jar:\
 /usr/share/java/xercesImpl.jar:\
 /opt/GATE-4.0/bin/gate.jar:\
 /opt/GATE-4.0/lib/jdom.jar:\
