@@ -1,5 +1,6 @@
 New in version 1.0.1 (??? 2009)
  * Fix crash when generating scheme frames for opencog.
+ * Distinct anaphora histories for distinct conversation streams. 
 
 New in version 1.0.0 (17 June 2009)
  * Add "ant help" and "ant javadoc" build targets

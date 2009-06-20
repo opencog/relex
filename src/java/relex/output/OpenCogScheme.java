@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import relex.Document;
 import relex.ParsedSentence;
 import relex.Sentence;
+import relex.anaphora.history.SentenceHistory;
 import relex.feature.FeatureNode;
 
 /**
@@ -93,14 +94,30 @@ public class OpenCogScheme
 
 		ret += orig_sentence;
 
-		if (do_show_linkage) ret += link_scheme.toString();
-		if (do_show_relex) ret += rel_scheme.toString();
-		if (do_show_frames) ret += frame_scheme.toString();
-		if (do_show_anaphora) ret += anaphora_scheme.toString(); 
+		if (do_show_linkage) ret += linkSchemeToString();
+		if (do_show_relex) ret += relSchemeToString();
+		if (do_show_frames) ret += frameSchemeToString();
+		if (do_show_anaphora) ret += anaphoraSchemeToString(); 
 		
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";
 		return ret;
+	}
+
+	public String anaphoraSchemeToString() {
+		return anaphora_scheme.toString();
+	}
+
+	public String frameSchemeToString() {
+		return frame_scheme.toString();
+	}
+
+	public String relSchemeToString() {
+		return rel_scheme.toString();
+	}
+
+	public String linkSchemeToString() {
+		return link_scheme.toString();
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -181,4 +198,13 @@ public class OpenCogScheme
 		return str;
 	}
 
+	/**
+	 * Sets the history for the AnaphoraResolutionScheme
+	 * @param history the history to be used for anaphora resolution
+	 */
+	public void setAnaphoraHistory(SentenceHistory history)
+	{
+		anaphora_scheme.setHistory(history);
+	}
+	
 } // end OpenCogScheme

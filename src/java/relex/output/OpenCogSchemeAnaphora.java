@@ -23,6 +23,7 @@ import relex.ParsedSentence;
 import relex.Sentence;
 import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
+import relex.anaphora.history.SentenceHistory;
 import relex.anaphora.history.SentenceHistoryFactory;
 import relex.anaphora.history.SentenceHistoryFactory.HistoryEnum;
 import relex.feature.FeatureNode;
@@ -63,6 +64,12 @@ public class OpenCogSchemeAnaphora
 		antecedents.clear();
 	}
 
+	public void setHistory(SentenceHistory history)
+	{
+		if(hobbs != null)
+			hobbs.setHistory(history);
+	}
+	
 	public String toString()
 	{
 		return printAnaphora();
