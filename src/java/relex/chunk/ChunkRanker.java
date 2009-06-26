@@ -17,6 +17,7 @@
 package relex.chunk;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import relex.stats.TruthValue;
 import relex.stats.SimpleTruthValue;
@@ -95,28 +96,10 @@ public class ChunkRanker
 
 	/**
 	 * Sort the chunks in order of decreasing confidence.
-	 * Uses a simple-minded bubble sort.
 	 */
 	public void sort()
 	{
-		int len = chunks.size();
-		for (int i=0; i<len; i++)
-		{
-			LexChunk chi = chunks.get(i);
-			double ci = chi.getConfidence();
-			for (int j=i+1; j<len; j++)
-			{
-				LexChunk chj = chunks.get(j);
-				double cj = chj.getConfidence();
-				if (ci < cj)
-				{
-					chunks.set(i, chj);
-					chunks.set(j, chi);
-					chi = chj;
-					ci = cj;
-				}
-			}
-		}
+		Collections.sort(chunks);
 	}
 
 	/**
