@@ -17,6 +17,7 @@
 package relex.chunk;
 
 import java.util.ArrayList;
+import java.lang.Comparable;
 
 import relex.feature.FeatureNode;
 import relex.feature.WordFeature;
@@ -28,7 +29,7 @@ import relex.feature.Chunk;
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
-public class LexChunk extends Chunk
+public class LexChunk extends Chunk implements Comparable<LexChunk>
 {
 	private static final long serialVersionUID = 8648176749497688526L;
 
@@ -44,7 +45,7 @@ public class LexChunk extends Chunk
 
 	/**
 	 * Return true if the other object equals this one, else return false.
-	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares 
+	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares
 	 * structure to determine if they have congruent structure.
 	 * For lexical object, this means "the same words", and nothing more.
 	 * In particular, equality of the associated truth values is ignored.
@@ -59,7 +60,7 @@ public class LexChunk extends Chunk
 			FeatureNode fthis = chunk.get(i);
 			FeatureNode foth = oth.chunk.get(i);
 
-			// Compare string values .. 
+			// Compare string values ..
 			FeatureNode sfthis = fthis.get("orig_str");
 			FeatureNode sfoth = foth.get("orig_str");
 
@@ -81,6 +82,15 @@ public class LexChunk extends Chunk
 			if (!st.equals(ot)) return false;
 		}
 		return true;
+	}
+
+	/**
+	 * CompareTo -- used for sorting
+	 */
+	public int compareTo(LexChunk that)
+	{
+		if (this.getConfidence() < that.getConfidence()) return +1;
+		return -1;
 	}
 
 	public String getChunkString()
