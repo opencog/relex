@@ -118,36 +118,35 @@ public class LexChunk extends Chunk implements Comparable<LexChunk>
 		for (int i=0; i<chunk.size(); i++)
 		{
 			FeatureNode fn = chunk.get(i);
-			// FeatureNode sf = fn.get("str");
-			FeatureNode sf = fn.get("orig_str");
+			FeatureNode sf = fn.get("str");
+			// FeatureNode sf = fn.get("orig_str");
 			if (sf != null)
 			{
 				FeatureNode start = fn.get("start_char");
-				FeatureNode orig = fn.get("orig_str");
+				FeatureNode end = fn.get("end_char");
 				String st = start.getValue();
-				String or = orig.getValue();
-				if (st == null || or == null)
+				String en = end.getValue();
+				if (st == null || en == null)
 				{
 					System.err.println("Error: chunk is missing feature nodes");
 					continue;
 				}
 				int ist = Integer.parseInt(st);
-				int len = or.length();
-				int end = ist+len;
+				int ien = Integer.parseInt(en);
 				if (chunk_start < 0)
 				{
 					chunk_start = ist;
-					chunk_end = end;
+					chunk_end = ien;
 				}
 				else if (ist <= chunk_end+1)
 				{
-					chunk_end = end;
+					chunk_end = ien;
 				}
 				else
 				{
 					str += "["+ chunk_start + "-" + chunk_end + "]";
 					chunk_start = ist;
-					chunk_end = end;
+					chunk_end = ien;
 				}
 			}
 		}
