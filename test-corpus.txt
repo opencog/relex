@@ -1,5 +1,7 @@
-He will take office on Monday.
+Grab the red ball.
+Drop it.
 END.
+He will take office on Monday.
 Alice ate an apple.
 Who is David Beazley?
 Alice looked at the mushroom.
