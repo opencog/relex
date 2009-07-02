@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import relex.feature.FeatureNode;
@@ -43,37 +45,27 @@ public class EntityMaintainer implements Serializable
 	// The original sentence string
 	private String originalSentence;
 
-	public String getOriginalSentence()
-	{
-		return originalSentence;
-	}
-
 	// The converted sentence is a copy of the original, 
 	// except all entities are replaced with ID strings
 	private String convertedSentence;
 
-	public String getConvertedSentence()
-	{
-		return convertedSentence;
-	}
+    // An array of EntityInfos, ordered by their order in the sentence
+    public List<EntityInfo> orderedEntityInfos;
 
-	// An array of EntityInfos, ordered by their order in the sentence
-	public ArrayList<EntityInfo> orderedEntityInfos;
+    // Maps entity ID strings to EntityInfos
+    private Map<String,EntityInfo> iDs2Entities;
 
-	// Maps entity ID strings to EntityInfos
-	private HashMap<String,EntityInfo> iDs2Entities;
+    // Keeps track of the last entityIDIndex created
+    int entityIDIndex;
 
-	// Keeps track of the last entityIDIndex created
-	int entityIDIndex;
+    // Maps feature nodes to entity IDs
+    // private HashMap<FeatureNode, String> featureNodes2EntityIDs;
 
-	// Maps feature nodes to entity IDs
-	// private HashMap<FeatureNode, String> featureNodes2EntityIDs;
+    // A set of integer indexes of inserted whitespace characters
+    private Set<Integer> insertedWhitespaceCharIndexes;
 
-	// A set of integer indexes of inserted whitespace characters
-	private TreeSet<Integer> insertedWhitespaceCharIndexes;
-
-	static ArrayList<String> emolist = new ArrayList<String>();
-
+    static List<String> emolist = new ArrayList<String>();
+	
 	static
 	{
 		// Emoticons -- smiley faces, right :-)
@@ -365,9 +357,15 @@ public class EntityMaintainer implements Serializable
 	}
 
 	// --------------------------------------------------------
-	/*
-	 * CONSTRUCTOR
+
+	/**
+	 * Default constructor is mainly used for de-serialization purposes.
 	 */
+	public EntityMaintainer()
+	{
+	    
+	}
+	
 	public EntityMaintainer(String _originalSentence, Collection<EntityInfo> eis)
 	{
 		if (eis.size() > MAX_NUM_ENTITIES)
@@ -473,16 +471,7 @@ public class EntityMaintainer implements Serializable
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Return all EntityInfo's ordered by their starting character
-	 * position.
-	 */
-	public List<EntityInfo> getEntities()
-	{
-		return orderedEntityInfos;
-	}
-	
+    
 	/**
 	 * prepareSentence() -- markup parsed sentence with entity 
 	 * information. This needs to be done before the relex algs run,
@@ -504,7 +493,71 @@ public class EntityMaintainer implements Serializable
 		}
 	}
 
-	public String toString()
+    /**
+     * Return all EntityInfo's ordered by their starting character
+     * position.
+     */
+    public List<EntityInfo> getEntities()
+    {
+        return orderedEntityInfos;
+    }
+    
+    public void setEntities(List<EntityInfo> orderedEntityInfos)
+    {
+        this.orderedEntityInfos = orderedEntityInfos;
+    }
+    
+    public String getConvertedSentence()
+    {
+        return convertedSentence;
+    }
+
+    public void setConvertedSentence(String convertedSentence)
+    {
+        this.convertedSentence = convertedSentence;
+    }
+    
+    public String getOriginalSentence()
+    {
+        return originalSentence;
+    }
+	
+    public void setOriginalSentence(String originalSentence)
+    {
+        this.originalSentence = originalSentence;
+    }
+        
+	public Map<String, EntityInfo> getIDs2Entities()
+    {
+        return iDs2Entities;
+    }
+
+    public void setIDs2Entities(Map<String, EntityInfo> ds2Entities)
+    {
+        iDs2Entities = ds2Entities;
+    }
+
+    public int getEntityIDIndex()
+    {
+        return entityIDIndex;
+    }
+
+    public void setEntityIDIndex(int entityIDIndex)
+    {
+        this.entityIDIndex = entityIDIndex;
+    }
+
+    public Set<Integer> getInsertedWhitespaceCharIndexes()
+    {
+        return insertedWhitespaceCharIndexes;
+    }
+
+    public void setInsertedWhitespaceCharIndexes(Set<Integer> insertedWhitespaceCharIndexes)
+    {
+        this.insertedWhitespaceCharIndexes = insertedWhitespaceCharIndexes;
+    }
+
+    public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
 		for (EntityInfo info: orderedEntityInfos)
@@ -516,7 +569,24 @@ public class EntityMaintainer implements Serializable
 		}
 		return sb.toString();
 	}
-	
+
+    public int hashCode()
+    {
+        return originalSentence == null ? 0 : originalSentence.hashCode();
+    }
+    
+    public boolean equals(Object other)
+    {
+        if (! (other instanceof EntityMaintainer))
+            return false;
+        EntityMaintainer em = (EntityMaintainer)other;
+        if (originalSentence == null)
+            return em.originalSentence == null;
+        else
+            return this.originalSentence.equals(em.originalSentence) &&
+                   this.orderedEntityInfos.equals(em.orderedEntityInfos); 
+    }
+    
 	/**
 	 * Arg0: a sentence with an entity Arg1: the first character of the
 	 * entity Arg2: the last character of the entity Example:

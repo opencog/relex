@@ -47,4 +47,24 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 	public String toString(){
 		return index+": "+sentence+"\n"+result+"\n";
 	}
+	
+    public int hashCode() {
+        return sentence == null ? 0 : sentence.hashCode();
+    }
+    
+    /**
+     * Very superficial compare, doesn't compare actual parses, just the sentence
+     * string.
+     */
+    public boolean equals(Object other) {
+        if (! (other instanceof RelexTaskResult))
+            return false;
+        RelexTaskResult x = (RelexTaskResult)other;
+        if (sentence == null)
+            return x.sentence == null;
+        else if (!this.sentence.equals(x.sentence))
+            return false;
+        else
+            return true;
+    }	
 }

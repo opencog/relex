@@ -101,8 +101,8 @@ public class ParallelRelationExtractor {
 //			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
 //			 lpc.setAllowSkippedWords(true);
 			 RemoteLGParser parser = new RemoteLGParser();
-			 parser.setHostname(DEFAULT_HOST);
-			 parser.setPort(FIRST_PORT+i);
+			 parser.getLinkGrammarClient().setHostname(DEFAULT_HOST);
+			 parser.getLinkGrammarClient().setPort(FIRST_PORT+i);
 			 RelexContext context = new RelexContext(parser, morphy);
 			 try {
 				pool.put(context);

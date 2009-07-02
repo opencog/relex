@@ -18,6 +18,7 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import relex.feature.Atom;
@@ -325,6 +326,11 @@ public class ParsedSentence extends Atom implements Serializable
 		return RelationForeach.foreach(getLeft(), cb);
 	}
 
+	public List<FeatureNode> getLeafConstituents()
+	{
+	    return this.leafConstituents;
+	}
+	
 	/* ---------------------------------------------------------------- */
 	/**
 	 * @return the FeatureNode representing the left-most word in the sentence.
