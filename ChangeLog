@@ -1,7 +1,8 @@
-New in version 1.0.1 (??? 2009)
+New in version 1.1.0 (???July 2009)
  * Fix crash when generating scheme frames for opencog.
  * Distinct anaphora histories for distinct conversation streams. 
  * Fix extents calculation in lexical chunker code.
+ * Requires new Java interfaces in link-grammar version 4.5.8
 
 New in version 1.0.0 (17 June 2009)
  * Add "ant help" and "ant javadoc" build targets

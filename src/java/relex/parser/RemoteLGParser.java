@@ -151,7 +151,7 @@ public class RemoteLGParser extends LGParser
 		return sntc;		
 	}
 	
-	@Override
+	// @Override
 	public Sentence parse(String sentence)
 	{
 	    try

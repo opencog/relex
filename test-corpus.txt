@@ -1,6 +1,7 @@
+Get the ball slowly.
+END.
 Grab the red ball.
 Drop it.
-END.
 He will take office on Monday.
 Alice ate an apple.
 Who is David Beazley?
