@@ -1,4 +1,4 @@
-New in version 1.1.0 (???July 2009)
+New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.
  * Distinct anaphora histories for distinct conversation streams. 
  * Fix extents calculation in lexical chunker code.
