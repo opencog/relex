@@ -568,9 +568,13 @@ public class FeatureNode extends Atom
 		return target.getValue();
 	}
 
-	public String pathValue(String path) 
+	public String pathValue(String str) 
 	{
-		return pathValue(new FeaturePath(path));
+		FeaturePath path = new FeaturePath(str);
+		FeatureNode target = pathTarget(path);
+		if (target == null) return null;
+		if (!target.isValued()) return null;
+		return target.getValue();
 	}
 
 	/**
@@ -674,7 +678,7 @@ public class FeatureNode extends Atom
 		while (j.hasNext()) {
 			String stuff = j.next();
 			ret += stuff + "=";
-			String v = pathValue(stuff);
+			String v = pathValue("<" + stuff + ">");
 			if (v == null) ret += "@";
 			else ret += v;
 			ret += "\n";
