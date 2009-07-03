@@ -170,8 +170,8 @@ public class Hobbs
 			if (type.equals("NP"))
 			{
 				// Step 6.
-				if (DEBUG > 0)
-					System.out.println("now do step 6 XXX -- step 6 not implemented!!");
+				// if (DEBUG > 0)
+					System.err.println("Error: anaphora: now do step 6 XXX -- step 6 not implemented!!");
 			}
 			// Step 7. Same as step 3, but for the new X.
 			StepSeven(pt, anaphore);
@@ -358,7 +358,7 @@ public class Hobbs
 	private void WalkTree(PhraseTree head,
 	                      PhraseTree path_stopper,
 	                      Filter filt,
-	                      Boolean stop_at_np)
+	                      boolean stop_at_np)
 	{
 		String marker = getlabel(anaphore);
 
@@ -391,10 +391,8 @@ public class Hobbs
 						antecedents.add(anaphore, pt);
 						if (DEBUG > 0)
 						{
-							System.err.println("Found antecedent "
-							                 +  pt.toString()
-							                 + " to pronoun "
-							                 + anaphore.toString());
+							System.err.println("Found antecedent " +  pt
+							                 + " to pronoun " + anaphore);
 
 							System.err.println("Current list:\n"
 							              + antecedents.toString(anaphore));
