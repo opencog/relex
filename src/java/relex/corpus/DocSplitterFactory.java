@@ -51,9 +51,10 @@ public class DocSplitterFactory
 			{
 				System.err.println(
 					"\nWARNING:\n" +
-					"\tIt appears that the DocSplitter class is not working for some reason\n" +
+					"\tIt appears that the DocSplitter class is not working for some reason.\n" +
 					"\tMake sure that data/sentence-detector/EnglishSD.bin.gz is installed\n" +
-					"\tand properly specified in script/run files.\n" +
+					"\tor that an alternate location is specified with -DEnglishModelFilename\n" +
+					"\tin the script/run files.\n" +
 					"\tWithout it, ReleEx must be given one sentence per line.\n" +
 					"\tPlease see the README file for info.\n");
 				Class<? extends DocSplitter> clazzy;
