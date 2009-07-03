@@ -517,6 +517,7 @@ public class FeatureNode extends Atom
 	/**
 	 * Export feature structures as Prolog lists.
 	 * XXX deprecated -- caller should use the PrologList class directly
+	 * @deprecated
 	 */
 	public String toPrologList(FeatureNameFilter filter, boolean indent)
 	{
@@ -565,6 +566,11 @@ public class FeatureNode extends Atom
 		if (target == null)
 			return null;
 		return target.getValue();
+	}
+
+	public String pathValue(String path) 
+	{
+		return pathValue(new FeaturePath(path));
 	}
 
 	/**
@@ -644,7 +650,7 @@ public class FeatureNode extends Atom
 	/**
 	 * Debugging function -- return string containing key names.
 	 */
-	public String _prt_vals()
+	public String _prt_keys()
 	{
 		if (isValued()) return "";
 		String ret = "";
@@ -654,6 +660,25 @@ public class FeatureNode extends Atom
 			ret += stuff + " ";
 		}
 		ret += "\n";
+		return ret;
+	}
+
+	/**
+	 * Debugging function -- return list of key-value pairs.
+	 */
+	public String _prt_vals()
+	{
+		if (isValued()) return "this=" + value;
+		String ret = "";
+		Iterator<String> j = getFeatureNames().iterator();
+		while (j.hasNext()) {
+			String stuff = j.next();
+			ret += stuff + "=";
+			String v = pathValue(stuff);
+			if (v == null) ret += "@";
+			else ret += v;
+			ret += "\n";
+		}
 		return ret;
 	}
 
