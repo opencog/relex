@@ -85,7 +85,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	/* --------------------------------------------------------------- */
 	public DocSplitterOpenNLPImpl()
 	{
-		buffer = "";
+		buffer = null;
 		initialize();
 	}
 
@@ -156,6 +156,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	 */
 	public void addText(String newText)
 	{
+		if (null == buffer) buffer = "";
 		buffer += newText;
 	}
 
@@ -164,7 +165,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	 */
 	public void clearBuffer()
 	{
-		buffer = "";
+		buffer = null;
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 		if (detector == null)
 		{
 			String rc = buffer;
-			buffer = "";
+			buffer = null;
 			return rc;
 		}
 
