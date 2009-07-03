@@ -1,5 +1,6 @@
 New in version 1.1.1 (xxx?? 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
+ * Fixes for anaphora resolution; head-word was mis-identified.
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.

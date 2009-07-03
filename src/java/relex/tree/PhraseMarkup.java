@@ -70,6 +70,7 @@ import relex.feature.FeatureNode;
 
 public class PhraseMarkup
 {
+	static final int DEBUG = 0;
 	int word_index;
 	ParsedSentence sentence;
 
@@ -97,10 +98,10 @@ public class PhraseMarkup
 		FeatureNode head = sent.getLeft();
 
 		doMarkup(head, null, phraseString);
-		// System.out.println(toString(sent.getLeft()));
+		// System.err.println("Debug: phrase markup:\n" + sent.getLeft());
 
 		// Now, mark up the phrase leaders as well. 
-		// This assume the relex algos have already run.
+		// This assumes that the relex algos have already run.
 		PhraseLeader.markup(head);
 	}
 
@@ -160,6 +161,8 @@ public class PhraseMarkup
 	private void doMarkup(FeatureNode top, FeatureNode root, String str)
 	{
 		if (str.charAt(0) != '(') return;
+
+		if (0 < DEBUG) System.err.println("Debug: doMarkup: " + str);
 
 		// Mark the head of the phrase
 		FeatureNode head = top.add("phr-head");

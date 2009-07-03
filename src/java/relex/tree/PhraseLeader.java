@@ -69,7 +69,8 @@ public class PhraseLeader
 		}
 		public Boolean BinaryRelationCB(String relation, FeatureNode from, FeatureNode to)
 		{
-			_phraseHeads(to);
+			// Headword is always the first word.
+			_phraseHeads(from);
 			return false;
 		}
 	}
@@ -80,6 +81,10 @@ public class PhraseLeader
 	 * have only one leaf under them. Assume that the leaf
 	 * must be the phrase leader. So e.g. "(PP for (NP fun))"
 	 * "fun" will be declared as the leader of "for fun".
+	 *
+	 * Note that is only makes sense for PP and NP, but not for 
+	 * S or VP. So for example: (S (VP drop (NP it))) the head
+	 * for S and VP is "drop", and not "it". 
 	 */
 	private static class leafHeads implements FeatureNodeCallback
 	{
@@ -88,12 +93,18 @@ public class PhraseLeader
 			FeatureNode leaf = PhraseTree.getOneLeafOnly(fn);
 			if (leaf != null)
 			{
+				// Reject phrases that aren't NP or PP
+				fn = fn.get("phr-head");
+				FeatureNode ft = fn.get("phr-type");
+				if (null == ft) return false;
+				String pt = ft.getValue();
+				if (!(pt.equals("NP") || pt.equals("PP"))) return false;
+
 				leaf = leaf.get("phr-head");
 				leaf = leaf.get("phr-next");
 				leaf = leaf.get("phr-word");
 				leaf = leaf.get("ref");
 
-				fn = fn.get("phr-head");
 				fn.set("phr-leader", leaf);
 			}
 			return false;
@@ -103,8 +114,8 @@ public class PhraseLeader
 	/* -------------------------------------------------------------------- */
 	public static void markup(FeatureNode sent)
 	{
-		RelationForeach.foreach(sent, new phraseHeads());
 		PhraseTree.foreach(sent, new leafHeads());
+		RelationForeach.foreach(sent, new phraseHeads());
 	}
 };
 
