@@ -41,19 +41,31 @@ public class DocSplitterFallbackImpl implements DocSplitter
 
 	public String getNextSentence()
 	{
-		String s = sb.toString();
-		clearBuffer();
+		String s = "";
+		int nl = sb.indexOf("\n");
+		if (0 < nl)
+		{
+			s = sb.substring(0,nl);
+			sb = sb.delete(0,nl);
+		}
+		else
+		{
+			s = sb.toString();
+			clearBuffer();
+		}
 		if (s.equals("")) s = null;
 		return s;
 	}
 
 	public List<TextInterval> process(String docText)
 	{
+		// XXX this is wrong, it fails to look for newlines!
 		return Arrays.asList(new TextInterval(0,docText.length()-1));
 	}
 
 	public List<String> split(String docText)
 	{
+		// XXX this is wrong, it fails to look for newlines!
 		return Arrays.asList(docText);
 	}
 }
