@@ -39,6 +39,13 @@ import java.util.List;
 public interface DocSplitter
 {
 	/**
+ 	 * Return true if the sentence detector initialized correctly.
+ 	 * This is used to fallback to simpler detectors if initialization
+ 	 * failed.
+ 	 */
+	boolean operational();
+
+	/**
 	 * Used to prevent overzelous sentence detectors which have 
 	 * recognizable idiosyncracies
 	 * @param s ...

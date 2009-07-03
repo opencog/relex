@@ -46,7 +46,21 @@ public class DocSplitterFactory
 	public static DocSplitter create()
 	{
 		try {
-			return clazz.newInstance();
+			DocSplitter ds =  clazz.newInstance();
+			if (false == ds.operational())
+			{
+				System.err.println(
+					"\nWARNING:\n" +
+					"\tIt appears that the DocSplitter class is not working for some reason\n" +
+					"\tMake sure that data/sentence-detector/EnglishSD.bin.gz is installed\n" +
+					"\tand properly specified in script/run files.\n" +
+					"\tWithout it, ReleEx must be given one sentence per line.\n" +
+					"\tPlease see the README file for info.\n");
+				Class<? extends DocSplitter> clazzy;
+				clazzy = DocSplitterFallbackImpl.class;
+				ds =  clazzy.newInstance();
+			}
+			return ds;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);

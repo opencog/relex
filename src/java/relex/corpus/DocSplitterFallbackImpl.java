@@ -18,6 +18,10 @@ import java.util.List;
 
 public class DocSplitterFallbackImpl implements DocSplitter
 {
+	public boolean operational()
+	{
+		return true;
+	}
 	public boolean acceptableBreak(String s, int start, int end)
 	{
 		return false;

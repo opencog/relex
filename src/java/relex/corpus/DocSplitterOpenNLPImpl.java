@@ -89,6 +89,12 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 		initialize();
 	}
 
+	public boolean operational()
+	{
+		if (detector == null) return false;
+		return true;
+	}
+
 	private void initialize()
 	{
 		if (detector == null)
