@@ -36,7 +36,7 @@ import relex.feature.RelationForeach;
 
 public class PhraseLeader
 {
-	private final static int DEBUG = 1;
+	private final static int DEBUG = 0;
 
 	/* -------------------------------------------------------------------- */
 	/**
@@ -48,6 +48,12 @@ public class PhraseLeader
 	 * in a graph. It is assumed that all words that occur
 	 * in a relation are necessarily the heads of some
 	 * phrase.
+	 *
+	 * Now, "chair" can be identified as the leader of "(NP the red chair)"
+	 * because there is a binary relation: "amod(chair, red)" that 
+	 * identifies * chair.  However, "(NP the chair)" has no such binary 
+	 * relation, and so instead, we look for either "DEFINITE-FLAG(chair, T)"
+	 * or for "noun_number(chair, singular)" to identify "chair".
 	 */
 	private static void _phraseHeads(FeatureNode fn)
 	{
@@ -64,6 +70,10 @@ public class PhraseLeader
 	{
 		public Boolean UnaryRelationCB(FeatureNode from, String rel)
 		{
+			if (rel.equals("DEFINITE-FLAG") || rel.equals("noun_number"))
+			{
+				_phraseHeads(from);
+			}
 			return false;
 		}
 		public Boolean BinaryHeadCB(FeatureNode from)
