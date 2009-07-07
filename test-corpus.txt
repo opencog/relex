@@ -1,3 +1,7 @@
+The ball is near the blue barrel. 
+Get it.
+END.
+The red ball is near the blue barrel. 
 Grab the red ball.
 Drop it.
 END.

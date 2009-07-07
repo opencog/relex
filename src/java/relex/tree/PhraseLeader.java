@@ -36,6 +36,8 @@ import relex.feature.RelationForeach;
 
 public class PhraseLeader
 {
+	private final static int DEBUG = 1;
+
 	/* -------------------------------------------------------------------- */
 	/**
 	 * Walk the graph, looking for phrase heads.
@@ -53,6 +55,8 @@ public class PhraseLeader
 		if (fn_name_source == null) return;
 		FeatureNode phr = fn_name_source.get("phr-head");
 		if (phr == null) return;
+		if (0 < DEBUG) System.err.println("Debug: set leader=" + fn.get("name") +
+		                " for phrase=" + PhraseTree.toString(fn_name_source));
 		phr.set("phr-leader", fn);
 	}
 
@@ -88,16 +92,17 @@ public class PhraseLeader
 	 */
 	private static class leafHeads implements FeatureNodeCallback
 	{
-		public Boolean FNCallback(FeatureNode fn)
+		public Boolean FNCallback(FeatureNode phr)
 		{
-			FeatureNode leaf = PhraseTree.getOneLeafOnly(fn);
+			FeatureNode leaf = PhraseTree.getOneLeafOnly(phr);
 			if (leaf != null)
 			{
 				// Reject phrases that aren't NP or PP
-				fn = fn.get("phr-head");
+				FeatureNode fn = phr.get("phr-head");
 				FeatureNode ft = fn.get("phr-type");
 				if (null == ft) return false;
 				String pt = ft.getValue();
+				if (0 < DEBUG) System.err.println("Debug: leaf phrase=" + PhraseTree.toString(phr));
 				if (!(pt.equals("NP") || pt.equals("PP"))) return false;
 
 				leaf = leaf.get("phr-head");
