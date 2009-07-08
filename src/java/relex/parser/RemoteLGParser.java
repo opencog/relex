@@ -157,6 +157,8 @@ public class RemoteLGParser extends LGParser
 	    try
 	    {
 	        ParseResult parseResult = linkGrammarClient.parse(sentence);
+            if (parseResult == null)
+                return null;
 			parseResult.setText(sentence);
 			return parseResultToSentence(parseResult);
 		} 
