@@ -128,9 +128,12 @@ public class Server
 			opencog.setShowRelex(relex_on);
 		}
 
-		try {
+		try
+		{
 			listen_sock = new ServerSocket(s.listen_port);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			System.err.println("Error: Listen failed on port " + s.listen_port);
 			System.exit(-1);
 		}
@@ -146,7 +149,7 @@ public class Server
 				ins = out_sock.getInputStream();
 				outs = out_sock.getOutputStream();
 			} catch (IOException e) {
-				System.out.println("Accept failed");
+				System.err.println("Error: Accept failed");
 				continue;
 			}
 
@@ -167,15 +170,19 @@ public class Server
 				}
 				ParsedSentence parse = sntc.getParses().get(0);
 
-				out.println(parse.getPhraseString());
+				// Print the phrase string .. why ?? 
+				out.println("; " + parse.getPhraseString());
 
-				if (verbose) {
+				if (verbose)
+				{
 					String fin = SimpleView.printRelationsAlt(parse);
 					System.out.print(fin);
-					if (frame_on) {
+					if (frame_on)
+					{
 						Frame frame = new Frame();
 						String[] fout = frame.process(fin);
-						for (int i=0; i < fout.length; i++) {
+						for (int i=0; i < fout.length; i++)
+						{
 							System.out.println(fout[i]);
 						}
 					}
@@ -196,15 +203,20 @@ public class Server
 
 				out.close();
 				System.err.println("Info: Closed printer");
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				System.err.println("Error: Processing input failed");
 				continue;
 			}
 
-			try {
+			try
+			{
 				out_sock.close();
 				System.err.println("Info: Closed socket");
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				System.err.println("Error: Socket close failed");
 				continue;
 			}
