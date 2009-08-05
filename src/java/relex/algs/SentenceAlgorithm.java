@@ -47,7 +47,7 @@ public abstract class SentenceAlgorithm
 			if (null != vars) {
 				boolean printResult = false;
 				if (VERBOSE)
-					System.out.print(" " + getSignature());
+					System.err.print(" " + getSignature());
 				if (INTERACTIVE) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 					try {
@@ -61,12 +61,12 @@ public abstract class SentenceAlgorithm
 					applyTo(c, context, vars);
 				} catch (Exception e) {
 					sentence.setErrorString(this + "\n" + e.toString());
-					// System.out.println(sentence);
-					// System.out.println(this);
+					// System.err.println(sentence);
+					// System.err.println(this);
 					// e.printStackTrace();
 				}
 				if (printResult)
-					System.out.println(sentence);
+					System.err.println("Info: " + sentence);
 				
 				FeatureNode f = c.get(SIGNATURE_FEATURE_NAME);
 				if (f == null) {

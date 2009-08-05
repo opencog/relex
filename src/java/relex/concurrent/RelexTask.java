@@ -63,9 +63,9 @@ public class RelexTask implements Callable<RelexTaskResult>
 	
 	public RelexTaskResult call() {
 		try {
-			if (DEBUG > 0) System.out.println("[" + index + "] Start processing "+ sentence);
+			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
 			String convertedSentence = entityMaintainer.getConvertedSentence().replace('\n', ' ').replace('\r', ' ');
-			if (DEBUG > 0) System.out.println("[" + index + "] End entity detection");
+			if (DEBUG > 0) System.err.println("[" + index + "] End entity detection");
 			Sentence sntc = null;
 			try {
 				sntc = context.getParser().parse(convertedSentence);//, context.getLinkParserClient());
@@ -74,7 +74,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 				sntc.setSentence(sentence);
 			}
 			
-			if (DEBUG > 0) System.out.println("[" + index + "] End parsing");
+			if (DEBUG > 0) System.err.println("[" + index + "] End parsing");
 
 			int i = 0;
 			for (ParsedSentence parse : sntc.getParses()) {
@@ -97,19 +97,19 @@ public class RelexTask implements Callable<RelexTaskResult>
 					e.printStackTrace();
 				}
 				if (DEBUG > 0) 
-					System.out.println("[" + index+ "] end post-processing sentence " + 
+					System.err.println("[" + index+ "] end post-processing sentence " + 
 							(i++) + "/"+ sntc.getParses().size());
 			}
 			return new RelexTaskResult(index, sentence, entityMaintainer, sntc);
 		} finally {
 			if (DEBUG > 0)
-				System.out.println("[" + index + "] End processing");
+				System.err.println("[" + index + "] End processing");
 			try {
 				pool.put(context);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if (DEBUG > 0) System.out.println("[" + index + "] Release resources");
+			if (DEBUG > 0) System.err.println("[" + index + "] Release resources");
 		}
 	}
 	

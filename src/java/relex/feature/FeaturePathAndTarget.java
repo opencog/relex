@@ -46,9 +46,9 @@ public class FeaturePathAndTarget {
 	{
 		// split the string around the = character
 		String[] items = str.split("[ ]*" + pathSeparatorRegex() + "[ ]*");
-//		System.out.println("\n"+str);
+//		System.err.println("\n"+str);
 //		for (int i=0; i < items.length; i++){
-//			System.out.println(items[i]);
+//			System.err.println(items[i]);
 //		}
 		if (items.length != 2)
 			throw new RuntimeException(
@@ -151,7 +151,8 @@ public class FeaturePathAndTarget {
 		return path.iterator();
 	}
 	
-	public String toString() {
+	public String toString()
+   {
 		StringBuffer sb = new StringBuffer(path.toString());
 		sb.append(" ").append(getSeparator()).append(" ");
 		if (isPathPair())
@@ -161,7 +162,8 @@ public class FeaturePathAndTarget {
 		return sb.toString();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+   {
 		FeaturePathAndTarget fp = new FeaturePathAndTarget("<a b c d>=<ww xx yy zz>");
 		FeaturePathAndTarget fp1 = new FeaturePathAndTarget("<a b c d>!=$1");
 		System.out.println(fp);

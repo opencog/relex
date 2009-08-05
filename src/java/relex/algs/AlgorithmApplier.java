@@ -89,7 +89,7 @@ public class AlgorithmApplier
 					if (line.charAt(0) == CLASS_CHAR) {
 						// If the line begins with CLASS_CHAR, use the current
 						// buffer to create a new algorithm
-						// System.out.println(sb);
+						// System.err.println(sb);
 						if (curAlg != null) {
 							addAlg(curAlg, sb.toString());
 							sb.delete(0, sb.length()); // ready the buffer for next alg

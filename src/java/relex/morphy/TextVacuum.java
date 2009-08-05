@@ -62,7 +62,7 @@ public class TextVacuum extends Thread {
 					readingDone = true;
 				}
 			} catch (Exception e) {
-				System.out.println("Error reading external stream");
+				System.err.println("Error reading external stream");
 				e.printStackTrace();
 			}
 		}

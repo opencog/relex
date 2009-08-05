@@ -127,7 +127,7 @@ class ConditionNode extends ASTNode
 		Matcher m = regpat.matcher(relexBase);
 		if (m.find()) {
 			if (VERBOSE) {
-				System.out.println(
+				System.err.println(
 				        "\nCondition match  relex: " + m.group()
 						+ "\n     condition: " + conditionStr);
 						// + "\n     regex: " + regex);
@@ -229,12 +229,12 @@ class ConditionNode extends ASTNode
 		        }*/
     			relexBase = relexBase.replace(uuid,uuidToBase.get(uuid));
     			/*for (int j = 0; j < indexToUUID.size(); j++) {
-    				System.out.print("word " + indexToUUID.get(j).UUID + " @pos " + indexToUUID.get(j).pos + " [\"" + al.get(j) + "\"]");
-    				System.out.print(" -> @pos " + newPairs.get(j).pos);
+    				System.err.print("word " + indexToUUID.get(j).UUID + " @pos " + indexToUUID.get(j).pos + " [\"" + al.get(j) + "\"]");
+    				System.err.print(" -> @pos " + newPairs.get(j).pos);
     				int lineEnd = relexBase.indexOf("\n",newPairs.get(j).pos);
     				if (lineEnd < 0) lineEnd = newPairs.get(j).pos + 10;
     				String t = relexBase.substring(newPairs.get(j).pos,java.lang.Math.min(lineEnd,relexBase.length()-1));
-    				System.out.println(" [\"" + t + "\"]");
+    				System.err.println(" [\"" + t + "\"]");
     			}*/
     			indexToUUID = newPairs;
 		        
@@ -269,7 +269,7 @@ class ConditionNode extends ASTNode
 						continue matchingLine;
 					}
 					if (VERBOSE) {
-						System.out.println("Concept " + varNameCheck + 
+						System.err.println("Concept " + varNameCheck + 
 								" contains " + word + "(" + word + ")");
 					}
 				} //end var is a concept var
@@ -280,9 +280,9 @@ class ConditionNode extends ASTNode
 					int j;
 					for (j=0; j < indexToUUID.size(); j++) {
 		        		if (indexToUUID.get(j).pos == relexLineMatcher.start(varNum)) {
-		        			if (VERBOSE) System.out.print(word);
+		        			if (VERBOSE) System.err.print(word);
 		        			word = indexToUUID.get(j).UUID;
-		        			if (VERBOSE) System.out.println(" mapped back to " + word);
+		        			if (VERBOSE) System.err.println(" mapped back to " + word);
 		        			break;
 		        		}
 					}

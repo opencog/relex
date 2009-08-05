@@ -64,9 +64,9 @@ public class LinkForeach
 			// Review the structure of the graph!
 			// FeatureNode fk = f.get(key);
 			// if(!fk.isValued())
-			// 	System.out.println(key + " => " + RelationView._prt_vals(fk));
+			// 	System.err.println(key + " => " + RelationView._prt_vals(fk));
 			// else
-			// 	System.out.println(key + " <-- " + fk.getValue());
+			// 	System.err.println(key + " <-- " + fk.getValue());
 			//
 			// The NEXT pointer is enough to walk through all of the words
 			// in the the sentence; however, that is not quite enough to 

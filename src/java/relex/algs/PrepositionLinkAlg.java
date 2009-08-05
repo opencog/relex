@@ -37,11 +37,11 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		FeatureNode existingPrepObj = modifiedLinks.get(prep);
 		// add prep to links, converting to a group if necessary
 		if (existingPrepObj == null) {
-			// System.out.println("PREP does not exist");
+			// System.err.println("PREP does not exist");
 			modifiedLinks.set(prep, prepObj);
 			modifiedLinkSources.set(prep, prepStringSource);
 		} else {
-			// System.out.println("PREP exists");
+			// System.err.println("PREP exists");
 
 			// add a new indexed-prep
 			int i = 2;
@@ -65,11 +65,11 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		FeatureNode prep_source = getTemplate().val("prep_source", vars);
 
 		/*
-		 * System.out.println("\nCalling PrepositionLinkAlg:");
-		 * System.out.println("Modified word: " + modified.get("str"));
-		 * System.out.println("prep: " + prepStringValue);
-		 * System.out.println("prep obj: " + prep_obj.get("name"));
-		 * System.out.println("prep source: " + prep_source.get("str"));
+		 * System.err.println("\nCalling PrepositionLinkAlg:");
+		 * System.err.println("Modified word: " + modified.get("str"));
+		 * System.err.println("prep: " + prepStringValue);
+		 * System.err.println("prep obj: " + prep_obj.get("name"));
+		 * System.err.println("prep source: " + prep_source.get("str"));
 		 */
 
 		if (SemanticView.isGroup(modified)) {

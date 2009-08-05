@@ -74,7 +74,7 @@ public class Rule
 
 			for (VarMap varMap: varMapList) {
 				for (String varName: varMap.keySet()) {
-					System.out.print(varName + " = " + varMap.get(varName) + "    ");
+					System.err.print(varName + " = " + varMap.get(varName) + "    ");
 				}
 				println();
 			}
@@ -513,7 +513,7 @@ public class Rule
 			return true;
 		}
 		if (VERBOSE) 
-			System.out.println("\nchecking concept var for legal value: " + concept);
+			System.err.println("\nchecking concept var for legal value: " + concept);
 
 		boolean legal = false;
 		//handle $Number variable special case
@@ -539,7 +539,7 @@ public class Rule
 			ArrayList<String> legalValues = Frame.conceptVarMap.get(concept.toLowerCase());
 			if (legalValues==null) {
 				if (VERBOSE)
-					System.out.println("no concept values list found for var " + concept);
+					System.err.println("no concept values list found for var " + concept);
 				return false;
 			}
 			for (String value: legalValues) {
@@ -551,14 +551,14 @@ public class Rule
 //		}
 		if (legal==false) {
 			if (VERBOSE)
-				System.out.println("'"+baseWord+"'" +
+				System.err.println("'"+baseWord+"'" +
 					" is NOT a legal value for " + concept);
 			//goto the next matching line
 			//continue matchingLine;
 		}
 		else {
 			if (VERBOSE)
-				System.out.println("==>'"+baseWord+"'" +
+				System.err.println("==>'"+baseWord+"'" +
 					" IS a legal value for " + concept);
 		}
 
@@ -567,7 +567,7 @@ public class Rule
 	} //end conceptContainsWord()
 
 	void println(String s) {
-		System.out.println(s);
+		System.err.println(s);
 	}
 
 	void println() {

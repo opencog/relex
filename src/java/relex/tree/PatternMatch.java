@@ -86,7 +86,7 @@ public class PatternMatch
 	 */
 	private static Boolean _match (String pattern, PhraseTree pt, PatternCallback cb)
 	{
-		if (0<debug) System.out.println("Enter match, pat= " + pattern + " tree=" + pt.toString());
+		if (0<debug) System.err.println("Enter match, pat= " + pattern + " tree=" + pt.toString());
 		int open = pattern.indexOf('(');
 		if (open < 0) return true;  // no opening paren was found.
 
@@ -103,7 +103,7 @@ public class PatternMatch
 
 		// phrase types must match.
 		String phtype = pt.getPhraseType();
-		// System.out.println ("ptype="+ptype + " phrasetype=" + phtype);
+		// System.err.println ("ptype="+ptype + " phrasetype=" + phtype);
 		if (!ptype.equals(phtype)) return true;
 
 		// skip over the type in the pattern string.
@@ -113,7 +113,7 @@ public class PatternMatch
 		// Now start walking the thing.
 		FeatureNode fn = pt.get("phr-head");
 		boolean saw_word = false;
-		if (0 < debug) System.out.println("match type for " + pt.toString() + " and pat=" + pattern);
+		if (0 < debug) System.err.println("match type for " + pt.toString() + " and pat=" + pattern);
 
 		while (fn != null)
 		{
@@ -127,7 +127,7 @@ public class PatternMatch
 					FeatureNode fu= wd.get("orig_str");
 					String fus="";
 					if (fu != null) fus=fu.getValue();
-					System.out.println("match got a word >>" + fus + "<<");
+					System.err.println("match got a word >>" + fus + "<<");
 				}
 				if (!saw_word)	pt.setCursor(fn);
 				saw_word = true;
@@ -141,7 +141,7 @@ public class PatternMatch
 					if (cb != null)
 					{
 						String wat = pattern.substring(0, pattern.indexOf('(')).trim();
-						if (0 < debug) System.out.println("match end of word string, pat=" + wat);
+						if (0 < debug) System.err.println("match end of word string, pat=" + wat);
 						Boolean rc = cb.PMCallback(wat, pt);
 						if (rc) return rc;
 					}
@@ -153,7 +153,7 @@ public class PatternMatch
 				if ((open < 0) || (close < 0)) return true;
 
 				String subpat = pattern.substring(open, close+1);
-				if (0 < debug) System.out.println("match recursive call");
+				if (0 < debug) System.err.println("match recursive call");
 				PhraseTree subt = new PhraseTree(fn);
 				boolean rc = _match(subpat, subt, cb);
 				if (rc) return rc;
@@ -170,7 +170,7 @@ public class PatternMatch
 		if (0 == pattern.length()) return false;
 		if (pat_starts_with_word && !saw_word) return true;
 		if (0 <= pattern.indexOf('(')) return true;  // shorted the pattern! 
-		if (0 < debug) System.out.println("match word string at end of pattern, patt=" + pattern + "=");
+		if (0 < debug) System.err.println("match word string at end of pattern, patt=" + pattern + "=");
 		if (cb != null)
 		{
 			Boolean rc = cb.PMCallback(pattern, pt);

@@ -70,7 +70,8 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 		return str.length();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+   {
 		String tString = "TestAlg\n" + "<a b> = $1\n" + "<a b> = <a c>\n" + "=\n" + "<a d> += $1\n";
 		TemplateActionAlg test = new TemplateActionAlg();
 		test.init(tString);

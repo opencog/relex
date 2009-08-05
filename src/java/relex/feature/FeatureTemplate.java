@@ -42,7 +42,7 @@ public class FeatureTemplate
 			test = test.substring(1);
 			if (test.charAt(0) != '\\') {
 				test = test.replaceAll("\\\\.", "[a-z\\*]");
-				// System.out.println(test + " --- " + val + " --- " +
+				// System.err.println(test + " --- " + val + " --- " +
 				// Pattern.matches(test,val));
 				return Pattern.matches(test, val); // interprets test as a regex
 			}

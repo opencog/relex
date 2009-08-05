@@ -95,7 +95,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 
 		// Load each PR as defined in ANNIEConstants
 		for (int i = 0; i < PR_NAMES.length; i++) {
-			if (DEBUG>0) System.out.println("About to create "+ PR_NAMES[i]);
+			if (DEBUG>0) System.err.println("About to create "+ PR_NAMES[i]);
 			FeatureMap params = Factory.newFeatureMap();
 			Map<Object, Object> configuredParams = annieParams.get(PR_NAMES[i]);
 			if (configuredParams != null)
@@ -103,7 +103,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 			ProcessingResource pr = (ProcessingResource) Factory.createResource(PR_NAMES[i], params);
 			
 			if (pr instanceof gate.creole.tokeniser.DefaultTokeniser) {
-				System.out.println("Changing parameter of "+pr.getClass().getName());
+				System.err.println("Changing parameter of "+pr.getClass().getName());
 			}
 			// add the PR to the pipeline controller
 			annieController.add(pr);
@@ -165,17 +165,17 @@ public class GateEntityDetector extends EntityMaintainerFactory
 				System.err.println("gate.home is not specified.. use -Dgate.home to specify the value");
 				throw new RuntimeException("GATE Home '" + fGateHome.getAbsolutePath() + "' is invalid.");
 			}
-			if (DEBUG>0) System.out.println("Initializing GATE...");
+			if (DEBUG>0) System.err.println("Initializing GATE...");
 			Gate.init();
-			if (DEBUG>0) System.out.println("GATE initialized.");
-			if (DEBUG>0) System.out.println("About to register ANNIE directories...");
+			if (DEBUG>0) System.err.println("GATE initialized.");
+			if (DEBUG>0) System.err.println("About to register ANNIE directories...");
 
 			Gate.getCreoleRegister().registerDirectories(
 					new File(new File(fGateHome, "plugins"), "ANNIE").toURI().toURL());
 
-			if (DEBUG>0) System.out.println("Annie plugins registered. Initializing ANNIE...");
+			if (DEBUG>0) System.err.println("Annie plugins registered. Initializing ANNIE...");
 			initAnnie();
-			if (DEBUG>0) System.out.println("ANNIE initialized.");
+			if (DEBUG>0) System.err.println("ANNIE initialized.");
 		} catch(GateException e) {
 			throw new RuntimeException(e.getMessage());
 		} catch(MalformedURLException m) {
@@ -183,11 +183,11 @@ public class GateEntityDetector extends EntityMaintainerFactory
 		}
 		if (DEBUG>0)
 		{
-			System.out.println("...GATE initialised");
+			System.err.println("...GATE initialised");
 			Package p = annieController.getClass().getPackage();
-			System.out.println("GATE Specification Version : " 
+			System.err.println("GATE Specification Version : " 
 			                   + p.getSpecificationVersion());
-			System.out.println("GATE Implementation Version : " 
+			System.err.println("GATE Implementation Version : " 
 			                   + p.getImplementationVersion());
 		}
 
@@ -198,12 +198,12 @@ public class GateEntityDetector extends EntityMaintainerFactory
 	public AnnotationSet getAnnotations(String documentText)
 		throws GateException
 	{
-		if (DEBUG>0) System.out.println("Original text is:\n"+documentText);
+		if (DEBUG>0) System.err.println("Original text is:\n"+documentText);
 		initialize();
 		
 		// Ugly hack; since Annie thinks "Don" is a person's name.
 		String fixed = documentText.replaceAll("Don't", "Do not").replaceAll("don't", "do not");
-		if (DEBUG>0) System.out.println("Fixed text is :\n"+fixed);
+		if (DEBUG>0) System.err.println("Fixed text is :\n"+fixed);
 		doc =  Factory.newDocument(fixed);
 		corpus = (Corpus) Factory.createResource("gate.corpora.CorpusImpl");
 		corpus.add(doc);
@@ -258,7 +258,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 				if (a.getType().equals(ANNIEConstants.SPACE_TOKEN_ANNOTATION_TYPE)) continue;
 				if (a.getType().equals(ANNIEConstants.TOKEN_ANNOTATION_TYPE)) continue;
 				
-				if (DEBUG>0) System.out.println("Found a " + atype + " entity " + a.toString());
+				if (DEBUG>0) System.err.println("Found a " + atype + " entity " + a.toString());
 	
 				if(a.getType().equals(ANNIEConstants.PERSON_ANNOTATION_TYPE))
 				{

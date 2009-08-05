@@ -44,7 +44,10 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/xercesImpl.jar:\
 "
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --frame --relex --anaphora --verbose
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --frame --relex --anaphora --verbose
+
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora 
+
 # These command line arguments don't seem to ever have done anything:
 #-n 4 -p 4444
 

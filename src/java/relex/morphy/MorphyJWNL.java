@@ -313,7 +313,7 @@ public class MorphyJWNL implements Morphy
 			List<?> li = mp.lookupAllBaseForms(POS.NOUN, word);
 			for (Object iw: li) {
 				String siw = (String) iw;
-				System.out.println("duuude orig word=" + word + "lemma=" + siw);
+				System.err.println("duuude orig word=" + word + "lemma=" + siw);
 			}
 			****************/
 
