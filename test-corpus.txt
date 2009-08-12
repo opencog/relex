@@ -1,6 +1,16 @@
+Give me the biggest ball.
+END.
+Give me the six biggest paychecks.
+Give me the last six paychecks.
+This is the biggest house.
+END.
+Becky is a cat.
+A cat is an animal.
+Is Becky a cat?
+Is Becky an animal?
+END.
 The ball is near the blue barrel. 
 Get it.
-END.
 The red ball is near the blue barrel. 
 Grab the red ball.
 Drop it.

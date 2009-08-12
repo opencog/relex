@@ -1063,28 +1063,30 @@ ADJ2
 ;
 ; SUPERLATIVES
 ;
+; L is a superlative modifying a determiner on the left.
+; e.g. "Give me the biggest ball" or "Give me the last six paychecks" 
+; Record the superlative.
 ;
 #TemplateActionAlg
 SUPERLATIVE-1
-<LAB> = \D\.*
-=
-<F_L det-obj> += <F_R ref>
-;
-; L superlative with DD definite determiner -- "The last six paychecks"
-; DD gives the head word, L gives the dependent.
-;
-#TemplateActionAlg
-SUPERLATIVE-1a
 <LAB> = \L\.*
 =
-<F_L det-obj> += <F_R ref>
+<F_L det-mod> += <F_R ref>
+;
+; With ordinary determiner: "the biggest ball", 
+; With DD definite determiner: "the last six paychecks", "the six biggest paychecks"
+; (DD conects determiners to numbers or adjectives)
+; The object is on the right of the D or DD link.
 ;
 #TemplateActionAlg
 SUPERLATIVE-2
-<LAB> = \DD\.*
+<LAB> = \D\.*|\DD\.*
+<F_L det-mod> != %
 =
 <F_R BACKGROUND-FLAG> = T
-<F_R ref links _amod> += <F_L det-obj>
+<F_R ref links _amod> += <F_L det-mod>
+;
+; Slap a superlative-flag onto the lemma
 ;
 #TemplateActionAlg
 SUPERLATIVE-3
