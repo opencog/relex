@@ -184,7 +184,7 @@ class OpenCogSchemeRel
 	private String printRank()
 	{
 		String ret =
-		"(ParseLink\n" +
+		"(ParseLink (stv 1 1)\n" +
 		"   (ParseNode \"" + parse.getIDString() + "\" (stv 1.0 ";
 
 		Double confidence = parse.getTruthValue().getConfidence();
