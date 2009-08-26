@@ -2,7 +2,7 @@
 ;; Frame Mapping Rules
 ;; Developed by David Noziglia, spring 2008
 ;;
-# IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Existance:Entity(be,$var0)
+# IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Existence:Entity(be,$var0)
 # IF _predobj(be,$atLocation) THEN ^1_Existence:Place($atLocation,$atLocation)
 # IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Attributes:Entity(be,$var0)
 # IF _predobj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Attributes:Attribute(be,$var0)
@@ -21,7 +21,7 @@
 # IF {_predobj(be,$var0) || _iobj(be,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Existence:Time(be,$var0)
 
 
-# IF _subj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Existance:Entity(be,$var0)
+# IF _subj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Existence:Entity(be,$var0)
 # IF _obj(be,$atLocation) THEN ^1_Existence:Place($atLocation,$atLocation)
 # IF _subj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Attributes:Entity(be,$var0)
 # IF _obj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Attributes:Attribute(be,$var0)
@@ -130,8 +130,9 @@
 # IF _amod($var0,$Number) ^ uncountable($var0) THEN ^1_Quantity:Quantity($Number,$Number) ^1_Quantity:Mass($Number,$var0)
 # IF _amod(amount,$Dimension) THEN ^1_Quantity:Quantity($Dimension,$Dimension) ^1_Quantity:Mass($Dimension,amount)
 # IF _amod(ranked,$var0) ^ as(ranked,$var1) THEN ^1_Rank:Item(ranked,$var0) ^1_Rank:Rank(ranked,$var1)
-# IF _amod($var0,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($var0,$var0)
-# IF _amod($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($var0,$var0)
+;; Fabricio: change color and dimension
+# IF _amod($var0,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
+# IF _amod($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$var0) ^1_Dimension:Object($Dimension,$var0)
 # IF _amod($Quantity,$var0) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
 # IF of($Quantifier,$var0) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($Quantifier,$var0)
 # IF _nn($Luck,$var0) ^ noun($var0) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
@@ -350,6 +351,11 @@
 # IF how_much(_$qVar) THEN ^1_Questioning:Message(how_much,_$qVar) ^1_Quantity:Mass(how_much,_$qVar)
 # IF truth-query($var0) ^ verb($var0) THEN ^1_Questioning:Message(truth-query,$var0)  ^1_Existence:Circumstances(truth-query,$var0)
 # IF truth-query($var0) ^ noun($var0) THEN ^1_Questioning:Message(truth-query,$var0) ^1_Existence:Entity(truth-query,$var0)
+
+;; Fabricio: accept the uuid instead of _$qVar  
+# IF what($var0) THEN ^1_Questioning:Message(what,_$qVar) ^1_Attributes:Entity(what,_$qVar) ^1_Entity:Entity(what,_$qVar)
+;; Fabricio: Is the ball blue?
+# IF truth-query($var0) ^ adj($var0) THEN ^1_Questioning:Message(truth-query,$var0) ^1_Attributes:Attribute(truth-query,$var0)
 
 # IF _that($var0,$var1) THEN ^1_Relation:Entity_1($var0,$var0) ^1_Relation:Entity_2($var1,$var1)
 # IF which($var0,$var1) THEN ^1_Relation:Entity_1($var0,$var0) ^1_Relation:Entity_2($var1,$var1)
@@ -1063,8 +1069,10 @@
 # IF _advmod($Contingency,$var0) THEN ^1_Contingency:Degree($Contingency,$var0)
 
 # IF _subj($Manipulation,$var0) THEN ^1_Manipulation:Agent($Manipulation,$var0)
-# IF $Imperative_relation($Manipulation) THEN ^1_Manipulation:Agent($Manipulation,you)
-# IF with($Manipulation,$var0) THEN ^1_Manipulation:Bodypart_of_agent(with,$var0)
+# IF $Imperative_relation($Manipulation) ^ NOT _to-do($var0,$Manipulation) THEN ^1_Manipulation:Agent($Manipulation,you)
+# IF $Imperative_relation($Manipulation) ^ _to-do($var0,$Manipulation) THEN ^1_Manipulation:Agent($Manipulation,$var0)
+;; Fabricio: remove with and add $Manipulation
+# IF with($Manipulation,$var0) THEN ^1_Manipulation:Bodypart_of_agent($Manipulation,$var0)
 # IF _obj($Manipulation,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Manipulation:Entity($Manipulation,$var0)
 # IF _advmod($Manipulation,$var0) THEN ^1_Manipulation:Manner($Manipulation,$var0)
 # IF for($Manipulation,$Time) THEN ^1_Manipulation:Duration($Manipulation,$Time)
@@ -1288,6 +1296,7 @@
 # IF $relTime($Motion_directional,$Time) ^ NOT _obj($Motion_directional,$var0) THEN ^1_Motion_directional:Time($Motion_directional,$Time)
 # IF _amod($Motion_directional,$Time) ^ NOT _obj($Motion_directional,$var0) THEN ^1_Motion_directional:Time($Motion_directional,$Time)
 
+
 # IF _subj($Hiding_objects,$var0) THEN ^1_Hiding_objects:Agent($Hiding_objects,$var0)
 # IF $Imperative_relation($Hiding_objects) THEN ^1_Hiding_objects:Agent($Hiding_objects,you)
 # IF _obj($Hiding_objects,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Hiding_objects:Hidden_object($Hiding_objects,$var0)
@@ -1447,7 +1456,7 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF _amod($Reading,$Time) THEN ^1_Reading:Time($Reading,$Time)
 # IF {_obj($Reading,$var0) || _iobj($Reading,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Reading:Time($Reading,$var0)
 
-# IF _subj($Intentionally_create,$var0) THEN ^1_Intentionally_create:Creator($Intentionally_create,$var0)
+# IF _subj($Intentionally_create,$var0) THEN ^1_ententionally_create:Creator($Intentionally_create,$var0)
 # IF $Imperative_relation($Intentionally_create) THEN ^1_Intentionally_create:Creator($Intentionally_create,you)
 # IF _obj($Intentionally_create,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Intentionally_create:($Intentionally_create,$var0)
 # IF with($Intentionally_create,$var0) ^ {person($var0) || organization($var0)} THEN ^1_Intentionally_create:Co_participant($Intentionally_create,$var0)
@@ -1848,8 +1857,10 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF by($Purpose,$var0) ^ NOT person($var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Purpose:Means($Purpose,$var0)
 # IF for($Purpose,$var0) THEN ^1_Purpose:Restrictor($Purpose,$var0)
 
+; Fabricio: if the imperative sentence has a subject, the Agent must be the subject 
 # IF _subj($Bringing,$var0) THEN ^1_Bringing:Agent($Bringing,$var0)
-# IF $Imperative_relation($Bringing) THEN ^1_Bringing:Agent($Bringing,you)
+# IF $Imperative_relation($Bringing) ^ NOT _to-do($var0,$Bringing) THEN ^1_Bringing:Agent($Bringing,you)
+# IF $Imperative_relation($Bringing) ^ _to-do($var0,$Bringing) THEN ^1_Bringing:Agent($Bringing,$var0)
 # IF _obj($Bringing,$var0) ^ NOT _iobj($Bringing,$var1) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Bringing:Theme($Bringing,$var0)
 # IF _obj($Bringing,$var0) ^ _iobj($Bringing,$var1) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Bringing:Theme($Bringing,$var1) ^1_Bringing:Beneficiary($Bringing,$var0)
 # IF by($Bringing,$var0) ^ NOT Person($var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Bringing:Means($Bringing,$var0)
@@ -2538,6 +2549,7 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF {_obj($Agree_or_refuse_to_act,$var0) || _iobj($Agree_or_refuse_to_act,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Agree_or_refuse_to_act:Time($Agree_or_refuse_to_act,$var0)
 
 # IF _subj($Self_motion,$var0) THEN ^1_Self_motion:Theme($Self_motion,$var0)
+;; Fabricio: if there is a subj, then it should be the Theme
 # IF $Imperative_relation($Self_motion) THEN ^1_Self_motion:Theme($Self_motion,you)
 # IF _obj($Self_motion,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Self_motion:Coordinated_event($Self_motion,$var0)
 # IF _obj($Self_motion,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Self_motion:Goal($Self_motion,$var0)
@@ -2558,14 +2570,16 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF within($Self_motion,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Self_motion:Carrier($Self_motion,$var0)
 # IF when($Self_motion,$var0) THEN ^1_Self_motion:Containing_event($Self_motion,$var0)
 # IF so_that($Self_motion,$var0) THEN ^1_Self_motion:Result($Self_motion,$var0)
-# IF_to-do($Self_motion,$var0) THEN ^1_Self_motion:Result($Self_motion,$var0)
-# IF_to-be($Self_motion,$var0) THEN ^1_Self_motion:Result($Self_motion,$var0)
+# IF _to-do($Self_motion,$var0) THEN ^1_Self_motion:Result($Self_motion,$var0)
+# IF _to-be($Self_motion,$var0) THEN ^1_Self_motion:Result($Self_motion,$var0)
 # IF until($Self_motion,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Self_motion:Result($Self_motion,$var0)
 # IF at($Self_motion,$Number) ^ per($Number,$Distance) THEN ^1_Self_motion:Speed($Self_motion,$Distance)
 # IF _advmod($Self_motion,$var0) ^ NOT $var0=$Frequency THEN ^1_Self_motion:Manner($Self_motion,$var0)
 # IF _advmod($Self_motion,$Frequency) THEN ^1_Self_motion:Frequency($Self_motion,$Frequency)
 # IF $relTime($Self_motion,$Time) THEN ^1_Self_motion:Time($Self_motion,$Time)
 # IF {_obj($Self_motion,$var0) || _iobj($Self_motion,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Self_motion:Time($Self_motion,$var0)
+;; Fabricio: the _to-do output must consider (var,$Self_motion) instead
+# IF _to-do($var0,$Self_motion) THEN ^1_Self_motion:Result($Self_motion,$var0)
 
 # IF _subj($Attempt_suasion,$var0) ^ {person($var0) || organization($var0)} THEN ^1_Attempt_suasion:Speaker($Attempt_suasion,$var0)
 # IF _subj($Attempt_suasion,$var0) ^ NOT {person($var0) || organization($var0)} THEN ^1_Attempt_suasion:Medium($Attempt_suasion,$var0)
@@ -5700,4 +5714,36 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF $relTime($Convict,$Time) THEN ^1_Convict:Time($Convict,$Time)
 # IF {_obj($Convict,$var0) || _iobj($Convict,$var0)} ^ date($var0) THEN ^1_Convict:Time($Convict,$var0)
 
+;; Fabricio: rule for drop (Motion Directional Down)
+# IF _obj($Motion_directional_down,$var0) THEN ^1_Motion_directional:Theme($Motion_directional_down,$var0)
+# IF verb($Motion_directional_down) THEN ^1_Motion_directional:Direction($Motion_directional_down,down)
+# IF verb($Motion_directional_down) THEN ^1_Motion_directional:Goal($Motion_directional_down,floor)
+# IF $Imperative_relation($Motion_directional_down) ^ NOT _to-do($var0,$Motion_directional_down) THEN ^1_Motion_directional:Source($Motion_directional_down,you)
+# IF $Imperative_relation($Motion_directional_down) ^ _to-do($var0,$Motion_directional_down) THEN ^1_Motion_directional:Source($Motion_directional_down,$var0)
+# IF $Imperative_relation($Motion_directional_down) THEN ^1_Motion_directional:Depictive($Motion_directional_down,drop)
 
+
+;; Fabricio: Motion
+# IF $Imperative_relation($Motion) ^ NOT _to-do($var0,$Motion) THEN ^1_Motion:Theme($Motion,you)
+# IF $Imperative_relation($Motion) ^ _to-do($var0,$Motion) THEN ^1_Motion:Theme($Motion,$var0)
+# IF to($Motion,$var0)  THEN ^1_Motion:Goal($Motion,$var0)
+# IF _amod($Motion,away) THEN ^1_Motion:Goal($Motion,away)
+# IF _obj($Motion,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Motion:Goal($Motion,$var0)
+
+;; Fabricio: Motion Manner
+# IF $Imperative_relation($Motion_walking) THEN ^1_Motion:Manner($Motion_walking,walking)
+# IF $Imperative_relation($Motion_running) THEN ^1_Motion:Manner($Motion_running,running)
+# IF $Imperative_relation($Motion_step) THEN ^1_Motion:Manner($Motion_step,step_to)
+
+;; Fabricio: rule for grap manipulation
+# IF $Imperative_relation($Manipulation_grab) ^ NOT _to-do($var0,$Manipulation_grab) THEN ^1_Manipulation:Depictive($Manipulation_grab,grab)
+# IF $Imperative_relation($Manipulation_grab) ^ _to-do($var0,$Manipulation_grab) THEN ^1_Manipulation:Depictive($Manipulation_grab,grab)
+
+;; Fabricio: Figure and Ground for locative relation 
+;; (TODO for near, the Ground was ok. But not for next_to. So I added the Ground here too. In some cases, it is printing two Ground
+# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2)
+# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Ground($Locative_relation,$var1)
+
+;; Fabricio: Locative relation NEAR
+# IF $Locative_relation_near($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Distance($Locative_relation_near,near)
+# IF $Locative_relation_near($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_near,near)

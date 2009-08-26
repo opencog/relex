@@ -192,6 +192,7 @@ near
 neighbor
 neighboring
 next to
+next_to
 north
 offshore
 opposite
@@ -5252,5 +5253,29 @@ not_guilty
 pronounce
 rule
 
+$Motion_directional_down
+drop
 
+$Manipulation_grab
+grab
 
+$Motion
+go
+move
+run
+walk
+step
+
+$Motion_walking
+walk
+
+$Motion_running
+run
+
+$Motion_step
+step
+
+$Locative_relation_near
+near
+next to
+next_to
