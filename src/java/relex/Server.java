@@ -194,7 +194,7 @@ public class Server
 				// just recieved a brand new sentence. The OpenCog scheme
 				// code depends on this being visible, in order to find
 				// the new sentence.
-				out.println("(ListLink");
+				out.println("(ListLink (stv 1 1)");				
 				out.println("   (AnchorNode \"# New Parsed Sentence\")");
 				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
 				out.println(")");

@@ -1,5 +1,6 @@
-Give me the biggest ball.
+What color is the ball?
 END.
+Give me the biggest ball.
 Give me the six biggest paychecks.
 Give me the last six paychecks.
 This is the biggest house.
