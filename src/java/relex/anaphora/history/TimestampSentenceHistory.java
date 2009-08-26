@@ -47,7 +47,7 @@ public class TimestampSentenceHistory implements SentenceHistory
 		TimestampSentence element = new TimestampSentence();
 		element.setSentence(sentence);
 		element.setTimestamp(new Date());
-		sentences.add(element);
+		sentences.add(0, element);
 	}
 
 	public ArrayList<Sentence> getSentenceList() 
