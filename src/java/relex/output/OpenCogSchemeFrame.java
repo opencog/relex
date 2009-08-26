@@ -15,7 +15,9 @@
  */
 package relex.output;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import relex.feature.FeatureNode;
 import relex.frame.Frame;
@@ -71,31 +73,46 @@ public class OpenCogSchemeFrame
 		String fin = SimpleView.printRelationsUUID(sent);
 		String[] fms = frame.process(fin,uuid_to_root_map);
 		
+		boolean onlyNewFormat = true;
+		
+		HashMap<String, ArrayList< FrameItem> > frames = 
+							new HashMap< String, ArrayList<FrameItem> >();
+		
+		/*
+		 * fms contains the frames like:
+		 * ^1_Color:Color(red,ball)
+		 * ^1_Color:Entity(red,ball)
+		 */		
 		for (String fm : fms) 
 		{
+					
 			// First, parse out the framenet string 
 			if (fm.charAt(0) != '^') continue;
 			int uscore = fm.indexOf('_');
 			if (0 > uscore) continue;
 
 			// String r = fm.substring(0, uscore);
-
+			
+			// fm contains: Color:Color(red,ball)
 			fm = fm.substring(uscore+1);
 			int colon = fm.indexOf(':');
 			if (0 > colon) continue;
 
+			//Color (1o) => frame name
 			String frm = fm.substring(0,colon);
 
 			fm = fm.substring(colon+1);
 			int lparen = fm.indexOf('(');
 			if (0 > lparen) continue;
-
+			
+			//Color (2o) => frame element name
 			String felt = fm.substring(0,lparen);
 
 			fm = fm.substring(lparen+1);
 			int rparen = fm.indexOf(')');
 			if (0 > rparen) continue;
 
+			//red,ball
 			String cpt1 = fm.substring(0,rparen);
 			String cpt2 = null;
 
@@ -106,10 +123,9 @@ public class OpenCogSchemeFrame
 			int comma = cpt1.indexOf(',');
 			if (0 < comma)
 			{
-				cpt2 = cpt1.substring(comma+1);
-				cpt1 = cpt1.substring(0, comma);
-				//System.err.println("cpt1: " + cpt1);
-				//System.err.println("cpt2: " + cpt2);
+				//frame element values
+				cpt2 = cpt1.substring(comma+1);//ball
+				cpt1 = cpt1.substring(0, comma);//red
 			}
 			if (cpt1 == null) continue;
 
@@ -129,6 +145,47 @@ public class OpenCogSchemeFrame
 			if (-1 < cpt1.indexOf('@')) cpt1_is_word = true;
 			if ((cpt2 != null) && (-1 < cpt2.indexOf('@'))) cpt2_is_word = true;
 
+			/*** Fabricio: change the frames output ***********/
+			//Add the FrameItem to the corresponding frame
+			if(frames.get(frm) == null){
+				frames.put(frm, new ArrayList<FrameItem>());
+			}
+			
+			FrameItem frameItem = new FrameItem();
+
+			frameItem.element1 = cpt1;
+			frameItem.predicateName = cpt1+"_"+frm;
+			if(cpt2 != null){
+				//frameItem.predicateName = cpt1 +"_"+ cpt2;
+				frameItem.element2 = cpt2;
+			}
+			
+			int indexOfFrameItem = frames.get(frm).indexOf(frameItem);
+			if(indexOfFrameItem < 0){
+				frames.get(frm).add(frameItem);
+				indexOfFrameItem = frames.get(frm).indexOf(frameItem);
+			}
+			
+			FrameElementItem frameElementItem = new FrameElementItem();
+			frameElementItem.elementName = felt;
+			
+			if(cpt2 != null){
+				frameElementItem.wordInstanceValueElement = cpt2;
+				if(cpt2_is_ling) frameElementItem.isLinguistic = true;
+				if(cpt2_is_word) frameElementItem.isWord = true;
+			} else {
+				frameElementItem.wordInstanceValueElement = cpt1;
+				if(cpt1_is_ling) frameElementItem.isLinguistic = true;
+				if(cpt1_is_word) frameElementItem.isWord = true;
+			}
+			
+			frames.get(frm).get(indexOfFrameItem).elements.add(frameElementItem);
+
+			if(onlyNewFormat)
+				continue;
+			
+			/***************************************************/
+			
 			// Link together.
 			ret += "(FrameElementLink (stv 1 1)\n" +
 			       "   (DefinedFrameNode \"#" + frm + "\")\n" +
@@ -196,6 +253,60 @@ public class OpenCogSchemeFrame
 			}
 			ret += "   )\n)\n";
 		}
+		
+		
+		/******* Fabricio: new frame format output *****************/
+		ret += "; New Frame Format Output\n\n";
+		for(String frameName : frames.keySet()){
+			ArrayList<FrameItem> frameItemList = frames.get(frameName);
+			for(FrameItem frameItem : frameItemList){
+				
+			
+				for(FrameElementItem element : frameItem.elements){
+					String frameElementPredicateName = frameItem.predicateName +"_"+element.elementName;
+					
+					ret += "(InheritanceLink (stv 1 1)\n" +
+					"   (PredicateNode \"" + frameElementPredicateName + "\")\n" +
+					"   (DefinedFrameElementNode \"#" + frameName + ":"+element.elementName +
+					"\")\n)\n";
+					
+					ret += "(FrameElementLink (stv 1 1)\n" +
+					"   (PredicateNode \"" + frameItem.predicateName +"\")\n" +
+					"   (PredicateNode \"" + frameElementPredicateName +
+					"\")\n)\n";
+					
+					ret += "(EvaluationLink (stv 1 1)\n" +
+					"   (PredicateNode \"" + frameElementPredicateName +"\")\n";
+					if (element.isLinguistic)
+					{
+						ret += "   (DefinedLinguisticConceptNode \"#" +  element.wordInstanceValueElement;
+					}
+					else if (element.isWord)
+					{
+						ret += "   (WordInstanceNode \"" + element.wordInstanceValueElement;
+					}
+					else
+					{
+						ret += "   (ConceptNode \"#" + element.wordInstanceValueElement;
+					}					
+					//"   (WordInstanceNode \"" + element.wordInstanceValueElement +
+					ret += "\")\n)\n";					
+
+				}
+				
+				ret += "(InheritanceLink (stv 1 1)\n" +
+				"   (PredicateNode \"" + frameItem.predicateName + "\")\n" +
+				"   (DefinedFrameNode \"#" + frameName + 
+				"\")\n)\n";
+				
+				
+			}
+		}
+		ret += "; END of New Frame Format Output\n\n";
+		
+		/***********************************************************/
+		
+		
 		return ret;
 	}
 
@@ -203,6 +314,38 @@ public class OpenCogSchemeFrame
 	public String toString()
 	{
 		return printFrames();
+	}
+}
+
+class FrameElementItem{
+	String elementName, wordInstanceValueElement;
+	boolean isLinguistic=false, isWord=false;
+}
+
+class FrameItem {
+	String predicateName;
+	String element1, element2;
+	List<FrameElementItem> elements;
+	
+	FrameItem(){
+		elements = new ArrayList<FrameElementItem>();
+	}	
+	
+	public int hashCode(){
+		int hash = 7;
+		hash = 31 * hash + (null == element1 ? 0 : element1.hashCode());
+		//hash = 31 * hash + (null == element2 ? 0 : element2.hashCode());
+		return  hash;
+	}
+	
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if((obj == null) || (obj.getClass() != this.getClass()))
+			return false;
+		FrameItem item = (FrameItem)obj;
+		return (item.hashCode() == this.hashCode());
+
 	}
 }
 
