@@ -4,6 +4,9 @@ New in version 1.1.1 (xxx?? 2009)
  * Fix crash when the distributed parser (remote parser) returns null.
  * Don't print the phrase string in the OpenCog server, it messes the output!
  * Fix issuing of _amod when superlative modifier is involved.
+ * Fix OpenCog Frame output to include truth values (Fabricio)
+ * Change OpenCog Frame output to hold frame references (Fabricio)
+ * Frames: add new concept vars and production rules. (Fabricio)
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.
