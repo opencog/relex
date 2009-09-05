@@ -112,8 +112,18 @@ class OpenCogSchemeRel
 			String src_guid = srcNode.get("nameSource").get("uuid").getValue();
 			String tgt_guid = tgtNode.get("nameSource").get("uuid").getValue();
 
+			char underscore = relName.charAt(0);
+
 			outstr += "(EvaluationLink (stv 1.0 1.0)\n";
-			outstr += "   (DefinedLinguisticRelationshipNode \"" + relName + "\")\n";
+			if ('_' == underscore)
+			{
+				outstr += "   (DefinedLinguisticRelationshipNode \"";
+			}
+			else
+			{
+				outstr += "   (PrepositionalRelationshipNode \"";
+			}
+			outstr += relName + "\")\n";
 			outstr += "   (ListLink\n";
 			outstr += "      (WordInstanceNode \"" + src_guid + "\")\n";
 			outstr += "      (WordInstanceNode \"" + tgt_guid + "\")\n";
