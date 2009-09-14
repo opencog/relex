@@ -478,7 +478,7 @@ WHEN
 <F_L head-question-word ref links _%atTime> = <F_L ref>
 ;
 #TemplateActionAlg
-; This algoritm was modified to exclude cases where there isn a todo 
+; This algoritm was modified to exclude cases where there isn't a todo 
 ; link followed by a verb
 ; This case is dealt with in WHERE_HACK_FOR_QP
 WHERE1
@@ -1164,6 +1164,22 @@ ADV4
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
 ;
+;/////////////////////////////////////////////////////////////////////////////
+; We assume that the head-word has been identified by now.
+; Now, tag the head-word as "hypothetical" on questions.
+; For just right now, take a very conservative approach, and only tag
+; "who" questions. More will need to be tagged.
+;
+; The idea here is that the question "Who threw the ball?" implies that
+; something was thrown -- but this is hypothetical, since maybe nothing
+; was thrown.
+
+#TemplateActionAlg
+QUESTION_HEAD_HYP
+<F_R ref QUERY-TYPE> = who
+=
+<F_R head-word ref HYP> = T
+
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; NOUN MODIFICATION

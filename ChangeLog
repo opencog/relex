@@ -8,6 +8,7 @@ New in version 1.1.1 (xxx?? 2009)
  * Change OpenCog Frame output to hold frame references (Fabricio)
  * Frames: add new concept vars and production rules. (Fabricio)
  * Change RelEx output for prepositional relations.
+ * Tag verbs of questions as hypothetical.
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.
