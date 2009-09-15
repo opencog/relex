@@ -7,7 +7,7 @@ New in version 1.1.1 (xxx?? 2009)
  * Fix OpenCog Frame output to include truth values (Fabricio)
  * Change OpenCog Frame output to hold frame references (Fabricio)
  * Frames: add new concept vars and production rules. (Fabricio)
- * Change RelEx output for prepositional relations.
+ * Use PrepositionalRelationNode in OpenCog prep relation output.
  * Tag verbs of questions as hypothetical.
 
 New in version 1.1.0 (2 July 2009)
