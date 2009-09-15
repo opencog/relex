@@ -18,12 +18,12 @@ anaphora:
 
 chunk:
 	Code to generate lexical chunks, aka lexicalized stems or units
-   or phrases. Mostly focused on phrasal verbs.
+	or phrases. Mostly focused on phrasal verbs.
 
 concurrent:
 	Provide infrastructure for multi-threaded (parallel) execution.
 	Not normally used or needed; intended only for improving 
-   performance for production servers.
+	performance for production servers.
 
 corpus:
 	Code to handle multiple-sentence corpuses. Includes a class to 
@@ -60,6 +60,10 @@ parser:
 	JNI binding to the C-language liblink-grammar-java.so, and an 
 	out-of-process server, reachable via a socket interface.
 
+parser-old:
+	Old, deprecated interfaces to the link-grammar parser. DO NOT USE
+	THESE IN NEW CODE! These are here for backwards compatibility only!
+
 stats:
 	Some simple classes providing very basic statistical support,
 	including some TruthValue (a la OpenCog) classes.
@@ -68,9 +72,9 @@ tree:
 	Routines to extract and manipulate the treebank style phrase tree
 	of a given parse. The phrase tree is central to the Hobbs algorithm,
 	and to lexical chunking. The PhraseLeader class provides head-word
-   identification.
+	identification.
 
 wsd:
 	Simple word-sense disambiguation code; compares word usage in pairs
-   of sentences.
+	of sentences.
 

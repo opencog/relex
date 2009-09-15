@@ -1,0 +1,7 @@
+
+This directory contains old, deprecated interfaces to the link-grammar
+parser. DO NOT USE THESE IN NEW CODE! These are here for backwards 
+compatibility only!
+
+These interfaces were deprecated in May 2009 and will be permanently
+removed in 2010 or 2011.
