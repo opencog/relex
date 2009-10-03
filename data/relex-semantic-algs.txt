@@ -1142,7 +1142,7 @@ ADV1
 #TemplateActionAlg
 ADV2
 <LAB> = \E\.*|\EA\.*
-<LAB> != \EA[my]\.*
+<LAB> != \Eq\.*|\EA[my]\.*
 <F_R head-word ref> != %
 =
 <F_R head-word BACKGROUND-FLAG> = T
@@ -1150,12 +1150,12 @@ ADV2
 ;
 ; The head-word can be blank in unusual or quirky parses, for example:
 ; "There are also bogus plans" where "bogus" is the head, instead of "are".
-; the "bogus" head is handled below, the "are" head is handles above.
+; the "bogus" head is handled below, the "are" head is handled above.
 ;
 #TemplateActionAlg
 ADV2_HEADLESS
 <LAB> = \E\.*|\EA\.*
-<LAB> != \EA[my]\.*
+<LAB> != \Eq\.*|\EA[my]\.*
 <F_R head-word ref> = %
 =
 <F_R BACKGROUND-FLAG> = T
@@ -1182,6 +1182,15 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
+;
+;
+#TemplateActionAlg
+PARATAXIS
+<LAB> = \Eq\.*
+<F_R head-word ref> != %
+=
+<F_R head-word BACKGROUND-FLAG> = T
+<F_R head-word ref links _parataxis> += <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ; We assume that the head-word has been identified by now.
