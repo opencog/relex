@@ -1183,6 +1183,9 @@ ADV4
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
 ;
+; Parataxis
+; "The guy, John said, left early in the morning."
+; _parataxis(leave, say)
 ;
 #TemplateActionAlg
 PARATAXIS
