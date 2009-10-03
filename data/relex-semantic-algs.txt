@@ -17,7 +17,7 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; SYNTACTIC ARG FILLING
+; Identifying subjects
 ;
 ;
 #TemplateActionAlg
@@ -25,7 +25,7 @@ STANDARD_SUBJ
 ;  Putting this alg before subject linking ensures AND support.
 ;  As a test, reverse the alg order and process "Kim and Pat are hungry."
 <LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
-; No subject for SF (filler subject)
+; No subject for SF (filler subject) aka "expletive"
 <LAB> != \MX.[rj]\.*
 <LAB> != MX|MXs|MXp
 ; exclude some relative constructions
@@ -48,6 +48,17 @@ REL_SUBJ
 =
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
+;
+; SF == filler subject aka expletive
+;
+#TemplateActionAlg
+EXPLETIVE_SUBJ
+<LAB> = \SF\.*
+=
+<F_R expl> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+; Identifying objects
 ;
 #TemplateActionAlg
 OBJ-LINK-TAG-INIT1
@@ -616,6 +627,14 @@ SUBJ_TO_LINKS
 <subj> != %
 =
 <ref links _subj> = <subj>
+;
+;
+#TemplateActionAlg
+EXPL_TO_LINKS
+<HEAD-FLAG> = T
+<expl> != %
+=
+<ref links _expl> = <expl>
 ;
 #TemplateActionAlg
 OBJ_TO_LINKS

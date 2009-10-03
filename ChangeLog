@@ -9,6 +9,7 @@ New in version 1.1.1 (xxx?? 2009)
  * Frames: add new concept vars and production rules. (Fabricio)
  * Use PrepositionalRelationNode in OpenCog prep relation output.
  * Tag verbs of questions as hypothetical.
+ * Explicitly identify "filler subjects" aka "expletives"
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.
