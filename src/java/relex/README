@@ -10,8 +10,11 @@ RelationExtractor.java:
 	of various forms, depending on the command-line flags.
 
 algs: 
-	code for applying the relation extraction algorithms,
-	such as the template substitution algorithm.
+	Code for applying the dependency relation detection patterns.
+   Dependency relations are discovered by applying a series of
+   pattern templates or 'rules' to a graph of the parsed text. The 
+   result of finding a pattern-match is that the resulting rule is
+   applied, which casues the graph to be modified in some way.
 
 anaphora:
 	Anaphora resolution algorithm. Implements the Hobbs algorithm.
@@ -34,26 +37,30 @@ corpus:
 
 entity:
 	Mangle sentences to consolidate entities before passing a sentence
-	to the parser.  This eases the burden on the parser. The entity
-	detection is supplied by systems outside of relex. The current 
-	implementation uses GATE.
+	to the parser.  The idea was to ease the burden on the parser; 
+   however, its not clear that there are any entity detectors that are
+   actually better than the parser. The entity detection is supplied by 
+   systems outside of relex. The current implementation uses GATE.
 
 feature:
-	The core classes for representing the feature graph.
+	The core classes for representing the graph of linguistic 
+   relationships and features.  The graph of linguistics relationships
+   is the central data structure around which RelEx operates.
 
 frame:
-	An implementation of a simple forward-chainging inference engine,
-	which is used to apply a set of frame rules to the relex output.
+   Code to provide semantic frame output, inspired by FrameNet markup.
+   The actual implementation is a set of pattern-matching rules which
+   are applied to the RelEx output.
 
 morphy:
 	A simple, easy-to-use class for finding the base forms (lemmas)
-	of a word. The current system uses wordnet to determine the lemmas,
-	and so most of the code here is a wrapper around wordnet.
+	of a word. The current system uses WordNet to determine the lemmas,
+	and so most of the code here is a wrapper around WordNet.
 
 output:
-	A collection of disparate classes that convert relex output to 
+	A collection of disparate classes that display the RelEx graph in
 	various formats. Notable are a set of classes that generate
-	OpenCog format XML.
+	OpenCog hypergraphs.
 
 parser:
 	Interfaces to the link grammar parser. Two choices: an in-process
@@ -76,5 +83,5 @@ tree:
 
 wsd:
 	Simple word-sense disambiguation code; compares word usage in pairs
-	of sentences.
+	of sentences. Crude experiment, deprecated.
 
