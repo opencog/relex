@@ -118,7 +118,7 @@ public class RawView
 	}
 
 	/**
-	 * Print the entire relex output. Caution, large!
+	 * Print the entire relex graph. Caution, large!
 	 */
 	public static String printZHeadsComplete(FeatureNode left)
 	{

@@ -18,6 +18,7 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.lang.Comparable;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,7 +50,9 @@ import relex.tree.PhraseTree;
  *    likelihood of this parse of being a correct (meaningful) parse
  *    of the sentence.
  */
-public class ParsedSentence extends Atom implements Serializable
+public class ParsedSentence
+	extends Atom
+	implements Serializable, Comparable<ParsedSentence>
 {
 	private static final long serialVersionUID = -5518792541801263127L;
 
@@ -430,6 +433,12 @@ public class ParsedSentence extends Atom implements Serializable
 	{
 		SimpleTruthValue stv = (SimpleTruthValue) truth_value;
 		return stv.getConfidence();
+	}
+
+	public int compareTo(ParsedSentence that)
+	{
+		if (this.getRank() < that.getRank()) return +1;
+		return -1;
 	}
 
 	public int hashCode()

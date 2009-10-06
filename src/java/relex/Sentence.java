@@ -21,6 +21,7 @@ package relex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 import relex.output.SimpleView;
@@ -136,6 +137,7 @@ public class Sentence implements Serializable
 
 	/**
  	 * Assign a simple parse-ranking score, based on LinkGrammar data.
+ 	 * Sort the parses by decreasing rank.
  	 */
 	public void simpleParseRank()
 	{
@@ -143,6 +145,7 @@ public class Sentence implements Serializable
 		{
 			parse.simpleRankParse();
 		}
+		Collections.sort(parses);
 	}
 
 	/**
