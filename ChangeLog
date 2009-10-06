@@ -12,6 +12,7 @@ New in version 1.1.1 (xxx?? 2009)
  * Explicitly identify "filler subjects" aka "expletives"
  * Identify Prataxis clauses.
  * Sort parses into ranked order.
+ * remove % from _%quantity relation name.
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.

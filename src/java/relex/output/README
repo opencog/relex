@@ -11,11 +11,12 @@ This directory contains:
 
 SimpleView.java:
 	Provides a very simple, simplistic printing of the RelEx
-	relationship graph.
+	relationship graph. This code should be consulted as an 
+   example for how to write new output classes.
 
 RawView.java:
-	Provides an indented, structurally correct graph-style visualization
-	of the RelEx graph.
+	Provides a full, complete dump of the entire RelEx graph.
+   It is *very* verbose.
 
 CompactView.java:
 	Provides a "compact-format" file, using an amalgamation of common
@@ -24,6 +25,10 @@ CompactView.java:
 	least, when using perl regex's). This is currently the default
 	output format for generating large databases of pre-parsed text. 
 	Strongly recommended for large projects. See goals below.
+
+LinkGraphGenerator.java:
+   Output GraphViz style markup, suitable for running through the 
+   GraphViz software.
 
 OpenCogScheme.java:
 OpenCogSchemeRel.java:
