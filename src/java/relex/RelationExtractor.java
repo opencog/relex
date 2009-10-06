@@ -39,12 +39,14 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
+import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.frame.Frame;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.OpenCogScheme;
 import relex.output.ParseView;
+import relex.output.PrologList;
 import relex.output.RawView;
 import relex.output.SimpleView;
 import relex.parser.LGParser;
@@ -349,6 +351,7 @@ public class RelationExtractor
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
+			" [--prolog (show prolog output)]" +
 			" [-q (do NOT show relations)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
@@ -368,6 +371,7 @@ public class RelationExtractor
 		flags.add("--pa");
 		flags.add("--pb");
 		flags.add("--pc");
+		flags.add("--prolog");
 		flags.add("-q");
 		flags.add("-r");
 		flags.add("-t");
@@ -615,6 +619,16 @@ public class RelationExtractor
 						chunker.findChunks(parse);
 						prt_chunks(chunker.getChunks());
 						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
+					}
+
+					if (commandMap.get("--prolog") != null)
+					{
+						PrologList pl = new PrologList();
+						System.out.println(
+							pl.toPrologList(parse.getLeft(), 
+								PrologList.getDefaultFilter(),
+								true));
+						System.out.println("\n======\n");
 					}
 
 					if (commandMap.get("-c") != null)
