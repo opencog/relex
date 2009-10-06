@@ -1284,19 +1284,19 @@ NUMBER-1
 <F_L POSSESSIVE-FLAG> != T
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
-<F_R ref links _%quantity> = <F_L ref>
+<F_R ref links _quantity> = <F_L ref>
 ;
 #TemplateActionAlg
 NUMBER-MOD
 <LAB> = \EN\.*
 =
-<F_R ref links _%quantity_mod> = <F_L ref>
+<F_R ref links _quantity_mod> = <F_L ref>
 ;
 #TemplateActionAlg
 NUMBER-MULT
 <LAB> = \NN\.*
 =
-<F_R ref links _%quantity_mult> = <F_L ref>
+<F_R ref links _quantity_mult> = <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
