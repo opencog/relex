@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -15,9 +14,15 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.output;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import relex.feature.FeatureNode;
+import relex.feature.FeatureNameFilter;
+
 
 /**
  * The PrologList class will take a featureNode graph,

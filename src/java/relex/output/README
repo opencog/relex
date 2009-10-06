@@ -39,6 +39,9 @@ OWLView.java:
 	Generates W3C Semantic Web OWL format. The org.semanticweb jar files
    need to be installed in order for this to be compiled.
 
+PrologList.java:
+   Generate Prolog output.
+
 OpenCogXML.java:
 OpenCogXMLRel.java:
 OpenCogXMLFrame.java:

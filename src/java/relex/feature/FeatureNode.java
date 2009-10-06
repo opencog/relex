@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import relex.output.PrologList;
+
 /**
  * FeatureNodes may store either a set of key-value pairs, where the
  * values are other FeatureNodes, or they may store a single string.
