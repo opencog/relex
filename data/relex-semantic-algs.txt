@@ -664,15 +664,18 @@ OBJ2_TO_LINKS_GERUND
 =
 <ref links _iobj> = <iobj>
 ;
-#TemplateActionAlg
-PREPOSITION_MARKING
-<LAB> = \Pp\.*
-<F_L str> = be
-=
-;<F_R ref COPULA-FLAG> = T
-;<F_L ref COPULA-FLAG> = T
-<F_L ref name> = %
-<F_L ref name> = _%copula
+; Err I don't get it. 
+; This is used in the NEGATIVE_CONTR below, but really, I don;'t get it .
+;   
+; #TemplateActionAlg
+; PREPOSITION_MARKING
+; <LAB> = \Pp\.*
+; <F_L str> = be
+; =
+; ;<F_R ref COPULA-FLAG> = T
+; ;<F_L ref COPULA-FLAG> = T
+; <F_L ref name> = %
+; <F_L ref name> = _%copula
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -889,9 +892,15 @@ PREP_CLAUSE_LINKING_WHERE
 PREP_CLAUSE_LINKING
 ; The preposition modifies the preceeding word with a clause
 ; Fails if any of the template variables are not filled
+;
 ;   "I see the building where Jim lives."
 ;   "I feel like Jim feels."
-<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+;
+; Don't include Pp in this list -- it generates garbage for:
+;   "The ball is under the couch" -- gets under(be,under)
+;
+; <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*
 <F_R head-word> !=%
 <F_L> = $modified
 <F_R str> = $prep

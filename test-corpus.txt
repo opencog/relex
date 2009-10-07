@@ -1,15 +1,16 @@
+The ball is under the couch.
+The ball isn't in the yard.
+END.
+where is the ball?
+END.
+Where did that happen?
+It happened in the zoo.
 Why did he fall?
 He fell because he was tripped.
-END.
 When did it happen?
 It happened at 5 o'clock.
 END.
 I received the camera as a Christmas present from relatives, and enjoy it a lot.
-END.
-The red ball is under the couch.
-where did that happen?
-where is the red ball?
-END.
 John made fun of Sarah.
 Who made fun of Sarah?
 John and Berd turned into monsters.

@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 1.1.0 ???July 2009
+                      Version 1.1.1 ??? 2009
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
