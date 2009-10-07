@@ -1032,6 +1032,8 @@ SPECIAL_PREP_RULE_WHEN
 <F_L ref name> = %
 <F_L ref name> = _%atTime
 ;
+; Example: "Where is the ball?"
+;
 #TemplateActionAlg
 SPECIAL_PREP_RULE_WHERE_WHERE
 <LAB> = \PF\.*
@@ -1039,6 +1041,7 @@ SPECIAL_PREP_RULE_WHERE_WHERE
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
 <F_L ref links _psubj> = <F_R ref links _subj>
+<F_R ref links _subj> = %
 <F_L ref links _pobj name> = _$qVar
 <F_L ref links _pobj nameSource> = %
 <F_L ref links _pobj nameSource> = <F_L>
@@ -1053,6 +1056,7 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 =
 <F_L ref SPECIAL-PREP-FLAG> = T
 <F_L ref links _psubj> = <F_R ref links _subj>
+<F_R ref links _subj> = %
 <F_L ref links _pobj name> = _$qVar
 <F_L ref links _pobj nameSource> = %
 <F_L ref links _pobj nameSource> = <F_L>
