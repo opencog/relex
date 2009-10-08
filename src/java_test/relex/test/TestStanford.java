@@ -16,6 +16,9 @@
 
 package relex.test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import relex.ParsedSentence;
 import relex.RelationExtractor;
 import relex.Sentence;
@@ -30,22 +33,77 @@ public class TestStanford
 		re = new RelationExtractor();
 		re.do_stanford = true;
 	}
+
+	public ArrayList<String> split(String a)
+	{
+		String[] sa = a.split("\n");
+		ArrayList<String> saa = new ArrayList<String>();
+		for (String s : sa)
+		{
+			saa.add(s);
+		}
+		Collections.sort (saa);
+		return saa;
+	}
+
 	public boolean test_sentence (String sent, String sf)
 	{
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
-		StanfordView.printRelations(parse);
+		String rs = StanfordView.printRelations(parse);
+
+		ArrayList<String> sfa = split(sf);
+		ArrayList<String> rsa = split(rs);
+		for (int i=0; i< sfa.size(); i++)
+		{
+			if (!sfa.get(i).equals (rsa.get(i)))
+			{
+				System.err.println("Error: miscompare:\n" +
+					"\tStanford = " + sfa + "\n" +
+					"\tRelEx    = " + rsa );
+				return false;
+			}
+		}
+
 		return true;
 	}
 	public static void main(String[] args)
 	{
-
 		TestStanford ts = new TestStanford();
-		ts.test_sentence ("Who invented sliced bread?",
+		boolean rc = true;
+
+		rc &= ts.test_sentence ("Who invented sliced bread?",
 			"nsubj(invented-2, who-1)\n" +
 			"amod(bread-4, sliced-3)\n" + 
 			"dobj(invented-2, bread-4)");
 
-		System.out.println("Test passed OK");
+		rc &= ts.test_sentence ("Jim runs quickly.",
+			"nsubj(runs-2, Jim-1)\n" +
+			"advmod(runs-2, quickly-3)");
+
+		rc &= ts.test_sentence ("The bird, a robin, sang sweetly.",
+			"det(bird-2, the-1)\n" +
+			"nsubj(sang-7, bird-2)\n" +
+			"det(robin-5, a-4)\n" +
+			"appos(bird-2, robin-5)\n" +
+			"advmod(sang-7, sweetly-8)");
+
+		rc &= ts.test_sentence ("There is a place we can go.",
+			"expl(is-2, There-1)\n" +
+			"det(place-4, a-3)\n" +
+			"nsubj(is-2, place-4)\n" +
+			"nsubj(go-7, we-5)\n" +
+			"aux(go-7, can-6)\n" +
+			"dep(is-2, go-7)");
+
+
+		if (rc)
+		{
+			System.err.println("Test passed OK");
+		}
+		else
+		{
+			System.err.println("Test failed");
+		}
 	}
 }
