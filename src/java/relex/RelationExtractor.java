@@ -49,6 +49,7 @@ import relex.output.ParseView;
 import relex.output.PrologList;
 import relex.output.RawView;
 import relex.output.SimpleView;
+import relex.output.SFView;
 import relex.parser.LGParser;
 import relex.parser.LocalLGParser;
 import relex.parser.RemoteLGParser;
@@ -64,7 +65,7 @@ import relex.tree.PhraseTree;
  * as a stand-alone document analyzer; it supports several
  * flags modifying the displayed output.
  *
- * The primarey interface is the processSentence() method,
+ * The primary interface is the processSentence() method,
  * which accepts one sentence at a time, parses it, and extracts
  * relationships from it. This method is stateful: it also
  * performs anaphora resolution.
@@ -346,6 +347,7 @@ public class RelationExtractor
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
+			" [--maxParseSeconds N]" +
 			" [-n max number of parses to display]" +
 			" [-o (show opencog scheme output)]" +
 			" [--pa (show phrase-based lexical chunks)]" +
@@ -355,10 +357,10 @@ public class RelationExtractor
 			" [-q (do NOT show relations)]" +
 			" [-r (show raw output)]" +
 			" [-s Sentence (in quotes)]" +
+			" [--stanford (generate stanford-compatible output)]" +
 			" [-t (show parse tree)]" +
 			" [-v verbose]" +
-			" [-x (show cerego XML output)]" +
-			" [--maxParseSeconds N]";
+			" [-x (show cerego XML output)]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("-c");
@@ -374,6 +376,7 @@ public class RelationExtractor
 		flags.add("--prolog");
 		flags.add("-q");
 		flags.add("-r");
+		flags.add("--stanford");
 		flags.add("-t");
 		flags.add("-v");
 		flags.add("-x");
@@ -628,6 +631,13 @@ public class RelationExtractor
 							pl.toPrologList(parse.getLeft(), 
 								PrologList.getDefaultFilter(),
 								true));
+						System.out.println("\n======\n");
+					}
+
+					if (commandMap.get("--stanford") != null)
+					{
+						SFView sf = new SFView();
+						System.out.println(sf.printRelations(parse));
 						System.out.println("\n======\n");
 					}
 
