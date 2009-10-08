@@ -10,11 +10,22 @@
 ; GENERATE SF RELATIONS
 ; Stanford parser generates some relations which relex does not.
 ; Generate these.
+;
+; Explicit determiner markup
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
 =
 <F_R ref sf-links _det> = <F_L ref>
+;
+; Explicit aux markup.
+; "there is a place we can go"  aux(go-7, can-6)
+#TemplateActionAlg
+SF_AUX
+<LAB> = \I\.*
+=
+<F_R ref sf-links _aux> = <F_L ref>
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;
