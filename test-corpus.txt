@@ -1,5 +1,6 @@
-There is a place we can go. 
+Jim wants to eat a cat.
 END.
+There is a place we can go. 
 where is the ball?
 The ball is under the couch.
 END.

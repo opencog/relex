@@ -189,12 +189,13 @@ MARK_FILLER_OBJ
 #TemplateActionAlg
 SUBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
-; Jim wants to eat a cat
+;  "Jim wants to eat a cat"
 <LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 =
 <F_R subj> = <F_L subj>
+<F_L subj> = %
 ;
 #TemplateActionAlg
 INV-SUBJECT_LINKING

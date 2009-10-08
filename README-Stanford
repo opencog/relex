@@ -20,6 +20,8 @@ RelationExtractor.java
 Test sentences
 --------------
 A list of test sentences, and status.
+These are tested automatically by running "ant test", which runs the
+test case "TestStanford.java".
 
 Who invented sliced bread?
     Stanford output:
