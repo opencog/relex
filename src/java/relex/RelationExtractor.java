@@ -646,8 +646,7 @@ public class RelationExtractor
 
 					if (commandMap.get("--stanford") != null)
 					{
-						StanfordView sf = new StanfordView();
-						System.out.println(sf.printRelations(parse));
+						System.out.println(StanfordView.printRelations(parse));
 						System.out.println("\n======\n");
 					}
 
