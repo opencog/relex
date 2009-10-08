@@ -49,7 +49,7 @@ import relex.output.ParseView;
 import relex.output.PrologList;
 import relex.output.RawView;
 import relex.output.SimpleView;
-import relex.output.SFView;
+import relex.output.StanfordView;
 import relex.parser.LGParser;
 import relex.parser.LocalLGParser;
 import relex.parser.RemoteLGParser;
@@ -646,7 +646,7 @@ public class RelationExtractor
 
 					if (commandMap.get("--stanford") != null)
 					{
-						SFView sf = new SFView();
+						StanfordView sf = new StanfordView();
 						System.out.println(sf.printRelations(parse));
 						System.out.println("\n======\n");
 					}

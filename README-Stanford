@@ -1,0 +1,35 @@
+
+             Stanford Parser Compatibility Mode
+             ----------------------------------
+                      October 2009
+
+The Stanford parser provides a defacto standard defintion of dependency
+relations used in parsing.  Relex has a prototype compatibility feature,
+which attempts to generate the same output as the Stanford parser.
+This is an interesting thing to do, for two reasons:
+
+   1) It provides a way of double-checking parse results,
+   2) Preliminary tests show that RelEx is more than three
+      times faster than the Stanford parser.
+
+The compatibility mode is currently experimental and incomplete.
+It can be enabled with the --stanford flag, passed to
+RelationExtractor.java
+
+
+Test sentences
+--------------
+A list of test sentences, and status.
+
+Who invented sliced bread?
+    Stanford output:
+       nsubj(invented-2, Who-1)
+       amod(bread-4, sliced-3)
+       dobj(invented-2, bread-4)
+    RelEx status: OK
+
+Jim runs quickly.
+    Stanford output:
+
+
+
