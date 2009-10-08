@@ -40,50 +40,7 @@ public class SFView
 	 */
 	public static String printRelations(ParsedSentence parse)
 	{
-		return printRelations(parse, null);
-	}
-	public static String printRelations(ParsedSentence parse,
-	                                    HashMap<FeatureNode,String> map)
-	{
 		Visit v = new Visit();
-		v.id_map = map;
-		v.str = "";
-		parse.foreach(v);
-		return v.str;
-	}
-
-	/**
-	 * Print out RelEx relations, alternate format.
-	 * Unary relations, including booleans, doen't show
-	 * the attribute name.
-	 *
-	 * Example:
-	 *   _subj(throw, John)
-	 *   _obj(throw, ball)
-	 *   past(throw)
-	 *   definite(ball)
-	 *   singular(ball)
-	 */
-	public static String printRelationsAlt(ParsedSentence parse)
-	{
-		return printRelationsAlt(parse, null);
-	}
-	public static String printRelationsAlt(ParsedSentence parse,
-	                                    HashMap<FeatureNode,String> map)
-	{
-		Visit v = new Visit();
-		v.id_map = map;
-		v.unaryStyle = true;
-		v.str = "";
-		parse.foreach(v);
-		return v.str;
-	}
-
-	public static String printRelationsUUID(ParsedSentence parse)
-	{
-		Visit v = new Visit();
-		v.show_uuid = true;
-		v.unaryStyle = true;
 		v.str = "";
 		parse.foreach(v);
 		return v.str;
@@ -91,11 +48,7 @@ public class SFView
 
 	private static class Visit implements RelationCallback
 	{
-		// Map associating a feature-node to a unique ID string.
-		public HashMap<FeatureNode,String> id_map = null;
-
 		public boolean unaryStyle = false;
-		public boolean show_uuid = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
@@ -112,16 +65,17 @@ public class SFView
 			}
 			String tgtName = tgt.getValue();
 
-			if (id_map != null)
+			// Trim leading underscores from the relation names.
+			char underscore = relName.charAt(0);
+			if ('_' == underscore)
 			{
-				srcName = id_map.get(srcNode);
-				tgtName = id_map.get(tgtNode);
+				relName = relName.substring(1);
 			}
-			if (show_uuid)
+			else
 			{
-				srcName = srcNode.get("nameSource").get("uuid").getValue();
-				tgtName = tgtNode.get("nameSource").get("uuid").getValue();
+				relName = "prep_" + relName;
 			}
+
 			str += relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
@@ -129,19 +83,12 @@ public class SFView
 
 		public Boolean UnaryRelationCB(FeatureNode srcNode, String attrName)
 		{
+/**********************
 			FeatureNode attr = srcNode.get(attrName);
 			if (!attr.isValued()) return false;
 			String value = attr.getValue();
 			String srcName = srcNode.get("name").getValue();
 
-			if (id_map != null)
-			{
-				srcName = id_map.get(srcNode);
-			}
-			if (show_uuid)
-			{
-				srcName = srcNode.get("nameSource").get("uuid").getValue();
-			}
 			if (unaryStyle)
 			{
 				if (attrName.endsWith("-FLAG"))
@@ -156,6 +103,7 @@ public class SFView
 			{
 				str += attrName + "(" + srcName + ", " + value + ")\n";
 			}
+******************/
 
 			return false;
 		}
