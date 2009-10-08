@@ -68,5 +68,13 @@ The linebacker gave the quarterback a push.
        dobj(gave-3, push-7)
     RelEx status: OK
 
+He stood at the goal line.
+    Stanford output:
+       nsubj(stood-2, He-1)
+       det(line-6, the-4)
+       nn(line-6, goal-5)
+       prep_at(stood-2, line-6)
+    RelEx status: 
+
 
        

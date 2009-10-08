@@ -46,6 +46,13 @@ public class TestStanford
 		return saa;
 	}
 
+	/**
+	 * First argument is the sentence.
+	 * Second argument is a list of the relations that the 
+	 * Stanford parser generates. 
+	 * Return true if relex generates that same dependencies
+	 * as the second argument.
+	 */
 	public boolean test_sentence (String sent, String sf)
 	{
 		Sentence sntc = re.processSentence(sent);
@@ -104,7 +111,12 @@ public class TestStanford
 			"iobj(gave-3, quarterback-5)\n" +
 			"det(push-7, a-6)\n" +
 			"dobj(gave-3, push-7)\n");
-			
+
+		rc &= ts.test_sentence ("He stood at the goal line.",
+			"nsubj(stood-2, he-1)\n" +
+			"det(line-6, the-4)\n" +
+			"nn(line-6, goal-5)\n" +
+			"prep_at(stood-2, line-6)");
 
 		if (rc)
 		{
