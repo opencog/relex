@@ -1,6 +1,6 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@ package relex.feature;
  * limitations under the License.
  */
 
+package relex.feature;
+
 /**
  * The RelationCallback is an interface class.
  * It provides a a simple, easy callback interface 
  * that can be invoked when traversing a graph.
- *
- *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
 public interface RelationCallback

@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,8 +51,6 @@ import java.util.HashSet;
  * as an actual class, making this programming style rather bulky. 
  * However, its well worth it, as, despite the extra bulk, it can 
  * dramatically simplify code.
- *
- *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 
 public class RelationForeach
@@ -148,8 +147,13 @@ public class RelationForeach
 	 */
 	private static	class RelCB implements FeatureNodeCallback
 	{
-		private RelationCallback rcb;
-		public RelCB(RelationCallback cb) { rcb = cb; }
+		public RelationCallback rcb;
+		public String link_str;     // How normal relex links are attached.
+		public RelCB (RelationCallback cb)
+		{
+			rcb = cb;
+			link_str = "links";
+		}
 		public Boolean FNCallback(FeatureNode fn_link_from)
 		{
 			if (fn_link_from == null) return false;
@@ -180,7 +184,7 @@ public class RelationForeach
 
 		private Boolean _binary(FeatureNode fn_link_from)
 		{
-			FeatureNode fn_link = fn_link_from.get("links");
+			FeatureNode fn_link = fn_link_from.get(link_str);
 			if (fn_link == null) return false;
 
 			Boolean stop = rcb.BinaryHeadCB(fn_link_from);
@@ -230,6 +234,19 @@ public class RelationForeach
 	{
 		HashSet<FeatureNode> alreadyVisited = new HashSet<FeatureNode>();
 		RelCB relcb = new RelCB(cb);
+		Boolean rc = _graphCrawl(root, alreadyVisited, relcb);
+		return rc;
+	}
+
+	/*
+	 * The "mode" string is used to find special stanford-parser style
+	 * relations.
+	 */
+	public static Boolean foreach(FeatureNode root, RelationCallback cb, String mode)
+	{
+		HashSet<FeatureNode> alreadyVisited = new HashSet<FeatureNode>();
+		RelCB relcb = new RelCB(cb);
+		relcb.link_str = mode;
 		Boolean rc = _graphCrawl(root, alreadyVisited, relcb);
 		return rc;
 	}
