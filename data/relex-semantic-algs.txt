@@ -73,6 +73,25 @@ OBJ-LINK-TAG-INIT2
 =
 <F_L OBJ-LINK-TAG> = UNSET
 ;
+; Sentences with two O links will have O*n pointing at direct object.
+;
+#TemplateActionAlg
+DIR_OBJ_N
+<LAB> = \O\.n\.*
+<LAB> != \O\.i\.*
+<F_L OBJ-LINK-TAG> = O-n|UNSET
+=
+<F_L OBJ-LINK-TAG> = O-n
+<F_L obj> += <F_R ref>
+;
+; #TemplateActionAlg
+; DIR_OBJ2
+; <LAB> = \O\.n\.*
+; <LAB> != \O\.i\.*
+; <F_L OBJ-LINK-TAG> != O-n|UNSET
+; =
+; <F_L obj> += <F_R ref>
+;
 #TemplateActionAlg
 GER_OBJ
 ;//Pv and Mv GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
@@ -92,13 +111,14 @@ PASS_OBJ
 =
 <F_R OBJ-LINK-TAG> = Pv
 ;
+; O GETS SECOND CHANCE TO IDENTIFY DIRECT OBJECT
+; If there no object, then O-link defines object
+; Must check for own tag value to be AND-SAFE
+; "I gave him the car." 
+; "This is the car I gave the man." (B has not had a chance to identify object)
+;
 #TemplateActionAlg
 DIR_OBJ1
-;//O GETS SECOND CHANCE TO IDENTIFY DIRECT OBJECT
-;//If there no object, then O-link defines object
-;//Must check for own tag value to be AND-SAFE
-;//"I gave him the car." 
-;//"This is the car I gave the man." (B has not had a chance to identify object)
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
@@ -107,11 +127,11 @@ DIR_OBJ1
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
 ;
+; If there is already an object, then O-link defines indirect object
+;   "He was given the car."
+;   "This is the man given the car."
 #TemplateActionAlg
 INDIR_OBJ1
-;//If there is already an object, then O-link defines indirect object
-;//"He was given the car."
-;//"This is the man given the car."
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
@@ -142,24 +162,6 @@ REL_INDIR_OBJ
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
 <F_R iobj> += <F_L ref>
-;
-#TemplateActionAlg
-DIR_OBJ2
-;//O*n GETS FOURTH CHANCE TO IDENTIFY DIRECT OBJECT
-<LAB> = \O\.n\.*
-<LAB> != \O\.i\.*
-<F_L OBJ-LINK-TAG> = O-n|UNSET
-=
-<F_L OBJ-LINK-TAG> = O-n
-<F_L obj> += <F_R ref>
-;
-#TemplateActionAlg
-DIR_OBJ2
-<LAB> = \O\.n\.*
-<LAB> != \O\.i\.*
-<F_L OBJ-LINK-TAG> != O-n|UNSET
-=
-<F_L iobj> += <F_R ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;

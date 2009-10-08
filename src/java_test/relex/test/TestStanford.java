@@ -97,6 +97,14 @@ public class TestStanford
 			// wtf ?? dep is not documented .. not sure what to do here ... 
 			// "dep(is-2, go-7)");
 
+		rc &= ts.test_sentence ("The linebacker gave the quarterback a push.",
+			"det(linebacker-2, the-1)\n" +
+			"nsubj(gave-3, linebacker-2)\n" +
+			"det(quarterback-5, the-4)\n" +
+			"iobj(gave-3, quarterback-5)\n" +
+			"det(push-7, a-6)\n" +
+			"dobj(gave-3, push-7)\n");
+			
 
 		if (rc)
 		{

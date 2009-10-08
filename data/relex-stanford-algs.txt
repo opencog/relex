@@ -90,6 +90,14 @@ APPO_TO_SF
 <ref sf-links _appos> = <ref links _appo>
 
 
+;
+#TemplateActionAlg
+IOBJ_TO_SF
+<ref links _iobj> != %
+=
+<ref sf-links _iobj> = <ref links _iobj>
+
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;

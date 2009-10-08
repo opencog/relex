@@ -58,4 +58,15 @@ There is a place we can go.
        "dep" which is not documented in thier manual.
        Other than that, the parsee works.
 
+The linebacker gave the quarterback a push.
+    Stanford output:
+       det(linebacker-2, The-1)
+       nsubj(gave-3, linebacker-2)
+       det(quarterback-5, the-4)
+       iobj(gave-3, quarterback-5)
+       det(push-7, a-6)
+       dobj(gave-3, push-7)
+    RelEx status: OK
+
+
        
