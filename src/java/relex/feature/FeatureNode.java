@@ -243,6 +243,14 @@ public class FeatureNode extends Atom
 	 * calling this method, "this" is not guaranteed to be a legitimate part of
 	 * the entire feature structure you were dealing with.
 	 *
+	 * XXX -- this is somewhat strangely named, it doesn't really
+	 * merge, per-se, since if both featurenodes have features
+	 * in them, then it throws an exeption if the features aren't 
+	 * identical. So really, a "merge" occurs only when one of the
+	 * featurenodes is empty.
+	 * So basically, this is just kind of crazy, I think.  This
+	 * makes sense only if the algs files are cleanly built...
+	 *
 	 * Returns the merged node.
 	 */
 	public FeatureNode mergeWith(FeatureNode other)
@@ -284,7 +292,6 @@ public class FeatureNode extends Atom
 
 				if (otherf != thisf)
 				{
-// System.out.println("duuude throwing up");
 					throw new RuntimeException(
 							"Cannot merge two non-valued feature nodes with inconsistent features.");
 				}
