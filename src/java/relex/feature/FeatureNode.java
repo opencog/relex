@@ -248,6 +248,10 @@ public class FeatureNode extends Atom
 	 * in them, then it throws an exeption if the features aren't 
 	 * identical. So really, a "merge" occurs only when one of the
 	 * featurenodes is empty.
+	 *
+	 * What's even crazier, the SentenceAlgorithm.java silently
+	 * eats the exceptions thrown here. So its all pretty pointless...
+	 *
 	 * So basically, this is just kind of crazy, I think.  This
 	 * makes sense only if the algs files are cleanly built...
 	 *
@@ -298,6 +302,36 @@ public class FeatureNode extends Atom
 			}
 		}
 
+		return this;
+	}
+
+	public FeatureNode mergeInto(FeatureNode other)
+	{
+		if (other == this)
+			return this;
+		if (isEmpty()) {
+			replaceSelfWith(other);
+			return this;
+		}
+
+		// Throw execeptions if the two FeatureNodes are non-unifiable
+		if (isValued())
+		{
+			if (!other.isValued())
+			{
+				throw new RuntimeException(
+						"Cannot merge a nonvalued node into a non-empty valued node");
+			}
+		}
+		else
+		{ // this has features
+			if (other.isValued())
+			{ // other has value
+				throw new RuntimeException(
+						"Cannot merge a non-empty valued node into a non-empty normal feature node");
+			}
+		}
+
 		// After checking for inconsistencies above, we can safely execute the
 		// code below
 		if (!isValued())
@@ -307,8 +341,7 @@ public class FeatureNode extends Atom
 				set(fName, other.get(fName));
 			}
 		}
-		other.replaceSelfWith(this);
-		return other;
+		return this;
 	}
 
 	public void replaceSelfWith(FeatureNode other)
