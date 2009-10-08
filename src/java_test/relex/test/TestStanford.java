@@ -61,11 +61,18 @@ public class TestStanford
 
 		ArrayList<String> sfa = split(sf);
 		ArrayList<String> rsa = split(rs);
+		if (sfa.size() != rsa.size())
+		{
+			System.err.println("Error: size miscompare:\n" +
+				"\tStanford = " + sfa + "\n" +
+				"\tRelEx    = " + rsa );
+			return false;
+		}
 		for (int i=0; i< sfa.size(); i++)
 		{
 			if (!sfa.get(i).equals (rsa.get(i)))
 			{
-				System.err.println("Error: miscompare:\n" +
+				System.err.println("Error: content miscompare:\n" +
 					"\tStanford = " + sfa + "\n" +
 					"\tRelEx    = " + rsa );
 				return false;
