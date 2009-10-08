@@ -305,14 +305,10 @@ public class FeatureNode extends Atom
 		return this;
 	}
 
-	public FeatureNode mergeInto(FeatureNode other)
+	public FeatureNode copyInto(FeatureNode other)
 	{
 		if (other == this)
 			return this;
-		if (isEmpty()) {
-			replaceSelfWith(other);
-			return this;
-		}
 
 		// Throw execeptions if the two FeatureNodes are non-unifiable
 		if (isValued())

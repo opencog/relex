@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
  *
  * Or it can be a simple path with a target string: <a b c> = hello
  */
-public class FeaturePathAndTarget {
-
+public class FeaturePathAndTarget
+{
 	private FeaturePath path;
 
 	private FeaturePath targetPath;

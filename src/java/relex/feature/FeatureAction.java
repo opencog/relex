@@ -33,6 +33,7 @@ public class FeatureAction extends FeaturePathAndTarget
 		actionSeparators = new HashSet<String>();
 		actionSeparators.add("=");
 		actionSeparators.add("+=");
+		actionSeparators.add("<=");
 	}
 
 	public FeatureAction(String str)
@@ -81,6 +82,36 @@ public class FeatureAction extends FeaturePathAndTarget
 			return;
 		}
 		left.mergeWith(right);
+		return;
+	}
+
+	private void doActionCopyIn(FeatureNode f, FeatureNode left,
+			FeatureNode right, String rightValStr)
+	{
+		// Make left if left is null
+		if (left == null)
+		{
+			left = new FeatureNode();
+			f.makePath(getPath(), left);
+		}
+		// Start handling cases:
+		// CASE 1:
+		if ((right == null) && (rightValStr == null)) {
+			// since right is null, it must be a path that didnt exist
+			f.makePath(getTargetPath(), left);
+			return;
+		}
+		// CASE 2: rightValStr != null
+		if (right == null) {
+			if ((!left.isEmpty()) && (!left.isValued()))
+				throw new RuntimeException(
+						"Cannot set a non-empty non-valued node to a value");
+			left.forceValue(rightValStr);
+			return;
+		}
+
+		// CASE 3: right != null
+		left.copyInto(right);
 		return;
 	}
 
@@ -152,6 +183,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		String act = getAction();
 		if (act.equals("="))
 			doActionEquals(f, left, right, rightValStr);
+		else if (act.equals("<="))
+			doActionCopyIn(f, left, right, rightValStr);
 		else if (act.equals("+="))
 			doActionAppend(f, left, right, rightValStr);
 		else
