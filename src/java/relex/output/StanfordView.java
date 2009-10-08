@@ -26,7 +26,7 @@ import relex.ParsedSentence;
 /**
  * Prototype implementation of Stanford-parser compatible output.
  */
-public class SFView
+public class StanfordView
 {
 	/**
 	 * Print out RelEx relations. All relations shown

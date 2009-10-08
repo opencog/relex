@@ -26,6 +26,11 @@ SF_AUX
 =
 <F_R ref sf-links _aux> = <F_L ref>
 
+;///////////////////////////////////////////////////////////////////////
+;
+; ALTERNATE MARKUP
+; Relex generates advmod for some cases where Stanford generates nsubj.
+; Here, we have to untangle this stuff.
 
 ;///////////////////////////////////////////////////////////////////////
 ;

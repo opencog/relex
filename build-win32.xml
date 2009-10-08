@@ -131,6 +131,16 @@
     <target name="cleanall" depends="clean"/>
     <target name="realclean" depends="clean"/>
 
+    <!-- run tests -->
+    <target name="test" depends="build-project">
+        <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <classpath refid="relex.classpath"/>
+            <arg line=""/>
+        </java>
+    </target>
+
     <!-- Build a jar file, for public consumption -->
     <target name="jar" depends="build-project">
         <jar basedir="bin" destfile="relex-${REVISION}.jar">

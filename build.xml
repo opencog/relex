@@ -102,6 +102,15 @@
         </javac>
     </target>
 
+    <target name="build-tests" depends="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+            source="${source}" target="${target}">
+            <src path="src/java_test"/>
+            <classpath refid="relex.classpath"/>
+        </javac>
+    </target>
+
     <!-- misc build targets -->
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
@@ -114,6 +123,7 @@
         <echo message=""/>
         <echo message="    build   -- generate the relex.jar file (default)"/>
         <echo message="    install -- install jar file in ${INSTALLDIR}"/>
+        <echo message="    test    -- run test cases"/>
         <echo message="    run     -- run a demo of the parser"/>
         <echo message="    dist    -- create distribution (tar.gz file)"/>
         <echo message="    clean   -- remove temporary files created by build"/>
@@ -128,6 +138,16 @@
     </target>
     <target name="cleanall" depends="clean"/>
     <target name="realclean" depends="clean"/>
+
+    <!-- Run tests -->
+    <target name="test" depends="build-tests">
+        <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <classpath refid="relex.classpath"/>
+            <arg line=""/>
+        </java>
+    </target>
 
     <!-- Build a jar file, for public consumption -->
     <target name="jar" depends="build-project">
@@ -181,6 +201,7 @@
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
                 <include name="data/relex-semantic-algs.txt"/>
+                <include name="data/relex-stanford-algs.txt"/>
                 <include name="data/relex-tagging-algs.txt"/>
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/wordnet/file_properties.xml"/>
