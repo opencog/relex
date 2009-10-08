@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
+import relex.feature.RelationForeach;
 import relex.ParsedSentence;
 
 /**
@@ -42,7 +43,7 @@ public class SFView
 	{
 		Visit v = new Visit();
 		v.str = "";
-		parse.foreach(v);
+		RelationForeach.foreach(parse.getLeft(), v, "sf-links");
 		return v.str;
 	}
 

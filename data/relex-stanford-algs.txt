@@ -1,0 +1,37 @@
+;
+; relex stanford-algs.txt
+;
+; Rules to extract Stanford-parser-style relationships.
+; The goal here is to be as compatible with the Stanford
+; parser as possible, given the parse provided by Link-Grammar.
+;
+
+;///////////////////////////////////////////////////////////////////////
+;
+; TRANSFER LINKS TO REF
+;
+; Stanford nsubj is just like relex subj
+#TemplateActionAlg
+SUBJ_TO_SF_LINKS
+<HEAD-FLAG> = T
+<subj> != %
+=
+<ref sf-links _nsubj> = <subj>
+;
+;
+#TemplateActionAlg
+EXPL_TO_SF_LINKS
+<HEAD-FLAG> = T
+<expl> != %
+=
+<ref sf-links _expl> = <expl>
+;
+#TemplateActionAlg
+OBJ_TO_LINKS
+<HEAD-FLAG> = T
+<obj> != %
+=
+<ref links _dobj> = <obj>
+;
+
+

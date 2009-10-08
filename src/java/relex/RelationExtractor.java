@@ -78,7 +78,6 @@ public class RelationExtractor
 	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
 	public static final int DEFAULT_MAX_PARSE_COST = 1000;
-	public static final String DEFAULT_ALGS_FILE = "./data/relex-semantic-algs.txt";
 
 	/** The LinkParserClient to be used - this class isn't thread safe! */
 	private RelexContext context;
@@ -100,6 +99,9 @@ public class RelationExtractor
 
 	/** Document - holder of sentences */
 	Document doco;
+
+	/* Stanford parser compatibility mode */
+	public boolean do_stanford;
 
 	/** Statistics */
 	private ParseStats stats;
@@ -135,6 +137,8 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 
 		doco = new Document();
+
+		do_stanford = false;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -216,6 +220,7 @@ public class RelationExtractor
 
 				// The actual relation extraction is done here.
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
+				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 
 				// Strip out the entity markup, so that when the
 				// sentence is printed, we don't print gunk.
@@ -432,6 +437,11 @@ public class RelationExtractor
 		    (commandMap.get("-o") == null))
 		{
 			re.do_anaphora_resolution = true;
+		}
+
+		if (commandMap.get("--stanford") != null)
+		{
+			re.do_stanford = true;
 		}
 
 		EntityMaintainerFactory gem = null;

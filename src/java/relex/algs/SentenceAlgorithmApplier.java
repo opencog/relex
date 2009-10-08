@@ -27,6 +27,7 @@ public class SentenceAlgorithmApplier
 {
 	private AlgorithmApplier tagger;
 	private AlgorithmApplier semant;
+	private AlgorithmApplier stanford;
 
 	public SentenceAlgorithmApplier()
 	{
@@ -34,6 +35,8 @@ public class SentenceAlgorithmApplier
 			"relex.tagalgpath", "relex-tagging-algs.txt");
 		semant = new AlgorithmApplier(
 			"relex.semalgpath", "relex-semantic-algs.txt");
+		stanford = new AlgorithmApplier(
+			"relex.sfalgpath", "relex-stanford-algs.txt");
 	}
 	
 	public void tagFeatures(ParsedSentence sentence, RelexContext context)
@@ -44,6 +47,11 @@ public class SentenceAlgorithmApplier
 	public void extractSemantics(ParsedSentence sentence, RelexContext context)
 	{
 		semant.applyAlgs(sentence, context);
+	}
+
+	public void extractStanford(ParsedSentence sentence, RelexContext context)
+	{
+		stanford.applyAlgs(sentence, context);
 	}
 
 	// The apply method!
