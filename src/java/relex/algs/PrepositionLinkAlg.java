@@ -31,7 +31,7 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 	                       FeatureNode prepStringSource)
 	{
 		String prep = prepStringValue.getValue();
-		FeatureNode modifiedLinks = modifiedRef.getOrMake("links");
+		FeatureNode modifiedLinks = modifiedRef.getOrMake("prep-links");
 		FeatureNode modifiedLinkSources = modifiedRef.getOrMake("linkSources");
 
 		FeatureNode existingPrepObj = modifiedLinks.get(prep);

@@ -60,6 +60,8 @@ public abstract class SentenceAlgorithm
 				try {
 					applyTo(c, context, vars);
 				} catch (Exception e) {
+System.err.println("Error: bad algorithm: " + getSignature());
+e.printStackTrace();
 					sentence.setErrorString(this + "\n" + e.toString());
 					// System.err.println(sentence);
 					// System.err.println(this);
