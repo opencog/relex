@@ -30,6 +30,16 @@ Who invented sliced bread?
 
 Jim runs quickly.
     Stanford output:
+       nsubj(runs-2, Jim-1)
+       advmod(runs-2, quickly-3)
+    RelEx status: OK
 
-
-
+The bird, a robin, sang sweetly. 
+    Stanford output:
+       det(bird-2, The-1)
+       nsubj(sang-7, bird-2)
+       det(robin-5, a-4)
+       appos(bird-2, robin-5)
+       advmod(sang-7, sweetly-8)
+    RelEx status: OK
+       

@@ -5,10 +5,20 @@
 ; The goal here is to be as compatible with the Stanford
 ; parser as possible, given the parse provided by Link-Grammar.
 ;
+;///////////////////////////////////////////////////////////////////////
+;
+; GENERATE SF RELATIONS
+; Stanford parser generates some relations which relex does not.
+; Generate these.
+#TemplateActionAlg
+SF_DET
+<LAB> = \D\.*
+=
+<F_R ref sf-links _det> = <F_L ref>
 
 ;///////////////////////////////////////////////////////////////////////
 ;
-; TRANSFER LINKS TO REF
+; TRANSFER LINKS TO SF-LINKS
 ;
 ; Stanford nsubj is just like relex subj
 #TemplateActionAlg
@@ -48,6 +58,20 @@ AMOD_TO_SF
 <ref links _amod> != %
 =
 <ref sf-links _amod> = <ref links _amod>
+
+;
+#TemplateActionAlg
+ADVMOD_TO_SF
+<ref links _advmod> != %
+=
+<ref sf-links _advmod> = <ref links _advmod>
+
+;
+#TemplateActionAlg
+APPO_TO_SF
+<ref links _appo> != %
+=
+<ref sf-links _appos> = <ref links _appo>
 
 
 
