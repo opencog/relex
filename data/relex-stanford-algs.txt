@@ -24,7 +24,7 @@ SF_DET
 SF_AUX
 <LAB> = \I\.*
 =
-<F_R ref sf-links _aux> = <F_L ref>
+<F_R ref sf-links _aux> += <F_L ref>
 
 ;///////////////////////////////////////////////////////////////////////
 ;
@@ -89,5 +89,19 @@ APPO_TO_SF
 =
 <ref sf-links _appos> = <ref links _appo>
 
+
+
+;///////////////////////////////////////////////////////////////////////
+;
+; Re-label objects, based on subject
+;
+;
+#TemplateActionAlg
+OBJ_TO_SUBJ
+<ref sf-links _expl> != %
+<ref sf-links _dobj> != %
+=
+<ref sf-links _nsubj> = <ref sf-links _dobj>
+<ref sf-links _dobj> = %
 
 

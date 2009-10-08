@@ -1,6 +1,5 @@
-Jim wants to eat a cat.
-END.
 There is a place we can go. 
+END.
 where is the ball?
 The ball is under the couch.
 END.

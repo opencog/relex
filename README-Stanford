@@ -54,5 +54,8 @@ There is a place we can go.
        aux(go-7, can-6)
        dep(is-2, go-7)
     RelEx status:
+       Not testing this sentence, since stanford outputs a 
+       "dep" which is not documented in thier manual.
+       Other than that, the parsee works.
 
        
