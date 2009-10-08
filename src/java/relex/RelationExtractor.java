@@ -359,7 +359,7 @@ public class RelationExtractor
 			" [-s Sentence (in quotes)]" +
 			" [--stanford (generate stanford-compatible output)]" +
 			" [-t (show parse tree)]" +
-			" [-v verbose]" +
+			" [-v (verbose, full graph output)]" +
 			" [-x (show cerego XML output)]";
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");

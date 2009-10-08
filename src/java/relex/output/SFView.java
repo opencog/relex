@@ -55,15 +55,14 @@ public class SFView
 		                                FeatureNode srcNode,
 		                                FeatureNode tgtNode)
 		{
-			String srcName = srcNode.get("name").getValue();
 			FeatureNode tgt = tgtNode.get("name");
 			if (tgt == null)
 			{
+				String srcName = srcNode.get("name").getValue();
 				System.out.println("Error: No target! rel=" + relName +
 				                   " and src=" + srcName);
 				return false;
 			}
-			String tgtName = tgt.getValue();
 
 			// Trim leading underscores from the relation names.
 			char underscore = relName.charAt(0);
@@ -76,7 +75,16 @@ public class SFView
 				relName = "prep_" + relName;
 			}
 
-			str += relName + "(" + srcName + ", " + tgtName + ")\n";
+			FeatureNode srcN = srcNode.get("nameSource");
+			FeatureNode tgtN = tgtNode.get("nameSource");
+
+			String srcName = srcN.get("orig_str").getValue();
+			String tgtName = tgtN.get("orig_str").getValue();
+			String srcIdx = srcN.get("index_in_sentence").getValue();
+			String tgtIdx = tgtN.get("index_in_sentence").getValue();
+
+			str += relName + "(" + srcName + "-" + srcIdx + ", " + 
+				tgtName + "-" + tgtIdx + ")\n";
 
 			return false;
 		}
