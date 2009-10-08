@@ -242,71 +242,66 @@ public class FeatureNode extends Atom
 	 * If "this" isEmpty, then it is replaced with other, which means that after
 	 * calling this method, "this" is not guaranteed to be a legitimate part of
 	 * the entire feature structure you were dealing with.
+	 *
+	 * Returns the merged node.
 	 */
-	public void mergeWith(FeatureNode other)
+	public FeatureNode mergeWith(FeatureNode other)
 	{
 		if (other == this)
-			return;
+			return this;
 		if (other.isEmpty()) {
 			other.replaceSelfWith(this);
-			return;
+			return other;
 		}
 		if (isEmpty()) {
 			replaceSelfWith(other);
-			return;
+			return this;
 		}
 
 		// Throw execeptions if the two FeatureNodes are non-unifiable
-		if (!isEmpty() && !other.isEmpty()) {
-			if (isValued()) {
-				if ((!other.isValued())
-						|| (!other.getValue().equals(getValue()))) {
-					throw new RuntimeException(
-							"Cannot merge a nonvalued node or a node with a different value into a non-empty valued node");
-				}
-			} else { // this has features
-				if (other.isValued()) { // other has value
-					throw new RuntimeException(
-							"Cannot merge a non-empty valued node into a non-empty normal feature node");
-				}
-				// other has features
-				Iterator<String> i = other.getFeatureNames().iterator();
-				while (i.hasNext()) {
-					String fName = i.next();
-					FeatureNode f = other.get(fName);
-					if (f != get(fName))
-						throw new RuntimeException(
-								"Cannot merge two non-valued feature nodes with inconsistent features.");
-				}
+		if (isValued())
+		{
+			if ((!other.isValued())
+					|| (!other.getValue().equals(getValue())))
+			{
+				throw new RuntimeException(
+						"Cannot merge a nonvalued node or a node with a different value into a non-empty valued node");
+			}
+		}
+		else
+		{ // this has features
+			if (other.isValued())
+			{ // other has value
+				throw new RuntimeException(
+						"Cannot merge a non-empty valued node into a non-empty normal feature node");
+			}
 
+			// other has features
+			for (String fName : other.getFeatureNames())
+			{
+				FeatureNode otherf = other.get(fName);
+				FeatureNode thisf = this.get(fName);
+
+				if (otherf != thisf)
+				{
+// System.out.println("duuude throwing up");
+					throw new RuntimeException(
+							"Cannot merge two non-valued feature nodes with inconsistent features.");
+				}
 			}
 		}
 
-		// after checking for inconsistencies above, we can safely execute the
+		// After checking for inconsistencies above, we can safely execute the
 		// code below
-		if (!isEmpty()) {
-			if ((!isValued()) && (!other.isValued())) {
-				Iterator<String> i = other.getFeatureNames().iterator();
-				while (i.hasNext()) {
-					String fName = i.next();
-					set(fName, other.get(fName));
-				}
-			}
-		} else { // empty
-			if (other.isValued()) {
-				forceValue(other.getValue());
-			} else {
-				// copy all of other's features to this
-				forceFeatures();
-				Iterator<String> i = other.getFeatureNames().iterator();
-				while (i.hasNext()) {
-					String fName = i.next();
-					set(fName, other.get(fName));
-				}
+		if (!isValued())
+		{
+			for (String fName : other.getFeatureNames())
+			{
+				set(fName, other.get(fName));
 			}
 		}
 		other.replaceSelfWith(this);
-
+		return other;
 	}
 
 	public void replaceSelfWith(FeatureNode other)
@@ -314,7 +309,7 @@ public class FeatureNode extends Atom
 		if (other == this)
 			return;
 		// Create a new hashset to avoid ConcurrentModificationException.
-		// That is, we will be modifyinh parents as we iterate through its
+		// That is, we will be modifying parents as we iterate through its
 		// *copy*.
 		Iterator<FeatureNode> i = new HashSet<FeatureNode>(parents).iterator();
 		while (i.hasNext()) {
