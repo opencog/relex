@@ -29,9 +29,10 @@ SF_DET
 ;
 ; Explicit aux markup.
 ; "there is a place we can go"  aux(go-7, can-6)
+; "The accident happened as the night was falling." aux(falling-8, was-7)
 #TemplateActionAlg
 SF_AUX
-<LAB> = \I\.*
+<LAB> = \I\.*|\Pg\.*b
 =
 <F_R ref sf-links _aux> = <F_L ref>
 

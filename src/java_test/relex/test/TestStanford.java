@@ -130,6 +130,15 @@ public class TestStanford
 			"advmod(beautiful-4, very-3)\n" +
 			"acomp(looks-2, beautiful-4)");
 
+		rc &= ts.test_sentence ("The accident happened as the night was falling.",
+			"det(accident-2, the-1)\n" +
+			"nsubj(happened-3, accident-2)\n" +
+			"mark(falling-8, as-4)\n" +
+			"det(night-6, the-5)\n" +
+			"nsubj(falling-8, night-6)\n" +
+			"aux(falling-8, was-7)\n" +
+			"advcl(happened-3, falling-8)");
+
 /****************
 		rc &= ts.test_sentence ("The garage is next to the house.",
 			"det(garage-2, the-1)\n" +

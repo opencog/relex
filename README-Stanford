@@ -83,6 +83,16 @@ She looks very beautiful.
        acomp(looks-2, beautiful-4)
     RelEx status: OK
 
+The accident happened as the night was falling.
+    Stanford output:
+       det(accident-2, The-1)
+       nsubj(happened-3, accident-2)
+       mark(falling-8, as-4)
+       det(night-6, the-5)
+       nsubj(falling-8, night-6)
+       aux(falling-8, was-7)
+       advcl(happened-3, falling-8)
+    RelEx status: TBD
 
 
 
