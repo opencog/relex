@@ -7,15 +7,6 @@
 ;
 ;///////////////////////////////////////////////////////////////////////
 ;
-; Transfer prep links to ref.
-#TemplateActionAlg
-PREP_TO_SF
-<ref prep-links> != %
-=
-<ref sf-links> <= <ref prep-links>
-
-;///////////////////////////////////////////////////////////////////////
-;
 ; GENERATE SF RELATIONS
 ; Stanford parser generates some relations which relex does not.
 ; Generate these.
@@ -53,6 +44,7 @@ ADVCL_OBJECT
 <F_R head-word> != %
 =
 <F_L ref sf-links _advcl> = <F_R head-word ref>
+<F_L DONT_SHOW_PREP> = T
 
 
 #TemplateActionAlg
@@ -62,6 +54,19 @@ ADVCL_COMPLEMENT
 =
 <F_R head-word ref sf-links _mark> = <F_R ref>
 
+
+;///////////////////////////////////////////////////////////////////////
+;
+; TRANSFER PREP LINKS TO SF-LINKS
+;
+; But don't transfer those that correspond to adverbial clauses, etc.
+;
+#TemplateActionAlg
+PREP_TO_SF
+<ref prep-links> != %
+<DONT_SHOW_PREP> != T
+=
+<ref sf-links> <= <ref prep-links>
 
 ;///////////////////////////////////////////////////////////////////////
 ;
