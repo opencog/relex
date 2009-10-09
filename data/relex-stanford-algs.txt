@@ -42,6 +42,27 @@ SF_AUX
 ; Relex generates advmod for some cases where Stanford generates nsubj.
 ; Here, we have to untangle this stuff.
 
+; The preposition modifies the preceeding phrase
+; "The accident happened as the night was falling."
+; mark(falling-8, as-4)
+; advcl(happened-3, falling-8)
+
+#TemplateActionAlg
+ADVCL_OBJECT
+<LAB> = MVs|\TH\.*|\WN\.*
+<F_R head-word> != %
+=
+<F_L ref sf-links _advcl> = <F_R head-word ref>
+
+
+#TemplateActionAlg
+ADVCL_COMPLEMENT
+<LAB> = MVs|\TH\.*|\WN\.*
+<F_R head-word> != %
+=
+<F_R head-word ref sf-links _mark> = <F_R ref>
+
+
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER LINKS TO SF-LINKS
