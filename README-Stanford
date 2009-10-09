@@ -92,8 +92,34 @@ The accident happened as the night was falling.
        nsubj(falling-8, night-6)
        aux(falling-8, was-7)
        advcl(happened-3, falling-8)
-    RelEx status: TBD
+    RelEx status: OK
 
+If you know who did it, you should tell the teacher.
+    Stanford output:
+       mark(know-3, If-1)
+       nsubj(know-3, you-2)
+       advcl(tell-10, know-3)
+       nsubj(did-5, who-4)
+       ccomp(know-3, did-5)
+       dobj(did-5, it-6)
+       nsubj(tell-10, you-8)
+       aux(tell-10, should-9)
+       det(teacher-12, the-11)
+       dobj(tell-10, teacher-12)
+
+
+Under construction:
+       advcl(tell-10, know-3)
+       ccomp(know-3, did-5)
+
+if(should, know)  xxxxx broken -- if(tell, know)
+_to-do(should, tell) xxxx broken! should be ccomp
+
+head-word $22 $26 $10 $6
+$22-tell
+$26  - should
+$10 - do
+$6 know -- head on you,if
 
 
 

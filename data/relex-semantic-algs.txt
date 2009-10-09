@@ -781,16 +781,17 @@ INV-MARK_TOBE
 ;<F_R head-word> = %
 ;=
 ;<F_L to-do> += <F_R ref>
-;
-#TemplateActionAlg
-TODO1z
-; I like running.
+; ---
+; clausal complement:
+;  "I like running." -- _to-do(like, running)
 ; The exception for Pg*b prevents hypothetical for forms of be: 
 ; "They WERE RUNNING." and "what ARE they PLANNING?"
+#TemplateActionAlg
+TODO1z
 <LAB> = \I\.*|\Pg\.*
 <LAB> != Pg*b
 <F_R TO-BE-FLAG> != T
-;<F_R head-word> != %
+<F_R head-word> != %
 =
 <F_L to-do> += <F_R head-word ref>
 ;

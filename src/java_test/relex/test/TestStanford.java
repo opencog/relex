@@ -125,11 +125,13 @@ public class TestStanford
 			"nn(line-6, goal-5)\n" +
 			"prep_at(stood-2, line-6)");
 
+		// acomp example from Stanford docs
 		rc &= ts.test_sentence ("She looks very beautiful.",
 			"nsubj(looks-2, she-1)\n" +
 			"advmod(beautiful-4, very-3)\n" +
 			"acomp(looks-2, beautiful-4)");
 
+		// advcl example from Stanford docs
 		rc &= ts.test_sentence ("The accident happened as the night was falling.",
 			"det(accident-2, the-1)\n" +
 			"nsubj(happened-3, accident-2)\n" +
@@ -138,6 +140,19 @@ public class TestStanford
 			"nsubj(falling-8, night-6)\n" +
 			"aux(falling-8, was-7)\n" +
 			"advcl(happened-3, falling-8)");
+
+		// advcl example from Stanford docs
+		rc &= ts.test_sentence ("If you know who did it, you should tell the teacher.",
+			"mark(know-3, if-1)\n" +
+			"nsubj(know-3, you-2)\n" +
+			"advcl(tell-10, know-3)\n" +
+			"nsubj(did-5, who-4)\n" +
+			"ccomp(know-3, did-5)\n" +
+			"dobj(did-5, it-6)\n" +
+			"nsubj(tell-10, you-8)\n" +
+			"aux(tell-10, should-9)\n" +
+			"det(teacher-12, the-11)\n" +
+			"dobj(tell-10, teacher-12)");
 
 /****************
 		rc &= ts.test_sentence ("The garage is next to the house.",
