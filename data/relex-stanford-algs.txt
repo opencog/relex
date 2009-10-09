@@ -47,12 +47,26 @@ ADVCL_OBJECT
 <F_L DONT_SHOW_PREP> = T
 
 
+;
+; "The accident happened as the night was falling." - mark(falling-8, as-4)
+;
 #TemplateActionAlg
 ADVCL_COMPLEMENT
 <LAB> = MVs|\TH\.*|\WN\.*
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _mark> = <F_R ref>
+
+
+; 
+; If you know who did it, you should tell the teacher. -  mark(know-3, if-1)
+;
+#TemplateActionAlg
+ADVCL2_COMPLEMENT
+<LAB> = \Cs
+<F_R head-word> != %
+=
+<F_R head-word ref sf-links _mark> = <F_L ref>
 
 
 ;///////////////////////////////////////////////////////////////////////

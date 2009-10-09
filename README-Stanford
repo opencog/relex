@@ -116,11 +116,12 @@ if(should, know)  xxxxx broken -- if(tell, know)
 _to-do(should, tell) xxxx broken! should be ccomp
 
 head-word $22 $26 $10 $6
-$22-tell
-$26  - should
+$22-tell -- head on  
+$26  - should head on 2nd you, and wall
 $10 - do
 $6 know -- head on you,if
 
+the correct head word should be "tell" not "should"
 
 
 The garage is next to the house.
