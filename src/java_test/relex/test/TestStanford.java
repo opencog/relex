@@ -125,6 +125,21 @@ public class TestStanford
 			"nn(line-6, goal-5)\n" +
 			"prep_at(stood-2, line-6)");
 
+		rc &= ts.test_sentence ("She looks very beautiful.",
+			"nsubj(looks-2, she-1)\n" +
+			"advmod(beautiful-4, very-3)\n" +
+			"acomp(looks-2, beautiful-4)");
+
+/****************
+		rc &= ts.test_sentence ("The garage is next to the house.",
+			"det(garage-2, the-1)\n" +
+			"nsubj(next-4, garage-2)\n" +
+			"cop(next-4, is-3)\n" +
+			"det(house-7, the-6)\n" +
+			"prep_to(next-4, house-7)");
+***********/
+
+
 		if (rc)
 		{
 			System.err.println("Test passed OK");

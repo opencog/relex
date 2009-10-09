@@ -12,7 +12,7 @@ This is an interesting thing to do, for two reasons:
    2) Preliminary tests show that RelEx is more than three
       times faster than the Stanford parser.
 
-The compatibility mode is currently experimental and incomplete.
+The compatibility mode is currently experimental and VERY incomplete.
 It can be enabled with the --stanford flag, passed to
 RelationExtractor.java
 
@@ -74,7 +74,27 @@ He stood at the goal line.
        det(line-6, the-4)
        nn(line-6, goal-5)
        prep_at(stood-2, line-6)
-    RelEx status: 
+    RelEx status: OK
+
+She looks very beautiful.
+    Stanford output:
+       nsubj(looks-2, She-1)
+       advmod(beautiful-4, very-3)
+       acomp(looks-2, beautiful-4)
+    RelEx status: OK
+
+
+
+
+
+The garage is next to the house.
+    Stanford output:
+       det(garage-2, The-1)
+       nsubj(next-4, garage-2)
+       cop(next-4, is-3)
+       det(house-7, the-6)
+       prep_to(next-4, house-7)
+
 
 
        

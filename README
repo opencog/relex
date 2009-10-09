@@ -208,6 +208,10 @@ it does not include all required output. For example, if the same word
 appears in a sentence twice, the demo output will not distinguish between
 these two words.
 
+This release of RelEx includes an experimental Stanford-parser
+compatibility mode. This is described in greater detail in
+README-Stanford.
+
 
 Running RelEx
 -------------

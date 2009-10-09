@@ -79,10 +79,10 @@ OBJ_TO_SF_LINKS_GERUND
 ; Modifiers
 ;
 #TemplateActionAlg
-AMOD_TO_SF
-<ref links _amod> != %
+ACOMP_TO_SF
+<ref links _to-be> != %
 =
-<ref sf-links _amod> = <ref links _amod>
+<ref sf-links _acomp> = <ref links _to-be>
 
 ;
 #TemplateActionAlg
@@ -90,6 +90,12 @@ ADVMOD_TO_SF
 <ref links _advmod> != %
 =
 <ref sf-links _advmod> = <ref links _advmod>
+
+#TemplateActionAlg
+AMOD_TO_SF
+<ref links _amod> != %
+=
+<ref sf-links _amod> = <ref links _amod>
 
 ;
 #TemplateActionAlg
