@@ -959,11 +959,12 @@ PREP_RELATIVE_BACKGROUND
 ; I know that you are happy because you are here."
 ; You laugh because you are here.
 ; I know that you laugh because you are here.
-;
-#PrepositionLinkAlg
+; ------
 ; The preposition modifies the following phrase
 ;    "On Tuesday, we left."
 ; Wont apply to "Often, we left" because 'often' has no obj
+;
+#PrepositionLinkAlg
 PRECEEDING_PREP_LINK
 <LAB> = \CO\.*|\Qd\.*
 <F_L PREP-OBJ> = T
@@ -1003,13 +1004,16 @@ PRECEEDING_PREP_CLAUSE_OBJECT
 <F_L> = $prep_source
 <F_L head-word ref> = $prep_obj
 =
-#TemplateActionAlg
-SPECIAL_PREP_RULE
+;
+;
 ; NOTE special prep rule is not working when the prep is modified: 
 ;    "Mike is in the room on Tuesday..."
 ; This is used for "John is in the room" to change subj to psubj
 ; "The garage is next to the house".
 ; "The book is on the table."
+;
+#TemplateActionAlg
+SPECIAL_PREP_RULE
 <LAB> = \Pp\.*
 <F_L str> = be
 <F_R ref links _subj> != %
