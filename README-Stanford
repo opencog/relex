@@ -187,13 +187,15 @@ He says that you like to swim.
       RelEx currently generates aux(swim-7, to-6) which seems
       reasonable to me.
 
+Bill is an honest man.
+    Stanford output:
+       nsubj(man-5, Bill-1)
+       cop(man-5, is-2)
+       det(man-5, an-3)
+       amod(man-5, honest-4)
+    RelEx status: OK
 
 Under construction:
-
-bzt:
-advcl(says-2, like-5)
-aux(swim-7, to-6)
-mark(like-5, that-3)
 
 
 Under construction:

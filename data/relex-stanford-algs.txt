@@ -16,7 +16,7 @@
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
-<F_L str> = the|a
+<F_L str> = a|an|the
 =
 <F_R ref sf-links _det> = <F_L ref>
 ;
@@ -307,7 +307,7 @@ SF_PREDADJ_TO_NSUBJ
 ;
 ;///////////////////////////////////////////////////////////////////////
 ;
-; Strange cpoluar hacks
+; Strange copular hacks
 ;
 ; attributive:
 ; An attributive is the complement of a copular verb such as 
@@ -323,4 +323,18 @@ SF_ATTR
 <F_R ref sf-links _nsubj> = <F_R ref sf-links _dobj>
 <F_R ref sf-links _dobj> = %
 
+; 
+; Bizarre trans-copular subject/attributive or something.
+; Bill is an honest man. - nsubj(man-5, Bill-1) cop(man-5, is-2)
+;
+#TemplateActionAlg
+SF_NSUBJ_COP
+<name> = be
+<sf-links _nsubj> != %
+<sf-links _dobj> != %
+=
+<sf-links _dobj sf-links _cop> = <>
+<sf-links _dobj sf-links _nsubj> = <sf-links _nsubj>
+<sf-links _dobj> = %
+<sf-links _nsubj> = %
 
