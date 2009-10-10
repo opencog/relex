@@ -473,13 +473,13 @@ TENSE_COPULA_INV
 <INV-TENSE-LINK-FLAG> = T
 <F_L tense prev> = <F_R tense>
 ;
-#TemplateActionAlg
-TENSE_FUTURE
 ; The place holder prevents "will" from having empty tense.
 ; Without that, the next verb might be affected by TENSE-LIST-CONNECT1, 
 ; which would incorrectly set the following verb's prev feature to itself.
+#TemplateActionAlg
+TENSE_FUTURE
 <LAB>=\I\.*
-<F_L str> = will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+<F_L str> = will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll|should|Should|shouldn't|Shouldn't|can|Can|can't|Can't|cannot|Cannot|may|May|mayn't|Mayn't|must|Must|mustn't|Mustn't
 =
 <TENSE-LINK-FLAG> = T
 <F_R tense prev> = <F_L tense>
@@ -489,7 +489,7 @@ TENSE_FUTURE
 #TemplateActionAlg
 TENSE_INFINITIVE
 <LAB>=\I\.*
-<F_L str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
+<F_L str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll|should|Should|shouldn't|Shouldn't|can|Can|can't|Can't|cannot|Cannot|may|May|mayn't|Mayn't|must|Must|mustn't|Mustn't
 =
 <F_R tense val> = infinitive
 ;

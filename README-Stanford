@@ -112,7 +112,7 @@ Under construction:
        advcl(tell-10, know-3)
        ccomp(know-3, did-5)
 
-if(should, know)  xxxxx broken -- if(tell, know)
+if(tell, know)
 _to-do(should, tell) xxxx broken! should be ccomp
 
 head-word $22 $26 $10 $6

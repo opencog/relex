@@ -281,31 +281,38 @@ PREP_OBJ
 ; TENSE SETTING AND 
 ; HEAD RELATION IDENTIFICATION
 ;
+; Idea: create a chain of verbs, the initial set of which might aux or 
+; auxpass verbs, and the final verb in the chain is the head-word.
+; e.g. "has been debated", where "has", "been" are aux, auxpass, and 
+; "debated" is the head-word.
+;
+; This applies to the first verb in a tense link sequence.
+; It sets the "first_verb" feature to point itself.
+; This will also apply to a plain verb that is not modified by tense modals.
+; The node <prev> is set earlier, in the tagging-algs file.
 ;
 #TemplateActionAlg
 TENSE_LIST_CONNECT1
-;//This applies to the first verb in a tense link sequence.
-;//It sets the "first_verb" feature to point itself.
-;//This will also apply to a plain verb that is not modified by tense modals.
 <tense prev> = %
 <tense> = $T
 =
 <tense first_verb> = <this>
 ;
+; This applies to all links in a tense link sequence
+; It sets a flag in any modal (always to the right of the link)
+; It ensures that all sequence members have pointers to the first verb
+; The TENSE-LINK-FLAG is set in the earlier tagging-algs file.
 #TemplateActionAlg
 TENSE_LIST_CONNECT2
-;//This applies to all links in a tense link sequence
-;//It sets a flag in any modal (always to the right of the link)
-;//It ensures that all sequence members have pointers to the first verb
 <TENSE-LINK-FLAG> = T
 =
 <F_L tense MODAL-FLAG> = T
 <F_R tense first_verb> = <F_L tense first_verb>
 ;
+; Inverse of TENSE_LIST_CONNECT2
+; Look how big Jim is.
 #TemplateActionAlg
 INV_TENSE_LIST_CONNECT2
-;//Inverse of TENSE_LIST_CONNECT2
-;//Look how big Jim is.
 <INV-TENSE-LINK-FLAG> = T
 =
 <F_R tense MODAL-FLAG> = T
