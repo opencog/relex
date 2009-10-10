@@ -272,10 +272,17 @@ TODO_TO_SF
 
 ;
 #TemplateActionAlg
-TODO_TO_SF
+QUANTITY_TO_SF
 <ref links _quantity> != %
 =
 <ref sf-links _num> = <ref links _quantity>
+
+;
+#TemplateActionAlg
+QUANTITY_TO_SF
+<ref links _measure_time> != %
+=
+<ref sf-links _measure> = <ref links _measure_time>
 
 
 ;///////////////////////////////////////////////////////////////////////

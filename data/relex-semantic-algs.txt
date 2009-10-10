@@ -1326,6 +1326,13 @@ NUMBER-MULT
 =
 <F_R ref links _quantity_mult> = <F_L ref>
 ;
+; "the birthday boy is 12 years old" - _measure_time(old, years)
+#TemplateActionAlg
+MEASURE-TIME
+<LAB> = \Yt\.*
+=
+<F_R ref links _measure_time> = <F_L ref>
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; POSSESSIVES aka GENITIVES
