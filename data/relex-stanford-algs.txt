@@ -51,10 +51,10 @@ SF_AUXPASS
 ; 
 ; Copulas
 ; Effects caused by the protein are important. -> cop(important-7, are-6)
-;
+; Bill is big. -> cop(big-3, is-2)
 #TemplateActionAlg
 SF_COP
-<LAB> = \Paf
+<LAB> = \Pa\.*
 =
 <F_R ref sf-links _cop> = <F_L ref>
 

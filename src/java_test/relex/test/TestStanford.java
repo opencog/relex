@@ -201,6 +201,10 @@ public class TestStanford
 			"nsubjpass(killed-3, Kennedy-1)\n" +
 			"auxpass(killed-3, got-2)");
 
+		rc &= ts.test_sentence ("Bill is big.",
+			"nsubj(big-3, Bill-1)\n" +
+			"cop(big-3, is-2)\n");
+
 		rc &= ts.test_sentence ("Bill is an honest man.",
 			"nsubj(man-5, Bill-1)\n" +
 			"cop(man-5, is-2)\n" +

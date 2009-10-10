@@ -187,6 +187,14 @@ He says that you like to swim.
       RelEx currently generates aux(swim-7, to-6) which seems
       reasonable to me.
 
+Bill is big.
+    Stanford output:
+       nsubj(big-3, Bill-1)
+       cop(big-3, is-2)
+    RelEx status: OK
+       (RelEx treats this as a predicative adjective, which
+       I think is more correct!)
+
 Bill is an honest man.
     Stanford output:
        nsubj(man-5, Bill-1)
