@@ -211,6 +211,12 @@ public class TestStanford
 			"det(man-5, an-3)\n" +
 			"amod(man-5, honest-4)");
 
+		rc &= ts.test_sentence ("What she said makes sense.",
+			"dobj(said-3, what-1)\n" +
+			"nsubj(said-3, she-2)\n" +
+			"csubj(makes-4, said-3)\n" +
+			"dobj(makes-4, sense-5)");
+
 
 /****************
 		rc &= ts.test_sentence ("He says that you like to swim.",

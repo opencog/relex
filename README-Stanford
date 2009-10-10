@@ -203,7 +203,21 @@ Bill is an honest man.
        amod(man-5, honest-4)
     RelEx status: OK
 
+What she said makes sense.
+    Stanford output:
+       dobj(said-3, What-1)
+       nsubj(said-3, she-2)
+       csubj(makes-4, said-3)
+       dobj(makes-4, sense-5)
+    RelEx status: OK
+
+
 Under construction:
+
+head-word $14 $5
+
+$5 - say is head for "say", she
+$14 - make is head for make, what, wall
 
 
 Under construction:
