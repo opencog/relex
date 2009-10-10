@@ -211,13 +211,19 @@ What she said makes sense.
        dobj(makes-4, sense-5)
     RelEx status: OK
 
+What she said is not true.
+    Stanford output:
+       dobj(said-3, What-1)
+       nsubj(said-3, she-2)
+       csubj(true-6, said-3)
+       cop(true-6, is-4)
+       neg(true-6, not-5)
+
 
 Under construction:
 
-head-word $14 $5
-
-$5 - say is head for "say", she
-$14 - make is head for make, what, wall
+neg --
+not $17
 
 
 Under construction:

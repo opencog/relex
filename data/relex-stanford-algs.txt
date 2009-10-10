@@ -59,6 +59,16 @@ SF_COP
 =
 <F_R ref sf-links _cop> = <F_L ref>
 
+;
+; Negatives
+#TemplateActionAlg
+SF_NEG
+<NEGATIVE-FLAG> != %
+<nameSource negation> != %
+=
+<sf-links _neg> = <nameSource negation ref>
+
+
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; ALTERNATIVES TO PREP MARKUP
@@ -306,13 +316,16 @@ SF_PREDADJ_TO_NSUBJ
 =
 <links _predadj sf-links _nsubj> = <>
 ;
-;
 ; Indicate clausal subjects as such.
 ; What she said makes sense. - csubj(makes-4, said-3)
 ;
-; The below is rather horridly complicated -- it tries to throw over
-; a csubj, and to blank out an nsubj as well.  There might be a better 
-; way, not sure.
+; The below is rather complicated -- it looks for a mis-compare
+; between the local head-word and the head-word of an object.
+; If there's a miscompare, then we've got a clausal subject.
+; The rest of the logic tires to estalish the proper clausal subject
+; as the head-word of the clause, and then to erase the existing 
+; subject (which isn't the head word)
+; Is there a better way?
 ;
 #TemplateActionAlg
 SF_NSUBJ_TO_CSUBJ

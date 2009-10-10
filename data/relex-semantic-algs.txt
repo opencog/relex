@@ -1431,13 +1431,15 @@ PREP_TO_LINKS
 ; NOT AND-SAFE
 ;
 ;
+; By using '+=' we can recognize double negatives by counting the T's
+; "negation" points at the actual word that is the negative.
 #TemplateActionAlg
 NEGATIVE1
-;//By using '+=' we can recognize double negatives by counting the T's
 <LAB> = \N\.*|\EB\.*
 <F_R str> = not
 =
 <F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
+<F_L tense first_verb head-word negation> += <F_R>
 ;
 #TemplateActionAlg
 NEGATIVE_CONTR1
@@ -1464,12 +1466,15 @@ NEGATIVE_CONTR3
 =
 <F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
 ;
+; "negation" points at the actual word that is the negative.
+;
 #TemplateActionAlg
 NEGATIVE_INF1
 <LAB> = \NT\.*
 <F_L str> = not
 =
 <F_R NEG-SYN-FLAG> = T
+<F_R negation> = <F_L>
 ;
 #TemplateActionAlg
 NEGATIVE_INF2
@@ -1477,6 +1482,7 @@ NEGATIVE_INF2
 <F_L NEG-SYN-FLAG> = T
 =
 <F_R tense first_verb head-word ref NEGATIVE-FLAG> += T
+<F_R tense first_verb head-word negation> += <F_L negation>
 ;
 #TemplateActionAlg
 NEGATIVE-IS-HYP

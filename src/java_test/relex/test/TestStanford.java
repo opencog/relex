@@ -217,6 +217,13 @@ public class TestStanford
 			"csubj(makes-4, said-3)\n" +
 			"dobj(makes-4, sense-5)");
 
+		rc &= ts.test_sentence ("What she said is not true.",
+			"dobj(said-3, what-1)\n" +
+			"nsubj(said-3, she-2)\n" +
+			"csubj(true-6, said-3)\n" +
+			"cop(true-6, is-4)\n" +
+			"neg(true-6, not-5)");
+
 
 /****************
 		rc &= ts.test_sentence ("He says that you like to swim.",
