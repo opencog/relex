@@ -286,3 +286,23 @@ SF_PREDADJ_TO_NSUBJ
 <links _predadj> != %
 =
 <links _predadj sf-links _nsubj> = <>
+;
+;///////////////////////////////////////////////////////////////////////
+;
+; Strange cpoluar hacks
+;
+; attributive:
+; An attributive is the complement of a copular verb such as 
+; “to be”, “to seem”, “to appear”.
+; XXX this needs a lot of work, probably.
+; What is that? ->  attr(is-2, What-1)
+#TemplateActionAlg
+SF_ATTR
+<LAB> = Ss*w
+=
+<F_R ref sf-links _attr> = <F_L ref>
+<F_R ref sf-links _nsubj> = %
+<F_R ref sf-links _nsubj> = <F_R ref sf-links _dobj>
+<F_R ref sf-links _dobj> = %
+
+

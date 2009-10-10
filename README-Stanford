@@ -129,8 +129,26 @@ Effects caused by the protein are important.
        agent(caused-2, protein-5)
        cop(important-7, are-6)
     RelEx status: OK
- 
 
+Sam, my brother, has arrived.
+    Stanford output:
+       nsubj(arrived-7, Sam-1)
+       poss(brother-4, my-3)
+       appos(Sam-1, brother-4)
+       aux(arrived-7, has-6)
+    RelEx status: OK
+
+What is that?
+    Stanford output:
+       attr(is-2, What-1)
+       nsubj(is-2, that-3)
+    RelEx status: OK
+
+       
+ 
+Under construction:
+
+Under construction:
 
 The garage is next to the house.
     Stanford output:

@@ -176,6 +176,9 @@ public class TestStanford
 			"appos(Sam-1, brother-4)\n" +
 			"aux(arrived-7, has-6)");
 
+		rc &= ts.test_sentence ("What is that?",
+			"attr(is-2, what-1)\n" +
+			"nsubj(is-2, that-3)");
 
 
 /****************
