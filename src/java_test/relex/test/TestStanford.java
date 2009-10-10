@@ -102,7 +102,7 @@ public class TestStanford
 			"appos(bird-2, robin-5)\n" +
 			"advmod(sang-7, sweetly-8)");
 
-		rc &= ts.test_sentence ("There is a place we can go.",
+		rc &= ts.test_sentence ("there is a place we can go.",
 			"expl(is-2, there-1)\n" +
 			"det(place-4, a-3)\n" +
 			"nsubj(is-2, place-4)\n" +
