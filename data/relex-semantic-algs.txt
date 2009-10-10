@@ -1326,6 +1326,32 @@ NUMBER-MULT
 =
 <F_R ref links _quantity_mult> = <F_L ref>
 ;
+; ---------------------------------------------------------------
+; Measures
+;
+; "the boy is 4 feet tall."
+#TemplateActionAlg
+MEASURE-SIZE
+<LAB> = \Ya\.*
+=
+<F_R ref links _measure_size> = <F_L ref>
+;
+; "the boy is 4 feet away."
+#TemplateActionAlg
+MEASURE-DISTANCE
+<LAB> = \Yd\.*
+=
+<F_R ref links _measure_distance> = <F_L ref>
+;
+;
+; "take these pilss 4 times a day."
+#TemplateActionAlg
+MEASURE-PER
+<LAB> = \Ys\.*
+=
+<F_L ref links _measure_per> = <F_R ref>
+;
+;
 ; "the birthday boy is 12 years old" - _measure_time(old, years)
 #TemplateActionAlg
 MEASURE-TIME
