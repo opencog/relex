@@ -170,6 +170,12 @@ public class TestStanford
 			"agent(caused-2, protein-5)\n" +
 			"cop(important-7, are-6)");
 
+		rc &= ts.test_sentence ("Sam, my brother, has arrived.",
+			"nsubj(arrived-7, Sam-1)\n" +
+			"poss(brother-4, my-3)\n" +
+			"appos(Sam-1, brother-4)\n" +
+			"aux(arrived-7, has-6)");
+
 
 
 /****************

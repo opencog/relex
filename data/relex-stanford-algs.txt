@@ -24,7 +24,7 @@ SF_DET
 ; "The accident happened as the night was falling." aux(falling-8, was-7)
 #TemplateActionAlg
 SF_AUX
-<LAB> = \I\.*|\Pg\.*b
+<LAB> = \I\.*|\Pg\.*b|\PP\.*
 =
 <F_R ref sf-links _aux> = <F_L ref>
 
@@ -225,6 +225,13 @@ NN_TO_SF
 <ref links _nn> != %
 =
 <ref sf-links _nn> = <ref links _nn>
+
+;
+#TemplateActionAlg
+POSS_TO_SF
+<ref links _poss> != %
+=
+<ref sf-links _poss> = <ref links _poss>
 
 
 ;///////////////////////////////////////////////////////////////////////
