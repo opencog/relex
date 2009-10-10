@@ -279,7 +279,28 @@ QUANTITY_TO_SF
 
 ;
 #TemplateActionAlg
-QUANTITY_TO_SF
+MEASURE_DISTANCE_TO_SF
+<ref links _measure_distance> != %
+=
+<ref sf-links _measure> = <ref links _measure_distance>
+
+;
+#TemplateActionAlg
+MEASURE_PER_TO_SF
+<ref links _measure_per> != %
+=
+<ref sf-links _measure> = <ref links _measure_per>
+
+;
+#TemplateActionAlg
+MEASURE_SIZE_TO_SF
+<ref links _measure_size> != %
+=
+<ref sf-links _measure> = <ref links _measure_size>
+
+;
+#TemplateActionAlg
+MEASURE_TIME_TO_SF
 <ref links _measure_time> != %
 =
 <ref sf-links _measure> = <ref links _measure_time>
