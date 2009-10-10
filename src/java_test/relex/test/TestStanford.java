@@ -201,6 +201,16 @@ public class TestStanford
 			"nsubjpass(killed-3, Kennedy-1)\n" +
 			"auxpass(killed-3, got-2)");
 
+/****************
+		rc &= ts.test_sentence ("He says that you like to swim.",
+			"nsubj(says-2, he-1)\n" +
+			"complm(like-5, that-3)\n" +
+			"nsubj(like-5, you-4)\n" +
+			"ccomp(says-2, like-5)\n" +
+			"nsubj(swim-7, to-6)\n" +   // NFW that this can be right.
+			"ccomp(like-5, swim-7)");
+***********/
+
 
 
 /****************

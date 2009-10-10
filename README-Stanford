@@ -175,12 +175,26 @@ Kennedy got killed.
        auxpass(killed-3, got-2)
     RelEx status: OK
 
+He says that you like to swim.
+    Stanford output:
+       nsubj(says-2, He-1)
+       complm(like-5, that-3)
+       nsubj(like-5, you-4)
+       ccomp(says-2, like-5)
+       nsubj(swim-7, to-6)
+       ccomp(like-5, swim-7)
+    RelEx status: Not testing. The "nsubj(swim, to)" seems insane to me
+      RelEx currently generates aux(swim-7, to-6) which seems
+      reasonable to me.
 
 
-
-       
- 
 Under construction:
+
+bzt:
+advcl(says-2, like-5)
+aux(swim-7, to-6)
+mark(like-5, that-3)
+
 
 Under construction:
 

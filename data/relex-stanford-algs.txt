@@ -73,7 +73,7 @@ SF_COP
 
 #TemplateActionAlg
 SF_ADVCL_OBJECT
-<LAB> = MVs|\TH\.*|\WN\.*
+<LAB> = MVs|\WN\.*
 <F_R head-word> != %
 =
 <F_L ref sf-links _advcl> = <F_R head-word ref>
@@ -85,7 +85,7 @@ SF_ADVCL_OBJECT
 ;
 #TemplateActionAlg
 SF_ADVCL_COMPLEMENT
-<LAB> = MVs|\TH\.*|\WN\.*
+<LAB> = MVs|\WN\.*
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _mark> = <F_R ref>
@@ -95,7 +95,7 @@ SF_ADVCL_COMPLEMENT
 ;  If you know who did it, you should tell the teacher. - advcl(tell-10, know-3)
 ;
 #TemplateActionAlg
-SF_ADVCL_OBJECT
+SF_ADVCL2_OBJECT
 <LAB> = \CO\.*
 <F_R head-word> != %
 <F_L head-word> != %
@@ -113,16 +113,27 @@ SF_ADVCL2_COMPLEMENT
 =
 <F_R head-word ref sf-links _mark> = <F_L ref>
 
-
-; 
+;
+; Clausal complement
 ; If you know who did it, you should tell the teacher. -  ccomp(know-3, did-5)
+; He says that you like to swim. - ccomp(says-2, like-5)
 ;
 #TemplateActionAlg
 SF_CLAUSAL_COMPLEMENT
-<LAB> = \QI\.*
+<LAB> = \QI\.*|\TH\.*
 <F_R head-word> != %
 =
 <F_L ref sf-links _ccomp> = <F_R head-word ref>
+<F_L DONT_SHOW_PREP> = T
+
+;
+#TemplateActionAlg
+SF_CLAUSAL_COMPLEMENTIZER
+<LAB> = \TH\.*
+<F_R head-word> != %
+=
+<F_R head-word ref sf-links _complm> = <F_R ref>
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;
@@ -235,6 +246,13 @@ POSS_TO_SF
 <ref links _poss> != %
 =
 <ref sf-links _poss> = <ref links _poss>
+
+;
+#TemplateActionAlg
+TODO_TO_SF
+<ref links _to-do> != %
+=
+<ref sf-links _ccomp> = <ref links _to-do>
 
 
 ;///////////////////////////////////////////////////////////////////////
