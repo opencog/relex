@@ -230,6 +230,13 @@ public class TestStanford
 			"aux(prefer-5, do-3)\n" +
 			"nsubj(prefer-5, you-4)");
 
+		rc &= ts.test_sentence ("there is a ghost in the room.",
+			"expl(is-2, there-1)\n" +
+			"det(ghost-4, a-3)\n" +
+			"nsubj(is-2, ghost-4)\n" +
+			"det(room-7, the-6)\n" +
+			"prep_in(is-2, room-7)");
+
 
 
 /****************

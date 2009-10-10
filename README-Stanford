@@ -234,6 +234,13 @@ Which book do you prefer?
     RelEx status: OK
 
 There is a ghost in the room.
+    Stanford output:
+       expl(is-2, There-1)
+       det(ghost-4, a-3)
+       nsubj(is-2, ghost-4)
+       det(room-7, the-6)
+       prep_in(is-2, room-7)
+       
 
 
 
