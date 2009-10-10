@@ -280,6 +280,13 @@ QUANTITY_TO_SF
 
 ;
 #TemplateActionAlg
+QUANTITY_MULT_TO_SF
+<ref links _quantity_mult> != %
+=
+<ref sf-links _number> = <ref links _quantity_mult>
+
+;
+#TemplateActionAlg
 MEASURE_DISTANCE_TO_SF
 <ref links _measure_distance> != %
 =

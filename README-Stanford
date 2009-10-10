@@ -278,6 +278,11 @@ Sam eats 3 sheep.
 
 I lost $ 3.2 billion.
     Stanford output:
+       nsubj(lost-2, I-1)
+       dobj(lost-2, $-3)
+       number($-3, 3.2-4)
+       number($-3, billion-5)
+
 
 
 Under construction:
