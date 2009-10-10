@@ -81,6 +81,17 @@ ADVCL2_COMPLEMENT
 <F_R head-word ref sf-links _mark> = <F_L ref>
 
 
+; 
+; If you know who did it, you should tell the teacher. -  ccomp(know-3, did-5)
+;
+#TemplateActionAlg
+CLAUSAL_COMPLEMENT
+<LAB> = \QI\.*
+<F_R head-word> != %
+=
+<F_L ref sf-links _ccomp> = <F_R head-word ref>
+
+
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER PREP LINKS TO SF-LINKS

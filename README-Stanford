@@ -108,20 +108,9 @@ If you know who did it, you should tell the teacher.
        dobj(tell-10, teacher-12)
 
 
+
+
 Under construction:
-       advcl(tell-10, know-3)
-       ccomp(know-3, did-5)
-
-if(tell, know)
-_to-do(should, tell) xxxx broken! should be ccomp
-
-head-word $23 $11 $6
-$23-tell -- head on wall, tell, should, 2nd you
-$11 - do head on who
-$6 know -- head on you,if
-
-the correct head word should be "tell" not "should"
-
 
 The garage is next to the house.
     Stanford output:
