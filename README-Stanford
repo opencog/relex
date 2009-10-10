@@ -257,12 +257,19 @@ She gave me a raise.
 
 Forces engaged in fighting after insurgents attacked.
     Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate mark.)
 
-       
-
-
+The director is 65 years old.
+    Stanford output:
+       det(director-2, The-1)
+       nsubj(old-6, director-2)
+       cop(old-6, is-3)
+       num(years-5, 65-4)
+       measure(old-6, years-5)
 
 Under construction:
+
 
 
 

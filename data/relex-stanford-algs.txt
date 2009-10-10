@@ -178,6 +178,10 @@ PREP_TO_SF
 ;
 ; TRANSFER LINKS TO SF-LINKS
 ;
+; These are relations which are more or less in 1-1 correspondance
+; with Relex relations. Just copy them over, and give them altered
+; names, as appropriate.
+;
 ; Stanford nsubj is just like relex subj
 #TemplateActionAlg
 SUBJ_TO_SF_LINKS
@@ -265,6 +269,13 @@ TODO_TO_SF
 <ref links _to-do> != %
 =
 <ref sf-links _ccomp> = <ref links _to-do>
+
+;
+#TemplateActionAlg
+TODO_TO_SF
+<ref links _quantity> != %
+=
+<ref sf-links _num> = <ref links _quantity>
 
 
 ;///////////////////////////////////////////////////////////////////////

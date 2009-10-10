@@ -243,8 +243,12 @@ public class TestStanford
 			"det(raise-5, a-4)\n" +
 			"dobj(gave-2, raise-5)");
 
-		// rc &= ts.test_sentence ("Forces engaged in fighting after insurgents attacked.",
-
+		rc &= ts.test_sentence ("The director is 65 years old.",
+			"det(director-2, the-1)\n" +
+			"nsubj(old-6, director-2)\n" +
+			"cop(old-6, is-3)\n" +
+			"num(years-5, 65-4)\n" +
+			"measure(old-6, years-5)");
 
 
 /****************
