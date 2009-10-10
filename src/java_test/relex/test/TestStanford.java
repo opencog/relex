@@ -163,6 +163,14 @@ public class TestStanford
 			"det(police-8, the-7)\n" +
 			"agent(killed-5, police-8)");
 
+		rc &= ts.test_sentence ("Effects caused by the protein are important.",
+			"nsubj(important-7, effects-1)\n" +
+			"partmod(Effects-1, caused-2)\n" +
+			"det(protein-5, the-4)\n" +
+			"agent(caused-2, protein-5)\n" +
+			"cop(important-7, are-6)");
+
+
 
 /****************
 		rc &= ts.test_sentence ("The garage is next to the house.",

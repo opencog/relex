@@ -233,6 +233,7 @@ SF_OBJ_TO_SUBJ
 
 ;
 ; Demote obj back to nsubjpass
+; "The man has been killed by the police." - nsubjpass(killed-5, man-2)
 ;
 #TemplateActionAlg
 SF_OBJ_TO_NSUBJPASS
@@ -242,3 +243,27 @@ SF_OBJ_TO_NSUBJPASS
 <ref sf-links _nsubjpass> = <ref sf-links _dobj>
 <ref sf-links _dobj> = %
 
+;
+; Demote obj back to partmod, and reverse the order of the dependency
+; Effects caused by the protein are important. - partmod(Effects-1, caused-2)
+;
+#TemplateActionAlg
+SF_OBJ_TO_PARTMOD
+<OBJ-LINK-TAG> = Mv
+<ref sf-links _dobj> != %
+=
+<ref sf-links _dobj sf-links _partmod> = <ref>
+<ref sf-links _dobj> = %
+
+;
+; Reverse the order of a predicateive adjective,
+; and convert to nusbj.
+; Effects caused by the protein are important. 
+; _predadj(effects, important) -> _nsubj (important, effects)
+; although this seems strange/broken to me.
+;
+#TemplateActionAlg
+SF_PREDADJ_TO_NSUBJ
+<links _predadj> != %
+=
+<links _predadj sf-links _nusbj> = <>

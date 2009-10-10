@@ -122,9 +122,16 @@ The man has been killed by the police.
     do too.
 
 Effects caused by the protein are important.
-
-
+    Stanford output:
+       nsubj(important-7, Effects-1)
+       partmod(Effects-1, caused-2)
+       det(protein-5, the-4)
+       agent(caused-2, protein-5)
+       cop(important-7, are-6)
+ 
 Under construction:
+       cop(important-7, are-6)
+
 
 
 The garage is next to the house.
