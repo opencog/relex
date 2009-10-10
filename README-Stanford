@@ -116,8 +116,13 @@ The man has been killed by the police.
        auxpass(killed-5, been-4)
        det(police-8, the-7)
        agent(killed-5, police-8)
-    Hmm ... but the above seems broken -- it leaves 
-    out "by" in the parse.
+    Relex status: OK.
+    Hmm ... but the above seems broken -- it leaves out "by" from the 
+    parse, using "agent" instead. Very strange! But that's what we'll
+    do too.
+
+Effects caused by the protein are important.
+
 
 Under construction:
 
