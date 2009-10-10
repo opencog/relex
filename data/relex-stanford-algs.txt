@@ -13,10 +13,11 @@
 ; these here.
 ;
 ; Explicit determiner markup
+; possesives are handled explicitly, so don't allow them here.
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
-<F_L str> = a|an|the
+<F_L orig-str> != my|our|thier|your
 =
 <F_R ref sf-links _det> = <F_L ref>
 ;

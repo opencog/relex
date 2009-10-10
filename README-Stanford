@@ -218,12 +218,27 @@ What she said is not true.
        csubj(true-6, said-3)
        cop(true-6, is-4)
        neg(true-6, not-5)
+    RelEx status: OK
+
+That she lied was suspected by everyone.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate csubjpass.)
+
+Which book do you prefer?
+    Stanford output:
+       det(book-2, Which-1)
+       dobj(prefer-5, book-2)
+       aux(prefer-5, do-3)
+       nsubj(prefer-5, you-4)
+    RelEx status: OK
+
+There is a ghost in the room.
+
 
 
 Under construction:
 
-neg --
-not $17
 
 
 Under construction:

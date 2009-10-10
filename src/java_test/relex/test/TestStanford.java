@@ -224,6 +224,13 @@ public class TestStanford
 			"cop(true-6, is-4)\n" +
 			"neg(true-6, not-5)");
 
+		rc &= ts.test_sentence ("Which book do you prefer?",
+			"det(book-2, which-1)\n" +
+			"dobj(prefer-5, book-2)\n" +
+			"aux(prefer-5, do-3)\n" +
+			"nsubj(prefer-5, you-4)");
+
+
 
 /****************
 		rc &= ts.test_sentence ("He says that you like to swim.",
