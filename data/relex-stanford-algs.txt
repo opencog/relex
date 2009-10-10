@@ -16,6 +16,7 @@
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
+<F_L str> = the|a
 =
 <F_R ref sf-links _det> = <F_L ref>
 ;
