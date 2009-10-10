@@ -165,7 +165,7 @@ public class TestStanford
 
 		rc &= ts.test_sentence ("Effects caused by the protein are important.",
 			"nsubj(important-7, effects-1)\n" +
-			"partmod(Effects-1, caused-2)\n" +
+			"partmod(effects-1, caused-2)\n" +
 			"det(protein-5, the-4)\n" +
 			"agent(caused-2, protein-5)\n" +
 			"cop(important-7, are-6)");
