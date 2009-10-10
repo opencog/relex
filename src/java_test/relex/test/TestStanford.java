@@ -237,6 +237,14 @@ public class TestStanford
 			"det(room-7, the-6)\n" +
 			"prep_in(is-2, room-7)");
 
+		rc &= ts.test_sentence ("She gave me a raise.",
+			"nsubj(gave-2, she-1)\n" +
+			"iobj(gave-2, me-3)\n" +
+			"det(raise-5, a-4)\n" +
+			"dobj(gave-2, raise-5)");
+
+		// rc &= ts.test_sentence ("Forces engaged in fighting after insurgents attacked.",
+
 
 
 /****************

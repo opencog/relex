@@ -240,6 +240,24 @@ There is a ghost in the room.
        nsubj(is-2, ghost-4)
        det(room-7, the-6)
        prep_in(is-2, room-7)
+    RelEx status: OK
+
+I don’t have anything to say.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate infmod.)
+
+She gave me a raise.
+    Stanford output:
+       nsubj(gave-2, She-1)
+       iobj(gave-2, me-3)
+       det(raise-5, a-4)
+       dobj(gave-2, raise-5)
+    RelEx status: OK
+
+Forces engaged in fighting after insurgents attacked.
+    Stanford output:
+
        
 
 
