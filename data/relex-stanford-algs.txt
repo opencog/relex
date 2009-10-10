@@ -48,9 +48,11 @@ SF_AUXPASS
 
 ;///////////////////////////////////////////////////////////////////////
 ;
-; ALTERNATE MARKUP
-; Relex generates advmod for some cases where Stanford generates nsubj.
-; Here, we have to untangle this stuff.
+; ALTERNATIVES TO PREP MARKUP
+; Relex generates prepositional relations, whereas Stanford tends
+; to discriminate more, frequently posting clauses and complements
+; distinctly.
+; Here, we untangle these.
 
 ; The preposition modifies the preceeding phrase
 ; "The accident happened as the night was falling."
@@ -58,7 +60,7 @@ SF_AUXPASS
 ; advcl(happened-3, falling-8)
 
 #TemplateActionAlg
-ADVCL_OBJECT
+SF_ADVCL_OBJECT
 <LAB> = MVs|\TH\.*|\WN\.*
 <F_R head-word> != %
 =
@@ -70,7 +72,7 @@ ADVCL_OBJECT
 ; "The accident happened as the night was falling." - mark(falling-8, as-4)
 ;
 #TemplateActionAlg
-ADVCL_COMPLEMENT
+SF_ADVCL_COMPLEMENT
 <LAB> = MVs|\TH\.*|\WN\.*
 <F_R head-word> != %
 =
@@ -81,7 +83,7 @@ ADVCL_COMPLEMENT
 ;  If you know who did it, you should tell the teacher. - advcl(tell-10, know-3)
 ;
 #TemplateActionAlg
-ADVCL_OBJECT
+SF_ADVCL_OBJECT
 <LAB> = \CO\.*
 <F_R head-word> != %
 <F_L head-word> != %
@@ -93,7 +95,7 @@ ADVCL_OBJECT
 ; If you know who did it, you should tell the teacher. -  mark(know-3, if-1)
 ;
 #TemplateActionAlg
-ADVCL2_COMPLEMENT
+SF_ADVCL2_COMPLEMENT
 <LAB> = \Cs
 <F_R head-word> != %
 =
@@ -104,11 +106,25 @@ ADVCL2_COMPLEMENT
 ; If you know who did it, you should tell the teacher. -  ccomp(know-3, did-5)
 ;
 #TemplateActionAlg
-CLAUSAL_COMPLEMENT
+SF_CLAUSAL_COMPLEMENT
 <LAB> = \QI\.*
 <F_R head-word> != %
 =
 <F_L ref sf-links _ccomp> = <F_R head-word ref>
+
+;///////////////////////////////////////////////////////////////////////
+;
+; ODDBALLS
+;
+; Here's an odd one: prep-by is turned into "agent"
+; e.g. "killed by police" - agent(killed, police)
+;
+#TemplateActionAlg
+SF_AGENT
+<prep-links by> != %
+=
+<sf-links _agent> = <prep-links by>
+<nameSource DONT_SHOW_PREP> = T
 
 
 ;///////////////////////////////////////////////////////////////////////
@@ -209,7 +225,7 @@ NN_TO_SF
 ;
 ;
 #TemplateActionAlg
-OBJ_TO_SUBJ
+SF_OBJ_TO_SUBJ
 <ref sf-links _expl> != %
 <ref sf-links _dobj> != %
 =
