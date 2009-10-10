@@ -126,7 +126,6 @@ SF_AGENT
 <sf-links _agent> = <prep-links by>
 <nameSource DONT_SHOW_PREP> = T
 
-
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER PREP LINKS TO SF-LINKS
@@ -222,14 +221,24 @@ NN_TO_SF
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; Re-label objects, based on subject
-;
+; "There is a place" - expl(is-2, There-1) nsubj(is-2, place-4)
 ;
 #TemplateActionAlg
 SF_OBJ_TO_SUBJ
-<ref sf-links _expl> != %
+<sf-links _expl> != %
+<sf-links _dobj> != %
+=
+<sf-links _nsubj> = <sf-links _dobj>
+<sf-links _dobj> = %
+
+;
+; Demote obj back to nsubjpass
+;
+#TemplateActionAlg
+SF_OBJ_TO_NSUBJPASS
+<OBJ-LINK-TAG> = Pv
 <ref sf-links _dobj> != %
 =
-<ref sf-links _nsubj> = <ref sf-links _dobj>
+<ref sf-links _nsubjpass> = <ref sf-links _dobj>
 <ref sf-links _dobj> = %
-
 

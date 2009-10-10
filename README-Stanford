@@ -56,7 +56,7 @@ There is a place we can go.
     RelEx status:
        Not testing this sentence, since stanford outputs a 
        "dep" which is not documented in thier manual.
-       Other than that, the parsee works.
+       Other than that, the parse works.
 
 The linebacker gave the quarterback a push.
     Stanford output:
@@ -120,10 +120,6 @@ The man has been killed by the police.
     out "by" in the parse.
 
 Under construction:
-       nsubjpass(killed-5, man-2)
-       agent(killed-5, police-8)
-
-
 
 
 The garage is next to the house.
