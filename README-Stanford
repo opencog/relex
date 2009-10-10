@@ -106,11 +106,25 @@ If you know who did it, you should tell the teacher.
        aux(tell-10, should-9)
        det(teacher-12, the-11)
        dobj(tell-10, teacher-12)
+    RelEx status: OK
 
-
-
+The man has been killed by the police.
+    Stanford output:
+       det(man-2, The-1)
+       nsubjpass(killed-5, man-2)
+       aux(killed-5, has-3)
+       auxpass(killed-5, been-4)
+       det(police-8, the-7)
+       agent(killed-5, police-8)
+    Hmm ... but the above seems broken -- it leaves 
+    out "by" in the parse.
 
 Under construction:
+       nsubjpass(killed-5, man-2)
+       agent(killed-5, police-8)
+
+
+
 
 The garage is next to the house.
     Stanford output:

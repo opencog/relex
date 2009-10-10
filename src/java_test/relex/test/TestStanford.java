@@ -154,6 +154,16 @@ public class TestStanford
 			"det(teacher-12, the-11)\n" +
 			"dobj(tell-10, teacher-12)");
 
+		// agent example from Stanford docs
+		rc &= ts.test_sentence ("The man has been killed by the police.",
+			"det(man-2, the-1)\n" +
+			"nsubjpass(killed-5, man-2)\n" +
+			"aux(killed-5, has-3)\n" +
+			"auxpass(killed-5, been-4)\n" +
+			"det(police-8, the-7)\n" +
+			"agent(killed-5, police-8)");
+
+
 /****************
 		rc &= ts.test_sentence ("The garage is next to the house.",
 			"det(garage-2, the-1)\n" +

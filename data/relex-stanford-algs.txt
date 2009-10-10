@@ -1,5 +1,5 @@
 ;
-; relex stanford-algs.txt
+; relex-stanford-algs.txt
 ;
 ; Rules to extract Stanford-parser-style relationships.
 ; The goal here is to be as compatible with the Stanford
@@ -7,9 +7,10 @@
 ;
 ;///////////////////////////////////////////////////////////////////////
 ;
-; GENERATE SF RELATIONS
-; Stanford parser generates some relations which relex does not.
-; Generate these.
+; GENERATE BASIC SF RELATIONS
+; Stanford parser generates some relations which RelEx does not.
+; This includes det, aux and auxpass. These qre quire simple. Generate
+; these here.
 ;
 ; Explicit determiner markup
 #TemplateActionAlg
@@ -26,6 +27,24 @@ SF_AUX
 <LAB> = \I\.*|\Pg\.*b
 =
 <F_R ref sf-links _aux> = <F_L ref>
+
+;
+; "has been killed" - aux(killed, has)
+#TemplateActionAlg
+SF_AUX2
+<LAB> = \PPf
+<F_L head-word> != %
+=
+<F_L head-word ref sf-links _aux> = <F_L ref>
+
+;
+; "has been killed" - auxpass(killed, been)
+#TemplateActionAlg
+SF_AUXPASS
+<LAB> = \Pv
+=
+<F_R ref sf-links _auxpass> = <F_L ref>
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;
