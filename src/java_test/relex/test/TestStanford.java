@@ -180,6 +180,28 @@ public class TestStanford
 			"attr(is-2, what-1)\n" +
 			"nsubj(is-2, that-3)");
 
+		rc &= ts.test_sentence ("Reagan has died.",
+			"nsubj(died-3, Reagan-1)\n" +
+			"aux(died-3, has-2)");
+
+		rc &= ts.test_sentence ("He should leave.",
+			"nsubj(leave-3, he-1)\n" +
+			"aux(leave-3, should-2)");
+
+		rc &= ts.test_sentence ("Kennedy has been killed.",
+			"nsubjpass(killed-4, Kennedy-1)\n" +
+			"aux(killed-4, has-2)\n" +
+			"auxpass(killed-4, been-3)");
+
+		rc &= ts.test_sentence ("Kennedy was killed.",
+			"nsubjpass(killed-3, Kennedy-1)\n" +
+			"auxpass(killed-3, was-2)");
+
+		rc &= ts.test_sentence ("Kennedy got killed.",
+			"nsubjpass(killed-3, Kennedy-1)\n" +
+			"auxpass(killed-3, got-2)");
+
+
 
 /****************
 		rc &= ts.test_sentence ("The garage is next to the house.",

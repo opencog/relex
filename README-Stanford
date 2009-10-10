@@ -144,6 +144,40 @@ What is that?
        nsubj(is-2, that-3)
     RelEx status: OK
 
+Reagan has died.
+    Stanford output:
+       nsubj(died-3, Reagan-1)
+       aux(died-3, has-2)
+    RelEx status: OK
+
+He should leave.
+    Stanford output:
+       nsubj(leave-3, He-1)
+       aux(leave-3, should-2)
+    RelEx status: OK
+
+Kennedy has been killed.
+    Stanford output:
+       nsubjpass(killed-4, Kennedy-1)
+       aux(killed-4, has-2)
+       auxpass(killed-4, been-3)
+    RelEx status: OK
+
+Kennedy was killed.
+    Stanford output:
+       nsubjpass(killed-3, Kennedy-1)
+       auxpass(killed-3, was-2)
+    RelEx status: OK
+
+Kennedy got killed.
+    Stanford output:
+       nsubjpass(killed-3, Kennedy-1)
+       auxpass(killed-3, got-2)
+    RelEx status: OK
+
+
+
+
        
  
 Under construction:
