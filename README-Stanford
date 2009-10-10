@@ -267,6 +267,18 @@ The director is 65 years old.
        cop(old-6, is-3)
        num(years-5, 65-4)
        measure(old-6, years-5)
+    RelEx status: OK
+
+Sam eats 3 sheep.
+    Stanford output:
+       nsubj(eats-2, Sam-1)
+       num(sheep-4, 3-3)
+       dobj(eats-2, sheep-4)
+    RelEx status: OK
+
+I lost $ 3.2 billion.
+    Stanford output:
+
 
 Under construction:
 

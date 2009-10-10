@@ -250,6 +250,11 @@ public class TestStanford
 			"num(years-5, 65-4)\n" +
 			"measure(old-6, years-5)");
 
+		rc &= ts.test_sentence ("Sam eats 3 sheep.",
+			"nsubj(eats-2, Sam-1)\n" +
+			"num(sheep-4, 3-3)\n" +
+			"dobj(eats-2, sheep-4)");
+
 
 /****************
 		rc &= ts.test_sentence ("He says that you like to swim.",
