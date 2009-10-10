@@ -58,6 +58,18 @@ ADVCL_COMPLEMENT
 <F_R head-word ref sf-links _mark> = <F_R ref>
 
 
+;
+;  If you know who did it, you should tell the teacher. - advcl(tell-10, know-3)
+;
+#TemplateActionAlg
+ADVCL_OBJECT
+<LAB> = \CO\.*
+<F_R head-word> != %
+<F_L head-word> != %
+=
+<F_R head-word ref sf-links _advcl> = <F_L head-word ref>
+<F_R head-word DONT_SHOW_PREP> = T
+
 ; 
 ; If you know who did it, you should tell the teacher. -  mark(know-3, if-1)
 ;
