@@ -55,6 +55,7 @@ SF_AUXPASS
 #TemplateActionAlg
 SF_COP
 <LAB> = \Pa\.*
+<F_L str> = be
 =
 <F_R ref sf-links _cop> = <F_L ref>
 
