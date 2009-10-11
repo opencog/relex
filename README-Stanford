@@ -17,6 +17,25 @@ It can be enabled with the --stanford flag, passed to
 RelationExtractor. So for example, edit "relation-extractor.sh"
 and add "--stanford" to the command line there.
 
+A set of test sentences, testing operation of the current parser,
+are documented below. An automated test case, testing compatibility,
+can be run by issueing the command "ant test", which will compile and
+run src/java_test/relex/test/TestStanford.java.
+
+Version
+-------
+The notes below are all relative to the version of the Stanford parser 
+that is available at the time of this writing. Namely, this is the
+version labelled as:
+
+    Stanford Lexicalized Parser v1.6.1 - 19 Oct 2008.
+
+The ruling documentation is taken to be:
+
+   Stanford typed dependencies manual, Marie-Catherine de Marneffe
+   and Christopher D. Manning September 2008, available at:
+   http://nlp.stanford.edu/software/dependencies_manual.pdf
+
 
 Test sentences
 --------------
@@ -341,6 +360,16 @@ About 200 people came to the party.
     RelEx status: OK
 
 ---------------------------------------
+
+I saw the book which you bought.
+    Stanford output:
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate ref. Instead, it
+       is gnerating rel, exactly the same as below. No surprise,
+       since syntactically, these sentences are identical.
+    RelEx status: OK
+       (I.e. reelex is generatng exactly the same thing as the 
+       stanford parser currently is.)
 
 I saw the man who you love.
     Stanford output:
