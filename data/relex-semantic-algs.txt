@@ -1315,6 +1315,12 @@ NUMBER-1
 <F_R ref links _quantity> = <F_L ref>
 ;
 #TemplateActionAlg
+NUMBER-2
+<LAB> = \NM\.*
+=
+<F_L ref links _quantity> = <F_R ref>
+;
+#TemplateActionAlg
 NUMBER-MOD
 <LAB> = \EN\.*
 =

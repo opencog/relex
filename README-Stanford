@@ -283,6 +283,15 @@ I lost $ 3.2 billion.
        number($-3, 3.2-4)
        number($-3, billion-5)
 
+    RelEx status: 
+       I don't get it. There's a subtle distinction between num and
+       number that stanford is making that I dont' understand.  RelEx
+       currently generates:
+          number(billion-5, 3-4)
+          num($-3, billion-5)
+
+    
+
 
 
 Under construction:
