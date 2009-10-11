@@ -298,6 +298,8 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		// Inflections may be one letter, or they may be longer.
 		// Link-grammar calls these "word subscripts"; perhaps we should
 		// stop mis-using the term "inflection" here ... 
+		// Note that numerical quantities might have a perion in them,
+		// e.g. 3.2 million. Don't treat numerics as inlections.
 		int len = wordString.length();
 		int dot = wordString.lastIndexOf('.');
 		if ((2 < len) && (dot == len-2))
@@ -341,15 +343,38 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				case 'u':  setMeasure(ths); break; // u == unit
 			}
 
-			setInflection(ths, "." + inflection);
+			// Don't do it if its a number!
+			switch(inflection)
+			{
+				case '0':  
+				case '1':  
+				case '2':  
+				case '3':  
+				case '4':  
+				case '5':  
+				case '6':  
+				case '7':  
+				case '8':  
+				case '9': break;
+				default:
+					setInflection(ths, "." + inflection);
+			}
 		}
 		else
 		{
 			setPOS(ths, POS_WORD);
 		}
+
 		if ((0 < dot) && (dot != len-1))
 		{
-			wordString = wordString.substring(0, dot);
+			// Don't truncate, if its a number!
+			// There will be an exception thrown, if
+			// the subscript isn't pure numeric ...
+			String w = wordString.substring(0, dot);
+			try { new java.math.BigInteger(w); }
+			catch (NumberFormatException ex) {
+				wordString = w;
+			}
 		}
 
 		// Words that are unknown to link grammar, or run through its

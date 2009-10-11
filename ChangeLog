@@ -17,6 +17,7 @@ New in version 1.1.1 (xxx?? 2009)
  * Remove garbage generated for certain questions, e.g. "Where is the ball?"
  * Fix cases where direct, indirect object reversed.
  * Fix handling of future tense in certain cases.
+ * Fix faulty printing of certain numeric quantities.
 
 New in version 1.1.0 (2 July 2009)
  * Fix crash when generating scheme frames for opencog.
