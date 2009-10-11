@@ -312,7 +312,7 @@ I sat on the chair.
     RelEx status:
        (Relex is currently producing the same results as Stanford.)
 
-We went to thier offices to get Bill's clothes.
+We went to their offices to get Bill's clothes.
     Stanford output:
        nsubj(went-2, We-1)
        xsubj(get-7, We-1)
@@ -322,14 +322,26 @@ We went to thier offices to get Bill's clothes.
        xcomp(went-2, get-7)
        poss(clothes-10, Bill-8)
        dobj(get-7, clothes-10)
-
-
+    RelEx status:
 Under construction:
-
        xsubj(get-7, We-1)
        xcomp(went-2, get-7)
 prep_to2(went-2, get-7)
 
+
+Tom likes to eat fish.
+    Stanford output:
+       nsubj(likes-2, Tom-1)
+       xsubj(eat-4, Tom-1)
+       aux(eat-4, to-3)
+       xcomp(likes-2, eat-4)
+       dobj(eat-4, fish-5)
+    RelEx status:
+
+
+
+Under construction:
+       xsubj(eat-4, Tom-1)
 
 
 
