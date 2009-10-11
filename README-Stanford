@@ -371,8 +371,7 @@ They shut down the station.
        prt(shut-2, down-3)
        det(station-5, the-4)
        dobj(shut-2, station-5)
-
-
+    RelEx status: OK
 
 Go home!
     Stanford output:

@@ -78,6 +78,7 @@ SF_REL
 =
 <F_R head-word ref sf-links _rel> = <F_R ref>
 
+;
 ; relative clause modifier
 #TemplateActionAlg
 SF_RCMOD
@@ -85,6 +86,15 @@ SF_RCMOD
 <F_R head-word> != %
 =
 <F_L ref sf-links _rcmod> = <F_R head-word ref>
+
+;
+; Particles
+#TemplateActionAlg
+SF_PRT
+<LAB> = K
+=
+<F_L ref sf-links _prt> = <F_R ref>
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;
