@@ -290,7 +290,15 @@ I lost $ 3.2 billion.
           number(billion-5, 3-4)
           num($-3, billion-5)
 
-    
+Truffles picked during the spring are tasty.
+    Stanford output:
+       nsubj(tasty-7, Truffles-1)
+       partmod(Truffles-1, picked-2)
+       det(spring-5, the-4)
+       prep_during(picked-2, spring-5)
+       cop(tasty-7, are-6)
+    RelEx status: OK
+
 
 
 

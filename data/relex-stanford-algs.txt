@@ -313,6 +313,13 @@ MEASURE_TIME_TO_SF
 =
 <ref sf-links _measure> = <ref links _measure_time>
 
+;
+#TemplateActionAlg
+PARATAXIS_TO_SF
+<ref links _parataxis> != %
+=
+<ref sf-links _parataxis> = <ref links _parataxis>
+
 
 ;///////////////////////////////////////////////////////////////////////
 ;

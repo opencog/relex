@@ -264,6 +264,13 @@ public class TestStanford
 			"number($-3, billion-5)");
 ***********/
 
+		rc &= ts.test_sentence ("Truffles picked during the spring are tasty.",
+			"nsubj(tasty-7, truffles-1)\n" +
+			"partmod(truffles-1, picked-2)\n" +
+			"det(spring-5, the-4)\n" +
+			"prep_during(picked-2, spring-5)\n" +
+			"cop(tasty-7, are-6)");
+
 
 
 /****************
