@@ -22,11 +22,19 @@ are documented below. An automated test case, testing compatibility,
 can be run by issueing the command "ant test", which will compile and
 run src/java_test/relex/test/TestStanford.java.
 
+The current RelEx implementation, and the notes below, are all relative
+to the version of the Stanford parser that is available at the time of 
+this writing.  RelEx is attempting to be functionally compatible, while
+using the documentation as a guide.  There are a number of areas where
+the actual operation of the Stanford parser does not match the
+documentation for it -- it either fails to generate the markup as
+claimed, or it generates undocumented dependencies.  Thus, creating
+"compatibility" is somewhat of an inexact science. The status of 
+various test sentences are reviewed below.
+
 Version
 -------
-The notes below are all relative to the version of the Stanford parser 
-that is available at the time of this writing. Namely, this is the
-version labelled as:
+The current Stanford parser version is labelled as:
 
     Stanford Lexicalized Parser v1.6.1 - 19 Oct 2008.
 
@@ -39,9 +47,11 @@ The ruling documentation is taken to be:
 
 Test sentences
 --------------
-A list of test sentences, and status.
-These are tested automatically by running "ant test", which runs the
-test case "TestStanford.java".
+A list of test sentences, and status. Many/most of these sentences are
+taken from the examples provided in the Stanford documentation.
+
+The parsing of these sentences are tested automatically by running 
+"ant test", which runs the test case "TestStanford.java".
 
 Who invented sliced bread?
     Stanford output:
@@ -212,8 +222,8 @@ Bill is big.
        nsubj(big-3, Bill-1)
        cop(big-3, is-2)
     RelEx status: OK
-       (RelEx treats this as a predicative adjective, which
-       I think is more correct!)
+       (This is an example where the use of the predicative adjective
+       would have been more conceptually correct!)
 
 Bill is an honest man.
     Stanford output:
@@ -242,8 +252,9 @@ What she said is not true.
 
 That she lied was suspected by everyone.
     Stanford output:
-       (Stanford is not outputting what the documentation says it
-        should -- it was supposed to illustrate csubjpass.)
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate csubjpass.
+    RelEx status: nominal
 
 Which book do you prefer?
     Stanford output:
@@ -264,8 +275,9 @@ There is a ghost in the room.
 
 I don’t have anything to say.
     Stanford output:
-       (Stanford is not outputting what the documentation says it
-        should -- it was supposed to illustrate infmod.)
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate infmod.
+    RelEx status: nominal
 
 She gave me a raise.
     Stanford output:
@@ -277,8 +289,9 @@ She gave me a raise.
 
 Forces engaged in fighting after insurgents attacked.
     Stanford output:
-       (Stanford is not outputting what the documentation says it
-        should -- it was supposed to illustrate mark.)
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate mark.
+    RelEx status: nominal
 
 The director is 65 years old.
     Stanford output:
@@ -303,12 +316,13 @@ I lost $ 3.2 billion.
        number($-3, 3.2-4)
        number($-3, billion-5)
 
-    RelEx status: 
+    RelEx status: nominal
        I don't get it. There's a subtle distinction between num and
-       number that stanford is making that I dont' understand.  RelEx
+       number that Stanford is making that I dont' understand.  RelEx
        currently generates:
-          number(billion-5, 3-4)
+          number(billion-5, 3.2-4)
           num($-3, billion-5)
+       which I think is more correct.
 
 Truffles picked during the spring are tasty.
     Stanford output:
@@ -322,16 +336,16 @@ Truffles picked during the spring are tasty.
 We have no information on whether users are at risk.
 They heard about you missing classes.
     Stanford output:
-       (Stanford is not outputting what the documentation says it
-        should -- it was supposed to illustrate pcomp.)
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate pcomp.
     RelEx status: nominal
 
 I sat on the chair.
     Stanford output:
-       (Stanford is not outputting what the documentation says it
-        should -- it was supposed to illustrate pobj.)
-    RelEx status:
-       (Relex is currently producing the same results as Stanford.)
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate pobj.
+    RelEx status: nominal
+       Relex is currently producing the same results as Stanford.
 
 We went to their offices to get Bill's clothes.
     Stanford output:
@@ -350,6 +364,30 @@ Under construction:
 prep_to2(went-2, get-7)
 
 ------------------------------------------
+
+They shut down the station.
+    Stanford output:
+       nsubj(shut-2, They-1)
+       prt(shut-2, down-3)
+       det(station-5, the-4)
+       dobj(shut-2, station-5)
+
+
+
+Go home!
+    Stanford output:
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate punct.
+    RelEx status: nominal
+
+He talked to him in order to secure the account.
+    Stanford output:
+       Stanford is not outputting what the documentation says it
+       should -- it was supposed to illustrate purpcl.
+    RelEx status: nominal
+        xxx relex gets xcomp wrong here, and needs an xsubj
+
+
 About 200 people came to the party.
     Stanford output:
        quantmod(200-2, About-1)
@@ -359,8 +397,6 @@ About 200 people came to the party.
        prep_to(came-4, party-7)
     RelEx status: OK
 
----------------------------------------
-
 I saw the book which you bought.
     Stanford output:
        Stanford is not outputting what the documentation says it
@@ -368,7 +404,7 @@ I saw the book which you bought.
        is gnerating rel, exactly the same as below. No surprise,
        since syntactically, these sentences are identical.
     RelEx status: OK
-       (I.e. reelex is generatng exactly the same thing as the 
+       (I.e. relex is generatng exactly the same thing as the 
        stanford parser currently is.)
 
 I saw the man who you love.
@@ -409,7 +445,6 @@ He says that you like to swim.
         should -- it was supposed to illustrate xcomp.)
     RelEx status: nominal
 
-
 I am ready to leave.
     Stanford output:
        nsubj(ready-3, I-1)
@@ -417,8 +452,6 @@ I am ready to leave.
        aux(leave-5, to-4)
        xcomp(ready-3, leave-5)
     RelEx status: OK
-
-
 
 Tom likes to eat fish.
     Stanford output:

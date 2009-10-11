@@ -286,14 +286,18 @@ public class TestStanford
 ***********/
 // ----------------------------------------------
 
+		rc &= ts.test_sentence ("They shut down the station.",
+			"nsubj(shut-2, They-1)\n" +
+			"prt(shut-2, down-3)\n" +
+			"det(station-5, the-4)\n" +
+			"dobj(shut-2, station-5)");
+
 		rc &= ts.test_sentence ("About 200 people came to the party.",
 			"quantmod(200-2, about-1)\n" +
 			"num(people-3, 200-2)\n" +
 			"nsubj(came-4, people-3)\n" +
 			"det(party-7, the-6)\n" +
 			"prep_to(came-4, party-7)");
-
-// ----------------------------------------------
 
 		rc &= ts.test_sentence ("I saw the man who you love.",
 			"nsubj(saw-2, I-1)\n" +
@@ -334,9 +338,6 @@ public class TestStanford
 			"aux(eat-4, to-3)\n" +
 			"xcomp(likes-2, eat-4)\n" +
 			"dobj(eat-4, fish-5)");
-
-
-
 
 
 /****************
