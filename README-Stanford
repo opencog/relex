@@ -304,6 +304,7 @@ They heard about you missing classes.
     Stanford output:
        (Stanford is not outputting what the documentation says it
         should -- it was supposed to illustrate pcomp.)
+    RelEx status: nominal
 
 I sat on the chair.
     Stanford output:
@@ -327,6 +328,46 @@ Under construction:
        xsubj(get-7, We-1)
        xcomp(went-2, get-7)
 prep_to2(went-2, get-7)
+
+------------------------------------------
+About 200 people came to the party.
+    Stanford output:
+       quantmod(200-2, About-1)
+       num(people-3, 200-2)
+       nsubj(came-4, people-3)
+       det(party-7, the-6)
+       prep_to(came-4, party-7)
+    RelEx status: OK
+
+---------------------------------------
+
+I saw the man whose wife you love.
+    Stanford output:
+       nsubj(saw-2, I-1)
+       det(man-4, the-3)
+       dobj(saw-2, man-4)
+       poss(wife-6, whose-5)
+       dobj(love-8, wife-6)
+       rel(love-8, wife-6)
+       nsubj(love-8, you-7)
+       rcmod(man-4, love-8)
+    RelEx status: Broken
+       Currently link-grammar is broken, it needs fixing on this one.
+       XXX
+
+
+Last night, I swam in the pool.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate tmod.)
+    RelEx status: nominal
+
+He says that you like to swim.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate xcomp.)
+    RelEx status: nominal
+
 
 I am ready to leave.
     Stanford output:

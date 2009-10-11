@@ -280,6 +280,33 @@ public class TestStanford
 			"xcomp(went-2, get-7)\n" +
 			"poss(clothes-10, Bill-8)\n" +
 			"dobj(get-7, clothes-10)");
+// ----------------------------------------------
+
+		rc &= ts.test_sentence ("About 200 people came to the party.",
+			"quantmod(200-2, about-1)\n" +
+			"num(people-3, 200-2)\n" +
+			"nsubj(came-4, people-3)\n" +
+			"det(party-7, the-6)\n" +
+			"prep_to(came-4, party-7)");
+
+// ----------------------------------------------
+
+/****************
+ * Currently link-grammar is broken on this one. 
+ * Link-grammar need fixing, and then relex.
+ *
+		rc &= ts.test_sentence ("I saw the man whose wife you love.",
+			"nsubj(saw-2, I-1)\n" +
+			"det(man-4, the-3)\n" +
+			"dobj(saw-2, man-4)\n" +
+			"poss(wife-6, whose-5)\n" +
+			"dobj(love-8, wife-6)\n" +
+			"rel(love-8, wife-6)\n" +
+			"nsubj(love-8, you-7)\n" +
+			"rcmod(man-4, love-8)");
+***********/
+
+		// rc &= ts.test_sentence ("He says that you like to swim.",
 
 		rc &= ts.test_sentence ("I am ready to leave.",
 			"nsubj(ready-3, I-1)\n" +
