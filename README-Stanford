@@ -39,6 +39,20 @@ It can be configured to use one of several different ranking algorithms.
 Thus, the "top-most" parse, used by the test case, is subject to change
 depending on the ranking algorithm.
 
+
+Issues:
+-------
+The stanford parser has several different operational modes, wherein
+it generates different relations, dependeing on the mode. A fair number
+of the relations, including csubjpass, infmod, pcomp, possessive, punct,
+purpcl, tmod and xcomp, are not generated in the default mode.  At this 
+time RelEx is attempting to be compatible only with the default mode.
+
+At this time, link-grammar handles conjunctions in a novel way.
+These are not percolated up to RelEx in a proper manner, and are
+thus are mostly not handled. 
+
+
 Version
 -------
 The current Stanford parser version is labelled as:
@@ -370,7 +384,6 @@ Under construction:
        xcomp(went-2, get-7)
 prep_to2(went-2, get-7)
 
-------------------------------------------
 All the boys are here.
     Stanford output:
        predet(boys-3, All-1)
