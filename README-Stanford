@@ -14,7 +14,8 @@ This is an interesting thing to do, for two reasons:
 
 The compatibility mode is currently experimental and VERY incomplete.
 It can be enabled with the --stanford flag, passed to
-RelationExtractor.java
+RelationExtractor. So for example, edit "relation-extractor.sh"
+and add "--stanford" to the command line there.
 
 
 Test sentences

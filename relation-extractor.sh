@@ -5,10 +5,27 @@
 # This provides a basic demo of the RelEx abilities.
 #
 # Flags:
-# RelationExtractor [-s Sentence (in quotes)] [-h (show this help)] 
-# [-t (show parse tree)] [-l (show parse links)] 
-# [-o (show opencog S-exp output)] [-v verbose]
-# [-n parse-number] [--maxParses N] [--maxParseSeconds N]
+# RelationExtractor [-a (perform anaphora resolution)] 
+# [-c (show plain output)]
+# [-f (show frame output)] 
+# [-g (use GATE entity detector)]
+# [-h (show this help)] 
+# [-l (show parse links)]
+# [-m (show parse metadata)] 
+# [--maxParseSeconds N]
+# [-n max number of parses to display] 
+# [-o (show opencog scheme output)] 
+# [--pa (show phrase-based lexical chunks)] 
+# [--pb (show pattern-based lexical chunks)]
+# [--pc (show relational lexical chunks)] 
+# [--prolog (show prolog output)] 
+# [-q (do NOT show relations)] 
+# [-r (show raw output)] 
+# [-s Sentence (in quotes)] 
+# [--stanford (generate stanford-compatible output)]
+# [-t (show parse tree)] 
+# [-v (verbose, full graph output)] 
+
 
 export LANG=en_US.UTF-8
 
