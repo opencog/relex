@@ -18,7 +18,7 @@
 SF_DET
 <LAB> = \D\.*
 <LAB> != Dmcn
-<F_L orig_str> != my|our|their|your
+<F_L orig_str> != my|our|their|your|'s
 =
 <F_R ref sf-links _det> = <F_L ref>
 ;
