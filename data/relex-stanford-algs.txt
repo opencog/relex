@@ -95,7 +95,6 @@ SF_PRT
 =
 <F_L ref sf-links _prt> = <F_R ref>
 
-
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; ALTERNATIVES TO PREP MARKUP
@@ -351,6 +350,13 @@ PARATAXIS_TO_SF
 <ref links _parataxis> != %
 =
 <ref sf-links _parataxis> = <ref links _parataxis>
+
+;
+#TemplateActionAlg
+PREDET_TO_SF
+<ref links _predet> != %
+=
+<ref sf-links _predet> = <ref links _predet>
 
 
 ;///////////////////////////////////////////////////////////////////////

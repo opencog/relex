@@ -287,8 +287,17 @@ public class TestStanford
 // ----------------------------------------------
 
 /****************
+		rc &= ts.test_sentence ("All the boys are here.",
+			"predet(boys-3, all-1)\n" +
+			"det(boys-3, the-2)\n" +
+			"nsubj(are-4, boys-3)\n" +
+			"advmod(are-4, here-5)");
+***********/
+
+/****************
  * These are ambiguous parses.
  * Stanford picks the opposite choice from Relex.
+ * See the README for a discussion.
 		rc &= ts.test_sentence ("I saw a cat in a hat.",
 			"nsubj(saw-2, I-1)\n" +
 			"det(cat-4, a-3)\n" +

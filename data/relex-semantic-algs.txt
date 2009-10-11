@@ -14,6 +14,11 @@
 ;  2. Special O*i construction: It is Jane who wants to do it.
 ;  3. VERB_INF / PAST PART alg?
 ;  4. R exception for "even" and "only"
+;  5. NP subjects with predeterminers are not handled correctly.
+;     Specifically, "All the boys are here" needs to identify "boys"
+;     as subject, not "all". Instead, link-grammar treats "all" as the 
+;     subject, and "boys" as the prepositional object. Which is .. curious.
+;     Anyway, this is not how the stanford parser does it ... 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1115,6 +1120,20 @@ ADJ2
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
 ;
+; Predeterminer
+; All the boys are here. - _predet(boy, all)
+; XXX FIXME .. this is kind of shaky. The problem is that
+; "boy" needs to be identified as the head-noun, and its not.
+; Thus, the subject is being identified as "all" instead of "boy"
+;
+; linkR1 = Jp
+#TemplateActionAlg
+PREDET
+<LAB> = \AL\.*
+<F_L linkR1 LAB> = \J\.*
+=
+<F_L linkR1 F_R ref links _predet> = <F_L ref> 
+
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; SUPERLATIVES
