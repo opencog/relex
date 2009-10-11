@@ -328,6 +328,15 @@ Under construction:
        xcomp(went-2, get-7)
 prep_to2(went-2, get-7)
 
+I am ready to leave.
+    Stanford output:
+       nsubj(ready-3, I-1)
+       cop(ready-3, am-2)
+       aux(leave-5, to-4)
+       xcomp(ready-3, leave-5)
+    RelEx status: OK
+
+
 
 Tom likes to eat fish.
     Stanford output:

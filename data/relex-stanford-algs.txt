@@ -433,10 +433,12 @@ SF_NSUBJ_COP
 
 ;
 ; Tom likes to eat fish. - xsubj(eat-4, Tom-1)
+; I am ready to leave -- xsubj should not be generated, causeof cop.
 ; 
 #TemplateActionAlg
 SF_XSUBJ
 <LAB> = TO
+<F_L head-word ref sf-links _cop> = %
 =
 <F_R head-word ref sf-links _xsubj> = <F_L ref sf-links _nsubj>
 

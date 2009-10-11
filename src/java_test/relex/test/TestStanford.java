@@ -281,6 +281,12 @@ public class TestStanford
 			"poss(clothes-10, Bill-8)\n" +
 			"dobj(get-7, clothes-10)");
 
+		rc &= ts.test_sentence ("I am ready to leave.",
+			"nsubj(ready-3, I-1)\n" +
+			"cop(ready-3, am-2)\n" +
+			"aux(leave-5, to-4)\n" +
+			"xcomp(ready-3, leave-5)");
+
 		rc &= ts.test_sentence ("Tom likes to eat fish.",
 			"nsubj(likes-2, Tom-1)\n" +
 			"xsubj(eat-4, Tom-1)\n" +
