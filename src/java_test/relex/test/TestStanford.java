@@ -291,6 +291,16 @@ public class TestStanford
 
 // ----------------------------------------------
 
+		rc &= ts.test_sentence ("I saw the man who you love.",
+			"nsubj(saw-2, I-1)\n" +
+			"det(man-4, the-3)\n" +
+			"dobj(saw-2, man-4)\n" +
+			"dobj(love-7, man-4)\n" +
+			"rel(love-7, who-5)\n" +
+			"nsubj(love-7, you-6)\n" +
+			"rcmod(man-4, love-7)");
+
+
 /****************
  * Currently link-grammar is broken on this one. 
  * Link-grammar need fixing, and then relex.

@@ -341,6 +341,23 @@ About 200 people came to the party.
 
 ---------------------------------------
 
+I saw the man who you love.
+    Stanford output:
+       nsubj(saw-2, I-1)
+       det(man-4, the-3)
+       dobj(saw-2, man-4)
+       dobj(love-7, man-4)
+       rel(love-7, who-5)
+       nsubj(love-7, you-6)
+       rcmod(man-4, love-7)
+    RelEx status: 
+
+Under construction:
+   rel(love-7, who-5)
+   rcmod(man-4, love-7)
+
+
+
 I saw the man whose wife you love.
     Stanford output:
        nsubj(saw-2, I-1)
