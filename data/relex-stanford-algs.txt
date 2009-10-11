@@ -70,13 +70,21 @@ SF_NEG
 =
 <sf-links _neg> = <nameSource negation ref>
 ;
-; relative clauses
+; relative clause relative
 #TemplateActionAlg
 SF_REL
 <LAB> = R
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _rel> = <F_R ref>
+
+; relative clause modifier
+#TemplateActionAlg
+SF_RCMOD
+<LAB> = R
+<F_R head-word> != %
+=
+<F_L ref sf-links _rcmod> = <F_R head-word ref>
 
 ;///////////////////////////////////////////////////////////////////////
 ;

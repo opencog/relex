@@ -351,12 +351,7 @@ I saw the man who you love.
        rel(love-7, who-5)
        nsubj(love-7, you-6)
        rcmod(man-4, love-7)
-    RelEx status: 
-
-Under construction:
-   rcmod(man-4, love-7)
-
-
+    RelEx status: OK
 
 I saw the man whose wife you love.
     Stanford output:
