@@ -781,6 +781,15 @@ INV-MARK_TOBE
 =
 <F_R TO-BE-FLAG> = T
 ;
+; Extend the headword to left.
+#TemplateActionAlg
+TO-HEAD-WORD
+<LAB> = \I\.*
+<F_R head-word> != %
+<F_L head-word> = %
+=
+<F_L head-word> = <F_R head-word>
+
 ;#TemplateActionAlg
 ;TODO1
 ;<LAB> = \I\.*|\Pg\.*
