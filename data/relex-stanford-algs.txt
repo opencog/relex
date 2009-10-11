@@ -231,12 +231,13 @@ OBJ_TO_SF_LINKS
 <ref sf-links _dobj> = <obj>
 ;
 ;
-#TemplateActionAlg
-OBJ_TO_SF_LINKS_GERUND
-<POS> = noun
-<obj> != %
-=
-<ref sf-links _ddobj> = <obj>
+; This seems to be wrong .... 
+; #TemplateActionAlg
+; OBJ_TO_SF_LINKS_GERUND
+; <POS> = noun
+; <obj> != %
+; =
+; <ref sf-links _ddobj> = <obj>
 ;
 ; Modifiers
 ;

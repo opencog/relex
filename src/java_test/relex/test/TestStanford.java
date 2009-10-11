@@ -176,7 +176,7 @@ public class TestStanford
 			"appos(Sam-1, brother-4)\n" +
 			"aux(arrived-7, has-6)");
 
-		rc &= ts.test_sentence ("What is that?",
+		rc &= ts.test_sentence ("what is that?",
 			"attr(is-2, what-1)\n" +
 			"nsubj(is-2, that-3)");
 
@@ -211,13 +211,13 @@ public class TestStanford
 			"det(man-5, an-3)\n" +
 			"amod(man-5, honest-4)");
 
-		rc &= ts.test_sentence ("What she said makes sense.",
+		rc &= ts.test_sentence ("what she said makes sense.",
 			"dobj(said-3, what-1)\n" +
 			"nsubj(said-3, she-2)\n" +
 			"csubj(makes-4, said-3)\n" +
 			"dobj(makes-4, sense-5)");
 
-		rc &= ts.test_sentence ("What she said is not true.",
+		rc &= ts.test_sentence ("what she said is not true.",
 			"dobj(said-3, what-1)\n" +
 			"nsubj(said-3, she-2)\n" +
 			"csubj(true-6, said-3)\n" +
@@ -286,8 +286,31 @@ public class TestStanford
 ***********/
 // ----------------------------------------------
 
-		rc &= ts.test_sentence ("They shut down the station.",
-			"nsubj(shut-2, They-1)\n" +
+/****************
+ * These are ambiguous parses.
+ * Stanford picks the opposite choice from Relex.
+		rc &= ts.test_sentence ("I saw a cat in a hat.",
+			"nsubj(saw-2, I-1)\n" +
+			"det(cat-4, a-3)\n" +
+			"dobj(saw-2, cat-4)\n" +
+			"det(hat-7, a-6)\n" +
+			"prep_in(cat-4, hat-7)");
+
+		rc &= ts.test_sentence ("I saw a cat with a telescope.",
+			"nsubj(saw-2, I-1)\n" +
+			"det(cat-4, a-3)\n" +
+			"dobj(saw-2, cat-4)\n" +
+			"det(telescope-7, a-6)\n" +
+			"prep_with(cat-4, telescope-7)");
+***********/
+
+		rc &= ts.test_sentence ("He is responsible for meals.",
+			"nsubj(responsible-3, he-1)\n" +
+			"cop(responsible-3, is-2)\n" +
+			"prep_for(responsible-3, meals-5)\n");
+
+		rc &= ts.test_sentence ("they shut down the station.",
+			"nsubj(shut-2, they-1)\n" +
 			"prt(shut-2, down-3)\n" +
 			"det(station-5, the-4)\n" +
 			"dobj(shut-2, station-5)");
