@@ -336,13 +336,7 @@ Tom likes to eat fish.
        aux(eat-4, to-3)
        xcomp(likes-2, eat-4)
        dobj(eat-4, fish-5)
-    RelEx status:
-
-
-
-Under construction:
-       xsubj(eat-4, Tom-1)
-
+    RelEx status: OK
 
 
 Under construction:

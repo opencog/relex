@@ -147,7 +147,6 @@ SF_CLAUSAL_COMPLEMENTIZER
 =
 <F_R head-word ref sf-links _complm> = <F_R ref>
 
-
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; ODDBALLS
@@ -428,4 +427,17 @@ SF_NSUBJ_COP
 <sf-links _dobj sf-links _nsubj> = <sf-links _nsubj>
 <sf-links _dobj> = %
 <sf-links _nsubj> = %
+
+;///////////////////////////////////////////////////////////////////////
+; Open subject
+
+;
+; Tom likes to eat fish. - xsubj(eat-4, Tom-1)
+; 
+#TemplateActionAlg
+SF_XSUBJ
+<LAB> = TO
+=
+<F_R head-word ref sf-links _xsubj> = <F_L ref sf-links _nsubj>
+
 
