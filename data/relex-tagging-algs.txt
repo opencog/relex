@@ -92,7 +92,7 @@ POS_NOUN_DET
 ;
 #TemplateActionAlg
 POS_NOUN_INVERTED
-<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*|ND
+<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*|ND|\NM\.*
 <F_R POS> = WORD
 =
 <F_R POS> = noun
@@ -327,7 +327,7 @@ POS_NUMBER
 ;
 #TemplateActionAlg
 POS_DATE
-<LAB> = TM|TY|NItn|NM
+<LAB> = TM|TY|NItn
 <F_R POS> = WORD
 =
 <F_R POS> = det
