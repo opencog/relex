@@ -12,7 +12,7 @@ This is an interesting thing to do, for two reasons:
    2) Preliminary tests show that RelEx is more than three
       times faster than the Stanford parser.
 
-The compatibility mode is currently experimental and VERY incomplete.
+The compatibility mode is currently experimental and incomplete.
 It can be enabled with the --stanford flag, passed to
 RelationExtractor. So for example, edit "relation-extractor.sh"
 and add "--stanford" to the command line there.
@@ -354,7 +354,6 @@ I saw the man who you love.
     RelEx status: 
 
 Under construction:
-   rel(love-7, who-5)
    rcmod(man-4, love-7)
 
 

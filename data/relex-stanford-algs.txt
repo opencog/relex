@@ -9,7 +9,7 @@
 ;
 ; GENERATE BASIC SF RELATIONS
 ; Stanford parser generates some relations which RelEx does not.
-; This includes det, aux and auxpass. These qre quire simple. Generate
+; This includes det, aux and auxpass. These are quite simple. Generate
 ; these here.
 ;
 ; Explicit determiner markup
@@ -69,7 +69,14 @@ SF_NEG
 <nameSource negation> != %
 =
 <sf-links _neg> = <nameSource negation ref>
-
+;
+; relative clauses
+#TemplateActionAlg
+SF_REL
+<LAB> = R
+<F_R head-word> != %
+=
+<F_R head-word ref sf-links _rel> = <F_R ref>
 
 ;///////////////////////////////////////////////////////////////////////
 ;
