@@ -271,6 +271,17 @@ public class TestStanford
 			"prep_during(picked-2, spring-5)\n" +
 			"cop(tasty-7, are-6)");
 
+		rc &= ts.test_sentence ("We went to their offices to get Bill's clothes.",
+			"nsubj(went-2, We-1)\n" +
+			"xsubj(get-7, We-1)\n" +
+			"poss(offices-5, their-4)\n" +
+			"prep_to(went-2, offices-5)\n" +
+			"aux(get-7, to-6)\n" +
+			"xcomp(went-2, get-7)\n" +
+			"poss(clothes-10, Bill-8)\n" +
+			"dobj(get-7, clothes-10)");
+
+
 
 
 /****************

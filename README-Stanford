@@ -299,10 +299,36 @@ Truffles picked during the spring are tasty.
        cop(tasty-7, are-6)
     RelEx status: OK
 
+We have no information on whether users are at risk.
+They heard about you missing classes.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate pcomp.)
 
+I sat on the chair.
+    Stanford output:
+       (Stanford is not outputting what the documentation says it
+        should -- it was supposed to illustrate pobj.)
+    RelEx status:
+       (Relex is currently producing the same results as Stanford.)
+
+We went to thier offices to get Bill's clothes.
+    Stanford output:
+       nsubj(went-2, We-1)
+       xsubj(get-7, We-1)
+       poss(offices-5, their-4)
+       prep_to(went-2, offices-5)
+       aux(get-7, to-6)
+       xcomp(went-2, get-7)
+       poss(clothes-10, Bill-8)
+       dobj(get-7, clothes-10)
 
 
 Under construction:
+
+       xsubj(get-7, We-1)
+       xcomp(went-2, get-7)
+prep_to2(went-2, get-7)
 
 
 

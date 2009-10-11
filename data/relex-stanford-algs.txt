@@ -17,7 +17,7 @@
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
-<LAB> != Dmcn
+<LAB> != \Dmc\.*
 <F_L orig_str> != my|our|thier|your
 =
 <F_R ref sf-links _det> = <F_L ref>
