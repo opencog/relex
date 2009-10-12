@@ -28,6 +28,7 @@ import relex.feature.FeatureNode;
 
 public abstract class SentenceAlgorithm
 {
+	private static final boolean DEBUG = false;
 	private static String SIGNATURE_FEATURE_NAME = "SIG";
 
 	public static boolean VERBOSE = false;
@@ -60,12 +61,14 @@ public abstract class SentenceAlgorithm
 				try {
 					applyTo(c, context, vars);
 				} catch (Exception e) {
-System.err.println("Error: bad algorithm: " + getSignature());
-e.printStackTrace();
+					if (DEBUG)
+					{
+						// System.err.println(sentence);
+						// System.err.println(this);
+						System.err.println("Error: bad algorithm: " + getSignature());
+						e.printStackTrace();
+					}
 					sentence.setErrorString(this + "\n" + e.toString());
-					// System.err.println(sentence);
-					// System.err.println(this);
-					// e.printStackTrace();
 				}
 				if (printResult)
 					System.err.println("Info: " + sentence);
