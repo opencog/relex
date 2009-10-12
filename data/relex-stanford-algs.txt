@@ -459,7 +459,7 @@ SF_PREDADJ_TO_NSUBJ_M3
 ; The below is rather complicated -- it looks for a mis-compare
 ; between the local head-word and the head-word of an object.
 ; If there's a miscompare, then we've got a clausal subject.
-; The rest of the logic tires to estalish the proper clausal subject
+; The rest of the logic tries to estalish the proper clausal subject
 ; as the head-word of the clause, and then to erase the existing 
 ; subject (which isn't the head word)
 ; Is there a better way?
