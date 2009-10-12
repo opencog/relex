@@ -59,9 +59,11 @@ public class StanfordView
 			FeatureNode tgt = tgtNode.get("name");
 			if (tgt == null)
 			{
-				String srcName = srcNode.get("name").getValue();
-				System.out.println("Error: No target! rel=" + relName +
-				                   " and src=" + srcName);
+				// Such errors can arise sometimes -- ignore them for now.
+				// e.g. parsing: "Be sure to check."
+				// String srcName = srcNode.get("name").getValue();
+				// System.out.println("Error: No target! rel=" + relName +
+				//                   " and src=" + srcName);
 				return false;
 			}
 
