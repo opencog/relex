@@ -16,8 +16,6 @@
  */
 package relex.output;
 
-import java.util.HashMap;
-
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.feature.RelationForeach;
@@ -29,15 +27,11 @@ import relex.ParsedSentence;
 public class StanfordView
 {
 	/**
-	 * Print out RelEx relations. All relations shown
-	 * in a binary form.
+	 * Print out Stanford-parser-style dependency relations.
 	 *
 	 * Example:
-	 *   _subj(throw, John)
-	 *   _obj(throw, ball)
-	 *   tense(throw, past)
-	 *   DEFINITE-FLAG(ball, T)
-	 *   noun_number(ball, singular)
+	 *   nsubj(throw, John)
+	 *   dobj(throw, ball)
 	 */
 	public static String printRelations(ParsedSentence parse)
 	{
@@ -49,21 +43,21 @@ public class StanfordView
 
 	private static class Visit implements RelationCallback
 	{
-		public boolean unaryStyle = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
 		                                FeatureNode srcNode,
 		                                FeatureNode tgtNode)
 		{
-			FeatureNode tgt = tgtNode.get("name");
-			if (tgt == null)
+			FeatureNode srcN = srcNode.get("nameSource");
+			FeatureNode tgtN = tgtNode.get("nameSource");
+			if (tgtN == null)
 			{
 				// Such errors can arise sometimes -- ignore them for now.
 				// e.g. parsing: "Be sure to check."
-				// String srcName = srcNode.get("name").getValue();
-				// System.out.println("Error: No target! rel=" + relName +
-				//                   " and src=" + srcName);
+				String srcName = srcNode.get("name").getValue();
+				System.out.println("Error: No target! rel=" + relName +
+				                  " and src=" + srcName);
 				return false;
 			}
 
@@ -77,9 +71,6 @@ public class StanfordView
 			{
 				relName = "prep_" + relName;
 			}
-
-			FeatureNode srcN = srcNode.get("nameSource");
-			FeatureNode tgtN = tgtNode.get("nameSource");
 
 			String srcName = srcN.get("orig_str").getValue();
 			String tgtName = tgtN.get("orig_str").getValue();
