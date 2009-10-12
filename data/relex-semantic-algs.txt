@@ -217,12 +217,13 @@ INV-SUBJECT_LINKING
 PREDICATIVE_ADJECTIVE_LINKING
 ;  "Mr. Smith is late."  (as opposed to "The late Mr. Smith")
 ; But Pa must connect to copula, so reject "The rose smelled sweet"
+; Use += because there may be several of these in a sentence.
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 <F_L str> = be
 =
-<F_L subj links _predadj> = <F_R ref>
+<F_L subj links _predadj> += <F_R ref>
 ;
 ;
 #TemplateActionAlg
