@@ -11,16 +11,19 @@
 ; Stanford parser generates some relations which RelEx does not.
 ; This includes det, aux and auxpass. These are quite simple. Generate
 ; these here.
+; ------
 ;
 ; Explicit determiner markup
-; possesives are handled explicitly, so don't allow them here.
+; Possesives are handled explicitly, so don't allow them here.
+; Use += for multiple determiners: e.g. "this or any book"
+;
 #TemplateActionAlg
 SF_DET
 <LAB> = \D\.*
 <LAB> != Dmcn
 <F_L orig_str> != my|our|their|your|'s
 =
-<F_R ref sf-links _det> = <F_L ref>
+<F_R ref sf-links _det> += <F_L ref>
 ;
 ; Explicit aux markup.
 ; "there is a place we can go"  aux(go-7, can-6)

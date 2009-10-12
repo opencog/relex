@@ -1,4 +1,3 @@
-package relex.feature;
 /*
  * Copyright 2008 Novamente LLC
  *
@@ -14,6 +13,8 @@ package relex.feature;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package relex.feature;
 
 /**
  * The FeatureNodeCallback is an interface class.

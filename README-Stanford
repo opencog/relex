@@ -9,8 +9,7 @@ attempts to generate the same output as the Stanford parser.  This is
 an interesting thing to do, for two reasons:
 
    1) It provides a way of double-checking parse results,
-   2) Preliminary tests show that RelEx is more than three
-      times faster than the Stanford parser.
+   2) RelEx is nearly four times faster than the Stanford parser.
 
 The compatibility mode is currently in "beta": it is almost fully
 implemented, but still has a number of rough spots that need work.

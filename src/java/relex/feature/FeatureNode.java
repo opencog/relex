@@ -297,7 +297,7 @@ public class FeatureNode extends Atom
 				if (otherf != thisf)
 				{
 					throw new RuntimeException(
-							"Cannot merge two non-valued feature nodes with inconsistent features.");
+						"Cannot merge two non-valued feature nodes with inconsistent features. fName = " + fName);
 				}
 			}
 		}
