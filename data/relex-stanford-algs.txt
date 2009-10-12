@@ -414,11 +414,44 @@ SF_OBJ_TO_PARTMOD
 ; _predadj(effects, important) -> _nsubj (important, effects)
 ; although this seems strange/broken to me.
 ;
+; conjoined phrases can have several of these, and so they have to 
+; be untangled via member links. E.G. 
+; "Mr. Bingley was good-looking and gentlemanlike."
+;
 #TemplateActionAlg
 SF_PREDADJ_TO_NSUBJ
 <links _predadj> != %
+<links _predadj member0> = %
 =
 <links _predadj sf-links _nsubj> = <>
+;
+#TemplateActionAlg
+SF_PREDADJ_TO_NSUBJ_M0
+<links _predadj> != %
+<links _predadj member0> != %
+=
+<links _predadj member0 sf-links _nsubj> = <>
+;
+#TemplateActionAlg
+SF_PREDADJ_TO_NSUBJ_M1
+<links _predadj> != %
+<links _predadj member1> != %
+=
+<links _predadj member1 sf-links _nsubj> = <>
+;
+#TemplateActionAlg
+SF_PREDADJ_TO_NSUBJ_M2
+<links _predadj> != %
+<links _predadj member2> != %
+=
+<links _predadj member2 sf-links _nsubj> = <>
+;
+#TemplateActionAlg
+SF_PREDADJ_TO_NSUBJ_M3
+<links _predadj> != %
+<links _predadj member3> != %
+=
+<links _predadj member3 sf-links _nsubj> = <>
 ;
 ; Indicate clausal subjects as such.
 ; What she said makes sense. - csubj(makes-4, said-3)

@@ -218,13 +218,20 @@ PREDICATIVE_ADJECTIVE_LINKING
 ;  "Mr. Smith is late."  (as opposed to "The late Mr. Smith")
 ; But Pa must connect to copula, so reject "The rose smelled sweet"
 ; Use += because there may be several of these in a sentence.
+; A head-word link seems to be needed to get this into the head-graph.
+; (I'm not quite sure why ...)
+; It *might* be better to just add this as
+; <F_L subj nameSource predadj> += <F_R ref>
+; and then later promot this to _predadj if we decide that things are
+; peachy (the same say that subj becomes _subj). But for now, we put
+; it straight in.
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 <F_L str> = be
 =
-<F_L subj links _predadj> = <F_R ref>
-; <F_L subj links _predadj> += <F_R ref>
+<F_L subj links _predadj> += <F_R ref>
+<F_L subj nameSource head-word> = <F_L subj nameSource>
 ;
 ;
 #TemplateActionAlg
@@ -680,6 +687,7 @@ OBJ2_TO_LINKS_GERUND
 <iobj> != %
 =
 <ref links _iobj> = <iobj>
+;
 ;
 ; Err I don't get it. 
 ; This is used in the NEGATIVE_CONTR below, but really, I don;'t get it .
