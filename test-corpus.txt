@@ -1,7 +1,3 @@
-Mr. Bingley was good-looking and gentlemanlike.
-END.
-Mrs. Bennet deigned not to make any reply, but, unable to contain herself, began scolding one of her daughters.
-END.
 You and the girls may go, or you may send them by themselves, which perhaps will be still better, for as you are as handsome as any of them, Mr. Bingley may like you the best of the party."
 END.
 "In such cases, a woman has not often much beauty to think of."  "But, my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood."
@@ -11,6 +7,7 @@ END.
 "If I can but see one of my daughters happily settled at Netherfield," said Mrs. Bennet to her
 husband, "and all the others equally well married, I shall have nothing to wish for."
 END.
+Mrs. Bennet deigned not to make any reply, but, unable to contain herself, began scolding one of her daughters.
 What she said is not true.
 Mr. Bingley was good-looking and gentlemanlike.
 Mr. Bingley was good-looking and gentlemanlike; he had a pleasant countenance, and easy, unaffected manners.

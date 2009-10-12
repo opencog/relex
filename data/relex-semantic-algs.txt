@@ -1649,11 +1649,13 @@ HYP-IF
 ;
 ; SEND BACKGROUND INFO TO WALL
 ;
-;
+; XXX FIXME -- sometimes background flag is set, but ref is null.
+; I don't get it. 
 ;
 #TemplateActionAlg
 WALL_BACKGROUND
 <BACKGROUND-FLAG> = T
+<ref> != %
 =
 <wall background> += <ref>
 ;
