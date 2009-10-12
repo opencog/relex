@@ -1,4 +1,10 @@
-I gave you Bill's clothes.
+The garage is next to the house.
+END.
+Be sure to check the copyright laws for your country before downloading any Project Gutenberg eBook.
+END.
+this is thrown
+Be sure to check the copyright laws for your country before downloading this or any other Project Gutenberg eBook.
+Be sure to check the copyright laws for your country before downloading or redistributing this or any other Project Gutenberg eBook.
 END.
 where is the ball?
 The ball is under the couch.

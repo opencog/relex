@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 1.1.1 ??? 2009
+                      Version 1.2.0 12 October 2009
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -208,9 +208,11 @@ it does not include all required output. For example, if the same word
 appears in a sentence twice, the demo output will not distinguish between
 these two words.
 
-This release of RelEx includes an experimental Stanford-parser
-compatibility mode. This is described in greater detail in
-README-Stanford.
+This release of RelEx includes a Stanford-parser compatibility mode.
+In this mode, RelEx will generate the same dependency relations as the
+Stanford parser. This mode is technically interesting because RelEx is
+more than three time faster than the Stanford parser. This is described
+in greater detail in the file "README-Stanford".
 
 
 Running RelEx

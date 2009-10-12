@@ -4,16 +4,18 @@
                       October 2009
 
 The Stanford parser provides a defacto standard defintion of dependency
-relations used in parsing.  Relex has a prototype compatibility feature,
-which attempts to generate the same output as the Stanford parser.
-This is an interesting thing to do, for two reasons:
+relations used in parsing.  Relex has a compatibility mode which
+attempts to generate the same output as the Stanford parser.  This is 
+an interesting thing to do, for two reasons:
 
    1) It provides a way of double-checking parse results,
    2) Preliminary tests show that RelEx is more than three
       times faster than the Stanford parser.
 
-The compatibility mode is currently experimental and incomplete.
-It can be enabled with the --stanford flag, passed to
+The compatibility mode is currently in "beta": it is almost fully
+implemented, but still has a number of rough spots that need work.
+
+Compatibility mode is enabled with the --stanford flag, passed to
 RelationExtractor. So for example, edit "relation-extractor.sh"
 and add "--stanford" to the command line there.
 
@@ -37,8 +39,20 @@ algorithm. The Link-Grammar parser often generates several candidate
 parses for a sentence, and then ranks them according to liklihood.  
 It can be configured to use one of several different ranking algorithms.
 Thus, the "top-most" parse, used by the test case, is subject to change
-depending on the ranking algorithm.
+depending on the ranking algorithm. That is, precision (but not recall)
+is strongly dependent on the parse ranking.
 
+What its not
+------------
+This mode is NOT an API compatibility. The API's are completly
+different. The compatibility is in the dependencies generated.
+
+Missing at this time is compatible part-of-speech tagging. At this
+time, RelEx generates much simpler part-of-speech tags, and there has
+been no effort made to ensure thier accurracy. 
+
+RelEx *CANNOT* be trained to learn other languages. RelEx is
+hand-crafted, and handles English only.
 
 Issues:
 -------
@@ -52,6 +66,7 @@ At this time, link-grammar handles conjunctions in a novel way.
 These are not percolated up to RelEx in a proper manner, and are
 thus are mostly not handled. 
 
+Some other rough spots/issues are marked with XXX below.
 
 Version
 -------
@@ -394,7 +409,13 @@ All the boys are here.
        Predet is generated, as described in stanford docs. However,
        the copular structure is different. More generally, link
        grammar treats predeterminers differently (AL link) and 
-       this needs some addtional resolution.
+       this needs some additional resolution. Also, it is not clear
+       to me why Stanford doesn't treat this as being copular, i.e.
+          nsubj(here-5, boys-3)
+          cop(here-5, are-4)
+       the way that it treats other copulas (e.g. "The garage is 
+       next to the house." gets nsubj(next-4, garage-2) cop(next-4,
+       is-3).
 
 I saw a cat in a hat.
 I saw a cat with a telescope.

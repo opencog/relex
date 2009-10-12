@@ -102,7 +102,7 @@ public class TestStanford
 			"appos(bird-2, robin-5)\n" +
 			"advmod(sang-7, sweetly-8)");
 
-		rc &= ts.test_sentence ("there is a place we can go.",
+		rc &= ts.test_sentence ("There is a place we can go.",
 			"expl(is-2, there-1)\n" +
 			"det(place-4, a-3)\n" +
 			"nsubj(is-2, place-4)\n" +
@@ -176,7 +176,7 @@ public class TestStanford
 			"appos(Sam-1, brother-4)\n" +
 			"aux(arrived-7, has-6)");
 
-		rc &= ts.test_sentence ("what is that?",
+		rc &= ts.test_sentence ("What is that?",
 			"attr(is-2, what-1)\n" +
 			"nsubj(is-2, that-3)");
 
@@ -211,13 +211,13 @@ public class TestStanford
 			"det(man-5, an-3)\n" +
 			"amod(man-5, honest-4)");
 
-		rc &= ts.test_sentence ("what she said makes sense.",
+		rc &= ts.test_sentence ("What she said makes sense.",
 			"dobj(said-3, what-1)\n" +
 			"nsubj(said-3, she-2)\n" +
 			"csubj(makes-4, said-3)\n" +
 			"dobj(makes-4, sense-5)");
 
-		rc &= ts.test_sentence ("what she said is not true.",
+		rc &= ts.test_sentence ("What she said is not true.",
 			"dobj(said-3, what-1)\n" +
 			"nsubj(said-3, she-2)\n" +
 			"csubj(true-6, said-3)\n" +
@@ -230,7 +230,7 @@ public class TestStanford
 			"aux(prefer-5, do-3)\n" +
 			"nsubj(prefer-5, you-4)");
 
-		rc &= ts.test_sentence ("there is a ghost in the room.",
+		rc &= ts.test_sentence ("There is a ghost in the room.",
 			"expl(is-2, there-1)\n" +
 			"det(ghost-4, a-3)\n" +
 			"nsubj(is-2, ghost-4)\n" +
@@ -272,7 +272,7 @@ public class TestStanford
 			"cop(tasty-7, are-6)");
 
 /****************
- * Currently fails due to xcomp problems
+ * Currently fails due to xcomp generation problems
  *
 		rc &= ts.test_sentence ("We went to their offices to get Bill's clothes.",
 			"nsubj(went-2, we-1)\n" +
@@ -284,9 +284,9 @@ public class TestStanford
 			"poss(clothes-10, Bill-8)\n" +
 			"dobj(get-7, clothes-10)");
 ***********/
-// ----------------------------------------------
 
 /****************
+ * See README-Stanfordfor details.
 		rc &= ts.test_sentence ("All the boys are here.",
 			"predet(boys-3, all-1)\n" +
 			"det(boys-3, the-2)\n" +
@@ -297,7 +297,7 @@ public class TestStanford
 /****************
  * These are ambiguous parses.
  * Stanford picks the opposite choice from Relex.
- * See the README for a discussion.
+ * See the README-Stanford for a discussion.
 		rc &= ts.test_sentence ("I saw a cat in a hat.",
 			"nsubj(saw-2, I-1)\n" +
 			"det(cat-4, a-3)\n" +
@@ -318,7 +318,7 @@ public class TestStanford
 			"cop(responsible-3, is-2)\n" +
 			"prep_for(responsible-3, meals-5)\n");
 
-		rc &= ts.test_sentence ("they shut down the station.",
+		rc &= ts.test_sentence ("They shut down the station.",
 			"nsubj(shut-2, they-1)\n" +
 			"prt(shut-2, down-3)\n" +
 			"det(station-5, the-4)\n" +
@@ -356,8 +356,6 @@ public class TestStanford
 			"rcmod(man-4, love-8)");
 ***********/
 
-		// rc &= ts.test_sentence ("He says that you like to swim.",
-
 		rc &= ts.test_sentence ("I am ready to leave.",
 			"nsubj(ready-3, I-1)\n" +
 			"cop(ready-3, am-2)\n" +
@@ -381,7 +379,6 @@ public class TestStanford
 			"nsubj(swim-7, to-6)\n" +   // NFW that this can be right.
 			"ccomp(like-5, swim-7)");
 ***********/
-
 
 
 /****************
