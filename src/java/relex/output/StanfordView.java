@@ -94,28 +94,6 @@ public class StanfordView
 
 		public Boolean UnaryRelationCB(FeatureNode srcNode, String attrName)
 		{
-/**********************
-			FeatureNode attr = srcNode.get(attrName);
-			if (!attr.isValued()) return false;
-			String value = attr.getValue();
-			String srcName = srcNode.get("name").getValue();
-
-			if (unaryStyle)
-			{
-				if (attrName.endsWith("-FLAG"))
-					value = attrName.replaceAll("-FLAG","").toLowerCase();
-
-				if (attrName.equals("HYP"))
-					value = attrName.toLowerCase();
-
-				str += value + "(" + srcName + ")\n";
-			}
-			else
-			{
-				str += attrName + "(" + srcName + ", " + value + ")\n";
-			}
-******************/
-
 			return false;
 		}
 	}
