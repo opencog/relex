@@ -223,7 +223,8 @@ PREDICATIVE_ADJECTIVE_LINKING
 <F_L FILLER-OBJ-FLAG> != T
 <F_L str> = be
 =
-<F_L subj links _predadj> += <F_R ref>
+<F_L subj links _predadj> = <F_R ref>
+; <F_L subj links _predadj> += <F_R ref>
 ;
 ;
 #TemplateActionAlg
@@ -1755,17 +1756,10 @@ WILL_TODO_FUTURE
 =
 <NEXT NEXT head tense> = future
 ;
-; Drop all tagged refs.
-;
-#TemplateActionAlg
-DROP_REF
-<ref DROP-REF-FLAG> = T
-=
-<ref> = %
-;
 ; ////////////////////////////////////////////////////////////////////////
 ;
 ; Final ref cleanup
+;
 ;
 ; Copy part-of-speach to where its visible.
 ;
@@ -1774,6 +1768,14 @@ COPY_POS_TO_REF
 <POS> != %
 =
 <ref pos> = <POS>
+;
+; Drop all tagged refs.
+;
+#TemplateActionAlg
+DROP_REF
+<ref DROP-REF-FLAG> = T
+=
+<ref> = %
 ;
 #TemplateActionAlg
 CLEAN_UP_BAD_REFS1

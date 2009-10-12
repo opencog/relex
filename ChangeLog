@@ -18,6 +18,7 @@ New in version 1.2.0 (12 October 2009)
  * Fix cases where direct, indirect object reversed.
  * Fix handling of future tense in certain cases.
  * Fix faulty printing of certain numeric quantities.
+ * Fix bug with multiple _predadj in one sentence.
  * Add a prototype Stanford-parser compatibility mode.
 
 New in version 1.1.0 (2 July 2009)
