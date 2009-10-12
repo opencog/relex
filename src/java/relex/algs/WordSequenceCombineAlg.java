@@ -43,7 +43,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 	/*
 	 * Finds the next node
 	 */
-	FeatureNode nextNode(FeatureNode node, int dir, String labelRegex)
+	private FeatureNode nextNode(FeatureNode node, int dir, String labelRegex)
 	{
 		LinkableView linkable = new LinkableView(node);
 
@@ -58,12 +58,12 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		return null;
 	}
 
-	boolean isRightMost(FeatureNode node, String labelRegex)
+	private boolean isRightMost(FeatureNode node, String labelRegex)
 	{
 		return nextNode(node, directionRight, labelRegex) == null;
 	}
 
-	FeatureNode getLeftMost(FeatureNode node, String labelRegex)
+	private FeatureNode getLeftMost(FeatureNode node, String labelRegex)
 	{
 		FeatureNode next = nextNode(node, directionLeft, labelRegex);
 		if (next == null)
@@ -71,7 +71,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		return getLeftMost(next, labelRegex);
 	}
 
-	String collectNames(FeatureNode current, FeatureNode rightNode,
+	private String collectNames(FeatureNode current, FeatureNode rightNode,
 	                    String labelRegex, boolean shouldEraseStrAndRef)
 	{
 		String name = current.get("str").getValue();
@@ -89,10 +89,15 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 			// "orig_str". This is because it is needed for printing in
 			// some of the output formats, which need to have access to
 			// the original, unprocessed sentence.
-			current.set("ref", null); // .set("name",new FeatureNode(""));
+			// current.set("orig_str", new FeatureNode(""));
+			//
+			// Also, must *not* delete "ref", as this is neeed by alternate
+			// output formats, e.g. the Stanford-parser compatbility output.
+			// current.set("ref", null);
+			
+			current.set("name", null);
 
 			current.set("str", new FeatureNode(""));
-			// current.set("orig_str", new FeatureNode(""));
 		}
 
 		if (current == rightNode)
