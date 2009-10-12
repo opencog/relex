@@ -3,7 +3,7 @@
              ----------------------------------
                       October 2009
 
-The Stanford parser provides a defacto standard defintion of dependency
+The Stanford parser provides a defacto standard definition of dependency
 relations used in parsing.  Relex has a compatibility mode which
 attempts to generate the same output as the Stanford parser.  This is 
 an interesting thing to do, for two reasons:
@@ -43,15 +43,16 @@ is strongly dependent on the parse ranking.
 
 What its not
 ------------
-This mode is NOT an API compatibility. The API's are completly
+This mode is NOT an API compatibility. The API's are completely
 different. The compatibility is in the dependencies generated.
 
 Missing at this time is compatible part-of-speech tagging. At this
 time, RelEx generates much simpler part-of-speech tags, and there has
-been no effort made to ensure thier accurracy. 
+been no effort made to ensure their accuracy. 
 
-RelEx *CANNOT* be trained to learn other languages. RelEx is
-hand-crafted, and handles English only.
+RelEx cannot be trained to learn other languages. RelEx is
+hand-crafted, and handles English only. (We have vague plans to do
+better someday...)
 
 Issues:
 -------
