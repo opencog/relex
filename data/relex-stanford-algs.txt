@@ -98,6 +98,14 @@ SF_PRT
 =
 <F_L ref sf-links _prt> = <F_R ref>
 
+;
+; Entity names
+#TemplateActionAlg
+SF_ENTITY_NAME
+<LAB> = G
+=
+<F_R ref sf-links _nn> = <F_L ref>
+
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; ALTERNATIVES TO PREP MARKUP
