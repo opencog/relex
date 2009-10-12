@@ -299,6 +299,32 @@ to be a large example program illustrating all of the various features
 of RelEx.  For custom applications, this class should be copied and
 modified as desired to fit the application.
 
+Speed test results
+------------------
+Performance comparison of RelEx-1.2.0 vs. Stanford-1.6.1, run 11 Oct 2009.
+Test corpus: first 150 sentences (including preface boilerplate) from 
+Project Gutenberg "Pride and Prejudice".  Due to differences in sentence
+detection, Stanford and RelEx disagree on the sentence count. Due to 
+differences in counting punctuation, the splitting of possessives and 
+contractions, the two disagreee on the word count as well.
+
+The unix command "wc" counts 2609 words in 148 sentences, for 
+2609/148 = 17.6 words/sent.
+ 
+Stanford, w/unix "time" command:
+   real	10m4.882s
+   user	10m1.974s
+   sys	0m4.208s
+
+   Actual: 2609/605= 4.31 words/sec
+
+RelEx, w/unix "time" command:
+   real	2m59.739s
+   user	2m36.342s
+   sys	0m22.137s
+
+   Actual: 2609/180 = 14.50 words/sec
+
 
 TODO
 ----
