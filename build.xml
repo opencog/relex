@@ -161,6 +161,7 @@
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
             <fileset file="data/relex-semantic-algs.txt" />
+            <fileset file="data/relex-stanford-algs.txt" />
             <fileset file="data/relex-tagging-algs.txt" />
             <fileset file="data/frame/concept_vars.txt" />
             <fileset file="data/frame/mapping_rules.txt" />
