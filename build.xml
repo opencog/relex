@@ -160,6 +160,7 @@
                 <attribute name="Implementation-Version" value="${REVISION}"/>
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
+            <fileset file="data/relex-penn-tagging-algs.txt" />
             <fileset file="data/relex-semantic-algs.txt" />
             <fileset file="data/relex-stanford-algs.txt" />
             <fileset file="data/relex-tagging-algs.txt" />
@@ -202,6 +203,7 @@
                 <include name="test-corpus.txt"/>
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
+                <include name="data/relex-penn-tagging-algs.txt"/>
                 <include name="data/relex-semantic-algs.txt"/>
                 <include name="data/relex-stanford-algs.txt"/>
                 <include name="data/relex-tagging-algs.txt"/>
@@ -237,7 +239,9 @@
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging-algs.txt"/>
             <jvmarg line="-Drelex.semalgpath=data/relex-semantic-algs.txt"/>
+            <jvmarg line="-Drelex.sfalgpath=data/relex-stanford-algs.txt"/>
             <jvmarg line="-Drelex.tagalgpath=data/relex-tagging-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <jvmarg line="-Dgate.home=${GATE_HOME}"/>

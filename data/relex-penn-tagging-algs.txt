@@ -17,3 +17,17 @@
 ; The basic relex tagging step must be run before this.
 ;
 
+;
+#TemplateActionAlg
+VERB_TAG
+<POS> = verb
+=
+<penn-pos> = V
+
+
+;
+#TemplateActionAlg
+PENN_POS_TO_REF
+<penn-pos> != %
+=
+<ref penn-pos> = <penn-pos-TAG>

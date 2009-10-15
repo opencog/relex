@@ -103,6 +103,9 @@ public class RelationExtractor
 	/* Stanford parser compatibility mode */
 	public boolean do_stanford;
 
+	/* Penn tagset compatibility mode */
+	public boolean do_penn_tagging;
+
 	/** Statistics */
 	private ParseStats stats;
 
@@ -139,6 +142,7 @@ public class RelationExtractor
 		doco = new Document();
 
 		do_stanford = false;
+		do_penn_tagging = false;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -221,6 +225,7 @@ public class RelationExtractor
 				// The actual relation extraction is done here.
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
+				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
 
 				// Strip out the entity markup, so that when the
 				// sentence is printed, we don't print gunk.
@@ -358,6 +363,7 @@ public class RelationExtractor
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
+			" [--penn (generate Penn treebank-style POS tags)]" +
 			" [--prolog (show prolog output)]" +
 			" [-q (do NOT show relations)]" +
 			" [-r (show raw output)]" +
@@ -378,6 +384,7 @@ public class RelationExtractor
 		flags.add("--pa");
 		flags.add("--pb");
 		flags.add("--pc");
+		flags.add("--penn");
 		flags.add("--prolog");
 		flags.add("-q");
 		flags.add("-r");
@@ -442,6 +449,11 @@ public class RelationExtractor
 		if (commandMap.get("--stanford") != null)
 		{
 			re.do_stanford = true;
+		}
+
+		if (commandMap.get("--penn") != null)
+		{
+			re.do_penn_tagging = true;
 		}
 
 		EntityMaintainerFactory gem = null;

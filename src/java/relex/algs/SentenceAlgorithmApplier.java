@@ -26,6 +26,7 @@ import relex.concurrent.RelexContext;
 public class SentenceAlgorithmApplier
 {
 	private AlgorithmApplier tagger;
+	private AlgorithmApplier penn;
 	private AlgorithmApplier semant;
 	private AlgorithmApplier stanford;
 
@@ -35,6 +36,8 @@ public class SentenceAlgorithmApplier
 			"relex.tagalgpath", "relex-tagging-algs.txt");
 		semant = new AlgorithmApplier(
 			"relex.semalgpath", "relex-semantic-algs.txt");
+		penn = new AlgorithmApplier(
+			"relex.pennalgpath", "relex-penn-tagging-algs.txt");
 		stanford = new AlgorithmApplier(
 			"relex.sfalgpath", "relex-stanford-algs.txt");
 	}
@@ -52,6 +55,11 @@ public class SentenceAlgorithmApplier
 	public void extractStanford(ParsedSentence sentence, RelexContext context)
 	{
 		stanford.applyAlgs(sentence, context);
+	}
+
+	public void pennTag(ParsedSentence sentence, RelexContext context)
+	{
+		penn.applyAlgs(sentence, context);
 	}
 
 	// The apply method!
