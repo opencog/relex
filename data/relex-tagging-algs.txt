@@ -966,9 +966,11 @@ SINGULAR_OBJ
 =
 <F_R num> = singular
 ;
+; XXX as of link-grammar 4.6.5, Os should never be used with
+; uncountable objects; it should always be Ou.
 #TemplateActionAlg
 UNCOUNTABLE_OBJ
-<LAB> = \Os\.*|\Us\.*
+<LAB> = \Ou\.*|\Os\.*|\Us\.*
 <F_R DET-FLAG> != T
 <F_R num> = %
 =
