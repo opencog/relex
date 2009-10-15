@@ -1,0 +1,19 @@
+;
+; relex-penn-tagging-algs.txt
+;
+; Provide Penn Trebank-style part-of-speech tags.
+; The Penn POS tags are described in:
+;
+;     Aoife Cahill's list:
+;     http://www.computing.dcu.ie/~acahill/tagset.html
+;
+;     Automatic Mapping Among Lexico-Grammatical Annotation Models (AMALGAM) 
+;     http://www.comp.leeds.ac.uk/amalgam/tagsets/upenn.html
+;
+;     Beatrice Santorini, Mitchell P. Marcus, MaryAnn Marcinkiewicz
+;     Building a Large Annotated Corpus of English: The Penn Treebank
+;     http://acl.ldc.upenn.edu/J/J93/J93-2004.pdf
+;
+; The basic relex tagging step must be run before this.
+;
+
