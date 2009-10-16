@@ -98,6 +98,17 @@ PENN_CARDINAL_NUMBER
 <penn-pos> = CD
 
 
+;
+; Existential there
+; Are there any *other* EX's to generate ??
+#TemplateActionAlg
+PENN_EXISTENTIAL_THERE
+<LAB> = \SF\.*
+<F_L str> = there
+=
+<F_L penn-pos> = EX
+
+
 ; PRP tagging after NN tagging to over-ride NN tags.
 #TemplateActionAlg
 PENN_PERSONAL_PRONOUN
@@ -105,6 +116,14 @@ PENN_PERSONAL_PRONOUN
 <ref PRONOUN-FLAG> = T
 =
 <penn-pos> = PRP
+
+; A closed list for now, I'm not sure what is wanted here ... 
+#TemplateActionAlg
+PENN_WH_ADVERB
+; <POS> = conjunction
+<str> = how|when|where|why
+=
+<penn-pos> = WRB
 
 ; /////////////////////////////////////////////////////////////////////
 ; Copy to ref

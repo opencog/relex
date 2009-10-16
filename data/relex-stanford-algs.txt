@@ -133,7 +133,8 @@ SF_ADVCL_OBJECT
 ;
 #TemplateActionAlg
 SF_ADVCL_COMPLEMENT
-<LAB> = MVs|\WN\.*
+; <LAB> = MVs|\WN\.*
+<LAB> = MVs
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _mark> = <F_R ref>
@@ -157,9 +158,21 @@ SF_ADVCL2_OBJECT
 #TemplateActionAlg
 SF_ADVCL2_COMPLEMENT
 <LAB> = \Cs
+<F_L str> != when|who
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _mark> = <F_L ref>
+
+;
+; Same as above, but for relative clauses introduced by
+; who, when, etc.
+#TemplateActionAlg
+SF_ADVCL_RELATIVE
+<LAB> = \Cs
+<F_R head-word> != %
+<F_L str> = when|who
+=
+<F_R head-word ref sf-links _rel> = <F_L ref>
 
 ;
 ; Clausal complement

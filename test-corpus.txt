@@ -1,5 +1,6 @@
-Truffles picked during the spring are tasty.
+There was a time when we were young.
 END.
+Truffles picked during the spring are tasty.
 I have eaten twelve truffles.
 I ate twelve truffles.
 END.

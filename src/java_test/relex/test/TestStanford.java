@@ -456,6 +456,22 @@ public class TestStanford
 			"auxpass(eaten-4-VBN, were-3-VBD)");
 			
 
+		// Full disclosure:  Stanford currently generates
+		// dep(time-4-NN, young-8-JJ) which just means it doesn't know
+		// the right answer.  
+		// It also generates advmod(young-8-JJ, when-5-WRB) in addition
+		// to rel(young-8-JJ, when-5-WRB) which is not quite right
+		// either.
+		rc &= ts.test_tagged_sentence ("There was a time when we were young.",
+			"expl(was-2-VBD, there-1-EX)\n" +
+			"det(time-4-NN, a-3-DT)\n" +
+			"nsubj(was-2-VBD, time-4-NN)\n" +
+			"rel(young-8-JJ, when-5-WRB)\n" +
+			"nsubj(young-8-JJ, we-6-PRP)\n" +
+			"cop(young-8-JJ, were-7-VBD)\n" +
+			"advcl(time-4-NN, young-8-JJ)");
+
+
 		if (rc)
 		{
 			System.err.println("Test passed OK");
