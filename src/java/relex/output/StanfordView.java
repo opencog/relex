@@ -33,10 +33,12 @@ public class StanfordView
 	 *   nsubj(throw, John)
 	 *   dobj(throw, ball)
 	 */
-	public static String printRelations(ParsedSentence parse)
+	public static String printRelations(ParsedSentence parse,
+	                                    boolean show_tags)
 	{
 		Visit v = new Visit();
 		v.str = "";
+		v.show_penn_tags = show_tags;
 		RelationForeach.foreach(parse.getLeft(), v, "sf-links");
 		return v.str;
 	}
@@ -44,6 +46,8 @@ public class StanfordView
 	private static class Visit implements RelationCallback
 	{
 		public String str;
+		public boolean show_penn_tags;
+
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
 		                                FeatureNode srcNode,
@@ -77,8 +81,18 @@ public class StanfordView
 			String srcIdx = srcN.get("index_in_sentence").getValue();
 			String tgtIdx = tgtN.get("index_in_sentence").getValue();
 
-			str += relName + "(" + srcName + "-" + srcIdx + ", " + 
-				tgtName + "-" + tgtIdx + ")\n";
+			String srcPosTag = "";
+			String tgtPosTag = "";
+			if (show_penn_tags)
+			{
+				FeatureNode srcPN = srcNode.get("penn-POS");
+				if (null != srcPN) srcPosTag = "-" + srcPN.getValue();
+				FeatureNode tgtPN = tgtNode.get("penn-POS");
+				if (null != tgtPN) tgtPosTag = "-" + tgtPN.getValue();
+			}
+
+			str += relName + "(" + srcName + "-" + srcIdx + srcPosTag + ", " + 
+				tgtName + "-" + tgtIdx + tgtPosTag + ")\n";
 
 			return false;
 		}

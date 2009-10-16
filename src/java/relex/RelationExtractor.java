@@ -658,7 +658,8 @@ public class RelationExtractor
 
 					if (commandMap.get("--stanford") != null)
 					{
-						System.out.println(StanfordView.printRelations(parse));
+						System.out.println(
+							StanfordView.printRelations(parse, re.do_penn_tagging));
 						System.out.println("\n======\n");
 					}
 

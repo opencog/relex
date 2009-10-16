@@ -30,4 +30,4 @@ VERB_TAG
 PENN_POS_TO_REF
 <penn-pos> != %
 =
-<ref penn-pos> = <penn-pos-TAG>
+<ref penn-POS> = <penn-pos>
