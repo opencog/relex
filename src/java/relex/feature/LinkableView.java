@@ -41,6 +41,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String POS_FEATURE_NAME = "POS";
 	private static String INFLECTION_NAME = "inflection";
+	private static String NOUN_NUM_FEATURE_NAME = "num";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
@@ -252,6 +253,11 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setFeat(ths, GENDER_FEATURE_NAME, gen);
 	}
 
+	public static void setUncountable(FeatureNode ths)
+	{
+		setFeat(ths, NOUN_NUM_FEATURE_NAME, "uncountable");
+	}
+
 	public void setInflection(String inf) {
 		setInflection(fn(), inf);
 	}
@@ -294,6 +300,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	public static void setWordAndPos(FeatureNode ths, String wordString)
 	{
 		throwIfNoFN(ths);
+		setPOS(ths, POS_WORD);
 
 		// Inflections may be one letter, or they may be longer.
 		// Link-grammar calls these "word subscripts"; perhaps we should
@@ -360,12 +367,21 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 					setInflection(ths, "." + inflection);
 			}
 		}
-		else
+
+		// Multi-letter inflections
+		if ((0 < dot) && (dot < len-2))
 		{
-			setPOS(ths, POS_WORD);
+			String infl = wordString.substring(dot);
+
+			if (infl.equals(".n-u"))
+			{
+				setPOS(ths, "noun");
+				setUncountable(ths);
+				setInflection(ths, infl);
+			}
 		}
 
-		if ((0 < dot) && (dot != len-1))
+		if ((0 < dot) && (dot < len-1))
 		{
 			// Don't truncate, if its a number!
 			// There will be an exception thrown, if
