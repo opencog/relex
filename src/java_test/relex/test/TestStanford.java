@@ -55,6 +55,7 @@ public class TestStanford
 	 */
 	public boolean test_sentence (String sent, String sf)
 	{
+		re.do_penn_tagging = false;
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
 		String rs = StanfordView.printRelations(parse, false);
@@ -84,6 +85,7 @@ public class TestStanford
 
 	public boolean test_tagged_sentence (String sent, String sf)
 	{
+		re.do_penn_tagging = true;
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
 		String rs = StanfordView.printRelations(parse, true);

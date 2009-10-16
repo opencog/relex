@@ -1,3 +1,6 @@
+New in version 1.2.1 (XXX 2009)
+ * Provide optional Penn-Treebank-compatible POS tagging.
+
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
  * Fixes for anaphora resolution; head-word was missing or mis-identified.
