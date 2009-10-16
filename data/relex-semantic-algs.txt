@@ -1119,9 +1119,12 @@ ADJ1
 ; Example of Ma link is "appropriate" in 
 ;   "It was done in a manner appropriate for the occasion."
 ;
+; MVp usually modifies verbs, i.e. so its indicates an adverb.
+; should probably check the POS on the left word to confirm.
 #TemplateActionAlg
 ADJ2
-<LAB> = \Mp\.*|\MVp\.*|\Ma\.*
+; <LAB> = \Mp\.*|\MVp\.*|\Ma\.*
+<LAB> = \Mp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
 <F_L BACKGROUND-FLAG> = T
@@ -1189,10 +1192,13 @@ SUPERLATIVE-3
 ; appropriate head-word. This seems hard to reproduce, and is
 ; partly due to bad parses. So require a head-word, explicitly.
 ;
+; Jim runs quickly.
+; MVp : "... than you can find elsewhere."
+; XXX should we check if left-word is a verb?
+; if its not then its an amod .. !?
 #TemplateActionAlg
 ADV1
-; Jim runs quickly.
-<LAB> = \MVa\.*|\EB\.*
+<LAB> = \MVp\.*|\MVa\.*|\EB\.*
 <LAB> != \EBx\.*
 <F_R str> != not
 <F_L head-word> != %
