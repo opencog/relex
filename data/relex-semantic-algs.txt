@@ -62,6 +62,12 @@ EXPLETIVE_SUBJ
 =
 <F_R expl> += <F_L ref>
 ;
+#TemplateActionAlg
+EXPLETIVE_SUBJ2
+<LAB> = \SFI\.*
+=
+<F_L expl> += <F_R ref>
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ; Identifying objects
 ;
