@@ -19,10 +19,34 @@
 
 ;
 #TemplateActionAlg
-VERB_TAG
-<POS> = verb
+PENN_DETERMINER
+<POS> = det
 =
-<penn-pos> = V
+<penn-pos> = DT
+
+;
+#TemplateActionAlg
+PENN_NOUN_SING_OR_MASS
+<POS> = noun
+<num> = singular|uncountable
+=
+<penn-pos> = NN
+
+;
+#TemplateActionAlg
+PENN_NOUN_PLURAL
+<POS> = noun
+<num> = plural
+=
+<penn-pos> = NNS
+
+;
+#TemplateActionAlg
+PENN_VERB_PAST_PARTICIPLE
+<POS> = verb
+<tense val> = past
+=
+<penn-pos> = VBN
 
 
 ;

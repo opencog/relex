@@ -57,7 +57,7 @@ public class TestStanford
 	{
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
-		String rs = StanfordView.printRelations(parse);
+		String rs = StanfordView.printRelations(parse, false);
 
 		ArrayList<String> sfa = split(sf);
 		ArrayList<String> rsa = split(rs);
@@ -81,6 +81,36 @@ public class TestStanford
 
 		return true;
 	}
+
+	public boolean test_tagged_sentence (String sent, String sf)
+	{
+		Sentence sntc = re.processSentence(sent);
+		ParsedSentence parse = sntc.getParses().get(0);
+		String rs = StanfordView.printRelations(parse, true);
+
+		ArrayList<String> sfa = split(sf);
+		ArrayList<String> rsa = split(rs);
+		if (sfa.size() != rsa.size())
+		{
+			System.err.println("Error: size miscompare:\n" +
+				"\tStanford = " + sfa + "\n" +
+				"\tRelEx    = " + rsa );
+			return false;
+		}
+		for (int i=0; i< sfa.size(); i++)
+		{
+			if (!sfa.get(i).equals (rsa.get(i)))
+			{
+				System.err.println("Error: content miscompare:\n" +
+					"\tStanford = " + sfa + "\n" +
+					"\tRelEx    = " + rsa );
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static void main(String[] args)
 	{
 		TestStanford ts = new TestStanford();
@@ -389,6 +419,17 @@ public class TestStanford
 			"det(house-7, the-6)\n" +
 			"prep_to(next-4, house-7)");
 ***********/
+
+		// =========================================================
+		// PENN PART_OF_SPEECH TAGGING
+		// =========================================================
+		//
+		rc &= ts.test_tagged_sentence ("Truffles picked during the spring are tasty.",
+			"nsubj(tasty-7-JJ, truffles-1-NNS)\n" +
+			"partmod(truffles-1-NNS, picked-2-VBN)\n" +
+			"det(spring-5-NN, the-4-DT)\n" +
+			"prep_during(picked-2-VBN, spring-5-NN)\n" +
+			"cop(tasty-7-JJ, are-6-VBP)");
 
 
 		if (rc)
