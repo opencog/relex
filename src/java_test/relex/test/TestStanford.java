@@ -471,6 +471,13 @@ public class TestStanford
 			"cop(young-8-JJ, were-7-VBD)\n" +
 			"advcl(time-4-NN, young-8-JJ)");
 
+		rc &= ts.test_tagged_sentence ("Is there a better way?",
+			"expl(is-1-VBZ, there-2-EX)\n" +
+			"det(way-5-NN, a-3-DT)\n" +
+			"amod(way-5-NN, better-4-JJR)\n" +
+			"nsubj(is-1-VBZ, way-5-NN)");
+
+
 
 		if (rc)
 		{

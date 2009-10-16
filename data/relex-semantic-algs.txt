@@ -1199,15 +1199,26 @@ SUPERLATIVE-3
 ; partly due to bad parses. So require a head-word, explicitly.
 ;
 ; Jim runs quickly.
-; MVp : "... than you can find elsewhere."
-; XXX should we check if left-word is a verb?
-; if its not then its an amod .. !?
 #TemplateActionAlg
 ADV1
-<LAB> = \MVp\.*|\MVa\.*|\EB\.*
+<LAB> = \MVa\.*|\EB\.*
 <LAB> != \EBx\.*
 <F_R str> != not
 <F_L head-word> != %
+=
+<F_L head-word BACKGROUND-FLAG> = T
+<F_L head-word ref links _advmod> += <F_R ref>
+;
+; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
+; XXX should check if left-word is a verb?; if its not then its an amod .. !?
+; We need explicit right-word-not-prep check to handle the usual; MVp
+; cases.
+#TemplateActionAlg
+ADV1
+<LAB> = \MVp\.*
+<F_R str> != not
+<F_L head-word> != %
+<F_R PREP-OBJ> = %
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>

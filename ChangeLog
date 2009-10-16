@@ -1,5 +1,7 @@
 New in version 1.2.1 (XXX 2009)
  * Provide optional Penn-Treebank-compatible POS tagging.
+ * Bug fixes for misc mis-identified POS tags
+ * Bug fix for mis-identified advmnod relation.
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
