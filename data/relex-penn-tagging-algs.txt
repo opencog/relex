@@ -26,9 +26,24 @@ PENN_DETERMINER
 
 ;
 #TemplateActionAlg
+PENN_ADJECTIVE
+<POS> = adj
+=
+<penn-pos> = JJ
+
+;
+#TemplateActionAlg
 PENN_NOUN_SING_OR_MASS
 <POS> = noun
 <num> = singular|uncountable
+=
+<penn-pos> = NN
+
+;
+#TemplateActionAlg
+PENN_NOUN_SING_OR_MASS2
+<POS> = noun
+<num> = %
 =
 <penn-pos> = NN
 
@@ -47,6 +62,14 @@ PENN_VERB_PAST_PARTICIPLE
 <tense val> = past
 =
 <penn-pos> = VBN
+
+;
+#TemplateActionAlg
+PENN_VERB_PRESENT
+<POS> = verb
+<tense val> = present
+=
+<penn-pos> = VBP
 
 
 ;

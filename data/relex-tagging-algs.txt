@@ -504,10 +504,11 @@ TENSE_PROGRESSIVE
 TENSE_PASSIVE_PARTICIPLE
 ; This prevents tense from being set to present; the correct tense 
 ; should be "past" in most(?) all(?) cases.
-<LAB>=\Pa\.*|\Mv\.*
+<LAB>=\Mv\.*
 <F_L str> != be
 =
 <F_R tense val> = past
+;
 ;
 #TemplateActionAlg
 INV-TENSE_NOTENSE
