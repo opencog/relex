@@ -507,7 +507,7 @@ TENSE_PASSIVE_PARTICIPLE
 <LAB>=\Mv\.*
 <F_L str> != be
 =
-<F_R tense val> = past
+<F_R tense val> = passive
 ;
 ;
 #TemplateActionAlg

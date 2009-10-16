@@ -74,7 +74,7 @@ PENN_VERB_PAST_SIMPLE
 #TemplateActionAlg
 PENN_VERB_PAST_PARTICIPLE
 <POS> = verb
-<tense val> = perfect
+<tense val> = passive|perfect
 =
 <penn-pos> = VBN
 
