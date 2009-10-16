@@ -1337,6 +1337,8 @@ QUANTITY_EXCEPTION
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
 ;
+; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
+;
 #TemplateActionAlg
 NUMBER-1
 <LAB> = \D\.*|\ND\.*|\NW\.*
@@ -1348,12 +1350,14 @@ NUMBER-1
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
 <F_R ref links _quantity> = <F_L ref>
+<F_L IS-NUMBER-FLAG> = T
 ;
 #TemplateActionAlg
 NUMBER-2
 <LAB> = \NM\.*
 =
 <F_L ref links _quantity> = <F_R ref>
+<F_R IS-NUMBER-FLAG> = T
 ;
 #TemplateActionAlg
 NUMBER-MOD

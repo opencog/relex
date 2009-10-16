@@ -14,8 +14,12 @@
 ;     Building a Large Annotated Corpus of English: The Penn Treebank
 ;     http://acl.ldc.upenn.edu/J/J93/J93-2004.pdf
 ;
-; The basic relex tagging step must be run before this.
+; Both the basic relex tagging, and the semantic-algs step must be run
+; before this.  The semantic-algs file does a lot of the verb tense
+; tagging that this file needs.
 ;
+; Most of the below is in alphabetical order, except for those cases
+; where the earlier tag must run first.
 
 ;
 #TemplateActionAlg
@@ -71,7 +75,27 @@ PENN_VERB_PRESENT
 =
 <penn-pos> = VBP
 
+; /////////////////////////////////////////////////////////////////////
+;  Misc over-rides of above tags.
+;
+; CD must run after JJ so that it over-rides previous JJ settings.
+#TemplateActionAlg
+PENN_CARDINAL_NUMBER
+<IS-NUMBER-FLAG> = T
+=
+<penn-pos> = CD
 
+
+; PRP tagging after NN tagging to over-ride NN tags.
+#TemplateActionAlg
+PENN_PERSONAL_PRONOUN
+<POS> = noun
+<ref PRONOUN-FLAG> = T
+=
+<penn-pos> = PRP
+
+; /////////////////////////////////////////////////////////////////////
+; Copy to ref
 ;
 #TemplateActionAlg
 PENN_POS_TO_REF

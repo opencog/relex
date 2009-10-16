@@ -318,7 +318,7 @@ public class TestStanford
 ***********/
 
 /****************
- * See README-Stanfordfor details.
+ * See README-Stanford for details.
 		rc &= ts.test_sentence ("All the boys are here.",
 			"predet(boys-3, all-1)\n" +
 			"det(boys-3, the-2)\n" +
@@ -432,6 +432,11 @@ public class TestStanford
 			"det(spring-5-NN, the-4-DT)\n" +
 			"prep_during(picked-2-VBN, spring-5-NN)\n" +
 			"cop(tasty-7-JJ, are-6-VBP)");
+
+		rc &= ts.test_tagged_sentence ("I ate twelve truffles.",
+			"nsubj(ate-2-VBD, I-1-PRP)\n" +
+			"num(truffles-4-NNS, twelve-3-CD)\n" +
+			"dobj(ate-2-VBD, truffles-4-NNS)");
 
 
 		if (rc)
