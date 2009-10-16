@@ -87,6 +87,18 @@ PENN_VERB_PRESENT
 =
 <penn-pos> = VBP
 
+;
+; VBZ is "third person singular" 
+; XXX We also need to handle SF links,
+; XXX and also probably need to send this to head-word as well. ?
+#TemplateActionAlg
+PENN_VERB_PRESENT_SING
+<LAB> = \Ss\.*
+<F_R POS> = verb
+<F_R tense val> = present
+=
+<F_R penn-pos> = VBZ
+
 ; /////////////////////////////////////////////////////////////////////
 ;  Misc over-rides of above tags.
 ;
