@@ -1214,7 +1214,7 @@ ADV1
 ; We need explicit right-word-not-prep check to handle the usual; MVp
 ; cases.
 #TemplateActionAlg
-ADV1
+ADV1_ONLY_IF_NOT_PREP
 <LAB> = \MVp\.*
 <F_R str> != not
 <F_L head-word> != %
