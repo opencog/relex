@@ -438,6 +438,18 @@ public class TestStanford
 			"num(truffles-4-NNS, twelve-3-CD)\n" +
 			"dobj(ate-2-VBD, truffles-4-NNS)");
 
+		rc &= ts.test_tagged_sentence ("I have eaten twelve truffles.",
+			"nsubj(eaten-3-VBN, I-1-PRP)\n" +
+			"aux(eaten-3-VBN, have-2-VBP)\n" +
+			"num(truffles-5-NNS, twelve-4-CD)\n" +
+			"dobj(eaten-3-VBN, truffles-5-NNS)");
+
+		rc &= ts.test_tagged_sentence ("I had eaten twelve truffles.",
+			"nsubj(eaten-3-VBN, I-1-PRP)\n" +
+			"aux(eaten-3-VBN, had-2-VBD)\n" +
+			"num(truffles-5-NNS, twelve-4-CD)\n" +
+			"dobj(eaten-3-VBN, truffles-5-NNS)");
+
 
 		if (rc)
 		{

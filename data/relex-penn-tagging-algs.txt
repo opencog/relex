@@ -61,9 +61,20 @@ PENN_NOUN_PLURAL
 
 ;
 #TemplateActionAlg
-PENN_VERB_PAST_PARTICIPLE
+PENN_VERB_PAST_SIMPLE
 <POS> = verb
 <tense val> = past
+=
+<penn-pos> = VBD
+
+;
+; past participles:
+; I have eaten -- present tense, perfect aspect
+; I had eaten -- past tense, perfect aspect
+#TemplateActionAlg
+PENN_VERB_PAST_PARTICIPLE
+<POS> = verb
+<tense val> = perfect
 =
 <penn-pos> = VBN
 
