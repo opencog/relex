@@ -1776,6 +1776,18 @@ COPY_POS_TO_REF
 =
 <ref pos> = <POS>
 ;
+; Copy tense to where its visible
+; We do this since we want to tense-tag some verbs that never
+; make it to the head e.g. misc copular/predicative-adjective verbs.
+; (usually, this is just "to be"...)
+; 
+#TemplateActionAlg
+COPY_TENSE_TO_REF
+<tense val> != %
+<ref tense> != %  
+=
+<ref tense> = <tense val>
+;
 ; Drop all tagged refs.
 ;
 #TemplateActionAlg
