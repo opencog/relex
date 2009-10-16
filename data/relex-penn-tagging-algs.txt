@@ -60,6 +60,15 @@ PENN_NOUN_PLURAL
 <penn-pos> = NNS
 
 ;
+; Identify verbs generically; the following rules
+; will over-ride as needed.
+;
+#TemplateActionAlg
+PENN_VERB_GENERIC
+<POS> = verb
+=
+<penn-pos> = VB
+;
 #TemplateActionAlg
 PENN_VERB_PAST_SIMPLE
 <POS> = verb
@@ -119,7 +128,6 @@ PENN_EXISTENTIAL_THERE
 <F_L str> = there
 =
 <F_L penn-pos> = EX
-
 
 ; PRP tagging after NN tagging to over-ride NN tags.
 #TemplateActionAlg
