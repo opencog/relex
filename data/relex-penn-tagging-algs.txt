@@ -129,6 +129,13 @@ PENN_EXISTENTIAL_THERE
 =
 <F_L penn-pos> = EX
 
+#TemplateActionAlg
+PENN_EXISTENTIAL_THERE_INV
+<LAB> = \SFI\.*
+<F_R str> = there
+=
+<F_R penn-pos> = EX
+
 ; Modal auxilliary. We look to see if the words is actually
 ; used as an auxilliary -- if it is, then we tag it. Now, I'm not sure,
 ; but perhaps this is a closed list: so the alternative alg is to tag
