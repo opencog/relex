@@ -129,6 +129,19 @@ PENN_EXISTENTIAL_THERE
 =
 <F_L penn-pos> = EX
 
+; Modal auxilliary. We look to see if the words is actually
+; used as an auxilliary -- if it is, then we tag it. Now, I'm not sure,
+; but perhaps this is a closed list: so the alternative alg is to tag
+; any occurance of:
+; can cannot could couldn't dare may might must need ought 
+; shall should shouldn't will would 
+#TemplateActionAlg
+PENN_MODAL_AUX
+<_aux> != %
+<_aux nameSource POS> = verb
+=
+<_aux nameSource penn-pos> = MD
+
 ; PRP tagging after NN tagging to over-ride NN tags.
 #TemplateActionAlg
 PENN_PERSONAL_PRONOUN
