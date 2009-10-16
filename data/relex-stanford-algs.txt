@@ -307,11 +307,13 @@ TODO_TO_SF
 <ref sf-links _xcomp> = <ref links _to-do>
 
 ;
+; Be sure to blank out _det if number is specified!
 #TemplateActionAlg
 QUANTITY_TO_SF
 <ref links _quantity> != %
 =
 <ref sf-links _num> = <ref links _quantity>
+<ref sf-links _det> = %
 
 ;
 #TemplateActionAlg
