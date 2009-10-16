@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright 2009 Linas Vepstas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +43,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	private static String POS_FEATURE_NAME = "POS";
 	private static String INFLECTION_NAME = "inflection";
 	private static String NOUN_NUM_FEATURE_NAME = "num";
+	private static String DEGREE_FEATURE_NAME = "degree";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
@@ -258,6 +260,11 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setFeat(ths, NOUN_NUM_FEATURE_NAME, "uncountable");
 	}
 
+	public static void setComparative(FeatureNode ths)
+	{
+		setFeat(ths, DEGREE_FEATURE_NAME, "comparative");
+	}
+
 	public void setInflection(String inf) {
 		setInflection(fn(), inf);
 	}
@@ -377,6 +384,12 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			{
 				setPOS(ths, "noun");
 				setUncountable(ths);
+				setInflection(ths, infl);
+			}
+			else if (infl.equals(".a-c"))
+			{
+				setPOS(ths, "adj");
+				setComparative(ths);
 				setInflection(ths, infl);
 			}
 		}

@@ -37,6 +37,14 @@ PENN_ADJECTIVE
 
 ;
 #TemplateActionAlg
+PENN_ADJECTIVE
+<POS> = adj
+<degree> = comparative
+=
+<penn-pos> = JJR
+
+;
+#TemplateActionAlg
 PENN_NOUN_SING_OR_MASS
 <POS> = noun
 <num> = singular|uncountable
