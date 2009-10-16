@@ -458,7 +458,7 @@ public class TestStanford
 
 		// Full disclosure:  Stanford currently generates
 		// dep(time-4-NN, young-8-JJ) which just means it doesn't know
-		// the right answer.  
+		// the right answer (which is advcl, right?).  
 		// It also generates advmod(young-8-JJ, when-5-WRB) in addition
 		// to rel(young-8-JJ, when-5-WRB) which is not quite right
 		// either.
