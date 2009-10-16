@@ -71,6 +71,7 @@ PENN_VERB_PAST_SIMPLE
 ; past participles:
 ; I have eaten -- present tense, perfect aspect
 ; I had eaten -- past tense, perfect aspect
+; 
 #TemplateActionAlg
 PENN_VERB_PAST_PARTICIPLE
 <POS> = verb

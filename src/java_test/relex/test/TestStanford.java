@@ -450,6 +450,11 @@ public class TestStanford
 			"num(truffles-5-NNS, twelve-4-CD)\n" +
 			"dobj(eaten-3-VBN, truffles-5-NNS)");
 
+		rc &= ts.test_tagged_sentence ("The truffles were eaten.",
+			"det(truffles-2-NNS, the-1-DT)\n" +
+			"nsubjpass(eaten-4-VBN, truffles-2-NNS)\n" +
+			"auxpass(eaten-4-VBN, were-3-VBD)");
+			
 
 		if (rc)
 		{
