@@ -19,7 +19,7 @@
 ;
 #TemplateActionAlg
 SF_DET
-<LAB> = \D\.*
+<LAB> = \D\.*|\DD\.*
 <LAB> != Dmcn
 <F_L orig_str> != my|our|their|your|'s
 =
