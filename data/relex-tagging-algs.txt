@@ -84,9 +84,12 @@ DETERMINER_POS2
 ;
 ; ---------------------------------------------------------
 ;
+; Determiners can point at nouns or adjectives:
+; "This is the largest".  "largest" should have been tagged as adj by parser.
 #TemplateActionAlg
 POS_NOUN_DET
 <DETERMINER_LINK_FLAG> = T
+<F_R POS> = WORD
 =
 <F_R POS> = noun
 ;
