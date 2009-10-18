@@ -83,12 +83,32 @@ SF_REL
 
 ;
 ; relative clause modifier
+; Two ways to look for this: Find R link, and use head-word, 
+; or find B link, and use that directly.
+;
+; However, it seems that the only time to correctly use rcmod is when 
+; the clause is modifying an NP that is the object, and never the subject.
+; XXX Is this correct!?
+;
+; #TemplateActionAlg
+; SF_RCMOD
+; <LAB> = \R\.*
+; <F_R head-word> != %
+; =
+; <F_L ref sf-links _rcmod> = <F_R head-word ref>
+#TemplateActionAlg
+SF_RCMOD_ID
+<LAB> = \O\.*
+=
+<F_R IS-OBJ-FLAG> = T
+
+
 #TemplateActionAlg
 SF_RCMOD
-<LAB> = R
-<F_R head-word> != %
+<LAB> = \B\.*
+<F_L IS-OBJ-FLAG> = T
 =
-<F_L ref sf-links _rcmod> = <F_R head-word ref>
+<F_L ref sf-links _rcmod> = <F_R ref>
 
 ;
 ; Particles
