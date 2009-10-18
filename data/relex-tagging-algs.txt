@@ -64,6 +64,16 @@ DETERMINER_POS
 <F_L DETERMINER_FLAG> = T
 <F_L POS> = det
 ;
+; Tag determiners that are inverested subjects: e.g.
+; "Are those the the one we want?"
+;
+#TemplateActionAlg
+DETERMINER_POS_SUBJ
+<LAB> = \SI\.*
+<F_R str> = this|these|those|that
+=
+<F_R POS> = det
+;
 ; "The Widget Company" has a DG link to "the", which is missed by rule above.
 #TemplateActionAlg
 DETERMINER_POS2
@@ -1096,15 +1106,18 @@ TAG_REFLEXIVE_PRONOUNS
 <ref PRONOUN-FLAG> = T
 <ref REFLEXIVE-FLAG> = T
 ;
-; Tag these as pronouns *only* if they are already tagged as nouns;
+; Tag these as anaphora *only* if they are already tagged as nouns;
 ; as otherwise, many of these can be adjectives, interjections.
+; XXX Should probably be more careful here, tagging only things
+; appropriate per syntax: e.g. "Are those the ones?" -- tag "those"
+; because its subject.
 ;
 #TemplateActionAlg
 TAG_PRONOUNS_WH
 <str> = all|another|any|anybody|anyone|anything|both|each|eachother|either|everybody|everyone|everything|few|little|many|more|most|much|neither|no_one|nobody|none|nothing|one|one_another|other|others|several|some|somebody|someone|something|that|these|this|those|what|whatever|whenever|which|whichever
 <POS> = noun
 =
-<ref PRONOUN-FLAG> = T
+<ref ANAPHORA-FLAG> = T
 ;
 ;
 ;/////////////////////////////////////////////////////////////////////////////
