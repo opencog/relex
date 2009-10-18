@@ -178,9 +178,12 @@ PENN_MODAL_AUX
 <_aux nameSource penn-pos> = MD
 
 ; PRP tagging after NN tagging to over-ride NN tags.
+; Look for non-trivial gender setting, which is what relex uses for 
+; "personal" pronouns.
 #TemplateActionAlg
 PENN_PERSONAL_PRONOUN
 <POS> = noun
+<gend> != %
 <ref PRONOUN-FLAG> = T
 =
 <penn-pos> = PRP
