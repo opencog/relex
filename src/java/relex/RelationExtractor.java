@@ -721,6 +721,7 @@ public class RelationExtractor
 					System.err.println ("\n" + re.stats.toString());
 				}
 
+				if (commandMap.get("-s") != null) break;
 				sentence = ds.getNextSentence();
 			}
 			if (commandMap.get("-s") != null) break;
@@ -736,6 +737,7 @@ public class RelationExtractor
 		{
 			System.out.println(".\nexit");
 		}
+		System.exit(0);
 	}
 }
 
