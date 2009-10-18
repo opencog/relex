@@ -90,6 +90,9 @@ SF_REL
 ; the clause is modifying an NP that is the object, and never the subject.
 ; XXX Is this correct!?
 ;
+; This is confusing. Infinitival modifiers should be rejected here:
+; e.g. "I don't have anything to say" or "the points to establish are these"
+;
 ; #TemplateActionAlg
 ; SF_RCMOD
 ; <LAB> = \R\.*
@@ -405,6 +408,21 @@ PREDET_TO_SF
 <ref links _predet> != %
 =
 <ref sf-links _predet> = <ref links _predet>
+
+
+;///////////////////////////////////////////////////////////////////////
+; Infinitival modifier.
+;
+; When an infinitival modifier is modifying a verb, its an "xcomp"
+; When an infinitival modifier is modifying a noun, its an "infmod"
+
+#TemplateActionAlg
+SF_INFMOD
+<sf-links _xcomp> != %
+<pos> = noun
+=
+<sf-links _infmod> = <sf-links _xcomp>
+<sf-links _xcomp> = %
 
 
 ;///////////////////////////////////////////////////////////////////////

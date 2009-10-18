@@ -494,13 +494,6 @@ public class TestStanford
 			"dobj(win-5-VB, heart-7-NN)\n" +
 			"aux(failed-9-VBN, have-8-VBP)");
 
-
-/* ----
-infmod(efforts-3, win-5)
-
-xcomp(efforts-3-NNS, win-5-VB)
--- */
-
 		if (rc)
 		{
 			System.err.println("Test passed OK");
