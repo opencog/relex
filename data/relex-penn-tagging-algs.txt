@@ -125,7 +125,7 @@ PENN_VERB_PRESENT_SING
 
 #TemplateActionAlg
 PENN_VERB_PRESENT_SING_INV
-<LAB> = \SFIs\.*
+<LAB> = \SFIs\.*|\SIs\.*
 <F_L POS> = verb
 <F_L tense val> = present
 =

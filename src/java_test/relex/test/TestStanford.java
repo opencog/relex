@@ -477,26 +477,19 @@ public class TestStanford
 			"amod(way-5-NN, better-4-JJR)\n" +
 			"nsubj(is-1-VBZ, way-5-NN)");
 
- (SQ (VBZ Is)
-    (NP (DT this))
-    (NP
-      (NP (DT the) (JJS largest))
-      (SBAR
-        (S
-          (NP (PRP you))
-          (VP (MD can)
-            (VP (VB find))))))
+		rc &= ts.test_tagged_sentence ("Is this the largest you can find?",
+			"cop(largest-4-JJS, is-1-VBZ)\n" +
+			"nsubj(largest-4-JJS, this-2-DT)\n" +
+			"det(largest-4-JJS, the-3-DT)\n" +
+			"nsubj(find-7-VB, you-5-PRP)\n" +
+			"aux(find-7-VB, can-6-MD)\n" +
+			"rcmod(largest-4-JJS, find-7-VB)");
 
-cop(largest-4, Is-1)
-nsubj(largest-4, this-2)
-det(largest-4, the-3)
-nsubj(find-7, you-5)
-aux(find-7, can-6)
-rcmod(largest-4, find-7)
-
+/*---
 rcmod(largest-4, find-7)
 
 dobj(find-7-VB, largest-4-NN)
+*/
 
 
 
