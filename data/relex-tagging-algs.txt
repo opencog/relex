@@ -264,12 +264,13 @@ POS_TH_PARTICLE
 ;
 ; Identify a particle: 
 ;   The word "to" in "I like to read."
+; Well, but most people call ths a prep ... 
 #TemplateActionAlg
 POS_I_PARTICLE
 <LAB> = I
 <F_L POS> = WORD
 =
-<F_L POS> = particle
+<F_L POS> = prep
 ;
 ; particles to the right of verbs "Jules called out to Jim"
 ; or nouns: "His job is picking up the trash."

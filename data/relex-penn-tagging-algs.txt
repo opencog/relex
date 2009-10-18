@@ -188,6 +188,14 @@ PENN_PERSONAL_PRONOUN
 =
 <penn-pos> = PRP
 
+; 
+#TemplateActionAlg
+PENN_TO_PARTICLE
+<LAB> = \TO\.*
+=
+<F_R penn-pos> = TO
+
+;
 ; A closed list for now, I'm not sure what is wanted here ... 
 #TemplateActionAlg
 PENN_WH_ADVERB
