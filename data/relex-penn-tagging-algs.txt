@@ -159,12 +159,12 @@ PENN_EXISTENTIAL_THERE_INV
 =
 <F_R penn-pos> = EX
 
-; Modal auxilliary. We look to see if the word is actually used as an 
-; auxilliary -- if it is, then we tag it. Hmm. It seems that only 
-; "to be" is ever tagged as MD ???
+; Modal auxilliary. We look to see if the word is actually used as an
+; auxilliary -- if it is, then we tag it.  Furthermore, word needs to
+; to be present/future tense (e.g. "had eaten", "had" is not tagged MD 
+; but VBD)
 ;
-; I'm not sure, but perhaps this is a closed list: so the alternative 
-; alg is to tag any occurance of:
+; This seems to be a closed list: tag any occurance of:
 ;
 ; can cannot could couldn't dare may might must need ought 
 ; shall should shouldn't will would 
@@ -173,7 +173,7 @@ PENN_EXISTENTIAL_THERE_INV
 PENN_MODAL_AUX
 <_aux> != %
 <_aux nameSource POS> = verb
-<_aux str> = be
+<_aux nameSource orig_str> = can|cannot|could|couldn't|dare|may|might|must|need|ought|shall|should|shouldn't|will|would
 =
 <_aux nameSource penn-pos> = MD
 
