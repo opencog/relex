@@ -485,13 +485,21 @@ public class TestStanford
 			"aux(find-7-VB, can-6-MD)\n" +
 			"rcmod(largest-4-JJS, find-7-VB)");
 
-/*---
-rcmod(largest-4, find-7)
+		rc &= ts.test_tagged_sentence ("But my efforts to win his heart have failed.",
+			"poss(efforts-3-NNS, my-2-PRP$)\n" +
+			"nsubj(failed-9-VBN, efforts-3-NNS)\n" +
+			"aux(win-5-VB, to-4-TO)\n" +
+			"infmod(efforts-3-NNS, win-5-VB)\n" +
+			"poss(heart-7-NN, his-6-PRP$)\n" +
+			"dobj(win-5-VB, heart-7-NN)\n" +
+			"aux(failed-9-VBN, have-8-VBP)");
 
-dobj(find-7-VB, largest-4-NN)
-*/
 
+/* ----
+infmod(efforts-3, win-5)
 
+xcomp(efforts-3-NNS, win-5-VB)
+-- */
 
 		if (rc)
 		{

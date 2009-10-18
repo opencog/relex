@@ -326,11 +326,13 @@ NN_TO_SF
 <ref sf-links _nn> = <ref links _nn>
 
 ;
+; Be sure to blank out _det if possesive is specified!
 #TemplateActionAlg
 POSS_TO_SF
 <ref links _poss> != %
 =
 <ref sf-links _poss> = <ref links _poss>
+<ref sf-links _det> = %
 
 ;
 #TemplateActionAlg
