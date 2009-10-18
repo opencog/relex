@@ -439,12 +439,6 @@ POS_IT
 ;
 #MorphyAlg
 ;
-#TemplateActionAlg
-IDENTIFY_POSSESSIVE
-<orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|thy|Thy|thine|Thine
-=
-<POSSESSIVE-FLAG> = T
-;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; MODAL TENSE
@@ -1094,6 +1088,12 @@ NUM_TO_REF
 ; Needed for Anaphora resolution
 ; Perhaps this info could be obtained from the link grammar parser,
 ; but it seems easier to just make an exhaustive list.
+;
+#TemplateActionAlg
+IDENTIFY_POSSESSIVE
+<orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|thy|Thy|thine|Thine
+=
+<POSSESSIVE-FLAG> = T
 ;
 #TemplateActionAlg
 TAG_PRONOUNS

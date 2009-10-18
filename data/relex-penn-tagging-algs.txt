@@ -188,6 +188,13 @@ PENN_PERSONAL_PRONOUN
 =
 <penn-pos> = PRP
 
+;
+#TemplateActionAlg
+PENN_POSSESIVE_PERSONAL_PRONOUN
+<POSSESSIVE-FLAG> = T
+=
+<penn-pos> = PRP$
+
 ; 
 #TemplateActionAlg
 PENN_TO_PARTICLE
