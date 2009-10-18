@@ -37,11 +37,19 @@ PENN_ADJECTIVE
 
 ;
 #TemplateActionAlg
-PENN_ADJECTIVE
+PENN_ADJ_COMPARATIVE
 <POS> = adj
 <degree> = comparative
 =
 <penn-pos> = JJR
+
+;
+#TemplateActionAlg
+PENN_ADJ_SUPERLATIVE
+<POS> = adj
+<degree> = superlative
+=
+<penn-pos> = JJS
 
 ;
 #TemplateActionAlg

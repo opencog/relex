@@ -265,6 +265,11 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setFeat(ths, DEGREE_FEATURE_NAME, "comparative");
 	}
 
+	public static void setSuperlative(FeatureNode ths)
+	{
+		setFeat(ths, DEGREE_FEATURE_NAME, "superlative");
+	}
+
 	public void setInflection(String inf) {
 		setInflection(fn(), inf);
 	}
@@ -390,6 +395,12 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			{
 				setPOS(ths, "adj");
 				setComparative(ths);
+				setInflection(ths, infl);
+			}
+			else if (infl.equals(".a-s"))
+			{
+				setPOS(ths, "adj");
+				setSuperlative(ths);
 				setInflection(ths, infl);
 			}
 		}
