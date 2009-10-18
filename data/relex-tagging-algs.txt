@@ -46,7 +46,18 @@ POS_NOUN
 ;---------------------------------------------------------------
 ;
 ; Closed-list determiners.
-; One could argue that this list should include the below:
+; These can be classified as:
+; -- Article 
+;    ++ definite article "the"
+;    ++ indefinite article "a", "an"
+; -- Possessive Adjective "my book" "their friends"
+; -- Demonstrative Adjective "this book" "those rocks"
+; -- Numeric determiner: "two dogs" "the first hour"
+; -- Quantifier "some things", "few authors"
+;
+; See also list of posessive,s, gernder, reflexive and anaphora below.
+;
+; One could argue that the following should be handled:
 ;    another some any 
 ;    my our thier her his its
 ;    no each every certain 
