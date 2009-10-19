@@ -233,7 +233,7 @@ PENN_WH_POSSESIVE_PRONOUN
 <LAB> = \D\.\.w
 ; <F_L orig_str> = what|which|whose
 =
-<F_R penn-pos> = WP$
+<F_L penn-pos> = WP$
 
 ; /////////////////////////////////////////////////////////////////////
 ; Copy to ref
