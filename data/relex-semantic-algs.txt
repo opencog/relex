@@ -430,6 +430,18 @@ PROPOGATE_HEAD-WORD
 =
 <head-word> = $Z
 ;
+; Extend the headword to left.
+; Currently, only stanford-campat needs this one.
+; except that relex is generally broken here.
+; e.g. "I wonder how many people you saw." is just messed up.
+; #TemplateActionAlg
+; HOW-HEAD-WORD
+; <LAB> = H
+; <F_R head-word> != %
+; <F_L head-word> = %
+; =
+; <F_L head-word> = <F_R head-word>
+
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; FILLER FIXING

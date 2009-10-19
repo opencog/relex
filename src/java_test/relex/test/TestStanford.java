@@ -494,6 +494,12 @@ public class TestStanford
 			"dobj(win-5-VB, heart-7-NN)\n" +
 			"aux(failed-9-VBN, have-8-VBP)");
 
+		rc &= ts.test_tagged_sentence ("The undergrads are occasionally late.",
+			"det(undergrads-2-NNS, the-1-DT)\n" +
+			"nsubj(late-5-JJ, undergrads-2-NNS)\n" +
+			"cop(late-5-JJ, are-3-VBP)\n" +
+			"advmod(late-5-JJ, occasionally-4-RB)");
+
 		if (rc)
 		{
 			System.err.println("Test passed OK");

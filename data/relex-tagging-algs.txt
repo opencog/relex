@@ -1101,7 +1101,7 @@ TAG_PRONOUNS
 <str> = I|i|Me|me|We|we|Us|us|You|you|He|he|Him|him|It|it|She|she|Them|them|They|they|who|Who|whoever|whom|whomever
 =
 <ref PRONOUN-FLAG> = T
-<ref ANAPHORA-FLAG> = T
+; <ref ANAPHORA-FLAG> = T
 ;
 ; We don't (currently) put a possesive tag on these pronouns; instead,
 ; we use a later rule to determine what is being possesed; e.g "your
@@ -1112,14 +1112,14 @@ TAG_PRONOUNS_POSS
 <str> = my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|Her|her|Hers|hers|His|his|Its|its|their|Their|thiers|Thiers|whose|Whose
 =
 <ref PRONOUN-FLAG> = T
-<ref ANAPHORA-FLAG> = T
+; <ref ANAPHORA-FLAG> = T
 ;
 #TemplateActionAlg
 TAG_REFLEXIVE_PRONOUNS
 <str> = Myself|myself|Ourselves|ourselves|yourself|Yourself|yourselves|ourselves|Himself|himself|Itself|itself|Herself|herself|Themselves|themselves
 =
 <ref PRONOUN-FLAG> = T
-<ref ANAPHORA-FLAG> = T
+; <ref ANAPHORA-FLAG> = T
 <ref REFLEXIVE-FLAG> = T
 ;
 ; Tag these as anaphora *only* if they are already tagged as nouns;
@@ -1135,7 +1135,7 @@ TAG_PRONOUNS_WH
 <POS> = noun
 =
 <ref PRONOUN-FLAG> = T
-<ref ANAPHORA-FLAG> = T
+; <ref ANAPHORA-FLAG> = T
 ;
 ;
 ;/////////////////////////////////////////////////////////////////////////////

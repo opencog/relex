@@ -131,6 +131,13 @@ PENN_VERB_PRESENT_SING_INV
 =
 <F_L penn-pos> = VBZ
 
+;
+#TemplateActionAlg
+PENN_ADVERB
+<POS> = adv
+=
+<penn-pos> = RB
+
 ; /////////////////////////////////////////////////////////////////////
 ;  Misc over-rides of above tags.
 ;
