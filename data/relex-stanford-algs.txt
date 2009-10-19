@@ -129,6 +129,13 @@ SF_ENTITY_NAME
 =
 <F_R ref sf-links _nn> = <F_L ref>
 
+; Treat "how much" as a plain-jane advmod
+#TemplateActionAlg
+SF_HOW_MUCH
+<LAB> = H
+=
+<F_R ref sf-links _advmod> = <F_L ref>
+
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; ALTERNATIVES TO PREP MARKUP
