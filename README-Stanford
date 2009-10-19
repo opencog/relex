@@ -84,7 +84,8 @@ The ruling documentation is taken to be:
 Test sentences
 --------------
 A list of test sentences, and status. Many/most of these sentences are
-taken from the examples provided in the Stanford documentation.
+taken from the examples provided in the Stanford documentation. 
+Additional test sentences can be found in "TestStanford.java".
 
 The parsing of these sentences are tested automatically by running 
 "ant test", which runs the test case "TestStanford.java".
@@ -474,7 +475,7 @@ I saw the book which you bought.
     Stanford output:
        Stanford is not outputting what the documentation says it
        should -- it was supposed to illustrate ref. Instead, it
-       is gnerating rel, exactly the same as below. No surprise,
+       is generating rel, exactly the same as below. No surprise,
        since syntactically, these sentences are identical.
     RelEx status: OK
        (I.e. relex is generatng exactly the same thing as the 
@@ -501,10 +502,9 @@ I saw the man whose wife you love.
        rel(love-8, wife-6)
        nsubj(love-8, you-7)
        rcmod(man-4, love-8)
-    RelEx status: Broken
-       Currently link-grammar is broken, it needs fixing on this one.
-       XXX
-
+    RelEx status: Incomplete
+      Not yet generating the rel and the rcmod. under construction.
+      shouldn't be hard ... 
 
 Last night, I swam in the pool.
     Stanford output:

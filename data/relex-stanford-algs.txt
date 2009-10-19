@@ -21,7 +21,6 @@
 SF_DET
 <LAB> = \D\.*|\DD\.*
 <LAB> != Dmcn
-<LAB> != \D\.\.w
 <F_L orig_str> != my|our|their|your|'s
 =
 <F_R ref sf-links _det> += <F_L ref>
@@ -31,7 +30,7 @@ SF_DET
 #TemplateActionAlg
 SF_DET_POSS
 <LAB> = \D\.\.w
-; <F_L orig_str> = what|which|whose
+<F_L orig_str> = whose
 =
 <F_R ref sf-links _poss> += <F_L ref>
 ;
@@ -90,6 +89,13 @@ SF_REL
 <F_R head-word> != %
 =
 <F_R head-word ref sf-links _rel> = <F_R ref>
+
+; As above but ... xxx under construction
+; #TemplateActionAlg
+; SF_REL
+; <LAB> = \B.*
+; =
+; <F_R ref sf-links _rel> = <F_L ref>
 
 ;
 ; relative clause modifier

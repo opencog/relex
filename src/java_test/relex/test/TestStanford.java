@@ -374,9 +374,13 @@ public class TestStanford
 
 
 /****************
- * Currently link-grammar is broken on this one. 
- * Link-grammar need fixing, and then relex.
  *
+ * relex is failing to generate teh following:
+ * Almost got it w/the B** rules but not quite ... 
+
+rel(love-8, wife-6)
+rcmod(man-4, love-8)
+
 		rc &= ts.test_sentence ("I saw the man whose wife you love.",
 			"nsubj(saw-2, I-1)\n" +
 			"det(man-4, the-3)\n" +

@@ -1,7 +1,7 @@
 
                   OpenRelEx Semantic Relation Extractor
                   -------------------------------------
-                      Version 1.2.0 12 October 2009
+                      Version 1.2.1 XX XXber 2009
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -214,6 +214,12 @@ Stanford parser. This mode is technically interesting because RelEx is
 more than three time faster than the Stanford parser. This is described
 in greater detail in the file "README-Stanford".
 
+This release of RelEx includes an optional Penn Treebank style part of
+speech tagger.  The tagger is experimental, and has not been evaluated
+for accuracy. It is probable that the accuracy is low, primarily because
+it has not been well tested. Because the tagging is based on the syntactic
+parse, in principle the accuracy could be very high, once fully debugged.
+
 
 Running RelEx
 -------------
@@ -238,6 +244,7 @@ Running this will display:
 	- Anaphora resolutions.
 	- Frame relations.
 	- Parse ranking info.
+	- (Optionally) Stanford and Penn Treebank output.
 
 Output is controlled by command-line flags that are set in the shell
 script.  The "-h" flag will print a list of all of the avaliable
