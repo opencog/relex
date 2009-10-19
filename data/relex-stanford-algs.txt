@@ -588,3 +588,13 @@ SF_XSUBJ
 <F_R head-word ref sf-links _xsubj> = <F_L ref sf-links _nsubj>
 
 
+;///////////////////////////////////////////////////////////////////////
+; Idiom -- unspecified dependency
+
+; 
+#TemplateActionAlg
+SF_IDIOM
+<LAB> = \ID[A-Z]*[a-z]*
+=
+<F_L ref sf-links _dep> = <F_R ref>
+
