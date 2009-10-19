@@ -571,12 +571,13 @@ TENSE_IMPERATIVE
 ;
 ; post-tense morphology cleanup: If the verb is "saw" and the tense is "past",
 ; then we are seeing with eyes, not sawing with a saw.
-#TemplateActionAlg
-SEE_SAW
-<tense val> = past
-<str> = saw
-=
-<str> = see
+; This messes up the orig_str, cause its done too early. Sigh.
+; #TemplateActionAlg
+; SEE_SAW
+; <tense val> = past
+; <str> = saw
+; =
+; <str> = see
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
