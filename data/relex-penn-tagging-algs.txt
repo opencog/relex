@@ -226,6 +226,15 @@ PENN_WH_ADVERB
 =
 <penn-pos> = WRB
 
+; possesive determiner, for example:
+; "I saw the man whose wife you love." poss(wife-6-NN, whose-5-WP$)
+#TemplateActionAlg
+PENN_WH_POSSESIVE_PRONOUN
+<LAB> = \D\.\.w
+; <F_L orig_str> = what|which|whose
+=
+<F_R penn-pos> = WP$
+
 ; /////////////////////////////////////////////////////////////////////
 ; Copy to ref
 ;
