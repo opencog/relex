@@ -93,6 +93,14 @@ PENN_VERB_PAST_SIMPLE
 <penn-pos> = VBD
 
 ;
+#TemplateActionAlg
+PENN_VERB_PAST_PROGRESSIVE
+<POS> = verb
+<tense val> = progressive
+=
+<penn-pos> = VBG
+
+;
 ; past participles:
 ; I have eaten -- present tense, perfect aspect
 ; I had eaten -- past tense, perfect aspect
