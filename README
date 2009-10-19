@@ -332,9 +332,25 @@ RelEx, w/unix "time" command:
 
    Actual: 2609/180 = 14.50 words/sec
 
+Ratio: Stanford/RelEx = 605sec/180sc = 3.36x faster!
 
 TODO
 ----
+
+TODO - Past Tense
+-----------------
+Currently, relex uses "is past tense" to query link-grammar. This can now
+be ditched by making use of the word subscripts in relex, just like 
+eveything else. This should provide a minor perf boost.
+
+
+TODO - Comparatives
+-------------------
+RelEx is pretty broken when it comes to handling comparative sentences.
+This needs fixing.
+
+TODO - Java Install
+-------------------
 The Java install dependencies would be much easier to deal with if
 there was a centralized repository from which one could easily obtain
 the needed jar files. That is, something analogous to apt-get or CPAN.
@@ -349,8 +365,8 @@ Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
 
 
-Head word
----------
+TODO - Frame Head word
+----------------------
 A core idea behind dependency grammar is that the order of a pair of 
 words in a dependency relation is important: the first word is the
 head word, the second is the dependent. This is maintained by RelEx,
