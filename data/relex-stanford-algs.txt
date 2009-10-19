@@ -21,9 +21,19 @@
 SF_DET
 <LAB> = \D\.*|\DD\.*
 <LAB> != Dmcn
+<LAB> != \D\.\.w
 <F_L orig_str> != my|our|their|your|'s
 =
 <F_R ref sf-links _det> += <F_L ref>
+;
+; possesive determiner, for example:
+; "I saw the man whose wife you love." poss(wife-6-NN, whose-5-WP$)
+#TemplateActionAlg
+SF_DET_POSS
+<LAB> = \D\.\.w
+; <F_L orig_str> = what|which|whose
+=
+<F_R ref sf-links _poss> += <F_L ref>
 ;
 ; Explicit aux markup.
 ; "there is a place we can go"  aux(go-7, can-6)
@@ -99,6 +109,7 @@ SF_REL
 ; <F_R head-word> != %
 ; =
 ; <F_L ref sf-links _rcmod> = <F_R head-word ref>
+;
 #TemplateActionAlg
 SF_RCMOD_ID
 <LAB> = \O\.*
