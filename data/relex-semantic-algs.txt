@@ -1486,40 +1486,50 @@ POSSR_TO_DET
 ; Use more pressure if the bleeding has not stopped after twenty minutes.
 ; Cornwallis was expecting more troops to arrive on British ships.
 ; The undergrads are gloomier than usual.
+; She eats more pasta.
+; -----
 ;
-#TemplateActionAlg
-COMPARATIVE_RELATION1
 ; Marks the comparative subject with a reference to the relation word
 ;    Dave eats more/as_many cats than/as... (D**m/D**y)
+#TemplateActionAlg
+COMPARATIVE_RELATION1
 <LAB> = \D\.\.[my]\.*
 =
 <F_R comparative-relation-word> = <F_L>
 <F_R COMP-SUBJ-FLAG> = T
 ;
+; Puts a reference to object of 'than' in the word 'than'
+;
 #TemplateActionAlg
 COMPARATIVE_OBJ1
-;Puts a reference to object of 'than' in the word 'than'
 <LAB> = \U\.c\.*|\O\.c\.*
 <F_L str> = than|as
 =
 <F_L comparative-obj-word> = <F_R>
 ;
+; Brings the comparative object into the controlling verb
+;
 #TemplateActionAlg
 COMPARATIVE_OBJ2
-;Brings the comparative object into the controlling verb
 <LAB> = \MV[tz]\.*
-<F_R comparative-obj-word> != % 
+<F_R comparative-obj-word> != %
 =
 <F_L comparative-obj-word> = <F_R comparative-obj-word>
 ;
+; Brings the object and comparative 2nd-part into the comparative subject
+; But only if there's a 2nd part -- "She likes more pasta" doesn't have
+; have a comparative object.
+;
 #TemplateActionAlg
 COMPARATIVE_OBJ3A
-;Brings the object and comparative 2nd-part into the comparative subject
 <LAB> = \O\.*
 <F_R COMP-SUBJ-FLAG> = T
+<F_L comparative-obj-word> != %
 =
 <F_R comparative-cvar name> = _$cVar
 <F_R comparative-cvar links _$crVar> = <F_L comparative-obj-word ref>
+;
+; Use the prep alg to handle the rest.
 ;
 #PrepositionLinkAlg
 COMPARATIVE_OBJECT_FINAL
@@ -1824,7 +1834,7 @@ COPY_POS_TO_REF
 #TemplateActionAlg
 COPY_TENSE_TO_REF
 <tense val> != %
-<ref tense> != %  
+<ref tense> != %
 =
 <ref tense> = <tense val>
 ;
