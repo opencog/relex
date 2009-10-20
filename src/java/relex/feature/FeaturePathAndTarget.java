@@ -123,7 +123,9 @@ public class FeaturePathAndTarget
 		try {
 			targetPath = new FeaturePath(str);
 		} catch (Exception e) {
-			targetString = str;
+			// Trim whitespace!! Else crapola whitespace in the algs file
+			// will damage results e.g. blah != %  with trailing whitespace.
+			targetString = str.trim();
 		}
 	}
 
