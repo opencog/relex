@@ -108,9 +108,17 @@ class OpenCogSchemeRel
 			FeatureNode tgtName = tgtNode.get("name");
 			if (tgtName == null) return false;
 
+			// nameSource might be NULL if theres a bug in an algs file.
+			// Currently, "She likes more pasta." triggers this, due to
+			// a bug in compartive processing (no target for _$crVar)
+			FeatureNode srcRaw = srcNode.get("nameSource");
+			if (null == srcRaw) return false;
+			FeatureNode tgtRaw = tgtNode.get("nameSource");
+			if (null == tgtRaw) return false;
+
 			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
-			String src_guid = srcNode.get("nameSource").get("uuid").getValue();
-			String tgt_guid = tgtNode.get("nameSource").get("uuid").getValue();
+			String src_guid = srcRaw.get("uuid").getValue();
+			String tgt_guid = tgtRaw.get("uuid").getValue();
 
 			char underscore = relName.charAt(0);
 
