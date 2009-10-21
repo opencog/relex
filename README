@@ -211,11 +211,13 @@ it does not include all required output. For example, if the same word
 appears in a sentence twice, the demo output will not distinguish between
 these two words.
 
-This release of RelEx includes a Stanford-parser compatibility mode.
-In this mode, RelEx will generate the same dependency relations as the
-Stanford parser. This mode is technically interesting because RelEx is
-more than three time faster than the Stanford parser. This is described
-in greater detail in the file "README-Stanford".
+This release of RelEx includes an experimental Stanford-parser 
+compatibility mode.  In this mode, RelEx will generate the same 
+dependency relations as the Stanford parser. This mode is technically
+interesting for comparing output; RelEx is more than three time faster 
+than the lexicalized (factored) Stanford parser, although it is slower
+than the PCFG parser. This is described in greater detail in the file
+"README-Stanford".
 
 This release of RelEx includes an optional Penn Treebank style part of
 speech tagger.  The tagger is experimental, and has not been evaluated
@@ -321,12 +323,31 @@ contractions, the two disagreee on the word count as well.
 The unix command "wc" counts 2609 words in 148 sentences, for 
 2609/148 = 17.6 words/sent.
  
-Stanford, w/unix "time" command:
+Stanford, w/ englishFactored.ser.gz , w/unix "time" command:
    real	10m4.882s
    user	10m1.974s
    sys	0m4.208s
 
    Actual: 2609/605= 4.31 words/sec
+
+Stanford, w/ englishPCFG.ser.gz , w/unix "time" command:
+   real	2m21.690s
+   user	2m23.165s
+   sys	0m1.056s
+
+   Actual: 2609/143 = 18.24 words/sec
+
+Stanford, w/ wsjFactored.ser.gz , w/unix "time" command:
+   real	10m5.972s
+   user	10m3.802s
+   sys	0m4.516s
+
+Stanford, w/ wsjPCFG.ser.gz , w/unix "time" command:
+   real	2m11.154s
+   user	2m14.312s
+   sys	0m1.144s
+
+   Actual: 2609/134 = 19.47 words/sec
 
 RelEx, w/unix "time" command:
    real	2m59.739s
@@ -335,7 +356,11 @@ RelEx, w/unix "time" command:
 
    Actual: 2609/180 = 14.50 words/sec
 
-Ratio: Stanford/RelEx = 605sec/180sc = 3.36x faster!
+Ratio: Stanford-englishFactored/RelEx = 605sec/180sc = 3.36x (faster)
+Ratio: Stanford-wsjFactored/RelEx = 606sec/180sec = 3.36x (faster)
+Ratio: Stanford-englishPCFG/RelEx = 143sec/180sec = 0.79x (slower)
+Ratio: Stanford-wsjPCFG/RelEx = 134sec/180sec = 0.74x (slower)
+
 
 TODO
 ----

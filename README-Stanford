@@ -9,10 +9,12 @@ attempts to generate the same output as the Stanford parser.  This is
 an interesting thing to do, for two reasons:
 
    1) It provides a way of double-checking parse results,
-   2) RelEx is nearly four times faster than the Stanford parser.
+   2) RelEx is more than three times faster than the "factored" 
+      version of the Stanford parser, although it is slower than the
+      PCFG version.
 
-The compatibility mode is currently in "beta": it is almost fully
-implemented, but still has a number of rough spots that need work.
+The compatibility mode is currently in "beta": it is mostly implemented,
+but still has a number of rough spots that need work.
 
 Compatibility mode is enabled with the --stanford flag, passed to
 RelationExtractor. So for example, edit "relation-extractor.sh"
