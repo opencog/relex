@@ -504,6 +504,15 @@ rcmod(man-4, love-8)
 			"cop(late-5-JJ, are-3-VBP)\n" +
 			"advmod(late-5-JJ, occasionally-4-RB)");
 
+		rc &= ts.test_tagged_sentence ("The height of Mount Everest is 8,848 metres.",
+			"det(height-2-NN, the-1-DT)\n" +
+			"nsubj(metres-8-NNS, height-2-NN)\n" +
+			"nn(Everest-5-NNP, Mount-4-NNP)\n" +
+			"prep_of(height-2-NN, Everest-5-NNP)\n" +
+			"cop(metres-8-NNS, is-6-VBZ)\n" +
+			"num(metres-8-NNS, 8,848-7-CD)");
+
+
 		if (rc)
 		{
 			System.err.println("Test passed OK");

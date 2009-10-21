@@ -69,6 +69,22 @@ PENN_NOUN_SING_OR_MASS2
 
 ;
 #TemplateActionAlg
+PENN_NOUN_PROPER_SINGULAR_L
+<LAB> = G
+<F_L POS> = noun
+=
+<F_L penn-pos> = NNP
+
+;
+#TemplateActionAlg
+PENN_NOUN_PROPER_SINGULAR_R
+<LAB> = G
+<F_R POS> = noun
+=
+<F_R penn-pos> = NNP
+
+;
+#TemplateActionAlg
 PENN_NOUN_PLURAL
 <POS> = noun
 <num> = plural
