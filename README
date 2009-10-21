@@ -135,6 +135,9 @@ function.
    decrease memory usage, as compared to the standard Sun JDK
    implementation of the java.util heirarchy.
 
+   ***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
+   work with version 2.0 !!
+
 - Apache commons logging
    The OpenNLP package requires that the Apache commons logging
    jar file be installed. In Debian/Ubuntu, this is supplied by
