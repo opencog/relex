@@ -5,9 +5,8 @@
 ; This tagging must be performed before relationship extraction is done.
 ;
 ;/////////////////////////////////////////////////////////////////////////////
-; 
-;  Part-of-speech Tagging:
-;  categories for Morphy are "noun" "verb" "adj" "adv"
+;
+; General remaks about the structure of the files:
 ;
 ;  Empty or blank node is shown by "%"
 ;
@@ -17,10 +16,52 @@
 ;     (also meaning that there is no way to represent a "." in a regular expression)
 ;
 ;/////////////////////////////////////////////////////////////////////////////
+; 
+;  Part-of-speech Tagging:
+;  categories for Morphy are "noun" "verb" "adj" "adv"
 ;
+;  POS tagging done in two steps:
+;  1) coarse/crude tagging, based on words subscripts obtained from
+;     link-grammar.
+;  2) refined tagging, based on actual links. This typically over-rides
+;     the coarse tagging given above.
 ;
-; POS TAGGING		
-;
+; adjectives
+#TemplateActionAlg
+SUBSCR_POS_A
+<inflection> = .a
+=
+<POS> = adj
+
+; b == both -- male or female given name.
+#TemplateActionAlg
+SUBSCR_POS_B
+<inflection> = .b
+=
+<POS> = noun
+<PERSON-FLAG> = T
+
+; e -- adverb
+#TemplateActionAlg
+SUBSCR_POS_E
+<inflection> = .e
+=
+<POS> = adv
+
+; f -- female given name.
+#TemplateActionAlg
+SUBSCR_POS_F
+<inflection> = .f
+=
+<POS> = noun
+<PERSON-FLAG> = T
+<GENDER> = feminine
+
+
+
+;/////////////////////////////////////////////////////////////////////////////
+; 
+; Refined POS tagging based on linkage used.
 ;
 #TemplateActionAlg
 POS_VERB

@@ -326,10 +326,10 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			char inflection = wordString.charAt(len-1);
 			switch(inflection)
 			{
-				case 'a': setPOS(ths, "adj"); break;
-				case 'b': setPOS(ths, "noun"); break; // male or female
-				case 'e': setPOS(ths, "adv"); break; // adverbs alternate
-				case 'f': setPOS(ths, "noun"); break; // female
+				// case 'a': setPOS(ths, "adj"); break;
+				// case 'b': setPOS(ths, "noun"); break; // male or female
+				// case 'e': setPOS(ths, "adv"); break; // adverbs alternate
+				// case 'f': setPOS(ths, "noun"); break; // female
 				case 'g': setPOS(ths, "noun"); break; // gerund -- noun or verb ??
 				case 'l': setPOS(ths, "noun"); break; // location
 				case 'm': setPOS(ths, "noun"); break; // male
@@ -353,8 +353,8 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			}
 			switch(inflection)
 			{
-				case 'b':  setPerson(ths); break; // male or female
-				case 'f':  setPerson(ths); setGender(ths, "feminine"); break;
+				// case 'b':  setPerson(ths); break; // male or female
+				// case 'f':  setPerson(ths); setGender(ths, "feminine"); break;
 				case 'l':  setLocation(ths); break;
 				case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
 				case 'o':  setOrganization(ths); break;

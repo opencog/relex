@@ -5,6 +5,16 @@
 The relex-semantic-algs.txt file contains rules for extracting 
 relationship types from the link grammar.  
 
+; General remaks about the structure of the files:
+;
+;  Empty or blank node is shown by "%"
+;
+;  Regular expression is introduced by "\"
+;  In regular expressions, "\." is converted to "[a-z\*]"
+;     (meaning any lower case or the * character)
+;     (also meaning that there is no way to represent a "." in a regular expression)
+
+
 Some notes about verb tenses:
 -----------------------------
 
