@@ -5,6 +5,7 @@ New in version 1.2.1 (XXX 2009)
  * Improved word features, including comparative, superlative tagging, etc.
  * Fix crash on opencog output module, on comparative sentences.
  * Fix: string substitution of "be" in frame rules (Fabricio)
+ * Fix: correctly pass variable nodes to opencog (Fabricio)
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.

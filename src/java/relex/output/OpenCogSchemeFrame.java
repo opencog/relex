@@ -85,7 +85,6 @@ public class OpenCogSchemeFrame
 		 */		
 		for (String fm : fms) 
 		{
-					
 			// First, parse out the framenet string 
 			if (fm.charAt(0) != '^') continue;
 			int uscore = fm.indexOf('_');
@@ -145,6 +144,14 @@ public class OpenCogSchemeFrame
 			if (-1 < cpt1.indexOf('@')) cpt1_is_word = true;
 			if ((cpt2 != null) && (-1 < cpt2.indexOf('@'))) cpt2_is_word = true;
 
+			// Are cpt1 and 2 variables?
+			Boolean cpt1_is_var = false;
+			Boolean cpt2_is_var = false;
+			if (-1 < cpt1.indexOf("$qVar")) cpt1_is_var = true;
+			if ((cpt2 != null) && (-1 < cpt2.indexOf("$qVar"))) cpt2_is_var = true;
+
+
+
 			/*** Fabricio: change the frames output ***********/
 			//Add the FrameItem to the corresponding frame
 			if(frames.get(frm) == null){
@@ -173,10 +180,12 @@ public class OpenCogSchemeFrame
 				frameElementItem.wordInstanceValueElement = cpt2;
 				if(cpt2_is_ling) frameElementItem.isLinguistic = true;
 				if(cpt2_is_word) frameElementItem.isWord = true;
+				if(cpt2_is_var) frameElementItem.isVar = true;
 			} else {
 				frameElementItem.wordInstanceValueElement = cpt1;
 				if(cpt1_is_ling) frameElementItem.isLinguistic = true;
 				if(cpt1_is_word) frameElementItem.isWord = true;
+				if(cpt1_is_var) frameElementItem.isVar = true;
 			}
 			
 			frames.get(frm).get(indexOfFrameItem).elements.add(frameElementItem);
@@ -210,7 +219,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "   (ConceptNode \"#" + cpt1 + "\")\n";
+				ret += "   (VariableNode \"#" + cpt1 + "\")\n";
 			}
 			ret += "   (DefinedFrameNode \"#" + frm + "\")\n)\n";
 
@@ -236,7 +245,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"#" + cpt1 + "\")\n";
+				ret += "      (VariableNode \"#" + cpt1 + "\")\n";
 			}
 			if (cpt2_is_ling)
 			{
@@ -249,7 +258,7 @@ public class OpenCogSchemeFrame
 			}
 			else
 			{
-				ret += "      (ConceptNode \"#" + cpt2 + "\")\n";
+				ret += "      (VariableNode \"#" + cpt2 + "\")\n";
 			}
 			ret += "   )\n)\n";
 		}
@@ -285,7 +294,11 @@ public class OpenCogSchemeFrame
 					{
 						ret += "   (WordInstanceNode \"" + element.wordInstanceValueElement;
 					}
-					else
+          else if (element.isVar)
+          {
+						ret += "   (VariableNode \"" + element.wordInstanceValueElement.replace("_","");
+          }
+          else
 					{
 						ret += "   (ConceptNode \"#" + element.wordInstanceValueElement;
 					}					
@@ -319,7 +332,7 @@ public class OpenCogSchemeFrame
 
 class FrameElementItem{
 	String elementName, wordInstanceValueElement;
-	boolean isLinguistic=false, isWord=false;
+	boolean isLinguistic=false, isWord=false, isVar=false;
 }
 
 class FrameItem {
