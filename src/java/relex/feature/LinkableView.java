@@ -34,12 +34,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String RIGHT_LINK_PREFIX = "linkR";
 
-	private static String GENDER_FEATURE_NAME = "GENDER";
-	private static String PERSON_FLAG_NAME = "PERSON-FLAG";
-	private static String MEASURE_FLAG_NAME = "MEASURE-FLAG";
-	private static String LOCATION_FLAG_NAME = "LOCATION-FLAG";
-	private static String ORGANIZATION_FLAG_NAME = "ORGANIZATION-FLAG";
-
 	private static String POS_FEATURE_NAME = "POS";
 	private static String INFLECTION_NAME = "inflection";
 
@@ -220,39 +214,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			ths.set(featname, new FeatureNode(featval));
 	}
 
-	public static void setLocation(FeatureNode ths)
-	{
-		setFeat(ths, LOCATION_FLAG_NAME, "T");
-	}
-
-	public static void setMeasure(FeatureNode ths)
-	{
-		setFeat(ths, MEASURE_FLAG_NAME, "T");
-	}
-
-	public static void setOrganization(FeatureNode ths)
-	{
-		setFeat(ths, ORGANIZATION_FLAG_NAME, "T");
-	}
-
-	public void setPerson() {
-		setPerson(fn());
-	}
-
-	public static void setPerson(FeatureNode ths)
-	{
-		setFeat(ths, PERSON_FLAG_NAME, "T");
-	}
-
-	public void setGender(String gen) {
-		setGender(fn(), gen);
-	}
-
-	public static void setGender(FeatureNode ths, String gen)
-	{
-		setFeat(ths, GENDER_FEATURE_NAME, gen);
-	}
-
 	public void setInflection(String inf) {
 		setInflection(fn(), inf);
 	}
@@ -304,31 +265,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		// e.g. 3.2 million. Don't treat numerics as inlections.
 		int len = wordString.length();
 		int dot = wordString.lastIndexOf('.');
-
-		// Multi-letter inflections
-//		if ((0 < dot) && (dot < len-2))
-//		{
-//			String infl = wordString.substring(dot);
-//
-//			if (infl.equals(".n-u"))
-//			{
-//				setPOS(ths, "noun");
-//				setUncountable(ths);
-//				setInflection(ths, infl);
-//			}
-	//		else if (infl.equals(".a-c"))
-	//		{
-	//			setPOS(ths, "adj");
-	//			setComparative(ths);
-	//			setInflection(ths, infl);
-	//		}
-	//		else if (infl.equals(".a-s"))
-		//	{
-			//	setPOS(ths, "adj");
-				//setSuperlative(ths);
-				//setInflection(ths, infl);
-			//}
-//		}
 
 		if ((0 < dot) && (dot < len-1))
 		{
