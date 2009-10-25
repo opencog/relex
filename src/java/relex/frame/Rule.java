@@ -146,8 +146,11 @@ public class Rule
 						// Prefix $'s with \ (for potential $'s in value, 
 						// such as _$qVar).
 						value = value.replace("$", "\\$");
-						String varsub = var.replace("$", "\\$");;
-						substRelationship = substRelationship.replaceAll("(?<!_)" + varsub + "(?i)", value);
+						String varsub = var.replace("$", "\\$");
+						//BUG: It was replacing the "be" from "bear" by the value when the varsub was "be" for instance
+						//Solution: Or it ends with "," or with ")", because of the format relation(var1,var2)
+						substRelationship = substRelationship.replaceAll("(?<!_)" + varsub + "(?i),", value+",");
+						substRelationship = substRelationship.replaceAll("(?<!_)" + varsub + "(?i)\\)", value+")");
 					}
 					if (VERBOSE) println("sub: " + substRelationship);
 					relationsSet.add(substRelationship);
