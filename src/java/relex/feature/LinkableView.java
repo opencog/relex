@@ -42,8 +42,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static String POS_FEATURE_NAME = "POS";
 	private static String INFLECTION_NAME = "inflection";
-	private static String NOUN_NUM_FEATURE_NAME = "num";
-	private static String DEGREE_FEATURE_NAME = "degree";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
@@ -255,21 +253,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setFeat(ths, GENDER_FEATURE_NAME, gen);
 	}
 
-	public static void setUncountable(FeatureNode ths)
-	{
-		setFeat(ths, NOUN_NUM_FEATURE_NAME, "uncountable");
-	}
-
-	public static void setComparative(FeatureNode ths)
-	{
-		setFeat(ths, DEGREE_FEATURE_NAME, "comparative");
-	}
-
-	public static void setSuperlative(FeatureNode ths)
-	{
-		setFeat(ths, DEGREE_FEATURE_NAME, "superlative");
-	}
-
 	public void setInflection(String inf) {
 		setInflection(fn(), inf);
 	}
@@ -321,66 +304,31 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		// e.g. 3.2 million. Don't treat numerics as inlections.
 		int len = wordString.length();
 		int dot = wordString.lastIndexOf('.');
-		if ((2 < len) && (dot == len-2))
-		{
-			char inflection = wordString.charAt(len-1);
-			switch(inflection)
-			{
-				// case 'u': setPOS(ths, "noun"); break; // units of measurement
-				// case 'v': setPOS(ths, "verb"); break;
-				// case 'w': setPOS(ths, "verb"); break; // verb, exceptions
-				// case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
-				// case 'y': setPOS(ths, "abbr"); break; // postfix abbreviation e.g. Ave.
-				// default: setPOS(ths, POS_WORD); break;
-			}
-			switch(inflection)
-			{
-				// case 't':  // titles, roles
-				// case 'u':  setMeasure(ths); break; // u == unit
-			}
-
-			// Don't do it if its a number!
-			switch(inflection)
-			{
-				case '0':  
-				case '1':  
-				case '2':  
-				case '3':  
-				case '4':  
-				case '5':  
-				case '6':  
-				case '7':  
-				case '8':  
-				case '9': break;
-				default:
-					setInflection(ths, "." + inflection);
-			}
-		}
 
 		// Multi-letter inflections
-		if ((0 < dot) && (dot < len-2))
-		{
-			String infl = wordString.substring(dot);
-
-			if (infl.equals(".n-u"))
-			{
-				setPOS(ths, "noun");
-				setUncountable(ths);
-				setInflection(ths, infl);
-			}
-			else if (infl.equals(".a-c"))
-			{
-				setPOS(ths, "adj");
-				setComparative(ths);
-				setInflection(ths, infl);
-			}
-			else if (infl.equals(".a-s"))
-			{
-				setPOS(ths, "adj");
-				setSuperlative(ths);
-				setInflection(ths, infl);
-			}
-		}
+//		if ((0 < dot) && (dot < len-2))
+//		{
+//			String infl = wordString.substring(dot);
+//
+//			if (infl.equals(".n-u"))
+//			{
+//				setPOS(ths, "noun");
+//				setUncountable(ths);
+//				setInflection(ths, infl);
+//			}
+	//		else if (infl.equals(".a-c"))
+	//		{
+	//			setPOS(ths, "adj");
+	//			setComparative(ths);
+	//			setInflection(ths, infl);
+	//		}
+	//		else if (infl.equals(".a-s"))
+		//	{
+			//	setPOS(ths, "adj");
+				//setSuperlative(ths);
+				//setInflection(ths, infl);
+			//}
+//		}
 
 		if ((0 < dot) && (dot < len-1))
 		{
@@ -389,8 +337,12 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			// the subscript isn't pure numeric ...
 			String w = wordString.substring(0, dot);
 			try { new java.math.BigInteger(w); }
-			catch (NumberFormatException ex) {
+			catch (NumberFormatException ex)
+			{
+				// If we are here, its not a number.
+				String infl = wordString.substring(dot);
 				wordString = w;
+				setInflection(ths, infl);
 			}
 		}
 

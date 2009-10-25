@@ -33,6 +33,22 @@ SUBSCR_POS_A
 =
 <POS> = adj
 
+; Comparative adjectives
+#TemplateActionAlg
+SUBSCR_POS_A-C
+<inflection> = .a-c
+=
+<POS> = adj
+<degree> = comparative
+
+; Superlative adjectives
+#TemplateActionAlg
+SUBSCR_POS_A-S
+<inflection> = .a-s
+=
+<POS> = adj
+<degree> = superlative
+
 ; b == both -- male or female given name.
 #TemplateActionAlg
 SUBSCR_POS_B
@@ -87,6 +103,14 @@ SUBSCR_POS_N
 <inflection> = .n
 =
 <POS> = noun
+
+; n-u uncountable (mass) noun
+#TemplateActionAlg
+SUBSCR_POS_N-U
+<inflection> = .n-u
+=
+<POS> = noun
+<num> = uncountable
 
 ; o -- organization
 #TemplateActionAlg
