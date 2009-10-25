@@ -11,8 +11,8 @@
 # IF _psubj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Categorization:Item(be,$var0)
 # IF _predobj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Categorization:Category(be,$var0)
 
-# IF _psubj(be,$var0) ^ _obj(be,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($var0,$var0)
-# IF _psubj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($var0,$var0)
+# IF _psubj(be,$var0) ^ _obj(be,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
+# IF _psubj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
 # IF _psubj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
 # IF _psubj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($var0,$var0)
 # IF _psubj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($var0,$var0) ^1_Luck:Depictive($Luck,$Luck)
@@ -30,8 +30,10 @@
 # IF _subj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Categorization:Item(be,$var0)
 # IF _obj(be,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Categorization:Category(be,$var0)
 
-# IF _subj(be,$var0) ^ _obj(be,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($var0,$var0)
-# IF _subj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($var0,$var0)
+# IF _subj(be,$var0) ^ _obj(be,$Color) ^ NOT copula-question($Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
+;; Fabricio: What is the color of the ball?
+# IF _subj(be,$var0) ^ _obj(be,$Color) ^ copula-question($Color) ^ of($Color, $var1) THEN ^1_Color:Color($Color,_$qVar) ^1_Color:Entity($Color,$var1)
+# IF _subj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
 # IF _subj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
 # IF _subj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($var0,$var0)
 # IF _subj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($var0,$var0) ^1_Luck:Depictive($Luck,$Luck)
@@ -132,7 +134,7 @@
 # IF _amod(ranked,$var0) ^ as(ranked,$var1) THEN ^1_Rank:Item(ranked,$var0) ^1_Rank:Rank(ranked,$var1)
 ;; Fabricio: change color and dimension
 # IF _amod($var0,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
-# IF _amod($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$var0) ^1_Dimension:Object($Dimension,$var0)
+# IF _amod($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
 # IF _amod($Quantity,$var0) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
 # IF of($Quantifier,$var0) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($Quantifier,$var0)
 # IF _nn($Luck,$var0) ^ noun($var0) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
@@ -143,8 +145,8 @@
 # IF _predadj($var0,$Number) ^ uncountable($var0) THEN ^1_Quantity:Quantity($Number,$Number) ^1_Quantity:Mass($Number,$var0)
 # IF _predadj(amount,$Dimension) THEN ^1_Quantity:Quantity($Dimension,$Dimension) ^1_Quantity:Mass($Dimension,amount)
 # IF _predadj(ranked,$var0) ^ as(ranked,$var1) THEN ^1_Rank:Item(ranked,$var0) ^1_Rank:Rank(ranked,$var1)
-# IF _predadj($var0,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($var0,$var0)
-# IF _predadj($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($var0,$var0)
+# IF _predadj($var0,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
+# IF _predadj($var0,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
 # IF _predadj($Quantity,$var0) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
 # IF of($Quantifier,$var0) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($Quantifier,$var0)
 # IF _nn($Luck,$var0) ^ noun($var0) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
@@ -333,7 +335,7 @@
 # IF present($var0) THEN ^1_Temporal_colocation:Time(present,present) ^1_Temporal_colocation:Event($var0,$var0)
 # IF past($var0) THEN ^1_Temporal_colocation:Time(past,past) ^1_Temporal_colocation:Event($var0,$var0)
 # IF future($var0) THEN ^1_Temporal_colocation:Time(future,future) ^1_Temporal_colocation:Event($var0,$var0)
-# IF hyp($var0) THEN ^1_Possibilites:Event(hyp,$var0)
+# IF hyp($var0) THEN ^1_Possibilities:Event(hyp,$var0)
 # IF present_progressive($var0) THEN ^1_Process_continue:Time(present,present) ^1_Process_continue:Event($var0,$var0)
 # IF past_progressive($var0) THEN ^1_Process_continue:Time(past,past) ^1_Process_continue:Event($var0,$var0)
 # IF future_progressive($var0) THEN ^1_Process_continue:Time(future,future) ^1_Process_continue:Event($var0,$var0)
@@ -341,7 +343,7 @@
 # IF past_perfect($var0) THEN ^1_Process_completed_state:Time(past,past) ^1_Process_completed_state:Event($var0,$var0)
 # IF future_perfect($var0) THEN ^1_Process_completed_state:Time(future,future) ^1_Process_completed_state:Event($var0,$var0)
 
-# IF where(_$qVar) THEN ^1_Questioning:Message(where,_$qVar) ^1_Locative_relation:Ground(where,_$qVar)
+# IF where(_$qVar) THEN ^1_Questioning:Message(where,_$qVar) ^1_Questioning:Addressee(where,you) ^1_Questioning:Manner(where,where)
 # IF why(_$qVar) THEN ^1_Questioning:Message(why,_$qVar) ^1_Reasoning:State_of_affairs(why,_$qVar) ^1_Purpose:Goal(why,_$qVar) ^1_Causation:Cause(why,_$qVar)
 # IF when(_$qVar) THEN ^1_Questioning:Message(when,_$qVar) ^_Temporal_colocation:Time(when,_$qVar)
 # IF who(_$qVar) THEN ^1_Questioning:Message(who,_$qVar) ^1_People:Person(who,_$qVar)
@@ -349,13 +351,21 @@
 # IF how(_$qVar) THEN ^1_Questioning:Message(how,_$qVar) ^1_Means:Descriptor(how,_$qVar)
 # IF how_many(_$qVar) THEN ^1_Questioning:Message(how_many,_$qVar) ^1_Quantity:Individuals(how_many,_$qVar)
 # IF how_much(_$qVar) THEN ^1_Questioning:Message(how_much,_$qVar) ^1_Quantity:Mass(how_much,_$qVar)
-# IF truth-query($var0) ^ verb($var0) THEN ^1_Questioning:Message(truth-query,$var0)  ^1_Existence:Circumstances(truth-query,$var0)
-# IF truth-query($var0) ^ noun($var0) THEN ^1_Questioning:Message(truth-query,$var0) ^1_Existence:Entity(truth-query,$var0)
+# IF truth-query($var0) ^ verb($var0) THEN  ^1_Existence:Circumstances($var0,truth-query)
+# IF truth-query($var0) ^ noun($var0) THEN  ^1_Existence:Entity($var0,truth-query)
 
 ;; Fabricio: accept the uuid instead of _$qVar  
-# IF what($var0) THEN ^1_Questioning:Message(what,_$qVar) ^1_Attributes:Entity(what,_$qVar) ^1_Entity:Entity(what,_$qVar)
-;; Fabricio: Is the ball blue?
-# IF truth-query($var0) ^ adj($var0) THEN ^1_Questioning:Message(truth-query,$var0) ^1_Attributes:Attribute(truth-query,$var0)
+# IF what($var0) THEN ^1_Questioning:Message(what,$var0) ^1_Questioning:Addressee(what,you) ^1_Questioning:Manner(what,what) ^1_Attributes:Entity(what,_$qVar) ^1_Entity:Entity(what,_$qVar)
+# IF where($var0) THEN ^1_Questioning:Message(where,$var0) ^1_Questioning:Addressee(where,you) ^1_Questioning:Manner(where,where)
+# IF why($var0) THEN ^1_Questioning:Message(why,$var0) ^1_Reasoning:State_of_affairs(why,_$qVar) ^1_Purpose:Goal(why,_$qVar) ^1_Causation:Cause(why,_$qVar)
+# IF when($var0) THEN ^1_Questioning:Message(when,$var0) ^_Temporal_colocation:Time(when,_$qVar)
+# IF who($var0) THEN ^1_Questioning:Message(who,$var0) ^1_People:Person(who,_$qVar)
+# IF how($var0) THEN ^1_Questioning:Message(how,$var0) ^1_Means:Descriptor(how,_$qVar)
+# IF how_many($var0) THEN ^1_Questioning:Message(how_many,$var0) ^1_Quantity:Individuals(how_many,_$qVar)
+# IF how_much($var0) THEN ^1_Questioning:Message(how_much,$var0) ^1_Quantity:Mass(how_much,_$qVar)
+;; Fabricio: addessee is always you (TODO, check this for cases like: Alice, is Fido hungry?)
+# IF truth-query($var0) ^ NOT truth-query(be) THEN ^1_Questioning:Message($var0,$var0) ^1_Attributes:Attribute($var0,truth-query) ^1_Questioning:Manner($var0,truth-query) ^1_Questioning:Addressee($var0,you)
+# IF truth-query($var0) ^ _predadj($var1, $var0) THEN ^1_Entity:Entity($var0,$var1)
 
 # IF _that($var0,$var1) THEN ^1_Relation:Entity_1($var0,$var0) ^1_Relation:Entity_2($var1,$var1)
 # IF which($var0,$var1) THEN ^1_Relation:Entity_1($var0,$var0) ^1_Relation:Entity_2($var1,$var1)
@@ -2449,8 +2459,6 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 
 # IF _subj($Questioning,$var0) THEN ^1_Questioning:Speaker($Questioning,$var0)
 # IF $Imperative_relation($Questioning) THEN ^1_Questioning:Speaker($Questioning,you)
-# IF _obj($Questioning,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Questioning:Addressee($Questioning,$var0)
-# IF _obj($Questioning,$var0) ^ of($Questioning,$var1) THEN ^1_Questioning:Message($Questioning,$var0) ^1_Questioning:Addressee($Questioning,$var1)
 # IF about($Questioning,$var0) THEN ^1_Questioning:Topic($Questioning,$var0)
 # IF in($Questioning,$var0) ^ NOT $var0=$Time ^ NOT date($var0) THEN ^1_Questioning:Internal_cause($Questioning,$var0)
 # IF _advmod($Questioning,$var0) THEN ^1_Questioning:Manner($Questioning,$var0)
@@ -3578,8 +3586,8 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF _amod($Prohibiting,$Time) THEN ^1_Prohibiting:Time($Prohibiting,$Time)
 # IF {_obj($Prohibiting,$var0) || _iobj($Prohibiting,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Prohibiting:Time($Prohibiting,$var0)
 
-# IF _subj($Biological_urge,$var0) THEN ^1_Biological_urge:Experiencer($Biological_urge,$var0)
-# IF _amod($var0,$Biological_urge) THEN ^1_Biological_urge:State($var0,$Biological_urge)
+# IF _subj($Biological_urge,$var0) THEN ^1_Biological_urge:Experiencer($Biological_urge,$var0) ^1_Biological_urge:State($Biological_urge,$Biological_urge)
+# IF _amod($var0,$Biological_urge) THEN ^1_Biological_urge:State($Biological_urge,$Biological_urge)
 # IF _advmod($Biological_urge,$var0) THEN ^1_Biological_urge:Parameter($Biological_urge,$var0)
 # IF while($Biological_urge,$Time) THEN ^1_Biological_urge:Duration($Biological_urge,$Time)
 # IF during($Biological_urge,$Time) THEN ^1_Biological_urge:Duration($Biological_urge,$Time)
@@ -3588,6 +3596,10 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF $relTime($Biological_urge,$Time) THEN ^1_Biological_urge:Time($Biological_urge,$Time)
 # IF _amod($Biological_urge,$Time) THEN ^1_Biological_urge:Time($Biological_urge,$Time)
 # IF {_obj($Biological_urge,$var0) || _iobj($Biological_urge,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Biological_urge:Time($Biological_urge,$var0)
+;; Fabricio: Are you hungry?
+# IF adj($Biological_urge) ^ _predadj($var0, $Biological_urge) THEN ^1_Biological_urge:Experiencer($Biological_urge,$var0) ^1_Biological_urge:State($Biological_urge,$Biological_urge)
+# IF _obj($var0,$Biological_urge) ^ _subj($var0,$var1) THEN ^1_Biological_urge:Experiencer($Biological_urge,$var1) ^1_Biological_urge:State($Biological_urge,$Biological_urge)
+
 
 # IF _subj($Emptying,$var0) ^ {person($var0) || organization($var0)} THEN ^1_Emptying:Actor($Emptying,$var0)
 # IF _subj($Emptying,$var0) ^ NOT {person($var0) || organization($var0)} THEN ^1_Emptying:Cause($Emptying,$var0)
@@ -5626,7 +5638,7 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF to($Emotion_directed,$var0) THEN ^1_Emotion_directed:Event($Emotion_directed,$var0)
 # IF in($Emotion_directed,$var0) ^ NOT $var0=$Time THEN ^1_Emotion_directed:Expressor($Emotion_directed,$var0)
 # IF with($Emotion_directed,$var0) THEN ^1_Emotion_directed:Expressor($Emotion_directed,$var0)
-# IF _amod($var0,$Emotion_directed) THEN ^1_Emotion_directed:State($var0,$Emotion_directed)
+# IF _amod($var0,$Emotion_directed) THEN ^1_Emotion_directed:State($Emotion_directed,$Emotion_directed)
 # IF for($Emotion_directed,$Time) THEN ^1_Emotion_directed:Stimulus($Emotion_directed,$Time)
 # IF towards($Emotion_directed,$var0) THEN ^1_Emotion_directed:Stimulus($Emotion_directed,$var0)
 # IF at($Emotion_directed,$var0) THEN ^1_Emotion_directed:Stimulus($Emotion_directed,$var0)
@@ -5642,6 +5654,9 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF for($Emotion_directed,$var0) ^ NOT $var0=$Time ^ NOT {person($var0) || organization($var0)} THEN ^1_Emotion_directed:Reason($Emotion_directed,$var0)
 # IF because($Emotion_directed,$var0) THEN ^1_Emotion_directed:Reason($Emotion_directed,$var0)
 # IF $atLocation($Emotion_directed,$var0) ^ NOT at($Emotion_directed,$var0) ^ NOT against($Emotion_directed,$var0) ^ NOT in($Emotion_directed,$var0) ^ NOT about($Emotion_directed,$var0) THEN ^1_Emotion_directed:Parameter($Emotion_directed,$var0)
+;; Fabricio
+# IF adj($Emotion_directed) ^ _predadj($var0, $Emotion_directed) THEN ^1_Emotion_directed:Experiencer($Emotion_directed,$var0) ^1_Emotion_directed:State($Emotion_directed,$Emotion_directed)
+# IF _advmod($var0,$Emotion_directed) ^ _subj($var0, $var1) THEN ^1_Emotion_directed:Experiencer($Emotion_directed,$var1) ^1_Emotion_directed:State($Emotion_directed,$Emotion_directed)
 
 # IF _subj($Cause_to_make_progress,$var0) THEN ^1_Cause_to_make_progress:Agent($Cause_to_make_progress,$var0)
 # IF $Imperative_relation($Cause_to_make_progress) THEN ^1_Cause_to_make_progress:Agent($Cause_to_make_progress,you)
@@ -5736,14 +5751,28 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF $Imperative_relation($Motion_step) THEN ^1_Motion:Manner($Motion_step,step_to)
 
 ;; Fabricio: rule for grap manipulation
-# IF $Imperative_relation($Manipulation_grab) ^ NOT _to-do($var0,$Manipulation_grab) THEN ^1_Manipulation:Depictive($Manipulation_grab,grab)
-# IF $Imperative_relation($Manipulation_grab) ^ _to-do($var0,$Manipulation_grab) THEN ^1_Manipulation:Depictive($Manipulation_grab,grab)
+# IF $Imperative_relation($Manipulation_grab) THEN ^1_Manipulation:Depictive($Manipulation_grab,grab)
 
 ;; Fabricio: Figure and Ground for locative relation 
 ;; (TODO for near, the Ground was ok. But not for next_to. So I added the Ground here too. In some cases, it is printing two Ground
-# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2)
-# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Ground($Locative_relation,$var1)
+# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2) ^1_Locative_relation:Ground($Locative_relation,$var1)
+# IF $Locative_relation($var0, $var1) ^ _subj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2) ^1_Locative_relation:Ground($Locative_relation,$var1)
 
 ;; Fabricio: Locative relation NEAR
-# IF $Locative_relation_near($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Distance($Locative_relation_near,near)
 # IF $Locative_relation_near($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_near,near)
+# IF _obj($Locative_relation_near,$var1) ^ _subj($Locative_relation_near,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_near,near)
+
+;; Fabricio: Locative relation NEXT
+# IF $Locative_relation_next($var0, $var1) THEN ^1_Locative_relation:Relation_type($Locative_relation_next,next)
+# IF _obj($Locative_relation_next,$var1) ^ _subj($Locative_relation_next,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_next,next)
+
+;; What color is the ball?
+# IF _subj(be,$Color) ^ _obj(be,$var0) ^ query(color) THEN ^1_Color:Color($Color,_$qVar) ^1_Color:Entity($Color,$var0)
+# IF _subj(be,$Color) ^ _obj(be,$var0) ^ NOT query(color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
+
+;; Is the ball {near,next to} the fountain?
+# IF _psubj($Locative_relation_near,$var0) ^ _pobj($Locative_relation_near,$var1) THEN ^1_Locative_relation:Figure($Locative_relation_near,$var0) ^1_Locative_relation:Ground($Locative_relation_near,$var1) ^1_Locative_relation:Relation_type($Locative_relation_near,near) 
+# IF _psubj($Locative_relation_next,$var0) ^ _pobj($Locative_relation_next,$var1) THEN ^1_Locative_relation:Figure($Locative_relation_next,$var0) ^1_Locative_relation:Ground($Locative_relation_next,$var1) ^1_Locative_relation:Relation_type($Locative_relation_next,next) 
+
+;; Where is the ball?
+# IF where($var0) ^ _pobj($var1, $var2) ^ _psubj($var1, $var3) THEN ^1_Locative_relation:Figure(where,$var3) ^1_Locative_relation:Ground(where,_$qVar0) ^1_Locative_relation:Relation_type(where,_$qVar1)
