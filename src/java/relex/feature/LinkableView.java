@@ -326,33 +326,17 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			char inflection = wordString.charAt(len-1);
 			switch(inflection)
 			{
-				// case 'l': setPOS(ths, "noun"); break; // location
-				// case 'm': setPOS(ths, "noun"); break; // male
-				// case 'n': setPOS(ths, "noun"); break;
-				// case 'o': setPOS(ths, "noun"); break; // organizations
-				// case 'p': setPOS(ths, "noun"); break; // plural (mass) nouns
-				// case 's': setPOS(ths, "noun"); break; // singular, mass or count nouns
-				// case 't':  // titles, roles
-				case 'u': setPOS(ths, "noun"); break; // units of measurement
-				case 'v': setPOS(ths, "verb"); break;
-				case 'w': setPOS(ths, "verb"); break; // verb, exceptions
-				case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
-				case 'y': setPOS(ths, "abbr"); break; // postfix abbreviation e.g. Ave.
-				case 'c':  // ??
-				case 'd':  // ??
-				case 'i':  // ??
-				case 'k':  // ??
-				case 'q':  // question-related ??
-				case 'r':  // preposition-like things
-				default: setPOS(ths, POS_WORD); break;
+				// case 'u': setPOS(ths, "noun"); break; // units of measurement
+				// case 'v': setPOS(ths, "verb"); break;
+				// case 'w': setPOS(ths, "verb"); break; // verb, exceptions
+				// case 'x': setPOS(ths, "abbr"); break; // prefix abbreviation e.g. Mr.
+				// case 'y': setPOS(ths, "abbr"); break; // postfix abbreviation e.g. Ave.
+				// default: setPOS(ths, POS_WORD); break;
 			}
 			switch(inflection)
 			{
-				// case 'l':  setLocation(ths); break;
-				// case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
-				// case 'o':  setOrganization(ths); break;
-				case 't':  // titles, roles
-				case 'u':  setMeasure(ths); break; // u == unit
+				// case 't':  // titles, roles
+				// case 'u':  setMeasure(ths); break; // u == unit
 			}
 
 			// Don't do it if its a number!

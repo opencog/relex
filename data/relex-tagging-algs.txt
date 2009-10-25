@@ -118,6 +118,42 @@ SUBSCR_POS_T
 =
 <ROLE-FLAG> = T
 
+; u -- unit of measurement
+#TemplateActionAlg
+SUBSCR_POS_U
+<inflection> = .u
+=
+<POS> = noun
+<MEASURE-FLAG> = T
+
+; v -- ordinary verb
+#TemplateActionAlg
+SUBSCR_POS_V
+<inflection> = .v
+=
+<POS> = verb
+
+; w -- ordinary verb (special cases)
+#TemplateActionAlg
+SUBSCR_POS_W
+<inflection> = .w
+=
+<POS> = verb
+
+; x -- prefix abbreviation e.g. Mr.
+#TemplateActionAlg
+SUBSCR_POS_X
+<inflection> = .x
+=
+<POS> = abbr
+
+; y -- postfix abbreviation e.g. Ave.
+#TemplateActionAlg
+SUBSCR_POS_Y
+<inflection> = .y
+=
+<POS> = abbr
+
 ;/////////////////////////////////////////////////////////////////////////////
 ; 
 ; Refined POS tagging based on linkage used.
