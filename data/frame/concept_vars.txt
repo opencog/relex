@@ -847,9 +847,9 @@ cream
 khaki
 ivory
 burgundy
+color
 colorless
 taupe
-color
 charcoal
 sage
 neutral
@@ -3803,6 +3803,7 @@ aroused
 beat
 bilious
 bushed
+defecate
 drowsy
 enervated
 exhausted
@@ -3815,7 +3816,10 @@ nauseated
 nauseous
 parched
 peckish
+pee
+poo
 pooped
+power
 queasy
 randy
 ravenous
@@ -3827,6 +3831,7 @@ thirsty
 tired
 tuckered
 turned on
+urinate
 weary
 worn out
 
@@ -5103,7 +5108,6 @@ astounded
 baffled
 befuddled
 bewildered
-blue
 bored
 chagrined
 concerned
@@ -5138,9 +5142,11 @@ embarrassed
 embittered
 enraged
 exasperated
+excite
 excited
 exhilarated
 fascinated
+fear
 fed up
 fed-up
 flabbergasted
@@ -5150,10 +5156,12 @@ frightened
 furious
 gleeful
 glum
+grateful
 gratified
 grief-stricken
 happy
 harried
+hateful
 heartbroken
 horrified
 humiliated
@@ -5167,6 +5175,8 @@ irked
 irritated
 jubilant
 livid
+lovable
+lovely
 low-spirited
 lugubrious
 mad
@@ -5186,6 +5196,7 @@ perplexed
 perturbed
 petrified
 pleased
+proud
 rattled
 relaxed
 resentful
@@ -5194,6 +5205,7 @@ riled
 ruffled
 sad
 saddened
+scared
 shocked
 sickened
 sore
@@ -5277,5 +5289,7 @@ step
 
 $Locative_relation_near
 near
+
+$Locative_relation_next
 next to
 next_to

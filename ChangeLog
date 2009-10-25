@@ -7,6 +7,7 @@ New in version 1.2.1 (XXX 2009)
  * Fix: string substitution of "be" in frame rules (Fabricio)
  * Fix: correctly pass variable nodes to opencog (Fabricio)
  * Fix: printing of variables in the "simple view" (Fabricio)
+ * Fix: minor additional concept vars, suitable for pets (Fabricio)
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
