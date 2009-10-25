@@ -365,6 +365,11 @@ Ratio: Stanford-wsjPCFG/RelEx = 134sec/180sec = 0.74x (slower)
 TODO
 ----
 
+TODO
+----
+POS labelling -- currently done in java code.
+Do it in the rules instead.
+
 TODO - Past Tense
 -----------------
 Currently, relex uses "is past tense" to query link-grammar. This can now

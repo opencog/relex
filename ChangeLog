@@ -3,7 +3,7 @@ New in version 1.2.1 (XXX 2009)
  * Bug fixes for misc mis-identified POS tags
  * Bug fix for mis-identified advmod relation.
  * Improved word features, including comparative, superlative tagging, etc.
- * Fix crash on opencoug output module, on comparative sentences.
+ * Fix crash on opencog output module, on comparative sentences.
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
