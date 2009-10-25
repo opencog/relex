@@ -121,14 +121,13 @@ public class SimpleView
 			}
 			if (show_uuid)
 			{
-        //fabricio: does not replace the _qVar variables
-        if(srcName.indexOf("_$qVar") == -1)
-          srcName = srcNode.get("nameSource").get("uuid").getValue();
-				
-        if(tgtName.indexOf("_$qVar") == -1)
-          tgtName = tgtNode.get("nameSource").get("uuid").getValue();
-	      
-		}
+				// fabricio: Do not replace the _qVar variables
+				if (srcName.indexOf("_$qVar") == -1)
+					srcName = srcNode.get("nameSource").get("uuid").getValue();
+
+				if (tgtName.indexOf("_$qVar") == -1)
+					tgtName = tgtNode.get("nameSource").get("uuid").getValue();
+			}
 			str += relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
