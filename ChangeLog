@@ -6,6 +6,7 @@ New in version 1.2.1 (XXX 2009)
  * Fix crash on opencog output module, on comparative sentences.
  * Fix: string substitution of "be" in frame rules (Fabricio)
  * Fix: correctly pass variable nodes to opencog (Fabricio)
+ * Fix: printing of variables in the "simple view" (Fabricio)
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.
