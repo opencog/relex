@@ -47,7 +47,7 @@ SUBSCR_POS_E
 <inflection> = .e
 =
 <POS> = adv
-
+;
 ; f -- female given name.
 #TemplateActionAlg
 SUBSCR_POS_F
@@ -56,8 +56,67 @@ SUBSCR_POS_F
 <POS> = noun
 <PERSON-FLAG> = T
 <GENDER> = feminine
+;
+; g -- gerund -- tag as noun, for now; if verb, then override later.
+#TemplateActionAlg
+SUBSCR_POS_G
+<inflection> = .g
+=
+<POS> = noun
 
+; l -- location
+#TemplateActionAlg
+SUBSCR_POS_L
+<inflection> = .l
+=
+<POS> = noun
+<LOCATION-FLAG> = T
 
+; m -- male given name.
+#TemplateActionAlg
+SUBSCR_POS_M
+<inflection> = .m
+=
+<POS> = noun
+<PERSON-FLAG> = T
+<GENDER> = masculine
+
+; n -- plain old common noun
+#TemplateActionAlg
+SUBSCR_POS_N
+<inflection> = .n
+=
+<POS> = noun
+
+; o -- organization
+#TemplateActionAlg
+SUBSCR_POS_O
+<inflection> = .o
+=
+<POS> = noun
+<ORGANIZATION-FLAG> = T
+
+; p -- plural count nouns
+#TemplateActionAlg
+SUBSCR_POS_P
+<inflection> = .p
+=
+<POS> = noun
+
+; s -- singular count nouns
+#TemplateActionAlg
+SUBSCR_POS_S
+<inflection> = .s
+=
+<POS> = noun
+
+; t -- title or role
+; XXX fixme -- to the left or right of title/role is a persons name -- 
+#TemplateActionAlg
+SUBSCR_POS_T
+<inflection> = .t
+=
+<ROLE-FLAG> = T
 
 ;/////////////////////////////////////////////////////////////////////////////
 ; 

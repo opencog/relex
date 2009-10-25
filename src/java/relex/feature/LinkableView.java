@@ -326,18 +326,13 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			char inflection = wordString.charAt(len-1);
 			switch(inflection)
 			{
-				// case 'a': setPOS(ths, "adj"); break;
-				// case 'b': setPOS(ths, "noun"); break; // male or female
-				// case 'e': setPOS(ths, "adv"); break; // adverbs alternate
-				// case 'f': setPOS(ths, "noun"); break; // female
-				case 'g': setPOS(ths, "noun"); break; // gerund -- noun or verb ??
-				case 'l': setPOS(ths, "noun"); break; // location
-				case 'm': setPOS(ths, "noun"); break; // male
-				case 'n': setPOS(ths, "noun"); break;
-				case 'o': setPOS(ths, "noun"); break; // organizations
-				case 'p': setPOS(ths, "noun"); break; // plural (mass) nouns
-				case 's': setPOS(ths, "noun"); break; // singular, mass or count nouns
-				case 't':  // titles, roles
+				// case 'l': setPOS(ths, "noun"); break; // location
+				// case 'm': setPOS(ths, "noun"); break; // male
+				// case 'n': setPOS(ths, "noun"); break;
+				// case 'o': setPOS(ths, "noun"); break; // organizations
+				// case 'p': setPOS(ths, "noun"); break; // plural (mass) nouns
+				// case 's': setPOS(ths, "noun"); break; // singular, mass or count nouns
+				// case 't':  // titles, roles
 				case 'u': setPOS(ths, "noun"); break; // units of measurement
 				case 'v': setPOS(ths, "verb"); break;
 				case 'w': setPOS(ths, "verb"); break; // verb, exceptions
@@ -353,11 +348,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			}
 			switch(inflection)
 			{
-				// case 'b':  setPerson(ths); break; // male or female
-				// case 'f':  setPerson(ths); setGender(ths, "feminine"); break;
-				case 'l':  setLocation(ths); break;
-				case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
-				case 'o':  setOrganization(ths); break;
+				// case 'l':  setLocation(ths); break;
+				// case 'm':  setPerson(ths); setGender(ths, "masculine"); break;
+				// case 'o':  setOrganization(ths); break;
 				case 't':  // titles, roles
 				case 'u':  setMeasure(ths); break; // u == unit
 			}
