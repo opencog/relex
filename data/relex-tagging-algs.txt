@@ -140,7 +140,7 @@ SUBSCR_POS_Q-D
 <inflection> = .q-d
 =
 <POS> = verb
-<tense> = past
+<tense val> = past
 
 ; s -- singular count nouns
 #TemplateActionAlg
@@ -178,7 +178,7 @@ SUBSCR_POS_V-D
 <inflection> = .v-d
 =
 <POS> = verb
-<tense> = past
+<tense val> = past
 
 ; w -- ordinary verb (special cases)
 #TemplateActionAlg
@@ -193,7 +193,7 @@ SUBSCR_POS_W-D
 <inflection> = .w-d
 =
 <POS> = verb
-<tense> = past
+<tense val> = past
 
 ; x -- prefix abbreviation e.g. Mr.
 #TemplateActionAlg
