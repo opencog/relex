@@ -339,10 +339,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		return f.getValue().toString();
 	}
 
-	public void setTenseVal(String tenseString) {
-		setTenseString(fn(), tenseString);
-	}
-	
 	public void setEntityFlag() {
 		fn().set("ENTITY-FLAG", new FeatureNode("T"));
 	}
@@ -351,16 +347,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		return fn().get("ENTITY-FLAG") != null;
 	}
 	
-	public static void setTenseString(FeatureNode ths, String tenseString) {
-		throwIfNoFN(ths);
-		FeatureNode f = ths.get(TENSE_FEATURE_NAME);
-		if (f == null) {
-			f = new FeatureNode();
-			ths.set(TENSE_FEATURE_NAME, f);
-		}
-		f.set("val", new FeatureNode(tenseString));
-	}
-
 	public void setNext(FeatureNode f) {
 		setNext(fn(), f);
 	}

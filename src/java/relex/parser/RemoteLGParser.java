@@ -87,8 +87,6 @@ public class RemoteLGParser extends LGParser
 
 					if (parseResult.getEntityFlags()[w] || Character.isUpperCase(wordString.charAt(0)))
 						fnv.setEntityFlag();
-					if (parseResult.getPastTenseFlags()[w])
-						fnv.setTenseVal("past");
 
 					parsedSentence.addWord(fnv.fn());
 
