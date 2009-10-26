@@ -127,6 +127,21 @@ SUBSCR_POS_P
 =
 <POS> = noun
 
+; q -- ordinary verb (in paraphrasing & question type sentences)
+#TemplateActionAlg
+SUBSCR_POS_Q
+<inflection> = .q
+=
+<POS> = verb
+
+; q-d -- ordinary verb, past tense
+#TemplateActionAlg
+SUBSCR_POS_Q-D
+<inflection> = .q-d
+=
+<POS> = verb
+<tense> = past
+
 ; s -- singular count nouns
 #TemplateActionAlg
 SUBSCR_POS_S
@@ -157,12 +172,28 @@ SUBSCR_POS_V
 =
 <POS> = verb
 
+; v-d -- ordinary verb, past tense
+#TemplateActionAlg
+SUBSCR_POS_V-D
+<inflection> = .v-d
+=
+<POS> = verb
+<tense> = past
+
 ; w -- ordinary verb (special cases)
 #TemplateActionAlg
 SUBSCR_POS_W
 <inflection> = .w
 =
 <POS> = verb
+
+; w-d -- ordinary verb, past tense
+#TemplateActionAlg
+SUBSCR_POS_W-D
+<inflection> = .w-d
+=
+<POS> = verb
+<tense> = past
 
 ; x -- prefix abbreviation e.g. Mr.
 #TemplateActionAlg
