@@ -1,4 +1,4 @@
-package relex.util.socket;
+package relex.parser_old.util.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;

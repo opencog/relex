@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package relex.parser;
+package relex.parser_old;
 
 import java.io.IOException;
 
-import relex.util.socket.ProcessServer;
+import relex.parser_old.util.socket.ProcessServer;
 
 /**
  * @deprecated

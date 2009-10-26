@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package relex.parser;
+package relex.parser_old;
 
 import java.util.ArrayList;
 
-import relex.util.socket.ProcessClient;
+import relex.parser_old.util.socket.ProcessClient;
 
 /**
  * This class serves as a wrapper to the C linkparser library.

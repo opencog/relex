@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package relex.parser;
+package relex.parser_old;
 
-import relex.util.socket.ProcessProtocol;
+import relex.parser_old.util.socket.ProcessProtocol;
 
 /**
  * @deprecated

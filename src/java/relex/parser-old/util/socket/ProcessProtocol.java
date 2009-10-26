@@ -1,4 +1,4 @@
-package relex.util.socket;
+package relex.parser_old.util.socket;
 
 public abstract class ProcessProtocol {
 	public static final String HANDSHAKE_REQUEST = "GETREADY";

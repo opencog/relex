@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package relex.parser;
+package relex.parser_old;
 
 import relex.Sentence;
 
