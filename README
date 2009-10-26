@@ -365,6 +365,12 @@ Ratio: Stanford-wsjPCFG/RelEx = 134sec/180sec = 0.74x (slower)
 TODO
 ----
 
+TODO - sentence detection
+-------------------------
+If OpenNLP is not installed, then use the java.text.BreakIterator for sentence
+detection.
+
+
 TODO - Comparatives
 -------------------
 RelEx is pretty broken when it comes to handling comparative sentences.
