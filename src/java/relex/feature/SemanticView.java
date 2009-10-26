@@ -40,8 +40,6 @@ public class SemanticView extends View
 
 	private static String IMPORTANCE_FEATURE = "importance";
 
-	private static String TENSE_FEATURE = "tense";
-
 	private static String SPECIFIC_FEATURE = "specific";
 
 	public static int varCount = 0;
@@ -264,29 +262,6 @@ public class SemanticView extends View
 		return true;
 	}
 
-	public String getTense() {
-		return getTense(fn());
-	}
-
-	public static String getTense(FeatureNode ths) {
-		FeatureNode f = ths.get(TENSE_FEATURE);
-		if (f == null)
-			return null;
-		return f.getValue();
-	}
-
-	public void setTense(String name) {
-		setTense(fn(), name);
-	}
-
-	public static void setTense(FeatureNode ths, String name) {
-		FeatureNode f = ths.get(TENSE_FEATURE);
-		if (f == null) {
-			f = new FeatureNode("");
-			ths.set(TENSE_FEATURE, f);
-		}
-		f.forceValue(name);
-	}
 
 	public boolean isGroup() {
 		return isGroup(fn());

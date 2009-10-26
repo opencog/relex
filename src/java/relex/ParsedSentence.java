@@ -289,7 +289,11 @@ public class ParsedSentence
 	 * which "part of speech" they are.  Thus, for example:
 	 * "The big red baloon floated away." becomes
 	 * LEFT-WALL The.det big.adj red.adj balloon.noun float.verb away.prep .
+	 *
+	 * @deprecated -- please make use of the output systems in the 
+	 * output directory, or create one, if you really need it!
 	 */
+	@Deprecated
 	public String printPartsOfSpeech()
 	{
 		StringBuffer sb = new StringBuffer();
@@ -299,9 +303,6 @@ public class ParsedSentence
 			String pos = w.getPOS();
 			if (pos != null && !pos.equals("WORD"))
 				sb.append("." + pos);
-			String tense = w.getTenseVal();  // ??? tense is not working ...
-			if (tense != null && tense.length() > 0)
-				sb.append(tense);
 			if (i < leafConstituents.size() - 1)
 				sb.append(" ");
 			// else
