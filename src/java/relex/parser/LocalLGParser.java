@@ -148,8 +148,6 @@ public class LocalLGParser extends LGParser
 
 					if (LinkGrammar.isEntity(wordString) || Character.isUpperCase(wordString.charAt(0)))
 						fnv.setEntityFlag();
-					if (LinkGrammar.isPastTenseForm(wordString))
-						fnv.setTenseVal("past");
 
 					s.addWord(fnv.fn());
 
@@ -330,8 +328,6 @@ public class LocalLGParser extends LGParser
 		Sentence sntc = lp.parse(
 			"After the signing, the ambassadors affirmed both sides' readiness for full-scale development of bilateral relations.");
 		System.err.println("FOUND " + sntc.getParses().size() + " sentence(s)");
-		System.err.println("HAD is past: " + LinkGrammar.isPastTenseForm("had"));
-		System.err.println("HAVE is past: " + LinkGrammar.isPastTenseForm("have"));
 		sntc = lp.parse("Mike saw the man with the telescope.");
 		if (sntc.getParses().size() > 0) {
 			ParsedSentence sentence = sntc.getParses().get(0);
@@ -340,8 +336,6 @@ public class LocalLGParser extends LGParser
 		} else {
 			System.err.println("No parse found for sentence");
 		}
-		if (args.length > 0)
-			System.err.println(args[0] + " is past: "+ LinkGrammar.isPastTenseForm(args[0]));
 		lp.close();
 	}
 }
