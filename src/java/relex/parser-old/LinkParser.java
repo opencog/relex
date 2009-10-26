@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import relex.ParsedSentence;
 import relex.Sentence;
-import relex.RelexProperties;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.feature.LinkableView;

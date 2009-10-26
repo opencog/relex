@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package relex;
+package relex.parser;
 
 import java.io.File;
 import java.io.FileInputStream;

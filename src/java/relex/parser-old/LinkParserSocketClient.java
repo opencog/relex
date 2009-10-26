@@ -18,7 +18,6 @@ package relex.parser;
 
 import java.util.ArrayList;
 
-import relex.RelexProperties;
 import relex.util.socket.ProcessClient;
 
 /**
