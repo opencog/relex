@@ -105,8 +105,8 @@ function.
 
 - OpenNLP
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
-   to find sentence boundaries in free text. Without OpenNLP, the input
-   to RelEx must be organized so that there's only one sentence per line.
+   to find sentence boundaries in free text. If OpenNLP is not found, 
+   then the less accurate java.text.BreakIterator class is used.
 
 	The OpenNLP home page is at http://opennlp.sourceforge.net/
 	Download and install OpenNLP tools, and verify that the 
@@ -364,12 +364,6 @@ Ratio: Stanford-wsjPCFG/RelEx = 134sec/180sec = 0.74x (slower)
 
 TODO
 ----
-
-TODO - sentence detection
--------------------------
-If OpenNLP is not installed, then use the java.text.BreakIterator for sentence
-detection.
-
 
 TODO - Comparatives
 -------------------

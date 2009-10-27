@@ -73,46 +73,37 @@ public class DocSplitterFallbackImpl implements DocSplitter
 		start = bdry.first();
 	}
 
-	/**
-	 * XXX This implementation is buggy.
-	 * If there is not a complete sentence in the buffer, this is 
-	 * supposed to return null, and wait for more text. Instead, it
-	 * will return a partial sentence fragment.
-	 */
 	public String getNextSentence()
 	{
 		int end = bdry.next();
 		String s = "";
 		if (BreakIterator.DONE != end)
 		{
-System.out.println("duuude net the end");
 			s = buffer.substring(start,end);
-			start = end;
 		}
 		else
 		{
 			s = buffer.substring(start);
-			s = s.trim();
-			int len = s.length();
-			if (len < 1)
-			{
-				clearBuffer();
-				return null;
-			}
-			char c = s.charAt(len-1);
-			if ('.' == c || '!' == c || '?' == c)
-			{
-				clearBuffer();
-				return s;
-			}
-			else
-			{
-				return null;
-			}
 		}
 
-		if (s.equals("")) s = null;
-		return s;
+		s = s.trim();
+		int len = s.length();
+		if (len < 1)
+		{
+			clearBuffer();
+			return null;
+		}
+
+		// Verify that we've got a complete sentence. If so, return it,
+		// else return null, and wait for more input.
+		char c = s.charAt(len-1);
+		if ('.' == c || '!' == c || '?' == c)
+		{
+			start = end;
+			if (BreakIterator.DONE == end) clearBuffer();
+			return s;
+		}
+		return null;
 	}
 
 	/* --------------------------------------------------------------- */

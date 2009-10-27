@@ -1,4 +1,10 @@
-This is a test
+This 
+is 
+a 
+test
+.
+This is another 
+sentence.
 END.
 I live on Enfield Dr. My doctor is Dr. Enfield. This is more text.
 The man filed suit.
