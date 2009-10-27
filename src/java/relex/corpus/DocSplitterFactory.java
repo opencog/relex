@@ -40,6 +40,7 @@ public class DocSplitterFactory
 				"\tgiven one sentence per line. Please see the README file for info.\n");
 			clazz0 = DocSplitterFallbackImpl.class;
 		}
+clazz0 = DocSplitterFallbackImpl.class;
 		clazz = clazz0;
 
 	}

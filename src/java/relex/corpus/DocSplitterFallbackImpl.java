@@ -13,46 +13,80 @@
  */
 package relex.corpus;
 
+import java.text.BreakIterator;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
+/**
+ * Default implementation of the doc splitter, if OpenNLP is not
+ * installed. This uses the standard Java text BreakIteror class
+ * to accomplish the sentence splitting.
+ */
 public class DocSplitterFallbackImpl implements DocSplitter
 {
+	private String buffer;
+	private BreakIterator bdry;
+	private int start;
+
+	public DocSplitterFallbackImpl()
+	{
+		buffer = "";
+		bdry = BreakIterator.getSentenceInstance(Locale.US);
+		bdry.setText("");
+		start = bdry.first();
+	}
+
 	public boolean operational()
 	{
 		return true;
 	}
+
+	/**
+	 * Returns false if break is unacceptable. Used to prevent overzelous
+	 * sentence detectors which have recognizable idiosyncracies
+	 */
 	public boolean acceptableBreak(String s, int start, int end)
 	{
 		return false;
 	}
 
-	private StringBuilder sb = new StringBuilder();
-
+	/**
+	 * Add more text to the buffer.
+	 * This allows this class to be used in FIFO mode: text is added with
+	 * this call, and sentences are extracted with the getNextSentence() call.
+	 */
 	public void addText(String newText)
 	{
-		sb.append(newText);
+		// First, trim off up to old start.
+		buffer = buffer.substring(start);
+		buffer += newText;
+		bdry.setText(buffer);
+		start = bdry.first();
 	}
 
 	public void clearBuffer()
 	{
-		sb.setLength(0);
+		buffer = "";
+		bdry.setText(buffer);
+		start = bdry.first();
 	}
 
 	public String getNextSentence()
 	{
+		int end = bdry.next();
 		String s = "";
-		int nl = sb.indexOf("\n");
-		if (0 < nl)
+		if (BreakIterator.DONE != end)
 		{
-			s = sb.substring(0,nl);
-			sb = sb.delete(0,nl);
+			s = buffer.substring(start,end);
+			start = end;
 		}
 		else
 		{
-			s = sb.toString();
+			s = buffer.substring(start);
 			clearBuffer();
 		}
+
 		if (s.equals("")) s = null;
 		return s;
 	}
