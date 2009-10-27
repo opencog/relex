@@ -14,7 +14,7 @@
 package relex.corpus;
 
 import java.text.BreakIterator;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,6 +25,7 @@ import java.util.Locale;
  */
 public class DocSplitterFallbackImpl implements DocSplitter
 {
+	// Buffered text, for FIFO mode.
 	private String buffer;
 	private BreakIterator bdry;
 	private int start;
@@ -72,34 +73,88 @@ public class DocSplitterFallbackImpl implements DocSplitter
 		start = bdry.first();
 	}
 
+	/**
+	 * XXX This implementation is buggy.
+	 * If there is not a complete sentence in the buffer, this is 
+	 * supposed to return null, and wait for more text. Instead, it
+	 * will return a partial sentence fragment.
+	 */
 	public String getNextSentence()
 	{
 		int end = bdry.next();
 		String s = "";
 		if (BreakIterator.DONE != end)
 		{
+System.out.println("duuude net the end");
 			s = buffer.substring(start,end);
 			start = end;
 		}
 		else
 		{
 			s = buffer.substring(start);
-			clearBuffer();
+			s = s.trim();
+			int len = s.length();
+			if (len < 1)
+			{
+				clearBuffer();
+				return null;
+			}
+			char c = s.charAt(len-1);
+			if ('.' == c || '!' == c || '?' == c)
+			{
+				clearBuffer();
+				return s;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		if (s.equals("")) s = null;
 		return s;
 	}
 
+	/* --------------------------------------------------------------- */
+	// Bulk mode returned values
+	private ArrayList<TextInterval> lst;
+	private ArrayList<String> snl;
+
+	/**
+	 * Split a document text string into sentences.
+	 * Returns a list of sentence start and end-points.
+	 */
 	public List<TextInterval> process(String docText)
 	{
-		// XXX this is wrong, it fails to look for newlines!
-		return Arrays.asList(new TextInterval(0,docText.length()-1));
+		_process(docText);
+		return lst;
 	}
 
+	/**
+	 * Split a document text string into sentences.
+	 * Returns a list of sentence strings.
+	 */
 	public List<String> split(String docText)
 	{
-		// XXX this is wrong, it fails to look for newlines!
-		return Arrays.asList(docText);
+		_process(docText);
+		return snl;
+	}
+
+	private void _process(String docText)
+	{
+		lst = new ArrayList<TextInterval>();
+		snl = new ArrayList<String>();
+		if (docText == null) return;
+
+		bdry.setText(docText);
+		start = bdry.first();
+		int end = bdry.next();
+		while (BreakIterator.DONE != end)
+		{
+			lst.add(new TextInterval(start, end));
+			snl.add(docText.substring(start, end));
+			start = end;
+			end = bdry.next();
+		}
 	}
 }
