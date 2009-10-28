@@ -149,7 +149,7 @@ public class RelationExtractor
 		cnttime = new TreeMap<String,Long>(); 
 	}
 
-	String getVersion()
+	public String getVersion()
 	{
 		return parser.getVersion() + "\t" + Version.getVersion();
 	}
