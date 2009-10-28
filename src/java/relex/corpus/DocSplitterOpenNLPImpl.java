@@ -110,7 +110,8 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				// e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 		}
 	}

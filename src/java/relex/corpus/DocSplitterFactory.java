@@ -36,8 +36,8 @@ public class DocSplitterFactory
 				"\nWARNING:\n" +
 				"\tIt appears that the OpenNLP tools are not installed or are not\n" +
 				"\tcorrectly specified in the java classpath. The OpenNLP tools are\n" +
-				"\tused to perform sentence detection. Without them, ReleEx must be\n" +
-				"\tgiven one sentence per line. Please see the README file for info.\n");
+				"\tused to perform sentence detection. Without them, ReleEx will use\n" +
+				"\tthe less accurate Java sentence detector. See the README file for info.\n");
 			clazz0 = DocSplitterFallbackImpl.class;
 		}
 		clazz = clazz0;
@@ -55,7 +55,7 @@ public class DocSplitterFactory
 					"\tMake sure that data/sentence-detector/EnglishSD.bin.gz is installed\n" +
 					"\tor that an alternate location is specified with -DEnglishModelFilename\n" +
 					"\tin the script/run files.\n" +
-					"\tWithout it, ReleEx must be given one sentence per line.\n" +
+					"\tWithout it, ReleEx will use the less-accurate Java native sentence detector.\n" +
 					"\tPlease see the README file for info.\n");
 				Class<? extends DocSplitter> clazzy;
 				clazzy = DocSplitterFallbackImpl.class;
