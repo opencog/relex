@@ -43,7 +43,6 @@ public class RawView
 	{
 		HashSet<String> ignores = new HashSet<String>();
 
-		ignores.add("linkSources");
 		ignores.add("nameSource");
 
 		ignores.add("syn_location");

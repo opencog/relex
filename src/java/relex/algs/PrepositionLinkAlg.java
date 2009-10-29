@@ -32,7 +32,6 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 	{
 		String prep = prepStringValue.getValue();
 		FeatureNode modifiedLinks = modifiedRef.getOrMake("prep-links");
-		FeatureNode modifiedLinkSources = modifiedRef.getOrMake("linkSources");
 
 		FeatureNode existingPrepObj = modifiedLinks.get(prep);
 		// add prep to links, converting to a group if necessary
@@ -40,7 +39,6 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		{
 			// System.err.println("PREP does not exist");
 			modifiedLinks.set(prep, prepObj);
-			modifiedLinkSources.set(prep, prepStringSource);
 		}
 		else
 		{
@@ -56,7 +54,6 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 				indexedPrep = prep + i;
 			}
 			modifiedLinks.set(indexedPrep, prepObj);
-			modifiedLinkSources.set(indexedPrep, prepStringSource);
 		}
 	}
 
