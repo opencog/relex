@@ -1,7 +1,11 @@
 ;
 ; relex-penn-tagging-algs.txt
 ;
-; Provide Penn Trebank-style part-of-speech tags.
+; Provide Penn Treebank-style part-of-speech tags.
+;
+; This is performed only in a "compatibility mode", when the user 
+; requests it -- it is not a part of "core" RelEx.
+;
 ; The Penn POS tags are described in:
 ;
 ;     Aoife Cahill's list:
@@ -15,12 +19,16 @@
 ;     http://acl.ldc.upenn.edu/J/J93/J93-2004.pdf
 ;
 ; Both the basic relex tagging, and the semantic-algs step must be run
-; before this.  The semantic-algs file does a lot of the verb tense
-; tagging that this file needs.
+; before this.  The semantic-algs file performs the verb tense tagging
+; that this file needs.
 ;
-; Most of the below is in alphabetical order, except for those cases
-; where the earlier tag must run first.
-
+; Most of the below is in alphabetical order, although there are a few cases
+; where some of the tegging must be done before other tags.
+;
+; Status: as of October 2009, this is "experimental" but fairly stable: it 
+; appears to provide the correct tagging for a few dozen test sentences, but
+; has not been validated on any sort of large corpus.  No doubt, there are
+; some subtle tagging variations that have not yet been addressed.
 ;
 #TemplateActionAlg
 PENN_DETERMINER
