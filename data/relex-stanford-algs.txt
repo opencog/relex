@@ -1,9 +1,17 @@
 ;
 ; relex-stanford-algs.txt
 ;
-; Rules to extract Stanford-parser-style relationships.
+; Rules to generate Stanford-parser-style relationships.
 ; The goal here is to be as compatible with the Stanford
 ; parser as possible, given the parse provided by Link-Grammar.
+;
+; As of October 2009, these algs are "experimental" but stable: they
+; give absolutely compatible answers on four dozen test sentences. 
+; They fail on a handful of sentences, although, for some of these,
+; it appears that the Stanford parser is generating incorrect results,
+; and, for some others, the correct behaviour is unclear/under-documented.
+; However, a large-scale corpus accuracy test has not been attempted,
+; and there may still be a number of bugs.
 ;
 ;///////////////////////////////////////////////////////////////////////
 ;
