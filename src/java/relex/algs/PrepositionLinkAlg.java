@@ -25,7 +25,7 @@ import relex.feature.SemanticView;
 
 public class PrepositionLinkAlg extends TemplateMatchingAlg
 {
-	protected void applyTo(FeatureNode modifiedRef,
+	private void applyTo(FeatureNode modifiedRef,
 	                       FeatureNode prepObj,
 	                       FeatureNode prepStringValue,
 	                       FeatureNode prepStringSource)
@@ -36,18 +36,22 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 
 		FeatureNode existingPrepObj = modifiedLinks.get(prep);
 		// add prep to links, converting to a group if necessary
-		if (existingPrepObj == null) {
+		if (existingPrepObj == null)
+		{
 			// System.err.println("PREP does not exist");
 			modifiedLinks.set(prep, prepObj);
 			modifiedLinkSources.set(prep, prepStringSource);
-		} else {
+		}
+		else
+		{
 			// System.err.println("PREP exists");
 
 			// add a new indexed-prep
 			int i = 2;
 			String indexedPrep = prep + i;
 			// Find an unused index
-			while (modifiedLinks.get(indexedPrep) != null) {
+			while (modifiedLinks.get(indexedPrep) != null)
+			{
 				i++;
 				indexedPrep = prep + i;
 			}
@@ -72,15 +76,19 @@ public class PrepositionLinkAlg extends TemplateMatchingAlg
 		 * System.err.println("prep source: " + prep_source.get("str"));
 		 */
 
-		if (SemanticView.isGroup(modified)) {
+		if (SemanticView.isGroup(modified))
+		{
 			// If the modified object is a group, apply prep to each of its
 			// elements
 			Iterator<FeatureNode> i = SemanticView.groupMemberIterator(modified);
-			while (i.hasNext()) {
+			while (i.hasNext())
+			{
 				applyTo(i.next().get("ref"), prep_obj, prepStringValue, prep_source);
 			}
 
-		} else {
+		}
+		else
+		{
 			// Otherwise, apply to just the one element.
 			applyTo(modified.get("ref"), prep_obj, prepStringValue, prep_source);
 		}
