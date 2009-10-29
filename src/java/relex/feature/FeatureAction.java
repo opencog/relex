@@ -195,7 +195,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		doAction(f, blankTemplate, emptyVarSet);
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer sb = new StringBuffer(getPath().toString());
 		sb.append(" ").append(getAction()).append(" ");
 		if (isPathPair())

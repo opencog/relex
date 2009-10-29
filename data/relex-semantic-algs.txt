@@ -958,10 +958,11 @@ PREP_CLAUSE_LINKING
 <F_R head-word ref> = $prep_obj
 =
 ;
-#PrepositionLinkAlg
-PREP_LINKING
 ; The preposition modifies the preceeding word with a noun
 ; Fails if any of the template variables are not filled
+
+#PrepositionLinkAlg
+PREP_LINKING
 <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
 <F_R head-word> = %
 <F_L> = $modified
@@ -969,9 +970,13 @@ PREP_LINKING
 <F_R> = $prep_source
 <F_R obj> = $prep_obj
 =
+<F_R prep-parts _prepobj> = <F_R obj>
+<F_L prep-parts _prepsubj> = <F_R ref>
+;
+; The preposition modifies the preceeding phrase
+;
 #PrepositionLinkAlg
 PREP_LINKING
-; The preposition modifies the preceeding phrase
 <LAB> = \MVi\.*
 <F_L> = $modified
 <F_R str> = $prep

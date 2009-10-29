@@ -37,15 +37,18 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 	                       Map<String,FeatureNode> vars)
 	{
 		Iterator<FeatureAction> i = featureActions.iterator();
-		while (i.hasNext()) {
+		while (i.hasNext())
+		{
 			FeatureAction act = i.next();
 			act.doAction(node, getTemplate(), vars);
 		}
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer sb = new StringBuffer(super.toString());
-		if (featureActions.size() > 0) {
+		if (featureActions.size() > 0)
+		{
 			Iterator<FeatureAction> i = featureActions.iterator();
 			sb.append(i.next().toString());
 			while (i.hasNext())
@@ -54,17 +57,25 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 		return sb.toString();
 	}
 
-	public int init(String str) {
+	public int init(String str)
+	{
 		int actionStart = super.init(str);
 		// Get actions
 		featureActions = new ArrayList<FeatureAction>();
 		String[] actLines = str.substring(actionStart).split("\n");
-		for (int i = 0; i < actLines.length; i++) {
+		for (int i = 0; i < actLines.length; i++)
+		{
 			String line = actLines[i];
-			try {
-				featureActions.add(new FeatureAction(line));
-			} catch (Exception e) {
-				throw new RuntimeException("ALGFILE format error: " + actLines[i] + "\n");
+			line = line.trim();
+
+			// Allow blank lines in rules ...
+			if (0 < line.length())
+			{
+				try {
+					featureActions.add(new FeatureAction(line));
+				} catch (Exception e) {
+					throw new RuntimeException("ALGFILE format error: " + actLines[i] + "\n");
+				}
 			}
 		}
 		return str.length();
