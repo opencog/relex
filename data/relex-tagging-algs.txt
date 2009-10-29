@@ -21,10 +21,14 @@
 ;  categories for Morphy are "noun" "verb" "adj" "adv"
 ;
 ;  POS tagging done in two steps:
-;  1) coarse/crude tagging, based on words subscripts obtained from
+;  1) coarse/crude tagging, based on word subscripts obtained from
 ;     link-grammar.
 ;  2) refined tagging, based on actual links. This typically over-rides
 ;     the coarse tagging given above.
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+; Step one: coarse/crude POS tagging, based on word subscripts.
 ;
 ; adjectives
 #TemplateActionAlg
@@ -211,7 +215,7 @@ SUBSCR_POS_Y
 
 ;/////////////////////////////////////////////////////////////////////////////
 ; 
-; Refined POS tagging based on linkage used.
+; Step 2: Refined POS tagging based on linkage used.
 ;
 #TemplateActionAlg
 POS_VERB
@@ -246,7 +250,7 @@ POS_NOUN
 ; -- Numeric determiner: "two dogs" "the first hour"
 ; -- Quantifier "some things", "few authors"
 ;
-; See also list of posessive,s, gernder, reflexive and anaphora below.
+; See also: list of posessives, gernder, reflexive and anaphora below.
 ;
 ; One could argue that the following should be handled:
 ;    another some any 
