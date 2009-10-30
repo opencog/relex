@@ -49,6 +49,9 @@ import relex.tree.PhraseTree;
  * 5. A TruthValue (inherited from Atom) that ranks the relative
  *    likelihood of this parse of being a correct (meaningful) parse
  *    of the sentence.
+ *
+ * XXX Most or all of this data should probably be anchored in the 
+ * feature-node graph.
  */
 public class ParsedSentence
 	extends Atom
@@ -75,10 +78,6 @@ public class ParsedSentence
 
 	private String errorString;
 
-	// Metadata about the sentence; primarily, this consists of diagnostic
-	// info returned by the link grammar parser.
-	private FeatureNode metaData;
-
 	// An ArrayList of FeatureNodes, each one representing a word in the
 	// sentence.  If there are no "link islands", each can be reached by
 	// following arcs from the others.
@@ -96,12 +95,19 @@ public class ParsedSentence
 		leafConstituents = new ArrayList<FeatureNode>();
 	}
 
-	public void setMetaData(FeatureNode f) {
-		metaData = f;
+	public void setMetaData(FeatureNode f)
+	{
+		// Get the left wall, and anchor the meta-data there.
+		leafConstituents.get(0).get("wall").set("meta", f);
 	}
 
-	public FeatureNode getMetaData() {
-		return metaData;
+	/**
+	 * Return metadata about the sentence; primarily, this consists
+	 * of diagnostic info returned by the link grammar parser.
+	 */
+	public FeatureNode getMetaData()
+	{
+		return leafConstituents.get(0).get("wall").get("meta");
 	}
 
 	public String getOriginalSentence() {
@@ -377,7 +383,7 @@ public class ParsedSentence
 
 	private int getMeta(String str)
 	{
-		FeatureNode fn = metaData.get(str);
+		FeatureNode fn = getMetaData().get(str);
 		if (fn == null) return -1;
 		String val = fn.getValue();
 		return Integer.parseInt(val);

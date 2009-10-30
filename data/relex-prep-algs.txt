@@ -2,6 +2,7 @@
 ; relex-prep-algs.txt
 ;
 ; Rules to expand prepositional relations from one dependency into two.
+; Currently, this affect *only* the Stanford-comaptibilit output.
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -23,7 +24,7 @@ PREP_EXPAND_OBJ
 ;
 ;#TemplateActionAlg
 ;PREP_KILL_CONTRACTION
-;<sf-links x> = 
+;<sf-links x> = <prep-links x>
 ;= 
 ;
 ;

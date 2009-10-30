@@ -1545,7 +1545,7 @@ COMPARATIVE_OBJECT_FINAL
 <comparative-cvar> = $prep_obj
 =
 ;
-; Send prep-links to links
+; Send (copy) prep-links to links
 ;
 #TemplateActionAlg
 PREP_TO_LINKS
