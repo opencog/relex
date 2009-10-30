@@ -20,14 +20,18 @@ import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
 
 /**
- * SentenceAlgorithmApplier is responsible for loading SentenceAlgorithms from a
- * file, and applying them to a ParsedSentence.
+ * SentenceAlgorithmApplier is responsible for loading SentenceAlgorithms
+ * from a file, and applying them to a ParsedSentence.
+ *
+ * Several different sets of algorithms may be applied. The core set 
+ * include basic feature tagging and semantic extraction. Optional sets
+ * include a Stanford-parser comptibility mode, and a Penn Treebank POS
+ * tagging compatibility mode.
  */
 public class SentenceAlgorithmApplier
 {
 	private AlgorithmApplier tagger;
 	private AlgorithmApplier penn;
-	private AlgorithmApplier preps;
 	private AlgorithmApplier semant;
 	private AlgorithmApplier stanford;
 
@@ -39,8 +43,6 @@ public class SentenceAlgorithmApplier
 			"relex.semalgpath", "relex-semantic-algs.txt");
 		penn = new AlgorithmApplier(
 			"relex.pennalgpath", "relex-penn-tagging-algs.txt");
-		preps = new AlgorithmApplier(
-			"relex.prepalgpath", "relex-prep-algs.txt");
 		stanford = new AlgorithmApplier(
 			"relex.sfalgpath", "relex-stanford-algs.txt");
 	}
@@ -63,11 +65,6 @@ public class SentenceAlgorithmApplier
 	public void pennTag(ParsedSentence sentence, RelexContext context)
 	{
 		penn.applyAlgs(sentence, context);
-	}
-
-	public void expandPreps(ParsedSentence sentence, RelexContext context)
-	{
-		preps.applyAlgs(sentence, context);
 	}
 
 	// The apply method, for the core relations only.

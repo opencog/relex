@@ -235,7 +235,6 @@ public class RelationExtractor
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
-				if (do_expand_preps) sentenceAlgorithmApplier.expandPreps(parse, context);
 
 				// Strip out the entity markup, so that when the
 				// sentence is printed, we don't print gunk.
