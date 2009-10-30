@@ -219,26 +219,35 @@ SUBSCR_POS_Y
 ;
 #TemplateActionAlg
 POS_VERB
-<LAB> = \S\.*|\SF\.*|\SX\.*|\I\.*|\B\.*|\BW\.*|\P\.*|\PP\.*|\Mv\.*|\Mg\.*
 <F_R POS> = WORD
+<LAB> = \S\.*|\SF\.*|\SX\.*|\I\.*|\B\.*|\BW\.*|\P\.*|\PP\.*|\Mv\.*|\Mg\.*
 =
 <F_R POS> = verb
 ;
 #TemplateActionAlg
 POS_VERB_INVERTED
-<LAB> = \SI\.*|\O\.*|\U\.*|\PP\.*|\SXI\.*|\SFI\.*
 <F_L POS> = WORD
+<LAB> = \SI\.*|\O\.*|\U\.*|\PP\.*|\SXI\.*|\SFI\.*
 =
 <F_L POS> = verb
 ;
 ;
 #TemplateActionAlg
 POS_NOUN
-<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp
 <F_L POS> = WORD
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp
 =
 <F_L POS> = noun
 ;
+; BI: "That is what the man said" -- tag "what" as noun; it'll get tagged 
+; with a pronoun flag later.
+;
+#TemplateActionAlg
+POS_NOUN_INVERTED
+<F_R POS> = WORD
+<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*|ND|\NM\.*|\BI\.*
+=
+<F_R POS> = noun
 ;---------------------------------------------------------------
 ;
 ; Closed-list determiners.
@@ -306,13 +315,6 @@ DETERMINER_POS2
 #TemplateActionAlg
 POS_NOUN_DET
 <DETERMINER_LINK_FLAG> = T
-<F_R POS> = WORD
-=
-<F_R POS> = noun
-;
-#TemplateActionAlg
-POS_NOUN_INVERTED
-<LAB> = \SI\.*|\O\.*|\U\.*|\J\.*|\ON\.*|\IN\.*|\SXI\.*|\JG\.*|\NS\.*|ND|\NM\.*
 <F_R POS> = WORD
 =
 <F_R POS> = noun
@@ -415,14 +417,6 @@ POS_ADV_INVERTED
 ;
 ;--------------------------------------------------------
 ; Oddball cases
-; "That is what the man said" -- tag "what" as noun; it'l get tagged 
-; with a pronoun flag later.
-#TemplateActionAlg
-POS_NOUN_COP
-<LAB> = \BI\.*
-<F_R POS> = WORD
-=
-<F_R POS> = noun
 ;
 ;
 #TemplateActionAlg
