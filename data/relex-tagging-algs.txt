@@ -376,10 +376,11 @@ POS_ADJ
 ; no object (in_line: "The man in line is happy.")
 ; Treat Ma like an adjective, e.g. "appropriate", in
 ; "It was done in a manner appropriate for the occasion."
+; EC: "How much more should we work on this?"
 ;
 #TemplateActionAlg
 POS_ADJ_INVERTED
-<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*|\EC\.*
 <F_R PREP-OBJ> = %
 =
 <F_R POS> = %
@@ -417,7 +418,7 @@ POS_NOUN_COP
 ; e.g. "I am wondering who to go to the party with."
 #TemplateActionAlg
 POS_WH_ADV
-<LAB> = \QI\.*
+<LAB> = \QI\.*|H
 <F_R POS> = WORD
 =
 <F_R POS> = adv
