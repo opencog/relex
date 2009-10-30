@@ -413,6 +413,23 @@ POS_NOUN_COP
 =
 <F_R POS> = noun
 ;
+; Question words (WH-words) are typically adverbs
+; e.g. "I am wondering who to go to the party with."
+#TemplateActionAlg
+POS_WH_ADV
+<LAB> = \QI\.*
+<F_R POS> = WORD
+=
+<F_R POS> = adv
+;
+#TemplateActionAlg
+POS_WH_NOUN
+<LAB> = \QI\.*
+<F_R str> = who
+=
+<F_R POS> = noun
+<F_R ref PRONOUN-FLAG> = T
+;
 ;--------------------------------------------------------
 ; Identify a conjuction:
 ;   The word "after" in "He spoke after he ate." (subordinating 
