@@ -74,7 +74,7 @@ public class FeaturePath
 	{
 		StringBuffer sb = new StringBuffer("<");
 		Iterator<String> i = iterator();
-		sb.append(i.next());
+		if (i.hasNext()) sb.append(i.next());
 		while (i.hasNext()) sb.append(" ").append(i.next());
 		sb.append(">");
 		return sb.toString();
