@@ -231,9 +231,10 @@ POS_VERB_INVERTED
 =
 <F_L POS> = verb
 ;
+;
 #TemplateActionAlg
 POS_NOUN
-<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp
 <F_L POS> = WORD
 =
 <F_L POS> = noun
@@ -380,10 +381,17 @@ POS_ADJ
 ;
 #TemplateActionAlg
 POS_ADJ_INVERTED
-<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*|\EC\.*|Ya
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
 <F_R POS> = %
+<F_R POS> = adj
+;
+#TemplateActionAlg
+POS_ADJ_INVERTED2
+<LAB> = \EC\.*|Ya
+<F_R POS> = WORD
+=
 <F_R POS> = adj
 ;
 ; Adverbs: 
