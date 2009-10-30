@@ -410,7 +410,7 @@ POS_ADV
 ;
 #TemplateActionAlg
 POS_ADV_INVERTED
-<LAB> = \E\.*|\EA\.*|\EE\.*|EN|PF
+<LAB> = \E\.*|\EA\.*|\EE\.*|EN|PF|WR
 <F_L POS> = WORD
 =
 <F_L POS> = adv
@@ -420,8 +420,7 @@ POS_ADV_INVERTED
 ;
 ;
 #TemplateActionAlg
-POS_WH_NOUN
-<LAB> = \QI\.*
+POS_WHO_NOUN
 <F_R str> = who
 =
 <F_R POS> = noun
