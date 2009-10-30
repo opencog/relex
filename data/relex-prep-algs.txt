@@ -1,0 +1,32 @@
+;
+; relex-prep-algs.txt
+;
+; Rules to expand prepositional relations from one dependency into two.
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
+;  PREPOSITIONS
+;
+;
+#TemplateActionAlg
+PREP_EXPAND_SUBJ
+<prep-parts _prepsubj> != %
+=
+<ref sf-links _prep> = <prep-parts _prepsubj>
+
+#TemplateActionAlg
+PREP_EXPAND_OBJ
+<prep-parts _prepobj> != %
+=
+<ref sf-links _pobj> = <prep-parts _prepobj>
+;
+;
+;#TemplateActionAlg
+;PREP_KILL_CONTRACTION
+;<sf-links x> = 
+;= 
+;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;/////////////////////////////// END OF FILE /////////////////////////////////
+;/////////////////////////////////////////////////////////////////////////////

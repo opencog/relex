@@ -27,6 +27,7 @@ public class SentenceAlgorithmApplier
 {
 	private AlgorithmApplier tagger;
 	private AlgorithmApplier penn;
+	private AlgorithmApplier preps;
 	private AlgorithmApplier semant;
 	private AlgorithmApplier stanford;
 
@@ -38,6 +39,8 @@ public class SentenceAlgorithmApplier
 			"relex.semalgpath", "relex-semantic-algs.txt");
 		penn = new AlgorithmApplier(
 			"relex.pennalgpath", "relex-penn-tagging-algs.txt");
+		preps = new AlgorithmApplier(
+			"relex.prepalgpath", "relex-prep-algs.txt");
 		stanford = new AlgorithmApplier(
 			"relex.sfalgpath", "relex-stanford-algs.txt");
 	}
@@ -62,7 +65,12 @@ public class SentenceAlgorithmApplier
 		penn.applyAlgs(sentence, context);
 	}
 
-	// The apply method!
+	public void expandPreps(ParsedSentence sentence, RelexContext context)
+	{
+		preps.applyAlgs(sentence, context);
+	}
+
+	// The apply method, for the core relations only.
 	public void applyAlgs(ParsedSentence sentence, RelexContext context)
 	{
 		tagger.applyAlgs(sentence, context);

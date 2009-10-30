@@ -106,6 +106,9 @@ public class RelationExtractor
 	/* Penn tagset compatibility mode */
 	public boolean do_penn_tagging;
 
+	/* Expand preposition markup to two dependencies. */
+	public boolean do_expand_preps;
+
 	/** Statistics */
 	private ParseStats stats;
 
@@ -143,6 +146,7 @@ public class RelationExtractor
 
 		do_stanford = false;
 		do_penn_tagging = false;
+		do_expand_preps = false;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -226,6 +230,7 @@ public class RelationExtractor
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
+				if (do_expand_preps) sentenceAlgorithmApplier.expandPreps(parse, context);
 
 				// Strip out the entity markup, so that when the
 				// sentence is printed, we don't print gunk.
@@ -352,6 +357,7 @@ public class RelationExtractor
 		String callString = "RelationExtractor" +
 			" [-a (perform anaphora resolution)]" +
 			" [-c (show plain output)]" +
+			" [--expand-preps (show expanded prepositions)]" +
 			" [-f (show frame output)]" +
 			" [-g (use GATE entity detector)]" +
 			" [-h (show this help)]" +
@@ -375,6 +381,7 @@ public class RelationExtractor
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("-c");
+		flags.add("--expand-preps");
 		flags.add("-f");
 		flags.add("-g");
 		flags.add("-h");
@@ -454,6 +461,11 @@ public class RelationExtractor
 		if (commandMap.get("--penn") != null)
 		{
 			re.do_penn_tagging = true;
+		}
+
+		if (commandMap.get("--expand-preps") != null)
+		{
+			re.do_expand_preps = true;
 		}
 
 		EntityMaintainerFactory gem = null;
