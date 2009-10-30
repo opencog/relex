@@ -380,7 +380,7 @@ POS_ADJ
 ;
 #TemplateActionAlg
 POS_ADJ_INVERTED
-<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*|\EC\.*
+<LAB> = \Pa\.*|\L\.*|\Pp\.*|\Mp\.*|\Ma\.*|\EC\.*|Ya
 <F_R PREP-OBJ> = %
 =
 <F_R POS> = %
@@ -389,9 +389,11 @@ POS_ADJ_INVERTED
 ; Adverbs: 
 ; "He plays better" uses MVb link.
 ; "He hears more" uses the MVm link.
+; Question words (WH-words) are typically adverbs
+; QI: "I am wondering who to go to the party with."
 #TemplateActionAlg
 POS_ADV
-<LAB> = \MVa\.*|\MVb\.*|\MVm\.*|\EB\.*|\EE\.*
+<LAB> = \MVa\.*|\MVb\.*|\MVm\.*|\EB\.*|\EE\.*|Yt|\QI\.*|H
 <F_R POS> = WORD
 =
 <F_R POS> = adv
@@ -414,14 +416,6 @@ POS_NOUN_COP
 =
 <F_R POS> = noun
 ;
-; Question words (WH-words) are typically adverbs
-; e.g. "I am wondering who to go to the party with."
-#TemplateActionAlg
-POS_WH_ADV
-<LAB> = \QI\.*|H
-<F_R POS> = WORD
-=
-<F_R POS> = adv
 ;
 #TemplateActionAlg
 POS_WH_NOUN
