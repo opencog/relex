@@ -269,14 +269,42 @@ SF_AGENT
 ; TRANSFER PREP LINKS TO SF-LINKS
 ;
 ; But don't transfer those that correspond to adverbial clauses, etc.
+; Don't transfer preps if the expand-preps flag is set.
 ;
 #TemplateActionAlg
 PREP_TO_SF
 <ref prep-links> != %
 <DONT_SHOW_PREP> != T
+<wall expand-preps> = %
 =
 <ref sf-links> <= <ref prep-links>
+;
+#TemplateActionAlg
+SF_PREP_EXPAND_SUBJ
+<DONT_SHOW_PREP> != T
+<prep-parts _prepsubj> != %
+<wall expand-preps> = T
+=
+<ref sf-links _prep> = <prep-parts _prepsubj>
 
+#TemplateActionAlg
+SF_PREP_EXPAND_OBJ
+<DONT_SHOW_PREP> != T
+<prep-parts _prepobj> != %
+<wall expand-preps> = T
+=
+<ref sf-links _pobj> = <prep-parts _prepobj>
+;
+;
+;#TemplateActionAlg
+;PREP_KILL_CONTRACTION
+;<sf-links x> = <prep-links x>
+;= 
+;
+;
+;/////////////////////////////////////////////////////////////////////////////
+;/////////////////////////////// END OF FILE /////////////////////////////////
+;/////////////////////////////////////////////////////////////////////////////
 ;///////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER LINKS TO SF-LINKS

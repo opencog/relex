@@ -161,6 +161,8 @@ public class FeatureNode extends Atom
 	 * Sets the value of this feature node. Method will fail if this FeatureNode
 	 * is not valued, by throwing RuntimeException.
 	 *
+	 * XXX this copies the string ... why ????
+	 *
 	 * @param value
 	 *            the value of this feature node
 	 */
@@ -171,7 +173,8 @@ public class FeatureNode extends Atom
 					"Cannot set the value of a non-valued FeatureNode");
 		if (value == null)
 			throw new RuntimeException("Cannot set to null value");
-		this.value = new String(value);
+		// this.value = new String(value);
+		this.value = value;
 	}
 
 	/**

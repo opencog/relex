@@ -98,7 +98,7 @@ public class ParsedSentence
 	public void setMetaData(FeatureNode f)
 	{
 		// Get the left wall, and anchor the meta-data there.
-		leafConstituents.get(0).get("wall").set("meta", f);
+		getLeft().get("wall").set("meta", f);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ParsedSentence
 	 */
 	public FeatureNode getMetaData()
 	{
-		return leafConstituents.get(0).get("wall").get("meta");
+		return getLeft().get("wall").get("meta");
 	}
 
 	public String getOriginalSentence() {

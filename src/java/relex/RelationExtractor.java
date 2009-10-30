@@ -222,6 +222,11 @@ public class RelationExtractor
 
 			for (ParsedSentence parse : sntc.getParses())
 			{
+				if (do_expand_preps) 
+				{
+					parse.getLeft().set("expand-preps", new FeatureNode("T"));
+				}
+
 				// Markup feature node graph with entity info,
 				// so that the relex algs (next step) can see them.
 				entityMaintainer.prepareSentence(parse.getLeft());
