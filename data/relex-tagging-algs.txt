@@ -235,7 +235,7 @@ POS_VERB_INVERTED
 #TemplateActionAlg
 POS_NOUN
 <F_L POS> = WORD
-<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp|MF
 =
 <F_L POS> = noun
 ;
