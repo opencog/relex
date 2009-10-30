@@ -61,6 +61,13 @@ PENN_ADJ_SUPERLATIVE
 
 ;
 #TemplateActionAlg
+PENN_PREP
+<POS> = prep
+=
+<penn-pos> = IN
+
+;
+#TemplateActionAlg
 PENN_NOUN_SING_OR_MASS
 <POS> = noun
 <num> = singular|uncountable
