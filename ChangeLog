@@ -11,6 +11,7 @@ New in version 1.2.1 (XXX 2009)
  * Move subscript-based feature tagging out of java code into algs file.
  * Remove usage of isPastTenseForm(), in favor of verb subscripts.
  * Fix: Fallback sentence splitter will use standard Java API.
+ * Fix: misc unusual POS tagging fixes.
 
 New in version 1.2.0 (12 October 2009)
  * Fixes DocSpliter fallback to behave when it is misconfigured.

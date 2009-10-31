@@ -455,7 +455,7 @@ POS_CONJUNCTION_INVERTED2
 ; Closed-list "fanboys" coordinating conjunctions
 #TemplateActionAlg
 POS_CONJUNCTION_CLOSED
-<str> = for|and|nor|but|or|yet|so
+<str> = for|and|nor|but|or|yet|so|than|either|neither
 <POS> = WORD
 =
 <POS> = conjunction
