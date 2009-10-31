@@ -615,6 +615,11 @@ SF_ATTR
 ; Bizarre trans-copular subject/attributive or something.
 ; Bill is an honest man. - nsubj(man-5, Bill-1) cop(man-5, is-2)
 ;
+; XXX this breaks down when there are two "be"'s in the sentence:
+; e.g. "That is just the kind of man he is"
+; which gets cross-talk of some kind -- the alg applier tries to
+; merge the two different "be"'s and fails ... I don't quite get it ... 
+;
 #TemplateActionAlg
 SF_NSUBJ_COP
 <name> = be
