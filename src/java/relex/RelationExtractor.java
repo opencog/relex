@@ -90,6 +90,7 @@ public class RelationExtractor
 
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
+	public boolean do_tree_markup;
 
 	/** Anaphora resolution */
 	// XXX these should probably be moved to class Document!
@@ -143,6 +144,8 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 
 		doco = new Document();
+
+		do_tree_markup = false;
 
 		do_stanford = false;
 		do_penn_tagging = false;
@@ -241,11 +244,14 @@ public class RelationExtractor
 				entityMaintainer.repairSentence(parse.getLeft());
 
 				// Also do a Penn tree-bank style phrase structure markup.
-				phraseMarkup.markup(parse);
+				if (do_tree_markup)
+				{
+					phraseMarkup.markup(parse);
 
-				// Repair the entity-mangled tree-bank string.
-				PhraseTree pt = new PhraseTree(parse.getLeft());
-				parse.setPhraseString(pt.toString());
+					// Repair the entity-mangled tree-bank string.
+					PhraseTree pt = new PhraseTree(parse.getLeft());
+					parse.setPhraseString(pt.toString());
+				}
 			}
 
 			// Assign a simple parse-ranking score, based on LinkGrammar data.
@@ -455,6 +461,15 @@ public class RelationExtractor
 		    (commandMap.get("-o") == null))
 		{
 			re.do_anaphora_resolution = true;
+			re.do_tree_markup = true;
+		}
+
+		if ((commandMap.get("-t") != null) ||
+		    (commandMap.get("--pa") != null) ||
+		    (commandMap.get("--pb") != null) ||
+		    (commandMap.get("--pc") != null))
+		{
+			re.do_tree_markup = true;
 		}
 
 		if (commandMap.get("--stanford") != null)
