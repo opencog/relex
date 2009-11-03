@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
     <property name="VERSION" value="1.2"/>
-    <property name="REVISION" value="1.2.0"/>
+    <property name="REVISION" value="1.2.1"/>
 
     <property name="DISCO_HOME" value="d:/work/disco/trunk"/>
     <property name="GATE_HOME" value="c:/tools/gate"/>
@@ -104,6 +104,15 @@
         </javac>
     </target>
 
+    <target name="build-tests" depends="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+            source="${source}" target="${target}">
+            <src path="src/java_test"/>
+            <classpath refid="relex.classpath"/>
+        </javac>
+    </target>
+
     <!-- misc build targets -->
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
@@ -116,6 +125,7 @@
         <echo message=""/>
         <echo message="    build   -- generate the relex.jar file (default)"/>
         <echo message="    install -- install jar file in ${INSTALLDIR}"/>
+        <echo message="    test    -- run test cases"/>
         <echo message="    run     -- run a demo of the parser"/>
         <echo message="    dist    -- create distribution (tar.gz file)"/>
         <echo message="    clean   -- remove temporary files created by build"/>
@@ -131,8 +141,8 @@
     <target name="cleanall" depends="clean"/>
     <target name="realclean" depends="clean"/>
 
-    <!-- run tests -->
-    <target name="test" depends="build-project">
+    <!-- Run tests -->
+    <target name="test" depends="build-tests">
         <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
@@ -151,7 +161,9 @@
                 <attribute name="Implementation-Version" value="${REVISION}"/>
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
+            <fileset file="data/relex-penn-tagging-algs.txt" />
             <fileset file="data/relex-semantic-algs.txt" />
+            <fileset file="data/relex-stanford-algs.txt" />
             <fileset file="data/relex-tagging-algs.txt" />
             <fileset file="data/frame/concept_vars.txt" />
             <fileset file="data/frame/mapping_rules.txt" />
@@ -192,7 +204,9 @@
                 <include name="test-corpus.txt"/>
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
+                <include name="data/relex-penn-tagging-algs.txt"/>
                 <include name="data/relex-semantic-algs.txt"/>
+                <include name="data/relex-stanford-algs.txt"/>
                 <include name="data/relex-tagging-algs.txt"/>
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/wordnet/file_properties.xml"/>
@@ -226,7 +240,9 @@
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging-algs.txt"/>
             <jvmarg line="-Drelex.semalgpath=data/relex-semantic-algs.txt"/>
+            <jvmarg line="-Drelex.sfalgpath=data/relex-stanford-algs.txt"/>
             <jvmarg line="-Drelex.tagalgpath=data/relex-tagging-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <jvmarg line="-Dgate.home=${GATE_HOME}"/>
