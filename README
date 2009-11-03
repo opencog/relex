@@ -1,7 +1,7 @@
 
-                  OpenRelEx Semantic Relation Extractor
-                  -------------------------------------
-                      Version 1.2.1 3 November 2009
+                     RelEx Semantic Relation Extractor
+                     ---------------------------------
+                     Version 1.2.1     3 November 2009
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -43,7 +43,7 @@ installed:
  - W3C OWL (optional)
 
 
-Pre-requiste dependencies
+Pre-requisite dependencies
 --------------------------
 The following packages are required pre-requisites for building RelEx.
 
@@ -54,7 +54,7 @@ The following packages are required pre-requisites for building RelEx.
 	http://www.abisource.com/projects/link-grammar/#download
 
    Link-grammar version 4.6.5 or later is needed; changes in the
-   Java clases require that version 4.6.5 or later be used.
+   Java classes require that version 4.6.5 or later be used.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
@@ -70,7 +70,7 @@ The following packages are required pre-requisites for building RelEx.
 - Wordnet
 	Wordnet is used by RelEx to provide basic English morphology,
 	such as singular versions of (plural) nouns, base forms (lemmas)
-	of adjectives, adverbs and infinitve forms of verbs.
+	of adjectives, adverbs and infinitive forms of verbs.
 
 	Download, unpack and install WordNet 3.0.  The install directory
 	then needs to be specified in data/wordnet/file_properties.xml,
@@ -85,7 +85,7 @@ The following packages are required pre-requisites for building RelEx.
 	wrapper around wordnet, providing the needed word morphology info.
 
 - didion.jwnl
-	The didion JWNL is the "Java WordNet Libary", and provides the
+	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at http://sourceforge.net/projects/jwordnet
 	and can be downloaded from
@@ -126,14 +126,14 @@ function.
 - Trove
 	Some users may require the GNU Trove to enable OpenNLP, although
 	this depends on the JDK installed.  GNU Trove is an implementation
-	of the java.util class heirarchy, which may or may not be included
+	of the java.util class hierarchy, which may or may not be included
 	in the installed JDK.  If needed, download trove from:
 
 	http://trove4j.sourceforge.net/
 
 	Since trove is optimized, using it may improve performance and/or
    decrease memory usage, as compared to the standard Sun JDK
-   implementation of the java.util heirarchy.
+   implementation of the java.util hierarchy.
 
    ***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
    work with version 2.0 !!
@@ -159,7 +159,7 @@ function.
 	detector, which RelEx can employ. An "entity" is the name of a 
    person, corporation or institutions, or a time, date or money
    expression. The term "entity detection" refers to the task of
-   identifying such quantites in parsed text.
+   identifying such quantities in parsed text.
 
 	Download GATE 4.0 from http://gate.ac.uk/download/index.html
 
@@ -172,7 +172,7 @@ function.
 	Debian/Ubuntu users can install Xerces using apt, via
 	"apt-get install libxerces2-java"
 
-	Other users may need to get xerces from 
+	Other users may need to get Xerces from 
 	http://xerces.apache.org/xerces2-j/
 
 	Alternatives to GATE may be used by providing a replacement
@@ -182,11 +182,11 @@ function.
 Building
 --------
 	After the above are installed, the relex java code can be built.
-	The build system uses "ant", and the ant build specifictions
+	The build system uses "ant", and the ant build specifications
 	are in "build.xml". Simply saying "ant" at the command line
 	should be enough to build. Saying "ant run" will run a basic
 	demo of the system. The "ant test" command will run a simple
-	test verifying the stanford-parser compatiblity mode.
+	test verifying the Stanford-parser compatibility mode.
 
 
 Using RelEx
@@ -202,7 +202,7 @@ is to avoid the heavy CPU overhead of re-parsing a large text over and
 over.  Example post-processing scripts are included (described below).
 
 In the "custom Java development" mode, it is assumed that a capable
-Java programmer can write new code to interface RelEx to meet thier needs.
+Java programmer can write new code to interface RelEx to meet their needs.
 A good place to start is to review the workings of the output code in
 src/java/relex/output/*.java.
 
@@ -253,7 +253,7 @@ Running this will display:
 	- (Optionally) Stanford and Penn Treebank output.
 
 Output is controlled by command-line flags that are set in the shell
-script.  The "-h" flag will print a list of all of the avaliable
+script.  The "-h" flag will print a list of all of the available
 command-line options.
 
 
@@ -266,7 +266,7 @@ easily post-processed by other systems (typically by using regex's).
 
 The idea behind the batch processing is that it is costly to parse
 large quantities of text: thus, it is convenient to parse the text
-once, save the results, and then perform post-processing at liesure,
+once, save the results, and then perform post-processing at leisure,
 as needed.  Thus, the form of post-processing can be changed at will,
 without requiring texts to be re-processed over and over again.
 
@@ -274,7 +274,7 @@ without requiring texts to be re-processed over and over again.
 src/perl/cff-to-opencog.pl 
 --------------------------
 This perl script provides an example of post-processing: it converts
-the "cff" btach output format into OpenCog hypergraphs, which can
+the "cff" batch output format into OpenCog hypergraphs, which can
 then be processed by OpenCog.
 
 
@@ -294,7 +294,7 @@ a free-form text into sentences, one per line.
 
 src/perl/wiki-scrub.pl
 ----------------------
-Ad-hoc script to scrub wikipedia xml dumps, outputting only valid
+Ad-hoc script to scrub Wikipedia xml dumps, outputting only valid
 English-language sentences.  This  script removes wiki markup, URL's
 tables, images, & etc.  It currently seems to be pretty darned
 bullet-proof, although it might handle multi-line refs incorrectly.
@@ -319,7 +319,7 @@ Test corpus: first 150 sentences (including preface boilerplate) from
 Project Gutenberg "Pride and Prejudice".  Due to differences in sentence
 detection, Stanford and RelEx disagree on the sentence count. Due to 
 differences in counting punctuation, the splitting of possessives and 
-contractions, the two disagreee on the word count as well.
+contractions, the two disagree on the word count as well.
 
 The unix command "wc" counts 2609 words in 148 sentences, for 
 2609/148 = 17.6 words/sent.
