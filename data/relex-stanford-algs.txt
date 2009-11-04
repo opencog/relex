@@ -349,140 +349,140 @@ OBJ_TO_SF_LINKS
 ;
 #TemplateActionAlg
 ACOMP_TO_SF
-<ref links _to-be> != %
+<links _to-be> != %
 =
-<ref sf-links _acomp> = <ref links _to-be>
+<sf-links _acomp> = <links _to-be>
 
 ;
 #TemplateActionAlg
 ADVMOD_TO_SF
-<ref links _advmod> != %
+<links _advmod> != %
 =
-<ref sf-links _advmod> = <ref links _advmod>
+<sf-links _advmod> = <links _advmod>
 
 #TemplateActionAlg
 AMOD_TO_SF
-<ref links _amod> != %
+<links _amod> != %
 =
-<ref sf-links _amod> = <ref links _amod>
+<sf-links _amod> = <links _amod>
 
 ;
 #TemplateActionAlg
 APPO_TO_SF
-<ref links _appo> != %
+<links _appo> != %
 =
-<ref sf-links _appos> = <ref links _appo>
+<sf-links _appos> = <links _appo>
 
 ;
 #TemplateActionAlg
 IOBJ_TO_SF
-<ref links _iobj> != %
+<links _iobj> != %
 =
-<ref sf-links _iobj> = <ref links _iobj>
+<sf-links _iobj> = <links _iobj>
 
 
 ;
 #TemplateActionAlg
 NN_TO_SF
-<ref links _nn> != %
+<links _nn> != %
 =
-<ref sf-links _nn> = <ref links _nn>
+<sf-links _nn> = <links _nn>
 
 ;
 ; Be sure to blank out _det if possesive is specified!
 #TemplateActionAlg
 POSS_TO_SF
-<ref links _poss> != %
+<links _poss> != %
 =
-<ref sf-links _poss> = <ref links _poss>
-<ref sf-links _det> = %
+<sf-links _poss> = <links _poss>
+<sf-links _det> = %
 
 ;
 #TemplateActionAlg
 TODO_TO_SF
-<ref links _to-do> != %
+<links _to-do> != %
 =
-<ref sf-links _xcomp> = <ref links _to-do>
+<sf-links _xcomp> = <links _to-do>
 
 ;
 ; Currently, Stanford parser collapses date expressions into num.
 ;
 #TemplateActionAlg
 DATE_DAY_TO_SF
-<ref links _date_day> != %
+<links _date_day> != %
 =
-<ref sf-links _num> += <ref links _date_day>
+<sf-links _num> += <links _date_day>
 
 #TemplateActionAlg
 DATE_YEAR_TO_SF
-<ref links _date_year> != %
+<links _date_year> != %
 =
-<ref sf-links _num> += <ref links _date_year>
+<sf-links _num> += <links _date_year>
 
 ;
 ; Be sure to blank out _det if number is specified!
 #TemplateActionAlg
 QUANTITY_TO_SF
-<ref links _quantity> != %
+<links _quantity> != %
 =
-<ref sf-links _num> += <ref links _quantity>
-<ref sf-links _det> = %
+<sf-links _num> += <links _quantity>
+<sf-links _det> = %
 
 ;
 #TemplateActionAlg
 QUANTITY_MULT_TO_SF
-<ref links _quantity_mult> != %
+<links _quantity_mult> != %
 =
-<ref sf-links _number> += <ref links _quantity_mult>
+<sf-links _number> += <links _quantity_mult>
 
 ;
 #TemplateActionAlg
 QUANTITY_MOD_TO_SF
-<ref links _quantity_mod> != %
+<links _quantity_mod> != %
 =
-<ref sf-links _quantmod> = <ref links _quantity_mod>
+<sf-links _quantmod> = <links _quantity_mod>
 
 ;
 #TemplateActionAlg
 MEASURE_DISTANCE_TO_SF
-<ref links _measure_distance> != %
+<links _measure_distance> != %
 =
-<ref sf-links _measure> = <ref links _measure_distance>
+<sf-links _measure> = <links _measure_distance>
 
 ;
 #TemplateActionAlg
 MEASURE_PER_TO_SF
-<ref links _measure_per> != %
+<links _measure_per> != %
 =
-<ref sf-links _measure> = <ref links _measure_per>
+<sf-links _measure> = <links _measure_per>
 
 ;
 #TemplateActionAlg
 MEASURE_SIZE_TO_SF
-<ref links _measure_size> != %
+<links _measure_size> != %
 =
-<ref sf-links _measure> = <ref links _measure_size>
+<sf-links _measure> = <links _measure_size>
 
 ;
 #TemplateActionAlg
 MEASURE_TIME_TO_SF
-<ref links _measure_time> != %
+<links _measure_time> != %
 =
-<ref sf-links _measure> = <ref links _measure_time>
+<sf-links _measure> = <links _measure_time>
 
 ;
 #TemplateActionAlg
 PARATAXIS_TO_SF
-<ref links _parataxis> != %
+<links _parataxis> != %
 =
-<ref sf-links _parataxis> = <ref links _parataxis>
+<sf-links _parataxis> = <links _parataxis>
 
 ;
 #TemplateActionAlg
 PREDET_TO_SF
-<ref links _predet> != %
+<links _predet> != %
 =
-<ref sf-links _predet> = <ref links _predet>
+<sf-links _predet> = <links _predet>
 
 
 ;///////////////////////////////////////////////////////////////////////

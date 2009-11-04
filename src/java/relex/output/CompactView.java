@@ -230,7 +230,7 @@ public class CompactView
 
 				str += getflag(ref, "date-FLAG");
 				str += getflag(ref, "DEFINITE-FLAG");
-				str += getflag(ref, "EMOTICON-FLAG");
+				str += getflag(ref, "emoticon-FLAG");
 				str += getflag(ref, "ENTITY-FLAG");
 				str += getflag(ref, "IDIOM-FLAG");
 				str += getflag(ref, "LOCATION-FLAG");
