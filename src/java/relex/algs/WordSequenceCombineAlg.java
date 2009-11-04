@@ -138,6 +138,11 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		// rightNode.set("start_char", leftNode.get("start_char"));
 		rightNode.get("start_char").setValue(leftNode.get("start_char").getValue());
 
+		// Create membership
+		// XXX need to set member for words in the middle too
+		// rightNode.set("memb", rightNode);
+		// leftNode.set("memb", rightNode);
+
 		// Use morphology on the right node, just in case.
 		// Err .. maybe not. What does this acheive?
 		//

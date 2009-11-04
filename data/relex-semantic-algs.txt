@@ -1444,6 +1444,18 @@ MEASURE-TIME
 =
 <F_R ref links _measure_time> = <F_L ref>
 ;
+#TemplateActionAlg
+DATE_DAY
+<LAB> = TM
+=
+<F_L ref links _date_day> = <F_R ref>
+;
+#TemplateActionAlg
+DATE_YEAR
+<LAB> = TY
+=
+<F_L ref links _date_year> = <F_R ref>
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; POSSESSIVES aka GENITIVES

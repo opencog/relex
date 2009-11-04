@@ -418,3 +418,8 @@ The sentence splitter fails to split the following:
 
 "In such cases, a woman has not often much beauty to think of."  "But,
 my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood."
+
+todo:
+-- write paper on question normalization including %atLocation
+-- write paper on wsd by pos-lookup
+-- write paoer on relex overview

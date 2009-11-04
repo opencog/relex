@@ -942,6 +942,13 @@ IN_DATES
 =
 <F_R ref date-FLAG> = T
 ;
+#TemplateActionAlg
+DATE_HEAD
+<LAB> = TM|TY
+=
+<F_L ref DATE-FLAG> = T
+
+;
 ; Time: It lasted five years
 #TemplateActionAlg
 TIME_EXP
@@ -1398,6 +1405,7 @@ GENDER_TO_REF
 =
 <ref gender> = %
 <ref gender> = <gend>
+;
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ; Misc promotion
