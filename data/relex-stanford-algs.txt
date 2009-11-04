@@ -404,13 +404,25 @@ TODO_TO_SF
 =
 <ref sf-links _xcomp> = <ref links _to-do>
 
+#TemplateActionAlg
+DATE_DAY_TO_SF
+<ref links _date_day> != %
+=
+<ref sf-links _num> += <ref links _date_day>
+
+#TemplateActionAlg
+DATE_YEAR_TO_SF
+<ref links _date_year> != %
+=
+<ref sf-links _num> += <ref links _date_year>
+
 ;
 ; Be sure to blank out _det if number is specified!
 #TemplateActionAlg
 QUANTITY_TO_SF
 <ref links _quantity> != %
 =
-<ref sf-links _num> = <ref links _quantity>
+<ref sf-links _num> += <ref links _quantity>
 <ref sf-links _det> = %
 
 ;
@@ -418,7 +430,7 @@ QUANTITY_TO_SF
 QUANTITY_MULT_TO_SF
 <ref links _quantity_mult> != %
 =
-<ref sf-links _number> = <ref links _quantity_mult>
+<ref sf-links _number> += <ref links _quantity_mult>
 
 ;
 #TemplateActionAlg

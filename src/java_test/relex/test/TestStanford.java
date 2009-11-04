@@ -512,6 +512,12 @@ rcmod(man-4, love-8)
 			"cop(metres-8-NNS, is-6-VBZ)\n" +
 			"num(metres-8-NNS, 8,848-7-CD)");
 
+		rc &= ts.test_tagged_sentence ("It happened on December 3rd, 1990."
+			"nsubj(happened-2-VBD, it-1-PRP)\n" +
+			"prep_on(happened-2-VBD, December-4-NNP)\n" +
+			"num(December-4-NNP, 3-5-CD)\n" +
+			"num(December-4-NNP, 1990-7-CD)");
+
 
 		if (rc)
 		{
