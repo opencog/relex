@@ -203,6 +203,11 @@ public class EntityMaintainer implements Serializable
 		tagger.addEntity(ei);
 	}
 
+	public void set(EntityTagger et)
+	{
+		tagger = et;
+	}
+
 	// --------------------------------------------------------
 
 	/**

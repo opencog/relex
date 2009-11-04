@@ -21,10 +21,11 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Map;
 
-import relex.corpus.EntityMaintainerFactory;
+import relex.corpus.EntityTaggerFactory;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityMaintainer;
+import relex.entity.EntityTagger;
 import relex.frame.Frame;
 import relex.output.CompactView;
 import relex.output.SimpleView;
@@ -123,12 +124,12 @@ public class WebFormat extends RelationExtractor
 		// Pass along the version string.
 		cv.setVersion(re.getVersion());
 
-		EntityMaintainerFactory gem = null;
+		EntityTagger gem = null;
 		if (commandMap.get("-g") == null)
 		{
 			re.starttime = System.currentTimeMillis();
-			gem = EntityMaintainerFactory.get();
-			gem.makeEntityMaintainer(""); // force initialization to measure initialization time
+			gem = EntityTaggerFactory.get();
+			gem.tagEntities(""); // force initialization to measure initialization time
 		}
 
 		// If sentence is not passed at command line, read from standard input:
@@ -172,7 +173,7 @@ public class WebFormat extends RelationExtractor
 				if (gem != null)
 				{
 					re.starttime = System.currentTimeMillis();
-					em = gem.makeEntityMaintainer(sentence);
+					//em = gem.makeEntityMaintainer(sentence);
 				}
 
 				Sentence sntc = re.processSentence(sentence,em);

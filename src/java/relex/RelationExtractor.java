@@ -33,12 +33,13 @@ import relex.chunk.PatternChunker;
 import relex.chunk.PhraseChunker;
 import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
-import relex.corpus.EntityMaintainerFactory;
+import relex.corpus.EntityTaggerFactory;
 // import relex.corpus.QuotesParensSentenceDetector;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityInfo;
 import relex.entity.EntityMaintainer;
+import relex.entity.EntityTagger;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.frame.Frame;
@@ -487,13 +488,13 @@ public class RelationExtractor
 			re.do_expand_preps = true;
 		}
 
-		EntityMaintainerFactory gem = null;
+		EntityTagger gem = null;
 		if (commandMap.get("-g") != null)
 		{
 			re.starttime = System.currentTimeMillis();
-			gem = EntityMaintainerFactory.get();
-			gem.makeEntityMaintainer(""); // force initialization to measure initialization time
-			re.reportTime("Entity Detection Initialization: ");
+			gem = EntityTaggerFactory.get();
+			gem.tagEntities(""); // force initialization to measure initialization time
+			re.reportTime("Entity Detector Initialization: ");
 		}
 
 		// If sentence is not passed at command line, read from standard input:
@@ -568,7 +569,9 @@ public class RelationExtractor
 				if (gem != null)
 				{
 					re.starttime = System.currentTimeMillis();
-					em = gem.makeEntityMaintainer(sentence);
+					em = new EntityMaintainer();
+					em.set(gem);
+					// gem.makeEntityTagger(sentence));
 					re.reportTime("Gate processing: ");
 				}
 				Sentence sntc = re.processSentence(sentence,em);

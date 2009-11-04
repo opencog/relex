@@ -34,26 +34,20 @@ public abstract class EntityTaggerFactory
 {	
 	public static final String DEFAULT_FACTORY = "relex.corpus.GateEntityDetector";
 	
-	/**
-	 * Detect named entities in the string sentence and return
-	 * an EntityTagger.
-	 */
-	public abstract EntityTagger makeEntityTagger(String sentence);
+	private static EntityTagger factory = null;
 	
-	private static EntityTaggerFactory factory = null;
-	
-	public static synchronized EntityTaggerFactory get()
+	public static synchronized EntityTagger get()
 	{
 		if (factory != null)
 			return factory;
 		
-		String classname = System.getProperty("relex.corpus.EntityTaggerFactory");
+		String classname = System.getProperty("relex.corpus.EntityTagger");
 		if (classname == null)
 			classname = DEFAULT_FACTORY;
 		try
 		{
 			Class<?> cl = Class.forName(classname);
-			return factory = (EntityTaggerFactory)cl.newInstance();				
+			return factory = (EntityTagger)cl.newInstance();				
 		}
 		catch (Exception ex)
 		{
