@@ -16,44 +16,44 @@
 
 package relex.corpus;
 
-import relex.entity.EntityMaintainer;
+import relex.entity.EntityTagger;
 
 /**
- * An EntityMaintainerFactory implementation is responsible for detecting
+ * An EntityTaggerFactory implementation is responsible for detecting
  * named entities in a sentence and producing an instance of 
- * {@link EntityMaintainer}.
+ * {@link EntityTagger}.
  *
  * This class also serves as a factory of a globally configured 
- * EntityMaintainerFactory through the 
- * relex.corpus.EntityMaintainerFactory system property.  The default
+ * EntityTaggerFactory through the 
+ * relex.corpus.EntityTaggerFactory system property.  The default
  * value of this property is relex.corpus.GateEntityDetector. This
- * globally configured EntityMaintainerFactory factory is created only
+ * globally configured EntityTaggerFactory factory is created only
  * once and maintained as a singleton within this class.
  */
-public abstract class EntityMaintainerFactory
+public abstract class EntityTaggerFactory
 {	
 	public static final String DEFAULT_FACTORY = "relex.corpus.GateEntityDetector";
 	
 	/**
 	 * Detect named entities in the string sentence and return
-	 * an EntityMaintainer.
+	 * an EntityTagger.
 	 */
-	public abstract EntityMaintainer makeEntityMaintainer(String sentence);
+	public abstract EntityTagger makeEntityTagger(String sentence);
 	
-	private static EntityMaintainerFactory factory = null;
+	private static EntityTaggerFactory factory = null;
 	
-	public static synchronized EntityMaintainerFactory get()
+	public static synchronized EntityTaggerFactory get()
 	{
 		if (factory != null)
 			return factory;
 		
-		String classname = System.getProperty("relex.corpus.EntityMaintainerFactory");
+		String classname = System.getProperty("relex.corpus.EntityTaggerFactory");
 		if (classname == null)
 			classname = DEFAULT_FACTORY;
 		try
 		{
 			Class<?> cl = Class.forName(classname);
-			return factory = (EntityMaintainerFactory)cl.newInstance();				
+			return factory = (EntityTaggerFactory)cl.newInstance();				
 		}
 		catch (Exception ex)
 		{

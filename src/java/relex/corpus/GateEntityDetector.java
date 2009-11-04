@@ -33,22 +33,26 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import relex.entity.EntityInfo;
-import relex.entity.EntityMaintainer;
+import relex.entity.EntityTagger;
 import relex.entity.EntityType;
 
 /**
  * Refactored version of taca/GateEntityDetector
  * Eliminates dependence on HG, TextDocument, Danalyzer.
- * Goes directly over to EntityMaintainer, skipping 
+ * Goes directly over to EntityTagger, skipping 
  * the various intermediate steps.
  */
-public class GateEntityDetector extends EntityMaintainerFactory
+public class GateEntityDetector implements EntityTagger
 {
 	public static final int DEBUG=0;
 	Boolean initialized = false;
+
+	// An array of EntityInfos, ordered by their order in the sentence
+	private List<EntityInfo> eil = null;
 
 	/**
 	 * The default GATE installation directory. It's not necessary to
@@ -195,7 +199,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 	}
 
 	@SuppressWarnings("unchecked") // effing Gate spews a warning.
-	public AnnotationSet getAnnotations(String documentText)
+	private AnnotationSet getAnnotations(String documentText)
 		throws GateException
 	{
 		if (DEBUG>0) System.err.println("Original text is:\n"+documentText);
@@ -224,24 +228,55 @@ public class GateEntityDetector extends EntityMaintainerFactory
 		annieController.setCorpus(null);
 	}
 
-	public EntityMaintainer makeEntityMaintainer(String sentence)
+	public List<EntityInfo> tagEntities(String sentence)
 	{
-		initialize();
-		EntityMaintainer em = null;
+		eil = null;
 		try
 		{
+			initialize();
 			AnnotationSet annoset = getAnnotations(sentence);
-			em = findEntitiesInText(annoset, sentence);
+			eil = findEntitiesInText(annoset, sentence);
 			releaseResources();
 		}
 		catch(GateException e)
 		{
 			if (DEBUG>0) System.err.println(e.getMessage());
 		}
-		return em;
+		return eil;
 	}
 
-	private EntityMaintainer findEntitiesInText(AnnotationSet annoset, String sentence)
+	public List<EntityInfo> getEntities()
+	{
+		return eil;
+	}
+
+	/**
+	 * Add the entity info to the list, inserting it in sorted order.
+	 */
+	public void addEntity(EntityInfo ei)
+	{
+		int open = 0;
+		int start = ei.getFirstCharIndex();
+		int end = ei.getLastCharIndex();
+		for (EntityInfo e: eil)
+		{
+			int beg = e.getFirstCharIndex();
+			if ((open <= start) && (end <= beg))
+			{
+				int idx = eil.indexOf(e);
+				eil.add(idx, ei);
+				return;
+			}
+			open = e.getLastCharIndex();
+
+			// If our entity overlaps with existing entities, ignore it.
+			if (start < open) return;
+		}
+		eil.add(ei);
+	}
+
+
+	private ArrayList<EntityInfo> findEntitiesInText(AnnotationSet annoset, String sentence)
 	{
 		try {
 			ArrayList<EntityInfo> eInfos = new ArrayList<EntityInfo>();
@@ -301,7 +336,7 @@ public class GateEntityDetector extends EntityMaintainerFactory
 					if (ei != null) eInfos.add(ei);
 				}
 			}
-			return new EntityMaintainer(sentence, eInfos);
+			return eInfos;
 		}
 		catch (RuntimeException e)
 		{
