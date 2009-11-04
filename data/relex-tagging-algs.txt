@@ -991,7 +991,7 @@ COMBINE_PARTICLES
 POLYWORD_PARTICLES
 <LAB> = K
 =
-<F_L ref POLYWORD-FLAG> = T
+<F_L ref polyword-FLAG> = T
 ;
 ; "He ate as many as I did"  combines into "as_many"
 ;
@@ -1004,7 +1004,7 @@ COMBINE_AS_MANY
 POLYWORD_AS_MANY
 <LAB> = AM
 =
-<F_R ref POLYWORD-FLAG> = T
+<F_R ref polyword-FLAG> = T
 ;
 ; "How much does the book cost?" combines "how_much"
 ;
@@ -1017,7 +1017,7 @@ COMBINE_HOW_MUCH
 POLYWORD_HOW_MUCH
 <LAB> = H
 =
-<F_R ref POLYWORD-FLAG> = T
+<F_R ref polyword-FLAG> = T
 ;
 ; -------------------------------------------
 ;
@@ -1396,8 +1396,8 @@ NEUTER_PRONOUNS
 #TemplateActionAlg
 PERSON_HAS_GENDER
 <PERSON-FLAG> = T
-=
 <gend> = %
+=
 <gend> = person
 ;
 #TemplateActionAlg

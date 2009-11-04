@@ -235,9 +235,9 @@ public class CompactView
 				str += getflag(ref, "idiom-FLAG");
 				str += getflag(ref, "location-FLAG");
 				str += getflag(ref, "money-FLAG");
-				str += getflag(ref, "ORGANIZATION-FLAG");
-				str += getflag(ref, "PERSON-FLAG");
-				str += getflag(ref, "POLYWORD-FLAG");
+				str += getflag(ref, "organization-FLAG");
+				str += getflag(ref, "person-FLAG");
+				str += getflag(ref, "polyword-FLAG");
 				str += getflag(ref, "time-FLAG");
 			}
 
