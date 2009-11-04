@@ -36,7 +36,7 @@ import relex.feature.FeatureNodeCallback;
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
 
-@deprecated
+@Deprecated
 public class ParseView
 {
 	// The sentence being examined.
