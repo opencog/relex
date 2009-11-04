@@ -1131,7 +1131,7 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 ;
 #TemplateActionAlg
 ADJ1
-<LAB> = \A\.*|\DT\.*
+<LAB> = \A\.*|\DT\.*|TQ
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _amod> += <F_L ref>

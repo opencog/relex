@@ -231,13 +231,14 @@ public class CompactView
 				str += getflag(ref, "date-FLAG");
 				str += getflag(ref, "DEFINITE-FLAG");
 				str += getflag(ref, "emoticon-FLAG");
-				str += getflag(ref, "ENTITY-FLAG");
+				str += getflag(ref, "entity-FLAG");
 				str += getflag(ref, "IDIOM-FLAG");
 				str += getflag(ref, "LOCATION-FLAG");
 				str += getflag(ref, "MONEY-FLAG");
 				str += getflag(ref, "ORGANIZATION-FLAG");
 				str += getflag(ref, "PERSON-FLAG");
 				str += getflag(ref, "POLYWORD-FLAG");
+				str += getflag(ref, "time-FLAG");
 			}
 
 			notfirst = false;
