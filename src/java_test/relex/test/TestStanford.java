@@ -27,11 +27,15 @@ import relex.output.StanfordView;
 public class TestStanford
 {
 	private RelationExtractor re;
+	private int pass;
+	private int fail;
 
 	public TestStanford()
 	{
 		re = new RelationExtractor();
 		re.do_stanford = true;
+		pass = 0;
+		fail = 0;
 	}
 
 	public ArrayList<String> split(String a)
@@ -67,6 +71,7 @@ public class TestStanford
 			System.err.println("Error: size miscompare:\n" +
 				"\tStanford = " + sfa + "\n" +
 				"\tRelEx    = " + rsa );
+			fail ++;
 			return false;
 		}
 		for (int i=0; i< sfa.size(); i++)
@@ -76,10 +81,12 @@ public class TestStanford
 				System.err.println("Error: content miscompare:\n" +
 					"\tStanford = " + sfa + "\n" +
 					"\tRelEx    = " + rsa );
+				fail ++;
 				return false;
 			}
 		}
 
+		pass ++;
 		return true;
 	}
 
@@ -97,6 +104,7 @@ public class TestStanford
 			System.err.println("Error: size miscompare:\n" +
 				"\tStanford = " + sfa + "\n" +
 				"\tRelEx    = " + rsa );
+			fail ++;
 			return false;
 		}
 		for (int i=0; i< sfa.size(); i++)
@@ -106,10 +114,12 @@ public class TestStanford
 				System.err.println("Error: content miscompare:\n" +
 					"\tStanford = " + sfa + "\n" +
 					"\tRelEx    = " + rsa );
+				fail ++;
 				return false;
 			}
 		}
 
+		pass ++;
 		return true;
 	}
 
@@ -521,11 +531,13 @@ rcmod(man-4, love-8)
 
 		if (rc)
 		{
-			System.err.println("Test passed OK");
+			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
 		}
 		else
 		{
-			System.err.println("Test failed");
+			System.err.println("Test failed\n\t" + 
+				ts.fail + " sentences failed\n\t" +
+				ts.pass + " sentences passed");
 		}
 	}
 }
