@@ -16,61 +16,20 @@
  */
 package relex.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
-public abstract class EntityTagger
+public interface EntityTagger
 {
-	// An array of EntityInfos, ordered by their order in the sentence
-	private List<EntityInfo> orderedEntityInfos;
-
 	public abstract List<EntityInfo> tagEntities(String sentence);
-
-	// --------------------------------------------------------
 
 	/**
 	 * Add the entity info to the list, inserting it in sorted order.
 	 */
-	public void addEntity(EntityInfo ei)
-	{
-		if (null == orderedEntityInfos)
-			orderedEntityInfos = new ArrayList<EntityInfo>();
-
-		int open = 0;
-		int start = ei.getFirstCharIndex();
-		int end = ei.getLastCharIndex();
-		for (EntityInfo e: orderedEntityInfos)
-		{
-			int beg = e.getFirstCharIndex();
-			if ((open <= start) && (end <= beg))
-			{
-				int idx = orderedEntityInfos.indexOf(e);
-				orderedEntityInfos.add(idx, ei);
-				return;
-			}
-			open = e.getLastCharIndex();
-
-			// If our entity overlaps with existing entities, ignore it.
-			if (start < open) return;
-		}
-		orderedEntityInfos.add(ei);
-	}
-
-	// --------------------------------------------------------
+	public void addEntity(EntityInfo ei);
 
 	/**
 	 * Return all EntityInfo's ordered by their starting character
 	 * position.
 	 */
-	public List<EntityInfo> getEntities()
-	{
-		return orderedEntityInfos;
-	}
-
-	public boolean equals(Object other)
-	{
-		if (! (other instanceof EntityTagger)) return false;
-		EntityTagger et = (EntityTagger)other;
-		return this.orderedEntityInfos.equals(et.orderedEntityInfos);
-	}
+	public List<EntityInfo> getEntities();
 }

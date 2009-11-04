@@ -220,7 +220,7 @@ public class EntityMaintainer implements Serializable
 					+ originalSentence);
 		}
 		originalSentence = _originalSentence;
-		tagger = new EntityTagger();
+		tagger = new EntityTaggerBasic();
 
 		for (EntityInfo it : eis)
 		{
