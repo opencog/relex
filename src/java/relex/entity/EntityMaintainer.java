@@ -42,18 +42,18 @@ public class EntityMaintainer implements Serializable
 	 */
 	public static int MAX_NUM_ENTITIES = 60;
 
+	// The list of entities
+	private EntityTagger tagger;
+
+	// Maps entity ID strings to EntityInfos
+	private Map<String,EntityInfo> iDs2Entities;
+
 	// The original sentence string
 	private String originalSentence;
 
 	// The converted sentence is a copy of the original, 
 	// except all entities are replaced with ID strings
 	private String convertedSentence;
-
-    // An array of EntityInfos, ordered by their order in the sentence
-    public List<EntityInfo> orderedEntityInfos;
-
-    // Maps entity ID strings to EntityInfos
-    private Map<String,EntityInfo> iDs2Entities;
 
     // Keeps track of the last entityIDIndex created
     int entityIDIndex;
@@ -64,101 +64,6 @@ public class EntityMaintainer implements Serializable
     // A set of integer indexes of inserted whitespace characters
     private Set<Integer> insertedWhitespaceCharIndexes;
 
-    static List<String> emolist = new ArrayList<String>();
-	
-	static
-	{
-		// Emoticons -- smiley faces, right :-)
-		// Partial list, only of the basics, taken from wikipedia
-		// This could be improved on by automatically generating
-		// these with and without noses, etc. 
-		//
-		// More generally, we should have a "bogus punctutation entity"
-		// for any sort of markup that is not recognized here.
-		//
-		// Some of these have leading or trailing whitespace ... 
-		// these are typically ones that have numbers, that's so that
-		// number expressions don't get mangled; others which might get
-		// mistaken for initials.
-		//
-		emolist.add(":-)");
-		emolist.add(":-(");
-		emolist.add(":)");
-		emolist.add(":(");
-		emolist.add(":'-)");
-		emolist.add(":')");
-		emolist.add(":D");
-		emolist.add(":-D");
-		emolist.add(":-O");
-		emolist.add(":-S");
-		emolist.add(":-$");
-		emolist.add(":-*");
-		emolist.add(":[");
-		emolist.add(":'[");
-		emolist.add(":'\\");
-		emolist.add(":-B");
-		emolist.add(":-#");
-		emolist.add(":-|");
-		emolist.add(":-&");
-		emolist.add(":-X");
-		emolist.add(":-K");
-		emolist.add(":]");
-		emolist.add(":-@");
-		emolist.add(":@");
-		emolist.add(":O]");
-		emolist.add(":d");
-		emolist.add("|-O");
-		emolist.add("%-(");
-		emolist.add("=)");
-		emolist.add("=O");
-		emolist.add(";)");
-		emolist.add(";-)");
-		emolist.add(";]");
-		emolist.add(";O]");
-		emolist.add(";O");
-		emolist.add(";D");
-		emolist.add("B-)");
-		emolist.add(" T.T "); // XXX Danger, may be initials
-		emolist.add("`:-)");
-		emolist.add(":P");
-		emolist.add("O:-)");
-		emolist.add("><");
-		emolist.add(">_<");
-		emolist.add("<_<");
-		emolist.add(">_>");
-		emolist.add(" Oo "); 
-		emolist.add(">:D");
-		emolist.add(" e.e "); // XXX Danger, may be initials
-		emolist.add("-.-*");
-		emolist.add("~.^");
-		emolist.add("(-_-)");
-		emolist.add("(-.-)");
-		emolist.add("-.-'");
-		emolist.add(" E.E "); // XXX Danger, may be initials
-		emolist.add("-.O");
-		emolist.add("*o*");
-		emolist.add("=^.^=");
-		emolist.add(" 8)");  // XXX Danger! may be legit non-smiley
-		emolist.add(" 8D "); // XXX Danger! may be legit non-smiley
-		emolist.add(">O");
-		emolist.add("(:-D");
-		emolist.add("c^:3");
-		emolist.add("~:>");
-		emolist.add("x-(");
-		emolist.add(";:^)B>");
-		emolist.add(" O.O "); // XXX Danger, may be initials
-		emolist.add(" o.o ");
-		emolist.add(" O.o ");
-		emolist.add(" o.O ");
-		emolist.add(" 8| ");   // XXX Daner, may be numerical expr.
-		emolist.add(">8V-()<");
-		emolist.add(" =3 ");  // XXX Danger, may be part of formula
-		emolist.add("-:3");
-		emolist.add(" <3 ");  // XXX Danger, may be part of formula
-		emolist.add("<><");
-		emolist.add("<@:)");
-		emolist.add(":3=");
-	}
 
 	// --------------------------------------------------------
 	/**
@@ -186,6 +91,7 @@ public class EntityMaintainer implements Serializable
 	 */
 	private void createConvertedSentence()
 	{
+		List<EntityInfo> orderedEntityInfos = tagger.getEntities();
 		if ((orderedEntityInfos == null) || (orderedEntityInfos.size() == 0))
 			convertedSentence = originalSentence;
 		convertedSentence = "";
@@ -285,21 +191,6 @@ public class EntityMaintainer implements Serializable
 	}
 
 	// --------------------------------------------------------
-	/**
-	 * Strip out emoticons, smileys :-)
-	 */
-	private void identifyEmoticons()
-	{
-		for(String emo : emolist)
-		{
-			int start = originalSentence.indexOf(emo);
-			if (start < 0) continue;
-			int end = start + emo.length();
-	
-			EntityInfo ei = new EntityInfo(originalSentence, start, end, EntityType.EMOTICON);
-			addEntity(ei);
-		}
-	}
 
 	/**
 	 * Escape parenthesis, treating them as entities.
@@ -336,24 +227,7 @@ public class EntityMaintainer implements Serializable
 	 */
 	public void addEntity(EntityInfo ei)
 	{
-		int open = 0;
-		int start = ei.getFirstCharIndex();
-		int end = ei.getLastCharIndex();
-		for (EntityInfo e: orderedEntityInfos)
-		{
-			int beg = e.getFirstCharIndex();
-			if ((open <= start) && (end <= beg))
-			{
-				int idx = orderedEntityInfos.indexOf(e);
-				orderedEntityInfos.add(idx, ei);
-				return;
-			}
-			open = e.getLastCharIndex();
-
-			// If our entity overlaps with existing entities, ignore it.
-			if (start < open) return;
-		}
-		orderedEntityInfos.add(ei);
+		tagger.addEntity(ei);
 	}
 
 	// --------------------------------------------------------
@@ -361,10 +235,7 @@ public class EntityMaintainer implements Serializable
 	/**
 	 * Default constructor is mainly used for de-serialization purposes.
 	 */
-	public EntityMaintainer()
-	{
-	    
-	}
+	public EntityMaintainer() {}
 	
 	public EntityMaintainer(String _originalSentence, Collection<EntityInfo> eis)
 	{
@@ -376,16 +247,16 @@ public class EntityMaintainer implements Serializable
 					+ originalSentence);
 		}
 		originalSentence = _originalSentence;
-		orderedEntityInfos = new ArrayList<EntityInfo>();
+		tagger = new EntityTagger();
 
 		for (EntityInfo it : eis)
 		{
-			addEntity(it);
+			tagger.addEntity(it);
 		}
 
 		// Strip out emoticons, which GATE doesn't do.
 		// Emoticons confuse the parser.
-		identifyEmoticons();
+		tagger.identifyEmoticons(originalSentence);
 
 		// Escape parenthesis. These confuse the phrase-tree markup.
 		escapeParens();
@@ -479,18 +350,7 @@ public class EntityMaintainer implements Serializable
 	 */
 	public void prepareSentence(FeatureNode leftNode)
 	{
-		for (LinkableView word = new LinkableView(leftNode); 
-		     word != null; 
-		     word = (word.getNext() == null ? 
-		                null : new LinkableView(word.getNext())))
-		{
-			String wordName = word.getWordString();
-			if (isEntityID(wordName))
-			{
-				EntityInfo entInfo = getEntityInfo(wordName);
-				entInfo.setProperties(word.fn());
-			}
-		}
+		tagger.prepareSentence(leftNode);
 	}
 
     /**
@@ -499,12 +359,12 @@ public class EntityMaintainer implements Serializable
      */
     public List<EntityInfo> getEntities()
     {
-        return orderedEntityInfos;
+        return tagger.getEntities();
     }
     
     public void setEntities(List<EntityInfo> orderedEntityInfos)
     {
-        this.orderedEntityInfos = orderedEntityInfos;
+        tagger.setEntities(orderedEntityInfos);
     }
     
     public String getConvertedSentence()
@@ -532,6 +392,8 @@ public class EntityMaintainer implements Serializable
         return iDs2Entities;
     }
 
+	/* XXX WTF? what is this for? This seems wrong to me ... */
+	@Deprecated
     public void setIDs2Entities(Map<String, EntityInfo> ds2Entities)
     {
         iDs2Entities = ds2Entities;
@@ -559,6 +421,7 @@ public class EntityMaintainer implements Serializable
 
     public String toString()
 	{
+		List<EntityInfo> orderedEntityInfos = tagger.getEntities();
 		StringBuilder sb = new StringBuilder();
 		for (EntityInfo info: orderedEntityInfos)
 		{
@@ -584,7 +447,7 @@ public class EntityMaintainer implements Serializable
             return em.originalSentence == null;
         else
             return this.originalSentence.equals(em.originalSentence) &&
-                   this.orderedEntityInfos.equals(em.orderedEntityInfos); 
+                   this.tagger.equals(em.tagger); 
     }
     
 	/**

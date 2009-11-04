@@ -159,17 +159,20 @@ public class EntityTagger implements Serializable
 	// --------------------------------------------------------
 	/**
 	 * Strip out emoticons, smileys :-)
-	 *
-	private void identifyEmoticons()
+	 */
+	public void identifyEmoticons(String sentence)
 	{
 		for(String emo : emolist)
 		{
-			int start = originalSentence.indexOf(emo);
-			if (start < 0) continue;
-			int end = start + emo.length();
+			int start = sentence.indexOf(emo);
+			while (0 <= start)
+			{
+				int end = start + emo.length();
 
-			EntityInfo ei = new EntityInfo(originalSentence, start, end, EntityType.EMOTICON);
-			addEntity(ei);
+				EntityInfo ei = new EntityInfo(sentence, start, end, EntityType.EMOTICON);
+				addEntity(ei);
+				start = sentence.indexOf(emo, end);
+			}
 		}
 	}
 
@@ -258,7 +261,7 @@ public class EntityTagger implements Serializable
 	 * prepareSentence() -- markup parsed sentence with entity
 	 * information. This needs to be done before the relex algs run,
 	 * as the relex algs may use some of this information.
-	 */
+	 *
 	public void prepareSentence(FeatureNode leftNode)
 	{
 		for (LinkableView word = new LinkableView(leftNode);
