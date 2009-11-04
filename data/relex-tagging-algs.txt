@@ -61,6 +61,14 @@ SUBSCR_POS_B
 <POS> = noun
 <PERSON-FLAG> = T
 
+; c == currency
+#TemplateActionAlg
+SUBSCR_POS_C
+<inflection> = .c
+=
+<POS> = noun
+<MONEY-FLAG> = T
+
 ; e -- adverb
 #TemplateActionAlg
 SUBSCR_POS_E
@@ -90,7 +98,7 @@ SUBSCR_POS_L
 <inflection> = .l
 =
 <POS> = noun
-<LOCATION-FLAG> = T
+<ref location-FLAG> = T
 
 ; m -- male given name.
 #TemplateActionAlg
@@ -871,7 +879,7 @@ INFLECTION_TAG
 LABEL_IDIOMS
 <LAB> = \ID[A-Z]*[a-z]*
 =
-<F_R ref IDIOM-FLAG> = T
+<F_R ref idiom-FLAG> = T
 ;
 ; -----------------------------------------------------------
 ; If there was no front-end entity processor, then use the link-grammar

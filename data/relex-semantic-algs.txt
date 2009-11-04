@@ -1381,12 +1381,20 @@ QUANTITY_EXCEPTION
 ;
 #TemplateActionAlg
 NUMBER-1
-<LAB> = \D\.*|\ND\.*|\NW\.*
+<LAB> = \D\.*|\NW\.*
 <LAB> != \D..y
 <LAB> != \D..w
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
+<F_L QUANTITY-EXCEPTION-FLAG> != T
+=
+<F_R ref links _quantity> = <F_L ref>
+<F_L IS-NUMBER-FLAG> = T
+;
+#TemplateActionAlg
+NUMBER-1a
+<LAB> = \ND\.*|\NI\.*
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
 <F_R ref links _quantity> = <F_L ref>
