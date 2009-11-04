@@ -160,7 +160,7 @@ public class EntityTagger implements Serializable
 	/**
 	 * Strip out emoticons, smileys :-)
 	 */
-	public void identifyEmoticons(String sentence)
+	private void identifyEmoticons(String sentence)
 	{
 		for(String emo : emolist)
 		{
@@ -196,12 +196,19 @@ public class EntityTagger implements Serializable
 		}
 	}
 
-	public void escapeParens(String sentence)
+	private void escapeParens(String sentence)
 	{
 		escapePunct(sentence, '(');
 		escapePunct(sentence, ')');
 		escapePunct(sentence, '[');
 		escapePunct(sentence, ']');
+	}
+
+	public List<EntityInfo> tagEntities(String sentence)
+	{
+		escapeParens(sentence);
+		identifyEmoticons(sentence);
+		return orderedEntityInfos;
 	}
 
 	// --------------------------------------------------------
@@ -239,16 +246,6 @@ public class EntityTagger implements Serializable
 	public EntityTagger()
 	{
 		orderedEntityInfos = new ArrayList<EntityInfo>();
-	}
-
-	public EntityTagger(Collection<EntityInfo> eis)
-	{
-		orderedEntityInfos = new ArrayList<EntityInfo>();
-
-		for (EntityInfo it : eis)
-		{
-			addEntity(it);
-		}
 	}
 
 	// --------------------------------------------------------

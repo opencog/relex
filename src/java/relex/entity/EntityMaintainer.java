@@ -227,12 +227,7 @@ public class EntityMaintainer implements Serializable
 			tagger.addEntity(it);
 		}
 
-		// Strip out emoticons, which GATE doesn't do.
-		// Emoticons confuse the parser.
-		tagger.identifyEmoticons(originalSentence);
-
-		// Escape parenthesis. These confuse the phrase-tree markup.
-		tagger.escapeParens(originalSentence);
+		tagger.tagEntities(originalSentence);
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
