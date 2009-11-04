@@ -191,36 +191,6 @@ public class EntityMaintainer implements Serializable
 	}
 
 	// --------------------------------------------------------
-
-	/**
-	 * Escape parenthesis, treating them as entities.
-	 * This is needed for one reason only: the phrase markup
-	 * uses a LISP-like structure for the Penn-treebank markup,
-	 * and stray parens in the original sentence mess it up.
-	 */
-	private void escapePunct(char punct)
-	{
-		int start = 0;
-		while (true)
-		{
-			start = originalSentence.indexOf(punct, start);
-			if (start < 0) break;
-
-			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
-			addEntity(ei);
-			start++;
-		}
-	}
-
-	private void escapeParens()
-	{
-		escapePunct('(');
-		escapePunct(')');
-		escapePunct('[');
-		escapePunct(']');
-	}
-
-	// --------------------------------------------------------
 	
 	/**
 	 * Add the entity info to the list, inserting it in sorted order.
@@ -259,7 +229,7 @@ public class EntityMaintainer implements Serializable
 		tagger.identifyEmoticons(originalSentence);
 
 		// Escape parenthesis. These confuse the phrase-tree markup.
-		escapeParens();
+		tagger.escapeParens(originalSentence);
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
@@ -350,7 +320,18 @@ public class EntityMaintainer implements Serializable
 	 */
 	public void prepareSentence(FeatureNode leftNode)
 	{
-		tagger.prepareSentence(leftNode);
+		for (LinkableView word = new LinkableView(leftNode);
+		     word != null;
+		     word = (word.getNext() == null ?
+		                null : new LinkableView(word.getNext())))
+		{
+			String wordName = word.getWordString();
+			if (isEntityID(wordName))
+			{
+				EntityInfo entInfo = getEntityInfo(wordName);
+				entInfo.setProperties(word.fn());
+			}
+		}
 	}
 
     /**

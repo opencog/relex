@@ -181,27 +181,27 @@ public class EntityTagger implements Serializable
 	 * This is needed for one reason only: the phrase markup
 	 * uses a LISP-like structure for the Penn-treebank markup,
 	 * and stray parens in the original sentence mess it up.
-	 *
-	private void escapePunct(char punct)
+	 */
+	private void escapePunct(String sentence, char punct)
 	{
 		int start = 0;
 		while (true)
 		{
-			start = originalSentence.indexOf(punct, start);
+			start = sentence.indexOf(punct, start);
 			if (start < 0) break;
 
-			EntityInfo ei = new EntityInfo(originalSentence, start, start+1, EntityType.PUNCTUATION);
+			EntityInfo ei = new EntityInfo(sentence, start, start+1, EntityType.PUNCTUATION);
 			addEntity(ei);
 			start++;
 		}
 	}
 
-	private void escapeParens()
+	public void escapeParens(String sentence)
 	{
-		escapePunct('(');
-		escapePunct(')');
-		escapePunct('[');
-		escapePunct(']');
+		escapePunct(sentence, '(');
+		escapePunct(sentence, ')');
+		escapePunct(sentence, '[');
+		escapePunct(sentence, ']');
 	}
 
 	// --------------------------------------------------------
@@ -256,27 +256,6 @@ public class EntityTagger implements Serializable
 	}
 
 	// --------------------------------------------------------
-
-	/**
-	 * prepareSentence() -- markup parsed sentence with entity
-	 * information. This needs to be done before the relex algs run,
-	 * as the relex algs may use some of this information.
-	 *
-	public void prepareSentence(FeatureNode leftNode)
-	{
-		for (LinkableView word = new LinkableView(leftNode);
-		     word != null;
-		     word = (word.getNext() == null ?
-		                null : new LinkableView(word.getNext())))
-		{
-			String wordName = word.getWordString();
-			if (isEntityID(wordName))
-			{
-				EntityInfo entInfo = getEntityInfo(wordName);
-				entInfo.setProperties(word.fn());
-			}
-		}
-	}
 
 	/**
 	 * Return all EntityInfo's ordered by their starting character
