@@ -346,10 +346,13 @@ public class EntityMaintainer implements Serializable
         return tagger.getEntities();
     }
     
+   /**************
+    * WTF   XXX this is just plain wrong ... no one should be calling this ...
     public void setEntities(List<EntityInfo> orderedEntityInfos)
     {
         tagger.setEntities(orderedEntityInfos);
     }
+    **************/
     
     public String getConvertedSentence()
     {

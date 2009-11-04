@@ -262,10 +262,13 @@ public class EntityTagger implements Serializable
 		return orderedEntityInfos;
 	}
 
+	/**************
+	 * WTF   XXX this is just plain wrong ... no one should be calling this ... 
 	public void setEntities(List<EntityInfo> orderedEntityInfos)
 	{
 		this.orderedEntityInfos = orderedEntityInfos;
 	}
+	**************/
 
 	public boolean equals(Object other)
 	{
