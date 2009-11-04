@@ -173,7 +173,8 @@ public class WebFormat extends RelationExtractor
 				if (gem != null)
 				{
 					re.starttime = System.currentTimeMillis();
-					//em = gem.makeEntityMaintainer(sentence);
+					em = new EntityMaintainer();
+					em.set(gem);
 				}
 
 				Sentence sntc = re.processSentence(sentence,em);

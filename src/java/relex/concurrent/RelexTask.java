@@ -64,6 +64,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 	public RelexTaskResult call() {
 		try {
 			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
+			entityMaintainer.convertSentence(sentence,null);
 			String convertedSentence = entityMaintainer.getConvertedSentence().replace('\n', ' ').replace('\r', ' ');
 			if (DEBUG > 0) System.err.println("[" + index + "] End entity detection");
 			Sentence sntc = null;
@@ -81,7 +82,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 				try {
 					// Markup feature node graph with entity info,
 					// so that the relex algs (next step) can see them.
-					entityMaintainer.prepareSentence(parse.getLeft());
+					entityMaintainer.tagSentence(parse.getLeft());
 
 					// The actual relation extraction is done here.
 					sentenceAlgorithmApplier.applyAlgs(parse, context);

@@ -2,6 +2,7 @@ New in version 1.2.2 (xxx 2009)
  * New date relationships for date tagging.
  * Fix: use of quantity in money expressions.
  * Downcase all flag names, so as to offer a more consistent usage.
+ * Major restructuring of the entity maintainer interfaces.
 
 New in version 1.2.1 (3 November 2009)
  * Provide optional Penn-Treebank-compatible POS tagging.

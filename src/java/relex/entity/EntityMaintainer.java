@@ -213,10 +213,15 @@ public class EntityMaintainer implements Serializable
 	/**
 	 * Default constructor is mainly used for de-serialization purposes.
 	 */
-	public EntityMaintainer() {}
-	
-	public EntityMaintainer(String _originalSentence, Collection<EntityInfo> eis)
+	public EntityMaintainer()
 	{
+		tagger = new EntityTaggerBasic();
+	}
+	
+	public void convertSentence(String _originalSentence, Collection<EntityInfo> eis)
+	{
+		if (null == eis) eis = new ArrayList<EntityInfo>();
+		
 		if (eis.size() > MAX_NUM_ENTITIES)
 		{
 			System.err.println("WARNING: Sentence had more than "
@@ -225,7 +230,6 @@ public class EntityMaintainer implements Serializable
 					+ originalSentence);
 		}
 		originalSentence = _originalSentence;
-		tagger = new EntityTaggerBasic();
 
 		for (EntityInfo it : eis)
 		{
@@ -317,11 +321,11 @@ public class EntityMaintainer implements Serializable
 	}
     
 	/**
-	 * prepareSentence() -- markup parsed sentence with entity 
+	 * tagSentence() -- markup parsed sentence with entity 
 	 * information. This needs to be done before the relex algs run,
 	 * as the relex algs may use some of this information.
 	 */
-	public void prepareSentence(FeatureNode leftNode)
+	public void tagSentence(FeatureNode leftNode)
 	{
 		for (LinkableView word = new LinkableView(leftNode);
 		     word != null;
@@ -345,14 +349,6 @@ public class EntityMaintainer implements Serializable
     {
         return tagger.getEntities();
     }
-    
-   /**************
-    * WTF   XXX this is just plain wrong ... no one should be calling this ...
-    public void setEntities(List<EntityInfo> orderedEntityInfos)
-    {
-        tagger.setEntities(orderedEntityInfos);
-    }
-    **************/
     
     public String getConvertedSentence()
     {
@@ -456,7 +452,8 @@ public class EntityMaintainer implements Serializable
 			list.add(eInfo);
 			arg += 2;
 		}
-		EntityMaintainer em = new EntityMaintainer(sentence, list);
+		EntityMaintainer em = new EntityMaintainer();
+		em.convertSentence(sentence, list);
 		System.out.println(em.getConvertedSentence());
 	}
 }

@@ -134,7 +134,8 @@ public class ParallelRelationExtractor {
 	 */
 	public void push(String sentence, EntityMaintainer entityMaintainer) throws InterruptedException{
 		if (entityMaintainer == null) {
-			//entityMaintainer = entityDetector.makeEntityMaintainer(sentence);
+			entityMaintainer = new EntityMaintainer();
+			entityMaintainer.set(EntityTaggerFactory.get());
 		}
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable = 

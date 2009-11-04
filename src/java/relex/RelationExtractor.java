@@ -213,8 +213,7 @@ public class RelationExtractor
 		starttime = System.currentTimeMillis();
 		if (entityMaintainer == null)
 		{
-			entityMaintainer = new EntityMaintainer(sentence,
-		                               new ArrayList<EntityInfo>());
+			entityMaintainer = new EntityMaintainer();
 		}
 
 		Sentence sntc = null;
@@ -233,7 +232,7 @@ public class RelationExtractor
 
 				// Markup feature node graph with entity info,
 				// so that the relex algs (next step) can see them.
-				entityMaintainer.prepareSentence(parse.getLeft());
+				entityMaintainer.tagSentence(parse.getLeft());
 
 				// The actual relation extraction is done here.
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
@@ -267,7 +266,7 @@ public class RelationExtractor
 		}
 		catch(Exception e)
 		{
-			System.err.println("Failed to process sentence: " + sentence);
+			System.err.println("Error: Failed to process sentence: " + sentence);
 			e.printStackTrace();
 		}
 		if (verbosity > 0) reportTime("RelEx processing: ");
@@ -282,7 +281,9 @@ public class RelationExtractor
 	private Sentence
 	parseSentence(String sentence, EntityMaintainer entityMaintainer)
 	{
-		if (entityMaintainer != null) {
+		if (entityMaintainer != null)
+		{
+			entityMaintainer.convertSentence(sentence,null);
 			sentence = entityMaintainer.getConvertedSentence();
 		}
 		if (sentence == null) return null;
