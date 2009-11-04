@@ -18,25 +18,11 @@ package relex.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-import relex.feature.FeatureNode;
-import relex.feature.LinkableView;
-import relex.feature.SemanticView;
-import relex.output.RawView;
-
-public class EntityTagger implements Serializable
+public class EntityTaggerBasic extends EntityTagger implements Serializable
 {
 	private static final long serialVersionUID = -8186219027158709714L;
-
-	// An array of EntityInfos, ordered by their order in the sentence
-	private List<EntityInfo> orderedEntityInfos;
 
 	// Maps feature nodes to entity IDs
 	// private HashMap<FeatureNode, String> featureNodes2EntityIDs;
@@ -214,63 +200,7 @@ public class EntityTagger implements Serializable
 	// --------------------------------------------------------
 
 	/**
-	 * Add the entity info to the list, inserting it in sorted order.
-	 */
-	public void addEntity(EntityInfo ei)
-	{
-		int open = 0;
-		int start = ei.getFirstCharIndex();
-		int end = ei.getLastCharIndex();
-		for (EntityInfo e: orderedEntityInfos)
-		{
-			int beg = e.getFirstCharIndex();
-			if ((open <= start) && (end <= beg))
-			{
-				int idx = orderedEntityInfos.indexOf(e);
-				orderedEntityInfos.add(idx, ei);
-				return;
-			}
-			open = e.getLastCharIndex();
-
-			// If our entity overlaps with existing entities, ignore it.
-			if (start < open) return;
-		}
-		orderedEntityInfos.add(ei);
-	}
-
-	// --------------------------------------------------------
-
-	/**
 	 * Default constructor is mainly used for de-serialization purposes.
 	 */
-	public EntityTagger()
-	{
-		orderedEntityInfos = new ArrayList<EntityInfo>();
-	}
-
-	// --------------------------------------------------------
-
-	/**
-	 * Return all EntityInfo's ordered by their starting character
-	 * position.
-	 */
-	public List<EntityInfo> getEntities()
-	{
-		return orderedEntityInfos;
-	}
-
-	/**************
-	 * WTF   XXX this is just plain wrong ... no one should be calling this ... 
-	public void setEntities(List<EntityInfo> orderedEntityInfos)
-	{
-		this.orderedEntityInfos = orderedEntityInfos;
-	}
-	**************/
-
-	public boolean equals(Object other)
-	{
-		if (! (other instanceof EntityTagger)) return false;
-		EntityTagger et = (EntityTagger)other;
-		return this.orderedEntityInfos.equals(et.orderedEntityInfos);
-	}
+	public EntityTaggerBasic() {}
 }
