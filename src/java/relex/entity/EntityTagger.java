@@ -38,9 +38,6 @@ public class EntityTagger implements Serializable
 	// An array of EntityInfos, ordered by their order in the sentence
 	private List<EntityInfo> orderedEntityInfos;
 
-	// Maps entity ID strings to EntityInfos
-	private Map<String,EntityInfo> iDs2Entities;
-
 	// Maps feature nodes to entity IDs
 	// private HashMap<FeatureNode, String> featureNodes2EntityIDs;
 
@@ -253,21 +250,9 @@ public class EntityTagger implements Serializable
 
 		// Escape parenthesis. These confuse the phrase-tree markup.
 		// escapeParens();
-
-		iDs2Entities = new HashMap<String, EntityInfo>();
 	}
 
 	// --------------------------------------------------------
-
-	public boolean isEntityID(String e)
-	{
-		return iDs2Entities.containsKey(e);
-	}
-
-	public EntityInfo getEntityInfo(String entityID)
-	{
-		return iDs2Entities.get(entityID);
-	}
 
 	/**
 	 * prepareSentence() -- markup parsed sentence with entity
@@ -302,33 +287,6 @@ public class EntityTagger implements Serializable
 	public void setEntities(List<EntityInfo> orderedEntityInfos)
 	{
 		this.orderedEntityInfos = orderedEntityInfos;
-	}
-
-	public Map<String, EntityInfo> getIDs2Entities()
-	{
-		return iDs2Entities;
-	}
-
-	public void setIDs2Entities(Map<String, EntityInfo> ds2Entities)
-	{
-		iDs2Entities = ds2Entities;
-	}
-
-	public String toString()
-	{
-		StringBuilder sb = new StringBuilder();
-		int idnum = 0;
-		for (EntityInfo info: orderedEntityInfos)
-		{
-			String name = info.getOriginalSentence().substring(
-					info.getFirstCharIndex(),
-					info.getLastCharIndex());
-			++idnum;
-			String id = info.idStringPrefix() + idnum;
-			iDs2Entities.put(id, info);
-			sb.append(id).append(": ").append(name).append("\n");
-		}
-		return sb.toString();
 	}
 
 	public boolean equals(Object other)
