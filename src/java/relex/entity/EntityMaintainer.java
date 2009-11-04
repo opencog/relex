@@ -93,7 +93,10 @@ public class EntityMaintainer implements Serializable
 	{
 		List<EntityInfo> orderedEntityInfos = tagger.getEntities();
 		if ((orderedEntityInfos == null) || (orderedEntityInfos.size() == 0))
+		{
 			convertedSentence = originalSentence;
+			return;
+		}
 		convertedSentence = "";
 		int curIndex = 0;
 

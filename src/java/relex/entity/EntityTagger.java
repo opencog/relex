@@ -236,7 +236,10 @@ public class EntityTagger implements Serializable
 	/**
 	 * Default constructor is mainly used for de-serialization purposes.
 	 */
-	public EntityTagger() {}
+	public EntityTagger()
+	{
+		orderedEntityInfos = new ArrayList<EntityInfo>();
+	}
 
 	public EntityTagger(Collection<EntityInfo> eis)
 	{
@@ -246,13 +249,6 @@ public class EntityTagger implements Serializable
 		{
 			addEntity(it);
 		}
-
-		// Strip out emoticons, which GATE doesn't do.
-		// Emoticons confuse the parser.
-		// identifyEmoticons();
-
-		// Escape parenthesis. These confuse the phrase-tree markup.
-		// escapeParens();
 	}
 
 	// --------------------------------------------------------

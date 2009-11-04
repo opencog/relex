@@ -1,5 +1,6 @@
-The boy is 4 cm tall.
+I live in New York.
 END.
+The boy is 4 cm tall.
 Jon Morgan offered Mike Judge 5 shekels for the lot.
 That cost two dollars.
 How many years did it last?
