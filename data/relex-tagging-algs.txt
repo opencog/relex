@@ -946,7 +946,7 @@ IN_DATES
 DATE_HEAD
 <LAB> = TM|TY
 =
-<F_L ref DATE-FLAG> = T
+<F_L ref date-FLAG> = T
 
 ;
 ; Time: It lasted five years

@@ -228,7 +228,7 @@ public class CompactView
 				str += getfeat(ref, "QUERY-TYPE");
 				str += getfeat(ref, "inflection-TAG");
 
-				str += getflag(ref, "DATE-FLAG");
+				str += getflag(ref, "date-FLAG");
 				str += getflag(ref, "DEFINITE-FLAG");
 				str += getflag(ref, "EMOTICON-FLAG");
 				str += getflag(ref, "ENTITY-FLAG");
