@@ -36,13 +36,10 @@ public class EntityTagger implements Serializable
 	private static final long serialVersionUID = -8186219027158709714L;
 
 	// An array of EntityInfos, ordered by their order in the sentence
-	public List<EntityInfo> orderedEntityInfos;
+	private List<EntityInfo> orderedEntityInfos;
 
 	// Maps entity ID strings to EntityInfos
 	private Map<String,EntityInfo> iDs2Entities;
-
-	// Keeps track of the last entityIDIndex created
-	int entityIDIndex;
 
 	// Maps feature nodes to entity IDs
 	// private HashMap<FeatureNode, String> featureNodes2EntityIDs;
@@ -162,14 +159,6 @@ public class EntityTagger implements Serializable
 		return false;
 	}
 
-	private String makeID(EntityInfo eInfo)
-	{
-		++entityIDIndex;
-		String id = eInfo.idStringPrefix() + entityIDIndex;
-		iDs2Entities.put(id, eInfo);
-		return id;
-	}
-
 	// --------------------------------------------------------
 	/**
 	 * Strip out emoticons, smileys :-)
@@ -266,7 +255,6 @@ public class EntityTagger implements Serializable
 		// escapeParens();
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
-		entityIDIndex = 0; // the first used index will be '1'
 	}
 
 	// --------------------------------------------------------
@@ -326,25 +314,19 @@ public class EntityTagger implements Serializable
 		iDs2Entities = ds2Entities;
 	}
 
-	public int getEntityIDIndex()
-	{
-		return entityIDIndex;
-	}
-
-	public void setEntityIDIndex(int entityIDIndex)
-	{
-		this.entityIDIndex = entityIDIndex;
-	}
-
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
+		int idnum = 0;
 		for (EntityInfo info: orderedEntityInfos)
 		{
 			String name = info.getOriginalSentence().substring(
 					info.getFirstCharIndex(),
 					info.getLastCharIndex());
-			sb.append(makeID(info)).append(": ").append(name).append("\n");
+			++idnum;
+			String id = info.idStringPrefix() + idnum;
+			iDs2Entities.put(id, info);
+			sb.append(id).append(": ").append(name).append("\n");
 		}
 		return sb.toString();
 	}
