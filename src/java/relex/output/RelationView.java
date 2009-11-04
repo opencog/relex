@@ -269,7 +269,7 @@ class RelationView
 	/**
 	 * Look for the word attribute "match_attr_name", and, if found,
 	 * check to see if it is true.  If so, then print "prt_attr_name",
-	 * with value prt_value. For example, "DEFINITE-FLAG", becomes
+	 * with value prt_value. For example, "definite-FLAG", becomes
 	 * "Quantification (The[1], Definite);"
 	 */
 	public String

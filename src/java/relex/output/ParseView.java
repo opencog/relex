@@ -27,16 +27,18 @@ import relex.feature.FeatureNodeCallback;
  * As the same sentence can have multiple parses, this
  * class only displays a single, particular parse.
  *
- * The name of this class is likely to change to some better name,
- * suggestions welcome.
- *
- * This class makes heavy use of String. If performance needs to be
- * improved, then a conversion to StringBuff should be considered.
+ * This class is deprecated. There are no know users of this class.
+ * It does not correctly handle some of the latest dependency types.
+ * It generates a non-standard output that is not well-documented, 
+ * nor is it compatible with any existing linguistic tagging system.
+ * This class should not be used in the development of new code.
  *
  * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
-public class ParseView {
 
+@deprecated
+public class ParseView
+{
 	// The sentence being examined.
 	private ParsedSentence sent;
 
@@ -206,7 +208,7 @@ public class ParseView {
 		declAttr("noun_number",   "number",         num_map);
 		declAttr("tense",         "tense",          tns_map);
 		declAttr("QUERY-TYPE",    "query",          qry_map);
-		declAttr("DEFINITE-FLAG", "quantification", def_map);
+		declAttr("definite-FLAG", "quantification", def_map);
 
 		// One-off word attributes
 		wattr_fmt = "%w      <relation id=\"%I\" label=\"%N\"><id1>%W</id1><id2>%V</id2></relation>\n";
@@ -277,7 +279,7 @@ public class ParseView {
 		declAttr("noun_number",   "Number",         num_map);
 		declAttr("tense",         "Tense",          tns_map);
 		declAttr("QUERY-TYPE",    "Query",          qry_map);
-		declAttr("DEFINITE-FLAG", "Quantification", def_map);
+		declAttr("definite-FLAG", "Quantification", def_map);
 
 		// One-off word attributes
 		wattr_fmt = "%w   %N (%W, %V)\n";
@@ -423,7 +425,7 @@ public class ParseView {
 			_map_id(pos, pos_map);
 
 			// Assign an ID number to quantifier.
-			String def = getAttr(f, "DEFINITE-FLAG");
+			String def = getAttr(f, "definite-FLAG");
 			_map_id(def, def_map);
 
 			// Assign an ID number to tenses.

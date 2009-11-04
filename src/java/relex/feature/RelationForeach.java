@@ -30,8 +30,8 @@ import java.util.HashSet;
  * just other keys: For example:
  *
  *     [name <<she>>
- *      DEFINITE-FLAG <<T>>
- *      PRONOUN-FLAG <<T>>
+ *      definite-FLAG <<T>>
+ *      pronoun-FLAG <<T>>
  *      gender <<feminine>>
  *      noun_number <<singular>>]
  *

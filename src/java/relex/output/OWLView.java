@@ -83,7 +83,7 @@ public class OWLView
 	*	_subj(throw, John)
 	*	_obj(throw, ball)
 	*	tense(throw, past)
-	*	DEFINITE-FLAG(ball, T)
+	*	definite-FLAG(ball, T)
 	*	noun_number(ball, singular)
 	*/
 	public void printRelations(ParsedSentence parse, String sentence, int sentence_id, String ontologyname)

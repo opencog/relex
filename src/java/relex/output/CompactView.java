@@ -229,7 +229,7 @@ public class CompactView
 				str += getfeat(ref, "inflection-TAG");
 
 				str += getflag(ref, "date-FLAG");
-				str += getflag(ref, "DEFINITE-FLAG");
+				str += getflag(ref, "definite-FLAG");
 				str += getflag(ref, "emoticon-FLAG");
 				str += getflag(ref, "entity-FLAG");
 				str += getflag(ref, "idiom-FLAG");
@@ -238,6 +238,7 @@ public class CompactView
 				str += getflag(ref, "organization-FLAG");
 				str += getflag(ref, "person-FLAG");
 				str += getflag(ref, "polyword-FLAG");
+				str += getflag(ref, "pronoun-FLAG");
 				str += getflag(ref, "time-FLAG");
 			}
 

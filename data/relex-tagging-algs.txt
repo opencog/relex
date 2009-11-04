@@ -933,7 +933,7 @@ LG_ENTITES
 DEFINITE_NAMES
 <LAB> = \G\.*
 =
-<F_R ref DEFINITE-FLAG> = T
+<F_R ref definite-FLAG> = T
 ;
 ; Entities are definite.
 ;
@@ -941,7 +941,7 @@ DEFINITE_NAMES
 DEFINITE_ENTITIES
 <ENTITY-FLAG> = T
 =
-<ref DEFINITE-FLAG> = T
+<ref definite-FLAG> = T
 ;
 ; Dates, appearing in IN links, e.g. "in the 1940's"
 #TemplateActionAlg
@@ -1026,7 +1026,7 @@ DEFINITE_DETERMINED
 <LAB> = \D\.*
 <F_L orig_str> = the|The|This|this|These|these|Those|those|That|that|'s|his|His|her|Her|their|Their|my|My|our|Our|your|Your
 =
-<F_R ref DEFINITE-FLAG> = T
+<F_R ref definite-FLAG> = T
 ;
 #TemplateActionAlg
 DEFINITE_NUMBERED1
@@ -1039,7 +1039,7 @@ DEFINITE_NUMBERED1
 <LAB> = \D\.*
 <F_L DD-FLAG> = T
 =
-<F_R ref DEFINITE-FLAG> = T
+<F_R ref definite-FLAG> = T
 ;
 ; -----------------------------------------------------------
 ;
@@ -1280,14 +1280,14 @@ SINGULAR_PRONOUNS
 <str> = I|i|Me|me|Myself|myself|He|he|She|she|Him|him|Her|her|Himself|himself|Herself|herself
 =
 <num> = singular
-<ref DEFINITE-FLAG>=T
+<ref definite-FLAG>=T
 ;
 #TemplateActionAlg
 PLURAL_PRONOUNS
 <str> = We|we|Us|us|Them|them|Ourselves|ourselves|Themselves|themselves
 =
 <num> = plural
-<ref DEFINITE-FLAG>=T
+<ref definite-FLAG>=T
 ;
 ; "it" is definite, but can be singular or uncountable (but not plural).
 ; (It was hot coffee. It was a book.)
@@ -1297,7 +1297,7 @@ IT_IS_DEFINITE
 <str> = It|it
 =
 <num> = %
-<ref DEFINITE-FLAG>=T
+<ref definite-FLAG>=T
 ;
 #TemplateActionAlg
 NUM_TO_REF

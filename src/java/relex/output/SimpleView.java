@@ -37,7 +37,7 @@ public class SimpleView
 	 *   _subj(throw, John)
 	 *   _obj(throw, ball)
 	 *   tense(throw, past)
-	 *   DEFINITE-FLAG(ball, T)
+	 *   definite-FLAG(ball, T)
 	 *   noun_number(ball, singular)
 	 */
 	public static String printRelations(ParsedSentence parse)

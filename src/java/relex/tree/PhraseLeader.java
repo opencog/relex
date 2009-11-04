@@ -52,7 +52,7 @@ public class PhraseLeader
 	 * Now, "chair" can be identified as the leader of "(NP the red chair)"
 	 * because there is a binary relation: "amod(chair, red)" that 
 	 * identifies * chair.  However, "(NP the chair)" has no such binary 
-	 * relation, and so instead, we look for either "DEFINITE-FLAG(chair, T)"
+	 * relation, and so instead, we look for either "definite-FLAG(chair, T)"
 	 * or for "noun_number(chair, singular)" to identify "chair".
 	 */
 	private static void _phraseHeads(FeatureNode fn)
@@ -70,7 +70,7 @@ public class PhraseLeader
 	{
 		public Boolean UnaryRelationCB(FeatureNode from, String rel)
 		{
-			if (rel.equals("DEFINITE-FLAG") || rel.equals("noun_number"))
+			if (rel.equals("definite-FLAG") || rel.equals("noun_number"))
 			{
 				_phraseHeads(from);
 			}
