@@ -1444,17 +1444,21 @@ MEASURE-TIME
 =
 <F_R ref links _measure_time> = <F_L ref>
 ;
+; Date and year identification. e.g. "It happened on December 3rd, 1990."
+; Currently, the IS-NUMBER-FLAG is used only by the penn pos tagging rules.
 #TemplateActionAlg
 DATE_DAY
 <LAB> = TM
 =
 <F_L ref links _date_day> = <F_R ref>
+<F_R IS-NUMBER-FLAG> = T
 ;
 #TemplateActionAlg
 DATE_YEAR
 <LAB> = TY
 =
 <F_L ref links _date_year> = <F_R ref>
+<F_R IS-NUMBER-FLAG> = T
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;

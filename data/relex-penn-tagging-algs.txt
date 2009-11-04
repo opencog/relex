@@ -85,7 +85,7 @@ PENN_NOUN_SING_OR_MASS2
 ;
 #TemplateActionAlg
 PENN_NOUN_PROPER_SINGULAR_L
-<LAB> = G
+<LAB> = G|TM|TY
 <F_L POS> = noun
 =
 <F_L penn-pos> = NNP

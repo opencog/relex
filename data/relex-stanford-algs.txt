@@ -404,6 +404,9 @@ TODO_TO_SF
 =
 <ref sf-links _xcomp> = <ref links _to-do>
 
+;
+; Currently, Stanford parser collapses date expressions into num.
+;
 #TemplateActionAlg
 DATE_DAY_TO_SF
 <ref links _date_day> != %
