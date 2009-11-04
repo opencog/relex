@@ -115,7 +115,7 @@ public class Antecedents
 	 */
 	private Boolean antiAnaFilter(FeatureNode anph, FeatureNode ante)
 	{
-		FeatureNode pro = ante.get("PRONOUN-FLAG");
+		FeatureNode pro = ante.get("pronoun-FLAG");
 		if (pro == null) return false;
 		return true;
 	}

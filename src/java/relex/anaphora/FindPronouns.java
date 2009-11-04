@@ -40,7 +40,7 @@ public class FindPronouns
 		public Boolean FNCallback(FeatureNode fn)
 		{
 			// System.out.println("ola " + fn._prt_vals());
-			FeatureNode pr = fn.get("PRONOUN-FLAG");
+			FeatureNode pr = fn.get("pronoun-FLAG");
 			if (pr != null)
 			{
 				pr = fn.get("nameSource");

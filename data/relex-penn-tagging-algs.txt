@@ -230,7 +230,7 @@ PENN_MODAL_AUX
 PENN_PERSONAL_PRONOUN
 <POS> = noun
 <gend> != %
-<ref PRONOUN-FLAG> = T
+<ref pronoun-FLAG> = T
 =
 <penn-pos> = PRP
 

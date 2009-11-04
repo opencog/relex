@@ -33,7 +33,7 @@ public class WordFeature
 	{
 		fn = fn.get("ref");
 		if (fn == null) return false;
-		fn = fn.get("PRONOUN-FLAG");
+		fn = fn.get("pronoun-FLAG");
 		if (fn == null) return false;
 		return true;
 	}
