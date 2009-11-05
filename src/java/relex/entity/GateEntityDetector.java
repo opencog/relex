@@ -228,7 +228,8 @@ public class GateEntityDetector extends EntityTagger
 	public List<EntityInfo> tagEntities(String sentence)
 	{
 		// Deal with some markup that ANNIE doesn't...
-		basic.tagEntities(sentence);
+		List<EntityInfo> emos = basic.tagEntities(sentence);
+		for (EntityInfo emo : emos) addEntity(emo);
 
 		try
 		{

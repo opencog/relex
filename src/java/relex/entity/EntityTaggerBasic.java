@@ -189,8 +189,9 @@ public class EntityTaggerBasic extends EntityTagger implements Serializable
 
 	public List<EntityInfo> tagEntities(String sentence)
 	{
-		escapeParens(sentence);
 		identifyEmoticons(sentence);
+		// escape any remaining parens only *after* doing the emos
+		escapeParens(sentence);
 		return getEntities();
 	}
 
