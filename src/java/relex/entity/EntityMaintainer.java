@@ -277,20 +277,19 @@ public class EntityMaintainer implements Serializable
 		int charDelta = 0;
 		try
 		{
-			for (LinkableView word = new LinkableView(leftNode);
-			     word != null;
-			     word = (word.getNext() == null ?
-			                  null : new LinkableView(word.getNext())))
+			for (FeatureNode fn = leftNode; 
+				fn != null; fn = LinkableView.getNext(fn))
 			{
+				int start = LinkableView.getStartChar(fn);
 				int previousWhiteSpace = 
-				      previouslyInsertedWhitespace(word.getStartChar());
+				      previouslyInsertedWhitespace(start);
 
-				String wordName = word.getWordString();
+				String wordName = LinkableView.getWordString(fn);
 
-				word.setStartChar(word.getStartChar() + charDelta
-						- previousWhiteSpace);
+				LinkableView.setStartChar(fn, 
+					start + charDelta - previousWhiteSpace);
 
-				// word.setExpandedStartChar(word.getExpandedStartChar()+charDelta);
+				// LinkableView.setExpandedStartChar(fn, LinkableView.getExpandedStartChar(fn)+charDelta);
 
 				if (isEntityID(wordName))
 				{
@@ -299,14 +298,14 @@ public class EntityMaintainer implements Serializable
 					charDelta += origName.length() - wordName.length();
 					try
 					{
-						SemanticView semView = new SemanticView(word.fn()
-								.get("ref"));
-						semView.setName(origName);
+						FeatureNode ref = fn.get("ref");
+						SemanticView.setName(ref, origName);
 					}
 					catch (Exception e) {}
 				}
 
-				word.setEndChar(word.getEndChar() + charDelta - previousWhiteSpace);
+				int end = LinkableView.getEndChar(fn);
+				LinkableView.setEndChar(fn, end + charDelta - previousWhiteSpace);
 				// word.setExpandedEndChar(word.getExpandedEndChar()+charDelta);
 			}
 		}
