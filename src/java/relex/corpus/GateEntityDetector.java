@@ -241,11 +241,9 @@ public class GateEntityDetector extends EntityTagger
 		return getEntities();
 	}
 
-	private ArrayList<EntityInfo> findEntitiesInText(AnnotationSet annoset, String sentence)
+	private void findEntitiesInText(AnnotationSet annoset, String sentence)
 	{
 		try {
-			ArrayList<EntityInfo> eInfos = new ArrayList<EntityInfo>();
-	
 			for (Iterator<Annotation> it = annoset.iterator(); it.hasNext();)
 			{
 				Annotation a = it.next();
@@ -286,22 +284,9 @@ public class GateEntityDetector extends EntityTagger
 	
 				if (ei != null)
 				{
-					// Insert in proper order.
-					for (int i = 0; i < eInfos.size(); i++)
-					{
-						if (eInfos.get(i).getFirstCharIndex() > ei.getFirstCharIndex())
-						{
-							eInfos.add(i, ei);
-							ei = null;
-							break;
-						}
-					}
-	
-					// Append at end, if not inserted in middle.
-					if (ei != null) eInfos.add(ei);
+					addEntity(ei);
 				}
 			}
-			return eInfos;
 		}
 		catch (RuntimeException e)
 		{

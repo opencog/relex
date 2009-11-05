@@ -24,9 +24,6 @@ public class EntityTaggerBasic extends EntityTagger implements Serializable
 {
 	private static final long serialVersionUID = -8186219027158709714L;
 
-	// An array of EntityInfos, ordered by their order in the sentence
-	private List<EntityInfo> orderedEntityInfos;
-
 	static List<String> emolist = new ArrayList<String>();
 
 	static
@@ -194,7 +191,7 @@ public class EntityTaggerBasic extends EntityTagger implements Serializable
 	{
 		escapeParens(sentence);
 		identifyEmoticons(sentence);
-		return orderedEntityInfos;
+		return getEntities();
 	}
 
 	// --------------------------------------------------------
@@ -202,51 +199,5 @@ public class EntityTaggerBasic extends EntityTagger implements Serializable
 	/**
 	 * Default constructor is mainly used for de-serialization purposes.
 	 */
-	public EntityTaggerBasic()
-	{
-		orderedEntityInfos = new ArrayList<EntityInfo>();
-	}
-
-	/**
-	 * Add the entity info to the list, inserting it in sorted order.
-	 */
-	public void addEntity(EntityInfo ei)
-	{
-		int open = 0;
-		int start = ei.getFirstCharIndex();
-		int end = ei.getLastCharIndex();
-		for (EntityInfo e: orderedEntityInfos)
-		{
-			int beg = e.getFirstCharIndex();
-			if ((open <= start) && (end <= beg))
-			{
-				int idx = orderedEntityInfos.indexOf(e);
-				orderedEntityInfos.add(idx, ei);
-				return;
-			}
-			open = e.getLastCharIndex();
-
-			// If our entity overlaps with existing entities, ignore it.
-			if (start < open) return;
-		}
-		orderedEntityInfos.add(ei);
-	}
-
-	// --------------------------------------------------------
-
-	/**
-	 * Return all EntityInfo's ordered by their starting character
-	 * position.
-	 */
-	public List<EntityInfo> getEntities()
-	{
-		return orderedEntityInfos;
-	}
-
-	public boolean equals(Object other)
-	{
-		if (! (other instanceof EntityTaggerBasic)) return false;
-		EntityTaggerBasic et = (EntityTaggerBasic)other;
-		return this.orderedEntityInfos.equals(et.orderedEntityInfos);
-	}
+	public EntityTaggerBasic() {}
 }
