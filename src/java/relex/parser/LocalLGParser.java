@@ -93,7 +93,7 @@ public class LocalLGParser extends LGParser
 			if (verbosity >= 5) System.err.println("making sentence for parse " + i);
 			ParsedSentence s = new ParsedSentence(sentence);
 
-			// add words
+			// Add words
 			int numWords = LinkGrammar.getNumWords();
 			FeatureNode lastFN = null;
 			FeatureNode leftWall = null;
@@ -132,10 +132,10 @@ public class LocalLGParser extends LGParser
 						throw new RuntimeException("Invalid parse: " +
 							"first word is not left wall");
 
-					// set the word and part-of-speach
+					// Set the word and part-of-speech
 					LinkableView.setWordAndPos(fn, wordString);
 
-					// create a feature "this" which points to the linkable
+					// Create a feature "this" which points to the linkable
 					fn.set("this", fn);
 
 					// set "wall" to point to the left wall
@@ -257,7 +257,7 @@ public class LocalLGParser extends LGParser
 				 * cLinkRLabel(i) + ":" + cLinkLabel(i) + ":");
 				 */
 				FeatureNode f = new FeatureNode();
-				new LinkView(f).setLinkFeatures(
+				LinkView.setLinkFeatures(f,
 						LinkGrammar.getLinkLLabel(i),
 						LinkGrammar.getLinkRLabel(i),
 						LinkGrammar.getLinkLabel(i),
