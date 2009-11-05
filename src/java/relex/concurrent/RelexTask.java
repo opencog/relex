@@ -24,6 +24,7 @@ import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.entity.EntityMaintainer;
 import relex.tree.PhraseMarkup;
+import relex.tree.PhraseTree;
 
 /**
  * Processes a sentence using the given LinkParserClient. When processing is
@@ -82,7 +83,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 				try {
 					// Markup feature node graph with entity info,
 					// so that the relex algs (next step) can see them.
-					entityMaintainer.tagSentence(parse.getLeft());
+					entityMaintainer.tagConvertedSentence(parse);
 
 					// The actual relation extraction is done here.
 					sentenceAlgorithmApplier.applyAlgs(parse, context);
@@ -93,7 +94,12 @@ public class RelexTask implements Callable<RelexTaskResult>
 
 					// Also do a Penn tree-bank style phrase structure markup.
 					if (phraseMarkup != null)
+					{
 						phraseMarkup.markup(parse);
+						// Repair the entity-mangled tree-bank string.
+						PhraseTree pt = new PhraseTree(parse.getLeft());
+						parse.setPhraseString(pt.toString());
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

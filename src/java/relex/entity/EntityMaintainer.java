@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.LinkableView;
 import relex.feature.SemanticView;
@@ -319,12 +320,13 @@ public class EntityMaintainer implements Serializable
 	}
     
 	/**
-	 * tagSentence() -- markup parsed sentence with entity 
+	 * tagConvertedSentence() -- markup parsed sentence with entity 
 	 * information. This needs to be done before the relex algs run,
 	 * as the relex algs may use some of this information.
 	 */
-	public void tagSentence(FeatureNode leftNode)
+	public void tagConvertedSentence(ParsedSentence parse)
 	{
+		FeatureNode leftNode = parse.getLeft();
 		for (LinkableView word = new LinkableView(leftNode);
 		     word != null;
 		     word = (word.getNext() == null ?

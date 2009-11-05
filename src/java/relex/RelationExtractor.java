@@ -232,7 +232,7 @@ public class RelationExtractor
 
 				// Markup feature node graph with entity info,
 				// so that the relex algs (next step) can see them.
-				entityMaintainer.tagSentence(parse.getLeft());
+				entityMaintainer.tagConvertedSentence(parse);
 
 				// The actual relation extraction is done here.
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
