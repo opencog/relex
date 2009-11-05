@@ -20,15 +20,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityTaggerBasic implements Serializable, EntityTagger
+public class EntityTaggerBasic extends EntityTagger implements Serializable
 {
 	private static final long serialVersionUID = -8186219027158709714L;
 
 	// An array of EntityInfos, ordered by their order in the sentence
 	private List<EntityInfo> orderedEntityInfos;
-
-	// Maps feature nodes to entity IDs
-	// private HashMap<FeatureNode, String> featureNodes2EntityIDs;
 
 	static List<String> emolist = new ArrayList<String>();
 

@@ -46,13 +46,10 @@ import relex.entity.EntityType;
  * Goes directly over to EntityTagger, skipping 
  * the various intermediate steps.
  */
-public class GateEntityDetector implements EntityTagger
+public class GateEntityDetector extends EntityTagger
 {
 	public static final int DEBUG=0;
 	Boolean initialized = false;
-
-	// An array of EntityInfos, ordered by their order in the sentence
-	private List<EntityInfo> eil = null;
 
 	/**
 	 * The default GATE installation directory. It's not necessary to
@@ -230,51 +227,19 @@ public class GateEntityDetector implements EntityTagger
 
 	public List<EntityInfo> tagEntities(String sentence)
 	{
-		eil = null;
 		try
 		{
 			initialize();
 			AnnotationSet annoset = getAnnotations(sentence);
-			eil = findEntitiesInText(annoset, sentence);
+			findEntitiesInText(annoset, sentence);
 			releaseResources();
 		}
 		catch(GateException e)
 		{
 			if (DEBUG>0) System.err.println(e.getMessage());
 		}
-		return eil;
+		return getEntities();
 	}
-
-	public List<EntityInfo> getEntities()
-	{
-		return eil;
-	}
-
-	/**
-	 * Add the entity info to the list, inserting it in sorted order.
-	 */
-	public void addEntity(EntityInfo ei)
-	{
-		int open = 0;
-		int start = ei.getFirstCharIndex();
-		int end = ei.getLastCharIndex();
-		for (EntityInfo e: eil)
-		{
-			int beg = e.getFirstCharIndex();
-			if ((open <= start) && (end <= beg))
-			{
-				int idx = eil.indexOf(e);
-				eil.add(idx, ei);
-				return;
-			}
-			open = e.getLastCharIndex();
-
-			// If our entity overlaps with existing entities, ignore it.
-			if (start < open) return;
-		}
-		eil.add(ei);
-	}
-
 
 	private ArrayList<EntityInfo> findEntitiesInText(AnnotationSet annoset, String sentence)
 	{

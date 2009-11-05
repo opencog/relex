@@ -16,20 +16,67 @@
  */
 package relex.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public interface EntityTagger
+public abstract class EntityTagger implements Serializable
 {
+	private static final long serialVersionUID = -8186219027158709712L;
+
+	// An array of EntityInfos, ordered by their order in the sentence
+	private List<EntityInfo> orderedEntityInfos;
+
 	public abstract List<EntityInfo> tagEntities(String sentence);
+
+	/**
+	 * Default constructor is mainly used for de-serialization purposes.
+	 */
+	public EntityTagger()
+	{
+		orderedEntityInfos = new ArrayList<EntityInfo>();
+	}
 
 	/**
 	 * Add the entity info to the list, inserting it in sorted order.
 	 */
-	public void addEntity(EntityInfo ei);
+	public void addEntity(EntityInfo ei)
+	{
+		int open = 0;
+		int start = ei.getFirstCharIndex();
+		int end = ei.getLastCharIndex();
+		for (EntityInfo e: orderedEntityInfos)
+		{
+			int beg = e.getFirstCharIndex();
+			if ((open <= start) && (end <= beg))
+			{
+				int idx = orderedEntityInfos.indexOf(e);
+				orderedEntityInfos.add(idx, ei);
+				return;
+			}
+			open = e.getLastCharIndex();
+
+			// If our entity overlaps with existing entities, ignore it.
+			if (start < open) return;
+		}
+		orderedEntityInfos.add(ei);
+	}
+
+	// --------------------------------------------------------
 
 	/**
 	 * Return all EntityInfo's ordered by their starting character
 	 * position.
 	 */
-	public List<EntityInfo> getEntities();
+	public List<EntityInfo> getEntities()
+	{
+		return orderedEntityInfos;
+	}
+
+	public boolean equals(Object other)
+	{
+		if (! (other instanceof EntityTagger)) return false;
+		EntityTagger et = (EntityTagger)other;
+		return this.orderedEntityInfos.equals(et.orderedEntityInfos);
+	}
 }
