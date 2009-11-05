@@ -812,79 +812,8 @@ BASIC_REF
 ;
 ; ENTITY PROCESSING
 ;
-; As of Dec 2008, the ENTITY-FLAG is set at the graph creation time.
-;
-; Entities need to be identified as nouns, so that later
-; relex rules, which look for nouns, treat them appropriately.
-;
-#TemplateActionAlg
-ENTITY_IS_NOUN
-<ENTITY-FLAG> = T
-=
-<POS> = %
-<POS> = noun
-;
-; The PERSON-FLAG, etc. are set by the entity detection code.
-; the following rules copy them to the ref, where they will 
-; appear in the relex output.
-#TemplateActionAlg
-ENTITY-PERSON
-<PERSON-FLAG> = T
-=
-<ref person-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-LOCATION
-<LOCATION-FLAG> = T
-<str> != %
-=
-<ref location-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-MEASURE
-<MEASURE-FLAG> = T
-=
-<ref measure-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-ORGANIZATION
-<ORGANIZATION-FLAG> = T
-=
-<ref organization-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-DATE
-<DATE-FLAG> = T
-=
-<ref date-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-MONEY
-<MONEY-FLAG> = T
-=
-<ref money-FLAG> = T
-;
-#TemplateActionAlg
-ENTITY-EMOTICON
-<EMOTICON-FLAG> = T
-=
-<ref emoticon-FLAG> = T
-;
-#TemplateActionAlg
-INFLECTION_TAG
-<inflection> != %
-=
-<ref inflection-TAG> = <inflection>
-;
-#TemplateActionAlg
-LABEL_IDIOMS
-<LAB> = \ID[A-Z]*[a-z]*
-=
-<F_R ref idiom-FLAG> = T
-;
-; -----------------------------------------------------------
-; If there was no front-end entity processor, then use the link-grammar
-; output for identidying entities. These will have G links to the left.
+; If there was no pre-parse entity processor, then use the link-grammar
+; output for identifying entities. These will have G links to the left.
 ;
 #WordSequenceCombineAlg
 PROPER_NAME_AND_ENTITIES_AND_IDIOMS
@@ -912,6 +841,87 @@ MERGED_EMPTY_STRING_ELIMINATION
 =
 <F_L str> = %
 ;
+; ---------------
+; The LOCATION-FLAG, etc. are set by the entity detection code.
+; the following rules copy them to the ref, where they will 
+; appear in the relex output.
+;
+; Make sure that str is not null, as the G-link merging above will
+; wipe some of these out. We want to promote to ref only those that
+; have a completly merged entity name.
+;
+#TemplateActionAlg
+ENTITY-LOCATION
+<LOCATION-FLAG> = T
+<str> != %
+=
+<ref location-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-MEASURE
+<MEASURE-FLAG> = T
+<str> != %
+=
+<ref measure-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-ORGANIZATION
+<ORGANIZATION-FLAG> = T
+<str> != %
+=
+<ref organization-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-PERSON
+<PERSON-FLAG> = T
+<str> != %
+=
+<ref person-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-DATE
+<DATE-FLAG> = T
+<str> != %
+=
+<ref date-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-MONEY
+<MONEY-FLAG> = T
+<str> != %
+=
+<ref money-FLAG> = T
+;
+#TemplateActionAlg
+ENTITY-EMOTICON
+<EMOTICON-FLAG> = T
+<str> != %
+=
+<ref emoticon-FLAG> = T
+;
+#TemplateActionAlg
+INFLECTION_TAG
+<inflection> != %
+=
+<ref inflection-TAG> = <inflection>
+;
+#TemplateActionAlg
+LABEL_IDIOMS
+<LAB> = \ID[A-Z]*[a-z]*
+=
+<F_R ref idiom-FLAG> = T
+;
+; Entities need to be identified as nouns, so that later
+; relex rules, which look for nouns, treat them appropriately.
+;
+; As of Dec 2008, the ENTITY-FLAG is set at the graph creation time.
+;
+#TemplateActionAlg
+ENTITY_IS_NOUN
+<ENTITY-FLAG> = T
+=
+<POS> = %
+<POS> = noun
 ;
 #TemplateActionAlg
 PROPER_NAME_POS_CORRECTION
