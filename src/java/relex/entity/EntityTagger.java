@@ -20,6 +20,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import relex.ParsedSentence;
+import relex.feature.FeatureNode;
+import relex.feature.LinkableView;
+
+
 public abstract class EntityTagger implements Serializable
 {
 	private static final long serialVersionUID = -8186219027158709712L;
@@ -62,8 +67,6 @@ public abstract class EntityTagger implements Serializable
 		orderedEntityInfos.add(ei);
 	}
 
-	// --------------------------------------------------------
-
 	/**
 	 * Return all EntityInfo's ordered by their starting character
 	 * position.
@@ -73,6 +76,34 @@ public abstract class EntityTagger implements Serializable
 		return orderedEntityInfos;
 	}
 
+	// --------------------------------------------------------
+	//
+	public void tagParse(ParsedSentence parse)
+	{
+		FeatureNode wn = parse.getLeft();
+		for (EntityInfo e: orderedEntityInfos)
+		{
+			int beg = e.getFirstCharIndex();
+
+			// Advance through the sentence until the entity overlaps
+			int word_end = LinkableView.getEndChar(wn);
+			while ((wn != null) && (word_end < beg))
+			{
+				wn = LinkableView.getNext(wn);
+				word_end = LinkableView.getEndChar(wn);
+			}
+			if (wn == null) break;
+
+			// Make sure that the word is bracketed by the entity
+			int word_start = LinkableView.getStartChar(wn);
+			if ((word_start <= beg) && (beg < word_end))
+			{
+				e.setProperties(wn);
+			}
+		}
+	}
+
+	// --------------------------------------------------------
 	public boolean equals(Object other)
 	{
 		if (! (other instanceof EntityTagger)) return false;

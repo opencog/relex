@@ -558,6 +558,7 @@ public class FeatureNode extends Atom
 	 * XXX deprecated -- caller should use the PrologList class directly
 	 * @deprecated
 	 */
+	@Deprecated
 	public String toPrologList(FeatureNameFilter filter, boolean indent)
 	{
 		PrologList pl = new PrologList();

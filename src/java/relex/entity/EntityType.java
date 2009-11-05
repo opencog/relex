@@ -2,10 +2,6 @@ package relex.entity;
 
 /**
  * 
- * <p>
- * 
- * </p>
- *
  * @author Borislav Iordanov
  *
  */
@@ -15,8 +11,10 @@ public enum EntityType
 	DATE,
 	EMOTICON,
 	LOCATION,
+	MEASURE,
 	MONEY,
 	ORGANIZATION,
 	PERSON,
-	PUNCTUATION;
+	PUNCTUATION,
+	TIME;
 }
