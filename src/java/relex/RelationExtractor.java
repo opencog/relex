@@ -102,14 +102,20 @@ public class RelationExtractor
 	/** Document - holder of sentences */
 	Document doco;
 
-	/* Stanford parser compatibility mode */
+	/** Stanford parser compatibility mode */
 	public boolean do_stanford;
 
-	/* Penn tagset compatibility mode */
+	/** Penn tagset compatibility mode */
 	public boolean do_penn_tagging;
 
-	/* Expand preposition markup to two dependencies. */
+	/** Expand preposition markup to two dependencies. */
 	public boolean do_expand_preps;
+
+	/** Perform entity substitution before parsing */
+	public boolean do_pre_entity_tagging;
+
+	/** Perform entity tagging after parse */
+	public boolean do_post_entity_tagging;
 
 	/** Statistics */
 	private ParseStats stats;
@@ -151,6 +157,8 @@ public class RelationExtractor
 		do_stanford = false;
 		do_penn_tagging = false;
 		do_expand_preps = false;
+		do_pre_entity_tagging = false;
+		do_post_entity_tagging = false;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -251,6 +259,11 @@ public class RelationExtractor
 					// Repair the entity-mangled tree-bank string.
 					PhraseTree pt = new PhraseTree(parse.getLeft());
 					parse.setPhraseString(pt.toString());
+				}
+
+				if (do_post_entity_tagging)
+				{
+					entityMaintainer.getTagger().tagParse(parse);
 				}
 			}
 
@@ -371,7 +384,8 @@ public class RelationExtractor
 			" [-c (show plain output)]" +
 			" [--expand-preps (show expanded prepositions)]" +
 			" [-f (show frame output)]" +
-			" [-g (use GATE entity detector)]" +
+			" [-g (pre-process with GATE entity detector)]" +
+			" [--g-post (post-process with GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (show parse links)]" +
 			" [-m (show parse metadata)]" +
@@ -396,6 +410,7 @@ public class RelationExtractor
 		flags.add("--expand-preps");
 		flags.add("-f");
 		flags.add("-g");
+		flags.add("--g-post");
 		flags.add("-h");
 		flags.add("-l");
 		flags.add("-m");
@@ -490,13 +505,16 @@ public class RelationExtractor
 		}
 
 		EntityTagger gem = null;
-		if (commandMap.get("-g") != null)
+		if ((commandMap.get("-g") != null) ||
+		    (commandMap.get("--g-post") != null))
 		{
 			re.starttime = System.currentTimeMillis();
 			gem = EntityTaggerFactory.get();
 			gem.tagEntities(""); // force initialization to measure initialization time
 			re.reportTime("Entity Detector Initialization: ");
 		}
+		if (commandMap.get("-g") != null) re.do_pre_entity_tagging = true;
+		if (commandMap.get("--g-post") != null) re.do_post_entity_tagging = true;
 
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
@@ -567,7 +585,7 @@ public class RelationExtractor
 			{
 				System.out.println("; SENTENCE: ["+sentence+"]");
 				EntityMaintainer em = null;
-				if (gem != null)
+				if (re.do_pre_entity_tagging)
 				{
 					re.starttime = System.currentTimeMillis();
 					em = new EntityMaintainer();

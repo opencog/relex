@@ -209,6 +209,11 @@ public class EntityMaintainer implements Serializable
 		tagger = et;
 	}
 
+	public EntityTagger getTagger()
+	{
+		return tagger;
+	}
+
 	// --------------------------------------------------------
 
 	/**
