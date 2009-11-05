@@ -30,7 +30,7 @@ public abstract class EntityTagger implements Serializable
 	private static final long serialVersionUID = -8186219027158709712L;
 
 	// An array of EntityInfos, ordered by their order in the sentence
-	private List<EntityInfo> orderedEntityInfos;
+	protected List<EntityInfo> orderedEntityInfos;
 
 	public abstract List<EntityInfo> tagEntities(String sentence);
 
@@ -84,6 +84,7 @@ public abstract class EntityTagger implements Serializable
 		for (EntityInfo e: orderedEntityInfos)
 		{
 			int beg = e.getFirstCharIndex();
+			int end = e.getLastCharIndex();
 
 			// Advance through the sentence until the entity overlaps
 			int word_end = LinkableView.getEndChar(wn);
@@ -96,9 +97,13 @@ public abstract class EntityTagger implements Serializable
 
 			// Make sure that the word is bracketed by the entity
 			int word_start = LinkableView.getStartChar(wn);
-			if ((word_start <= beg) && (beg < word_end))
+			while ((wn != null) && (beg <= word_start) && (word_end <= end))
 			{
 				e.setProperties(wn);
+				wn = LinkableView.getNext(wn);
+				if (wn == null) break;
+				word_start = LinkableView.getStartChar(wn);
+				word_end = LinkableView.getEndChar(wn);
 			}
 		}
 	}

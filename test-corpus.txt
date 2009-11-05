@@ -1,5 +1,6 @@
-I live :-) in New York.
+I live in New York.
 END.
+I live :-) in New York.
 The boy is 4 cm tall.
 Jon Morgan offered Mike Judge 5 shekels for the lot.
 That cost two dollars.

@@ -116,6 +116,7 @@ public class RelationExtractor
 
 	/** Perform entity tagging after parse */
 	public boolean do_post_entity_tagging;
+	public EntityTagger tagger;
 
 	/** Statistics */
 	private ParseStats stats;
@@ -159,6 +160,7 @@ public class RelationExtractor
 		do_expand_preps = false;
 		do_pre_entity_tagging = false;
 		do_post_entity_tagging = false;
+		tagger = null;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -238,6 +240,14 @@ public class RelationExtractor
 					parse.getLeft().set("expand-preps", new FeatureNode("T"));
 				}
 
+				if (do_post_entity_tagging && (tagger != null))
+				{
+					// Markup feature node graph with entity info,
+					// so that the relex algs (next step) can see them.
+					tagger.tagEntities(sentence);
+					tagger.tagParse(parse);
+				}
+
 				// Markup feature node graph with entity info,
 				// so that the relex algs (next step) can see them.
 				entityMaintainer.tagConvertedSentence(parse);
@@ -261,10 +271,6 @@ public class RelationExtractor
 					parse.setPhraseString(pt.toString());
 				}
 
-				if (do_post_entity_tagging)
-				{
-					entityMaintainer.getTagger().tagParse(parse);
-				}
 			}
 
 			// Assign a simple parse-ranking score, based on LinkGrammar data.
@@ -511,6 +517,7 @@ public class RelationExtractor
 			re.starttime = System.currentTimeMillis();
 			gem = EntityTaggerFactory.get();
 			gem.tagEntities(""); // force initialization to measure initialization time
+			re.tagger = gem;
 			re.reportTime("Entity Detector Initialization: ");
 		}
 		if (commandMap.get("-g") != null) re.do_pre_entity_tagging = true;

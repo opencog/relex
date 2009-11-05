@@ -836,6 +836,7 @@ ENTITY-PERSON
 #TemplateActionAlg
 ENTITY-LOCATION
 <LOCATION-FLAG> = T
+<str> != %
 =
 <ref location-FLAG> = T
 ;
