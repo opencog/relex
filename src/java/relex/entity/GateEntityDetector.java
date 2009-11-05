@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package relex.corpus;
+package relex.entity;
 
 import gate.Annotation;
 import gate.AnnotationSet;
@@ -35,10 +35,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import relex.entity.EntityInfo;
-import relex.entity.EntityTagger;
-import relex.entity.EntityType;
 
 /**
  * Refactored version of taca/GateEntityDetector

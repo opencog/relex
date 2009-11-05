@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package relex.corpus;
-
-import relex.entity.EntityTagger;
+package relex.entity;
 
 /**
  * An EntityTaggerFactory implementation is responsible for detecting
@@ -25,14 +23,14 @@ import relex.entity.EntityTagger;
  *
  * This class also serves as a factory of a globally configured 
  * EntityTaggerFactory through the 
- * relex.corpus.EntityTaggerFactory system property.  The default
- * value of this property is relex.corpus.GateEntityDetector. This
+ * relex.entity.EntityTaggerFactory system property.  The default
+ * value of this property is relex.entity.GateEntityDetector. This
  * globally configured EntityTaggerFactory factory is created only
  * once and maintained as a singleton within this class.
  */
 public abstract class EntityTaggerFactory
 {	
-	public static final String DEFAULT_FACTORY = "relex.corpus.GateEntityDetector";
+	public static final String DEFAULT_FACTORY = "relex.entity.GateEntityDetector";
 	
 	private static EntityTagger factory = null;
 	
@@ -41,7 +39,7 @@ public abstract class EntityTaggerFactory
 		if (factory != null)
 			return factory;
 		
-		String classname = System.getProperty("relex.corpus.EntityTagger");
+		String classname = System.getProperty("relex.entity.EntityTagger");
 		if (classname == null)
 			classname = DEFAULT_FACTORY;
 		try

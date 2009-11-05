@@ -21,11 +21,11 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Map;
 
-import relex.corpus.EntityTaggerFactory;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityMaintainer;
 import relex.entity.EntityTagger;
+import relex.entity.EntityTaggerFactory;
 import relex.frame.Frame;
 import relex.output.CompactView;
 import relex.output.SimpleView;
