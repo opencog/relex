@@ -91,7 +91,7 @@ public class EntityMaintainer implements Serializable
 	 */
 	private void createConvertedSentence()
 	{
-		List<EntityInfo> orderedEntityInfos = tagger.getEntities();
+		List<EntityInfo> orderedEntityInfos = tagger.tagEntities(originalSentence);
 		if ((orderedEntityInfos == null) || (orderedEntityInfos.size() == 0))
 		{
 			convertedSentence = originalSentence;
@@ -235,8 +235,6 @@ public class EntityMaintainer implements Serializable
 		{
 			tagger.addEntity(it);
 		}
-
-		tagger.tagEntities(originalSentence);
 
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
