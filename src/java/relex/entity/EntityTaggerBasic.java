@@ -122,25 +122,6 @@ public class EntityTaggerBasic extends EntityTagger implements Serializable
 
 	// --------------------------------------------------------
 	/**
-	 * Returns true iff the character after the entity is legal.
-	 * Only whitespace and certain punction are allowed.
-	 */
-	private boolean isLegalEntityFollowingString(String s)
-	{
-		if (s.length() == 0)
-			return true;
-		char c = s.charAt(0);
-		if (Character.isWhitespace(c))
-			return true;
-		if (c == '.' || c == ',' || c == ';' || c == ':')
-			return true;
-		if (s.startsWith("'s ") || s.startsWith("' "))
-			return true;
-		return false;
-	}
-
-	// --------------------------------------------------------
-	/**
 	 * Strip out emoticons, smileys :-)
 	 */
 	private void identifyEmoticons(String sentence)
