@@ -77,6 +77,9 @@ public class GateEntityDetector extends EntityTagger
 	private Document doc = null;
 	private Map<String, Map<Object, Object>> annieParams = new HashMap<String, Map<Object, Object>>();
 	
+	// Tag things that ANNIE overlooked...
+	private EntityTaggerBasic basic;
+
 	/**
 	 * Initialise the ANNIE system. This creates a "corpus pipeline"
 	 * application that can be used to run sets of documents through
@@ -120,6 +123,7 @@ public class GateEntityDetector extends EntityTagger
 	public GateEntityDetector()
 	{
 		initialized = false;
+		basic = new EntityTaggerBasic();
 	}
 
 	public GateEntityDetector(Map<String, Map<Object, Object>> params)
@@ -223,6 +227,9 @@ public class GateEntityDetector extends EntityTagger
 
 	public List<EntityInfo> tagEntities(String sentence)
 	{
+		// Deal with some markup that ANNIE doesn't...
+		basic.tagEntities(sentence);
+
 		try
 		{
 			initialize();
