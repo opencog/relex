@@ -49,10 +49,10 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
  		int nl = LinkableView.numLinks(node, dir);
 		for (int i = 0; i < nl; i++)
 		{
-			LinkView link = new LinkView(LinkableView.getLink(node, dir, i));
-			String label = link.getLabel(0);
+			FeatureNode fn = LinkableView.getLink(node, dir, i);
+			String label = LinkView.getLabel(fn, 0);
 			if (Pattern.matches(labelRegex, label))
-				return (dir == directionLeft ? link.getLeft() : link.getRight());
+				return (dir == directionLeft ? LinkView.getLeft(fn) : LinkView.getRight(fn));
 		}
 		return null;
 	}

@@ -126,7 +126,8 @@ public class RemoteLGParser extends LGParser
 			for (Link link : linkage)
 				if (!ignoreLast || link.getRight() != linkage.getLinkedWordCount() - 1)
 				{
-					new LinkView(new FeatureNode()).setLinkFeatures(
+					FeatureNode fn = new FeatureNode();
+					LinkView.setLinkFeatures(fn,
 							link.getLeftLabel(),
 							link.getRightLabel(),
 							link.getLabel(),
