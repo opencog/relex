@@ -326,18 +326,16 @@ public class EntityMaintainer implements Serializable
 	 */
 	public void tagConvertedSentence(ParsedSentence parse)
 	{
-		FeatureNode leftNode = parse.getLeft();
-		for (LinkableView word = new LinkableView(leftNode);
-		     word != null;
-		     word = (word.getNext() == null ?
-		                null : new LinkableView(word.getNext())))
+		FeatureNode fn = parse.getLeft();
+		while (fn != null)
 		{
-			String wordName = word.getWordString();
+			String wordName = LinkableView.getWordString(fn);
 			if (isEntityID(wordName))
 			{
 				EntityInfo entInfo = getEntityInfo(wordName);
-				entInfo.setProperties(word.fn());
+				entInfo.setProperties(fn);
 			}
+			fn = LinkableView.getNext(fn);
 		}
 	}
 
