@@ -44,10 +44,9 @@ public class MorphyAlg extends SentenceAlgorithm
 	protected void applyTo(FeatureNode node, RelexContext context,
 	                       Map<String,FeatureNode> vars)
 	{
-		LinkableView w = new LinkableView(node);
-		String original = w.getWordString();
+		String original = LinkableView.getWordString(node);
 		Morphed m = context.getMorphy().morph(original);
-		String pos = w.getPOS();
+		String pos = LinkableView.getPOS(node);
 		if (pos == null)
 			throw new RuntimeException("All nodes with 'str' should have 'POS'");
 		FeatureNode f = null;

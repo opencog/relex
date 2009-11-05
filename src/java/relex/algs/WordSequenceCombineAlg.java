@@ -45,12 +45,11 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 	 */
 	private FeatureNode nextNode(FeatureNode node, int dir, String labelRegex)
 	{
-		LinkableView linkable = new LinkableView(node);
-
  		// Iterate on right links.
-		for (int i = 0; i < linkable.numLinks(dir); i++)
+ 		int nl = LinkableView.numLinks(node, dir);
+		for (int i = 0; i < nl; i++)
 		{
-			LinkView link = new LinkView(linkable.getLink(dir, i));
+			LinkView link = new LinkView(LinkableView.getLink(node, dir, i));
 			String label = link.getLabel(0);
 			if (Pattern.matches(labelRegex, label))
 				return (dir == directionLeft ? link.getLeft() : link.getRight());
