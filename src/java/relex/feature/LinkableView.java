@@ -325,7 +325,11 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	}
 
 	public void setEntityFlag() {
-		fn().set("ENTITY-FLAG", new FeatureNode("T"));
+		setEntityFlag(fn());
+	}
+	
+	public static void setEntityFlag(FeatureNode ths) {
+		ths.set("ENTITY-FLAG", new FeatureNode("T"));
 	}
 	
 	public boolean hasEntityFlag()	{
@@ -496,8 +500,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		setCharIndices(fn(), start, end, indexInSentence);
 	}
 
-	public void setCharIndices(FeatureNode ths, int start, int end,
-			int indexInSentence) {
+	public static void setCharIndices(FeatureNode ths,
+	                           int start, int end, int indexInSentence)
+	{
 		throwIfNoFN(ths);
 		FeatureNode f = ths.get(START_NAME);
 		if (f == null) {

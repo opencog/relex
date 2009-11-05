@@ -124,8 +124,8 @@ public class LocalLGParser extends LGParser
 				}
 				else
 				{
-					LinkableView fnv = new LinkableView(new FeatureNode());
-					if (wordString.equals("LEFT-WALL")) leftWall = fnv.fn();
+					FeatureNode fn = new FeatureNode();
+					if (wordString.equals("LEFT-WALL")) leftWall = fn;
 					// LEFT-WALL should always be first word, so throw an
 					// exception if it was not.
 					if (leftWall == null)
@@ -133,23 +133,23 @@ public class LocalLGParser extends LGParser
 							"first word is not left wall");
 
 					// set the word and part-of-speach
-					fnv.setWordAndPos(wordString);
+					LinkableView.setWordAndPos(fn, wordString);
 
 					// create a feature "this" which points to the linkable
-					fnv.fn().set("this", fnv.fn());
+					fn.set("this", fn);
 
 					// set "wall" to point to the left wall
-					fnv.fn().set("wall", leftWall);
+					fn.set("wall", leftWall);
 					if (lastFN != null)
 					{
-						LinkableView.setNext(lastFN, fnv.fn());
-						fnv.setPrev(lastFN);
+						LinkableView.setNext(lastFN, fn);
+						LinkableView.setPrev(fn, lastFN);
 					}
 
 					if (LinkGrammar.isEntity(wordString) || Character.isUpperCase(wordString.charAt(0)))
-						fnv.setEntityFlag();
+						LinkableView.setEntityFlag(fn);
 
-					s.addWord(fnv.fn());
+					s.addWord(fn);
 
 					// Add char-index information to the feature node
 					// FYI, the JNI call (*env)->NewStringUTF(env, str);
@@ -172,13 +172,13 @@ public class LocalLGParser extends LGParser
 					timesTokenSeen.put(tokenString, new Integer(timesSeen + 1));
 					int endChar = (startChar >= 0 ? startChar + tokenString.length() : -1);
 					// System.err.println("INFO IS " + startChar + "," + endChar);
-					fnv.setCharIndices(startChar, endChar, w);
+					LinkableView.setCharIndices(fn, startChar, endChar, w);
 
 					// Increment index to start looking for next tokenString
 					// after the current one. Use "max" to prevent decreasing
 					// index in the case the tokenString end is -1
 					startChar = Math.max(startChar, endChar);
-					lastFN = fnv.fn();
+					lastFN = fn;
 				}
 			}
 
