@@ -220,22 +220,22 @@ public class EntityMaintainer implements Serializable
 	
 	public void convertSentence(String _originalSentence, Collection<EntityInfo> eis)
 	{
-		if (null == eis) eis = new ArrayList<EntityInfo>();
-		
-		if (eis.size() > MAX_NUM_ENTITIES)
+		if (null != eis)
 		{
-			System.err.println("WARNING: Sentence had more than "
-					+ MAX_NUM_ENTITIES
-					+ ".  Ignoring extras.\nOriginal sentence:"
-					+ originalSentence);
+			if (eis.size() > MAX_NUM_ENTITIES)
+			{
+				System.err.println("WARNING: Sentence had more than "
+						+ MAX_NUM_ENTITIES
+						+ ".  Ignoring extras.\nOriginal sentence:"
+						+ originalSentence);
+			}
+			for (EntityInfo it : eis)
+			{
+				tagger.addEntity(it);
+			}
 		}
+
 		originalSentence = _originalSentence;
-
-		for (EntityInfo it : eis)
-		{
-			tagger.addEntity(it);
-		}
-
 		iDs2Entities = new HashMap<String, EntityInfo>();
 		entityIDIndex = 0; // the first used index will be '1'
 
