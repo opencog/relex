@@ -655,6 +655,20 @@ POS_IT
 ;
 #MorphyAlg
 ;
+; And now, for some lemma corrections...
+; "He'd have to try again"
+; 'd ->would -> past subjunctive of "will" but really future ... 
+#TemplateActionAlg
+MORPHY_FIX_WOULD
+<F_R POS> = verb
+<LAB> = \S\.*
+<F_R str> = 'd
+=
+<F_R str> = will
+<F_R morph root> = will
+<F_R morph type> = verb
+; <F_R tense val> = past_subjunctive
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; MODAL TENSE
@@ -787,13 +801,12 @@ TENSE_IMPERATIVE
 ;
 ; post-tense morphology cleanup: If the verb is "saw" and the tense is "past",
 ; then we are seeing with eyes, not sawing with a saw.
-; This messes up the orig_str, cause its done too early. Sigh.
-; #TemplateActionAlg
-; SEE_SAW
-; <tense val> = past
-; <str> = saw
-; =
-; <str> = see
+#TemplateActionAlg
+SEE_SAW
+<tense val> = past
+<str> = saw
+=
+<str> = see
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
