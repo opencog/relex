@@ -297,6 +297,8 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		ths.set(WORD_STRING_FEATURE_NAME, f);
 
 		// The MorphyAlg will modify the above, so make a copy of the original.
+		// (Literally a copy -- this has to be a distinct feature node.)
+		f = new FeatureNode(wordString);
 		ths.set(ORIG_WORD_STRING_FEATURE_NAME, f);
 	}
 
