@@ -61,7 +61,11 @@ public class MorphyJWNL implements Morphy
 	private static HashMap<String, String> defaultNounStems = new HashMap<String, String>();
 
 	/* static private initializer */
-	static {
+	static
+	{
+		// XXX NOTE: many/most/all of these should probably
+		// be handled in the tagging-algs file, instead of here.
+		// See, for example, the stanzas right after MorphyAlg
 		irregularVerbContractions.put("won't", "will");
 		irregularVerbContractions.put("can't", "can");
 		irregularVerbContractions.put("cannot", "can");
@@ -94,8 +98,10 @@ public class MorphyJWNL implements Morphy
 		standardContractions.put("'re", "are");
 		standardContractions.put("'m", "am");
 
-		// Word-around for WordNet defaults when 
+		// Work-around for WordNet defaults when 
 		// multiple stems are possible.
+		// XXX this should probably be handled in the tagging file!
+		// Because, there we can tell apart singular and plural!!
 		defaultNounStems.put("men", "man");
 	}
 
