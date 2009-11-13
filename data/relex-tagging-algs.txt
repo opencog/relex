@@ -682,6 +682,16 @@ MORPHY_FIX_HAD
 <F_L morph root> = have
 <F_L morph type> = verb
 ;
+#TemplateActionAlg
+MORPHY_FIX_WILL
+<F_L str> = 'll
+<F_L POS> = verb
+<LAB> = \I\.*
+=
+<F_L str> = will
+<F_L morph root> = will
+<F_L morph type> = verb
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; MODAL TENSE
