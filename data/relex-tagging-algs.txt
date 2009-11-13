@@ -656,18 +656,31 @@ POS_IT
 #MorphyAlg
 ;
 ; And now, for some lemma corrections...
-; "He'd have to try again"
-; 'd ->would -> past subjunctive of "will" but really future ... 
+; "He'd have to go" -> He would have to go"
+; 'd ->would -> will-> indicates that "have" is conditional mood
+;
+; "He'd decided to stay" -> He had decided to stay"
+; 'd ->had -> have
+;
 #TemplateActionAlg
 MORPHY_FIX_WOULD
-<F_R POS> = verb
-<LAB> = \S\.*
-<F_R str> = 'd
+<F_L str> = 'd
+<F_L POS> = verb
+<LAB> = \I\.*
 =
-<F_R str> = will
-<F_R morph root> = will
-<F_R morph type> = verb
-; <F_R tense val> = past_subjunctive
+<F_L str> = will
+<F_L morph root> = will
+<F_L morph type> = verb
+;
+#TemplateActionAlg
+MORPHY_FIX_HAD
+<F_L str> = 'd
+<F_L POS> = verb
+<LAB> = \PP\.*
+=
+<F_L str> = have
+<F_L morph root> = have
+<F_L morph type> = verb
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
