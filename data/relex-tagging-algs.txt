@@ -812,12 +812,13 @@ TENSE_IMPERATIVE
 <F_R tense val> = imperative
 <F_R POS> = verb
 ;
-; post-tense morphology cleanup: If the verb is "saw" and the tense is "past",
-; then we are seeing with eyes, not sawing with a saw.
+; post-tense morphology cleanup: If the orig verb string is "saw" 
+; and the tense is "past", then we are seeing with eyes, not 
+; sawing with a saw.
 #TemplateActionAlg
 SEE_SAW
 <tense val> = past
-<str> = saw
+<orig_str> = saw
 =
 <str> = see
 ;
