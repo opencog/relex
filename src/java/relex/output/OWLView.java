@@ -3,7 +3,7 @@
  * by Rui P. Costa (adapted from SimpleView and RelationView)
  *
  * Created in 2008 by "Rui Costa" <racosta@student.dei.uc.pt>,
- *                    "Rui Costa" * <racosta@student.dei.uc.pt>
+ *                     Rui P. Costa <b4h0pe@gmail.com>
  */
 package relex.output;
 
