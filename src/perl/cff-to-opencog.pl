@@ -109,6 +109,12 @@ while (<>)
 		my $rank = 0.4 * $nsw + 0.2 * $djc + 0.06 * $ac + 0.012 * $lc;
 		$rank = exp (-$rank);
 		if ($rank < 1.0e-3) { $rank = 0.0; }
+
+		# Special-case handling for the WSD code: set the score to zero if
+		# there are any skipped words. Basically, we want to minimize damage
+		# to the tables as a result of bad parses.
+		if ($nsw !- 0) { $rank = 0.0; }
+
 		print "(ParseNode \"$parse_inst\" (cog-new-stv 1.0 $rank))\n";
 	}
 
