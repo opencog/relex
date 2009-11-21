@@ -113,7 +113,7 @@ while (<>)
 		# Special-case handling for the WSD code: set the score to zero if
 		# there are any skipped words. Basically, we want to minimize damage
 		# to the tables as a result of bad parses.
-		if ($nsw !- 0) { $rank = 0.0; }
+		if ($nsw != 0) { $rank = 0.0; }
 
 		print "(ParseNode \"$parse_inst\" (cog-new-stv 1.0 $rank))\n";
 	}
