@@ -15,7 +15,8 @@
 # Copyright (c) 2008 Linas Vepstas <linasvepstas@gmail.com>
 #
 
-$min_required_relex_version = "relex-0.11.0";
+$min_required_relex_version = "relex-1.2.0";
+$min_required_lg_version = "link-grammar-4.6.5";
 
 #--------------------------------------------------------------------
 # Need to specify the binmodes, in order for \w to match utf8 chars
@@ -49,15 +50,29 @@ while (<>)
 		# output, and so instead, we'll generate no output at all.
 		#
 		# if(/$required_relex_version/) {}
-		/relex-(\d)\.(\d+)\.(\d+)/;
+		/link-grammar-(\d)\.(\d+)\.(\d+)/;
 		my $major = $1;
 		my $minor = $2;
 		my $rev = $3;
 
-		$min_required_relex_version =~ /relex-(\d)\.(\d+)\.(\d+)/;
+		$min_required_lg_version =~ /link-grammar-(\d)\.(\d+)\.(\d+)/;
 		my $req_major = $1;
 		my $req_minor = $2;
 		my $req_rev = $3;
+
+		if ($major < $req_major) { exit 1;}
+		if ($minor < $req_minor) { exit 1;}
+		if ($rev < $req_rev) { exit 1;}
+
+		/relex-(\d)\.(\d+)\.(\d+)/;
+		$major = $1;
+		$minor = $2;
+		$rev = $3;
+
+		$min_required_relex_version =~ /relex-(\d)\.(\d+)\.(\d+)/;
+		$req_major = $1;
+		$req_minor = $2;
+		$req_rev = $3;
 
 		if ($major < $req_major) { exit 1;}
 		if ($minor < $req_minor) { exit 1;}
