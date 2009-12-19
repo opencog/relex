@@ -200,8 +200,8 @@ public class OWLView
 			s = map_owl_relexwords.keySet();
 			for (Iterator<String> it = s.iterator(); it.hasNext();)
 			{
-				manager.applyChange(new AddAxiom(ontology, factory.getOWLClassAssertionAxiom(map_owl_relexwords.get(it.next()), relex_word)));*/
-			}
+				manager.applyChange(new AddAxiom(ontology, factory.getOWLClassAssertionAxiom(map_owl_relexwords.get(it.next()), relex_word)));
+			}*/
 
 		}
 		catch (OWLException e)
