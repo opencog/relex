@@ -139,6 +139,8 @@ billion
 trillion
 google
 googleplex
+googol
+googolplex
 half
 third
 quarter
@@ -996,7 +998,7 @@ centimeters
 millimeter
 millimeters
 nanometer
-namometers
+nanometers
 chain
 chains
 kilometre
@@ -1015,6 +1017,7 @@ picometer
 yottameter
 terameter
 petameter
+hectometer
 hektometer
 rod
 angstrom
@@ -1029,7 +1032,8 @@ picometers
 yottameters
 terameters
 petameters
-hektometer
+hectometers
+hektometers
 rods
 angstroms
 imperial measure
@@ -1098,6 +1102,7 @@ pungent
 ripe
 rotten
 salty
+savory
 savoury
 see
 sense
@@ -1553,7 +1558,7 @@ flummox
 fluster
 frighten
 frustrate
-fulfil
+fulfill
 gall
 gladden
 gratify
@@ -2086,7 +2091,7 @@ mediocre
 new to
 outstanding
 proficient
-skilful
+skillful
 skilled
 so-so
 splendid
@@ -2118,7 +2123,7 @@ good
 great
 ideal
 ineffective
-marvellous
+marvelous
 outstanding
 perfect
 splendid
@@ -2386,7 +2391,7 @@ drown
 eliminate
 euthanize
 exterminate
-garrotte
+garrote
 kill
 liquidate
 lynch
@@ -2500,6 +2505,7 @@ employ
 operate
 use
 utilise
+utilize
 
 $Capability
 able
@@ -2562,7 +2568,7 @@ belief
 believe
 cognize
 comprehend
-comprehention
+comprehension
 conceive
 conception
 conscious
@@ -3237,6 +3243,7 @@ generate
 make
 produce
 synthesise
+synthesize
 
 $Supply
 equip
@@ -3436,7 +3443,7 @@ pivotal
 principal
 serious
 significant
-triffling
+trifling
 trivial
 vital
 unimportant
@@ -4010,7 +4017,8 @@ shake
 shiver
 spin
 swing
-temble
+tremble
+tumble
 turn
 twirl
 vibrate
@@ -4537,6 +4545,7 @@ $Endangering
 endanger
 imperil
 jeopardise
+jeopardize
 
 $Escaping
 bust_out
@@ -4720,6 +4729,7 @@ $Memorization
 commit_to_memory
 learn.v
 memorise
+memorize
 
 $Partiality
 bias
@@ -5220,6 +5230,7 @@ terror-stricken
 thrilled
 tormented
 traumatised
+traumatized
 unsettled
 unsympathetic
 upset
@@ -5232,7 +5243,7 @@ $Cause_to_make_progress
 develop
 gain
 improve
-moderize
+modernize
 perfect
 
 $Cause_expansion
