@@ -722,7 +722,7 @@
 
 # IF _subj(tell,$var0) THEN ^1_Telling:Speaker(tell,$var0)
 # IF $Imperative_relation(tell) THEN ^1_Telling:Speaker(tell,you)
-# IF _obj(tell,$var0) ^_that(tell,$var1) THEN ^1_Telling:Message(tell,$var0) ^1_Telling:Addressee(tell,$var1)
+# IF _obj(tell,$var0) ^_that(tell,$var1) THEN ^1_Telling:Addressee(tell,$var0) ^1_Telling:Message(tell,$var1)
 # IF _obj(tell,$var0) ^ _iobj(tell,$var1) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Telling:Addressee(tell,$var0) ^1_Telling:Message(tell,$var1)
 # IF about(tell,$Pronoun) THEN ^1_Telling:Topic(tell,$Pronoun)
 # IF _amod($var0,tell) THEN ^1_Telling:Descriptor(tell,$var0)
