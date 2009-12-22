@@ -136,7 +136,7 @@ public class GateEntityDetector extends EntityTagger
 	public void reset ()
 	{
 		super.reset();
-		basic.reset();
+		if (basic != null) basic.reset();
 		doc = null;
 	}
 	
