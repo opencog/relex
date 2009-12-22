@@ -18,10 +18,14 @@ package relex;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Arrays;
 
 import relex.algs.SentenceAlgorithmApplier;
 import relex.anaphora.Antecedents;
@@ -409,7 +413,9 @@ public class RelationExtractor
 			" [--stanford (generate stanford-compatible output)]" +
 			" [-t (show parse tree)]" +
 			" [-v (verbose, full graph output)]" +
-			" [-x (show cerego XML output)]";
+			" [-x (show cerego XML output)]" +
+			" [--html filename (output HTML to file)]"
+				;
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("-c");
@@ -436,11 +442,13 @@ public class RelationExtractor
 		opts.add("-n");
 		opts.add("-s");
 		opts.add("--maxParseSeconds");
+		opts.add("--html");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
 		String sentence = null;
 		int maxParses = 1;
 		int maxParseSeconds = 6;
+		PrintWriter html = null;
 
 		// Check for optional command line arguments.
 		try
@@ -453,6 +461,9 @@ public class RelationExtractor
 
 			opt = commandMap.get("--maxParseSeconds");
 			if (opt != null) maxParseSeconds = Integer.parseInt(opt);
+
+			opt = commandMap.get("--html");
+			if (opt != null) html = new PrintWriter(new FileWriter(opt));
 		}
 		catch (Exception e)
 		{
@@ -471,6 +482,8 @@ public class RelationExtractor
 		// If generating OpenCog Scheme, delimit output.
 		if (commandMap.get("-o") != null)
 			System.out.print("scm\n");
+
+		if (html != null) html.println("<html>");
 
 		RelationExtractor re = new RelationExtractor(false);
 		re.setAllowSkippedWords(true);
@@ -604,6 +617,10 @@ public class RelationExtractor
 				Sentence sntc = re.processSentence(sentence,em);
 				re.doco.addSentence(sntc);
 
+				if (html != null)
+					html.printf("<div id='relex-%d'><table><tr><td>%d: %s</td></tr><tr>\n",
+						sentence_count, sentence_count, escape(sentence));
+
 				sentence_count ++;
 				re.stats.bin(sntc);
 
@@ -640,8 +657,11 @@ public class RelationExtractor
 						System.out.println("\n======\n");
 					}
 
-					if (commandMap.get("-t") != null)
+					if (commandMap.get("-t") != null) {
 						System.out.println("\n" + parse.getPhraseString());
+						if (html != null)
+							html.printf("<td colspan='2'>%s</td></tr><tr>", escape(parse.getPhraseString()));
+					}
 
 					// Don't print the link string if xml output is enabled.
 					// XML parsers choke on it.
@@ -680,6 +700,9 @@ public class RelationExtractor
 						System.out.println("Dependency relations:\n");
 						System.out.println(SimpleView.printRelations(parse));
 						System.out.println("\n======\n");
+
+						if (html != null)
+							html.printf("<td valign='top'><pre>%s</pre></td>\n", escape(SimpleView.printRelations(parse)));
 					}
 
 					if (commandMap.get("--pa") != null)
@@ -746,8 +769,19 @@ public class RelationExtractor
 						String fin = SimpleView.printRelationsAlt(parse);
 						String[] fout = frame.process(fin);
 						re.reportTime("Frame processing: ");
+
+						Arrays.sort(fout);
+
 						for (int i=0; i < fout.length; i++) {
 							System.out.println(fout[i]);
+						}
+
+						if (html != null) {
+							html.print("<td valign='top'><pre>");
+							for (String f : fout) {
+								html.println(escape(f));
+							}
+							html.println("</pre></td>");
 						}
 
 						System.out.println("\nFraming rules applied:\n");
@@ -758,6 +792,8 @@ public class RelationExtractor
 						opencog.setParse(parse);
 						System.out.println(opencog.toString());
 					}
+
+					if (html != null) html.println("</tr></table></div>");
 
 					if (++numParses >= maxParses) break;
 				}
@@ -788,6 +824,11 @@ public class RelationExtractor
 			if (commandMap.get("-s") != null) break;
 		}
 
+		if (html != null) {
+			html.println("</html>");
+			html.close();
+		}
+
 		// Dump the list of document sentences
 		if (commandMap.get("-o") != null)
 		{
@@ -800,6 +841,15 @@ public class RelationExtractor
 		}
 		System.exit(0);
 	}
+
+	private static String escape(String sent)
+	{
+		sent = sent.replace("&", "&amp;");
+		sent = sent.replace("<", "&lt;");
+		sent = sent.replace(">", "&rt;");
+		return sent;
+	}
+
 }
 
 /* ============================ END OF FILE ====================== */
