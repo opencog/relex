@@ -122,6 +122,7 @@ public class GateEntityDetector extends EntityTagger
 
 	public GateEntityDetector()
 	{
+		super();
 		initialized = false;
 		basic = new EntityTaggerBasic();
 	}
@@ -130,6 +131,13 @@ public class GateEntityDetector extends EntityTagger
 	{
 		this();
 		annieParams.putAll(params);
+	}
+
+	public void reset ()
+	{
+		super.reset();
+		basic.reset();
+		doc = null;
 	}
 	
 	/**

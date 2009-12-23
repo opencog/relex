@@ -39,7 +39,7 @@ public abstract class EntityTagger implements Serializable
 	 */
 	public EntityTagger()
 	{
-		reset();
+		orderedEntityInfos = new ArrayList<EntityInfo>();
 	}
 
 	public void reset()
