@@ -93,9 +93,10 @@ public abstract class EntityTagger implements Serializable
 
 			// Advance through the sentence until the entity overlaps
 			int word_end = LinkableView.getEndChar(wn);
-			while ((wn != null) && (word_end < beg))
+			while (word_end < beg)
 			{
 				wn = LinkableView.getNext(wn);
+				if (null == wn) break;
 				word_end = LinkableView.getEndChar(wn);
 			}
 			if (wn == null) break;
