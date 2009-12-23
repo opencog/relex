@@ -596,6 +596,7 @@ public class RelationExtractor
 				{
 					re.starttime = System.currentTimeMillis();
 					em = new EntityMaintainer();
+					gent.reset();
 					em.set(gent);
 					// gent.makeEntityTagger(sentence));
 					re.reportTime("Gate processing: ");

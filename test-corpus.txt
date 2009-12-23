@@ -1,6 +1,9 @@
+Sue received a message from Joe.
+Joe gave Sue a message.
+END.
+What color is this book?
 The rose smelled sweet.
 Tom likes cooking.
-END.
 Tom seemed suspicious.
 Tom appears satisfied.
 Tom is a coward.
