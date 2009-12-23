@@ -510,14 +510,14 @@ public class RelationExtractor
 			re.do_expand_preps = true;
 		}
 
-		EntityTagger gem = null;
+		EntityTagger gent = null;
 		if ((commandMap.get("-g") != null) ||
 		    (commandMap.get("--g-post") != null))
 		{
 			re.starttime = System.currentTimeMillis();
-			gem = EntityTaggerFactory.get();
-			gem.tagEntities(""); // force initialization to measure initialization time
-			re.tagger = gem;
+			gent = EntityTaggerFactory.get();
+			gent.tagEntities(""); // force initialization to measure initialization time
+			re.tagger = gent;
 			re.reportTime("Entity Detector Initialization: ");
 		}
 		if (commandMap.get("-g") != null) re.do_pre_entity_tagging = true;
@@ -596,8 +596,8 @@ public class RelationExtractor
 				{
 					re.starttime = System.currentTimeMillis();
 					em = new EntityMaintainer();
-					em.set(gem);
-					// gem.makeEntityTagger(sentence));
+					em.set(gent);
+					// gent.makeEntityTagger(sentence));
 					re.reportTime("Gate processing: ");
 				}
 				Sentence sntc = re.processSentence(sentence,em);
