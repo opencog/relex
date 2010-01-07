@@ -85,7 +85,8 @@ class ConditionNode extends ASTNode
 		// Regex to also group constants. Constants need to also be mapped, since
 		// when using word instances with UUIDs, they may not necessarily map to
 		// the constant directly... i.e. one of the lemmas may equal the constant.
-		regex = regex.replaceAll("\\((\\w+),", "(($1),").replaceAll(",(\\w+)\\)", ",($1)\\)");
+		//10/01/06 JPW: A constant in the second replace will be followed by an escaped "\" before the ")".
+		regex = regex.replaceAll("\\((\\w+),", "(($1),").replaceAll(",(\\w+)\\\\\\)", ",($1)\\\\\\)");
 
 		relexLinePattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
 	}
@@ -253,6 +254,13 @@ class ConditionNode extends ASTNode
 			//for each variable
 			for (String varName: vars) {
 				varNum++;
+
+//                if (varNum > relexLineMatcher.groupCount()) {
+//                    System.err.println("ConditionNode.processVariableMatch: More vars than groups!");
+//                    System.err.println("conditionStr: " + conditionStr);
+//                    System.err.println("relex: " + relex);
+//                }
+
 				String word = relexLineMatcher.group(varNum);
 								
 				// Check var is not a constant and then...
