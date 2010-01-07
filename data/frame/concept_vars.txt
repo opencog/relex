@@ -30,6 +30,7 @@ at
 athwart
 atop
 before
+behind
 below
 beneath
 beside
@@ -41,6 +42,7 @@ distant_to
 down
 elsewhere
 everywhere
+far
 here
 east of
 in
@@ -201,6 +203,7 @@ opposite
 out
 outlying
 past
+right
 south
 surrounding
 there
@@ -5304,3 +5307,12 @@ near
 $Locative_relation_next
 next to
 next_to
+
+$Locative_relation_right
+right
+
+$Locative_relation_left
+left
+
+$Locative_relation_far
+far
