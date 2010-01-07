@@ -199,7 +199,7 @@ public class OpenCogSchemeFrame
 			ret += "(FrameElementLink (stv 1 1)\n" +
 			       "   (DefinedFrameNode \"#" + frm + "\")\n" +
 			       "   (DefinedFrameElementNode \"#" +
-                     frm + ":" + felt + "\")\n)\n";
+			       frm + ":" + felt + "\")\n)\n";
 
 			// Now, for the specific mappings
 			ret += "(InheritanceLink ";
@@ -230,14 +230,14 @@ public class OpenCogSchemeFrame
 			// Assign some bogus place-holder truth value.
 			ret += "(EvaluationLink (stv 1 0.2)\n";
 			ret += "   (DefinedFrameElementNode \"#" +
-                     frm + ":" + felt + "\")\n";
+			       frm + ":" + felt + "\")\n";
 
 			// Embedded: Link first and second concepts together.
 			ret += "   (ListLink\n";
 			if (cpt1_is_ling)
 			{
 				ret += "      (DefinedLinguisticConceptNode \"#" + 
-				            cpt1 + "\")\n";
+				       cpt1 + "\")\n";
 			}
 			else if (cpt1_is_word)
 			{
@@ -266,17 +266,31 @@ public class OpenCogSchemeFrame
 		
 		/******* Fabricio: new frame format output *****************/
 		ret += "; New Frame Format Output\n\n";
-		for(String frameName : frames.keySet()){
+		for (String frameName : frames.keySet())
+		{
 			ArrayList<FrameItem> frameItemList = frames.get(frameName);
-			for(FrameItem frameItem : frameItemList){
-				
-			
-				for(FrameElementItem element : frameItem.elements){
-					String frameElementPredicateName = frameItem.predicateName +"_"+element.elementName;
+			boolean foundGround = false;
+			for (FrameItem frameItem : frameItemList)
+			{
+				for (FrameElementItem element : frameItem.elements)
+				{
+					if (frameName.equals("Locative_relation") &&
+					   element.elementName.equals("Ground"))
+					{
+						if (foundGround)
+						{
+							element.elementName = "Ground_2";
+						}
+						foundGround = true;
+					}
+
+					String frameElementPredicateName = frameItem.predicateName + 
+					     "_" + element.elementName;
 					
 					ret += "(InheritanceLink (stv 1 1)\n" +
 					"   (PredicateNode \"" + frameElementPredicateName + "\")\n" +
-					"   (DefinedFrameElementNode \"#" + frameName + ":"+element.elementName +
+					"   (DefinedFrameElementNode \"#" + frameName + 
+					":" + element.elementName +
 					"\")\n)\n";
 					
 					ret += "(FrameElementLink (stv 1 1)\n" +
@@ -294,11 +308,12 @@ public class OpenCogSchemeFrame
 					{
 						ret += "   (WordInstanceNode \"" + element.wordInstanceValueElement;
 					}
-          else if (element.isVar)
-          {
-						ret += "   (VariableNode \"" + element.wordInstanceValueElement.replace("_","");
-          }
-          else
+					else if (element.isVar)
+					{
+						ret += "   (VariableNode \"" + 
+						    element.wordInstanceValueElement.replace("_","");
+					}
+					else
 					{
 						ret += "   (ConceptNode \"#" + element.wordInstanceValueElement;
 					}					
@@ -308,9 +323,9 @@ public class OpenCogSchemeFrame
 				}
 				
 				ret += "(InheritanceLink (stv 1 1)\n" +
-				"   (PredicateNode \"" + frameItem.predicateName + "\")\n" +
-				"   (DefinedFrameNode \"#" + frameName + 
-				"\")\n)\n";
+				       "   (PredicateNode \"" + frameItem.predicateName + "\")\n" +
+				       "   (DefinedFrameNode \"#" + frameName + 
+				       "\")\n)\n";
 				
 				
 			}
