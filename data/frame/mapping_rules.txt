@@ -168,6 +168,8 @@
 # IF _nn($State,$var0) THEN ^1_Type:Type_property(state,$State) ^1_Type:Category(state,$var0)
 # IF _nn($Time,$var0) THEN ^1_Event:Event($Time,$var0) ^1_Event:Time($Time,$var0)
 # IF _nn(only,$var0) ^ noun($var0) THEN ^1_Sole_instance:Item(only,$var0)
+# IF _nn($var0,$var1) ^ noun($var1) ^ noun($var0) THEN ^1_Entity:Entity($var0,$var0) ^1_Entity:Name($var0,$var1)
+# IF noun($var0) THEN ^1_Entity:Entity($var0,$var0)
 
 # IF _appo($var0,$var1) ^ noun($var1) THEN ^1_Categorization:Category($var0,$var1) ^1_Categorization:Item($var0,$var1)
 # IF _appo($Quantity,$var0) ^ singular($var0) THEN ^1_Quantity:Mass($Quantity,$var0)
@@ -5753,15 +5755,11 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 
 ;; Fabricio: Figure and Ground for locative relation 
 ;; (TODO for near, the Ground was ok. But not for next_to. So I added the Ground here too. In some cases, it is printing two Ground
-# IF $Locative_relation($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2) ^1_Locative_relation:Ground($Locative_relation,$var1)
-# IF $Locative_relation($var0, $var1) ^ _subj($var0,$var2) THEN ^1_Locative_relation:Figure($Locative_relation,$var2) ^1_Locative_relation:Ground($Locative_relation,$var1)
 
 ;; Fabricio: Locative relation NEAR
-# IF $Locative_relation_near($var0, $var1) ^ _obj($var0,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_near,near)
 # IF _obj($Locative_relation_near,$var1) ^ _subj($Locative_relation_near,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_near,near)
 
 ;; Fabricio: Locative relation NEXT
-# IF $Locative_relation_next($var0, $var1) THEN ^1_Locative_relation:Relation_type($Locative_relation_next,next)
 # IF _obj($Locative_relation_next,$var1) ^ _subj($Locative_relation_next,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_next,next)
 
 ;; What color is the ball?
@@ -5772,5 +5770,23 @@ THEN ^1_Reading:Purpose($Reading,$var0)
 # IF _psubj($Locative_relation_near,$var0) ^ _pobj($Locative_relation_near,$var1) THEN ^1_Locative_relation:Figure($Locative_relation_near,$var0) ^1_Locative_relation:Ground($Locative_relation_near,$var1) ^1_Locative_relation:Relation_type($Locative_relation_near,near) 
 # IF _psubj($Locative_relation_next,$var0) ^ _pobj($Locative_relation_next,$var1) THEN ^1_Locative_relation:Figure($Locative_relation_next,$var0) ^1_Locative_relation:Ground($Locative_relation_next,$var1) ^1_Locative_relation:Relation_type($Locative_relation_next,next) 
 
+# IF _psubj($atLocation, $var0) ^ _pobj($atLocation, $var1) THEN  ^1_Locative_relation:Figure($atLocation,$var0) ^1_Locative_relation:Ground($atLocation,$var1) 
+
 ;; Where is the ball?
-# IF where($var0) ^ _pobj($var1, $var2) ^ _psubj($var1, $var3) THEN ^1_Locative_relation:Figure(where,$var3) ^1_Locative_relation:Ground(where,_$qVar0) ^1_Locative_relation:Relation_type(where,_$qVar1)
+# IF where($var0) ^ _pobj($var1, $var2) ^ _psubj($var1, $var3) THEN ^1_Locative_relation:Relation_type($var1,_$qVar1)
+
+# IF $atLocation($var0,$var1) ^ _psubj($var2, $var3) ^ _pobj($var4, $var5) ^ NOT $Locative_relation_next($var0,$var1) THEN  ^1_Locative_relation:Relation_type($var1,$atLocation)
+
+;; Fabricio: Location right
+# IF _pobj($var0, $Locative_relation_right) ^ _psubj($var0,$var1) ^ of($Locative_relation_right,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_right,right_of) ^1_Locative_relation:Figure($Locative_relation_right,$var1) ^1_Locative_relation:Ground($Locative_relation_right,$var2) 
+
+;; Fabricio: Location left
+# IF _pobj($var0, $Locative_relation_left) ^ _psubj($var0,$var1) ^ of($Locative_relation_left,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_left,left_of) ^1_Locative_relation:Figure($Locative_relation_left,$var1) ^1_Locative_relation:Ground($Locative_relation_left,$var2) 
+
+;; Is the ball at {right,left} the tree?
+# IF of($Locative_relation_right,$var1) ^ _nn($Locative_relation_right,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_right,right) ^1_Locative_relation:Figure($Locative_relation_right,$var2) ^1_Locative_relation:Ground($Locative_relation_right,$var1)
+# IF of($Locative_relation_left,$var1) ^ _nn($Locative_relation_left,$var2) THEN ^1_Locative_relation:Relation_type($Locative_relation_left,left) ^1_Locative_relation:Figure($Locative_relation_left,$var2) ^1_Locative_relation:Ground($Locative_relation_left,$var1)
+
+# IF truth-query(be) THEN ^1_Questioning:Message(be,be) ^1_Attributes:Attribute(be,truth-query) ^1_Questioning:Manner(be,truth-query) ^1_Questioning:Addressee(be,you)
+
+# IF from($Locative_relation_far, $var0) ^ _predadj($var1, $Locative_relation_far) THEN ^1_Locative_relation:Relation_type($Locative_relation_far,far) ^1_Locative_relation:Figure($Locative_relation_far,$var1) ^1_Locative_relation:Ground($Locative_relation_far,$var0)
