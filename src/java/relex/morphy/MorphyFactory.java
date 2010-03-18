@@ -76,8 +76,14 @@ public class MorphyFactory
 		}
 		catch (Exception ex)
 		{
-			System.err.println("Error: Unable to initialize JWNL:" + 
-				ex.toString());
+			String estr = "Error: Unable to initialize JWNL: " + ex.toString() + "\n";
+			Throwable th = ex.getCause();
+			while (th != null)
+			{
+				estr += th.toString() + "\n";
+				th = th.getCause();
+			}
+			System.err.println(estr);
 			return false;
 		}
 	}

@@ -7,6 +7,7 @@ New in version 1.3.0 (xxx 2009)
  * Fix certain morphology handlers e.g.'d->would or 'd->had 
  * Misc frame rules fixes from Jim White, including a crash fix
  * Misc frame rules fixes from Fabricio Silva.
+ * Clarify JWNL not found error message problems.
 
 New in version 1.2.1 (3 November 2009)
  * Provide optional Penn-Treebank-compatible POS tagging.
