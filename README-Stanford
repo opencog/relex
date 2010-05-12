@@ -82,6 +82,13 @@ The ruling documentation is taken to be:
    and Christopher D. Manning September 2008, available at:
    http://nlp.stanford.edu/software/dependencies_manual.pdf
 
+Documentation for the Penn Tagset can be found at:
+ftp://ftp.cis.upenn.edu/pub/treebank/doc/tagguide.ps.gz
+http://www.ims.uni-stuttgart.de/projekte/CorpusWorkbench/CQP-HTMLDemo/PennTreebankTS.html
+http://www.mozart-oz.org/mogul/doc/lager/brill-tagger/penn.html
+http://www.comp.leeds.ac.uk/ccalas/tagsets/upenn.html
+http://bulba.sdsu.edu/jeanette/thesis/PennTags.html
+
 
 Test sentences
 --------------
