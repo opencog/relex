@@ -37,7 +37,7 @@ public abstract class SentenceAlgorithm
 
 	/**
 	 * Iterates over the entire feature structure in the ParsedSentence,
-	 * applying the algorithm whereever it can be applied.
+	 * applying the algorithm where-ever it can be applied.
 	 */
 	public void apply(ParsedSentence sentence, RelexContext context)
 	{

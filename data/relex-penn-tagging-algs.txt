@@ -83,6 +83,7 @@ PENN_NOUN_SING_OR_MASS2
 <penn-pos> = NN
 
 ;
+; NNP is noun, proper singular
 #TemplateActionAlg
 PENN_NOUN_PROPER_SINGULAR_L
 <LAB> = G|TM|TY
@@ -90,7 +91,7 @@ PENN_NOUN_PROPER_SINGULAR_L
 =
 <F_L penn-pos> = NNP
 
-;
+; NNP is noun, proper singular
 #TemplateActionAlg
 PENN_NOUN_PROPER_SINGULAR_R
 <LAB> = G
@@ -98,7 +99,8 @@ PENN_NOUN_PROPER_SINGULAR_R
 =
 <F_R penn-pos> = NNP
 
-;
+; Yes, NNS is "Noun, Plural" in the Penn tagset. Think "Nouns",
+; i.e. noun with an s at the end.
 #TemplateActionAlg
 PENN_NOUN_PLURAL
 <POS> = noun
