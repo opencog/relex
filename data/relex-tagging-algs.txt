@@ -1215,8 +1215,11 @@ ENTITY_SINGULAR
 <num> = %
 <num> = singular
 ;
+; Hmmm. This rule assumes that the wordnet lemmatization is more
+; accurate than the parse.. and this is probably not true. Maybe
+; we should steer the lemmatization based on the parse!?
 #TemplateActionAlg
-NOUN_NUMBER
+LEMMA_NOUN_NUMBER
 <POS> = noun
 <str> != <orig_str>
 <num> = %
