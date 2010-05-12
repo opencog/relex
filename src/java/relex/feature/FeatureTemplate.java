@@ -109,15 +109,17 @@ public class FeatureTemplate
 			return false;
 		}
 		if (pathAndTarget.isPathPair()) {
-			// if path is a pair, make sure that F has both paths
-			// and that their destinatiosn are equal
+			// If path is a pair, make sure that F has both paths
+			// and that their destination are equal.
 			FeaturePath path2 = pathAndTarget.getTargetPath();
 			FeatureNode fTarget2 = f.pathTarget(path2);
-			if (fTarget != fTarget2) {
-				return false;
+			if (fTarget.isValued() && fTarget2.isValued())
+			{
+				return (fTarget.getValue() == fTarget2.getValue());
 			}
+			return fTarget.equiv(fTarget2);
 		} else {
-			// otherwise, test if F's target matches the path's
+			// Otherwise, test if F's target matches the path's.
 			String pathTarg = pathAndTarget.getTargetString();
 			if (pathTarg.equals(NULL_STRING))
 				// only empty string would match null
