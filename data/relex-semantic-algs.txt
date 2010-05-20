@@ -594,7 +594,7 @@ HOW_MUCH
 <F_L ref polyword-FLAG> = %
 ;
 ; "How many dogs did you chase?" "How many dogs chased you?"
-; "How many tails does a cat have?" "How much cofee did you drink?"
+; "How many tails does a cat have?" "How much coffee did you drink?"
 ; "How many times did I tell you to stop?" 
 ;
 #TemplateActionAlg
@@ -1637,6 +1637,21 @@ NEGATIVE_INF2
 <F_R tense first_verb head-word ref NEGATIVE-FLAG> += T
 <F_R tense first_verb head-word negation> += <F_L negation>
 ;
+; Currently, RelEx tags all negative assertions as hypothetical; for
+; example: “John wasn't there” or “that isn't the case”. The linguistic
+; reasoning to support this is not well-grounded, but is based on the
+; notion that such negative assertions are generated as replies to
+; speculative questions, and thus are inherently argumentative, inheriting
+; the speculative nature of the question. A proper study, based on corpus
+; linguistics principles, might clarify whether such tagging is indeed
+; semantically appropriate. More importantly, this case illustrates the
+; limits of a purely syntactic approach to identification of
+; speculative/hypothetical statements. The speculative nature of the
+; sentence is no longer readily appearent from its grammatical
+; construction; the context of the surrounding paragraphs or dialog
+; provides a semantic backdrop that is necessary to properly interpret the
+; remark.
+;
 #TemplateActionAlg
 NEGATIVE-IS-HYP
 <NEGATIVE-FLAG> = T
@@ -1693,6 +1708,11 @@ APPO_LEFT
 ;
 ; HYPOTHETICAL
 ;
+; RelEx treats all clausal constructions as inhrently speculative:
+; this seems semantically reasonable, as there is always a claimant who
+; may not be accurately reporting the facts. 
+; _to-do: "John says you like swimming" John may be lying or misinformed.
+; _to-be: "Mary says the rose smelled sweet" likewise.
 ;
 #TemplateActionAlg
 HYP-TO-DO
