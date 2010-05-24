@@ -45,6 +45,13 @@ public class MorphyAlg extends SentenceAlgorithm
 	                       Map<String,FeatureNode> vars)
 	{
 		String original = LinkableView.getWordString(node);
+
+		// Don't bother looking for morphology of LEFT-WALL
+		if (original.equals("LEFT-WALL")) return;
+
+		// Do not look up morphology of skipped-words. 
+		if (original.charAt(0) == '[') return;
+
 		Morphed m = context.getMorphy().morph(original);
 		String pos = LinkableView.getPOS(node);
 		if (pos == null)
