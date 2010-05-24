@@ -283,6 +283,30 @@ public class MorphyJWNL implements Morphy
 	{
 		String word = m.getOriginal();
 
+		// JWNL has a bug, where it performs a combinatoric explosion 
+		// of searches for certain words. This is described in 
+		// sourceforge bug report (see URL):
+		// https://sourceforge.net/tracker/?func=detail&aid=3006600&group_id=33824&atid=409470
+		// We hack around this here, by skipping any word that has
+		// too many dashes in it.
+		if (word.length() > 30)
+		{
+/*
+			Actually, just punt on anything longer than 30 letters.
+			This should handle just about all comon english words,
+			while still avoiding the bug in JWNL.
+			int cnt = 0;
+			int idx = 0;
+			while (0 <= idx)
+			{
+				idx = word.indexOf('-', idx);
+				cnt ++;
+				if (cnt > 3) return;
+			}
+*/
+			return;
+		}
+
  		// If it is a common possessive form of personal pronoun,
  		// then don't go any further, we're done.
 		if (loadPossessive(word, m))
