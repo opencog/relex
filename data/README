@@ -19,7 +19,7 @@ Some notes about verb tenses:
 -----------------------------
 
 I've identified 35 cases: sixteen perfect, sixteen imperfect, three
-oddball cases. Relex produces the right output for all be the very
+oddball cases. Relex produces the right output for all but the very
 last, which is a confusing case anyway.
 
    Imperfect:
