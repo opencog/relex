@@ -112,8 +112,8 @@
         </javac>
     </target>
 
-    <!-- misc build targets -->
-    <target depends="build-subprojects,build-project" name="build"/>
+    <!-- Main build target -->
+    <target name="build" depends="build-subprojects,build-project"/>
     <target name="build-subprojects"/>
 
     <!-- help -->
