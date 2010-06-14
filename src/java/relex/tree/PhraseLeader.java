@@ -62,7 +62,10 @@ public class PhraseLeader
 		FeatureNode phr = fn_name_source.get("phr-head");
 		if (phr == null) return;
 
-		// If already set, return.
+		// If already set, return. Do this because we should trust the
+		// binary relations more than the unary ones; and the binary
+		// ones are checked first. (The unary relations can accidentally
+		// over-ride a correct binary ID.)
 		if (null != phr.get("phr-leader")) return;
 
 		if (0 < DEBUG) System.err.println("Debug: set leader=" + fn.get("name") +

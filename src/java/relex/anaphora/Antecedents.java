@@ -117,6 +117,10 @@ public class Antecedents
 	{
 		FeatureNode pro = ante.get("pronoun-FLAG");
 		if (pro == null) return false;
+		if (DEBUG > 0)
+		{
+			System.out.println("Anti-anaphora filter mismatch");
+		}
 		return true;
 	}
 
@@ -142,12 +146,23 @@ public class Antecedents
 		// However, "it" can never match a plural.
 		if (prn == null)
 		{
-			if (sant.equals("plural")) return true;
+			if (sant.equals("plural"))
+			{
+				if (DEBUG > 0)
+				{
+					System.out.println("Number filter mismatch: it/plural");
+				}
+				return true;
+			}
 			return false;
 		}
 
 		String sprn = prn.getValue();
 		if (sant.equals(sprn)) return false;
+		if (DEBUG > 0)
+		{
+			System.out.println("Number filter mismatch");
+		}
 		return true;
 	}
 
@@ -172,6 +187,10 @@ public class Antecedents
 		if (ant == null)
 		{
 			if(sprn.equals("neuter")) return false;
+			if (DEBUG > 0)
+			{
+				System.out.println("Gender filter mismatch: neuter/sexed");
+			}
 			return true;
 		}
 		String sant = ant.getValue();
@@ -179,6 +198,10 @@ public class Antecedents
 		if (sant.equals(sprn)) return false;
 		if (sant.equals("person") && sprn.equals("masculine")) return false;
 		if (sant.equals("person") && sprn.equals("feminine")) return false;
+		if (DEBUG > 0)
+		{
+			System.out.println("Gender filter mismatch");
+		}
 		return true;
 	}
 
