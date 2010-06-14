@@ -77,9 +77,10 @@ SUBSCR_POS_E
 <POS> = adv
 ;
 ; f -- female given name.
+; n-f -- common noun, feminine -- e.g. duchess, grandmother, milkmaid, sister, etc
 #TemplateActionAlg
 SUBSCR_POS_F
-<inflection> = .f
+<inflection> = .f|.n-f
 =
 <POS> = noun
 <PERSON-FLAG> = T
@@ -101,9 +102,10 @@ SUBSCR_POS_L
 <ref location-FLAG> = T
 
 ; m -- male given name.
+; n-m -- common noun, masculine: e.g. uncle, grandfather, duke, brother.
 #TemplateActionAlg
 SUBSCR_POS_M
-<inflection> = .m
+<inflection> = .m|.n-m
 =
 <POS> = noun
 <PERSON-FLAG> = T

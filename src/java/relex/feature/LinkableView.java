@@ -290,7 +290,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		    wordString.endsWith("[~]"))
 		{
 			len = wordString.length(); // recompute length, due to above dots.
-			wordString = wordString.substring(0,len-3);
+			wordString = wordString.substring(0, len-3);
 		}
 
 		FeatureNode f = new FeatureNode(wordString);
