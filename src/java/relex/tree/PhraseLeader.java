@@ -51,7 +51,7 @@ public class PhraseLeader
 	 *
 	 * Now, "chair" can be identified as the leader of "(NP the red chair)"
 	 * because there is a binary relation: "amod(chair, red)" that 
-	 * identifies * chair.  However, "(NP the chair)" has no such binary 
+	 * identifies chair.  However, "(NP the chair)" has no such binary 
 	 * relation, and so instead, we look for either "definite-FLAG(chair, T)"
 	 * or for "noun_number(chair, singular)" to identify "chair".
 	 */
@@ -61,6 +61,10 @@ public class PhraseLeader
 		if (fn_name_source == null) return;
 		FeatureNode phr = fn_name_source.get("phr-head");
 		if (phr == null) return;
+
+		// If already set, return.
+		if (null != phr.get("phr-leader")) return;
+
 		if (0 < DEBUG) System.err.println("Debug: set leader=" + fn.get("name") +
 		                " for phrase=" + PhraseTree.toString(fn_name_source));
 		phr.set("phr-leader", fn);
