@@ -144,7 +144,7 @@
     <target name="test" depends="build-tests">
         <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
-            <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
             <classpath refid="relex.classpath"/>
             <arg line=""/>
         </java>
@@ -240,7 +240,7 @@
     <target name="run" depends="build-project">
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
-            <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
             <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging-algs.txt"/>
             <jvmarg line="-Drelex.semalgpath=data/relex-semantic-algs.txt"/>
             <jvmarg line="-Drelex.sfalgpath=data/relex-stanford-algs.txt"/>
