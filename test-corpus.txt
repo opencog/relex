@@ -1,3 +1,5 @@
+Books are fun to read.
+END.
 my aunt gave me that book.
 She was an avid reader.
 END.

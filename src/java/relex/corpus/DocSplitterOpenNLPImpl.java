@@ -106,6 +106,20 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 				if (englishModelFilename == null || englishModelFilename.length() == 0)
 					englishModelFilename = DEFAULT_ENGLISH_FILENAME;
 
+			}
+			catch (Exception e)
+			{
+				// e.printStackTrace();
+				System.err.println(e.getMessage());
+			}
+			try
+			{
+				// This is what opennlp-1.5.0 uses so try this one first.
+				// Except that this won't compile. I cannot figure out
+				// the opennlp API. I give up. Java sux. Punt.
+				// detector = new opennlp.tools.sentdetect.SentenceDetectorME(englishModelFilename);
+				// This is what opennlp-1.4.3, 1.3.0 and 1.2.0 use
+				// It's our fallback plan if the above fails.
 				detector = new opennlp.tools.lang.english.SentenceDetector(englishModelFilename);
 			}
 			catch (Exception e)

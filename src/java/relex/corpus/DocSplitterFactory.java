@@ -20,9 +20,23 @@ public class DocSplitterFactory
 	private static final Class<? extends DocSplitter> clazz;
 	static{
 		Class<? extends DocSplitter> clazz0;
+		clazz0 = DocSplitterFallbackImpl.class;
+		// This is what opennlp-1.5.0 uses
+		// Except that I can't figure out how to load the model,
+		// when I run 1.5.0. So, for now, stub this out. 
+		// try
+		// {
+		// 	Class.forName("opennlp.tools.sentdetect.SentenceDetectorME");
+		// }
+		// catch(Throwable t)
+		// {
+		// }
 		try
 		{
+			// If the above isn't found, try again ... 
+			// This is what opennlp-1.4.3 and 1.3.0 use.
 			Class.forName("opennlp.tools.lang.english.SentenceDetector");
+
 			// clazz0 = DocSplitterOpenNLPImpl.class;
 			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLPImpl");
 
@@ -30,7 +44,7 @@ public class DocSplitterFactory
 			// a type-safety warning,
 			clazz0 = (Class<DocSplitter>) c;
 		}
-		catch(Throwable t)
+		catch(Throwable t2)
 		{
 			System.err.println(
 				"\nWARNING:\n" +
@@ -38,11 +52,11 @@ public class DocSplitterFactory
 				"\tcorrectly specified in the java classpath. The OpenNLP tools are\n" +
 				"\tused to perform sentence detection. Without them, ReleEx will use\n" +
 				"\tthe less accurate Java sentence detector. See the README file for info.\n");
-			clazz0 = DocSplitterFallbackImpl.class;
 		}
-		clazz = clazz0;
 
+		clazz = clazz0;
 	}
+
 	public static DocSplitter create()
 	{
 		try {
