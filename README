@@ -366,6 +366,21 @@ Ratio: Stanford-wsjPCFG/RelEx = 134sec/180sec = 0.74x (slower)
 TODO
 ----
 
+TODO - LinkGraphGenerator
+-------------------------
+This graph visualization class is not currently used. It should be
+wired up and turned on.
+
+TODO - Conjunctions
+-------------------
+Linkgrammar as a bunch of new conjunction links. Relex needs 
+to grok these.
+
+TODO - OpenNLP
+--------------
+A new version of OpenNLP is available. It is not backwards-compatible
+with the OLD API. Need to port relex to the new API.
+
 TODO - Comparatives
 -------------------
 RelEx is pretty broken when it comes to handling comparative sentences.
