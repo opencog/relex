@@ -61,7 +61,7 @@ do
 	
 	echo "url $url"
 	cat "${fpath}" | \
-	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.WebFormat  -g -n 20 \
+	nice java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.WebFormat  -g -n 20 \
 	--url "${url}" > "parsed/$lettre/${f}.xml" 2> "err/$lettre/${f}"
 
 	mv "enwiki-20080524-alpha/$lettre/${f}" done/$lettre
