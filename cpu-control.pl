@@ -1,11 +1,15 @@
 #! /usr/bin/env perl
 
 # The max allowed CPU usage, 1 to 100
-$max_cpu = 20;
+$max_cpu = 80;
+
+# on a 16-cpu system, one job is about 1/16 = 6.25% of cpu.
+$hysteresis = 7;
 
 while(1)
 {
-	($j, $k, $l, $vmstat) = `vmstat 1 2`;
+	# Get a 2-second average of cpu usage. A 1-sec avg is too noisy!
+	($j, $k, $l, $vmstat) = `vmstat 2 2`;
 
 	# trim leading whitespace
 	$vmstat =~ s/^\s+//;
@@ -16,13 +20,7 @@ while(1)
 	# the different fields returned by vmstat
 	($r, $b, $swpd, $free, $buff, $cache, $si, $so, $bi, $bo, $in, $cs, $us, $sy, $id, $wa) =  split(/ /, $vmstat);
 
-	if ($us < $max_cpu)
-	{
-		sleep 1;
-		next;
-	}
-
-	# If we are here, the cpu usage is too high.
+	# Look at the list of jobs.
 	@jobs = `ps aux |grep linas | grep java |grep -v grep`;
 
 	foreach $job (@jobs)
@@ -34,19 +32,29 @@ while(1)
 
 		($user, $pid, $cpu, $mem, $vsz, $rss, $tty, $stat, $start, $time, $command) = split(/ /, $job);
 
-		print "duude $pid  $stat\n";
-
 		if ($stat eq "Tl")
 		{
-			print "duude $pid is stopped: $stat\n";
+			# if we're below the allowed max, then restart a job
+			if ($us < $max_cpu-$hysteresis)
+			{
+				print "cpu usage=$us < max-cpu=$max_cpu -- starting job $pid\n";
+				`kill -CONT $pid`;
+				last;
+			}
 			next;
 		}
-
-		`kill -STOP $pid`;
-		last;
+		else
+		{
+			# if we're above the allowed max, then halt a job
+			if ($us > $max_cpu)
+			{
+				print "cpu usage=$us > max-cpu=$max_cpu -- stopping job $pid\n";
+				`kill -STOP $pid`;
+				last;
+			}
+			next;
+		}
 	}
 
-	print "duuude come around agin\n";
 	sleep 1;
-
 }
