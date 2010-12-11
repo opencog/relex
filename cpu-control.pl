@@ -13,10 +13,10 @@
 
 
 # The max allowed CPU usage, 1 to 99
-$max_cpu = 80;
+$max_cpu = 25;
 
 # Number of cpus in the system.
-$nr_cpus = 16
+$nr_cpus = 16;
 
 # On a 16-cpu system, one job is about 1/16 = 6.25% of cpu.
 $hysteresis = 100/$nr_cpus +1;
@@ -33,7 +33,9 @@ while(1)
 	$vmstat =~ s/\s+/ /g;
 
 	# the different fields returned by vmstat
-	($r, $b, $swpd, $free, $buff, $cache, $si, $so, $bi, $bo, $in, $cs, $us, $sy, $id, $wa) =  split(/ /, $vmstat);
+	($r, $b, $swpd, $free, $buff, $cache, $si, $so, $bi, $bo, $int, $cs, $user, $sys, $idle, $wait) =  split(/ /, $vmstat);
+
+	$tot_usage = $user + $sys;
 
 	# Look at the list of jobs.
 	@jobs = `ps aux |grep linas | grep java |grep -v grep`;
@@ -50,9 +52,9 @@ while(1)
 		if ($stat eq "Tl")
 		{
 			# if we're below the allowed max, then restart a job
-			if ($us < $max_cpu-$hysteresis)
+			if ($tot_usage < $max_cpu-$hysteresis)
 			{
-				print "cpu usage=$us < max-cpu=$max_cpu -- starting job $pid\n";
+				print "curr cpu usage=$tot_usage < allowed max=$max_cpu -- starting job $pid\n";
 				`kill -CONT $pid`;
 				last;
 			}
@@ -61,9 +63,9 @@ while(1)
 		else
 		{
 			# if we're above the allowed max, then halt a job
-			if ($us > $max_cpu)
+			if ($tot_usage > $max_cpu)
 			{
-				print "cpu usage=$us > max-cpu=$max_cpu -- stopping job $pid\n";
+				print "curr cpu usage=$tot_usage > allowed max=$max_cpu -- stopping job $pid\n";
 				`kill -STOP $pid`;
 				last;
 			}
