@@ -49,7 +49,8 @@ while(1)
 
 		($user, $pid, $cpu, $mem, $vsz, $rss, $tty, $stat, $start, $time, $command) = split(/ /, $job);
 
-		if ($stat eq "Tl")
+		# Some typical job status: Tl TNl   N for Nice l for multi-threaded (as java will be)
+		if (($stat eq "TNl") || ($stat eq "Tl"))
 		{
 			# if we're below the allowed max, then restart a job
 			if ($tot_usage < $max_cpu-$hysteresis)
