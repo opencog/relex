@@ -13,7 +13,7 @@
 
 
 # The max allowed CPU usage, 1 to 99
-$max_cpu = 25;
+$max_cpu = 80;
 
 # Number of cpus in the system.
 $nr_cpus = 16;
