@@ -229,14 +229,13 @@ parse, in principle the accuracy could be very high, once fully debugged.
 
 Running RelEx
 -------------
-Several example shell scripts (MS Windows batch files) are included
-to show sample usage. These files (*.sh in unix, or *.bat, in Windows)
-define the required system properties, classpath and JVM options.
+Several example unix shell scripts and MS Windows batch files are
+included to show sample usage. These files (*.sh in unix, or *.bat,
+in Windows) define the required system properties, classpath and JVM
+options.
 
 If there are any ClassNotFound exceptions, please verify the paths
-and values in these files.  An important property is relex.algpath;
-it defines the semantic algorithms used by RelEx.  The default file
-is data/relex-semantic-algs.txt.
+and values in these files.
 
 
 relation-extractor.sh
@@ -312,6 +311,7 @@ to be a large example program illustrating all of the various features
 of RelEx.  For custom applications, this class should be copied and
 modified as desired to fit the application.
 
+
 Speed test results
 ------------------
 Performance comparison of RelEx-1.2.0 vs. Stanford-1.6.1, run 11 Oct 2009.
@@ -320,6 +320,10 @@ Project Gutenberg "Pride and Prejudice".  Due to differences in sentence
 detection, Stanford and RelEx disagree on the sentence count. Due to 
 differences in counting punctuation, the splitting of possessives and 
 contractions, the two disagree on the word count as well.
+
+Since these tests were run, the performance of link-grammar has been
+improved by a factor of 2x-3x. This update should have a significant
+effect on relex speeds.
 
 The unix command "wc" counts 2609 words in 148 sentences, for 
 2609/148 = 17.6 words/sent.
@@ -376,15 +380,18 @@ TODO - Conjunctions
 Linkgrammar as a bunch of new conjunction links. Relex needs 
 to grok these.
 
+
 TODO - OpenNLP
 --------------
 A new version of OpenNLP is available. It is not backwards-compatible
 with the OLD API. Need to port relex to the new API.
 
+
 TODO - Comparatives
 -------------------
 RelEx is pretty broken when it comes to handling comparative sentences.
 This needs fixing.
+
 
 TODO - Java Install
 -------------------

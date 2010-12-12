@@ -12,3 +12,6 @@ The cff-to-opencog.pl utility will convert the relex compact file format
 convert it into the opencog format (compatible with what
 output/OpenCogScheme.java would produce).
 
+The cpu-control.pl utility will monitor overall CPU usage on a system,
+and halt parsing jobs when the cpu usage gets to high. It will restart
+the jobs when cpu usage drops. It has a response time of a few seconds.
