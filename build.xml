@@ -188,6 +188,7 @@
                         excludes=".bzr*/**, relex-*/**" mode="755">
                 <include name="batch-process.sh"/>
                 <include name="batch-wiki.sh"/>
+                <include name="cpu-control.pl"/>
                 <include name="doc-splitter.sh"/>
                 <include name="link-grammar-server.sh"/>
                 <include name="opencog-server.sh"/>

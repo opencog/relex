@@ -13,7 +13,7 @@
 
 
 # The max allowed CPU usage, 1 to 99
-$max_cpu = 80;
+$max_cpu = 85;
 
 # Number of cpus in the system.
 $nr_cpus = 16;
@@ -23,8 +23,8 @@ $hysteresis = 100/$nr_cpus +1;
 
 while(1)
 {
-	# Get a 2-second average of cpu usage. A 1-sec avg is too noisy!
-	($j, $k, $l, $vmstat) = `vmstat 2 2`;
+	# Get a 3-second average of cpu usage. A 1-sec avg is too noisy!
+	($discard_a, $discard_b, $discard_c, $vmstat) = `vmstat 3 2`;
 
 	# trim leading whitespace
 	$vmstat =~ s/^\s+//;
@@ -73,6 +73,4 @@ while(1)
 			next;
 		}
 	}
-
-	sleep 1;
 }
