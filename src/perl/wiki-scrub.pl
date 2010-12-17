@@ -11,7 +11,7 @@
 # cat simplewiki-20080629.xml.bz2 | bunzip2 | ./wiki-scrub.pl
 # 
 # This script creates individual files, one per article, placing these
-# in a directory "wiki-scrubbed", which must already exist. This
+# in a directory "wiki-stripped", which must already exist. This
 # directory name is user-configurable, see immediately below.
 #
 # Copyright (c) 2008 Linas Vepstas <linas@linas.org>
