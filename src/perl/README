@@ -4,8 +4,14 @@
 
 The wiki-scrub.pl utility will take a wikipedia page, marked up in the
 standard Wikipedia XML format, and remove all markup, leaving only
-plain text. The goal is to have generate text that can be input into
+plain text. The goal is to have clean text that can be input into
 Relex.
+
+The wiki-clean.sh shell script will remove certain unwanted wikipedia
+pages (templates, images, categories, etc.)
+
+The wiki-alpha.sh shell script will move wikipedia articles to 
+alphabetical directories. 
 
 The cff-to-opencog.pl utility will convert the relex compact file format
 (written out by relex.WebFormat via output/CompactView.java), and
