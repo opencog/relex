@@ -188,13 +188,13 @@
                         excludes=".bzr*/**, relex-*/**" mode="755">
                 <include name="batch-process.sh"/>
                 <include name="batch-wiki.sh"/>
-                <include name="cpu-control.pl"/>
                 <include name="doc-splitter.sh"/>
                 <include name="link-grammar-server.sh"/>
                 <include name="opencog-server.sh"/>
                 <include name="parallel-relation-extractor.sh"/>
                 <include name="relation-extractor.sh"/>
                 <include name="src/perl/*.pl"/>
+                <include name="src/perl/*.sh"/>
             </tarfileset>
             <tarfileset dir="." prefix="relex-${REVISION}/" 
                         excludes=".bzr*/**, relex-*/**">
