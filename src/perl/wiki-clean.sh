@@ -17,6 +17,9 @@ find . -name 'Wikipedia:*' -print | wc
 find . -name '"List of "*' -print | wc
 find . -name '"Lists of "*' -print | wc
 
+# Must use "find" to accomplish this, since using "rm Category:*"
+# leads to an overflow of the command line.
+
 echo "Category:"
 time find . -name 'Category:*' -exec rm {} \;
 time find . -name 'MediaWiki:*' -exec rm {} \;
