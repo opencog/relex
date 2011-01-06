@@ -24,7 +24,7 @@ export LANG=en_US.UTF-8
 VM_OPTS="-Xmx1024m"
 
 RELEX_OPTS="\
-	-Djava.library.path=/home/linas/lib \
+	-Djava.library.path=/usr/local/lib:/usr/local/lib/jni \
 	-DEnglishModelFilename=EnglishSD.bin.gz \
 	"
 
@@ -41,7 +41,7 @@ CLASSPATH="-classpath \
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/commons-logging.jar:\
 /usr/local/share/java/linkgrammar.jar:\
-/usr/local/share/java/linkgrammar.jar:\
+/usr/share/java/linkgrammar.jar:\
 /usr/share/java/gnu-getopt.jar:\
 /usr/share/java/xercesImpl.jar:\
 "
