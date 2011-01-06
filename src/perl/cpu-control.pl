@@ -55,7 +55,11 @@ while(1)
 			# if we're below the allowed max, then restart a job
 			if ($tot_usage < $max_cpu-$hysteresis)
 			{
+				($sec,$min,$hour,$mday,$mon,$year,$wday, $yday,$isdst) = localtime(time);
+				printf "%4d-%02d-%02d %02d:%02d:%02d ",
+					$year+1900,$mon+1,$mday,$hour,$min,$sec;
 				print "curr cpu usage=$tot_usage < allowed max=$max_cpu -- starting job $pid\n";
+
 				`kill -CONT $pid`;
 				last;
 			}
@@ -66,8 +70,11 @@ while(1)
 			# if we're above the allowed max, then halt a job
 			if ($tot_usage > $max_cpu)
 			{
-				print "curr cpu usage=$tot_usage > allowed max=$max_cpu -- stopping job $pid\n";
 				`kill -STOP $pid`;
+				($sec,$min,$hour,$mday,$mon,$year,$wday, $yday,$isdst) = localtime(time);
+				printf "%4d-%02d-%02d %02d:%02d:%02d ",
+					$year+1900,$mon+1,$mday,$hour,$min,$sec;
+				print "curr cpu usage=$tot_usage > allowed max=$max_cpu -- stopping job $pid\n";
 				last;
 			}
 			next;
