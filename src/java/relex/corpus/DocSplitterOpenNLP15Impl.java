@@ -18,6 +18,7 @@ package relex.corpus;
 
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.util.Span;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -116,20 +117,17 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 				System.err.println(e.getMessage());
 			}
 
-			InputStream modelIn = new FileInputStream(englishModelFilename);
 			try
 			{
-				SentenceModel detector = new SentenceModel(modelIn);
+				InputStream modelIn = new FileInputStream(englishModelFilename);
+				SentenceModel model = new SentenceModel(modelIn);
+				modelIn.close();
+				detector = new SentenceDetectorME(model);
 			}
 			catch (IOException e)
 			{
 				System.err.println(e.getMessage());
 			}
-			if (modelIn != null)
-			{
-				modelIn.close();
-			}
-			detector = new SentenceDetectorME(model);
 		}
 	}
 
@@ -200,13 +198,13 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 			return rc;
 		}
 
-		int[] sentenceEnds = detector.sentPosDetect(buffer);
-		if (0 == sentenceEnds.length) return null;
+		Span spans[] = detector.sentPosDetect(buffer);
+		if (0 == spans.length) return null;
 
 		start = 0;
-		for (int sentenceEnd : sentenceEnds)
+		for (Span span : spans)
 		{
-			end = sentenceEnd;
+			end = span.getEnd();
 			if (foundSentence(buffer)) break;
 		}
 		if (!foundSentence(buffer)) return null;
@@ -260,12 +258,13 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 		snl = new ArrayList<String>();
 		if (docText == null) return;
 
-		int[] sentenceEnds = detector.sentPosDetect(docText);
+		Span spans[] = detector.sentPosDetect(buffer);
 
 		start = 0;
 		end = 0;
-		for (int sentenceEnd : sentenceEnds)
+		for (Span span : spans)
 		{
+			int sentenceEnd = span.getEnd();
 			int prevstart = start;
 			start = end; // from previous loop iteration
 			end = sentenceEnd;
