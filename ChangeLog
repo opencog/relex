@@ -1,10 +1,11 @@
-New in version 1.3.1 (xxx 2010)
+New in version 1.3.1 (xxx January 2011)
  * Work around JWNL bug 3006600 for infinite loop -- 
    https://sourceforge.net/tracker/?func=detail&aid=3006600&group_id=33824&atid=409470
  * Add .n-f and .n-m linkgrammar gender tag recognition
  * Fix: anaphora resolution failure due to bad head-word identification.
  * Fix: missing frame concept error.
  * Fix: Add /usr/lib/jni to the library search path.
+ * Add support for OpenNLP-1.5 (bug https://bugs.launchpad.net/relex/+bug/667949)
 
 New in version 1.3.0 (15 May 2010)
  * New date relationships for date tagging.

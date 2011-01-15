@@ -25,7 +25,7 @@ VM_OPTS="-Xmx1024m"
 
 RELEX_OPTS="\
 	-Djava.library.path=/usr/local/lib:/usr/local/lib/jni \
-	-DEnglishModelFilename=EnglishSD.bin.gz \
+	-DEnglishModelFilename=data/opennlp/models-1.5/en-sent.bin \
 	"
 
 
@@ -35,15 +35,14 @@ RELEX_OPTS="\
 
 CLASSPATH="-classpath \
 /usr/local/share/java/relex.jar:\
-/usr/local/share/java/opennlp-tools-1.4.3.jar:\
-/usr/local/share/java/maxent-2.5.2.jar:\
+/usr/local/share/java/opennlp-tools-1.5.0.jar:\
+/usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/commons-logging.jar:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/linkgrammar.jar:\
 /usr/share/java/gnu-getopt.jar:\
-/usr/share/java/xercesImpl.jar:\
 "
 
 # IFS=$(echo -en "\n\b")
