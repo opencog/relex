@@ -25,7 +25,9 @@ public class DocSplitterFactory
 		// First, try to load opennlp-1.5.0
 		try
 		{
-			Class.forName("opennlp.tools.sentdetect.SentenceDetectorME");
+			// Earlier versions of opennlp don't have this class,
+			// and so we'll throw an error if its not found.
+			Class.forName("opennlp.tools.sentdetect.SentenceModel");
 
 			// clazz0 = DocSplitterOpenNLP15Impl.class;
 			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP15Impl");

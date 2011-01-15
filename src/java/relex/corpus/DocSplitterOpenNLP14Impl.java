@@ -22,28 +22,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * DocSplitter -- split document into sentences.
- * Sentences are blocks of text ending with a period, exclamation
- * mark, or question mark. Unpunctuated blocks of text are not
- * recognized as sentences.
- *
- * This class can operate in one of two modes: batch mode and fifo mode.
- *
- * In batch mode, a large block of text is submitted, and the
- * process() or split() methods are used to get arrays of sentences.
- *
- * In fifo mode, it can be fed anything from large blocks of text
- * to sentence fragments or even a few letters at a time, via the
- * addText() method. It can then be polled to see if there is a
- * complete sentence yet, by calling getNextSentence().  Calls
- * to each of these routines can be arbitrarily alternated, with
- * sentence fragments buffered up.
+ * DocSplitterOpenNLP14Impl -- split document into sentences.
  *
  * This is a convenience wrapper around the opennlp-tools-1.2.x, 1.3.x
  * and 1.4.x toolkits; the 1.5.x toolkits sports a new incompatible API
  * that will not work with this class.
  *
- * This wrapper also fixes some bugs encountered there.
+ * This wrapper also fixes some bugs in the open-nlp-1.4 english
+ * language model.
  *
  * Refactored, expanded version of ord.disco.taca.SentenceAnnotator
  *

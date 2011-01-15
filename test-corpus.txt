@@ -1,5 +1,8 @@
-Books are fun to read.
+This is a sentence.  How now brown
+cow? I am so excited!  What should
+I do?  I don't know.
 END.
+Books are fun to read.
 my aunt gave me that book.
 She was an avid reader.
 END.
