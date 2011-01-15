@@ -41,13 +41,13 @@ public class DocSplitterFactory
 		{
 			try
 			{
-				// If the above isn't found, try again ... 
+				// If the above isn't found, try again ...
 				// This is what opennlp-1.4.3 and 1.3.0 use.
 				Class.forName("opennlp.tools.lang.english.SentenceDetector");
-	
+
 				// clazz0 = DocSplitterOpenNLPImpl.class;
 				Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP14Impl");
-	
+
 				// It seems to be impossible to perform this cast and not get
 				// a type-safety warning,
 				clazz0 = (Class<DocSplitter>) c;

@@ -116,12 +116,8 @@ public class DocSplitterOpenNLP14Impl implements DocSplitter
 			}
 			try
 			{
-				// This is what opennlp-1.5.0 uses so try this one first.
-				// Except that this won't compile. I cannot figure out
-				// the opennlp API. I give up. Java sux. Punt.
-				// detector = new opennlp.tools.sentdetect.SentenceDetectorME(englishModelFilename);
 				// This is what opennlp-1.4.3, 1.3.0 and 1.2.0 use
-				// It's our fallback plan if the above fails.
+				// This is not compatible with opennlp-1.5
 				detector = new opennlp.tools.lang.english.SentenceDetector(englishModelFilename);
 			}
 			catch (Exception e)
@@ -155,9 +151,9 @@ public class DocSplitterOpenNLP14Impl implements DocSplitter
 		for (String endString : unacceptableSentenceEnds)
 		{
 			int len = endString.length();
-			if (end >= start + len && 
+			if (end >= start + len &&
 			    s.substring(end - len, end).equals(endString) &&
-			    (end == start + len || Character.isWhitespace(s.charAt(end - len - 1)))) 
+			    (end == start + len || Character.isWhitespace(s.charAt(end - len - 1))))
 			{
 				return false;
 			}
