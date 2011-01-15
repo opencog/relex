@@ -129,7 +129,7 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 	 */
 	private boolean acceptableBreak(String s, int start, int end)
 	{
-		// if the string ends with "Ms." preceeded by whitespace
+		// If the string ends with "Ms." preceeded by whitespace
 		for (String endString : unacceptableSentenceEnds)
 		{
 			int len = endString.length();
@@ -140,7 +140,15 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 				return false;
 			}
 		}
-		return true;
+
+		// OpenNLP-1.5 will fail on sentences split between multiple
+		// lines. Therefore, make sure we actually have punctuation
+		// at the end! Otherwise, its probably only half-a-sentence.
+		char e = s.charAt(end-1);
+		if(e == '.') return true;
+		if(e == '?') return true;
+		if(e == '!') return true;
+		return false;
 	}
 
 	/* --------------------------------------------------------------- */
