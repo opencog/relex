@@ -39,9 +39,11 @@ import java.util.HashSet;
  * to each of these routines can be arbitrarily alternated, with
  * sentence fragments buffered up.
  *
- * This is a convenience wrapper around the opennlp toolkit;
- * it fixes some bugs encountered there, and provides a more
- * convenient interface.
+ * This is a convenience wrapper around the opennlp-tools-1.2.x, 1.3.x
+ * and 1.4.x toolkits; the 1.5.x toolkits sports a new incompatible API
+ * that will not work with this class.
+ *
+ * This wrapper also fixes some bugs encountered there.
  *
  * Refactored, expanded version of ord.disco.taca.SentenceAnnotator
  *
@@ -50,7 +52,7 @@ import java.util.HashSet;
  * it is preceeded by white space.
  */
 // @SuppressWarnings({"CallToPrintStackTrace", "UseOfSystemOutOrSystemErr"})
-public class DocSplitterOpenNLPImpl implements DocSplitter
+public class DocSplitterOpenNLP14Impl implements DocSplitter
 {
 	private static final int DEBUG = 0;
 	private static final String DEFAULT_ENGLISH_FILENAME =
@@ -83,7 +85,7 @@ public class DocSplitterOpenNLPImpl implements DocSplitter
 	private String englishModelFilename;
 
 	/* --------------------------------------------------------------- */
-	public DocSplitterOpenNLPImpl()
+	public DocSplitterOpenNLP14Impl()
 	{
 		buffer = null;
 		initialize();

@@ -21,9 +21,7 @@ public class DocSplitterFactory
 	static{
 		Class<? extends DocSplitter> clazz0;
 		clazz0 = DocSplitterFallbackImpl.class;
-		// This is what opennlp-1.5.0 uses
-		// Except that I can't figure out how to load the model,
-		// when I run 1.5.0. So, for now, stub this out. 
+		// First, try to load opennlp-1.5.0
 		// try
 		// {
 		// 	Class.forName("opennlp.tools.sentdetect.SentenceDetectorME");
@@ -38,7 +36,7 @@ public class DocSplitterFactory
 			Class.forName("opennlp.tools.lang.english.SentenceDetector");
 
 			// clazz0 = DocSplitterOpenNLPImpl.class;
-			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLPImpl");
+			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP14Impl");
 
 			// It seems to be impossible to perform this cast and not get
 			// a type-safety warning,
