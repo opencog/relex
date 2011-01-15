@@ -73,13 +73,13 @@
     <!-- conditional compilation, check for OWL -->
     <available classname="org.semanticweb.owl.model.OWLClass" classpathref="relex.classpath" property="OWL.present"/>
     <target name="look-for-owl" unless="OWL.present">
-       <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
+       <echo message="Will not build (optional) OWL output format; org.semanticweb.owl classes not found."/>
     </target>
 
     <!-- conditional compilation, check for GATE -->
     <available classname="gate.creole.ANNIEConstants" classpathref="relex.classpath" property="GATE.present"/>
     <target name="look-for-gate" unless="GATE.present">
-       <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
+       <echo message="Will not build (optional/deprecated) GATE-based entity detector; GATE classes not found."/>
     </target>
 
     <!-- conditional compilation, check for OpenNLP-1.5 -->
@@ -94,7 +94,7 @@
          Ouch, that hurts! -->
     <target name="look-for-opennlp-1.4" unless="OpenNLP15.present">
     	 <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP14.present"/>
-       <echo message="Looking for OpenNLP-1.4..."/>
+       <echo message="Looking for (optional) OpenNLP-1.4..."/>
     </target>
 
     <target name="look-for-opennlp" depends="look-for-opennlp-1.5">
@@ -236,6 +236,7 @@
                 <include name="data/relex-stanford-algs.txt"/>
                 <include name="data/relex-tagging-algs.txt"/>
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
+                <include name="data/opennlp/models-1.5/en-sent.bin" />
                 <include name="data/wordnet/file_properties.xml"/>
                 <include name="src/java/relex/anaphora/test-corpus.txt"/>
                 <include name="**/README"/>

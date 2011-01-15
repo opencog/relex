@@ -80,7 +80,7 @@ public class DocSplitterFactory
 				System.err.println(
 					"\nWARNING:\n" +
 					"\tIt appears that the DocSplitter class is not working for some reason.\n" +
-					"\tMake sure that data/sentence-detector/EnglishSD.bin.gz is installed\n" +
+					"\tMake sure that data/opennlp/models-1.5/en-sent.bin is installed\n" +
 					"\tor that an alternate location is specified with -DEnglishModelFilename\n" +
 					"\tin the script/run files.\n" +
 					"\tWithout it, ReleEx will use the less-accurate Java native sentence detector.\n" +
