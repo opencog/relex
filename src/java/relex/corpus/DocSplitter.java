@@ -46,16 +46,6 @@ public interface DocSplitter
 	boolean operational();
 
 	/**
-	 * Used to prevent overzelous sentence detectors which have 
-	 * recognizable idiosyncracies
-	 * @param s ...
-	 * @param start ...
-	 * @param end ...
-	 * @return false if break is unacceptable
-	 */
-	boolean acceptableBreak(String s, int start, int end);
-
-	/**
 	 * Adds more text to the buffer.
 	 * This allows this class to be used in FIFO mode: text is added with
 	 * this call, and sentences are extracted with the getNextSentence() call.

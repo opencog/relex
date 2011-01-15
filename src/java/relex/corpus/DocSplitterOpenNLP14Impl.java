@@ -131,7 +131,7 @@ public class DocSplitterOpenNLP14Impl implements DocSplitter
 	 * Returns false if break is unacceptable. Used to prevent overzelous
 	 * sentence detectors which have recognizable idiosyncracies
 	 */
-	public boolean acceptableBreak(String s, int start, int end)
+	private boolean acceptableBreak(String s, int start, int end)
 	{
 		// if the string ends with "Ms." preceeded by whitespace
 		for (String endString : unacceptableSentenceEnds)

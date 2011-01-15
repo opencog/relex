@@ -44,15 +44,6 @@ public class DocSplitterFallbackImpl implements DocSplitter
 	}
 
 	/**
-	 * Returns false if break is unacceptable. Used to prevent overzelous
-	 * sentence detectors which have recognizable idiosyncracies
-	 */
-	public boolean acceptableBreak(String s, int start, int end)
-	{
-		return false;
-	}
-
-	/**
 	 * Add more text to the buffer.
 	 * This allows this class to be used in FIFO mode: text is added with
 	 * this call, and sentences are extracted with the getNextSentence() call.
