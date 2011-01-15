@@ -18,32 +18,46 @@ package relex.corpus;
 public class DocSplitterFactory
 {
 	private static final Class<? extends DocSplitter> clazz;
-	static{
+	static {
 		Class<? extends DocSplitter> clazz0;
-		clazz0 = DocSplitterFallbackImpl.class;
+		clazz0 = null;
+
 		// First, try to load opennlp-1.5.0
-		// try
-		// {
-		// 	Class.forName("opennlp.tools.sentdetect.SentenceDetectorME");
-		// }
-		// catch(Throwable t)
-		// {
-		// }
 		try
 		{
-			// If the above isn't found, try again ... 
-			// This is what opennlp-1.4.3 and 1.3.0 use.
-			Class.forName("opennlp.tools.lang.english.SentenceDetector");
+			Class.forName("opennlp.tools.sentdetect.SentenceDetectorME");
 
-			// clazz0 = DocSplitterOpenNLPImpl.class;
-			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP14Impl");
+			// clazz0 = DocSplitterOpenNLP15Impl.class;
+			Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP15Impl");
 
 			// It seems to be impossible to perform this cast and not get
 			// a type-safety warning,
 			clazz0 = (Class<DocSplitter>) c;
 		}
-		catch(Throwable t2)
+		catch(Throwable t) {}
+
+		// Try again, this time looking for opennlp-tools-1.4.x or 1.3.x
+		if (null == clazz0)
 		{
+			try
+			{
+				// If the above isn't found, try again ... 
+				// This is what opennlp-1.4.3 and 1.3.0 use.
+				Class.forName("opennlp.tools.lang.english.SentenceDetector");
+	
+				// clazz0 = DocSplitterOpenNLPImpl.class;
+				Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP14Impl");
+	
+				// It seems to be impossible to perform this cast and not get
+				// a type-safety warning,
+				clazz0 = (Class<DocSplitter>) c;
+			}
+			catch(Throwable t2) {}
+		}
+
+		if (null == clazz0)
+		{
+			clazz0 = DocSplitterFallbackImpl.class;
 			System.err.println(
 				"\nWARNING:\n" +
 				"\tIt appears that the OpenNLP tools are not installed or are not\n" +
