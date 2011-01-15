@@ -74,10 +74,22 @@
        <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
     </target>
 
-    <!-- conditional compilation, check for OpenNLP -->
-    <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP.present"/>
-    <target name="look-for-opennlp" unless="OpenNLP.present">
-       <echo message="Will not build OpenNLP-based sentence detector; OpenNLP classes not found."/>
+    <!-- conditional compilation, check for OpenNLP-1.5 -->
+    <available classname="opennlp.tools.sentdetect.SentenceModel" classpathref="relex.classpath" property="OpenNLP15.present"/>
+    <target name="look-for-opennlp-1.5" unless="OpenNLP15.present">
+       <echo message="Could not find OpenNLP-1.5 classes; looking for OpenNLP-1.4."/>
+    </target>
+
+    <!-- conditional compilation, check for OpenNLP-1.4 or earlier -->
+    <!-- If 1.5 is found, then make sure that 1.4 is not used!
+         The API's are incompatible, so the build WILL fail.
+         Ouch, that hurts! -->
+    <target name="look-for-opennlp-1.4" unless="OpenNLP15.present">
+    	 <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP14.present"/>
+       <echo message="Looking for OpenNLP-1.4..."/>
+    </target>
+
+    <target name="look-for-opennlp" depends="look-for-opennlp-1.5">
     </target>
 
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
@@ -100,7 +112,8 @@
             <src path="src/java"/>
             <exclude name="**/OWLView.java" unless="OWL.present" />
             <exclude name="**/GateEntityDetector.java" unless="GATE.present" />
-            <exclude name="**/DocSplitterOpenNLPImpl.java" unless="OpenNLP.present" />
+            <exclude name="**/DocSplitterOpenNLP15Impl.java" unless="OpenNLP15.present" />
+            <exclude name="**/DocSplitterOpenNLP14Impl.java" unless="OpenNLP14.present" />
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
