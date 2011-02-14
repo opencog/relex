@@ -32,7 +32,7 @@ import relex.output.SimpleView;
  * It holds:
  *
  *   1) A string copy of the input sentence.
- *   2) An array of of generated parses of this sentence.
+ *   2) An array of the generated parses of this sentence.
  *   3) Utilities to score (rank) the various parses.
  */
 public class Sentence implements Serializable

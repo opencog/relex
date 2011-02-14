@@ -24,9 +24,8 @@ import relex.feature.Atom;
 
 /**
  * The Document class stores a sequence of Sentence objects.
- * It is primarily useful for any post-processing steps, anthing
- * that needs to obtain access multiple sentences at a time.
- *
+ * It is primarily useful for any post-processing steps, anything
+ * that needs to access multiple sentences at a time.
  */
 public class Document extends Atom implements Serializable
 {
