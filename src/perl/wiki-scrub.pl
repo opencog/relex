@@ -6,6 +6,7 @@
 # English-language sentences.  This  script removes wiki markup, URL's
 # tables, images, & etc.  It currently seems to be pretty darned
 # bullet-proof, although it might handle multi-line refs incorrectly.
+# Can also stumble over nested elements...
 # 
 # Example usage:
 # cat simplewiki-20080629.xml.bz2 | bunzip2 | ./wiki-scrub.pl
@@ -88,6 +89,11 @@ while (<>)
 		next;
 	}
 	if ($have_table) { next; }
+
+	# Above should catch everything in a table, but sometimes doesn't.
+	# Maybe because other crap is nested, and $have_text was turned back on??
+	# If there is a vert bar in column 1, its part of a table.
+	if (/^\|/) { next; }
 
 	if (/&lt;table/) { $have_text = 0; $have_ptable++; }
 	if (/&lt;\/table/) {
