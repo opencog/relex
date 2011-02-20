@@ -93,6 +93,14 @@ SUBSCR_POS_G
 =
 <POS> = noun
 
+; j-anything: conjunction. The following currently appear in LG:
+; .j-a, .j-b .j-c .j-g .j-n .j-o .j-p .j-r .j-ru .j-v 
+#TemplateActionAlg
+SUBSCR_POS_CONJ
+<inflection> = .j-.
+=
+<POS> = conjunction
+
 ; l -- location
 #TemplateActionAlg
 SUBSCR_POS_L
@@ -241,13 +249,12 @@ POS_VERB_INVERTED
 =
 <F_L POS> = verb
 ;
-;
+; Untagged subjects are nouns; except when they are conjunctions..
 #TemplateActionAlg
 POS_NOUN
 <F_L POS> = WORD
 <LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp|MF
 =
-<F_L POS> = noun
 ;
 ; BI: "That is what the man said" -- tag "what" as noun; it'll get tagged 
 ; with a pronoun flag later.
