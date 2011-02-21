@@ -655,70 +655,6 @@ DO_QUESTION1
 ;
 ; /////////////////////////////////////////////////////////////////////
 ;
-; Conjunction identification and processing.
-; Do this after subject, object, etc. have been put into place.
-; This will look for conjunctions sitting in the place where a noun
-; etc. would normally sit, and boild them down.
-;
-#TemplateActionAlg
-CONJ_AND_L
-<LAB> = \SJl\.*
-=
-<F_R conj> += <F_L>
-
-#TemplateActionAlg
-CONJ_AND_R
-<LAB> = \SJr\.*
-=
-<F_L conj> += <F_R>
-
-; Merge and-links
-; result is conj_and(Jack, Jill)
-;
-#TemplateActionAlg
-CONJ_AND_MERGE
-<conj member0> != %
-<conj member1> != %
-<str> = and
-=
-<conj member0 ref links conj_and> = <conj member1 ref>
-
-; Merge or-links
-; result is conj_or(Jack, Jill)
-;
-#TemplateActionAlg
-CONJ_OR_MERGE
-<conj member0> != %
-<conj member1> != %
-<str> = or
-=
-<conj member0 ref links conj_or> = <conj member1 ref>
-
-; Make two copies of conjunctions
-#TemplateActionAlg
-DUP_SUBJ_CONJ
-<subj nameSource conj> != %
-=
-<tmp> += <subj nameSource conj member0 ref>
-<tmp> += <subj nameSource conj member1 ref>
-<subj> = %
-<subj> = <tmp>
-<tmp> = %
-
-; Make two copies of conjunctions
-#TemplateActionAlg
-DUP_OBJ_CONJ
-<obj nameSource conj> != %
-=
-<tmp> += <obj nameSource conj member0 ref>
-<tmp> += <obj nameSource conj member1 ref>
-<obj> = %
-<obj> = <tmp>
-<tmp> = %
-
-
-; /////////////////////////////////////////////////////////////////////
-;
 ; TRANSFER LINKS TO REF
 ;
 ;
@@ -1643,8 +1579,6 @@ PREP_TO_LINKS
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; NEGATIVITY
-; NOT AND-SAFE
-;
 ;
 ; By using '+=' we can recognize double negatives by counting the T's
 ; "negation" points at the actual word that is the negative.
@@ -1723,8 +1657,8 @@ NEGATIVE-IS-HYP
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; PARENTHETICALS (MX, GN)  --- NOT AND-SAFE
-; AND SOME RELATIVE PREPS
+; PARENTHETICALS (MX, GN)
+; Also various RELATIVE PREPS
 ;
 ;
 #TemplateActionAlg
@@ -1766,6 +1700,79 @@ APPO_LEFT
 <F_R ref links _nn> += <F_L ref>
 ;<F_R ref links _appo> += <F_L ref>
 ;
+; /////////////////////////////////////////////////////////////////////
+;
+; Conjunction identification and processing.
+; Do this after subject, object, etc. have been put into place.
+; This will look for conjunctions sitting in the place where a noun
+; etc. would normally sit, and boild them down.
+;
+#TemplateActionAlg
+CONJ_AND_L
+<LAB> = \SJl\.*|\AJl\.*
+=
+<F_R conj> += <F_L>
+
+#TemplateActionAlg
+CONJ_AND_R
+<LAB> = \SJr\.*|\AJr\.*
+=
+<F_L conj> += <F_R>
+
+; Merge and-links
+; result is conj_and(Jack, Jill)
+;
+#TemplateActionAlg
+CONJ_AND_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = and
+=
+<conj member0 ref links conj_and> = <conj member1 ref>
+
+; Merge or-links
+; result is conj_or(Jack, Jill)
+;
+#TemplateActionAlg
+CONJ_OR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = or
+=
+<conj member0 ref links conj_or> = <conj member1 ref>
+
+; Make two copies of conjunctions
+#TemplateActionAlg
+DUP_SUBJ_CONJ
+<subj nameSource conj> != %
+=
+<tmp> += <subj nameSource conj member0 ref>
+<tmp> += <subj nameSource conj member1 ref>
+<subj> = %
+<subj> = <tmp>
+<tmp> = %
+
+; Make two copies of conjunctions
+#TemplateActionAlg
+DUP_OBJ_CONJ
+<obj nameSource conj> != %
+=
+<tmp> += <obj nameSource conj member0 ref>
+<tmp> += <obj nameSource conj member1 ref>
+<obj> = %
+<obj> = <tmp>
+<tmp> = %
+
+; Make two copies of conjunctions
+#TemplateActionAlg
+DUP_AMOD_CONJ
+<_amod nameSource conj> != %
+=
+<tmp> += <_amod nameSource conj member0 ref>
+<tmp> += <_amod nameSource conj member1 ref>
+<_amod> = %
+<_amod> = <tmp>
+<tmp> = %
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; HYPOTHETICAL
