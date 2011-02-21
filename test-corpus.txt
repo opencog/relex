@@ -1,4 +1,9 @@
+Oscar Peterson played piano and wrote music.
+END.
+I saw a red and black cat.
+I saw the show with Jack and Jill.
 I saw Jack and Jill.
+Jack and Jill fell down.
 END.
 This is a sentence.  How now brown
 cow? I will tell Ms. Johnson about it!  What should
