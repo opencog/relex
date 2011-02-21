@@ -1265,6 +1265,17 @@ SUPERLATIVE-3
 =
 <F_R ref SUPERLATIVE-FLAG> = T
 ;
+; Fix up conjoined modifiers, make a copy of each.
+#TemplateActionAlg
+CONJ_AMOD
+<F_R ref links _amod> != %
+<F_L conj> != %
+=
+<F_R ref links _amod> = %
+<F_R ref links _amod> += <F_L conj member0 ref>
+<F_R ref links _amod> += <F_L conj member1 ref>
+
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; ADVERB MODIFICATIONS
@@ -1793,16 +1804,6 @@ CONJ_OR_MERGE
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
 
-; Make two copies of conjunctions
-#TemplateActionAlg
-DUP_AMOD_CONJ
-<_amod nameSource conj> != %
-=
-<tmp> += <_amod nameSource conj member0 ref>
-<tmp> += <_amod nameSource conj member1 ref>
-<_amod> = %
-<_amod> = <tmp>
-<tmp> = %
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; HYPOTHETICAL
