@@ -27,7 +27,7 @@ import relex.feature.FeatureNodeCallback;
  * As the same sentence can have multiple parses, this
  * class only displays a single, particular parse.
  *
- * This class is deprecated. There are no know users of this class.
+ * This class is deprecated. There are no known users of this class.
  * It does not correctly handle some of the latest dependency types.
  * It generates a non-standard output that is not well-documented, 
  * nor is it compatible with any existing linguistic tagging system.

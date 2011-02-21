@@ -1,7 +1,7 @@
 
                 RelEx Semantic Relation Extractor
                 ---------------------------------
-                Version 1.3.1     15 January 2011
+                Version 1.4.0     xxxx 2011
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -53,8 +53,8 @@ The following packages are required pre-requisites for building RelEx.
 	are available for download at
 	http://www.abisource.com/projects/link-grammar/#download
 
-   Link-grammar version 4.6.5 or later is needed; changes in the
-   Java classes require that version 4.6.5 or later be used.
+   Link-grammar version 4.7.0 or later is needed; changes in the
+   conjunction handling requires that version 4.7.0 or later be used.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
