@@ -62,6 +62,10 @@ public class PhraseLeader
 		FeatureNode phr = fn_name_source.get("phr-head");
 		if (phr == null) return;
 
+		// Definite nouns that are part of entity names will have 
+		// their "str" field blanked. These can never be heads.
+		if (fn_name_source.get("str") == null) return;
+
 		// If already set, return. Do this because we should trust the
 		// binary relations more than the unary ones; and the binary
 		// ones are checked first. (The unary relations can accidentally
