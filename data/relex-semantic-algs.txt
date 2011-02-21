@@ -51,6 +51,36 @@ REL_SUBJ
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
 
+#TemplateActionAlg
+CONJ_AND_L
+<LAB> = \SJl\.*
+=
+<F_R conj> += <F_L>
+
+#TemplateActionAlg
+CONJ_AND_R
+<LAB> = \SJr\.*
+=
+<F_L conj> += <F_R>
+
+; Merge and-links
+#TemplateActionAlg
+CONJ_AND_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = and
+=
+<conj member0 ref links conj_and> = <conj member1 ref>
+
+; Merge or-links
+#TemplateActionAlg
+CONJ_OR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = or
+=
+<conj member0 ref links conj_or> = <conj member1 ref>
+
 ; ------------------------------------------------------------------
 ; SF == filler subject aka expletive
 ;
@@ -1742,7 +1772,7 @@ HYP-IF
 =
 <if HYP> = T
 ;
-;/////////////////////////////////////////////////////////////////////////////
+; /////////////////////////////////////////////////////////////////////
 ;
 ; SEND BACKGROUND INFO TO WALL
 ;
