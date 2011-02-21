@@ -1267,6 +1267,7 @@ SUPERLATIVE-3
 <F_R ref SUPERLATIVE-FLAG> = T
 ;
 ; Fix up conjoined modifiers, make a copy of each.
+; Example: "The red and black cat sleeps."
 #TemplateActionAlg
 CONJ_AMOD
 <F_R ref links _amod> != %
@@ -1363,6 +1364,7 @@ ADV4
 ;
 ; Fix up conjunctions; link not to the conjunction,
 ; but to each conjoined modifier.
+; Example: "She handled it quickly and gracefully."
 ;
 #TemplateActionAlg
 CONJ_ADVMOD
