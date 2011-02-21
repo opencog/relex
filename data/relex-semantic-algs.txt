@@ -694,6 +694,18 @@ CONJ_OR_MERGE
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
 
+; Make two copies of conjunctions
+#TemplateActionAlg
+DUP_SUBJ_CONJ
+<subj nameSource conj> != %
+=
+<tmp> += <subj nameSource conj member0 ref>
+<tmp> += <subj nameSource conj member1 ref>
+<subj> = %
+<subj> = <tmp>
+<tmp> = %
+
+
 ; /////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER LINKS TO REF
