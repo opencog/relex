@@ -51,36 +51,6 @@ REL_SUBJ
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
 
-#TemplateActionAlg
-CONJ_AND_L
-<LAB> = \SJl\.*
-=
-<F_R conj> += <F_L>
-
-#TemplateActionAlg
-CONJ_AND_R
-<LAB> = \SJr\.*
-=
-<F_L conj> += <F_R>
-
-; Merge and-links
-#TemplateActionAlg
-CONJ_AND_MERGE
-<conj member0> != %
-<conj member1> != %
-<str> = and
-=
-<conj member0 ref links conj_and> = <conj member1 ref>
-
-; Merge or-links
-#TemplateActionAlg
-CONJ_OR_MERGE
-<conj member0> != %
-<conj member1> != %
-<str> = or
-=
-<conj member0 ref links conj_or> = <conj member1 ref>
-
 ; ------------------------------------------------------------------
 ; SF == filler subject aka expletive
 ;
@@ -683,7 +653,48 @@ DO_QUESTION1
 ;<subj QUERY-FLAG> = T
 ;<obj> = %
 ;
-;/////////////////////////////////////////////////////////////////////////////
+; /////////////////////////////////////////////////////////////////////
+;
+; Conjunction identification and processing.
+; Do this after subject, object, etc. have been put into place.
+; This will look for conjunctions sitting in the place where a noun
+; etc. would normally sit, and boild them down.
+;
+#TemplateActionAlg
+CONJ_AND_L
+<LAB> = \SJl\.*
+=
+<F_R conj> += <F_L>
+
+#TemplateActionAlg
+CONJ_AND_R
+<LAB> = \SJr\.*
+=
+<F_L conj> += <F_R>
+
+; Merge and-links
+; result is conj_and(Jack, Jill)
+;
+#TemplateActionAlg
+CONJ_AND_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = and
+=
+<conj member0 ref links conj_and> = <conj member1 ref>
+
+; Merge or-links
+; result is conj_or(Jack, Jill)
+;
+#TemplateActionAlg
+CONJ_OR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = or
+=
+<conj member0 ref links conj_or> = <conj member1 ref>
+
+; /////////////////////////////////////////////////////////////////////
 ;
 ; TRANSFER LINKS TO REF
 ;
