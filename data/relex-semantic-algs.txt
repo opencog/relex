@@ -51,17 +51,22 @@ STANDARD_SUBJ
 <LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
 <LAB> != \MX.[rj]\.*
 <LAB> != MX|MXs|MXp
+=
+<IS_SUBJ_LINK> = T
+
+; If we found the subject link, then create the subj dependency.
+#TemplateActionAlg
+MAKE_STANDARD_SUBJ
+<IS_SUBJ_LINK> = T
 <F_L conj> = %
 =
 <F_R subj> += <F_L ref>
 ;
 ; Same as above, but there was a conjunction.
-; create two subjects, in that case.
+; Create two subjects, in that case.
 #TemplateActionAlg
 CONJ_STANDARD_SUBJ
-<LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
-<LAB> != \MX.[rj]\.*
-<LAB> != MX|MXs|MXp
+<IS_SUBJ_LINK> = T
 <F_L conj> != %
 =
 <F_R subj> += <F_L conj member0 ref>
