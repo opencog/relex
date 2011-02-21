@@ -51,6 +51,20 @@ REL_SUBJ
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
 
+; Move subject off of the "and" and onto the actual verb
+#TemplateActionAlg
+CONJ_MOVE_SUBJ_L
+<LAB> = \VJl\.*
+=
+<F_L subj> = <F_R subj>
+
+#TemplateActionAlg
+CONJ_MOVE_SUBJ_R
+<LAB> = \VJr\.*
+=
+<F_R subj> = <F_L subj>
+<F_L subj> = %
+
 ; ------------------------------------------------------------------
 ; SF == filler subject aka expletive
 ;
