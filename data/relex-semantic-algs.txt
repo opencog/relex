@@ -24,11 +24,8 @@
 ;
 ; Identifying subjects
 ;
-;
 #TemplateActionAlg
 STANDARD_SUBJ
-;  Putting this alg before subject linking ensures AND support.
-;  As a test, reverse the alg order and process "Kim and Pat are hungry."
 <LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
 ; No subject for SF (filler subject) aka "expletive"
 <LAB> != \MX.[rj]\.*
@@ -43,17 +40,18 @@ INVERTED_SUBJ
 <LAB> = \SI\.*|\SXI\.*
 =
 <F_L subj> += <F_R ref>
-;
-#TemplateActionAlg
-REL_SUBJ
+
 ;  If a node has both B and RS, then get the subject from the B-link.
 ;  "This is the dog and cat that chased me."
+#TemplateActionAlg
+REL_SUBJ
 <LAB> = \B\.*|\BW\.*
 <F_R RS-FLAG> = T
 =
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
-;
+
+; ------------------------------------------------------------------
 ; SF == filler subject aka expletive
 ;
 #TemplateActionAlg
