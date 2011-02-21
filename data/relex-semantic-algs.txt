@@ -1290,9 +1290,10 @@ CONJ_AMOD
 ; partly due to bad parses. So require a head-word, explicitly.
 ;
 ; Jim runs quickly.
+; MVr: "She handled it quickly and gracefully."
 #TemplateActionAlg
 ADV1
-<LAB> = \MVa\.*|\EB\.*
+<LAB> = \MVa\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
 <F_R str> != not
 <F_L head-word> != %
@@ -1359,6 +1360,20 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
+;
+; Fix up conjunctions; link not to the conjunction,
+; but to each conjoined modifier.
+;
+#TemplateActionAlg
+CONJ_ADVMOD
+<F_L ref links _advmod> != %
+<F_R conj> != %
+=
+<F_L ref links _advmod> = %
+<F_L ref links _advmod> += <F_R conj member0 ref>
+<F_L ref links _advmod> += <F_R conj member1 ref>
+
+;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Parataxis
 ; "The guy, John said, left early in the morning."
