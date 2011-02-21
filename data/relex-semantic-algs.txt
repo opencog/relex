@@ -156,9 +156,9 @@ DIR_OBJ_N
 ;
 #TemplateActionAlg
 GER_OBJ
-;//Pv and Mv GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
-;//Identifies a modifying gerund fills the argument
-;//"This is the man given a dog by me."
+; Pv and Mv GET FIRST CHANCE TO IDENTIFY DIRECT OBJECT
+; Identifies a modifying gerund fills the argument
+; "This is the man given a dog by me."
 <LAB> = \Mv\.*
 =
 <F_R OBJ-LINK-TAG> = Mv
@@ -203,10 +203,10 @@ INDIR_OBJ1
 ;
 #TemplateActionAlg
 REL_OBJ
-;//B (without RS) GETS THIRD CHANCE TO IDENTIFY DIRECT OBJECT
-;//Checks to make sure Mv/Pv or O have not already filled the object
-;//Identifies a relative object and fills the argument
-;//"This is the dog and cat Pat and I chased and ate."
+; B (without RS) GETS THIRD CHANCE TO IDENTIFY DIRECT OBJECT
+; Checks to make sure Mv/Pv or O have not already filled the object
+; Identifies a relative object and fills the argument
+; "This is the dog and cat Pat and I chased and ate."
 <LAB> = \B\.*|\BW\.*
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
@@ -216,14 +216,25 @@ REL_OBJ
 ;
 #TemplateActionAlg
 REL_INDIR_OBJ
-;//If O or Mv/Pv have already filled the object, B identifies indirect
-;//"This is the car I gave the man." (O fills before B)
-;//"This is the car the man was given." (Pv filles vefore B)
+; If O or Mv/Pv have already filled the object, B identifies indirect
+; "This is the car I gave the man." (O fills before B)
+; "This is the car the man was given." (Pv fills before B)
 <LAB> = \B\.*|\BW\.*
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
 <F_R iobj> += <F_L ref>
+;
+; Conjunction fixups for object. Basically, we don't want obj
+; pointing at the conjunction, we want it pointing at the actual things.
+#TemplateActionAlg
+CONJ_OBJ
+<F_L obj> != %
+<F_R conj> != %
+=
+<F_L obj> = %
+<F_L obj> += <F_R conj member0 ref>
+<F_L obj> += <F_R conj member1 ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -500,7 +511,7 @@ PROPOGATE_HEAD-WORD
 ;
 #TemplateActionAlg
 FILLER_FIX
-;Transfers object to subject for "There appears to [be]/[have been] a problem
+; Transfers object to subject for "There appears to [be]/[have been] a problem
 ; But only if there is no subject.  So wont tranfer for "Jim appears..."
 <LAB> = \Ix\.*|\PPf\.*
 <F_R subj> = %
@@ -1781,17 +1792,6 @@ CONJ_OR_MERGE
 <str> = or
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
-
-; Make two copies of conjunctions
-#TemplateActionAlg
-DUP_OBJ_CONJ
-<obj nameSource conj> != %
-=
-<tmp> += <obj nameSource conj member0 ref>
-<tmp> += <obj nameSource conj member1 ref>
-<obj> = %
-<obj> = <tmp>
-<tmp> = %
 
 ; Make two copies of conjunctions
 #TemplateActionAlg
