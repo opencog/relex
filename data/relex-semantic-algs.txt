@@ -1292,9 +1292,10 @@ CONJ_AMOD
 ;
 ; Jim runs quickly.
 ; MVr: "She handled it quickly and gracefully."
+; MVb: "He sang louder and stronger."
 #TemplateActionAlg
 ADV1
-<LAB> = \MVa\.*|\MVr\.*|\EB\.*
+<LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
 <F_R str> != not
 <F_L head-word> != %
