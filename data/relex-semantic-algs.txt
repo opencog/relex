@@ -22,21 +22,54 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; Locate conjunctions
+;
+#TemplateActionAlg
+CONJ_AND_L
+<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
+=
+<F_R conj> += <F_L>
+
+#TemplateActionAlg
+CONJ_AND_R
+<LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
+=
+<F_L conj> += <F_R>
+
+;/////////////////////////////////////////////////////////////////////////////
+;
 ; Identifying subjects
 ;
+;/////////////////////////////////////////////////////////////////////////////
+; 
+; Standard subject, 
+; No subject for SF (filler subject) aka "expletive"
+; Also exclude some relative constructions
+; no conjunctions
 #TemplateActionAlg
 STANDARD_SUBJ
 <LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
-; No subject for SF (filler subject) aka "expletive"
 <LAB> != \MX.[rj]\.*
 <LAB> != MX|MXs|MXp
-; exclude some relative constructions
+<F_L conj> = %
 =
 <F_R subj> += <F_L ref>
 ;
+; Same as above, but there was a conjunction.
+; create two subjects, in that case.
+#TemplateActionAlg
+CONJ_STANDARD_SUBJ
+<LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
+<LAB> != \MX.[rj]\.*
+<LAB> != MX|MXs|MXp
+<F_L conj> != %
+=
+<F_R subj> += <F_L conj member0 ref>
+<F_R subj> += <F_L conj member1 ref>
+;
+; Inverted version of standard subject.
 #TemplateActionAlg
 INVERTED_SUBJ
-; Inverted version of standard subject.
 <LAB> = \SI\.*|\SXI\.*
 =
 <F_L subj> += <F_R ref>
@@ -51,15 +84,16 @@ REL_SUBJ
 <F_R REL-SUBJ-FLAG> = T
 <F_R subj> += <F_L ref>
 
+; For subj linking to conjoined verbs, 
 ; Move subject off of the "and" and onto the actual verb
 #TemplateActionAlg
-CONJ_MOVE_SUBJ_L
+CONJ_MOVE_VERB_L
 <LAB> = \VJl\.*
 =
 <F_L subj> = <F_R subj>
 
 #TemplateActionAlg
-CONJ_MOVE_SUBJ_R
+CONJ_MOVE_VERB_R
 <LAB> = \VJr\.*
 =
 <F_R subj> = <F_L subj>
@@ -1721,18 +1755,6 @@ APPO_LEFT
 ; This will look for conjunctions sitting in the place where a noun
 ; etc. would normally sit, and boild them down.
 ;
-#TemplateActionAlg
-CONJ_AND_L
-<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
-=
-<F_R conj> += <F_L>
-
-#TemplateActionAlg
-CONJ_AND_R
-<LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
-=
-<F_L conj> += <F_R>
-
 ; Merge and-links
 ; result is conj_and(Jack, Jill)
 ;
@@ -1754,17 +1776,6 @@ CONJ_OR_MERGE
 <str> = or
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
-
-; Make two copies of conjunctions
-#TemplateActionAlg
-DUP_SUBJ_CONJ
-<subj nameSource conj> != %
-=
-<tmp> += <subj nameSource conj member0 ref>
-<tmp> += <subj nameSource conj member1 ref>
-<subj> = %
-<subj> = <tmp>
-<tmp> = %
 
 ; Make two copies of conjunctions
 #TemplateActionAlg
