@@ -705,6 +705,17 @@ DUP_SUBJ_CONJ
 <subj> = <tmp>
 <tmp> = %
 
+; Make two copies of conjunctions
+#TemplateActionAlg
+DUP_OBJ_CONJ
+<obj nameSource conj> != %
+=
+<tmp> += <obj nameSource conj member0 ref>
+<tmp> += <obj nameSource conj member1 ref>
+<obj> = %
+<obj> = <tmp>
+<tmp> = %
+
 
 ; /////////////////////////////////////////////////////////////////////
 ;
