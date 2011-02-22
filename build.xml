@@ -92,12 +92,12 @@
     <!-- If 1.5 is found, then make sure that 1.4 is not used!
          The API's are incompatible, so the build WILL fail.
          Ouch, that hurts! -->
-    <target name="look-for-opennlp-1.4" unless="OpenNLP15.present">
-    	 <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP14.present"/>
+    <target name="look-for-opennlp-1.4" unless="OpenNLP15.present" depends="look-for-opennlp-1.5">
+       <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP14.present"/>
        <echo message="Looking for (optional) OpenNLP-1.4..."/>
     </target>
 
-    <target name="look-for-opennlp" depends="look-for-opennlp-1.5">
+    <target name="look-for-opennlp" depends="look-for-opennlp-1.4">
     </target>
 
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
