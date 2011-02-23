@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# mv-it.sh
+# batch-move-files.sh -- move parsed files from one directory to another.
+# Moves a fixed number of files per run.
 
 # IFS=$(echo -en "\n\b")
 
