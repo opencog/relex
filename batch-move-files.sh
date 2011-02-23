@@ -2,6 +2,8 @@
 #
 # batch-move-files.sh -- move parsed files from one directory to another.
 # Moves a fixed number of files per run.
+#
+# Copyright (c) 2011 Linas Vepstas 
 
 # IFS=$(echo -en "\n\b")
 
