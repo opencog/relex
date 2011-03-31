@@ -168,6 +168,7 @@
 # IF _nn($State,$var0) THEN ^1_Type:Type_property(state,$State) ^1_Type:Category(state,$var0)
 # IF _nn($Time,$var0) THEN ^1_Event:Event($Time,$var0) ^1_Event:Time($Time,$var0)
 # IF _nn(only,$var0) ^ noun($var0) THEN ^1_Sole_instance:Item(only,$var0)
+;; The next two lines are not in the RelEx from the Multiverse embodiment proxy
 # IF _nn($var0,$var1) ^ noun($var1) ^ noun($var0) THEN ^1_Entity:Entity($var0,$var0) ^1_Entity:Name($var0,$var1)
 # IF noun($var0) THEN ^1_Entity:Entity($var0,$var0)
 
@@ -363,7 +364,8 @@
 # IF how($var0) THEN ^1_Questioning:Message(how,$var0) ^1_Means:Descriptor(how,_$qVar)
 # IF how_many($var0) THEN ^1_Questioning:Message(how_many,$var0) ^1_Quantity:Individuals(how_many,_$qVar)
 # IF how_much($var0) THEN ^1_Questioning:Message(how_much,$var0) ^1_Quantity:Mass(how_much,_$qVar)
-;; Fabricio: addessee is always you (TODO, check this for cases like: Alice, is Fido hungry?)
+;; Fabricio: addessee is always you (TODO: check this for cases like: Alice, is Fido hungry?)
+;; TODO: check why be is not accepted...
 # IF truth-query($var0) ^ NOT truth-query(be) THEN ^1_Questioning:Message($var0,$var0) ^1_Attributes:Attribute($var0,truth-query) ^1_Questioning:Manner($var0,truth-query) ^1_Questioning:Addressee($var0,you)
 # IF truth-query($var0) ^ _predadj($var1, $var0) THEN ^1_Entity:Entity($var0,$var1)
 
