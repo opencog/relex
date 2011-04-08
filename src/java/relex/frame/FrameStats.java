@@ -150,14 +150,19 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 		FrameStats fr = new FrameStats();
 		String verbose = System.getProperty("verbose");
 		if (verbose!=null && verbose.equals("true")) { Frame.VERBOSE = true; }
-        String filename = args[0];
 
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(false);
         SAXParser saxParser = spf.newSAXParser();
-        XMLReader xmlReader = saxParser.getXMLReader();
-        xmlReader.setContentHandler(fr);
-        xmlReader.parse(convertToFileURL(filename));
+
+		for (int i=0; i < args.length; i++) {
+            String filename = args[i];
+
+            System.err.println("Processing file " + filename);
+            XMLReader xmlReader = saxParser.getXMLReader();
+            xmlReader.setContentHandler(fr);
+            xmlReader.parse(convertToFileURL(filename));
+        }
 
         // dump new mapping rules file with counts and examples sentences
 		/*for (Rule r: rules) {
@@ -181,51 +186,44 @@ public class FrameStats extends FrameProcessor implements ContentHandler
             FileWriter fw = new FileWriter(outf);
             String lastExample = "";
             int exampleMatches = 0;
-			try {
-				BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
-				String line;
-				while ((line = in.readLine()) != null)
-				{
-                    lineno++;
-					// ignore comments
-					int cmnt = line.indexOf(COMMENT_DELIM);
-					if (-1 < cmnt) {
-                        fw.write(line + "\n");
-                        continue;
-                    }
-                    String[] relexRule = line.split("#");
-                    if (relexRule.length < 2) {
-                        fw.write(line + "\n");
-                        continue;
-                    }
-                    //process rules - store in Rule objects
-                    String ruleline = relexRule[1];
-                    if (ruleExampleSentences.containsKey(lineno)){
-                        ArrayList<String> examples = ruleExampleSentences.get(lineno);
-                        String shortest = "";
-                        for (String s: examples) {
-                            if (shortest.length() == 0 || shortest.length() > s.length())
-                                shortest=s;
-                        }
-                        //if (!shortest.equals(lastExample)) {
-                        fw.write(";; example: " + shortest + "\n");
-                            //lastExample = shortest;
-                        //}
-                    }
-
-                    fw.write(line.trim());
-                    if (ruleCount.containsKey(lineno)){
-                        fw.write(" # " + ruleCount.get(lineno));
-                    }
-                    fw.write("\n");
+            BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
+            String line;
+            while ((line = in.readLine()) != null)
+            {
+                lineno++;
+                // ignore comments
+                int cmnt = line.indexOf(COMMENT_DELIM);
+                if (-1 < cmnt) {
+                    fw.write(line + "\n");
+                    continue;
                 }
-				in.close();
-			} catch (IOException e) {
-				msg = "Error";
-				System.err.println(msg);
-				System.err.println(e);
-                return;
-			}
+                String[] relexRule = line.split("#");
+                if (relexRule.length < 2) {
+                    fw.write(line + "\n");
+                    continue;
+                }
+                //process rules - store in Rule objects
+                String ruleline = relexRule[1];
+                if (ruleExampleSentences.containsKey(lineno)){
+                    ArrayList<String> examples = ruleExampleSentences.get(lineno);
+                    String shortest = "";
+                    for (String s: examples) {
+                        if (shortest.length() == 0 || shortest.length() > s.length())
+                            shortest=s;
+                    }
+                    //if (!shortest.equals(lastExample)) {
+                    fw.write(";; example: " + shortest + "\n");
+                        //lastExample = shortest;
+                    //}
+                }
+
+                fw.write(line.trim());
+                if (ruleCount.containsKey(lineno)){
+                    fw.write(" # " + ruleCount.get(lineno));
+                }
+                fw.write("\n");
+            }
+            in.close();
             fw.close();
 	 	} catch (Exception e) {
 			String msg = "Error";
