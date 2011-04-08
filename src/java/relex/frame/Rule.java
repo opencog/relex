@@ -43,6 +43,7 @@ public class Rule
 
 	public String ruleStr; //for debugging, could remove for production
 	private HashMap<String,ParensNode> parensNodeMap;
+    public int lineno; // line number so that we can easily find the source of the rule 
 
 	void addRelationship(String relationship) {
 		relationships.add(relationship);
@@ -184,9 +185,10 @@ public class Rule
 	 *
 	 * @return true if parse is successful, otherwise false
 	 */
-	public boolean parseRule(String line) {
+	public boolean parseRule(String line, int _lineno) {
 		setRuleStr(line);
 		String[] frags = line.split("THEN");
+        lineno = _lineno;
 
 		if (frags.length!=2) {
 			//reportIllformedRule(line);

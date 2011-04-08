@@ -69,7 +69,7 @@ public class FrameProcessor
 	private String mapping_rules_file;
 	private String concept_vars_file;
 
-	private static final String COMMENT_DELIM = ";;";
+	public static final String COMMENT_DELIM = ";;";
 
 	static boolean is_inited = false;
 	static ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -81,6 +81,7 @@ public class FrameProcessor
 
 	public FrameProcessor()
 	{
+        //VERBOSE = true;
 		concept_vars_file = null;
 		mapping_rules_file = null;
 	}
@@ -129,12 +130,12 @@ public class FrameProcessor
 			relationships.addAll(rule.fire(fireRules.get(rule),VERBOSE,uuid_to_root));
 		}
 
-		//println("\nRELEX SENTENCE:\n\n" + relex.trim());
+		//System.out.println("\nRELEX SENTENCE:\n\n" + relex.trim());
 		//print out the applied mapping rules
-//		println("\nAPPLIED MAPPING RULES:\n");
-//		for (Rule aRule: fireRules) {
-//			println(aRule.getRuleStr());
-//		}
+		//System.out.println("\nAPPLIED MAPPING RULES:\n");
+		//for (Rule aRule: fireRules.keySet()) {
+	//		System.out.println(aRule.getRuleStr());
+		//}
 
 		return relationships.toArray(new String[relationships.size()]);
 	} //end processRelex()
@@ -187,7 +188,7 @@ public class FrameProcessor
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	private BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException
+	public BufferedReader getReader(String file, String defaultDir) throws FileNotFoundException
 	{
 			InputStream in = null; 
 			String dir = System.getProperty("frame.datapath");
@@ -238,6 +239,8 @@ public class FrameProcessor
 					int cmnt = line.indexOf(COMMENT_DELIM);
 					if (-1 < cmnt)
 					{
+                        // this doesn't make sense. it is merely removing the
+                        // comment delimiter, not the comment!
 						line = line.substring(cmnt);
 					}
 					fileStr.append(line + "\n");
@@ -297,53 +300,53 @@ public class FrameProcessor
 	private String loadMappingRules()
 	{
 		try {
+            ArrayList<Rule> newRules = new ArrayList<Rule>();
 			String relexRulesStr = "";
+            int lineno = 0;
+            String msg = "";
 			try {
 				BufferedReader in = new BufferedReader(getReader(mapping_rules_file, data_dir));
 				String line;
-				StringBuilder sb = new StringBuilder();
 				while ((line = in.readLine()) != null)
 				{
+                    lineno++;
 					// ignore comments
 					int cmnt = line.indexOf(COMMENT_DELIM);
-					if (-1 < cmnt)
-					{
-						line = line.substring(cmnt);
-					}
-					sb.append(line + "\n");
-				}
+					if (-1 < cmnt) {
+                        //if (VERBOSE) {
+                        //    System.err.println("Skipping comment line: " + line);
+                        //}
+                        continue;
+                    }
+                    String[] relexRule = line.split("#");
+                    if (relexRule.length < 2) {
+                        //if (VERBOSE) {
+                        //    System.err.println("Skipping line without #: " + line);
+                        //}
+                        continue;
+                    }
+                    relexRulesStr += line;
+
+                    //process rules - store in Rule objects
+                    String ruleline = relexRule[1];
+                    // TODO check for duplicate rules?
+                    Rule rule = new Rule();
+                    boolean parseSuccess = rule.parseRule(ruleline,lineno);
+                    if (parseSuccess) {
+                        newRules.add(rule);
+                    }
+                    else {
+                        msg += "\n**** Warning: IMPROPERLY FORMED RULE ENCOUNTERED. ****\nRule: " + ruleline.trim() + "\n";
+                        System.err.println("**** IMPROPERLY FORMED RULE ENCOUNTERED at line " + lineno + ". ****\nRule: " + ruleline.trim() + "\n");
+                    }
+                }
 				in.close();
 
-				relexRulesStr = sb.toString();
-
 			} catch (IOException e) {
-				String msg = "Error reading in Frame mapping rules file!--File not loaded";
+				msg = "Error reading in Frame mapping rules file!--File not loaded";
 				System.err.println(msg);
 				System.err.println(e);
 				return(msg + "\n" + e);
-			}
-			String msg = "";
-			String[] relexRules = relexRulesStr.split("#");
-
-			//process rules - store in Rule objects
-			//start index at 1 b/c we don't want initial files text before first # symbol
-			String line = "";
-
-			ArrayList<Rule> newRules = new ArrayList<Rule>();
-			for (int i=1; i<relexRules.length; i++) {
-				//TODO check for duplicate rules?
-				Rule rule = new Rule();
-				line = relexRules[i];
-
-				boolean parseSuccess = rule.parseRule(line);
-				if (parseSuccess) {
-					//rule.print();
-					newRules.add(rule);
-				}
-				else {
-					msg += "\n**** Warning: IMPROPERLY FORMED RULE ENCOUNTERED. ****\nRule: " + line.trim() + "\n";
-					System.err.println("**** IMPROPERLY FORMED RULE ENCOUNTERED at line " + i + ". ****\nRule: " + line.trim() + "\n");
-				}
 			}
 			rules = newRules;
 			if (VERBOSE) {

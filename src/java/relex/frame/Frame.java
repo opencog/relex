@@ -55,6 +55,10 @@ public class Frame extends FrameProcessor
 		}
 		System.out.println("\n=========\n");
 		System.out.println(fr.printAppliedRules());
+
+        // access fireRules to see which ones were applied
+        // public HashMap<Rule, VarMapList> fireRules = new HashMap<Rule,VarMapList>();
+        
 	}
 } //end class Frame
 
