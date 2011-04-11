@@ -438,7 +438,7 @@ POS_ADV_INVERTED
 ;
 #TemplateActionAlg
 POS_WHO_NOUN
-<F_R str> = who
+<F_R str> = who|you
 =
 <F_R POS> = noun
 <F_R ref pronoun-FLAG> = T
@@ -470,10 +470,10 @@ POS_CONJUNCTION_INVERTED2
 <F_L POS> = conjunction
 ;
 ; Closed-list "fanboys" coordinating conjunctions
+; This over-rides any previous tags.
 #TemplateActionAlg
 POS_CONJUNCTION_CLOSED
 <str> = for|and|nor|but|or|yet|so|than|either|neither
-<POS> = WORD
 =
 <POS> = conjunction
 ;
@@ -489,7 +489,7 @@ POS_TH_PARTICLE
 ;
 ; Identify a particle: 
 ;   The word "to" in "I like to read."
-; Well, but most people call ths a prep ... 
+; Well, but most people call this a prep ... 
 #TemplateActionAlg
 POS_I_PARTICLE
 <LAB> = I

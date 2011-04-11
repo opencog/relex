@@ -1,3 +1,6 @@
+New in version 1.4.1 (xxx 2011)
+ * Fix POS tagging for conjunctions.
+
 New in version 1.4.0 (21 February 2011)
  * Fix conjunctions to work with current versions of link-grammar.
  * Fix anaphora printing for entities.

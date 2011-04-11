@@ -1,5 +1,7 @@
-we ate popcorn and watched movies.
+You can stay or leave.
+I can stay and leave.
 END.
+we ate popcorn and watched movies.
 When and where is the party?
 It is hidden somewhere in or near the house.
 END.
