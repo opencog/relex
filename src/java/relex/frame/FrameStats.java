@@ -37,7 +37,13 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 
     // Line number -> rule application count
     public HashMap<Integer, Integer> ruleCount = new HashMap<Integer,Integer>();
-    public HashMap<Integer, ArrayList<String> > ruleExampleSentences = new HashMap<Integer,ArrayList<String> >();
+    public HashMap<Integer, String > ruleExampleSentences = new HashMap<Integer,String >();
+    public HashMap<Integer, VarMapList > ruleExampleSentenceVarMap = new HashMap<Integer,VarMapList>();
+    public HashMap<Integer, Rule > lineToRule = new HashMap<Integer,Rule>();
+
+    // Try to find example sentences that are close to this length. To short
+    // and the examples can get cryptic, too long and it's hard to decipher.
+    public int idealSentenceLength = 30;
 
 	public FrameStats()
 	{
@@ -80,10 +86,10 @@ public class FrameStats extends FrameProcessor implements ContentHandler
             // because some sentences have no parse
             currentSentence = elementText.trim();
             sentencesProcessed += 1;
-            if (sentencesProcessed % 100 == 0)  {
+            /*if (sentencesProcessed % 100 == 0)  {
                 System.err.print(".");
                 System.err.flush();
-            }
+            }*/
         } else if ("parse".equals(name)) {
             parsesProcessed += 1;
         } else if ("relations".equals(name)) {
@@ -106,12 +112,17 @@ public class FrameStats extends FrameProcessor implements ContentHandler
                 } else {
                     ruleCount.put(r.lineno,1); 
                 }
-                if (ruleExampleSentences.containsKey(r.lineno) ) {
-                    ruleExampleSentences.get(r.lineno).add(currentSentence); 
-                } else {
-                    ArrayList<String> examples = new ArrayList<String>();
-                    examples.add(currentSentence);
-                    ruleExampleSentences.put(r.lineno,examples); 
+                // replace example sentence if the current one is shorter
+                String existing = "";
+                if (ruleExampleSentences.containsKey(r.lineno)){
+                    existing = ruleExampleSentences.get(r.lineno);
+                }
+                if (existing.length() == 0 || 
+                        Math.abs(currentSentence.length() - idealSentenceLength) <
+                        Math.abs(existing.length() - idealSentenceLength)) {
+                    existing=currentSentence;
+                    ruleExampleSentences.put(r.lineno,existing);
+                    ruleExampleSentenceVarMap.put(r.lineno,fireRules.get(r));
                 }
             }
         }
@@ -130,8 +141,8 @@ public class FrameStats extends FrameProcessor implements ContentHandler
     public void setDocumentLocator(Locator locator) {}
     public void startPrefixMapping(String prefix, String uri) {}
 
-    private static String convertToFileURL(String filename) {
-        String path = new File(filename).getAbsolutePath();
+    private static String convertToFileURL(String path2, String filename) {
+        String path = new File(path2,filename).getAbsolutePath();
         if (File.separatorChar != '/') {
             path = path.replace(File.separatorChar, '/');
         }
@@ -151,79 +162,127 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 		String verbose = System.getProperty("verbose");
 		if (verbose!=null && verbose.equals("true")) { Frame.VERBOSE = true; }
 
-        SAXParserFactory spf = SAXParserFactory.newInstance();
-        spf.setNamespaceAware(false);
-        SAXParser saxParser = spf.newSAXParser();
+        // build map from lineno to rule object
+        for (Rule r : rules) {
+            fr.lineToRule.put(r.lineno, r);
+        }
 
 		for (int i=0; i < args.length; i++) {
             String filename = args[i];
+            File dir = new File(args[i]);
 
-            System.err.println("Processing file " + filename);
-            XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setContentHandler(fr);
-            xmlReader.parse(convertToFileURL(filename));
+            // Only get xml files
+            FilenameFilter filter = new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".xml");
+                }
+            };
+
+            String[] children = dir.list(filter);
+            if (children == null) {
+                // process a single file
+                fr.processFile(".",filename);
+            } else {
+                System.out.println("Queuing " + children.length + " files");
+                // process all files in directory
+                long start = System.currentTimeMillis();
+                for (int j=0; j<children.length; j++) {
+                    System.err.print("[" + j + "/"+ children.length + "] ");
+                    fr.processFile(filename,children[j]);
+                    if (j % 20 == 0) {
+                        long timeElapsed = System.currentTimeMillis() - start;
+                        float timePerDoc = timeElapsed / (float) j;
+                        long timeRemaining = (long) (timePerDoc * (children.length - j));
+                        long timeRemainingMinutes = (timeRemaining / 1000) /60;
+                        long timeRemainingHours = timeRemainingMinutes/60;
+                        timeRemainingMinutes -= timeRemainingHours * 60;
+                        System.err.println("Estimated time remaining " + timeRemainingHours + ":"+ timeRemainingMinutes);
+                    }
+                    //if (j == 200) j = children.length;
+                }
+            }
         }
-
-        // dump new mapping rules file with counts and examples sentences
-		/*for (Rule r: rules) {
-            r.printout();
-            System.err.println("was used " + fr.ruleCount.get(r.lineno) + " times.\n");
-        }*/
 
         System.err.println("Sentences processed=" + fr.sentencesProcessed);
         System.err.println("Parses processed=" + fr.parsesProcessed);
 
+        // dump new mapping rules file with counts and examples sentences
         fr.dumpNewMappingWithFrequencies();
 
 	}
 
+    public void processFile(String path, String filename) throws Exception 
+    {
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        spf.setNamespaceAware(false);
+        SAXParser saxParser = spf.newSAXParser();
+        System.err.println(" Processing file " + filename);
+        XMLReader xmlReader = saxParser.getXMLReader();
+        xmlReader.setContentHandler(this);
+        try {
+            xmlReader.parse(convertToFileURL(path,filename));
+	 	} catch (Exception e) {
+			//String msg = "Parse error in file " + filename;
+			//System.err.println(msg);
+			//System.err.println(e);
+            elementText = "";
+            currentSentence = "";
+			return;
+		}
+    }
+
     public void dumpNewMappingWithFrequencies()
     {
 		try {
-            int lineno = 0;
             String msg = "";
             File outf = new File("new_mapping_rules.txt");
             FileWriter fw = new FileWriter(outf);
             String lastExample = "";
             int exampleMatches = 0;
-            BufferedReader in = new BufferedReader(getReader(MAPPING_RULES_FILE, MAPPING_RULES_DIR));
-            String line;
-            while ((line = in.readLine()) != null)
-            {
-                lineno++;
-                // ignore comments
-                int cmnt = line.indexOf(COMMENT_DELIM);
-                if (-1 < cmnt) {
-                    fw.write(line + "\n");
-                    continue;
-                }
-                String[] relexRule = line.split("#");
-                if (relexRule.length < 2) {
-                    fw.write(line + "\n");
-                    continue;
-                }
-                //process rules - store in Rule objects
-                String ruleline = relexRule[1];
-                if (ruleExampleSentences.containsKey(lineno)){
-                    ArrayList<String> examples = ruleExampleSentences.get(lineno);
-                    String shortest = "";
-                    for (String s: examples) {
-                        if (shortest.length() == 0 || shortest.length() > s.length())
-                            shortest=s;
-                    }
-                    //if (!shortest.equals(lastExample)) {
-                    fw.write(";; example: " + shortest + "\n");
-                        //lastExample = shortest;
-                    //}
+            // sort the r2f rules by frequency
+            Map m = sortByValue(ruleCount);
+
+            for (Object o : m.keySet()) {
+                Integer lineno = (Integer) o;
+                Rule r = lineToRule.get(lineno);
+
+                String ruleline = r.ruleStr;
+
+                // save the original line number so rule can easily be
+                // found in original file)
+                fw.write(";; line: " + lineno + "\n");
+                // save count
+                if (ruleCount.containsKey(lineno)){
+                    fw.write(";; count: " + ruleCount.get(lineno) + "\n");
+                } else {
+                    fw.write(" # count: 0\n");
                 }
 
-                fw.write(line.trim());
-                if (ruleCount.containsKey(lineno)){
-                    fw.write(" # " + ruleCount.get(lineno));
+                // save example sentence
+                if (ruleExampleSentences.containsKey(r.lineno)){
+                    String example = ruleExampleSentences.get(r.lineno);
+                    fw.write(";; example: " + example + "\n");
+                    for (VarMap varMapList : ruleExampleSentenceVarMap.get(r.lineno) ) {
+                        StringBuffer s = varMapList.print();
+                        fw.write(";; " + s);
+                    }
                 }
+                // save var mappings
+                // save rule 
+                fw.write("# " + ruleline.trim());
                 fw.write("\n");
             }
-            in.close();
+            for (Rule r : rules) {
+                // dump rules that haven't been applied at the end
+                if (!ruleCount.containsKey(r.lineno)) {
+                    fw.write(";; line: " + r.lineno + "\n");
+                    fw.write(";; count: 0\n");
+                    String ruleline = r.ruleStr;
+                    fw.write("# " + ruleline.trim());
+                    fw.write("\n");
+                }
+            }
+            //in.close();
             fw.close();
 	 	} catch (Exception e) {
 			String msg = "Error";
@@ -232,6 +291,23 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 			e.printStackTrace();
 			return;
 		}
+    }
+
+    static Map sortByValue(Map map) {
+         List list = new LinkedList(map.entrySet());
+         Collections.sort(list, new Comparator() {
+              public int compare(Object o1, Object o2) {
+                   return ((Comparable) ((Map.Entry) (o2)).getValue())
+                  .compareTo(((Map.Entry) (o1)).getValue());
+              }
+         });
+
+        Map result = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry)it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 } //end class FrameStats
 

@@ -41,7 +41,7 @@ public class Rule
 	// Abstract Syntax Tree that represents the conditions of the rule
 	ASTNode conditionSyntaxTree;
 
-	public String ruleStr; //for debugging, could remove for production
+	public String ruleStr;
 	private HashMap<String,ParensNode> parensNodeMap;
     public int lineno; // line number so that we can easily find the source of the rule 
 
