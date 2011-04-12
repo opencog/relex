@@ -13,9 +13,9 @@
 
 # IF _psubj(be,$var0) ^ _obj(be,$Color) THEN ^1_Color:Color($Color,$Color) ^1_Color:Entity($Color,$var0)
 # IF _psubj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
-# IF _psubj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
-# IF _psubj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($var0,$var0)
-# IF _psubj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($var0,$var0) ^1_Luck:Depictive($Luck,$Luck)
+# IF _psubj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($Quantity,$var0)
+# IF _psubj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($Quantifier,$var0)
+# IF _psubj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
 
 # IF _predobj(be,$var0) ^ in($var0,$var1) THEN ^1_Part_whole:Part(be,$var0) ^1_Part_whole:Whole(be,$var1)
 # IF {_predobj(be,$var0) || _iobj(be,$var0)} ^ {date($var0) || $var0=$Time} THEN ^1_Existence:Time(be,$var0)
@@ -34,9 +34,9 @@
 ;; Fabricio: What is the color of the ball?
 # IF _subj(be,$var0) ^ _obj(be,$Color) ^ copula-question($Color) ^ of($Color, $var1) THEN ^1_Color:Color($Color,_$qVar) ^1_Color:Entity($Color,$var1)
 # IF _subj(be,$var0) ^ _obj(be,$Dimension) THEN ^1_Dimension:Measurement($Dimension,$Dimension) ^1_Dimension:Object($Dimension,$var0)
-# IF _subj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($var0,$var0)
-# IF _subj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($var0,$var0)
-# IF _subj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($var0,$var0) ^1_Luck:Depictive($Luck,$Luck)
+# IF _subj(be,$var0) ^ _obj(be,$Quantity) THEN ^1_Quantity:Q_Prop($Quantity,$Quantity) ^1_Quantity:Individuals($Quantity,$var0)
+# IF _subj(be,$var0) ^ _obj(be,$Quantifier) THEN ^2_Quantifier:Quantity($Quantifier,$Quantifier) ^2_Quantifier:Individuals($Quantifier,$var0)
+# IF _subj(be,$var0) ^ _obj(be,$Luck) THEN ^1_Luck:Protagonist($Luck,$var0) ^1_Luck:Depictive($Luck,$Luck)
 
 # IF _obj(be,$var0) ^ in($var0,$var1) THEN ^1_Part_whole:Part(be,$var0) ^1_Part_whole:Whole(be,$var1)
 # IF if(be,$var0) THEN ^1_Existence:Circumstances(be,$var0)
@@ -61,7 +61,7 @@
 # IF _obj($var0,$var1) ^ _iobj($var0,$var2) ^ NOT _obj(be,$var1) ^ NOT date($var1) ^ NOT $var1=$Time THEN ^1_Transitive_action:Patient($var0,$var2) ^2_Transitive_action:Beneficiary($var0,$var1)
 # IF to($var0,$var1 ^ NOT _subj(be,$var1) ^ person($var1) THEN ^1_Transitive_action:Place($var0,$var1)
 # IF _to-do($var0,$var1) ^ NOT _subj(be,$var1) THEN ^1_Transitive_action:Cause(verb,$var0) ^1_Transitive_action:Event(verb,$var1)
-# IF _to-be($var0,$var1) ^ NOT _subj(be,$var1) THEN ^1_Event:Cause($var0,$var0) ^1_Event:Event($var1,$var1)
+# IF _to-be($var0,$var1) ^ NOT _subj(be,$var1) THEN ^1_Event:Cause($var0,$var0) ^1_Event:Event($var0,$var1)
 
 # IF _advmod(be,also) THEN ^2_Alternate_scenario:State_of_being(also,be)
 # IF _advmod(be,also) THEN ^2_Alternate_scenario:State_of_being(also,be)
@@ -75,7 +75,7 @@
 # IF _%quantity_mult($Number,$Number_1) THEN ^2_Calculate:Factor_1(_%quantity_mult,$Number) ^2_Calculate:Factor_2(_%quantity_mult,$Number_1)
 # IF _subj(multiply,$Number) ^ by(multiply,$Number_1) THEN ^2_Calculate:Factor_1(multiply,$Number) ^2_Calculate:Factor_2(multiply,$Number_1)
 # IF by($Number,$Number_1) THEN ^2_Calculate:Factor_1(by,$Number) ^2_Calculate:Factor_2(by,$Number_1)
-# IF times($Number,$Number_1) THEN ^2_Calculate:Factor_1(times,$Number) ^2_Calculate:Factor_2(by,$Number_1)
+# IF times($Number,$Number_1) THEN ^2_Calculate:Factor_1(times,$Number) ^2_Calculate:Factor_2(times,$Number_1)
 # IF _subj(divide,$Number) ^ by(divide,$Number_1) THEN ^2_Calculate:Divisor(divide,$Number_1)  ^2_Calculate:Dividend(divide,$Number)
 # IF into($Number,$Number_1) THEN ^2_Calculate:Divisor(into,$Number) ^2_Calculate:Dividend(into,$Number_1)
 # IF _subj(subtract,$Number) ^ from(subtract,$Number_1) THEN ^2_Calculate:Minuend(minus,$Number_1) ^2_Calculate:Subtrahend(minus,$Number)
@@ -105,7 +105,7 @@
 # IF _subj($Temperature,$var0) THEN ^1_Ambient_temperature:Attribute($Temperature,$var0)
 # IF _amod($var0,$Temperature) THEN ^1_Temperature:Degree(temperature,$Temperature) 
 
-# IF_that($var0,$var1) THEN ^1_Relation:Entity_1(that,$var0) ^1_Relation:Entity_2(that,$var1)
+# IF _that($var0,$var1) THEN ^1_Relation:Entity_1(that,$var0) ^1_Relation:Entity_2(that,$var1)
 # IF which($var0,$var1) THEN ^1_Relation:Entity_1(which,$var0) ^1_Relation:Entity_2(which,$var1)
 
 # IF _poss(turn,$var0) THEN ^1_Temporal_colocation:Actor(turn,$var0)
@@ -1856,7 +1856,7 @@
 
 # IF _subj($Evidence,$var0) THEN ^1_Evidence:Support($Evidence,$var0)
 # IF _obj($Evidence,$var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Evidence:Proposition($Evidence,$var0)
-# IF_that($Evidence,$var0) THEN ^1_Evidence:Proposition($Evidence,$var0)
+# IF _that($Evidence,$var0) THEN ^1_Evidence:Proposition($Evidence,$var0)
 # IF by($Evidence,$var0) ^ NOT Person($var0) ^ NOT date($var0) ^ NOT $var0=$Time THEN ^1_Evidence:Means($Evidence,$var0)
 # IF _advmod($var0,$Evidence) THEN ^1_Evidence:Manner($Evidence,$var0)
 # IF to($Evidence,$var0) THEN ^1_Evidence:Cognizer($Evidence,$var0)
