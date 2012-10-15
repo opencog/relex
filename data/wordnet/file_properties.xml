@@ -43,13 +43,13 @@
 	<!--	<param name="dictionary_path" value="/opt/WordNet-3.0/dict"/> -->
 
    <!--  Use this in Ubuntu  -->
-	<!--		<param name="dictionary_path" value="/usr/share/wordnet"/> -->
+			<param name="dictionary_path" value="/usr/share/wordnet"/>
 
 	<!--  Use this in Windows -->
   	<!--	<param name="dictionary_path" value="C:\Program Files\WordNet\3.0\dict"/>  -->
 
    <!--  Use this in OSX  -->
-		<param name="dictionary_path" value="/usr/local/WordNet-3.0/dict"/>
+	<!--	<param name="dictionary_path" value="/usr/local/WordNet-3.0/dict"/> -->
 
 		</param>
 	</dictionary>
