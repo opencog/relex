@@ -18,7 +18,6 @@ package relex.frame;
 
 import javax.xml.parsers.*;
 import org.xml.sax.*;
-import org.xml.sax.helpers.*;
 
 import java.util.*;
 import java.io.*;
@@ -234,11 +233,8 @@ public class FrameStats extends FrameProcessor implements ContentHandler
     public void dumpNewMappingWithFrequencies()
     {
 		try {
-            String msg = "";
             File outf = new File("new_mapping_rules.txt");
             FileWriter fw = new FileWriter(outf);
-            String lastExample = "";
-            int exampleMatches = 0;
             // sort the r2f rules by frequency
             Map m = sortByValue(ruleCount);
 
