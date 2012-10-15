@@ -1,5 +1,7 @@
-New in version 1.4.1 (xxx 2011)
+New in version 1.4.1 (xxx 2012)
  * Fix POS tagging for conjunctions.
+ * NLGen output view from Blake Lemoine
+ * html view from James White
 
 New in version 1.4.0 (21 February 2011)
  * Fix conjunctions to work with current versions of link-grammar.
