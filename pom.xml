@@ -8,6 +8,22 @@
   <name>relex</name>
   <description>RelEx dependency relation extractor</description>
   <url>http://maven.apache.org</url>
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://maven.apache.org</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
   <build>
     <sourceDirectory>${basedir}/src/java</sourceDirectory>
     <testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
@@ -65,34 +81,29 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.opencog</groupId>
-      <artifactId>linkgrammar</artifactId>
-      <version>4.5.6</version>
-    </dependency>
-    <dependency>
-      <groupId>net.didion</groupId>
+      <groupId>net.sf.jwordnet</groupId>
       <artifactId>jwnl</artifactId>
-      <version>1.4</version>
+      <version>1.4_rc3</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.opennlp</groupId>
-      <artifactId>opennlp-tools</artifactId>
-      <version>1.4.3</version>
+      <groupId>org.apache</groupId>
+      <artifactId>apache</artifactId>
+      <version>12</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.opennlp</groupId>
-      <artifactId>maxent</artifactId>
-      <version>2.5.2</version>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp</artifactId>
+      <version>1.5.2-incubating</version>
     </dependency>
     <dependency>
       <groupId>uk.ac.gate</groupId>
-      <artifactId>gate</artifactId>
-      <version>4.0</version>
+      <artifactId>gate-core</artifactId>
+      <version>7.0</version>
     </dependency>
     <dependency>
-      <groupId>org.semanticweb</groupId>
-      <artifactId>owlapi</artifactId>
-      <version>2.2.0</version>
+      <groupId>net.sourceforge.owlapi</groupId>
+      <artifactId>owlapi-api</artifactId>
+      <version>3.4.1</version>
     </dependency>
   </dependencies>
 </project>
