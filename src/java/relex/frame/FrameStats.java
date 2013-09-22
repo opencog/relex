@@ -230,6 +230,7 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 		}
     }
 
+    @SuppressWarnings("unchecked")
     public void dumpNewMappingWithFrequencies()
     {
 		try {
@@ -289,6 +290,7 @@ public class FrameStats extends FrameProcessor implements ContentHandler
 		}
     }
 
+    @SuppressWarnings("unchecked")
     static Map sortByValue(Map map) {
          List list = new LinkedList(map.entrySet());
          Collections.sort(list, new Comparator() {
