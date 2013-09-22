@@ -146,7 +146,7 @@ public class LocalLGParser extends LGParser
 						LinkableView.setPrev(fn, lastFN);
 					}
 
-					if (LinkGrammar.isEntity(wordString) || Character.isUpperCase(wordString.charAt(0)))
+					if (Character.isUpperCase(wordString.charAt(0)))
 						LinkableView.setEntityFlag(fn);
 
 					s.addWord(fn);
