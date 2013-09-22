@@ -138,7 +138,6 @@ public class CompactView
 			str += "      <lg-rank ";
 			str += "num_skipped_words=\"" + parse.getNumSkippedWords() + "\" ";
 			str += "disjunct_cost=\"" + parse.getDisjunctCost() + "\" ";
-			str += "and_cost=\"" + parse.getAndCost() + "\" ";
 			str += "link_cost=\"" + parse.getLinkCost() + "\" ";
 			str += "/>\n";
 		}

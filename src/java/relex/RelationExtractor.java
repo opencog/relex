@@ -691,7 +691,6 @@ public class RelationExtractor
 						System.out.println(
 							"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
 							" DIS=" + parse.getDisjunctCost() +
-							" AND=" + parse.getAndCost() +
 							" LEN=" + parse.getLinkCost() + ")");
 					}
 

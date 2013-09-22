@@ -141,7 +141,6 @@ public class RemoteLGParser extends LGParser
 			// set meta data
 			FeatureNode meta = new FeatureNode();
 			meta.set("num_skipped_words", new FeatureNode(Integer.toString(parseResult.getNumSkippedWords())));
-			meta.set("and_cost", new FeatureNode(Integer.toString(linkage.getAndCost())));
 			meta.set("disjunct_cost", new FeatureNode(Integer.toString(linkage.getDisjunctCost())));
 			meta.set("link_cost", new FeatureNode(Integer.toString(linkage.getLinkCost())));
 			meta.set("num_violations", new FeatureNode(Integer.toString(linkage.getNumViolations())));

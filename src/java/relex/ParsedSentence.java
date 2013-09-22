@@ -361,11 +361,6 @@ public class ParsedSentence
 	/* ---------------------------------------------------------------- */
 	/* Return unpacked meta information about parse, and ranking too */
 
-	public int getAndCost()
-	{
-		return getMeta("and_cost");
-	}
-
 	public int getDisjunctCost()
 	{
 		return getMeta("disjunct_cost");
@@ -414,8 +409,7 @@ public class ParsedSentence
 		// costs are the tiebreaker.
 		double weight = 0.4 * getNumSkippedWords();
 		weight += 0.2 * getDisjunctCost();
-		weight += 0.06 * getAndCost();
-		weight += 0.012 * getLinkCost();
+		weight += 0.02 * getLinkCost();
 
 		weight = Math.exp(-weight);
 
