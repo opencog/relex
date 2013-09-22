@@ -155,7 +155,7 @@ public class LocalLGParser extends LGParser
 					// Add char-index information to the feature node
 					// FYI, the JNI call (*env)->NewStringUTF(env, str);
 					// will return NULL if str is utf8-encoded Japanese or Chinese. Go figure.
-					String tokenString = LinkGrammar.getWord(w);
+					String tokenString = wordString;
 					if (null != tokenString) tokenString = tokenString.toLowerCase(); // normalize cases
 					else tokenString = "";
 
