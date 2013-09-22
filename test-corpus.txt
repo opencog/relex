@@ -1,3 +1,10 @@
+Call me when you are ready.
+END.
+What is Sophie likely to eat?
+END.
+John is eager to please.
+John is easy to please.
+END.
 You can stay or leave.
 I can stay and leave.
 END.
@@ -917,3 +924,5 @@ Then she started shrinking.
 END.
 
 Usually, only the remnants from a Pacific hurricane affect California.
+END.
+
