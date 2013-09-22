@@ -85,7 +85,8 @@ public class RemoteLGParser extends LGParser
 						fnv.setPrev(lastFN);
 					}
 
-					if (parseResult.getEntityFlags()[w] || Character.isUpperCase(wordString.charAt(0)))
+					// XXX This should be removed, it really doesn't belong here.
+					if (Character.isUpperCase(wordString.charAt(0)))
 						fnv.setEntityFlag();
 
 					parsedSentence.addWord(fnv.fn());
@@ -94,12 +95,9 @@ public class RemoteLGParser extends LGParser
 					// Add char-index information to the feature node
 					//
 					// Boris: I don't quite understand this code which is copied over previous
-					// off this class. The loop is over all words in the current linkage, but
-					// the token is obtained from a global array of all tokens in the sentence
-					// (regardless of whether they participate in the current parse or are skipped).
-					// And anyway, in case of skipped words, how are you going to get the
+					// version of this class. In case of skipped words, how are you going to get the
 					// character index right? Need to know which words exactly have been skipped.
-					String tokenString = parseResult.wordAt(w).toLowerCase(); // normalize cases
+					String tokenString = linkage.wordAt(w).toLowerCase(); // normalize cases
 
 					Integer timesSeenInt = timesTokenSeen.get(tokenString);
 					int timesSeen = (timesSeenInt == null ? 0 : timesSeenInt.intValue());

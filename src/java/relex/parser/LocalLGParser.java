@@ -146,6 +146,7 @@ public class LocalLGParser extends LGParser
 						LinkableView.setPrev(fn, lastFN);
 					}
 
+					// XXX This should be removed, it really doesn't belong here.
 					if (Character.isUpperCase(wordString.charAt(0)))
 						LinkableView.setEntityFlag(fn);
 
