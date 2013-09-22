@@ -1,5 +1,7 @@
 New in version 1.4.2 (XXX 2013??)
  * Updated maven pom file, from Krzysztof Wezowski
+ * Remove obsolete parser version, which didn't build any more.
+ * Fix/remove assorted deprecated functions.
 
 New in version 1.4.1 (15 October 2012)
  * Fix POS tagging for conjunctions.
