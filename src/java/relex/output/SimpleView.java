@@ -22,7 +22,7 @@ import relex.feature.RelationCallback;
 import relex.ParsedSentence;
 
 /**
- * Implements a very simple, direct printout of the 
+ * Implements a very simple, direct printout of the
  * RelEx feature graph.
  *
  * Copyright (c) 2008 Linas Vepstas <linas@linas.org>
@@ -49,9 +49,10 @@ public class SimpleView
 	{
 		Visit v = new Visit();
 		v.id_map = map;
-		v.str = "";
+		v.binary_str = "";
+		v.unary_str = "";
 		parse.foreach(v);
-		return v.str;
+		return v.binary_str + "\nAttributes:\n\n" + v.unary_str;
 	}
 
 	/**
@@ -76,9 +77,10 @@ public class SimpleView
 		Visit v = new Visit();
 		v.id_map = map;
 		v.unaryStyle = true;
-		v.str = "";
+		v.binary_str = "";
+		v.unary_str = "";
 		parse.foreach(v);
-		return v.str;
+		return v.binary_str + "\n" + v.unary_str;
 	}
 
 	public static String printRelationsUUID(ParsedSentence parse)
@@ -86,9 +88,10 @@ public class SimpleView
 		Visit v = new Visit();
 		v.show_uuid = true;
 		v.unaryStyle = true;
-		v.str = "";
+		v.binary_str = "";
+		v.unary_str = "";
 		parse.foreach(v);
-		return v.str;
+		return v.binary_str + "\n" + v.unary_str;
 	}
 
 	private static class Visit implements RelationCallback
@@ -98,7 +101,8 @@ public class SimpleView
 
 		public boolean unaryStyle = false;
 		public boolean show_uuid = false;
-		public String str;
+		public String binary_str;
+		public String unary_str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
 		                                FeatureNode srcNode,
@@ -128,7 +132,7 @@ public class SimpleView
 				if (tgtName.indexOf("_$qVar") == -1)
 					tgtName = tgtNode.get("nameSource").get("uuid").getValue();
 			}
-			str += relName + "(" + srcName + ", " + tgtName + ")\n";
+			binary_str += relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
 		}
@@ -156,11 +160,11 @@ public class SimpleView
 				if (attrName.equals("HYP"))
 					value = attrName.toLowerCase();
 
-				str += value + "(" + srcName + ")\n";
+				unary_str += value + "(" + srcName + ")\n";
 			}
 			else
 			{
-				str += attrName + "(" + srcName + ", " + value + ")\n";
+				unary_str += attrName + "(" + srcName + ", " + value + ")\n";
 			}
 
 			return false;
