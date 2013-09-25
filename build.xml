@@ -3,7 +3,8 @@
     <property name="VERSION" value="1.4"/>
     <property name="REVISION" value="1.4.1"/>
 
-    <property name="PREFIX" value="${basedir}/lib"/>
+    <!-- <property name="PREFIX" value="${basedir}/lib"/> -->
+    <property name="PREFIX" value="/usr/share/java"/>
     <property name="ALTPREFIX" value="/usr/local/share/java"/>
     <property name="GATE_HOME" value="/opt/GATE-4.0"/>
     <!-- <property name="GATE_HOME" value="../gate-4.0"/> -->
@@ -131,6 +132,7 @@
     <target name="build-tests" depends="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+            includeantruntime="false"
             source="${source}" target="${target}">
             <src path="src/java_test"/>
             <classpath refid="relex.classpath"/>
