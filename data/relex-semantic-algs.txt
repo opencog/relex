@@ -1318,6 +1318,7 @@ SUPERLATIVE-3
 CONJ_AMOD
 <F_R ref links _amod> != %
 <F_L conj> != %
+<LAB> != SJrs
 =
 <F_R ref links _amod> = %
 <F_R ref links _amod> += <F_L conj member0 ref>
