@@ -13,26 +13,16 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.semanticweb.owl.apibinding.OWLManager;
-import org.semanticweb.owl.model.AddAxiom;
-import org.semanticweb.owl.model.OWLAxiomAnnotationAxiom;
-import org.semanticweb.owl.model.OWLClass;
-import org.semanticweb.owl.model.OWLClassAssertionAxiom;
-import org.semanticweb.owl.model.OWLDataFactory;
-import org.semanticweb.owl.model.OWLException;
-import org.semanticweb.owl.model.OWLIndividual;
-import org.semanticweb.owl.model.OWLLabelAnnotation;
-import org.semanticweb.owl.model.OWLObjectProperty;
-import org.semanticweb.owl.model.OWLObjectPropertyAssertionAxiom;
-import org.semanticweb.owl.model.OWLOntology;
-import org.semanticweb.owl.model.OWLOntologyChangeException;
-import org.semanticweb.owl.model.OWLOntologyManager;
-import org.semanticweb.owl.model.OWLProperty;
-import org.semanticweb.owl.util.SimpleURIMapper;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.DefaultOntologyFormat;
+import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.util.OWLEntityURIConverter;
 
+import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
 import relex.ParsedSentence;
+import uk.ac.manchester.cs.owl.owlapi.OWLAnnotationPropertyImpl;
 
 /**
  * Implements a very simple, direct printout of the
@@ -80,11 +70,11 @@ public class OWLView
 	* in a binary form.
 	*
 	* Example:
-	*	_subj(throw, John)
-	*	_obj(throw, ball)
-	*	tense(throw, past)
-	*	definite-FLAG(ball, T)
-	*	noun_number(ball, singular)
+	*       _subj(throw, John)
+	*       _obj(throw, ball)
+	*       tense(throw, past)
+	*       definite-FLAG(ball, T)
+	*       noun_number(ball, singular)
 	*/
 	public void printRelations(ParsedSentence parse, String sentence, int sentence_id, String ontologyname)
 	{
@@ -94,12 +84,15 @@ public class OWLView
 
 			//Add the sentence to Sentence Class
 			this.sentence_id = sentence_id;
-			sentenceInd = factory.getOWLIndividual(URI.create(ontologyURI + "#" + "sentence_" + sentence_id));
+			sentenceInd = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + "sentence_" + sentence_id));
+			//OWLAnnotationProperty p = new OWLAnnotationPropertyImpl(IRI.create(sentence));
 
-			OWLLabelAnnotation label = factory.getOWLLabelAnnotation(sent);
+			//OWLAnnotation label = factory.getOWLAnnotation(sentence);
+			OWLOntologyFormat ontologyFormat = manager.getOntologyFormat(ontology);
+			OWLAnnotation label = (OWLAnnotation) factory.getOWLAnnotationProperty(sentence, (PrefixManager) ontologyFormat);
 
-			OWLClassAssertionAxiom sentClass = factory.getOWLClassAssertionAxiom(sentenceInd, this.sentence);
-			OWLAxiomAnnotationAxiom labelClass = factory.getOWLAxiomAnnotationAxiom(sentClass, label);
+			OWLClassAssertionAxiom sentClass = factory.getOWLClassAssertionAxiom(this.sentence,sentenceInd);
+			OWLAnnotationAssertionAxiom labelClass = factory.getOWLAnnotationAssertionAxiom((OWLAnnotationSubject) sentClass, label);
 			manager.applyChange(new AddAxiom(ontology, sentClass));
 			manager.applyChange(new AddAxiom(ontology, labelClass));
 
@@ -130,21 +123,21 @@ public class OWLView
 			physicalURI = URI.create("file:/media/Docs/uc/MSc-2/SW/Project/ontologies/relex2.owl");
 
 			// Set up a mapping, which maps the ontology URI to the physical URI
-			SimpleURIMapper mapper = new SimpleURIMapper(ontologyURI, physicalURI);
-			manager.addURIMapper(mapper);
+			OWLOntologyIRIMapper mapper = new SimpleIRIMapper(IRI.create(ontologyURI),IRI.create(physicalURI));
+			manager.addIRIMapper(mapper);
 
 			// Now create the ontology - we use the ontology URI
-			ontology = manager.createOntology(physicalURI);
+			ontology = manager.createOntology(IRI.create(physicalURI));
 			//Data factory, allows to manipulate ontology data
 			factory = manager.getOWLDataFactory();
 
-			sentence = factory.getOWLClass(URI.create(ontologyURI + "#Sentence"));
-			word = factory.getOWLClass(URI.create(ontologyURI + "#Word"));
-			//relex_word = factory.getOWLClass(URI.create(ontologyURI + "#Relex_word"));
+			sentence = factory.getOWLClass(IRI.create(ontologyURI + "#Sentence"));
+			word = factory.getOWLClass(IRI.create(ontologyURI + "#Word"));
+			//relex_word = factory.getOWLClass(IRI.create(ontologyURI + "#Relex_word"));
 
 			//Generic properties for classes
-			has = factory.getOWLObjectProperty(URI.create(ontologyURI + "#relex_has"));
-			//map_owl_properties.put("type",factory.getOWLObjectProperty(URI.create(ontologyURI + "#type")));
+			has = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#relex_has"));
+			//map_owl_properties.put("type",factory.getOWLObjectProperty(IRI.create(ontologyURI + "#type")));
 
 			// word is subclass of phrase
 			//OWLAxiom subclassing = factory.getOWLSubClassAxiom(word, sentence);
@@ -156,38 +149,38 @@ public class OWLView
 
 			//2º Add the predefined properties
 
-			/*map_owl_properties.put("tense",factory.getOWLObjectProperty(URI.create(ontologyURI + "#p_tense")));
-			map_owl_properties.put("index",factory.getOWLDataProperty(URI.create(ontologyURI + "#p_index")));
+			/*map_owl_properties.put("tense",factory.getOWLObjectProperty(IRI.create(ontologyURI + * "#p_tense")));
+			map_owl_properties.put("index",factory.getOWLDataProperty(IRI.create(ontologyURI + "#p_index")));
 			//Add possible relex words
-			map_owl_relexwords.put("masculine",factory.getOWLIndividual(URI.create(ontologyURI + "#rw_masculine")));
-			map_owl_relexwords.put("feminine",factory.getOWLIndividual(URI.create(ontologyURI + "#rw_feminine")));
-			map_owl_relexwords.put("person",factory.getOWLIndividual(URI.create(ontologyURI + "#rw_person")));
-			map_owl_relexwords.put("neuter",factory.getOWLIndividual(URI.create(ontologyURI + "#rw_neuter")));*/
+			map_owl_relexwords.put("masculine",factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_masculine")));
+			map_owl_relexwords.put("feminine",factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_feminine")));
+			map_owl_relexwords.put("person",factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_person")));
+			map_owl_relexwords.put("neuter",factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_neuter")));*/
 
-			/*OWLObjectProperty number = factory.getOWLObjectProperty(URI.create(ontologyURI + "#number"));
-			OWLObjectProperty tense = factory.getOWLObjectProperty(URI.create(ontologyURI + "#tense"));
-			OWLObjectProperty query = factory.getOWLObjectProperty(URI.create(ontologyURI + "#query"));
-			OWLObjectProperty quantification = factory.getOWLObjectProperty(URI.create(ontologyURI + "#quantification"));*/
+			/*OWLObjectProperty number = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#number"));
+			OWLObjectProperty tense = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#tense"));
+			OWLObjectProperty query = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#query"));
+			OWLObjectProperty quantification = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#quantification"));*/
 
 			// Add axioms to the ontology
 			//OWLAxiom genderax = factory.getOWLObjectProperty(infinitive);
 
 			//Phrase Individuals
 			/*phr_type_map_owl = new HashMap<String,OWLIndividual>();
-			phr_type_map_owl.put("Adverbial Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_adjective")));
-			phr_type_map_owl.put("Adverbial Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_adverb")));
-			phr_type_map_owl.put("Noun Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_noun")));
-			phr_type_map_owl.put("Prepositional Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_prepositional")));
-			phr_type_map_owl.put("Particle",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_particle")));
-			phr_type_map_owl.put("Quantifier Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_quantifier")));
-			phr_type_map_owl.put("Clause",		factory.getOWLIndividual(URI.create(ontologyURI + "#rw_clause")));
-			phr_type_map_owl.put("Subordinate Clause",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_subordinate")));
-			phr_type_map_owl.put("Subject Inverted",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_inverted")));
-			phr_type_map_owl.put("Sentence",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_root")));
-			phr_type_map_owl.put("Verb Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_verb")));
-			phr_type_map_owl.put("Wh-Adverb Phrase", factory.getOWLIndividual(URI.create(ontologyURI + "#rw_wh-adverb")));
-			phr_type_map_owl.put("Wh-Noun Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_wh-noun")));
-			phr_type_map_owl.put("Wh-Prepositional Phrase",	factory.getOWLIndividual(URI.create(ontologyURI + "#rw_wh-prep")));*/
+			phr_type_map_owl.put("Adverbial Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_adjective")));
+			phr_type_map_owl.put("Adverbial Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_adverb")));
+			phr_type_map_owl.put("Noun Phrase",      factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_noun")));
+			phr_type_map_owl.put("Prepositional Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_prepositional")));
+			phr_type_map_owl.put("Particle",         factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_particle")));
+			phr_type_map_owl.put("Quantifier Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_quantifier")));
+			phr_type_map_owl.put("Clause",           factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_clause")));
+			phr_type_map_owl.put("Subordinate Clause", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_subordinate")));
+			phr_type_map_owl.put("Subject Inverted", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_inverted")));
+			phr_type_map_owl.put("Sentence",         factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_root")));
+			phr_type_map_owl.put("Verb Phrase",      factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_verb")));
+			phr_type_map_owl.put("Wh-Adverb Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_wh-adverb")));
+			phr_type_map_owl.put("Wh-Noun Phrase",   factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_wh-noun")));
+			phr_type_map_owl.put("Wh-Prepositional Phrase", factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#rw_wh-prep")));*/
 
 			//Add all the phr_type_map_owl Individuals to the Relex_word Class
 			/*Set<String> s = phr_type_map_owl.keySet();
@@ -223,10 +216,9 @@ public class OWLView
 	{
 		try
 		{
-			// Save the ontology
 			physicalURI = URI.create("file:" + path);
 
-			manager.setPhysicalURIForOntology(ontology, physicalURI);
+			manager.setOntologyDocumentIRI(ontology,IRI.create(physicalURI));
 
 			manager.saveOntology(ontology);
 		}
@@ -242,11 +234,11 @@ public class OWLView
 	* the attribute name.
 	*
 	* Example:
-	*	_subj(throw, John)
-	*	_obj(throw, ball)
-	*	past(throw)
-	*	definite(ball)
-	*	singular(ball)
+	*       _subj(throw, John)
+	*       _obj(throw, ball)
+	*       past(throw)
+	*       definite(ball)
+	*       singular(ball)
 	*/
 	public String printRelationsAlt(ParsedSentence parse)
 	{
@@ -277,72 +269,66 @@ public class OWLView
 												FeatureNode srcNode,
 												FeatureNode tgtNode)
 		{
-			try
+			String srcName = srcNode.get("name").getValue();
+			FeatureNode tgt = tgtNode.get("name");
+			if (tgt == null)
 			{
-				String srcName = srcNode.get("name").getValue();
-				FeatureNode tgt = tgtNode.get("name");
-				if (tgt == null)
-				{
-					System.out.println("Error: No target! rel=" + relName + " and src=" + srcName);
-					return false;
-				}
-				String tgtName = tgt.getValue();
-				if (id_map != null)
-				{
-					srcName = id_map.get(srcNode);
-					tgtName = id_map.get(tgtNode);
-				}
-				//Optimize using StringBuilder
-				//Get the Individual type (noun, etc.) and the type_property
-				System.out.println("\n\tRELATION (binary) = " + relName + "(" + srcName + ", " + tgtName + ")\n");
-
-				//Cleaning
-				if(relName.charAt(0)=='_')
-					relName = relName.replaceFirst("_", "");
-					if(relName.length()>1)
-							if(relName.charAt(1)=='%')
-								relName = relName.replaceFirst("%", "");
-
-				if(tgtName.contains("[") || tgtName.contains("]") || srcName.contains("[") || srcName.contains("]") ||
-							tgtName.equals("WORD") || srcName.equals("WORD")  || tgtName.contains("misc-") || srcName.contains("misc-")) return false;
-
-				if(srcName.length()>0 && tgtName.length()>0)
-				{
-					//1º Add the first term to Word Class
-					srcName=srcName.replaceAll("[\\%\\s]", "");
-					//System.out.println("srcName = " + srcName);
-					OWLIndividual src_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + srcName));
-					OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom(src_word, word);
-					manager.applyChange(new AddAxiom(ontology, addSrcWord));
-
-					//2º Create the property
-					relName = relName.replaceAll("[\\%\\ss]", "");
-					OWLObjectProperty rel = factory.getOWLObjectProperty(URI.create(ontologyURI + "#" + relName));
-
-					//3º Add the second term to Word Class
-					tgtName = tgtName.replaceAll("[\\%\\s]", "");
-					OWLIndividual dst_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + tgtName));
-					OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(dst_word, word);
-					manager.applyChange(new AddAxiom(ontology, addDstWord));
-
-					//4º Create axiom for the relation
-					OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(src_word, rel, dst_word);
-					manager.applyChange(new AddAxiom(ontology, addrel));
-
-					//5º Add the words (Class) to the sentence (Class)
-					OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
-					//OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
-
-
-					manager.applyChange(new AddAxiom(ontology, addw1));
-					//manager.applyChange(new AddAxiom(ontology, addw2));
-				}
-
+				System.out.println("Error: No target! rel=" + relName + " and src=" + srcName);
+				return false;
 			}
-			catch (OWLException ex)
+			String tgtName = tgt.getValue();
+			if (id_map != null)
 			{
-				Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
+				srcName = id_map.get(srcNode);
+				tgtName = id_map.get(tgtNode);
 			}
+			//Optimize using StringBuilder
+			//Get the Individual type (noun, etc.) and the type_property
+			System.out.println("\n\tRELATION (binary) = " + relName + "(" + srcName + ", " + tgtName + ")\n");
+
+			//Cleaning
+			if (relName.charAt(0)=='_')
+				relName = relName.replaceFirst("_", "");
+			if (relName.length()>1)
+				if (relName.charAt(1)=='%')
+					relName = relName.replaceFirst("%", "");
+
+			if (tgtName.contains("[") || tgtName.contains("]") || srcName.contains("[") || srcName.contains("]") ||
+				tgtName.equals("WORD") || srcName.equals("WORD")  || tgtName.contains("misc-") || srcName.contains("misc-")) return false;
+
+			if (srcName.length()>0 && tgtName.length()>0)
+			{
+				//1º Add the first term to Word Class
+				srcName=srcName.replaceAll("[\\%\\s]", "");
+				//System.out.println("srcName = " + srcName);
+				OWLIndividual src_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + srcName));
+				OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom(word,src_word);
+				manager.applyChange(new AddAxiom(ontology, addSrcWord));
+
+				//2º Create the property
+				relName = relName.replaceAll("[\\%\\ss]", "");
+				OWLObjectProperty rel = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#" + relName));
+
+				//3º Add the second term to Word Class
+				tgtName = tgtName.replaceAll("[\\%\\s]", "");
+				OWLIndividual dst_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + tgtName));
+				OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(word,dst_word );
+				manager.applyChange(new AddAxiom(ontology, addDstWord));
+
+				//4º Create axiom for the relation
+				OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(rel,src_word, dst_word);
+				manager.applyChange(new AddAxiom(ontology, addrel));
+
+				//5º Add the words (Class) to the sentence (Class)
+				OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(has,sentenceInd, src_word);
+				//OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has,
+				//dst_word);
+
+
+				manager.applyChange(new AddAxiom(ontology, addw1));
+				//manager.applyChange(new AddAxiom(ontology, addw2));
+			}
+
 			return false;
 		}
 
@@ -365,93 +351,77 @@ public class OWLView
 				if (attrName.equals("HYP"))
 					value = attrName.toLowerCase();
 
-				try
-				{
-					//Optimize using StringBuilder
-					//Get the Individual type (noun, etc.) and the type_property
-					System.out.println("\n\tRELATION (unary1) = " + value + "(" + srcName + ")\n");
+				//Optimize using StringBuilder
+				//Get the Individual type (noun, etc.) and the type_property
+				System.out.println("\n\tRELATION (unary1) = " + value + "(" + srcName + ")\n");
 
-					//1º Add the first term to Word Class
-					srcName=srcName.replaceAll("\\%", "");
-					OWLIndividual src_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + srcName.replaceAll(" ", "")));
-					OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom(src_word, word);
-					manager.applyChange(new AddAxiom(ontology, addSrcWord));
+				//1º Add the first term to Word Class
+				srcName=srcName.replaceAll("\\%", "");
+				OWLIndividual src_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + srcName.replaceAll(" ", "")));
+				OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom(word,src_word );
+				manager.applyChange(new AddAxiom(ontology, addSrcWord));
 
-					//2º Create the property
-					OWLObjectProperty rel = factory.getOWLObjectProperty(URI.create(ontologyURI + "#relex_is"));
+				//2º Create the property
+				OWLObjectProperty rel = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#relex_is"));
 
-					//3º Add the second term to Word Class
-					value=value.replaceAll("\\%", "");
-					OWLIndividual dst_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + value.replaceAll(" ", "")));
-					OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(dst_word, word);
-					manager.applyChange(new AddAxiom(ontology, addDstWord));
+				//3º Add the second term to Word Class
+				value=value.replaceAll("\\%", "");
+				OWLIndividual dst_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + value.replaceAll(" ", "")));
+				OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(word,dst_word );
+				manager.applyChange(new AddAxiom(ontology, addDstWord));
 
-					//4º Create axiom for the relation
-					OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(src_word, rel, dst_word);
-					manager.applyChange(new AddAxiom(ontology, addrel));
+				//4º Create axiom for the relation
+				OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(rel,src_word , dst_word);
+				manager.applyChange(new AddAxiom(ontology, addrel));
 
-					//5º Add the words (Class) to the sentence (Class)
-					/*OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
-					OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
-
-					manager.applyChange(new AddAxiom(ontology, addw1));
-					manager.applyChange(new AddAxiom(ontology, addw2));*/
-
-				}
-				catch (OWLException ex)
-				{
-					Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
-				}
+				//5º Add the words (Class) to the sentence (Class)
+				/*OWLObjectPropertyAssertionAxiom addw1 = * factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
+				OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
+				manager.applyChange(new AddAxiom(ontology, addw1));
+				manager.applyChange(new AddAxiom(ontology, addw2));*/
 			}
 			else
 			{
-				try
-			 	{
-					//Optimize using StringBuilder
-					//Get the Individual type (noun, etc.) and the type_property
-					System.out.println("\n\tRELATION (unary2) = " + attrName + "(" + srcName + ", " + value + ")\n");
+				//Optimize using StringBuilder
+				//Get the Individual type (noun, etc.) and the type_property
+				System.out.println("\n\tRELATION (unary2) = " + attrName + "(" + srcName + ", " + value + ")\n");
 
-					if(value.charAt(0)=='.')
-						value = value.replaceFirst(".", "");
+				if (value.charAt(0)=='.')
+					value = value.replaceFirst(".", "");
 
-					if(value.contains("[") || value.contains("]") || srcName.contains("[") || srcName.contains("]") ||
-								value.equals("WORD") || srcName.equals("WORD") || value.contains("misc-") || srcName.contains("misc-")) return false;
+				if (value.contains("[") || value.contains("]") || srcName.contains("[") || srcName.contains("]") ||
+						value.equals("WORD") || srcName.equals("WORD") || value.contains("misc-") || srcName.contains("misc-")) return false;
 
-					if(srcName.length()>0 && value.length()>0)
-					{
-						//1º Add the first term to Word Class
-						srcName=srcName.replaceAll("[\\%\\s]", "");
-						OWLIndividual src_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + srcName));
-						OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom(src_word, word);
-						manager.applyChange(new AddAxiom(ontology, addSrcWord));
-
-						//2º Create the property
-						attrName=attrName.replaceAll("[\\%\\s]", "");
-						OWLObjectProperty rel = factory.getOWLObjectProperty(URI.create(ontologyURI + "#" + attrName));
-
-						//3º Add the second term to Word Class
-						value=value.replaceAll("[\\%\\s]", "");
-						OWLIndividual dst_word = factory.getOWLIndividual(URI.create(ontologyURI + "#" + value));
-						OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(dst_word, word);
-						manager.applyChange(new AddAxiom(ontology, addDstWord));
-
-						//4º Create axiom for the relation
-						OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(src_word, rel, dst_word);
-						manager.applyChange(new AddAxiom(ontology, addrel));
-
-						//5º Add the words (Class) to the sentence (Class)
-						OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, src_word);
-						//OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
-
-						manager.applyChange(new AddAxiom(ontology, addw1));
-						//manager.applyChange(new AddAxiom(ontology, addw2));
-					}
-
-				}
-				catch (OWLException ex)
+				if (srcName.length()>0 && value.length()>0)
 				{
-					Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
+					//1º Add the first term to Word Class
+					srcName=srcName.replaceAll("[\\%\\s]", "");
+					OWLIndividual src_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + srcName));
+					OWLClassAssertionAxiom addSrcWord = factory.getOWLClassAssertionAxiom( word,src_word);
+					manager.applyChange(new AddAxiom(ontology, addSrcWord));
+
+					//2º Create the property
+					attrName=attrName.replaceAll("[\\%\\s]", "");
+					OWLObjectProperty rel = factory.getOWLObjectProperty(IRI.create(ontologyURI + "#" + attrName));
+
+					//3º Add the second term to Word Class
+					value=value.replaceAll("[\\%\\s]", "");
+					OWLIndividual dst_word = factory.getOWLNamedIndividual(IRI.create(ontologyURI + "#" + value));
+					OWLClassAssertionAxiom addDstWord = factory.getOWLClassAssertionAxiom(word,dst_word );
+					manager.applyChange(new AddAxiom(ontology, addDstWord));
+
+					//4º Create axiom for the relation
+					OWLObjectPropertyAssertionAxiom addrel = factory.getOWLObjectPropertyAssertionAxiom(rel,src_word , dst_word);
+					manager.applyChange(new AddAxiom(ontology, addrel));
+
+					//5º Add the words (Class) to the sentence (Class)
+					OWLObjectPropertyAssertionAxiom addw1 = factory.getOWLObjectPropertyAssertionAxiom(has,sentenceInd , src_word);
+					//OWLObjectPropertyAssertionAxiom addw2 = factory.getOWLObjectPropertyAssertionAxiom(sentenceInd, has, dst_word);
+
+					manager.applyChange(new AddAxiom(ontology, addw1));
+					//manager.applyChange(new AddAxiom(ontology, addw2));
 				}
+
 			}
 			return false;
 		}
@@ -459,4 +429,3 @@ public class OWLView
 }
 
 /* ============================ END OF FILE ====================== */
-

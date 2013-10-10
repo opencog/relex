@@ -1,9 +1,10 @@
 New in version 1.4.2 (XXX 2013??)
- * Updated maven pom file, from Krzysztof Wezowski
+ * Updated maven pom file, from Krzysztof Wezowski.
  * Remove obsolete parser version, which didn't build any more.
  * Fix/remove assorted deprecated functions.
  * Print binary relations separated from unary attributes.
- * Fix "I want you to eat cake" (rodas solomon)
+ * Fix "I want you to eat cake", from Rodas Solomon.
+ * OWL updates from Lucky--
 
 New in version 1.4.1 (15 October 2012)
  * Fix POS tagging for conjunctions.
