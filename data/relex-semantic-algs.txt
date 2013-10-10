@@ -119,6 +119,15 @@ EXPLETIVE_SUBJ2
 =
 <F_L expl> += <F_R ref>
 ;
+; determiners for  Bug #200082 
+#TemplateActionAlg
+ind_deter
+<LAB> = \D\.*
+<F_R ref definite-FLAG> = T
+<F_R POS> = noun
+=
+<F_R det>= <F_L ref>
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ; Identifying objects
 ;
@@ -189,6 +198,35 @@ DIR_OBJ1
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
 ;
+;START BUG 3 Solution #################################
+;   "I want you to eat cake."
+; should generate _subj(eat, you) not _obj(eat, you)
+; Arguably, the link-grammar parse is wrong. The below works around this.
+;
+; Below is what we added to solve the problem.
+; We created the temp1 for temporary storage. If there is another means please suggest.
+; 
+#TemplateActionAlg
+ALG1
+<LAB> = \Ox
+=
+<F_L temp1> += <F_R ref>
+#TemplateActionAlg
+ALG2
+<LAB> = \TO\.*
+=
+<F_R temp1> = <F_L temp1>
+<F_L obj> = %
+
+#TemplateActionAlg
+ALG3
+<LAB> = \I\.*
+=
+<F_R subj> = <F_L temp1>
+<F_L temp1 > = %
+
+;END BUG 3 Solution #################################
+;
 ; If there is already an object, then O-link defines indirect object
 ;   "He was given the car."
 ;   "This is the man given the car."
@@ -255,12 +293,12 @@ PASSIVE_OBJ_LINK
 =
 <F_R obj> = <F_L subj>
 ;
-#TemplateActionAlg
-;  "Tom made it unlikely that she will come."
-MARK_FILLER_OBJ
-<LAB> = \OX\.*
-=
-<F_L FILLER-OBJ-FLAG> = T
+;#TemplateActionAlg
+;;  "Tom made it unlikely that she will come."
+;MARK_FILLER_OBJ
+;<LAB> = \OX\.*
+;=
+;<F_L FILLER-OBJ-FLAG> = T
 ;
 #TemplateActionAlg
 SUBJECT_LINKING
@@ -722,6 +760,12 @@ DO_QUESTION1
 ;
 ; TRANSFER LINKS TO REF
 ;
+;
+#TemplateActionAlg
+DET_TO_LINKS
+<det> != %
+=
+<ref links _det> = <det>
 ;
 #TemplateActionAlg
 SUBJ_TO_LINKS
