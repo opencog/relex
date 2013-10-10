@@ -120,6 +120,8 @@ EXPLETIVE_SUBJ2
 <F_L expl> += <F_R ref>
 ;
 ; determiners for  Bug #200082 
+;  "Ben ate those cookies." "Ben ate that cookie."
+;
 #TemplateActionAlg
 ind_deter
 <LAB> = \D\.*
