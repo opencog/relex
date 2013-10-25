@@ -1,7 +1,7 @@
 
                 RelEx Semantic Relation Extractor
                 ---------------------------------
-                Version 1.4.1     15 October 2012
+                Version 1.4.2     24 October 2013
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -377,11 +377,6 @@ TODO - LinkGraphGenerator
 This graph visualization class is not currently used. It should be
 wired up and turned on.
 
-TODO - Conjunctions
--------------------
-Linkgrammar as a bunch of new conjunction links. Relex needs 
-to grok these.
-
 
 TODO - OpenNLP
 --------------
@@ -441,6 +436,7 @@ reversed.
 
 The following was audited, and appears to be correct:
 _appo
+
 
 Bugs:
 ----

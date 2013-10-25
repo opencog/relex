@@ -1,4 +1,4 @@
-New in version 1.4.2 (XXX 2013??)
+New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.
  * Remove obsolete parser version, which didn't build any more.
  * Fix/remove assorted deprecated functions.
