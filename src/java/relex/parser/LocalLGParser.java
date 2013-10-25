@@ -199,7 +199,7 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isLoadSense());
+			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isStoreSense());
 			if (config.isStoreConstituentString())
 			{
 				if (verbosity >= 5) System.err.println("Adding Tree Structure");

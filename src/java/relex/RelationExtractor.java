@@ -139,7 +139,7 @@ public class RelationExtractor
 	{
 		parser = useSocket ? new RemoteLGParser() : new LocalLGParser();
 		parser.getConfig().setStoreConstituentString(true);
-		parser.getConfig().setLoadSense(true);
+		parser.getConfig().setStoreSense(true);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(parser, morphy);
 
