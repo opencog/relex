@@ -1,3 +1,16 @@
+You can stay or leave.
+END.
+Fewer people like pigs than dogs.
+More people like pigs than dogs.
+Some people like pigs more than dogs.
+END.
+Alice ate a green mushroom when she was in Scotland.
+END.
+How many years did it last?
+All the boys are here.
+The dogs, some of them very large, ran after the man.
+END.
+What colour is the car?
 what color is this book?
 END.
 Janet, who is an expert on dogs, helped me choose one.

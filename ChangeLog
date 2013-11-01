@@ -1,3 +1,6 @@
+New in version 1.4.3 (XXX 2014)
+ * Minor cleanup of windows *.bat file
+
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.
  * Remove obsolete parser version, which didn't build any more.
