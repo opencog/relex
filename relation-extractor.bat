@@ -1,6 +1,6 @@
 set DISCO_HOME=C:/disco
 
-java ^
+"%JAVA_HOME%\bin\java" ^
 -Xmx1024m ^
 -Djava.library.path=%DISCO_HOME%/native/windows ^
 -Drelex.linkparserpath=%DISCO_HOME%/data/linkparser ^
