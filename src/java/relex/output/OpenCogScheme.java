@@ -55,7 +55,6 @@ public class OpenCogScheme
 	{
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
-		frame_scheme = new OpenCogSchemeFrame();
 		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
 	}
@@ -66,7 +65,13 @@ public class OpenCogScheme
 	public void setShowRelex(boolean t) { do_show_relex = t; }
 	public boolean getShowRelex() { return do_show_relex; }
 
-	public void setShowFrames(boolean t) { do_show_frames = t; }
+	public void setShowFrames(boolean t)
+	{
+		// Just even creating this is slooow .. so don't do it!
+		if (t)
+			frame_scheme = new OpenCogSchemeFrame();
+		do_show_frames = t;
+	}
 	public boolean getShowFrames() { return do_show_frames; }
 
 	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }

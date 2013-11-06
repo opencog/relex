@@ -62,7 +62,7 @@ public class Server
 			" --port num \t Port number to listen on (default: 4444)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
-			" --frame    \t Output Semantic Frames\n" +
+			" --frame    \t Output Semantic Frames (Caution: Very slow!)\n" +
 			" --anaphora \t Output anaphore references\n" +
 			" --verbose  \t Print parse/frame output to server stdout.\n";
 
