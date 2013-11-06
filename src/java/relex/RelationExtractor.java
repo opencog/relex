@@ -44,7 +44,6 @@ import relex.entity.EntityTagger;
 import relex.entity.EntityTaggerFactory;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
-import relex.frame.Frame;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.NLGInputView;
@@ -390,7 +389,6 @@ public class RelationExtractor
 		String callString = "RelationExtractor" +
 			" [-a (perform anaphora resolution)]" +
 			" [--expand-preps (show expanded prepositions)]" +
-			" [-f (show frame output)]" +
 			" [-g (pre-process with GATE entity detector)]" +
 			" [--g-post (post-process with GATE entity detector)]" +
 			" [-h (show this help)]" +
@@ -416,7 +414,6 @@ public class RelationExtractor
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("--expand-preps");
-		flags.add("-f");
 		flags.add("-g");
 		flags.add("--g-post");
 		flags.add("-h");
@@ -556,14 +553,6 @@ public class RelationExtractor
 			{
 				opencog.setShowAnaphora(true);
 			}
-		}
-
-		// Print normal frames, but only if -o has not been invoked.
-		Frame frame = null;
-		if ((commandMap.get("-f") != null) &&
-		    (commandMap.get("-o") == null))
-		{
-			frame = new Frame();
 		}
 
 		int sentence_count = 0;
@@ -745,31 +734,6 @@ public class RelationExtractor
 						System.out.println("\n======\n");
 					}
 
-					if ((commandMap.get("-f") != null) &&
-					    (commandMap.get("-o") == null))
-					{
-						re.starttime = System.currentTimeMillis();
-						String fin = SimpleView.printRelationsAlt(parse);
-						String[] fout = frame.process(fin);
-						re.reportTime("Frame processing: ");
-
-						Arrays.sort(fout);
-
-						for (int i=0; i < fout.length; i++) {
-							System.out.println(fout[i]);
-						}
-
-						if (html != null) {
-							html.print("<td valign='top'><pre>");
-							for (String f : fout) {
-								html.println(escape(f));
-							}
-							html.println("</pre></td>");
-						}
-
-						System.out.println("\nFraming rules applied:\n");
-						System.out.println(frame.printAppliedRules());
-					}
 					if (commandMap.get("-o") != null)
 					{
 						opencog.setParse(parse);
