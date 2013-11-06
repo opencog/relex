@@ -151,7 +151,7 @@ public class PlainTextServer
 				ins = out_sock.getInputStream();
 				outs = out_sock.getOutputStream();
 			} catch (IOException e) {
-				System.err.println("Error: Accept failed");
+				System.err.println("Error: Socket accept failed");
 				continue;
 			}
 
@@ -170,21 +170,30 @@ public class PlainTextServer
 					out.println("; NO PARSES");
 					continue;
 				}
-				ParsedSentence parse = sntc.getParses().get(0);
 
-				// Print the phrase string .. why ??
+				int num_show = sntc.getParses().size();
+				if (3 < num_show) num_show = 3;
 
-				out.println("; " + parse.getPhraseString());
-				out.println("; Dependency relations:\n");
+				for (int i=0; i< num_show; i++) 
+				{ 
+					ParsedSentence parse = sntc.getParses().get(i);
 
-				// String fin = sv.printRelationsAlt(parse);
-				String fin = sv.printRelations(parse);
-				if (verbose)
-					System.out.print(fin);
+					// Print the phrase string .. why ??
 
-				out.println(fin);
+					int ialt = i+1;
+					out.println("==== Parse alternative " + ialt + " ====\n");
+					out.println("Phrase Structure parse:\n");
+					out.println("    " + parse.getPhraseString());
+					out.println("Dependency relations:\n");
 
-				out.println("; END OF SENTENCE");
+					// String fin = sv.printRelationsAlt(parse);
+					String fin = sv.printRelations(parse);
+					if (verbose)
+						System.out.print(fin);
+
+					out.println(fin);
+				}
+				out.println("==== END OF SENTENCE ====");
 
 				out.close();
 				System.err.println("Info: Closed printer");
