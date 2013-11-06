@@ -42,11 +42,9 @@ public class OpenCogScheme
 
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
-	private OpenCogSchemeFrame frame_scheme;
 	private OpenCogSchemeAnaphora anaphora_scheme;
 	private boolean do_show_linkage = false;
 	private boolean do_show_relex = false;
-	private boolean do_show_frames = false;
 	private boolean do_show_anaphora = false;
 
 	/* -------------------------------------------------------------------- */
@@ -65,15 +63,6 @@ public class OpenCogScheme
 	public void setShowRelex(boolean t) { do_show_relex = t; }
 	public boolean getShowRelex() { return do_show_relex; }
 
-	public void setShowFrames(boolean t)
-	{
-		// Just even creating this is slooow .. so don't do it!
-		if (t)
-			frame_scheme = new OpenCogSchemeFrame();
-		do_show_frames = t;
-	}
-	public boolean getShowFrames() { return do_show_frames; }
-
 	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
 	public boolean getShowAnaphora() { return do_show_anaphora; }
 
@@ -86,7 +75,6 @@ public class OpenCogScheme
 
 		link_scheme.setParse(parse);
 		rel_scheme.setParse(parse);
-		frame_scheme.setParse(parse);
 
 		anaphora_scheme.clear();
 		anaphora_scheme.setSentence(parse);
@@ -101,7 +89,6 @@ public class OpenCogScheme
 
 		if (do_show_linkage) ret += linkSchemeToString();
 		if (do_show_relex) ret += relSchemeToString();
-		if (do_show_frames) ret += frameSchemeToString();
 		if (do_show_anaphora) ret += anaphoraSchemeToString(); 
 		
 		// Don't repeat the orig sentence, until we get a new sentence.
@@ -111,10 +98,6 @@ public class OpenCogScheme
 
 	public String anaphoraSchemeToString() {
 		return anaphora_scheme.toString();
-	}
-
-	public String frameSchemeToString() {
-		return frame_scheme.toString();
 	}
 
 	public String relSchemeToString() {

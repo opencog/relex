@@ -33,12 +33,10 @@ LinkGraphGenerator.java:
 OpenCogScheme.java:
 OpenCogSchemeRel.java:
 OpenCogSchemeLink.java:
-OpenCogSchemeFrame.java:
 	Generates OpenCog Scheme. Only the OpenCog class is public; the
 	other two are helpers. SchemeRel generates output that corresponds
-	to the basic RelEx feature graph, while SchemeFrame generates output
-	for the frame relations. SchemeLink generates the link-grammar
-	relations.
+	to the basic RelEx feature graph.  SchemeLink generates the
+	link-grammar relations.
 
 OWLView.java:
 	Generates W3C Semantic Web OWL format. The org.semanticweb jar files

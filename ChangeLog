@@ -4,8 +4,8 @@ New in version 1.4.3 (XXX 2014)
  * Fix the opencog-server.sh file so that the port number can be set.
  * Disable frames by default: it make everything slowww!
  * Add a plain-text server, for demoing relex live on the web.
- * Remove the obsolete OpenCogXML* output classes.
- * Remove the obsolete cerego-view classes (1.7KLOC removed)
+ * Remove the obsolete OpenCogXML* output classes. (500 LOC removed)
+ * Remove the obsolete Cerego-view classes (1.7KLOC removed)
 
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.

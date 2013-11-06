@@ -552,10 +552,6 @@ public class RelationExtractor
 			{
 				opencog.setShowRelex(false);
 			}
-			if (commandMap.get("-f") != null)
-			{
-				opencog.setShowFrames(true);
-			}
 			if (commandMap.get("-a") != null)
 			{
 				opencog.setShowAnaphora(true);

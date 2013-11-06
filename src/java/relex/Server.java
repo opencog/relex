@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import relex.output.SimpleView;
-import relex.frame.Frame;
 import relex.output.OpenCogScheme;
 import relex.Version;
 
@@ -51,7 +50,6 @@ public class Server
 	public static void main(String[] args)
 	{
 		int listen_port = 4444;
-		boolean frame_on = false;
 		boolean relex_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
@@ -62,19 +60,14 @@ public class Server
 			" --port num \t Port number to listen on (default: 4444)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
-			" --frame    \t Output Semantic Frames (Caution: Very slow!)\n" +
 			" --anaphora \t Output anaphore references\n" +
-			" --verbose  \t Print parse/frame output to server stdout.\n";
+			" --verbose  \t Print parse output to server stdout.\n";
 
 		for (int i = 0; i < args.length; i++)
 		{
 			if (args[i].equals("--anaphora"))
 			{
 				anaphora_on = true;
-			}
-			else if (args[i].equals("--frame"))
-			{
-				frame_on = true;
 			}
 			else if (args[i].equals("--help") || args[i].equals("-h"))
 			{
@@ -125,20 +118,15 @@ public class Server
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
-		if (!frame_on && !relex_on && !link_on)
+		if (!relex_on && !link_on)
 		{
-			// By default just export RelEx output, not frames
+			// By default just export RelEx output.
 			relex_on = true;
 		}
 		if (anaphora_on)
 		{
 			System.err.println("Info: Anaphora output on.");
 			opencog.setShowAnaphora(anaphora_on);
-		}
-		if (frame_on)
-		{
-			System.err.println("Info: Frame output on.");
-			opencog.setShowFrames(frame_on);
 		}
 		if (link_on)
 		{
@@ -200,15 +188,6 @@ public class Server
 				{
 					String fin = SimpleView.printRelationsAlt(parse);
 					System.out.print(fin);
-					if (frame_on)
-					{
-						Frame frame = new Frame();
-						String[] fout = frame.process(fin);
-						for (int i=0; i < fout.length; i++)
-						{
-							System.out.println(fout[i]);
-						}
-					}
 				}
 				opencog.setParse(parse);
 				out.println(opencog.toString());
