@@ -167,7 +167,7 @@ public class RelationExtractor
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
-		cnttime = new TreeMap<String,Long>(); 
+		cnttime = new TreeMap<String,Long>();
 	}
 
 	public String getVersion()
@@ -238,7 +238,7 @@ public class RelationExtractor
 
 			for (ParsedSentence parse : sntc.getParses())
 			{
-				if (do_expand_preps) 
+				if (do_expand_preps)
 				{
 					parse.getLeft().set("expand-preps", new FeatureNode("T"));
 				}
@@ -325,8 +325,8 @@ public class RelationExtractor
 	/* ---------------------------------------------------------- */
 	// Provide some basic timing info
 	Long starttime;
-	TreeMap<String,Long> sumtime; 
-	TreeMap<String,Long> cnttime; 
+	TreeMap<String,Long> sumtime;
+	TreeMap<String,Long> cnttime;
 
 	private void reportTime(String msg)
 	{
@@ -347,7 +347,7 @@ public class RelationExtractor
 		cnttime.put(msg, cnt);
 
 		Long avg = sum / cnt;
-		System.err.println(msg + elapsed + " milliseconds (avg=" 
+		System.err.println(msg + elapsed + " milliseconds (avg="
 			+ avg + " millisecs, cnt=" + cnt + ")");
 	}
 
@@ -697,7 +697,7 @@ public class RelationExtractor
 					// Verbose graph.
 					if (commandMap.get("-v") != null)
 						// System.out.println("\n" + parse.fullParseString());
-						System.out.println("\n" + 
+						System.out.println("\n" +
 						 	parse.getLeft().toString(LinkView.getFilter()));
 
 					if ((commandMap.get("-q") == null) &&
@@ -741,7 +741,7 @@ public class RelationExtractor
 					{
 						PrologList pl = new PrologList();
 						System.out.println(
-							pl.toPrologList(parse.getLeft(), 
+							pl.toPrologList(parse.getLeft(),
 								PrologList.getDefaultFilter(),
 								true));
 						System.out.println("\n======\n");
