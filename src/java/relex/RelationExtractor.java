@@ -78,7 +78,7 @@ public class RelationExtractor
 {
 	public static final int verbosity = 1;
 
-	public static final int DEFAULT_MAX_PARSES = 100;
+	public static final int DEFAULT_MAX_PARSES = 4;
 	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
 	public static final int DEFAULT_MAX_PARSE_COST = 1000;
