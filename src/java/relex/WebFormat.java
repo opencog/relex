@@ -27,7 +27,6 @@ import relex.entity.EntityMaintainer;
 import relex.entity.EntityTagger;
 import relex.entity.EntityTaggerFactory;
 import relex.output.CompactView;
-import relex.output.SimpleView;
 
 /**
  * The WebFormat class provides the central processing point for parsing

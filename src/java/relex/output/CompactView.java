@@ -300,7 +300,6 @@ public class CompactView
 
 	private static class Visit implements RelationCallback
 	{
-		public Boolean unaryStyle = false;
 		public String str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,

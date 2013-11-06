@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import net.didion.jwnl.JWNL;
-import relex.frame.Frame;
 
 public class MorphyFactory
 {
@@ -119,13 +118,6 @@ public class MorphyFactory
 						propertyName + ":" + property);
 					return in;
 				}
-			}
-			
-			in = Frame.class.getResourceAsStream("/" + file);
-			if (in != null)
-			{
-				System.err.println("Info: Using " + file +" from resource (jar file).");
-				return in;
 			}
 			
 			String defaultFile = defaultDir+"/"+file;
