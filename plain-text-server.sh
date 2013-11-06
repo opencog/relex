@@ -45,6 +45,6 @@ bin:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --relex --anaphora --port 3333
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --relex --stanford --port 3333
 
 

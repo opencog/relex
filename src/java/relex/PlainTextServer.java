@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import relex.output.SimpleView;
+import relex.output.StanfordView;
 import relex.Version;
 
 
@@ -51,6 +52,7 @@ public class PlainTextServer
 		boolean relex_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
+		boolean stanford_on = false;
 		boolean verbose = false;
 		String usageString = "Plain-text RelEx server.\n" +
 			"Given a sentence, it returns a plain-output parse.\n" +
@@ -59,6 +61,7 @@ public class PlainTextServer
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --anaphora \t Output anaphore references\n" +
+			" --stanford \t Output Standford-format relations\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
 		for (int i = 0; i < args.length; i++)
@@ -95,6 +98,10 @@ public class PlainTextServer
 			{
 				relex_on = true;
 			}
+			else if (args[i].equals("--stanford"))
+			{
+				stanford_on = true;
+			}
 			else if (args[i].equals("--verbose") )
 			{
 				System.err.println("Info: Verbose server mode set.");
@@ -112,6 +119,7 @@ public class PlainTextServer
 
 		RelationExtractor r = new RelationExtractor(false);
 		SimpleView sv = new SimpleView();
+		StanfordView st = new StanfordView();
 		PlainTextServer s = new PlainTextServer();
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
@@ -132,6 +140,10 @@ public class PlainTextServer
 		if (relex_on)
 		{
 			System.err.println("Info: RelEx output on.");
+		}
+		if (stanford_on)
+		{
+			System.err.println("Info: Stanford output on.");
 		}
 
 		try
@@ -186,16 +198,25 @@ public class PlainTextServer
 
 					int ialt = i+1;
 					out.println("==== Parse alternative " + ialt + " ====\n");
-					out.println("Phrase Structure parse:\n");
-					out.println("    " + parse.getPhraseString());
-					out.println("Dependency relations:\n");
 
-					// String fin = sv.printRelationsAlt(parse);
-					String fin = sv.printRelations(parse);
+					if (relex_on)
+					{
+						out.println("Phrase Structure parse:\n");
+						out.println("    " + parse.getPhraseString());
+						out.println("Dependency relations:\n");
+
+						// String fin = sv.printRelationsAlt(parse);
+						String fin = sv.printRelations(parse);
+						out.println(fin);
+					}
+					if (stanford_on)
+					{
+						out.println("Stanford-style dependency relations:\n");
+						String fin = st.printRelations(parse, true);
+						out.println(fin);
+					}
 					if (verbose)
-						System.out.print(fin);
-
-					out.println(fin);
+						System.out.print(sv.printRelations(parse));
 				}
 				out.println("==== END OF SENTENCE ====");
 
