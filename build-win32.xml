@@ -4,7 +4,6 @@
     <property name="REVISION" value="1.4.2"/>
 
     <property name="DISCO_HOME" value="d:/work/disco/trunk"/>
-    <property name="GATE_HOME" value="c:/tools/gate"/>
 
     <property name="PREFIX" value="${DISCO_HOME}/lib"/>
     <property name="ALTPREFIX" value="${DISCO_HOME}/lib"/>
@@ -45,16 +44,6 @@
         <pathelement location="${ALTPREFIX}/trove.jar"/>
         <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
         <pathelement location="${ALTPREFIX}/commons-logging.jar"/>
-
-        <!-- GATE - optional for entity recognition -->
-        <pathelement location="${GATE_HOME}/bin/gate.jar"/>
-        <pathelement location="${GATE_HOME}/lib/jdom.jar"/>
-        <pathelement location="${GATE_HOME}/lib/xercesImpl.jar"/>
-        <pathelement location="${GATE_HOME}/lib/jasper-compiler-jdt.jar"/>
-        <pathelement location="${GATE_HOME}/lib/nekohtml-0.9.5.jar"/>
-        <pathelement location="${GATE_HOME}/lib/ontotext.jar"/>
-        <pathelement location="${GATE_HOME}/lib/stax-api-1.0.1.jar"/>
-        <pathelement location="${GATE_HOME}/lib/PDFBox-0.7.2.jar"/>
     </path>
 
     <!-- Steps to take on initialization -->
@@ -66,12 +55,6 @@
     <available classname="org.semanticweb.owl.model.OWLClass" classpathref="relex.classpath" property="OWL.present"/>
     <target name="look-for-owl" unless="OWL.present">
        <echo message="Will not build OWL output format; org.semanticweb.owl classes not found."/>
-    </target>
-
-    <!-- conditional compilation, check for GATE -->
-    <available classname="gate.creole.ANNIEConstants" classpathref="relex.classpath" property="GATE.present"/>
-    <target name="look-for-gate" unless="GATE.present">
-       <echo message="Will not build GATE-based entity detector; GATE classes not found."/>
     </target>
 
     <!-- conditional compilation, check for OpenNLP -->
@@ -92,13 +75,12 @@
        </copy>
     </target>
 
-    <target name="build-project" depends="init, build-version, look-for-gate, look-for-owl, look-for-opennlp">
+    <target name="build-project" depends="init, build-version, look-for-owl, look-for-opennlp">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}">
             <src path="src/java"/>
             <exclude name="**/OWLView.java" unless="OWL.present" />
-            <exclude name="**/GateEntityDetector.java" unless="GATE.present" />
             <exclude name="**/DocSplitterOpenNLPImpl.java" unless="OpenNLP.present" />
             <classpath refid="relex.classpath"/>
         </javac>
@@ -245,7 +227,6 @@
             <jvmarg line="-Drelex.sfalgpath=data/relex-stanford-algs.txt"/>
             <jvmarg line="-Drelex.tagalgpath=data/relex-tagging-algs.txt"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
-            <jvmarg line="-Dgate.home=${GATE_HOME}"/>
             <classpath refid="relex.classpath"/>
             <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
         </java>
