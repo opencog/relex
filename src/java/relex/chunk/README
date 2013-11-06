@@ -3,14 +3,14 @@
                          ----------------
                     Linas Vepstas, April 2008
 
-Key ideas: 
+Key ideas:
  * Lexis is the basis of language.
  * Language consists of grammaticalized lexis, not lexicalized grammar.
 
 See: Olga Moudraia, "Lexical Approach to Second Language Teaching"
 http://www.cal.org/resources/digest/0102lexical.html
 
-Alternate names: "gambits", "lexical phrases", "lexical units", 
+Alternate names: "gambits", "lexical phrases", "lexical units",
 "lexicalized stems", "speech formulae".
 
 
@@ -28,16 +28,16 @@ Types of lexical chunks:
     * Collocations, or word partnerships (e.g., community service,
       absolutely convinced)
     * Idioms (e.g. break a leg, back in the day)
-    * Institutionalized utterances (e.g., I'll get it; We'll see; 
+    * Institutionalized utterances (e.g., I'll get it; We'll see;
       That'll do; If I were you . . .; Would you like a cup of coffee?)
     * Sentence frames and heads (e.g., That is not as . . . as you think;
-      The fact/suggestion/problem/danger was . . .) and even text frames 
+      The fact/suggestion/problem/danger was . . .) and even text frames
       (e.g., In this paper we explore . . .; Firstly . . .; Secondly . . .;
       Finally . . .)
 
-(Taken from Lewis, M. (1997b). "Pedagogical implications of the lexical 
-approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary 
-acquisition: A rationale for pedagogy" (pp.  255-270). Cambridge: Cambridge 
+(Taken from Lewis, M. (1997b). "Pedagogical implications of the lexical
+approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary
+acquisition: A rationale for pedagogy" (pp.  255-270). Cambridge: Cambridge
 University Press.)
 
 The code in this directory can be used to obtain phrasal verbs and
@@ -55,9 +55,9 @@ RelationChunker -- print out phrases based on the binary RelEx
       relations -- e.g. object phrases, noun modifier phrases,
       prepositional phrases, etc.
 
-PatternChunker() -- print out lexical chunks based on matching to a 
+PatternChunker() -- print out lexical chunks based on matching to a
      collection of sentence patterns. Of the various mechanisms, this
-     one yeilds the most interesting/best results.  The rest of this 
+     one yeilds the most interesting/best results.  The rest of this
      README file is concerned wth these sentence patterns.
 
 Also in this directory:
@@ -86,10 +86,10 @@ which is always followed by its nominal object.
 		(VP look (PP after (NP our children)))
 
    Need to drop NP in PP, to get "look after".
-	This pattern matches to 
+	This pattern matches to
 
 		(VP a (PP a (NP r)))
-	
+
    Some more complicated examples:
    He will TAKE OFFICE ON monday.
 
@@ -101,7 +101,7 @@ which is always followed by its nominal object.
      (VP was (VP filled (PP to (S (VP overflowing)))))
    (The second parse is inappropriate).
 
- * Prepositional verbs that have thier own object, which 
+ * Prepositional verbs that have thier own object, which
    usually precedes the preposition:
 
 	She HELPED him TO some more.
@@ -113,7 +113,7 @@ which is always followed by its nominal object.
    Skip both NP's, to get "took ... to"
       (VP a (NP r) (PP a (NP r)))
 
-   Similarly, but more complex: 
+   Similarly, but more complex:
    She HELPED the boy TO an extra portion of potatoes.
 
       (VP helped (NP the boy) (PP to (NP (NP an extra portion) (PP of (NP potatoes)))))
@@ -130,7 +130,7 @@ which is always followed by its nominal object.
       (VP ran (PP away) (PP from (NP home)))
       (VP ran (PP away) (PP from (NP home)) (PP at (NP age two)))
 
-   Keep the VP, and the first PP, and the second PP, 
+   Keep the VP, and the first PP, and the second PP,
    dropping NP in the second PP.
       (VP a (PP a) (PP a (NP r)) *)
 
@@ -141,7 +141,7 @@ which is always followed by its nominal object.
       (VP talked (PP to (NP the minister)) (PP about (NP the crisis)))
    so:
       (VP a (PP a (NP r)) (PP a (NP r)))
- 
+
    However, problems when the verb is a copula:
    I was IN LOVE WITH that bunny.
    Desired answer: "in love with"
@@ -164,12 +164,12 @@ Particle Verbs:
    Intransitive particle verbs do not have an object:
 
    He WENT AWAY.
-      (VP went (PRT away)) 
+      (VP went (PRT away))
 
    Keep the match tight:
       (S (NP r) (VP a (PRT a)) *)
 
-  * Transitive particle verbs have an object, which may preceed 
+  * Transitive particle verbs have an object, which may preceed
     the verb:
    SWITCH the light OFF.
       (VP Switch (NP the light) (PRT off))
@@ -191,8 +191,8 @@ Particle Verbs:
    with RelEx, because earlier stages mangle the sentence. The actual
    phrase becomes:
        (VP let's (VP get out (NP it) (PRT) (PP in (NP the open))))
-   because the K link was used to merge "get" and "out". This, 
-   ahem, wrecks the pattern matching. -- Fixed, had to hack 
+   because the K link was used to merge "get" and "out". This,
+   ahem, wrecks the pattern matching. -- Fixed, had to hack
    algs/TwoWordCombineToLeftAlg.java to not merge the orig_str.
 
    We want to keep the object NP only if its a pronoun !!
@@ -214,7 +214,7 @@ Particle Verbs:
     too idiomatic to handle correctly!?
 
  * Infinitive forms:
-   I want TO GO HOME now. 
+   I want TO GO HOME now.
      (S (VP to (VP go (PRT home))))
      (S (VP to (VP go (PRT home) (PP now))))
      (S (VP Please (VP go (PRT away) (PP now))) .)
@@ -227,7 +227,7 @@ Miscellany
 -----------
  * You can't STOP me FROM seeing her.
       (VP can't (VP stop (NP me) (PP from (S (VP seeing (NP her))))))
-   
+
       (VP r (VP a (NP r) (PP a (S *))))
 
  * He had A GOOD FEELING FOR that sort of thing.
@@ -238,9 +238,9 @@ Miscellany
       (VP r (NP a) (PP a (NP r (NP r))))
 
  * General Custer GAVE the Sioux chief NO QUARTER.
-   The desired answer is "give ... no quarter". 
+   The desired answer is "give ... no quarter".
 
-      (VP gave (NP the Sioux chief) (NP no quarter)) 
+      (VP gave (NP the Sioux chief) (NP no quarter))
 
    Skip first NP, keep second.
 
@@ -249,9 +249,9 @@ Miscellany
  * Reversed adjectival double prep phrase.
     It was done IN A MANNER APPROPRIATE FOR the occasion.
 
-      (VP done (PP in (NP a manner (ADJP appropriate (PP for (NP the occasion)))))) 
+      (VP done (PP in (NP a manner (ADJP appropriate (PP for (NP the occasion))))))
 
-      (VP r (PP a (NP a (ADJP a (PP a (NP r)))))) 
+      (VP r (PP a (NP a (ADJP a (PP a (NP r))))))
 
 Sentence phrases
 ----------------
@@ -261,7 +261,7 @@ Sentence phrases
       (S (NP John Dillinger) (VP was (NP (NP a man) (SBAR (WHNP who) (S (VP broke (NP the law)))))) .)
 
   Currently using a broad coverage:
-    (S (VP a (NP a))) 
+    (S (VP a (NP a)))
 
   XXX This pattern matches a lot. Could narrow to require WHNP.
   Perhaps this is too much of a collocation to detect automatically?
@@ -330,9 +330,9 @@ Noun phrases:
 It's a good bet he did it.
 (S (S (NP It) (VP 's (NP (NP a good bet) (SBAR (S (NP he) (VP did)))))) it .)
 
-It's a good bet that he did it. 
+It's a good bet that he did it.
 
-Fails to parse. 
+Fails to parse.
 
 
 Pattern match:

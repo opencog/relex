@@ -191,9 +191,9 @@ public class PrologList
 		order.add("head");
 		order.add("background");
 		order.add("words");
-		return new FeatureNameFilter(ignores, order);		
+		return new FeatureNameFilter(ignores, order);
 	}
-	
+
 }
 
 // =========================== End of File ===============================

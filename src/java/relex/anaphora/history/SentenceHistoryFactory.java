@@ -14,20 +14,20 @@
 package relex.anaphora.history;
 
 /**
- * 
+ *
  * Factory to create the SentenceHistory object
- * 
+ *
  * @author fabricio <fabricio@vettalabs.com>
  *
  */
-public class SentenceHistoryFactory 
+public class SentenceHistoryFactory
 {
-	public enum HistoryEnum 
+	public enum HistoryEnum
 	{
 		DEFAULT,
-		TIMESTAMP	
+		TIMESTAMP
 	}
-	
+
 	public static SentenceHistory create(HistoryEnum historyType)
 	{
 		switch(historyType)
@@ -38,5 +38,5 @@ public class SentenceHistoryFactory
 				return new DefaultSentenceHistory();
 		}
 		return new DefaultSentenceHistory();
-	}	
+	}
 }

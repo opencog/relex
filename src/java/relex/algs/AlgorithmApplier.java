@@ -52,7 +52,7 @@ public class AlgorithmApplier
 	{
 		read(prop, filename);
 	}
-	
+
 	private void addAlg(SentenceAlgorithm alg, String initString)
 	{
 		alg.init(initString); // init the algorithm
@@ -78,7 +78,7 @@ public class AlgorithmApplier
 		InputStream in = getAlgorithmsFile(prop, filename);
 		algs = new ArrayList<SentenceAlgorithm>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		
+
 		SentenceAlgorithm curAlg = null;
 		StringBuffer sb = new StringBuffer();
 		String line = null;
@@ -144,7 +144,7 @@ public class AlgorithmApplier
 					return in;
 				}
 			}
-			
+
 			in = AlgorithmApplier.class.getResourceAsStream(
 				"/" + filename);
 			if (in != null)
@@ -154,7 +154,7 @@ public class AlgorithmApplier
 						"Info: Using relex algorithms file defined as a resource.");
 				return in;
 			}
-	
+
 			String defaultRelexAlgsFile =
 				"./data/" + filename;
 			in = new FileInputStream(defaultRelexAlgsFile);
@@ -166,7 +166,7 @@ public class AlgorithmApplier
 						defaultRelexAlgsFile);
 				return in;
 			}
-	
+
 			throw new RuntimeException("Error reading algorithms file.");
 		}
 		catch (FileNotFoundException exception)

@@ -29,7 +29,7 @@ import relex.ParsedSentence;
 public abstract class LexicalChunker
 {
 	private ArrayList<LexChunk> chunks;
-	
+
 	public LexicalChunker()
 	{
 		chunks = new ArrayList<LexChunk>();

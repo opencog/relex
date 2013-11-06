@@ -39,38 +39,38 @@ import relex.parser.RemoteLGParser;
 import relex.tree.PhraseMarkup;
 
 public class ParallelRelationExtractor {
-	
+
 	private static final String DEFAULT_HOST = "localhost";
 	public static final int FIRST_PORT = 9000;
 	public static final int CLIENT_POOL_SIZE = 1;
-	
+
     private ExecutorService exec;
 
 	private BlockingQueue<RelexContext> pool;
 
 	private LinkedBlockingQueue<Future<RelexTaskResult>> results;
-	
+
 	public int count = 0;
-	
+
 	private boolean stop;
 
 	// Single-threaded processors
 	/** Antecedents used in anaphora resolution */
 	public Antecedents antecedents;
-	
+
 	/** Anaphora resolution */
 	private Hobbs hobbs;
-	
+
 	// Thread-safe processors
 	/** Syntactic processing */
 //	private LinkParser linkParser;
-	
+
 	/** Semantic (RelEx) processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
-	
+
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
-	
+
 	public ParallelRelationExtractor(){
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
@@ -90,7 +90,7 @@ public class ParallelRelationExtractor {
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 		morphy.initialize();
-		
+
 		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
 //			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
 //			 lpc.setAllowSkippedWords(true);
@@ -133,11 +133,11 @@ public class ParallelRelationExtractor {
 	protected RelexTaskResult take() throws InterruptedException, ExecutionException {
 		Future<RelexTaskResult> first = results.take();
 		RelexTaskResult taskResult = first.get();
-		
+
 		// Perform anaphora resolution
 		hobbs.addParse(taskResult.result);
 		hobbs.resolve(taskResult.result);
-		
+
 		return taskResult;
 	}
 
@@ -171,7 +171,7 @@ public class ParallelRelationExtractor {
 	protected boolean isRunning() {
 		return !stop || !results.isEmpty();
 	}
-	
+
 	/**
 	 * Unit test. Read a text file and process its sentences in parallel.
 	 * Assumes link-grammar servers running on DEFAULT_HOST,
@@ -185,7 +185,7 @@ public class ParallelRelationExtractor {
 		long t = System.currentTimeMillis();
 		final ParallelRelationExtractor pre = new ParallelRelationExtractor();
 		System.err.println("Initialization time: "+((System.currentTimeMillis() - t)/1000)+" s");
-		
+
 		final long xt = System.currentTimeMillis();
 		// Producer - submits sentences from a file
 		new Thread(new Runnable(){
@@ -205,7 +205,7 @@ public class ParallelRelationExtractor {
 			        // Break text into sentences and submit
 					ds.addText(sb.toString());
 					sb = null;
-					
+
 					String sentence = ds.getNextSentence();
 					while (sentence!=null){
 						pre.push(sentence);

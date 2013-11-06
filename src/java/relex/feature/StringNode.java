@@ -25,7 +25,7 @@ package relex.feature;
 public class StringNode extends Atom
 {
 	private static final long serialVersionUID = 1087852981117134672L;
-	
+
 	protected String string;
 
 	public String getValue()

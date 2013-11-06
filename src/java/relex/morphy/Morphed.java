@@ -30,7 +30,7 @@ public class Morphed
 		this.original = original;
 		this.features = new HashMap<String, FeatureNode>();
 	}
-	
+
 	public void putRootNegative(String type, String root)
 	{
 		putRoot(type, root);
@@ -47,17 +47,17 @@ public class Morphed
 		f.set(Morphy.TYPE_F, new FeatureNode(type));
 		features.put(type, f);
 	}
-	
+
 	public String getOriginal()
 	{
 		return original;
 	}
-	
+
 	public HashMap<String, FeatureNode> getFeatures()
 	{
 		return features;
 	}
-	
+
 	public boolean hasRoot() {
 		return features.size() > 0;
 	}
@@ -81,7 +81,7 @@ public class Morphed
 	{
 		return features.get(Morphy.ADV_F);
 	}
-	
+
 	private String getRoot(FeatureNode f) {
 		return f == null ? null : f.get(Morphy.ROOT_F).getValue();
 	}
@@ -101,7 +101,7 @@ public class Morphed
 	public String getAdvString() {
 		return getRoot(getAdv());
 	}
-	
+
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer(getOriginal());
@@ -114,5 +114,5 @@ public class Morphed
 		if (getAdvString() != null)
 			sb.append(" Adv:" + getAdvString());
 		return sb.toString();
-	}	
+	}
 }

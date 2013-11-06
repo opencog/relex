@@ -46,7 +46,7 @@ public class SentenceAlgorithmApplier
 		stanford = new AlgorithmApplier(
 			"relex.sfalgpath", "relex-stanford-algs.txt");
 	}
-	
+
 	public void tagFeatures(ParsedSentence sentence, RelexContext context)
 	{
 		tagger.applyAlgs(sentence, context);

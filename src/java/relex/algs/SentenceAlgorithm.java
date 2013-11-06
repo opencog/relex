@@ -72,7 +72,7 @@ public abstract class SentenceAlgorithm
 				}
 				if (printResult)
 					System.err.println("Info: " + sentence);
-				
+
 				FeatureNode f = c.get(SIGNATURE_FEATURE_NAME);
 				if (f == null) {
 					f = new FeatureNode(getSignature());

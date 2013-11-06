@@ -1,5 +1,5 @@
 
-There are several distinct, code-wise unrelated, but conceptually 
+There are several distinct, code-wise unrelated, but conceptually
 similar systems in this directory.  All of these are focused on
 providing printed output of the RelEx graph, or the concept frames.
 
@@ -11,7 +11,7 @@ This directory contains:
 
 SimpleView.java:
 	Provides a very simple, simplistic printing of the RelEx
-	relationship graph. This code should be consulted as an 
+	relationship graph. This code should be consulted as an
    example for how to write new output classes.
 
 RawView.java:
@@ -23,11 +23,11 @@ CompactView.java:
 	public linguistic file formats. The goal of this file format is to
 	be human-readable, fairly compact and extremely easy to parse (at
 	least, when using perl regex's). This is currently the default
-	output format for generating large databases of pre-parsed text. 
+	output format for generating large databases of pre-parsed text.
 	Strongly recommended for large projects. See goals below.
 
 LinkGraphGenerator.java:
-   Output GraphViz style markup, suitable for running through the 
+   Output GraphViz style markup, suitable for running through the
    GraphViz software.
 
 OpenCogScheme.java:
@@ -51,9 +51,9 @@ PrologList.java:
 
 The goal of the generic parse output format is to allow the results of
 parsing a text to be stored in a relatively compact, simple format that
-is easily read by humans as well as machines.  Because NLP parsing is 
-a relatively CPU-intensive computational task, having a collection 
-of pre-parsed texts offers a reasonable jumping-off point for more 
+is easily read by humans as well as machines.  Because NLP parsing is
+a relatively CPU-intensive computational task, having a collection
+of pre-parsed texts offers a reasonable jumping-off point for more
 sophisticated experiments in NLP search, reasoning and general AI systems.
 
 See the web page:

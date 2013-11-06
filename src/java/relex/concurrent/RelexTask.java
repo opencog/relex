@@ -37,7 +37,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 	// arguments
 	private int index;
 	private String sentence;
-	
+
 	// Reusable, shared processors
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 	private PhraseMarkup phraseMarkup;
@@ -45,7 +45,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 	// Used in mutual exclusion, must be returned to the pool
 	private RelexContext context;
 	private BlockingQueue<RelexContext> pool;
-	
+
 	public RelexTask(int index, String sentence,
 			SentenceAlgorithmApplier sentenceAlgorithmApplier,
 			PhraseMarkup phraseMarkup,
@@ -57,7 +57,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 		this.pool = pool;
 		this.sentence = sentence;
 	}
-	
+
 	public RelexTaskResult call() {
 		try {
 			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
@@ -68,7 +68,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 				sntc = new Sentence();
 				sntc.setSentence(sentence);
 			}
-			
+
 			if (DEBUG > 0) System.err.println("[" + index + "] End parsing");
 
 			int i = 0;
@@ -104,7 +104,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 			if (DEBUG > 0) System.err.println("[" + index + "] Release resources");
 		}
 	}
-	
+
 	public String toString()
 	{
 		return index + ": " + sentence;

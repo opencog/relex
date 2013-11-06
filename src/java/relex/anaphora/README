@@ -7,14 +7,14 @@ version of Hobbs algorithm for anaphora resolution.  That is,
 it resolves the references "he" and "it" in the example text
 "John went to the door. He opened it."
 
-A more extensive set of tested examples are in 
+A more extensive set of tested examples are in
 "test-corpus.txt"
 
 Bugs/ToDo:
 ----------
 -- Disable the gender-checking filter if GATE is not performing
    entity detection. The problem is that GATE is needed to identify
-   male/female names, to match against gendered pronouns he/she. 
+   male/female names, to match against gendered pronouns he/she.
    Without entity detection, these potential matches are rejected.
    (The should have been accepted, but marked as "uncertain").
 
@@ -27,7 +27,7 @@ Bugs/ToDo:
        at its fulfillment."
 
    The algo finds "work" as a candidate for "its", but incorrectly
-   prints "fulfillment" instead, since the match is to 
+   prints "fulfillment" instead, since the match is to
    (NP its_2 fulfillment) and "fulfillment" is the head, not "its"
 
 -- Algo is too tight, rejecting some possibilities:

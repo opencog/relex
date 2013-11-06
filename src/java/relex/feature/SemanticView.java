@@ -290,7 +290,7 @@ public class SemanticView extends View
 	public Iterator<FeatureNode> groupMemberIterator() {
 		return groupMemberIterator(fn());
 	}
-	
+
 	public List<FeatureNode> groupMembers(){
 		return groupMembers(fn());
 	}

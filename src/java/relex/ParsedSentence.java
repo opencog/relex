@@ -340,7 +340,7 @@ public class ParsedSentence
 	{
 	    return this.leafConstituents;
 	}
-	
+
 	/* ---------------------------------------------------------------- */
 	/**
 	 * @return the FeatureNode representing the left-most word in the sentence.

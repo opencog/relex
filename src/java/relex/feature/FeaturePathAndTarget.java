@@ -81,7 +81,7 @@ public class FeaturePathAndTarget
 		throw new RuntimeException("Error: relex: Parsed Path And "
 			+ "Target but could not determine separator");
 	}
-	
+
 	public FeaturePathAndTarget(FeaturePathAndTarget other) {
 		this(other.toString());
 	}
@@ -152,7 +152,7 @@ public class FeaturePathAndTarget
 	public Iterator<String> iterator() {
 		return path.iterator();
 	}
-	
+
 	public String toString()
    {
 		StringBuffer sb = new StringBuffer(path.toString());
@@ -163,7 +163,7 @@ public class FeaturePathAndTarget
 			sb.append(getTargetString());
 		return sb.toString();
 	}
-	
+
 	public static void main(String[] args)
    {
 		FeaturePathAndTarget fp = new FeaturePathAndTarget("<a b c d>=<ww xx yy zz>");

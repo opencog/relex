@@ -172,7 +172,7 @@ public class CompactView
 		f = f.get(fn);
 		if (f == null) return "";
 		if (notfirst) return "|" + f.getValue();
-		notfirst = true;	
+		notfirst = true;
 		return f.getValue();
 	}
 
@@ -187,7 +187,7 @@ public class CompactView
 
 		fn = fn.replaceAll("-FLAG","").toLowerCase();
 		if (notfirst) return "|" + fn;
-		notfirst = true;	
+		notfirst = true;
 		return fn;
 	}
 

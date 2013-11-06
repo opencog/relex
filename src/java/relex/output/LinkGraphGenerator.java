@@ -31,15 +31,15 @@ import relex.feature.LinkForeach;
  */
 public class LinkGraphGenerator {
 	public static final boolean HIDE_LEFT_WALL = true;
-	
+
 	public static final String GRAPHVIZ_BIN = System.getProperty("graphviz.bin") != null ? System.getProperty("graphviz.bin") : "/usr/bin";
-	
+
 	public static File generateGraph(
 			String title,
 			ParsedSentence parse,
 			File directory,
 			boolean limitSize) {
-		
+
 		PrintWriter writer = null;
 		File temp = null;
 		try {
@@ -59,11 +59,11 @@ public class LinkGraphGenerator {
 			} else {
 				writer.println("\tgraph [ label=\"" + sentence + "\", labelloc=t];");
 			}
-			
+
 			// Avoids LEFT-WALL
 			int begin = 0;
 			int end = parse.getNumWords();
-			
+
 			if (HIDE_LEFT_WALL){
 				begin++;
 				end--;
@@ -74,7 +74,7 @@ public class LinkGraphGenerator {
 			LinkCB cb = new LinkCB();
 			LinkForeach.foreach(parse.getLeft(), cb);
 			writer.println(cb.sb.toString());
-			
+
 			writer.println("\n}");
 		} catch (IOException ioe) {
 			System.err.println("Error creating dot file.");
@@ -103,7 +103,6 @@ public class LinkGraphGenerator {
 		}
 		return new File(temp.getAbsolutePath().concat(".png"));
 	}
-	
 }
 
 
@@ -117,14 +116,14 @@ class LinkCB implements FeatureNodeCallback
 		String rIndex = fn.get("F_R").get("index_in_sentence").getValue();
 
 		if (LinkGraphGenerator.HIDE_LEFT_WALL && lIndex.equals("0")) return false;
-		
+
 		sb.append("\t\"node"+lIndex+"\"");
 		sb.append(" -> ");
 		sb.append("\t\"node"+rIndex+"\"");
 		sb.append(" [label=\"");
 		sb.append(label);
 		sb.append("\"]\n");
-		
+
 		return false;
 	}
 };

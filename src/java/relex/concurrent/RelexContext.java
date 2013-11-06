@@ -24,7 +24,7 @@ public class RelexContext
 //	private LinkParserClient linkParserClient;
 	private IParser parser;
 	private Morphy morphy;
-	
+
 /*	public LinkParserClient getLinkParserClient() {
 		return linkParserClient;
 	}
@@ -37,11 +37,11 @@ public class RelexContext
 	{
 		return parser;
 	}
-	
+
 	public Morphy getMorphy() {
 		return morphy;
 	}
-	
+
 	public void setMorphy(Morphy morphy) {
 		this.morphy = morphy;
 	}
@@ -54,5 +54,5 @@ public class RelexContext
 		this.parser = parser;
 		this.morphy = morphy;
 	}
-	
+
 }

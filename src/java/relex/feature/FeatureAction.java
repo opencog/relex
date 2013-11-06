@@ -28,7 +28,7 @@ public class FeatureAction extends FeaturePathAndTarget
 
 	static private FeatureTemplate blankTemplate = new FeatureTemplate();
 	static private Map<String, FeatureNode> emptyVarSet = new HashMap<String, FeatureNode>();
-	
+
 	static {
 		actionSeparators = new HashSet<String>();
 		actionSeparators.add("=");

@@ -90,7 +90,7 @@ public class OpenCogScheme
 		if (do_show_linkage) ret += linkSchemeToString();
 		if (do_show_relex) ret += relSchemeToString();
 		if (do_show_anaphora) ret += anaphoraSchemeToString();
-		
+
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";
 		return ret;
@@ -194,5 +194,5 @@ public class OpenCogScheme
 	{
 		anaphora_scheme.setHistory(history);
 	}
-	
+
 } // end OpenCogScheme

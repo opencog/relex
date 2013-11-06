@@ -39,7 +39,7 @@ public class PatternChunker extends LexicalChunker
 	static final int debug = 0;
 
 	private PatCB callback;
-	
+
 	public PatternChunker()
 	{
 		super();
@@ -106,7 +106,7 @@ public class PatternChunker extends LexicalChunker
 			// GAVE the Sioux cheif NO QUARTER
 			matcher("(VP a (NP r) (NP a))");
 
-			// It was done IN A MANNER APPROPRIATE FOR the occasion.	
+			// It was done IN A MANNER APPROPRIATE FOR the occasion.
 			matcher("(VP r (PP a (NP a (ADJP a (PP a (NP r))))))");
 
 			// Sentence phrases:

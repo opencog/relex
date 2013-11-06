@@ -45,7 +45,7 @@ public class MorphyFactory
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * By default returns the thread-safe Morphy, if there's no
 	 * system property defined.
@@ -55,7 +55,7 @@ public class MorphyFactory
 	{
 		return getImplementation(DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 	}
-	
+
 	/**
 	 * Used by JWNL-based Morphy implementations.
 	 * @return
@@ -86,7 +86,7 @@ public class MorphyFactory
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Determine the file that will be used.
 	 *
@@ -108,7 +108,7 @@ public class MorphyFactory
 	{
 			InputStream in = null;
 			String property = System.getProperty(propertyName);
-			
+
 			if (property != null)
 			{
 				in = new FileInputStream(property);
@@ -119,7 +119,7 @@ public class MorphyFactory
 					return in;
 				}
 			}
-			
+
 			String defaultFile = defaultDir+"/"+file;
 			in = new FileInputStream(defaultFile);
 			if (in != null)

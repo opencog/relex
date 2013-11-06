@@ -69,7 +69,7 @@ public class OpenCogSchemeAnaphora
 		if(hobbs != null)
 			hobbs.setHistory(history);
 	}
-	
+
 	public String toString()
 	{
 		return printAnaphora();

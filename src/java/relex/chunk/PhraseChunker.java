@@ -34,7 +34,7 @@ public class PhraseChunker extends LexicalChunker
 	static final int debug = 0;
 	static final int minwords = 3;
 	static final int maxwords = 5;
-	
+
 	public void findChunks(ParsedSentence parse)
 	{
 		PhraseTree pt = parse.getPhraseTree();

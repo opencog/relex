@@ -9,7 +9,7 @@ public interface Morphy {
 	public static String ROOT_F = "root";
 	public static String TYPE_F = "type";
 	public static String NEG_F = "neg";
-	
+
 	public abstract void initialize();
 
 	public abstract Morphed morph(String word);

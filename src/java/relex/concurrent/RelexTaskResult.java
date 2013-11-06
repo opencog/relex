@@ -21,13 +21,13 @@ import java.io.Serializable;
 import relex.Sentence;
 
 public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable {
-	
+
 	private static final long serialVersionUID = -3231030217056826602L;
-	
+
 	public Integer index;
 	public String sentence;
 	public Sentence result;
-	
+
 	public RelexTaskResult(int index, String sentence,
 	                       Sentence sntc)
 	{
@@ -35,19 +35,19 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 		this.sentence = sentence;
 		this.result = sntc;
 	}
-	
+
 	public int compareTo(RelexTaskResult that) {
 		return this.index.compareTo(that.index);
 	}
-	
+
 	public String toString(){
 		return index+": "+sentence+"\n"+result+"\n";
 	}
-	
+
 	public int hashCode() {
 		return sentence == null ? 0 : sentence.hashCode();
 	}
-	
+
 	/**
 	 * Very superficial compare, doesn't compare actual parses, just the sentence
 	 * string.
@@ -63,5 +63,5 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 			return false;
 		else
 			return true;
-	}	
+	}
 }

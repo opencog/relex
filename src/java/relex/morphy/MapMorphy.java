@@ -84,21 +84,21 @@ public class MapMorphy implements Morphy
 				SuffixStemmer.makeSuffixStemmer("|ies=y|es=e|es=|ed=e|ed=|ing=e|ing=|s=|"));
 		stemmers.put(POS.ADJECTIVE,
 				SuffixStemmer.makeSuffixStemmer("|er=|est=|er=e|est=e|"));
-	}	
+	}
 
 	public static String DEFAULT_WORDNET_CONFIG_FILE = "data/wordnet/file_properties.xml";
-	
+
 	final POS[] pos = new POS[] { POS.NOUN, POS.VERB, POS.ADVERB, POS.ADJECTIVE };
-	
+
 	Map<POS, Map<String, IndexWord>> partsOfSpeech = new HashMap<POS, Map<String,IndexWord>>();
-	
+
 	Map<POS, Map<String, TreeSet<String>>> exceptions = new HashMap<POS, Map<String, TreeSet<String>>>();
-	
+
 	@SuppressWarnings("unchecked")
 	public void initialize() {
 		MorphyFactory.initializeJWNL();
-		
-		Dictionary d = Dictionary.getInstance();			
+
+		Dictionary d = Dictionary.getInstance();
 		for(int i = 0; i < pos.length; i++) {
 			Map<String, TreeSet<String>> posExceptions = exceptions.get(pos[i]);
 			if (posExceptions == null){
@@ -143,10 +143,10 @@ public class MapMorphy implements Morphy
 		String lookup = word.trim().toLowerCase();
 		IndexWord indexWord = partsOfSpeech.get(pos).get(lookup);
 		if (indexWord != null) return indexWord;
-		
+
 		IndexWord exception = lookupExceptions(pos, lookup);
 		if (exception!=null) return exception;
-		
+
 		Stemmer stemmer = stemmers.get(pos);
 		if (stemmer != null){
 			for (String stemmed : stemmer.stemIt(word)){
@@ -175,7 +175,7 @@ public class MapMorphy implements Morphy
 		}
 		return null;
 	}
-	
+
 	private void load(Morphed m)
 	{
 		String word = m.getOriginal();
@@ -200,7 +200,7 @@ public class MapMorphy implements Morphy
 			IndexWord noun = lookup(POS.NOUN, word);
 			IndexWord adj = lookup(POS.ADJECTIVE, word);
 			IndexWord adv = lookup(POS.ADVERB, word);
-			
+
 			if (noun != null) {
 				m.putRoot(NOUN_F, maybeChangeFirstLetter(m.getOriginal(), noun.getLemma()));
 			}
@@ -232,7 +232,7 @@ public class MapMorphy implements Morphy
 			return s;
 		return word;
 	}
-	
+
 	protected boolean loadPossessive(String word, Morphed m)
 	{
 		boolean found = false;
@@ -248,7 +248,7 @@ public class MapMorphy implements Morphy
 		}
 		return found;
 	}
-	
+
 	protected String maybeChangeFirstLetter(String originalString, String modifiedString) {
 		if (Character.isUpperCase(originalString.charAt(0))) {
 			if (modifiedString.length() > 1) {
@@ -257,7 +257,7 @@ public class MapMorphy implements Morphy
 			return modifiedString.toUpperCase();
 		}
 		return modifiedString;
-	}	
+	}
 	/**
 	 * Attempts to strip a negative contraction off the word.
 	 */
@@ -275,7 +275,6 @@ public class MapMorphy implements Morphy
 		return word;
 	}
 
-	
 	public static void main(String[] args) throws FileNotFoundException, JWNLException
    {
 		System.out.println("Initializing MapMorphy...");
@@ -283,7 +282,7 @@ public class MapMorphy implements Morphy
 		MapMorphy morphy = new MapMorphy();
 		morphy.initialize();
 		System.out.println("Elapsed time: "+((System.currentTimeMillis() - t)/1000)+" s");
-	
+
 		String[] test = new String[]{"abaci", "cat", "kills", "Kill", "bill", "slowly", "fast", "Barbra Streisand"};
 		for (int i=0; i < test.length; i++){
 			Morphed m = morphy.morph(test[i]);

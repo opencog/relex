@@ -32,7 +32,7 @@ import relex.stats.SimpleTruthValue;
 public class ChunkRanker
 {
 	private ArrayList<LexChunk> chunks;
-	
+
 	public ChunkRanker()
 	{
 		chunks = new ArrayList<LexChunk>();

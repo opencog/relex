@@ -93,7 +93,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 			// Also, must *not* delete "ref", as this is neeed by alternate
 			// output formats, e.g. the Stanford-parser compatbility output.
 			// current.set("ref", null);
-			
+
 			current.set("name", null);
 
 			current.set("str", new FeatureNode(""));
@@ -120,11 +120,11 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		String bigName = collectNames(leftNode, rightNode, allLabelRegex, true);
 		FeatureNode bigNameF = new FeatureNode(bigName);
 		rightNode.get("ref").set("name", bigNameF);
-		
+
 		// See email message "Relex fixes: definites and conjoined
 		// prepositions" from Mike Ross
 		// rightNode.get("ref").set("specific", new FeatureNode("T"));
-		
+
 		rightNode.set("str", bigNameF);
 
 		// Set original string too, since the big name is created using original

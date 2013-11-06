@@ -38,13 +38,13 @@ import relex.output.SimpleView;
 public class Sentence implements Serializable
 {
 	private static final long serialVersionUID = -3047552550351161106L;
-	
+
 	private String originalSentence;
 	private ArrayList<ParsedSentence> parses;
 	private int numParses;
 
 	private String sentenceID;
-	
+
 	public Sentence()
 	{
 		originalSentence = null;
@@ -90,12 +90,12 @@ public class Sentence implements Serializable
 	{
 		originalSentence = s;
 	}
-	
+
 	public String getSentence()
 	{
 		return originalSentence;
 	}
-	
+
 	public void setParses (ArrayList<ParsedSentence> pl)
 	{
 		parses = pl;

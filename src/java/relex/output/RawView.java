@@ -99,9 +99,9 @@ public class RawView
 		order.add("head");
 		order.add("background");
 		order.add("words");
-		return new FeatureNameFilter(ignores, order);		
+		return new FeatureNameFilter(ignores, order);
 	}
-	
+
 	/**
 	 * Print the so-called "raw" relex output, in structured form.
 	 * Used primarily in debugging and development.

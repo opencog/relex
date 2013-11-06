@@ -329,15 +329,15 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	public void setEntityFlag() {
 		setEntityFlag(fn());
 	}
-	
+
 	public static void setEntityFlag(FeatureNode ths) {
 		ths.set("ENTITY-FLAG", new FeatureNode("T"));
 	}
-	
+
 	public boolean hasEntityFlag()	{
 		return fn().get("ENTITY-FLAG") != null;
 	}
-	
+
 	public void setNext(FeatureNode f) {
 		setNext(fn(), f);
 	}

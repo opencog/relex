@@ -11,7 +11,7 @@ public class SuffixStemmer implements Stemmer
 {
 	private String[][] suffixes;
 
-	
+
 	public String[][] getSuffixes()
 	{
 		return suffixes;
@@ -26,21 +26,21 @@ public class SuffixStemmer implements Stemmer
 	public Iterable<String> stemIt(String word)
 	{
 		ArrayList<String> results = new ArrayList<String>();
-		
+
 		if (suffixes == null)
 			return results;
-		
+
 		for (int i = 0; i < suffixes.length; i++)
 		{
 			if (word.endsWith(suffixes[i][0]))
 			{
 				results.add(word.substring(
-                        0, word.length() - suffixes[i][0].length()) + suffixes[i][1]);				
+                        0, word.length() - suffixes[i][0].length()) + suffixes[i][1]);
 			}
 		}
 		return results;
 	}
-	
+
 	public static String [][] parseSuffixStemmerConfiguration(String configuration)
 	{
 		StringTokenizer tokenizer = new StringTokenizer(configuration, "|=", true);
@@ -69,7 +69,7 @@ public class SuffixStemmer implements Stemmer
 		}
 		return (String[][]) suffixList.toArray(new String[suffixList.size()][]);
 	}
-	
+
 	public static SuffixStemmer makeSuffixStemmer(String configuration)
 	{
 		SuffixStemmer result = new SuffixStemmer();
