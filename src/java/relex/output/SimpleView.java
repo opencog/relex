@@ -51,6 +51,7 @@ public class SimpleView
 		v.id_map = map;
 		v.binary_str = "";
 		v.unary_str = "";
+		v.indent = "    ";
 		parse.foreach(v);
 		return v.binary_str + "\nAttributes:\n\n" + v.unary_str;
 	}
@@ -101,6 +102,7 @@ public class SimpleView
 
 		public boolean unaryStyle = false;
 		public boolean show_uuid = false;
+		public String indent;
 		public String binary_str;
 		public String unary_str;
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
@@ -132,7 +134,7 @@ public class SimpleView
 				if (tgtName.indexOf("_$qVar") == -1)
 					tgtName = tgtNode.get("nameSource").get("uuid").getValue();
 			}
-			binary_str += relName + "(" + srcName + ", " + tgtName + ")\n";
+			binary_str += indent + relName + "(" + srcName + ", " + tgtName + ")\n";
 
 			return false;
 		}
@@ -160,11 +162,11 @@ public class SimpleView
 				if (attrName.equals("HYP"))
 					value = attrName.toLowerCase();
 
-				unary_str += value + "(" + srcName + ")\n";
+				unary_str += indent + value + "(" + srcName + ")\n";
 			}
 			else
 			{
-				unary_str += attrName + "(" + srcName + ", " + value + ")\n";
+				unary_str += indent + attrName + "(" + srcName + ", " + value + ")\n";
 			}
 
 			return false;
