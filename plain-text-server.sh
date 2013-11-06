@@ -1,19 +1,18 @@
 #!/bin/bash
 #
-# opencog-server.sh: read from socket, generate opencog output.
+# plain-text-server.sh: read from socket, generate plain-text demo output.
 #
 # This script starts a RelEx server that listens for plain-text input
-# (English sentences) on port 4444. It then parses the text, and
-# returns opencog output on the same socket. The end of the parse is
+# (English sentences) on port 3333. It then parses the text, and
+# returns a plain-text output on the same socket. The end of the parse is
 # demarcated with an ; END OF SENTENCE token.
 #
-# It is intended that this server be used entirely from within OpenCog
-# (primarily by the OpenCog chatbot), to parse text. It is not intended
-# for general, manual use.
+# It is intended that this server be used only for live web demos,
+# rather than for anything serious.
 #
 # Example usage:
 #    ./opencog-server.sh &
-#    telnet localhost 4444
+#    telnet localhost 3333
 #    This is a test
 #    ^]q
 #
@@ -46,6 +45,6 @@ bin:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora --port 4444
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --relex --anaphora --port 3333
 
 

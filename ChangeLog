@@ -3,6 +3,7 @@ New in version 1.4.3 (XXX 2014)
  * Fix the link-grammar-server.sh file so that it works.
  * Fix the opencog-server.sh file so that the port number can be set.
  * Disable frames by default: it make everything slowww!
+ * Add a plain-text server, for demoing relex live on the web.
 
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.
