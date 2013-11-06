@@ -15,7 +15,7 @@
  */
 
 /**
- * This algorithm combines sequences of words which should be a single 
+ * This algorithm combines sequences of words which should be a single
  * word (proper names, and idioms like "at hand")
  */
 package relex.algs;
@@ -30,9 +30,9 @@ import relex.feature.LinkView;
  * Combines two words into one, stored in the left node.
  * But don't mangle the "orig str", we need this for other uses.
  * The core problem is that combining to the left, which is
- * called on "K" relations, will change word order (e.g. "Let's 
+ * called on "K" relations, will change word order (e.g. "Let's
  * get it on" combines "get on", eventually giving _obj(get_on, it))
- * However, changed word order is terrible if the orig str needs 
+ * However, changed word order is terrible if the orig str needs
  * to be printed.
  */
 public class TwoWordCombineToLeftAlg extends TemplateMatchingAlg

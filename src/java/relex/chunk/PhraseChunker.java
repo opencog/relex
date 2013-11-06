@@ -58,7 +58,7 @@ public class PhraseChunker extends LexicalChunker
 		 */
 		public Boolean FNCallback(FeatureNode fn)
 		{
-			if (root == fn) return false;  // don't report the whole sentence 
+			if (root == fn) return false;  // don't report the whole sentence
 
 			PhraseTree pt = new PhraseTree(fn);
 			int breadth = pt.getBreadth();

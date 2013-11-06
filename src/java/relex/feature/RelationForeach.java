@@ -22,11 +22,11 @@ import java.util.HashSet;
 /**
  * The RelationForeach class provides a simple, easy-to-use way of
  * traversing all of the unary and binary relations in a feature graph.
- * It invokes the FeatureNodeCallback.FNCallback() method on each 
+ * It invokes the FeatureNodeCallback.FNCallback() method on each
  * relation node visited.
  *
  * Relations are chacterized by having a "name" node, indicating
- * the thing to which the relations apply. Unary relations are 
+ * the thing to which the relations apply. Unary relations are
  * just other keys: For example:
  *
  *     [name <<she>>
@@ -44,12 +44,12 @@ import java.util.HashSet;
  *   _subj(need, she)  and _to-do(need, do)
  *
  *
- * The best way to think of a "foreach" class is to think of it as 
- * a for-loop, with a "hidden" iterator. The callback is then the 
+ * The best way to think of a "foreach" class is to think of it as
+ * a for-loop, with a "hidden" iterator. The callback is then the
  * inner block of the for loop. Because Java does not have the concept
  * of anonymous blocks, the inner block callback has to be implemented
- * as an actual class, making this programming style rather bulky. 
- * However, its well worth it, as, despite the extra bulk, it can 
+ * as an actual class, making this programming style rather bulky.
+ * However, its well worth it, as, despite the extra bulk, it can
  * dramatically simplify code.
  */
 
@@ -61,8 +61,8 @@ public class RelationForeach
 	 * ref nodes, and relation nodes, have such an entry.
 	 */
 	private static Boolean
-	_graphCrawl(FeatureNode f, 
-	            HashSet<FeatureNode> alreadyVisited, 
+	_graphCrawl(FeatureNode f,
+	            HashSet<FeatureNode> alreadyVisited,
 	            FeatureNodeCallback cb)
 	{
 		Boolean rc = false;
@@ -85,7 +85,7 @@ public class RelationForeach
 			// 	System.out.println(key + " <-- " + fk.getValue());
 			//
 			// The NEXT pointer is enough to walk through all of the words
-			// in the the sentence; however, that is not quite enough to 
+			// in the the sentence; however, that is not quite enough to
 			// to crawl the entire graph. In particular, comparative links
 			// to _$crVar aren't linked by words. So follow all pointers,
 			// unless they are one of the particularly boring kinds below.

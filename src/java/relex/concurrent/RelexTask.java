@@ -27,23 +27,23 @@ import relex.tree.PhraseTree;
 
 /**
  * Processes a sentence using the given LinkParserClient. When processing is
- * finished, returns the LPC to the pool. 
- *  
+ * finished, returns the LPC to the pool.
+ *
  * @author muriloq
  */
 public class RelexTask implements Callable<RelexTaskResult>
 {
 	public static final int DEBUG = 0;
-	// arguments 
+	// arguments
 	private int index;
 	private String sentence;
 	
-	// Reusable, shared processors 
+	// Reusable, shared processors
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 	private PhraseMarkup phraseMarkup;
 
 	// Used in mutual exclusion, must be returned to the pool
-	private RelexContext context; 
+	private RelexContext context;
 	private BlockingQueue<RelexContext> pool;
 	
 	public RelexTask(int index, String sentence,
@@ -88,8 +88,8 @@ public class RelexTask implements Callable<RelexTaskResult>
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				if (DEBUG > 0) 
-					System.err.println("[" + index+ "] end post-processing sentence " + 
+				if (DEBUG > 0)
+					System.err.println("[" + index+ "] end post-processing sentence " +
 							(i++) + "/"+ sntc.getParses().size());
 			}
 			return new RelexTaskResult(index, sentence, sntc);

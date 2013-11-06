@@ -24,7 +24,7 @@ import relex.feature.RelationCallback;
 import relex.ParsedSentence;
 
 /**
- * Implements a very simple, direct printout of the 
+ * Implements a very simple, direct printout of the
  * RelEx feature graph readable for natural language generation.
  *
  * Copyright (c) 2009 Blake Lemoine <bal2277@louisiana.edu>
@@ -96,7 +96,7 @@ public class NLGInputView
 		public HashMap<FeatureNode,String> id_map = null;
 
 		/* The entity_markers ArrayList contains the names of the binary relations
-		 * that may have entities as their arguments.  t is the case that unary 
+		 * that may have entities as their arguments.  t is the case that unary
 		 * relations may have entities as their argument, but in all such cases
 		 * a binary relation containing that entity will appear before it that
 		 * contains the same entity.  If one of these relations is present then

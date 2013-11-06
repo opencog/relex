@@ -26,7 +26,7 @@ import relex.tree.PhraseTree;
 
 /**
  * Identify "lexical units" aka "phrase chunks" aka "lexicalized stems".
- * These are identified by means of certain sentence patterns: certain 
+ * These are identified by means of certain sentence patterns: certain
  * "idiomatic" patterns for NP, VP and PP phrases.  The main function
  * is split into two parts: a dictionary of phrase types, and a pattern
  * matcher that can find these inside of sentences.
@@ -70,7 +70,7 @@ public class PatternChunker extends LexicalChunker
 			// Phrasal verbs: prepositonal verbs
 			// e.g. (VP look (PP after (NP them))) " We look after them."
 			matcher("(VP a (PP a (NP r)))");  // a subphrase of the below, which seems to cover most of it?
-			matcher("(VP a (VP a (PP a (NP r))))"); 
+			matcher("(VP a (VP a (PP a (NP r))))");
 			matcher("(VP a (VP a (PP a (S (VP r)))))");
 
 			matcher("(VP a (NP r) (PP a (NP *)))");
@@ -96,7 +96,7 @@ public class PatternChunker extends LexicalChunker
 
 			// p means "accept only if its a pronoun"
 			matcher("(VP a (NP p) (PRT a))");
-			// XXX this needs to be narrowed ... 
+			// XXX this needs to be narrowed ...
 			// matcher("(VP a (NP p) (PRT a) *)");
 			matcher("(VP a (NP r) (PRT a) (PP a (NP *)))");
 
@@ -126,7 +126,7 @@ public class PatternChunker extends LexicalChunker
 			boolean rc = PatternMatch.match(str, pt, callback);
 			if (rc) return;
 
-			// Accept the chunk as a whole, only if the callback 
+			// Accept the chunk as a whole, only if the callback
 			// accepted all parts of it.
 			add(callback.curr_chunk);
 		}
@@ -165,7 +165,7 @@ public class PatternChunker extends LexicalChunker
 		public Boolean PMCallback(String pattern, PhraseTree pt)
 		{
 			if(0 < debug)
-				System.out.println("=== >" + pattern + "< == >" + 
+				System.out.println("=== >" + pattern + "< == >" +
                               PhraseTree.toString(pt.getCursor()) +
 				                  "< phr=" + pt.toString());
 
@@ -186,7 +186,7 @@ public class PatternChunker extends LexicalChunker
 			// "p" means "accept only if its a pronoun".
 			else if (pattern.equals("p"))
 			{
-				// Must have only one word in the phrase ... 
+				// Must have only one word in the phrase ...
 				if (1 != pt.getBreadth()) return false;
 
 				// ... and that word must be a pronoun.

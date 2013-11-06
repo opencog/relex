@@ -50,8 +50,8 @@ public class PhraseLeader
 	 * phrase.
 	 *
 	 * Now, "chair" can be identified as the leader of "(NP the red chair)"
-	 * because there is a binary relation: "amod(chair, red)" that 
-	 * identifies chair.  However, "(NP the chair)" has no such binary 
+	 * because there is a binary relation: "amod(chair, red)" that
+	 * identifies chair.  However, "(NP the chair)" has no such binary
 	 * relation, and so instead, we look for either "definite-FLAG(chair, T)"
 	 * or for "noun_number(chair, singular)" to identify "chair".
 	 */
@@ -62,7 +62,7 @@ public class PhraseLeader
 		FeatureNode phr = fn_name_source.get("phr-head");
 		if (phr == null) return;
 
-		// Definite nouns that are part of entity names will have 
+		// Definite nouns that are part of entity names will have
 		// their "str" field blanked. These can never be heads.
 		if (fn_name_source.get("str") == null) return;
 
@@ -102,14 +102,14 @@ public class PhraseLeader
 
 	/* -------------------------------------------------------------------- */
 	/**
-	 * Walk the constituent tree, looking for phrases that 
+	 * Walk the constituent tree, looking for phrases that
 	 * have only one leaf under them. Assume that the leaf
 	 * must be the phrase leader. So e.g. "(PP for (NP fun))"
 	 * "fun" will be declared as the leader of "for fun".
 	 *
-	 * Note that is only makes sense for PP and NP, but not for 
+	 * Note that is only makes sense for PP and NP, but not for
 	 * S or VP. So for example: (S (VP drop (NP it))) the head
-	 * for S and VP is "drop", and not "it". 
+	 * for S and VP is "drop", and not "it".
 	 */
 	private static class leafHeads implements FeatureNodeCallback
 	{

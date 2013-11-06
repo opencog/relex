@@ -1,9 +1,9 @@
 package relex.morphy;
 
 /**
- * 
+ *
  * <p>
- * A stemmer will produce one or more variants of possible root forms of a 
+ * A stemmer will produce one or more variants of possible root forms of a
  * given word.
  * </p>
  *

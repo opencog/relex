@@ -41,7 +41,7 @@ public abstract class TemplateMatchingAlg extends SentenceAlgorithm {
 
 	/**
 	 * Tests if ConstituentNode is a superset of template
-	 * 
+	 *
 	 * @param node
 	 * @return map of matching nodes
 	 */

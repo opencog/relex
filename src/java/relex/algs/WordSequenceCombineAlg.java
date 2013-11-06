@@ -17,7 +17,7 @@
 package relex.algs;
 
 /**
- * This algorithm combines sequences of words which should be a single word 
+ * This algorithm combines sequences of words which should be a single word
  * (proper names, and idioms like "at hand")
  */
 import java.util.regex.Pattern;
@@ -84,7 +84,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 
 		if (shouldEraseStrAndRef && current != rightNode)
 		{
-			// Nodes should *NOT* actually be deleted, especially not the 
+			// Nodes should *NOT* actually be deleted, especially not the
 			// "orig_str". This is because it is needed for printing in
 			// some of the output formats, which need to have access to
 			// the original, unprocessed sentence.
@@ -121,7 +121,7 @@ public class WordSequenceCombineAlg extends TemplateMatchingAlg
 		FeatureNode bigNameF = new FeatureNode(bigName);
 		rightNode.get("ref").set("name", bigNameF);
 		
-		// See email message "Relex fixes: definites and conjoined 
+		// See email message "Relex fixes: definites and conjoined
 		// prepositions" from Mike Ross
 		// rightNode.get("ref").set("specific", new FeatureNode("T"));
 		

@@ -49,7 +49,7 @@ public class MorphyAlg extends SentenceAlgorithm
 		// Don't bother looking for morphology of LEFT-WALL
 		if (original.equals("LEFT-WALL")) return;
 
-		// Do not look up morphology of skipped-words. 
+		// Do not look up morphology of skipped-words.
 		if (original.charAt(0) == '[') return;
 
 		Morphed m = context.getMorphy().morph(original);
@@ -74,7 +74,7 @@ public class MorphyAlg extends SentenceAlgorithm
 		}
 	}
 
-	protected Map<String,FeatureNode> canApplyTo(FeatureNode node) 
+	protected Map<String,FeatureNode> canApplyTo(FeatureNode node)
 	{
 		if ((!node.isValued()) && (node.get("str") != null))
 			return new HashMap<String,FeatureNode>();

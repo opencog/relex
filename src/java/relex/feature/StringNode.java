@@ -31,9 +31,9 @@ public class StringNode extends Atom
 	public String getValue()
 	{
 		return string;
-	} 
+	}
 	public void setValue(String str)
 	{
 		string = str;
-	} 
+	}
 }

@@ -3,7 +3,7 @@ package relex.corpus;
 import java.io.Serializable;
 
 /* This class is not intedned for general public use */
-public final class TextInterval implements Serializable 
+public final class TextInterval implements Serializable
 {
 	private static final long serialVersionUID = -7788249983906665037L;
 

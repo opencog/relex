@@ -98,7 +98,7 @@ public class WordSense
 					sp.tgt_word = tgt_fn;
 					if (0 < verbosity)
 					{
-						System.out.println("pos match \""+ example_word + 
+						System.out.println("pos match \""+ example_word +
 							"\" to \"" + target_word + "\" pos " +
 							xmp_pos + " conf=" + xmp_conf*tgt_conf);
 					}
@@ -143,19 +143,19 @@ public class WordSense
 			{
 				// If the word doesn't even appear in the relation,
 				// just ignore this relation, try the next one.
-				if ((word != srcNode.get("nameSource")) && 
+				if ((word != srcNode.get("nameSource")) &&
 				    (word != tgtNode.get("nameSource")))
 				{
 					return false;
 				}
 
 				// If the relation names don't match, then it
-				// is very unlikely that the word sense usage 
+				// is very unlikely that the word sense usage
 				// in the target and example sentences match.
 				// So strike this one from the ranks.
 				// Assume the relation name matches, we also
 				// expect the word to appear in the same slot
-				// in the location -- if not, again, the 
+				// in the location -- if not, again, the
 				// matching seems unlikely.
 				if (relation.equals(relation_name) &&
 				   (((word == srcNode.get("nameSource")) && which == 1) ||
@@ -183,10 +183,10 @@ public class WordSense
 			public Boolean BinaryRelationCB(String relation,
 			                  FeatureNode srcNode, FeatureNode tgtNode)
 			{
-				// "which" just says whether its the first or second 
+				// "which" just says whether its the first or second
 				// arg of the relation.
 				int which = 0;
-				if (word == srcNode.get("nameSource")) 
+				if (word == srcNode.get("nameSource"))
 				{
 					which = 1;
 				}
@@ -195,7 +195,7 @@ public class WordSense
 					which = 2;
 				}
 
-				// "which" isn't zero only if this word participated 
+				// "which" isn't zero only if this word participated
 				// in this relation. If it did, then loop over the
 				// relations in the example sentence, to see if we
 				// can find an analoguous one there.
@@ -218,7 +218,7 @@ public class WordSense
 		TgtCB tgt_cb = new TgtCB();
 		tgt_cb.good_matches = new ArrayList<SensePair>();
 
-		// Now, loop over the plausible pairs, and see if 
+		// Now, loop over the plausible pairs, and see if
 		// the word is used in the same way in both sentences.
 		for (SensePair sp : spl)
 		{
@@ -340,7 +340,7 @@ public class WordSense
 			stv = ws.wordSenseMatch(tp.word, ri_example, ri_target);
 			System.out.println("Got " + stv.toString() +
 			                   " expected " + tp.match +
-			                   " for \"" + tp.word + "\"" + 
+			                   " for \"" + tp.word + "\"" +
 			                   " in \"" + tp.example_sentence + "\"" +
 			                   " and \"" + tp.target_sentence + "\"");
 		}

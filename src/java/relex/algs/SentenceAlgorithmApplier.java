@@ -23,7 +23,7 @@ import relex.concurrent.RelexContext;
  * SentenceAlgorithmApplier is responsible for loading SentenceAlgorithms
  * from a file, and applying them to a ParsedSentence.
  *
- * Several different sets of algorithms may be applied. The core set 
+ * Several different sets of algorithms may be applied. The core set
  * include basic feature tagging and semantic extraction. Optional sets
  * include a Stanford-parser comptibility mode, and a Penn Treebank POS
  * tagging compatibility mode.

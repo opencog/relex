@@ -29,7 +29,7 @@ public class ErrorAlg extends TemplateMatchingAlg
 	protected void applyTo(FeatureNode node, RelexContext context,
 	                       Map<String,FeatureNode> vars)
 	{
-		throw new RuntimeException("ErrorAlg with template:\n" + 
+		throw new RuntimeException("ErrorAlg with template:\n" +
 			getTemplate() + "\n\napplied to FeatureNode:\n" + node);
 	}
 }

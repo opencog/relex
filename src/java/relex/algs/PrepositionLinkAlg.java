@@ -25,7 +25,7 @@ import relex.feature.SemanticView;
 
 /**
  * XXX It would be more elegant if a new kind of markup was invented for this,
- * and TemplateActionAlg did the heavy lifting here. That way, we could 
+ * and TemplateActionAlg did the heavy lifting here. That way, we could
  * obsolete this class.  i.e. we need some way of saying "get the string
  * of this thing" and having TemplateActionAlg do the string manipulation.
  * Because, really, this alg doesn't really do anything sophisticatted, at all.
@@ -98,7 +98,7 @@ public class PrepositionLinkAlg extends TemplateActionAlg
 			applyTo(modified.get("ref"), prep_obj, prepStringValue, prep_source);
 		}
 
-		// The superclass is TemplateActionAlg -- go and run its apply method. 
+		// The superclass is TemplateActionAlg -- go and run its apply method.
 		// That allows us to perform some additional bits & teeaks as needed,
 		// and lessesn the difference between this alg and the emplateActionAlg.
 		super.applyTo(node, context, vars);

@@ -30,37 +30,37 @@ public class SuffixStemmer implements Stemmer
 		if (suffixes == null)
 			return results;
 		
-		for (int i = 0; i < suffixes.length; i++) 
+		for (int i = 0; i < suffixes.length; i++)
 		{
-			if (word.endsWith(suffixes[i][0])) 
+			if (word.endsWith(suffixes[i][0]))
 			{
 				results.add(word.substring(
                         0, word.length() - suffixes[i][0].length()) + suffixes[i][1]);				
 			}
-		} 
+		}
 		return results;
 	}
 	
 	public static String [][] parseSuffixStemmerConfiguration(String configuration)
 	{
 		StringTokenizer tokenizer = new StringTokenizer(configuration, "|=", true);
-		if (!"|".equals(tokenizer.nextToken())) 
+		if (!"|".equals(tokenizer.nextToken()))
 		{
 			throw new RuntimeException("Suffix stemmer configuration must start with |");
 		}
 		List<String[]> suffixList = new ArrayList<String[]>();
-		while (tokenizer.hasMoreTokens()) 
+		while (tokenizer.hasMoreTokens())
 		{
 			String next = tokenizer.nextToken();
 			String first = "";
 			String second = "";
-			if (!"=".equals(next)) 
+			if (!"=".equals(next))
 			{
 				first = next;
 				tokenizer.nextToken();
 			}
 			next = tokenizer.nextToken();
-			if (!"|".equals(next)) 
+			if (!"|".equals(next))
 			{
 				second = next;
 				tokenizer.nextToken();

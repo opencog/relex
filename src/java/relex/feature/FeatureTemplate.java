@@ -33,7 +33,7 @@ public class FeatureTemplate
 	/**
 	 * if test begins with "\" it is interpretted as a regular expression
 	 * (unless it begins with "\\" in which case the first character is removed)
-	 * 
+	 *
 	 * Also "\." is replaced with "[a-z\*]"
 	 */
 	private boolean matchesVal(String test, String val)

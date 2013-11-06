@@ -25,7 +25,7 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 	private static final long serialVersionUID = -3231030217056826602L;
 	
 	public Integer index;
-	public String sentence; 
+	public String sentence;
 	public Sentence result;
 	
 	public RelexTaskResult(int index, String sentence,

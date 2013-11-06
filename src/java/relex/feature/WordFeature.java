@@ -20,7 +20,7 @@ package relex.feature;
  * Return simple information about the proprties
  * of the word that the feature is pointing at.
  *
- * These routines will return correct results only *after* 
+ * These routines will return correct results only *after*
  * the sentence has been parsed, and the algs have been run.
  *
  * Copyright (C) 2008 Linas Vepstas <linas@linas.org>

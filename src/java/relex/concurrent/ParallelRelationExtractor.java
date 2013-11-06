@@ -82,11 +82,11 @@ public class ParallelRelationExtractor {
 	}
 
 	/**
-	 * Initialize the pool of LinkParserClients, creating CLIENT_POOL_SIZE instances, 
+	 * Initialize the pool of LinkParserClients, creating CLIENT_POOL_SIZE instances,
 	 * which connects to ports FIRST_PORT, FIRST_PORT+1, ..., FIRST_PORT+(CLIENT_POOL_SIZE-1)
 	 */
 	private void initializePool() {
-		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool 
+		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 		morphy.initialize();
@@ -107,26 +107,26 @@ public class ParallelRelationExtractor {
 
 	/**
 	 * Submit a new sentence to be processed, blocking if no resources are available.
-	 * Results are obtained calling take(), and are returned in order of submission. 
-	 * 
+	 * Results are obtained calling take(), and are returned in order of submission.
+	 *
 	 * @param sentence The sentence to be processed.
 	 * @throws InterruptedException
 	 */
 	public void push(String sentence) throws InterruptedException{
 		RelexContext context = pool.take();
-		Callable<RelexTaskResult> callable = 
-			new RelexTask(count++, sentence, 
-					sentenceAlgorithmApplier, 
+		Callable<RelexTaskResult> callable =
+			new RelexTask(count++, sentence,
+					sentenceAlgorithmApplier,
 					phraseMarkup, context, pool);
 		Future<RelexTaskResult> submit = exec.submit(callable);
         results.add(submit);
 	}
 
 	/**
-	 * Return the next result, in order of submission, or blocks until 
+	 * Return the next result, in order of submission, or blocks until
 	 * it's ready
-	 * 
-	 * @return The next result 
+	 *
+	 * @return The next result
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
@@ -156,28 +156,28 @@ public class ParallelRelationExtractor {
 	}
 
 	/**
-	 * Stop accepting requests, and shutdown the thread pool after all 
-	 * remaining requests are done. 
+	 * Stop accepting requests, and shutdown the thread pool after all
+	 * remaining requests are done.
 	 */
 	public void shutdown(){
-		stop = true; 
+		stop = true;
 		exec.shutdown();
 	}
 
 	/**
-	 * @return true is no more sentences are accepted (i.e., shutdown() was called) 
+	 * @return true is no more sentences are accepted (i.e., shutdown() was called)
 	 * and there are no pending results
 	 */
 	protected boolean isRunning() {
 		return !stop || !results.isEmpty();
 	}
 	
-	/**  
-	 * Unit test. Read a text file and process its sentences in parallel. 
-	 * Assumes link-grammar servers running on DEFAULT_HOST, 
-	 * listening to ports FIRST_PORT, FIRST_PORT+1, ..., FIRST_PORT+(CLIENT_POOL_SIZE-1) 
-	 * 
-	 * @param args The text file to be read  
+	/**
+	 * Unit test. Read a text file and process its sentences in parallel.
+	 * Assumes link-grammar servers running on DEFAULT_HOST,
+	 * listening to ports FIRST_PORT, FIRST_PORT+1, ..., FIRST_PORT+(CLIENT_POOL_SIZE-1)
+	 *
+	 * @param args The text file to be read
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -187,12 +187,12 @@ public class ParallelRelationExtractor {
 		System.err.println("Initialization time: "+((System.currentTimeMillis() - t)/1000)+" s");
 		
 		final long xt = System.currentTimeMillis();
-		// Producer - submits sentences from a file 
+		// Producer - submits sentences from a file
 		new Thread(new Runnable(){
 			public void run() {
 		        DocSplitter ds = DocSplitterFactory.create();
 				try {
-					// Read entire file 
+					// Read entire file
 					StringBuilder sb = new StringBuilder();
 			        BufferedReader in = new BufferedReader(new FileReader(args[0]));
 			        String line = in.readLine();
@@ -201,8 +201,8 @@ public class ParallelRelationExtractor {
 			        	line = in.readLine();
 			        }
 			        in.close();
-			        
-			        // Break text into sentences and submit 
+
+			        // Break text into sentences and submit
 					ds.addText(sb.toString());
 					sb = null;
 					
@@ -231,7 +231,7 @@ public class ParallelRelationExtractor {
 				System.err.println("Elapsed time: "+((System.currentTimeMillis() - xt)/1000)+" s");
 			}
 		}).start();
-        
+
 	}
 }
 

@@ -89,7 +89,7 @@ public class OpenCogScheme
 
 		if (do_show_linkage) ret += linkSchemeToString();
 		if (do_show_relex) ret += relSchemeToString();
-		if (do_show_anaphora) ret += anaphoraSchemeToString(); 
+		if (do_show_anaphora) ret += anaphoraSchemeToString();
 		
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";
@@ -177,7 +177,7 @@ public class OpenCogScheme
 		ArrayList<Sentence> sentence_list = doco.getSentences();
 		for (int i=0; i<sentence_list.size(); i++)
 		{
-			str += "      (SentenceNode \"" + 
+			str += "      (SentenceNode \"" +
 			       sentence_list.get(i).getID() + "\")\n";
 		}
 

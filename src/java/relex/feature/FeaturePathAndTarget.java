@@ -71,7 +71,7 @@ public class FeaturePathAndTarget
 			String re = ".*>[ ]*\\Q" + sep + "\\E[ ]*[<$%\\.\\,\\?\\-\\:\\;\\'\\w\\\\].*";
 			if (Pattern.matches(re, str)) {
 				if (!getPathSeparators().contains(sep)) {
-					throw new RuntimeException("Error: relex: " + 
+					throw new RuntimeException("Error: relex: " +
 						sep + " is not a valid path separator.");
 				}
 				separator = sep;
@@ -80,7 +80,7 @@ public class FeaturePathAndTarget
 		}
 		throw new RuntimeException("Error: relex: Parsed Path And "
 			+ "Target but could not determine separator");
-	} 
+	}
 	
 	public FeaturePathAndTarget(FeaturePathAndTarget other) {
 		this(other.toString());

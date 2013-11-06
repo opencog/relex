@@ -99,8 +99,8 @@ public abstract class SentenceAlgorithm
 		                         new LinkedHashSet<FeatureNode>()).iterator();
 	}
 
-	private LinkedHashSet<FeatureNode> 
-	_iteratorFromLeft(FeatureNode f, LinkedHashSet<FeatureNode> alreadyVisited) 
+	private LinkedHashSet<FeatureNode>
+	_iteratorFromLeft(FeatureNode f, LinkedHashSet<FeatureNode> alreadyVisited)
 	{
 		if (alreadyVisited.contains(f))
 			return alreadyVisited;

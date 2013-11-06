@@ -99,7 +99,7 @@ public class StanfordView
 				if (null != tgtPN) tgtPosTag = "-" + tgtPN.getValue();
 			}
 
-			str += indent + relName + "(" + srcName + "-" + srcIdx + srcPosTag + ", " + 
+			str += indent + relName + "(" + srcName + "-" + srcIdx + srcPosTag + ", " +
 				tgtName + "-" + tgtIdx + tgtPosTag + ")\n";
 
 			return false;

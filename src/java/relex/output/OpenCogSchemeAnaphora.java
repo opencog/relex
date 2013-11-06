@@ -81,7 +81,7 @@ public class OpenCogSchemeAnaphora
 		hobbs.resolve(sentence);
 
 		String str = new String();
-		HashMap<FeatureNode,ArrayList<FeatureNode>> ante_map = 
+		HashMap<FeatureNode,ArrayList<FeatureNode>> ante_map =
 		        antecedents.getAntecedents();
 
 		for (FeatureNode anap: ante_map.keySet())
@@ -101,7 +101,7 @@ public class OpenCogSchemeAnaphora
 				rank += 1.0;
 				double confidence = 1.0 / rank;
 
-				str += 
+				str +=
 				   "; ante(" + anap_str + ", " + tgt_str + ")\n" +
 				   "(EvaluationLink (stv 1 " + confidence +")\n" +
 				   "   (ConceptNode \"" + predicateName + "\")\n" +

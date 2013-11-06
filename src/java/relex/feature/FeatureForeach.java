@@ -17,7 +17,7 @@
 package relex.feature;
 
 /**
- * The FeatureForeach class provides a backwards-compatible interface to 
+ * The FeatureForeach class provides a backwards-compatible interface to
  * RelationForeach class.  Its use is deprecated.
  */
 

@@ -17,17 +17,17 @@ public class MorphyFactory
 	private static final String JWNL_DIR_PROPERTIES_XML = "./data/wordnet";
 
 	/**
-	 * Obtains a Morphy instance. If the system property 
+	 * Obtains a Morphy instance. If the system property
 	 * MORPHY_IMPLEMENTATION_PROPERTY is defined, try to instantiate
-	 * the class specified by it; if not, uses the given class name.  
-	 * 
+	 * the class specified by it; if not, uses the given class name.
+	 *
 	 * @param defaultImplementation
 	 * @return
 	 */
 	public static Morphy getImplementation(String defaultImplementation)
 	{
-		Morphy instance = null; 
-		String implementationClassname = 
+		Morphy instance = null;
+		String implementationClassname =
 			System.getProperty(MORPHY_IMPLEMENTATION_PROPERTY);
 		if (implementationClassname == null)
 			implementationClassname = defaultImplementation;
@@ -40,7 +40,7 @@ public class MorphyFactory
 		catch (Exception ex)
 		{
 			throw new RuntimeException(
-				"Error: Unable to initialize Morphy algorithm:" + 
+				"Error: Unable to initialize Morphy algorithm:" +
 				ex.toString(),ex);
 		}
 		return instance;
@@ -48,7 +48,7 @@ public class MorphyFactory
 	
 	/**
 	 * By default returns the thread-safe Morphy, if there's no
-	 * system property defined. 
+	 * system property defined.
 	 * @return
 	 */
 	public static Morphy getImplementation()
@@ -57,8 +57,8 @@ public class MorphyFactory
 	}
 	
 	/**
-	 * Used by JWNL-based Morphy implementations. 
-	 * @return 
+	 * Used by JWNL-based Morphy implementations.
+	 * @return
 	 */
 	public static boolean initializeJWNL()
 	{
@@ -66,8 +66,8 @@ public class MorphyFactory
 		{
 			JWNL.initialize(
 					getJWNLConfigFileStream(
-							WORDNET_PROPERTY, 
-							JWNL_FILE_PROPERTIES_XML, 
+							WORDNET_PROPERTY,
+							JWNL_FILE_PROPERTIES_XML,
 							JWNL_DIR_PROPERTIES_XML
 					)
 			);
@@ -88,17 +88,17 @@ public class MorphyFactory
 	}
 	
 	/**
-	 * Determine the file that will be used. 
-	 * 
-	 * First try to load the the file in the directory defined by 
+	 * Determine the file that will be used.
+	 *
+	 * First try to load the the file in the directory defined by
 	 * the system property. Then try to load the file as a resource
-	 * in the jar file. Finally, tries the default location 
+	 * in the jar file. Finally, tries the default location
 	 * (equivalent to -Dproperty=default)
 	 *
 	 * @param propertyName TODO
-	 * 
+	 *
 	 * @return
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	private static InputStream getJWNLConfigFileStream (
 		            String propertyName,
@@ -106,7 +106,7 @@ public class MorphyFactory
 	               String defaultDir)
 	throws FileNotFoundException
 	{
-			InputStream in = null; 
+			InputStream in = null;
 			String property = System.getProperty(propertyName);
 			
 			if (property != null)

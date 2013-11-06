@@ -70,7 +70,7 @@ public class MorphyJWNL implements Morphy
 		irregularVerbContractions.put("can't", "can");
 		irregularVerbContractions.put("cannot", "can");
 
-		// Hmm .. ain't ain't conjugated. 
+		// Hmm .. ain't ain't conjugated.
 		// I ain't, you ain't, we ain't, they ain't changing at all.
 		irregularVerbContractions.put("ain't", "be");
 
@@ -98,7 +98,7 @@ public class MorphyJWNL implements Morphy
 		standardContractions.put("'re", "are");
 		standardContractions.put("'m", "am");
 
-		// Work-around for WordNet defaults when 
+		// Work-around for WordNet defaults when
 		// multiple stems are possible.
 		// XXX this should probably be handled in the tagging file!
 		// Because, there we can tell apart singular and plural!!
@@ -122,7 +122,7 @@ public class MorphyJWNL implements Morphy
 					"\tWas -Dwordnet.configfile set correctly?\n" +
 					"\tDoes the wordnet.configfile contain the  right paths?\n" +
 					"\tWill use command-line interface; " +
-					"this will negatively impact performance."); 
+					"this will negatively impact performance.");
 		} else {
 		    javaWordnetFound = true;
 		}
@@ -241,7 +241,7 @@ public class MorphyJWNL implements Morphy
 	 * which tells us that "dog" is the singular for "dogs" and
 	 * its a noun.
 	 */
-	private void parseWordnetCommandOutput(String line, 
+	private void parseWordnetCommandOutput(String line,
 	                                       boolean negativeVerb,
 	                                       Morphed m)
 	{
@@ -283,8 +283,8 @@ public class MorphyJWNL implements Morphy
 	{
 		String word = m.getOriginal();
 
-		// JWNL has a bug, where it performs a combinatoric explosion 
-		// of searches for certain words. This is described in 
+		// JWNL has a bug, where it performs a combinatoric explosion
+		// of searches for certain words. This is described in
 		// sourceforge bug report (see URL):
 		// https://sourceforge.net/tracker/?func=detail&aid=3006600&group_id=33824&atid=409470
 		// We hack around this here, by skipping any word that has
@@ -325,10 +325,10 @@ public class MorphyJWNL implements Morphy
 			 * There may be several root forms for any given word. The code
 			 * below demonstrates how to look these up in JWNL. Unfortunately
 			 * the current design of RelEx assumes that only one root form is
-			 * possible, and there's no real way of disambiguating these. 
+			 * possible, and there's no real way of disambiguating these.
 			 *
 			 * For example: "men" has the root form "man", of course, but also
-			 * "men", because its a synonym for "staff, workforce", in which case 
+			 * "men", because its a synonym for "staff, workforce", in which case
 			 * "men" is the correct singular form. This is a rare usage: we can
 			 * say "The staff is angry" but not "The men is angry" ...
 			 * We will need to hack around this on a case-by-case basis,
@@ -336,7 +336,7 @@ public class MorphyJWNL implements Morphy
 			 *
 			 * Note also: Wordnet will not indicate that "men" is a plural form,
 			 * so, we still have no way of disambiguating the result of a parse.
-			 * i.e. although link-grammar may tell us that "men" is plural, 
+			 * i.e. although link-grammar may tell us that "men" is plural,
 			 * wordnet will not tell us what its singular form is.
 			 *
 			MorphologicalProcessor mp = dict.getMorphologicalProcessor();
@@ -350,7 +350,7 @@ public class MorphyJWNL implements Morphy
 			IndexWord verb = dict.lookupIndexWord(POS.VERB, word);
 
 			// If we've stripped an n't from something tha isn't a verb,
-			// then its ... a weird word that I certainly don't know. 
+			// then its ... a weird word that I certainly don't know.
 			if (negativeVerb && verb == null) {
 				return;
 			}

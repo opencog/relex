@@ -50,7 +50,7 @@ import relex.tree.PhraseTree;
  *    likelihood of this parse of being a correct (meaningful) parse
  *    of the sentence.
  *
- * XXX Most or all of this data should probably be anchored in the 
+ * XXX Most or all of this data should probably be anchored in the
  * feature-node graph.
  */
 public class ParsedSentence
@@ -255,10 +255,10 @@ public class ParsedSentence
 	}
 
 	/**
-	 * assign_id -- Add UUID tags to all word nodes in the parse. 
+	 * assign_id -- Add UUID tags to all word nodes in the parse.
 	 * These UUID tags are used by opencog, and by other parts
 	 * (e.g. the anaphora resolution code) to uniquely identify
-	 * individual word instances across multiple parses of 
+	 * individual word instances across multiple parses of
 	 * multiple sentences of multiple documents or conversations.
 	 */
 	public void assign_id()
@@ -296,7 +296,7 @@ public class ParsedSentence
 	 * "The big red baloon floated away." becomes
 	 * LEFT-WALL The.det big.adj red.adj balloon.noun float.verb away.prep .
 	 *
-	 * @deprecated -- please make use of the output systems in the 
+	 * @deprecated -- please make use of the output systems in the
 	 * output directory, or create one, if you really need it!
 	 */
 	@Deprecated

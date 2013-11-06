@@ -19,7 +19,7 @@ package relex.feature;
 
 /**
  * The RelationCallback is an interface class.
- * It provides a a simple, easy callback interface 
+ * It provides a a simple, easy callback interface
  * that can be invoked when traversing a graph.
  */
 
@@ -54,8 +54,8 @@ public interface RelationCallback
 	 * BinaryHeadCB() -- called once for every binary relation head.
 	 *
 	 * Typically, there are multiple binary relations originating from a
-	 * given node. Whereas BinaryRelationCB() will be called once for 
-	 * each relation originating from that node, the BinaryHeadCB() will 
+	 * given node. Whereas BinaryRelationCB() will be called once for
+	 * each relation originating from that node, the BinaryHeadCB() will
 	 * be called only once for the originating node.
 	 *
 	 * Return true to halt traversal; return false to call again.

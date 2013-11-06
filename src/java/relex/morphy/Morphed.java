@@ -31,14 +31,14 @@ public class Morphed
 		this.features = new HashMap<String, FeatureNode>();
 	}
 	
-	public void putRootNegative(String type, String root) 
+	public void putRootNegative(String type, String root)
 	{
 		putRoot(type, root);
 		FeatureNode f = features.get(type);
 		f.set(Morphy.NEG_F, new FeatureNode("T"));
 	}
 
-	public void putRoot(String type, String root) 
+	public void putRoot(String type, String root)
 	{
 		FeatureNode f = features.get(type);
 		if (f == null)
@@ -62,22 +62,22 @@ public class Morphed
 		return features.size() > 0;
 	}
 
-	public FeatureNode getNoun() 
+	public FeatureNode getNoun()
 	{
 		return features.get(Morphy.NOUN_F);
 	}
 
-	public FeatureNode getVerb() 
+	public FeatureNode getVerb()
 	{
 		return features.get(Morphy.VERB_F);
 	}
 
-	public FeatureNode getAdj() 
+	public FeatureNode getAdj()
 	{
 		return features.get(Morphy.ADJ_F);
 	}
 
-	public FeatureNode getAdv() 
+	public FeatureNode getAdv()
 	{
 		return features.get(Morphy.ADV_F);
 	}
@@ -102,7 +102,7 @@ public class Morphed
 		return getRoot(getAdv());
 	}
 	
-	public String toString() 
+	public String toString()
 	{
 		StringBuffer sb = new StringBuffer(getOriginal());
 		if (getNounString() != null)

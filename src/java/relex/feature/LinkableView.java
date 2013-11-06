@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 /**
  * This class allows for a view of a FeatureNode as an element that
- * contains left and right links. 
+ * contains left and right links.
  */
 public class LinkableView extends View // implements TreeNode , LinkNode
 {
@@ -260,7 +260,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 		// Inflections may be one letter, or they may be longer.
 		// Link-grammar calls these "word subscripts"; perhaps we should
-		// stop mis-using the term "inflection" here ... 
+		// stop mis-using the term "inflection" here ...
 		// Note that numerical quantities might have a perion in them,
 		// e.g. 3.2 million. Don't treat numerics as inlections.
 		int len = wordString.length();

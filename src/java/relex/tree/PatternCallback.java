@@ -16,7 +16,7 @@
 
 /**
  * The PatternCallback is an interface class.
- * It provides a a simple, easy callback interface 
+ * It provides a a simple, easy callback interface
  * to performing pattern matching on trees.
  *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>

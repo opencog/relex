@@ -50,7 +50,7 @@ public class MapMorphy implements Morphy
 		irregularVerbContractions.put("can't", "can");
 		irregularVerbContractions.put("cannot", "can");
 
-		// Hmm .. ain't ain't conjugated. 
+		// Hmm .. ain't ain't conjugated.
 		// I ain't, you ain't, we ain't, they ain't changing at all.
 		irregularVerbContractions.put("ain't", "am");
 
@@ -78,11 +78,11 @@ public class MapMorphy implements Morphy
 
 	private static Map<POS, Stemmer> stemmers = new HashMap<POS, Stemmer>();
 	static {
-		stemmers.put(POS.NOUN, 
+		stemmers.put(POS.NOUN,
 				SuffixStemmer.makeSuffixStemmer("|ses=s|xes=x|zes=z|ches=ch|shes=sh|men=man|ies=y|s=|"));
-		stemmers.put(POS.VERB, 
+		stemmers.put(POS.VERB,
 				SuffixStemmer.makeSuffixStemmer("|ies=y|es=e|es=|ed=e|ed=|ing=e|ing=|s=|"));
-		stemmers.put(POS.ADJECTIVE, 
+		stemmers.put(POS.ADJECTIVE,
 				SuffixStemmer.makeSuffixStemmer("|er=|est=|er=e|est=e|"));
 	}	
 
@@ -100,7 +100,7 @@ public class MapMorphy implements Morphy
 		
 		Dictionary d = Dictionary.getInstance();			
 		for(int i = 0; i < pos.length; i++) {
-			Map<String, TreeSet<String>> posExceptions = exceptions.get(pos[i]); 
+			Map<String, TreeSet<String>> posExceptions = exceptions.get(pos[i]);
 			if (posExceptions == null){
 				posExceptions = new TreeMap<String, TreeSet<String>>();
 				exceptions.put(pos[i], posExceptions);
@@ -191,7 +191,7 @@ public class MapMorphy implements Morphy
 
 		IndexWord verb = lookup(POS.VERB, word);
 
-			// Dont check for non-verb roots if we already 
+			// Dont check for non-verb roots if we already
 			// know its a negative verb.
 			if (negativeVerb && verb == null) {
 				return;

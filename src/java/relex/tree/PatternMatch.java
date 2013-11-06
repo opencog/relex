@@ -31,7 +31,7 @@ public class PatternMatch
 	 * Phrase pattern matching.
 	 * Given a string pattern, e.g. (NP (NP a) (PP a (NP r)))
 	 * and a phrase-tree structure, it will determine
-	 * if the phrase-tree structure matches the pattern, 
+	 * if the phrase-tree structure matches the pattern,
 	 * and then if will call the callback for each match.
 	 *
 	 * So, for example, if the PhraseTree looks like:
@@ -41,7 +41,7 @@ public class PatternMatch
 	 *    ("a", (PP of (NP clicks)))
 	 *    ("r", (NP clicks))
 	 * In this example, the letters "a" and "r" have explicit meaning;
-	 * it is up to the callback to decide what to do with them. They 
+	 * it is up to the callback to decide what to do with them. They
 	 * do have an implicit meaning: they are "wildcards" which match
 	 * any string of words.
 	 *
@@ -53,18 +53,18 @@ public class PatternMatch
 	 *    (VP a (PP a) (PP a (NP r)))
 	 *    (VP a (PP a) (PP a (NP r)) (PP r))
 	 *
-	 * As of the current implementation, there is no wild-card to match 
-	 * phrase types, or to do infix-matching of phrases. There seems to 
+	 * As of the current implementation, there is no wild-card to match
+	 * phrase types, or to do infix-matching of phrases. There seems to
 	 * be no particular need for these right now.
 	 *
 	 * The callbacks are guaranteed to be made in sentence word order.
 	 *
-	 * The actual implementation below is a rather ad hoc, matching 
+	 * The actual implementation below is a rather ad hoc, matching
 	 * trees expressed as strings to trees expressed as FeatureNode
-	 * PhraseTrees. One might have gotten a so-called "cleaner" 
+	 * PhraseTrees. One might have gotten a so-called "cleaner"
 	 * implementation by converting the former into a PhraseTree,
-	 * and then matching PhraseTrees, using an elegent general 
-	 * finite stack machine of some sort.  But this seemed like 
+	 * and then matching PhraseTrees, using an elegent general
+	 * finite stack machine of some sort.  But this seemed like
 	 * more work than needed; so the long-winded, "elegent" solution
 	 * looses to the shorter, ad-hoc solution.
 	 */
@@ -169,7 +169,7 @@ public class PatternMatch
 
 		if (0 == pattern.length()) return false;
 		if (pat_starts_with_word && !saw_word) return true;
-		if (0 <= pattern.indexOf('(')) return true;  // shorted the pattern! 
+		if (0 <= pattern.indexOf('(')) return true;  // shorted the pattern!
 		if (0 < debug) System.err.println("match word string at end of pattern, patt=" + pattern + "=");
 		if (cb != null)
 		{
@@ -197,8 +197,8 @@ public class PatternMatch
 			{
 				cnt --;
 				paren = next_clos;
-			} 
-			else if (0 < next_open) 
+			}
+			else if (0 < next_open)
 			{
 				cnt ++;
 				paren = next_open;

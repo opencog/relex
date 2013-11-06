@@ -66,8 +66,8 @@ public class RelationChunker extends LexicalChunker
 			FeatureNode fm = from.get("nameSource");
 
 			if (0 < debug)
-				System.out.println(relation + "(" + 
-				                   from.get("name").getValue() + "," + 
+				System.out.println(relation + "(" +
+				                   from.get("name").getValue() + "," +
 				                   to.get("name").getValue() + ")");
 
 			PhraseTree pt = new PhraseTree(fm);

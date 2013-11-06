@@ -24,8 +24,8 @@ import relex.feature.FeatureNode;
 /* Various different views of the parsed sentence */
 public class RawView
 {
-	public static String printSem(FeatureNode head, 
-	                       FeatureNode background, 
+	public static String printSem(FeatureNode head,
+	                       FeatureNode background,
 	                       FeatureNameFilter filter)
 	{
 		if (head == null)
@@ -110,7 +110,7 @@ public class RawView
 	{
 		if (left == null) return "";
 
-		String out = printSem(left.get("head"), 
+		String out = printSem(left.get("head"),
 		                      left.get("background"),
 		                      getZHeadsFilter());
 		return out;
@@ -122,10 +122,10 @@ public class RawView
 	public static String printZHeadsComplete(FeatureNode left)
 	{
 		if (left == null) return "";
-		FeatureNameFilter filter = 
-			      new FeatureNameFilter(new HashSet<String>(), 
+		FeatureNameFilter filter =
+			      new FeatureNameFilter(new HashSet<String>(),
 		                               new ArrayList<String>());
-		String out = printSem(left.get("head"), 
+		String out = printSem(left.get("head"),
 		                      left.get("background"), filter);
 		return out;
 	}

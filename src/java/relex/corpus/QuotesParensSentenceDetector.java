@@ -26,11 +26,11 @@ import java.util.*;
  * and "Go to hell!"
  *
  * XXX This is currently broken as it fails to handle possesives correctly,
- * e.g. 
- *    John's sleeve was dirty. 
- * breaks up into 
- *     John BLOCK 
- * and 
+ * e.g.
+ *    John's sleeve was dirty.
+ * breaks up into
+ *     John BLOCK
+ * and
  *     s sleeve was dirty.
  * This needs to be fixed.
  *

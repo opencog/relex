@@ -69,7 +69,7 @@ class OpenCogSchemeLink
 		public Boolean FNCallback(FeatureNode fn)
 		{
 			str +=
-				"(EvaluationLink (stv 1.0 1.0)\n" + 
+				"(EvaluationLink (stv 1.0 1.0)\n" +
 				"   (LinkGrammarRelationshipNode \"" +
 				fn.get("LAB").getValue() + "\")\n" +
 				"   (ListLink\n" +

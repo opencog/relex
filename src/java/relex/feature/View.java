@@ -18,7 +18,7 @@ package relex.feature;
 
 /**
  * This class allows FeatureNodes to have different views. Essentially,
- * every view will have special methods for setting and getting 
+ * every view will have special methods for setting and getting
  * particular features.
  */
 public abstract class View

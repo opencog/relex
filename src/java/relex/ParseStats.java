@@ -27,7 +27,7 @@ import relex.stats.Histogram;
 /**
  * This class collects a miscellany of statistics about a parsed text.
  *
- * Copyright (C) 2008 Linas Vepstas <linas@linas.org> 
+ * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 public class ParseStats
 {

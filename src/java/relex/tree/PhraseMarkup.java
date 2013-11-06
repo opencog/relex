@@ -90,7 +90,7 @@ public class PhraseMarkup
 		sentence = sent;
 		String phraseString = sent.getPhraseString();
 
-		// The phraseString might be null if the sentence contains Japanese 
+		// The phraseString might be null if the sentence contains Japanese
 		// or Chinese UTF8 characters.  It seems that Java does not support
 		// Japanese/Chinese automatically(!!??) and returns nulls for such
 		// strings.
@@ -100,7 +100,7 @@ public class PhraseMarkup
 		doMarkup(head, null, phraseString);
 		// System.err.println("Debug: phrase markup:\n" + sent.getLeft());
 
-		// Now, mark up the phrase leaders as well. 
+		// Now, mark up the phrase leaders as well.
 		// This assumes that the relex algos have already run.
 		PhraseLeader.markup(head);
 	}

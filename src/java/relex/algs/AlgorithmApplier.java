@@ -117,20 +117,20 @@ public class AlgorithmApplier
 	}
 
 	/**
-	 * Determine the relex algorithms file will be used. 
-	 * 
+	 * Determine the relex algorithms file will be used.
+	 *
 	 * First try to load the the file defined by the system property
 	 * relex.algpath. Then try to load the file as a resource in the
 	 * jar file.  Finally, tries the default location (equivalent to
 	 * -Drelex.algpath=./data/relex-semantic-algs.txt)
-	 * 
+	 *
 	 * @return
 	 */
 	public static InputStream getAlgorithmsFile(String prop, String filename)
 	{
 		try
 		{
-			InputStream in = null; 
+			InputStream in = null;
 			String algsFileName = System.getProperty(prop);
 			if (algsFileName!=null)
 			{
@@ -155,7 +155,7 @@ public class AlgorithmApplier
 				return in;
 			}
 	
-			String defaultRelexAlgsFile = 
+			String defaultRelexAlgsFile =
 				"./data/" + filename;
 			in = new FileInputStream(defaultRelexAlgsFile);
 			if (in != null)

@@ -91,8 +91,8 @@ public class FeatureNode extends Atom
 		// Otherwise, str is interpreted as the value of this FeatureNode.
 		//
 		// But this is used only during development of new relex rules;
-		// do not do this in ordinary production code. In particular, 
-		// this code will mis-identify any lingering HTML markup, and 
+		// do not do this in ordinary production code. In particular,
+		// this code will mis-identify any lingering HTML markup, and
 		// crash the system! (We shouldn't feed relex any HTML, but
 		// sometimes some slips through ..)
 		//
@@ -248,7 +248,7 @@ public class FeatureNode extends Atom
 	 *
 	 * XXX -- this is somewhat strangely named, it doesn't really
 	 * merge, per-se, since if both featurenodes have features
-	 * in them, then it throws an exeption if the features aren't 
+	 * in them, then it throws an exeption if the features aren't
 	 * identical. So really, a "merge" occurs only when one of the
 	 * featurenodes is empty.
 	 *
@@ -571,15 +571,15 @@ public class FeatureNode extends Atom
 	 *
 	 * This routine walks the indicated chain of keys, looking
 	 * up each in turn. If any key in the path is not found,
-	 * null is returned. If particular, if the very first 
-	 * path element is not found, null is returned. If the 
+	 * null is returned. If particular, if the very first
+	 * path element is not found, null is returned. If the
 	 * navigation was successful, then the FeatureNode at
 	 * the end of the path is returned.
 	 *
 	 * Example usage:
 	 * pathTarget(new FeaturePath("<ref noun_number>"));
 	 */
-	public FeatureNode pathTarget(FeaturePath path) 
+	public FeatureNode pathTarget(FeaturePath path)
 	{
 		FeatureNode cur = this;
 		Iterator<String> feats = path.iterator();
@@ -591,16 +591,16 @@ public class FeatureNode extends Atom
 		return cur;
 	}
 
-	public FeatureNode pathTarget(String str) 
+	public FeatureNode pathTarget(String str)
 	{
 		return pathTarget(new FeaturePath(str));
 	}
 
 	/**
-	 * pathValue() -- 
+	 * pathValue() --
 	 * Returns the value of the path target -- or null if the path does not exist.
 	 */
-	public String pathValue(FeaturePath path) 
+	public String pathValue(FeaturePath path)
 	{
 		FeatureNode target = pathTarget(path);
 		if (target == null)
@@ -608,7 +608,7 @@ public class FeatureNode extends Atom
 		return target.getValue();
 	}
 
-	public String pathValue(String str) 
+	public String pathValue(String str)
 	{
 		FeaturePath path = new FeaturePath(str);
 		FeatureNode target = pathTarget(path);
@@ -623,7 +623,7 @@ public class FeatureNode extends Atom
 	 * error will be thrown if the path does not unify with this FeatureNode.
 	 */
 	public void makePath(FeaturePath path, FeatureNode target,
-	                     boolean forceTarget) 
+	                     boolean forceTarget)
 	{
 		FeatureNode cur = this;
 		Iterator<String> feats = path.iterator();

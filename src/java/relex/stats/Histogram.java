@@ -20,7 +20,7 @@ import java.lang.Math;
 /**
  * This class provides simple historgram (bin count) support.
  *
- * Copyright (C) 2008 Linas Vepstas <linas@linas.org> 
+ * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 public class Histogram implements TruthValue
 {

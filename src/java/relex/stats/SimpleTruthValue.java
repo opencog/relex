@@ -19,7 +19,7 @@ package relex.stats;
  * This class provides a simple OpenCog-like TruthValue object.
  * It is similar to, but not the same as, OpenCog TV objects.
  *
- * Copyright (C) 2008 Linas Vepstas <linas@linas.org> 
+ * Copyright (C) 2008 Linas Vepstas <linas@linas.org>
  */
 public class SimpleTruthValue implements TruthValue
 {

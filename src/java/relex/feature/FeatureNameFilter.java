@@ -60,7 +60,7 @@ public class FeatureNameFilter
 	/*
 	 * Copy feature names to output, optionally sorting them with a specified
 	 * sort order. The sort order is curious: if the sort list contains an empty
-	 * string, this halts sorting, and everything following the empty string is 
+	 * string, this halts sorting, and everything following the empty string is
 	 * placed at the end!!
 	 */
 	protected void transfer(ArrayList<String> output, Set<String> featureNames) {

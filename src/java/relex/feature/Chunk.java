@@ -68,7 +68,7 @@ public class Chunk extends Atom
 
 			// Add subphrases to the word list
 			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
+			if (subf != null)
 			{
 				addPhrase(fn);
 			}
@@ -78,7 +78,7 @@ public class Chunk extends Atom
 
 	/**
 	 * Return true if the other object equals this one, else return false.
-	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares 
+	 * Equals, in the comp-sci sense (e.g. scheme or lisp): compares
 	 * structure to determine if they have congruent structure.
 	 */
 	public boolean equals(Object other)

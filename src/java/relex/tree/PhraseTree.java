@@ -22,7 +22,7 @@ import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 
 /**
- * The PhraseTree class visualizes the Penn tree-bank style 
+ * The PhraseTree class visualizes the Penn tree-bank style
  * phrase structure markup in a FeatureNode graph.
  *
  * An example Penn tree phrase structure is
@@ -320,7 +320,7 @@ public class PhraseTree
 	}
 
 	/**
-	 * Return true, if this phrase has at least one word in it 
+	 * Return true, if this phrase has at least one word in it
 	 * (as opposed to consisting entirely of subphrases)
 	 */
 	public static Boolean hasWord(FeatureNode phr)
@@ -336,7 +336,7 @@ public class PhraseTree
 	}
 
 	/**
-	 * Return true, if this phrase starts with a word 
+	 * Return true, if this phrase starts with a word
 	 * (as opposed to starting with a subphrases)
 	 */
 	public static Boolean startsWithWord(FeatureNode phr)
@@ -379,7 +379,7 @@ public class PhraseTree
 		while (fn != null)
 		{
 			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
+			if (subf != null)
 			{
 				int depth = getDepth(fn);
 				if (maxdepth < depth) maxdepth = depth;
@@ -392,7 +392,7 @@ public class PhraseTree
 	/**
 	 * Return true, if this word is part of a leaf word phrase
 	 * and the leaf word phrase has two or more words in it.
-	 * To be a "leaf phrase", the phrase itself must not 
+	 * To be a "leaf phrase", the phrase itself must not
 	 * contain any sub-phrases.
 	 */
 	public static Boolean isCompoundLeaf(FeatureNode word)
@@ -437,8 +437,8 @@ public class PhraseTree
 	}
 
 	/**
-	 * Return the leaf node, if this tree has only a 
-	 * single branch all the way down to its leaf. 
+	 * Return the leaf node, if this tree has only a
+	 * single branch all the way down to its leaf.
 	 * i.e. the branch itself is either a leaf,
 	 * or there is only one subphrase.
 	 */
@@ -510,7 +510,7 @@ public class PhraseTree
 			if (wd != null) words.add (wd);
 
 			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
+			if (subf != null)
 			{
 				getWordList(fn, words);
 			}
@@ -530,7 +530,7 @@ public class PhraseTree
 			if (wd != null) return wd;
 
 			FeatureNode subf = fn.get("phr-head");
-			if (subf != null) 
+			if (subf != null)
 			{
 				wd = getFirstWord(fn);
 				if (wd != null) return wd;
@@ -555,8 +555,8 @@ public class PhraseTree
 	/**
 	 * getNextPhrase -- iterator, return next phrase head.
 	 *
-	 * If the input argument is pointing into a list of 
-	 * phrases, this iterator will return the next phrase 
+	 * If the input argument is pointing into a list of
+	 * phrases, this iterator will return the next phrase
 	 * in the list.  It will skip over any words in the list.
 	 *
 	 * Sample usage of recursive walk:

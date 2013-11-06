@@ -19,7 +19,7 @@ package relex.parser;
 /**
  * Represents an unrecoverable error during parsing. Such exceptions
  * are caused by improper configuration, a bug, a failure to access
- * some resource such as a remote server etc. 
+ * some resource such as a remote server etc.
  *
  * @author Borislav Iordanov
  */

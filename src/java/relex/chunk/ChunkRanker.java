@@ -49,7 +49,7 @@ public class ChunkRanker
 	}
 
 	/**
-	 * Add a chunk. If its already in the list, then increment 
+	 * Add a chunk. If its already in the list, then increment
 	 * its liklihood of being appropriate.
 	 */
 	public void add(LexChunk ch, TruthValue weight)

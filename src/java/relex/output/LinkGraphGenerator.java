@@ -26,7 +26,7 @@ import relex.feature.LinkForeach;
 
 /**
  * Generates a graph (using graphviz) of the links produced by link-grammar
- * 
+ *
  * @author muriloq
  */
 public class LinkGraphGenerator {
@@ -36,8 +36,8 @@ public class LinkGraphGenerator {
 	
 	public static File generateGraph(
 			String title,
-			ParsedSentence parse, 
-			File directory, 
+			ParsedSentence parse,
+			File directory,
 			boolean limitSize) {
 		
 		PrintWriter writer = null;
@@ -88,7 +88,7 @@ public class LinkGraphGenerator {
 	/**
 	 * Generate a graph in the PNG format using the DOT source code in the given
 	 * file.
-	 * 
+	 *
 	 * @param temp The file containing the DOT source code
 	 */
 	public static File generateGraphImage(File temp) {
@@ -115,7 +115,7 @@ class LinkCB implements FeatureNodeCallback
 		String label = fn.get("LAB").getValue();
 		String lIndex = fn.get("F_L").get("index_in_sentence").getValue();
 		String rIndex = fn.get("F_R").get("index_in_sentence").getValue();
- 
+
 		if (LinkGraphGenerator.HIDE_LEFT_WALL && lIndex.equals("0")) return false;
 		
 		sb.append("\t\"node"+lIndex+"\"");

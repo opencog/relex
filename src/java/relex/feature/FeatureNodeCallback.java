@@ -18,7 +18,7 @@ package relex.feature;
 
 /**
  * The FeatureNodeCallback is an interface class.
- * It provides a a simple, easy callback interface 
+ * It provides a a simple, easy callback interface
  * that can be invoked when traversing a graph.
  *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>

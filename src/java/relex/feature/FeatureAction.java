@@ -240,7 +240,7 @@ public class FeatureAction extends FeaturePathAndTarget
 		 * FeatureAction a1 = new FeatureAction("<x zz> = <x z>");
 		 * FeatureAction a2 = new FeatureAction("<x double> += <x z>");
 		 * FeatureAction a3 = new FeatureAction("<x y> = <x double>");
-		 * 
+		 *
 		 * System.out.println(f + "\nexecuting: " +a1); a1.doAction(f);
 		 * System.out.println(f + "\nexecuting: " +a2); a2.doAction(f);
 		 * System.out.println(f + "\nexecuting: " +a2); a2.doAction(f);

@@ -19,7 +19,7 @@ package relex.concurrent;
 import relex.morphy.Morphy;
 import relex.parser.IParser;
 
-public class RelexContext 
+public class RelexContext
 {
 //	private LinkParserClient linkParserClient;
 	private IParser parser;
@@ -27,11 +27,11 @@ public class RelexContext
 	
 /*	public LinkParserClient getLinkParserClient() {
 		return linkParserClient;
-	} 
+	}
 
 	public void setLinkParserClient(LinkParserClient linkParserClient) {
 		this.linkParserClient = linkParserClient;
-	} */ 
+	} */
 
 	public IParser getParser()
 	{

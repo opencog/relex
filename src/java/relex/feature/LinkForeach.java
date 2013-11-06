@@ -26,12 +26,12 @@ import java.util.HashSet;
  * link-grammar, as it returns pointers into the feature graph,
  * rather than to words in a sentence.
  *
- * The best way to think of a "foreach" class is to think of it as 
- * a for-loop, with a "hidden" iterator. The callback is then the 
+ * The best way to think of a "foreach" class is to think of it as
+ * a for-loop, with a "hidden" iterator. The callback is then the
  * inner block of the for loop. Because Java does not have the concept
  * of anonymous blocks, the inner block callback has to be implemented
- * as an actual class, making this programming style rather bulky. 
- * However, its well worth it, as, despite the extra bulk, it can 
+ * as an actual class, making this programming style rather bulky.
+ * However, its well worth it, as, despite the extra bulk, it can
  * dramatically simplify code.
  *
  *  Copyright (C) 2008 Linas Vepstas <linas@linas.org>
@@ -45,8 +45,8 @@ public class LinkForeach
 	 * link-grammar linkage nodes have such an entry.
 	 */
 	private static Boolean
-	_graphCrawl(FeatureNode f, 
-	            HashSet<FeatureNode> alreadyVisited, 
+	_graphCrawl(FeatureNode f,
+	            HashSet<FeatureNode> alreadyVisited,
 	            FeatureNodeCallback cb)
 	{
 		Boolean rc = false;
@@ -69,7 +69,7 @@ public class LinkForeach
 			// 	System.err.println(key + " <-- " + fk.getValue());
 			//
 			// The NEXT pointer is enough to walk through all of the words
-			// in the the sentence; however, that is not quite enough to 
+			// in the the sentence; however, that is not quite enough to
 			// to crawl the entire graph. In particular, comparative links
 			// to _$crVar aren't linked by words. So follow all pointers,
 			// unless they are one of the particularly boring kinds below.
@@ -104,7 +104,7 @@ public class LinkForeach
 	}
 
 	/**
-	 * Walk the graph, calling a callback for each link grammar link 
+	 * Walk the graph, calling a callback for each link grammar link
 	 * node visited. The callback is called only when a node has a
 	 * "LAB" entry. Only link-grammar links nodes have such an entry.
 	 */
