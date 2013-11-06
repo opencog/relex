@@ -7,7 +7,7 @@
 # Flags:
 # RelationExtractor [-a (perform anaphora resolution)] 
 # [-c (show plain output)]
-# [-f (show frame output)] 
+# [-f (show frame output)]  Caution: slowww!
 # [-g (use GATE entity detector)]
 # [-h (show this help)] 
 # [-l (show parse links)]
@@ -59,25 +59,30 @@ bin:\
 /usr/share/java/linkgrammar.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
-/usr/share/java/xercesImpl.jar:\
-/opt/GATE-4.0/bin/gate.jar:\
-/opt/GATE-4.0/lib/jdom.jar:\
-/opt/GATE-4.0/lib/jasper-compiler-jdt.jar:\
-/opt/GATE-4.0/lib/nekohtml-0.9.5.jar:\
-/opt/GATE-4.0/lib/ontotext.jar:\
-/opt/GATE-4.0/lib/stax-api-1.0.1.jar:\
-/opt/GATE-4.0/lib/PDFBox-0.7.2.jar:\
-/opt/GATE-4.0/lib/wstx-lgpl-2.0.6.jar
 "
+
+# /usr/share/java/xercesImpl.jar:\
+
+# GATE is strongly deprecated, but here it is if you want it:
+# /opt/GATE-4.0/bin/gate.jar:\
+# /opt/GATE-4.0/lib/jdom.jar:\
+# /opt/GATE-4.0/lib/jasper-compiler-jdt.jar:\
+# /opt/GATE-4.0/lib/nekohtml-0.9.5.jar:\
+# /opt/GATE-4.0/lib/ontotext.jar:\
+# /opt/GATE-4.0/lib/stax-api-1.0.1.jar:\
+# /opt/GATE-4.0/lib/PDFBox-0.7.2.jar:\
+# /opt/GATE-4.0/lib/wstx-lgpl-2.0.6.jar
+
 # wordnet doesn't work with the gate version of jwnl ...
 # /opt/GATE-4.0/lib/jwnl.jar:\
 
 # Read a sentence from stdin:
 #echo "Alice wrote a book about dinosaurs for the University of California in Berkeley." | \
-#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l	-t -f -r-a -g
-#/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -a -g -s "Alice ate the mushroom."
+#	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l	-t -r-a -g
+#/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -r -a -g -s "Alice ate the mushroom."
 
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -a -s "Alice ate the mushroom."
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -f -r -a -s "Alice ate the mushroom."
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -r -a -s "Alice ate the mushroom."
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \
