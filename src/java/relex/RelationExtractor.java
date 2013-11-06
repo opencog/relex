@@ -49,7 +49,6 @@ import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.NLGInputView;
 import relex.output.OpenCogScheme;
-import relex.output.ParseView;
 import relex.output.PrologList;
 import relex.output.RawView;
 import relex.output.SimpleView;
@@ -390,7 +389,6 @@ public class RelationExtractor
 	{
 		String callString = "RelationExtractor" +
 			" [-a (perform anaphora resolution)]" +
-			" [-c (show plain output)]" +
 			" [--expand-preps (show expanded prepositions)]" +
 			" [-f (show frame output)]" +
 			" [-g (pre-process with GATE entity detector)]" +
@@ -413,12 +411,10 @@ public class RelationExtractor
 			" [--stanford (generate stanford-compatible output)]" +
 			" [-t (show parse tree)]" +
 			" [-v (verbose, full graph output)]" +
-			" [-x (show cerego XML output)]" +
 			" [--html filename (output HTML to file)]"
 				;
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
-		flags.add("-c");
 		flags.add("--expand-preps");
 		flags.add("-f");
 		flags.add("-g");
@@ -438,7 +434,6 @@ public class RelationExtractor
 		flags.add("--stanford");
 		flags.add("-t");
 		flags.add("-v");
-		flags.add("-x");
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("-s");
@@ -544,7 +539,6 @@ public class RelationExtractor
 		// QuotesParens is currently broken, it fails to handle possesives.
 		// QuotesParensSentenceDetector ds = QuotesParensSentenceDetector.create();
 
-		ParseView ceregoView = new ParseView();
 		OpenCogScheme opencog = null;
 		if (commandMap.get("-o") != null)
 		{
@@ -755,21 +749,6 @@ public class RelationExtractor
 						System.out.println("\n======\n");
 					}
 
-					if (commandMap.get("-c") != null)
-					{
-						ceregoView.setParse(parse);
-						ceregoView.showXML(false);
-						System.out.println(ceregoView.printCerego());
-						System.out.println("\n======\n");
-					}
-					if (commandMap.get("-x") != null)
-					{
-						System.out.print("-->\n");
-						ceregoView.setParse(parse);
-						ceregoView.showXML(true);
-						System.out.println(ceregoView.printCerego());
-						System.out.println("\n<!-- ======\n");
-					}
 					if ((commandMap.get("-f") != null) &&
 					    (commandMap.get("-o") == null))
 					{

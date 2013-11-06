@@ -47,27 +47,6 @@ OWLView.java:
 PrologList.java:
    Generate Prolog output.
 
-OpenCogXML.java:
-OpenCogXMLRel.java:
-OpenCogXMLFrame.java:
-	Obsolete; use OpenCogScheme (above) instead.
-	OpenCog no longer understands this format.
-	Generates OpenCog XML. Only the OpenCog class is 
-	public; the other two are helpers. XMLRel generates
-	output that corresponds to the basic RelEx feature 
-	graph, while XMLFrame generates output for the 
-	frame relations.
-
-ParseView.java:
-PhraseView.java:
-RelationView.java:
-	Deprecated. Do not use for new development.
-	These three files, together as a group, implement
-	the so-called "Cerego-style" output. There are two
-	variants "plain-text" and XML. The XML format is 
-	quite complex and daunting. Only ParseView is public;
-	the other two are helper classes.
-
 
 ========================================================
        Design Notes for the "Compact" file format
