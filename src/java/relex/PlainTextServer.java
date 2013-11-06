@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import relex.output.SimpleView;
+import relex.Version;
 
 
 /**
@@ -106,6 +107,9 @@ public class PlainTextServer
 				System.exit(1);
 			}
 		}
+
+		System.err.println("Info: Version: " + Version.getVersion());
+
 		RelationExtractor r = new RelationExtractor(false);
 		SimpleView sv = new SimpleView();
 		PlainTextServer s = new PlainTextServer();
@@ -174,8 +178,8 @@ public class PlainTextServer
 				int num_show = sntc.getParses().size();
 				if (3 < num_show) num_show = 3;
 
-				for (int i=0; i< num_show; i++) 
-				{ 
+				for (int i=0; i< num_show; i++)
+				{
 					ParsedSentence parse = sntc.getParses().get(i);
 
 					// Print the phrase string .. why ??

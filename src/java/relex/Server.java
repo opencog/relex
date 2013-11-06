@@ -27,7 +27,7 @@ import java.net.Socket;
 import relex.output.SimpleView;
 import relex.frame.Frame;
 import relex.output.OpenCogScheme;
-
+import relex.Version;
 
 /**
  * The Server class provides a very simple socket-based parse server.
@@ -116,6 +116,9 @@ public class Server
 				System.exit(1);
 			}
 		}
+
+		System.err.println("Info: Version: " + Version.getVersion());
+
 		RelationExtractor r = new RelationExtractor(false);
 		OpenCogScheme opencog = new OpenCogScheme();
 		Server s = new Server();
@@ -214,7 +217,7 @@ public class Server
 				// just recieved a brand new sentence. The OpenCog scheme
 				// code depends on this being visible, in order to find
 				// the new sentence.
-				out.println("(ListLink (stv 1 1)");				
+				out.println("(ListLink (stv 1 1)");
 				out.println("   (AnchorNode \"# New Parsed Sentence\")");
 				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
 				out.println(")");
