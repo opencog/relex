@@ -41,6 +41,7 @@ entity:
    however, its not clear that there are any entity detectors that are
    actually better than the parser. The entity detection is supplied by 
    systems outside of relex. The current implementation uses GATE.
+   Obsolete, code was removed in November 2013.
 
 feature:
 	The core classes for representing the graph of linguistic 

@@ -38,9 +38,6 @@ import relex.concurrent.RelexContext;
 // import relex.corpus.QuotesParensSentenceDetector;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.entity.EntityMaintainer;
-import relex.entity.EntityTagger;
-import relex.entity.EntityTaggerFactory;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
 import relex.morphy.Morphy;
@@ -111,13 +108,6 @@ public class RelationExtractor
 	/** Expand preposition markup to two dependencies. */
 	public boolean do_expand_preps;
 
-	/** Perform entity substitution before parsing */
-	public boolean do_pre_entity_tagging;
-
-	/** Perform entity tagging after parse */
-	public boolean do_post_entity_tagging;
-	public EntityTagger tagger;
-
 	/** Statistics */
 	private ParseStats stats;
 
@@ -158,9 +148,6 @@ public class RelationExtractor
 		do_stanford = false;
 		do_penn_tagging = false;
 		do_expand_preps = false;
-		do_pre_entity_tagging = false;
-		do_post_entity_tagging = false;
-		tagger = null;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -214,23 +201,13 @@ public class RelationExtractor
 
 	public Sentence processSentence(String sentence)
 	{
-		return processSentence(sentence, null);
-	}
-
-	public Sentence processSentence(String sentence,
-	                                 EntityMaintainer entityMaintainer)
-	{
 		starttime = System.currentTimeMillis();
-		if (entityMaintainer == null)
-		{
-			entityMaintainer = new EntityMaintainer();
-		}
 
 		Sentence sntc = null;
 		try
 		{
 			if (verbosity > 0) starttime = System.currentTimeMillis();
-			sntc = parseSentence(sentence, entityMaintainer);
+			sntc = parseSentence(sentence);
 			if (verbosity > 0) reportTime("Link-parsing: ");
 
 			for (ParsedSentence parse : sntc.getParses())
@@ -240,26 +217,10 @@ public class RelationExtractor
 					parse.getLeft().set("expand-preps", new FeatureNode("T"));
 				}
 
-				if (do_post_entity_tagging && (tagger != null))
-				{
-					// Markup feature node graph with entity info,
-					// so that the relex algs (next step) can see them.
-					tagger.tagEntities(sentence);
-					tagger.tagParse(parse);
-				}
-
-				// Markup feature node graph with entity info,
-				// so that the relex algs (next step) can see them.
-				entityMaintainer.tagConvertedSentence(parse);
-
 				// The actual relation extraction is done here.
 				sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
-
-				// Strip out the entity markup, so that when the
-				// sentence is printed, we don't print gunk.
-				entityMaintainer.repairSentence(parse.getLeft());
 
 				// Also do a Penn tree-bank style phrase structure markup.
 				if (do_tree_markup)
@@ -294,20 +255,13 @@ public class RelationExtractor
 
 	/**
 	 * Parses a sentence, using the parser. The private ArrayList of
-	 * currentParses is filled with the ParsedSentences Uses an optional
-	 * EntityMaintainer to work on a converted sentence.
+	 * currentParses is filled with the ParsedSentences.
 	 */
 	private Sentence
-	parseSentence(String sentence, EntityMaintainer entityMaintainer)
+	parseSentence(String sentence)
 	{
-		if (entityMaintainer != null)
-		{
-			entityMaintainer.convertSentence(sentence,null);
-			sentence = entityMaintainer.getConvertedSentence();
-		}
 		if (sentence == null) return null;
 
-		String orig_sentence = entityMaintainer.getOriginalSentence();
 		Sentence sent = null;
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
 			sent = parser.parse(sentence);
@@ -315,7 +269,6 @@ public class RelationExtractor
 			System.err.println("Sentence too long!: " + sentence);
 			sent = new Sentence();
 		}
-		sent.setSentence(orig_sentence);
 		return sent;
 	}
 
@@ -388,8 +341,6 @@ public class RelationExtractor
 		String callString = "RelationExtractor" +
 			" [-a (perform anaphora resolution)]" +
 			" [--expand-preps (show expanded prepositions)]" +
-			" [-g (pre-process with GATE entity detector)]" +
-			" [--g-post (post-process with GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-i (show output for generation)]" +
 			" [-l (show parse links)]" +
@@ -413,8 +364,6 @@ public class RelationExtractor
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("--expand-preps");
-		flags.add("-g");
-		flags.add("--g-post");
 		flags.add("-h");
 		flags.add("-i");
 		flags.add("-l");
@@ -515,19 +464,6 @@ public class RelationExtractor
 			re.do_expand_preps = true;
 		}
 
-		EntityTagger gent = null;
-		if ((commandMap.get("-g") != null) ||
-		    (commandMap.get("--g-post") != null))
-		{
-			re.starttime = System.currentTimeMillis();
-			gent = EntityTaggerFactory.get();
-			gent.tagEntities(""); // force initialization to measure initialization time
-			re.tagger = gent;
-			re.reportTime("Entity Detector Initialization: ");
-		}
-		if (commandMap.get("-g") != null) re.do_pre_entity_tagging = true;
-		if (commandMap.get("--g-post") != null) re.do_post_entity_tagging = true;
-
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		DocSplitter ds = DocSplitterFactory.create();
@@ -583,16 +519,6 @@ public class RelationExtractor
 			while (sentence != null)
 			{
 				System.out.println("; SENTENCE: ["+sentence+"]");
-				EntityMaintainer em = null;
-				if (re.do_pre_entity_tagging)
-				{
-					re.starttime = System.currentTimeMillis();
-					em = new EntityMaintainer();
-					gent.reset();
-					em.set(gent);
-					// gent.makeEntityTagger(sentence));
-					re.reportTime("Gate processing: ");
-				}
 				Sentence sntc = re.processSentence(sentence,em);
 				re.doco.addSentence(sntc);
 
