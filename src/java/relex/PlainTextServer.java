@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import relex.output.SimpleView;
-import relex.output.OpenCogScheme;
 
 
 /**
@@ -40,7 +39,7 @@ public class PlainTextServer
 {
 	private int listen_port;
 
-	public Server()
+	public PlainTextServer()
 	{
 		listen_port = 3333;
 	}
@@ -53,7 +52,7 @@ public class PlainTextServer
 		boolean anaphora_on = false;
 		boolean verbose = false;
 		String usageString = "Plain-text RelEx server.\n" +
-			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
+			"Given a sentence, it returns a plain-output parse.\n" +
 			" -p number  \t Port number to listen on (default: 3333)\n" +
 			" --port num \t Port number to listen on (default: 3333)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
@@ -108,8 +107,8 @@ public class PlainTextServer
 			}
 		}
 		RelationExtractor r = new RelationExtractor(false);
-		OpenCogScheme opencog = new OpenCogScheme();
-		Server s = new Server();
+		SimpleView sv = new SimpleView();
+		PlainTextServer s = new PlainTextServer();
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
@@ -121,17 +120,14 @@ public class PlainTextServer
 		if (anaphora_on)
 		{
 			System.err.println("Info: Anaphora output on.");
-			opencog.setShowAnaphora(anaphora_on);
 		}
 		if (link_on)
 		{
 			System.err.println("Info: Link grammar output on.");
-			opencog.setShowLinkage(link_on);
 		}
 		if (relex_on)
 		{
 			System.err.println("Info: RelEx output on.");
-			opencog.setShowRelex(relex_on);
 		}
 
 		try
@@ -177,24 +173,16 @@ public class PlainTextServer
 				ParsedSentence parse = sntc.getParses().get(0);
 
 				// Print the phrase string .. why ??
+
 				out.println("; " + parse.getPhraseString());
+				out.println("; Dependency relations:\n");
 
+				// String fin = sv.printRelationsAlt(parse);
+				String fin = sv.printRelations(parse);
 				if (verbose)
-				{
-					String fin = SimpleView.printRelationsAlt(parse);
 					System.out.print(fin);
-				}
-				opencog.setParse(parse);
-				out.println(opencog.toString());
 
-				// Add a special tag to tell the cog server that it's
-				// just recieved a brand new sentence. The OpenCog scheme
-				// code depends on this being visible, in order to find
-				// the new sentence.
-				out.println("(ListLink (stv 1 1)");				
-				out.println("   (AnchorNode \"# New Parsed Sentence\")");
-				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-				out.println(")");
+				out.println(fin);
 
 				out.println("; END OF SENTENCE");
 
