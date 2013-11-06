@@ -36,9 +36,16 @@ public class StanfordView
 	public static String printRelations(ParsedSentence parse,
 	                                    boolean show_tags)
 	{
+		return printRelations(parse, show_tags, "");
+	}
+	public static String printRelations(ParsedSentence parse,
+	                                    boolean show_tags,
+	                                    String indent)
+	{
 		Visit v = new Visit();
 		v.str = "";
 		v.show_penn_tags = show_tags;
+		v.indent = indent;
 		RelationForeach.foreach(parse.getLeft(), v, "sf-links");
 		return v.str;
 	}
@@ -46,6 +53,7 @@ public class StanfordView
 	private static class Visit implements RelationCallback
 	{
 		public String str;
+		public String indent;
 		public boolean show_penn_tags;
 
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
@@ -91,7 +99,7 @@ public class StanfordView
 				if (null != tgtPN) tgtPosTag = "-" + tgtPN.getValue();
 			}
 
-			str += relName + "(" + srcName + "-" + srcIdx + srcPosTag + ", " + 
+			str += indent + relName + "(" + srcName + "-" + srcIdx + srcPosTag + ", " + 
 				tgtName + "-" + tgtIdx + tgtPosTag + ")\n";
 
 			return false;

@@ -118,8 +118,6 @@ public class PlainTextServer
 		System.err.println("Info: Version: " + Version.getVersion());
 
 		RelationExtractor r = new RelationExtractor(false);
-		SimpleView sv = new SimpleView();
-		StanfordView st = new StanfordView();
 		PlainTextServer s = new PlainTextServer();
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
@@ -144,6 +142,8 @@ public class PlainTextServer
 		if (stanford_on)
 		{
 			System.err.println("Info: Stanford output on.");
+			r.do_stanford = true;
+			r.do_penn_tagging = true;
 		}
 
 		try
@@ -205,18 +205,18 @@ public class PlainTextServer
 						out.println("    " + parse.getPhraseString());
 						out.println("Dependency relations:\n");
 
-						// String fin = sv.printRelationsAlt(parse);
-						String fin = sv.printRelations(parse);
+						// String fin = SimpleView.printRelationsAlt(parse);
+						String fin = SimpleView.printRelations(parse);
 						out.println(fin);
 					}
 					if (stanford_on)
 					{
 						out.println("Stanford-style dependency relations:\n");
-						String fin = st.printRelations(parse, true);
+						String fin = StanfordView.printRelations(parse, true, "    ");
 						out.println(fin);
 					}
 					if (verbose)
-						System.out.print(sv.printRelations(parse));
+						System.out.print(SimpleView.printRelations(parse));
 				}
 				out.println("==== END OF SENTENCE ====");
 
