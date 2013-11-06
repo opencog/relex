@@ -26,7 +26,6 @@ import relex.corpus.DocSplitterFactory;
 import relex.entity.EntityMaintainer;
 import relex.entity.EntityTagger;
 import relex.entity.EntityTaggerFactory;
-import relex.frame.Frame;
 import relex.output.CompactView;
 import relex.output.SimpleView;
 
@@ -56,7 +55,6 @@ public class WebFormat extends RelationExtractor
 	public static void main(String[] args)
 	{
 		String callString = "WebFormat" +
-			" [-f (show frame output)]" +
 			" [-g (do not use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (do not show parse links)]" +
@@ -66,7 +64,6 @@ public class WebFormat extends RelationExtractor
 			" [--url source URL]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
-		flags.add("-f");
 		flags.add("-g");
 		flags.add("-h");
 		flags.add("-l");
@@ -136,9 +133,6 @@ public class WebFormat extends RelationExtractor
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		DocSplitter ds = DocSplitterFactory.create();
 
-		Frame frame = null;
-		if (commandMap.get("-f") != null) frame = new Frame();
-
 		// Collect statistics
 		int sentence_count = 0;
 		ParseStats stats = new ParseStats();
@@ -181,21 +175,6 @@ public class WebFormat extends RelationExtractor
 
 				// Print output
 				System.out.println (cv.toString(sntc));
-
-				for (ParsedSentence parse: sntc.getParses())
-				{
-					if (commandMap.get("-f") != null)
-					{
-						String fin = SimpleView.printRelationsAlt(parse);
-						String[] fout = frame.process(fin);
-						for (int i=0; i < fout.length; i++) {
-							System.out.println(fout[i]);
-						}
-
-						System.out.println("\nFraming rules applied:\n");
-						System.out.println(frame.printAppliedRules());
-					}
-				}
 
 				// Collect statistics
 				sentence_count ++;
