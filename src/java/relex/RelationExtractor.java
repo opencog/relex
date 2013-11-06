@@ -749,8 +749,9 @@ public class RelationExtractor
 
 					if (commandMap.get("--stanford") != null)
 					{
+						System.out.println("Stanford-style dependency relations:\n");
 						System.out.println(
-							StanfordView.printRelations(parse, re.do_penn_tagging));
+							StanfordView.printRelations(parse, re.do_penn_tagging, "    "));
 						System.out.println("\n======\n");
 					}
 
