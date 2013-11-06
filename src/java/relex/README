@@ -50,7 +50,7 @@ feature:
 frame:
    Code to provide semantic frame output, inspired by FrameNet markup.
    The actual implementation is a set of pattern-matching rules which
-   are applied to the RelEx output.
+   are applied to the RelEx output. Obsolete, removed in Novemeber 2013
 
 morphy:
 	A simple, easy-to-use class for finding the base forms (lemmas)

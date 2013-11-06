@@ -195,8 +195,6 @@
             <fileset file="data/relex-semantic-algs.txt" />
             <fileset file="data/relex-stanford-algs.txt" />
             <fileset file="data/relex-tagging-algs.txt" />
-            <fileset file="data/frame/concept_vars.txt" />
-            <fileset file="data/frame/mapping_rules.txt" />
             <fileset file="data/wordnet/file_properties.xml" />
             <fileset file="data/sentence-detector/EnglishSD.bin.gz" />
             <fileset file="data/opennlp/models-1.5/en-sent.bin" />
@@ -237,8 +235,6 @@
                 <include name="build.xml"/>
                 <include name="pom.xml"/>
                 <include name="test-corpus.txt"/>
-                <include name="data/frame/concept_vars.txt"/>
-                <include name="data/frame/mapping_rules.txt"/>
                 <include name="data/relex-penn-tagging-algs.txt"/>
                 <include name="data/relex-semantic-algs.txt"/>
                 <include name="data/relex-stanford-algs.txt"/>
