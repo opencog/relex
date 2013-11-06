@@ -2,8 +2,8 @@
 #
 # opencog-server.sh: read from socket, generate opencog output.
 #
-# This script start a RelEx server that listens for plain-text input
-# (English sentences) on port 4444. It then parses the text, and 
+# This script starts a RelEx server that listens for plain-text input
+# (English sentences) on port 4444. It then parses the text, and
 # returns opencog output on the same socket. The end of the parse is
 # demarcated with an ; END OF SENTENCE token.
 #
@@ -49,9 +49,6 @@ bin:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --frame --relex --anaphora --verbose
 
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora 
-
-# These command line arguments don't seem to ever have done anything:
-#-n 4 -p 4444
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora --port 4444
 
 

@@ -1,5 +1,7 @@
 New in version 1.4.3 (XXX 2014)
  * Minor cleanup of windows *.bat file, build and config files.
+ * Fix the link-grammar-server.sh file so that it works.
+ * Fix the opencog-server.sh file so that the port number can be set.
 
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.

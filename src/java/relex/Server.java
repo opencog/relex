@@ -32,7 +32,7 @@ import relex.output.OpenCogScheme;
 /**
  * The Server class provides a very simple socket-based parse server.
  * It will listen for plain-text input sentences on port 4444, and will
- * generate OpenCog output.  
+ * generate OpenCog output.
  *
  * It is intended that this server be used by OpenCog agents to process
  * text; the text is sent from opencog to this server, and the returned
@@ -50,12 +50,16 @@ public class Server
 
 	public static void main(String[] args)
 	{
+		int listen_port = 4444;
 		boolean frame_on = false;
 		boolean relex_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
 		boolean verbose = false;
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
+			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
+			" -p number  \t Port number to listen on (default: 4444)\n" +
+			" --port num \t Port number to listen on (default: 4444)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --frame    \t Output Semantic Frames\n" +
@@ -72,7 +76,7 @@ public class Server
 			{
 				frame_on = true;
 			}
-			else if (args[i].equals("--help") )
+			else if (args[i].equals("--help") || args[i].equals("-h"))
 			{
 				System.out.println(usageString);
 				System.exit(0);
@@ -80,6 +84,21 @@ public class Server
 			else if (args[i].equals("--link"))
 			{
 				link_on = true;
+			}
+			else if (args[i].equals("--port") || args[i].equals("-p"))
+			{
+				i++;
+				if (i >= args.length) {
+					System.err.println("Error: Expected a port number after the -p flag.");
+					System.exit(1);
+				}
+
+				try {
+					listen_port = Integer.parseInt(args[i]);
+				} catch (NumberFormatException nfe) {
+					System.err.println("Error: Expected a port number after the -p flag.");
+					System.exit(1);
+				}
 			}
 			else if (args[i].equals("--relex"))
 			{
@@ -100,6 +119,7 @@ public class Server
 		RelationExtractor r = new RelationExtractor(false);
 		OpenCogScheme opencog = new OpenCogScheme();
 		Server s = new Server();
+		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
 		if (!frame_on && !relex_on && !link_on)
@@ -170,7 +190,7 @@ public class Server
 				}
 				ParsedSentence parse = sntc.getParses().get(0);
 
-				// Print the phrase string .. why ?? 
+				// Print the phrase string .. why ??
 				out.println("; " + parse.getPhraseString());
 
 				if (verbose)
