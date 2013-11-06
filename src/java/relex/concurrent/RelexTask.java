@@ -22,7 +22,6 @@ import java.util.concurrent.Callable;
 import relex.ParsedSentence;
 import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
-import relex.entity.EntityMaintainer;
 import relex.tree.PhraseMarkup;
 import relex.tree.PhraseTree;
 
@@ -38,7 +37,6 @@ public class RelexTask implements Callable<RelexTaskResult>
 	// arguments 
 	private int index;
 	private String sentence;
-	private EntityMaintainer entityMaintainer;
 	
 	// Reusable, shared processors 
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
@@ -49,12 +47,10 @@ public class RelexTask implements Callable<RelexTaskResult>
 	private BlockingQueue<RelexContext> pool;
 	
 	public RelexTask(int index, String sentence,
-			EntityMaintainer entityMaintainer, 
 			SentenceAlgorithmApplier sentenceAlgorithmApplier,
 			PhraseMarkup phraseMarkup,
 			RelexContext context, BlockingQueue<RelexContext> pool){
 		this.index = index;
-		this.entityMaintainer = entityMaintainer; 
 		this.sentenceAlgorithmApplier = sentenceAlgorithmApplier;
 		this.phraseMarkup = phraseMarkup;
 		this.context = context;
@@ -65,9 +61,6 @@ public class RelexTask implements Callable<RelexTaskResult>
 	public RelexTaskResult call() {
 		try {
 			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
-			entityMaintainer.convertSentence(sentence,null);
-			String convertedSentence = entityMaintainer.getConvertedSentence().replace('\n', ' ').replace('\r', ' ');
-			if (DEBUG > 0) System.err.println("[" + index + "] End entity detection");
 			Sentence sntc = null;
 			try {
 				sntc = context.getParser().parse(convertedSentence);//, context.getLinkParserClient());
@@ -81,16 +74,8 @@ public class RelexTask implements Callable<RelexTaskResult>
 			int i = 0;
 			for (ParsedSentence parse : sntc.getParses()) {
 				try {
-					// Markup feature node graph with entity info,
-					// so that the relex algs (next step) can see them.
-					entityMaintainer.tagConvertedSentence(parse);
-
 					// The actual relation extraction is done here.
 					sentenceAlgorithmApplier.applyAlgs(parse, context);
-
-					// Strip out the entity markup, so that when the
-					// sentence is printed, we don't print gunk.
-					entityMaintainer.repairSentence(parse.getLeft());
 
 					// Also do a Penn tree-bank style phrase structure markup.
 					if (phraseMarkup != null)
@@ -107,7 +92,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 					System.err.println("[" + index+ "] end post-processing sentence " + 
 							(i++) + "/"+ sntc.getParses().size());
 			}
-			return new RelexTaskResult(index, sentence, entityMaintainer, sntc);
+			return new RelexTaskResult(index, sentence, sntc);
 		} finally {
 			if (DEBUG > 0)
 				System.err.println("[" + index + "] End processing");

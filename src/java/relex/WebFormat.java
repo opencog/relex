@@ -23,9 +23,6 @@ import java.util.Map;
 
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.entity.EntityMaintainer;
-import relex.entity.EntityTagger;
-import relex.entity.EntityTaggerFactory;
 import relex.output.CompactView;
 
 /**
@@ -54,7 +51,6 @@ public class WebFormat extends RelationExtractor
 	public static void main(String[] args)
 	{
 		String callString = "WebFormat" +
-			" [-g (do not use GATE entity detector)]" +
 			" [-h (show this help)]" +
 			" [-l (do not show parse links)]" +
 			" [-m (do not show parse metadata)]" +
@@ -63,7 +59,6 @@ public class WebFormat extends RelationExtractor
 			" [--url source URL]" +
 			" [--maxParseSeconds N]";
 		HashSet<String> flags = new HashSet<String>();
-		flags.add("-g");
 		flags.add("-h");
 		flags.add("-l");
 		flags.add("-m");
@@ -120,14 +115,6 @@ public class WebFormat extends RelationExtractor
 		// Pass along the version string.
 		cv.setVersion(re.getVersion());
 
-		EntityTagger gem = null;
-		if (commandMap.get("-g") == null)
-		{
-			re.starttime = System.currentTimeMillis();
-			gem = EntityTaggerFactory.get();
-			gem.tagEntities(""); // force initialization to measure initialization time
-		}
-
 		// If sentence is not passed at command line, read from standard input:
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		DocSplitter ds = DocSplitterFactory.create();
@@ -162,15 +149,7 @@ public class WebFormat extends RelationExtractor
 
 			while (sentence != null)
 			{
-				EntityMaintainer em = null;
-				if (gem != null)
-				{
-					re.starttime = System.currentTimeMillis();
-					em = new EntityMaintainer();
-					em.set(gem);
-				}
-
-				Sentence sntc = re.processSentence(sentence,em);
+				Sentence sntc = re.processSentence(sentence);
 
 				// Print output
 				System.out.println (cv.toString(sntc));

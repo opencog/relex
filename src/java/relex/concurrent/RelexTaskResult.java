@@ -19,7 +19,6 @@ package relex.concurrent;
 import java.io.Serializable;
 
 import relex.Sentence;
-import relex.entity.EntityMaintainer;
 
 public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable {
 	
@@ -28,15 +27,12 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 	public Integer index;
 	public String sentence; 
 	public Sentence result;
-	public EntityMaintainer entityMaintainer;
 	
 	public RelexTaskResult(int index, String sentence,
-	                       EntityMaintainer entityMaintainer,
 	                       Sentence sntc)
 	{
 		this.index = index;
 		this.sentence = sentence;
-		this.entityMaintainer = entityMaintainer;
 		this.result = sntc;
 	}
 	
@@ -48,23 +44,24 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 		return index+": "+sentence+"\n"+result+"\n";
 	}
 	
-    public int hashCode() {
-        return sentence == null ? 0 : sentence.hashCode();
-    }
-    
-    /**
-     * Very superficial compare, doesn't compare actual parses, just the sentence
-     * string.
-     */
-    public boolean equals(Object other) {
-        if (! (other instanceof RelexTaskResult))
-            return false;
-        RelexTaskResult x = (RelexTaskResult)other;
-        if (sentence == null)
-            return x.sentence == null;
-        else if (!this.sentence.equals(x.sentence))
-            return false;
-        else
-            return true;
-    }	
+	public int hashCode() {
+		return sentence == null ? 0 : sentence.hashCode();
+	}
+	
+	/**
+	 * Very superficial compare, doesn't compare actual parses, just the sentence
+	 * string.
+	 */
+	public boolean equals(Object other)
+	{
+		if (! (other instanceof RelexTaskResult))
+			return false;
+		RelexTaskResult x = (RelexTaskResult)other;
+		if (sentence == null)
+			return x.sentence == null;
+		else if (!this.sentence.equals(x.sentence))
+			return false;
+		else
+			return true;
+	}	
 }

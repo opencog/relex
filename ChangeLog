@@ -6,7 +6,7 @@ New in version 1.5.0 (XXX 2014)
  * Remove the obsolete OpenCogXML* output classes. (500 LOC of Java removed)
  * Remove the obsolete Cerego-view classes (1.7KLOC of Java removed)
  * Remove the obsolete frame code (2.8KLOC java, 11.2KLOC rules)
- * Remove the obsolete GATE entity tagger (1.4KLOC Java code)
+ * Remove the obsolete GATE entity tagger (1.5KLOC Java code)
 
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.

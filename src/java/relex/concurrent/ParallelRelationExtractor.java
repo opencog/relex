@@ -33,9 +33,6 @@ import relex.anaphora.Antecedents;
 import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.entity.EntityMaintainer;
-import relex.entity.EntityTagger;
-import relex.entity.EntityTaggerFactory;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.parser.RemoteLGParser;
@@ -58,9 +55,6 @@ public class ParallelRelationExtractor {
 	private boolean stop;
 
 	// Single-threaded processors
-	/** Entity detector */ 
-	private EntityTagger entityDetector;
-	
 	/** Antecedents used in anaphora resolution */
 	public Antecedents antecedents;
 	
@@ -80,7 +74,6 @@ public class ParallelRelationExtractor {
 	public ParallelRelationExtractor(){
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
-		entityDetector = EntityTaggerFactory.get();
 //		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
 		phraseMarkup = new PhraseMarkup();
@@ -117,11 +110,10 @@ public class ParallelRelationExtractor {
 	 * Results are obtained calling take(), and are returned in order of submission. 
 	 * 
 	 * @param sentence The sentence to be processed.
-	 * @param The optional entity mantainer used for the document  
 	 * @throws InterruptedException
 	 */
 	public void push(String sentence) throws InterruptedException{
-		push(sentence, null);
+		push(sentence);
 	}
 	
 	/**
@@ -129,18 +121,12 @@ public class ParallelRelationExtractor {
 	 * Results are obtained calling take(), and are returned in order of submission. 
 	 * 
 	 * @param sentence The sentence to be processed.
-	 * @param The optional entity mantainer used for the document  
 	 * @throws InterruptedException
 	 */
-	public void push(String sentence, EntityMaintainer entityMaintainer) throws InterruptedException{
-		if (entityMaintainer == null) {
-			entityMaintainer = new EntityMaintainer();
-			entityMaintainer.set(EntityTaggerFactory.get());
-		}
+	public void push(String sentence) throws InterruptedException{
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable = 
 			new RelexTask(count++, sentence, 
-					entityMaintainer, 
 					sentenceAlgorithmApplier, 
 					phraseMarkup, context, pool);
 		Future<RelexTaskResult> submit = exec.submit(callable);
