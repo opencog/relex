@@ -519,7 +519,7 @@ public class RelationExtractor
 			while (sentence != null)
 			{
 				System.out.println("; SENTENCE: ["+sentence+"]");
-				Sentence sntc = re.processSentence(sentence,em);
+				Sentence sntc = re.processSentence(sentence);
 				re.doco.addSentence(sntc);
 
 				if (html != null)

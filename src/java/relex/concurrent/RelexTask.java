@@ -63,7 +63,7 @@ public class RelexTask implements Callable<RelexTaskResult>
 			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
 			Sentence sntc = null;
 			try {
-				sntc = context.getParser().parse(convertedSentence);//, context.getLinkParserClient());
+				sntc = context.getParser().parse(sentence);//, context.getLinkParserClient());
 			} catch (RuntimeException ex) {
 				sntc = new Sentence();
 				sntc.setSentence(sentence);

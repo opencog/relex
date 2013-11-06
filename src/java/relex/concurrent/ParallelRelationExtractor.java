@@ -113,17 +113,6 @@ public class ParallelRelationExtractor {
 	 * @throws InterruptedException
 	 */
 	public void push(String sentence) throws InterruptedException{
-		push(sentence);
-	}
-	
-	/**
-	 * Submit a new sentence to be processed, blocking if no resources are available.
-	 * Results are obtained calling take(), and are returned in order of submission. 
-	 * 
-	 * @param sentence The sentence to be processed.
-	 * @throws InterruptedException
-	 */
-	public void push(String sentence) throws InterruptedException{
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable = 
 			new RelexTask(count++, sentence, 
