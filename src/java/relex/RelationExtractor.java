@@ -43,6 +43,7 @@ import relex.feature.LinkView;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.NLGInputView;
+import relex.output.LogicView;
 import relex.output.OpenCogScheme;
 import relex.output.PrologList;
 import relex.output.RawView;
@@ -348,6 +349,7 @@ public class RelationExtractor
 			" [--maxParseSeconds N]" +
 			" [-n max number of parses to display]" +
 			" [-o (show opencog scheme output)]" +
+			" [--or (show opencog rule-based scheme output)]" +
 			" [--pa (show phrase-based lexical chunks)]" +
 			" [--pb (show pattern-based lexical chunks)]" +
 			" [--pc (show relational lexical chunks)]" +
@@ -369,6 +371,7 @@ public class RelationExtractor
 		flags.add("-l");
 		flags.add("-m");
 		flags.add("-o");
+		flags.add("--or");
 		flags.add("--pa");
 		flags.add("--pb");
 		flags.add("--pc");
@@ -614,6 +617,18 @@ public class RelationExtractor
 
 						if (html != null)
 							html.printf("<td valign='top'><pre>%s</pre></td>\n", escape(SimpleView.printRelations(parse)));
+					}
+					
+					if (commandMap.get("--or") != null)
+					{
+						LogicView logicView = new LogicView();
+						
+						logicView.loadRules();
+						
+						System.out.println("\n======\n");
+						System.out.println("Relex2Logic output:");
+						System.out.println(logicView.printRelationsNew(parse));
+						System.out.println("\n======\n");
 					}
 
 					if (commandMap.get("--pa") != null)
