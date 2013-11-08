@@ -39,7 +39,7 @@ public class LogicView {
 	 */
 	public void loadRules() {
 		String ruleFileName = System.getProperty("relex.orfile");
-		
+
 		if (ruleFileName!=null)
 		{
 			java.io.File f = new java.io.File(ruleFileName);

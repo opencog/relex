@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 package relex.output;
@@ -62,7 +62,7 @@ public class LogicProcessor {
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
-		
+
 		for (String appliedRule : appliedRules)
 		{
 			for (String mutuallyExclusiveRule: relexRule.getMutuallyExclusiveRuleNames())
@@ -71,49 +71,49 @@ public class LogicProcessor {
 					bNotMutuallyExclusive = false;
 			}
 		}
-		
+
 		if (bNotMutuallyExclusive)
 		{
 			for (Criterium ruleCriterium: relexRule.getCriteria())
 			{
 				if (bVerboseMode)
 					System.out.println("  Matching criterium: " + ruleCriterium.getCriteriumString() + "...");
-				
+
 				List<FeatureNode> criteriumFeatureNodes = findFeatureNodes(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
-				
+
 				if (criteriumFeatureNodes != null)
 				{
 					for (FeatureNode foundNode : criteriumFeatureNodes)
 					{
 						if (bVerboseMode)
 							System.out.println("   Found node '" + ruleCriterium.getCriteriumLabel() + "'");
-						
+
 						if (!foundNode.isValued())
 						{
 							if (foundNode.getFeatureNames().contains("name"))
 							{
 								if (bVerboseMode)
 									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
-								
+
 								String secondVariableName = ruleCriterium.getSecondVariableName();
 								String secondVariableValue = foundNode.get("name").getValue();
-								
+
 								if (bVerboseMode)
 									System.out.println("   I just recorded the value of '" + secondVariableName + "' to be '" + secondVariableValue + "'");
-								
+
 								String firstVariableName = ruleCriterium.getFirstVariableName();
-								String firstVariableValue = getHeadNameValue(rootNode); 
-								
+								String firstVariableValue = getHeadNameValue(rootNode);
+
 								List<FeatureNode> suitableParents = findFeatureNodeByChildLinkName(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
-								
+
 								for (FeatureNode suitableParent : suitableParents)
 								{
 									firstVariableValue = suitableParent.get("name").getValue();
 								}
-								
+
 								if (bVerboseMode)
 									System.out.println("   I just recorded the value of '" + firstVariableName + "' to be '" + firstVariableValue + "'");
-								
+
 								ruleCriterium.setVariableValue(firstVariableName, firstVariableValue);
 								ruleCriterium.setVariableValue(secondVariableName, secondVariableValue);
 							}
@@ -122,26 +122,26 @@ public class LogicProcessor {
 						{
 							if (bVerboseMode)
 								System.out.println("   It is valued, the value is '" + foundNode.getValue() + "'");
-							
+
 							if (ruleCriterium.getSecondVariableName().equals(foundNode.getValue()))
 							{
 								if (bVerboseMode)
 									System.out.println("   This value matches the one specified in the rule!");
-								
+
 								ruleCriterium.setVariableValue(ruleCriterium.getFirstVariableName(), getHeadNameValue(rootNode));
 								ruleCriterium.setVariableValue(foundNode.getValue(), foundNode.getValue());
 							}
 						}
 					}
-					
+
 				}
 			}
-			
+
 			if (relexRule.getAllCriteriaSatisfied())
 			{
 				if (bVerboseMode)
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
-				
+
 				bResult = true;
 			}
 			else
@@ -152,12 +152,12 @@ public class LogicProcessor {
 		}
 		else
 		{
-			System.out.println("   Cannot apply rule '" + relexRule.getName() + "' due to mutual exclusivity");			
+			System.out.println("   Cannot apply rule '" + relexRule.getName() + "' due to mutual exclusivity");
 		}
-		
+
 		return bResult;
 	}
-	
+
 	/**
 	 * Retrieves the Scheme output from a rule whose applicability has been established, rewriting the variables in the rule to the values that have been determined in the verification process.
 	 * @param ruleToApply The rule that has been determined applicable, and contains the established values for the variable criteria.
@@ -169,7 +169,7 @@ public class LogicProcessor {
 		schemeBuilder.append(schemeOutput);
 		schemeBuilder.append("\n");
 	}
-	
+
 	/**
 	 * Applies the local ruleset to the dependency graph that starts with rootNode.
 	 * @param rootNode The root of the dependency graph.
@@ -179,26 +179,26 @@ public class LogicProcessor {
 	{
 		StringBuilder schemeBuilder = new StringBuilder();
 		List<String> appliedRules = new ArrayList<String>();
-		
+
 		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
-		
+
 		for (Rule relexRule: ruleSet) {
-			
+
 			if (bVerboseMode)
 				System.out.println("Matching rule '" + relexRule.getName() + "'...");
-			
+
 			if (checkRuleApplicability(relexRule, rootNode, appliedRules))
 			{
 				applyRule(relexRule, schemeBuilder);
-				
+
 				appliedRules.add(relexRule.getName());
 			}
 		}
-		
-		
+
+
 		return schemeBuilder.toString();
 	}
-	
+
 	/**
 	 * Retries the value of the name feature of the head.
 	 * @param rootNode The root of the dependency graph.
@@ -207,20 +207,20 @@ public class LogicProcessor {
 	private String getHeadNameValue(FeatureNode rootNode)
 	{
 		String headNameValue = "";
-		
+
 		FeatureNode headNode = rootNode.get("head");
-		
+
 		if (headNode != null)
 		{
 			FeatureNode nameNode = headNode.get("name");
-			
+
 			if (nameNode != null)
 			{
 				if (nameNode.isValued())
-					headNameValue = nameNode.getValue();				
+					headNameValue = nameNode.getValue();
 			}
 		}
-		
+
 		return headNameValue;
 	}
 
@@ -318,7 +318,7 @@ public class LogicProcessor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param nodeToSearchThrough The FeatureNode from which to begin the search.
 	 * @param name The name of the node to find.
 	 * @param alreadyVisited A list of nodes that has already been visited to avoid infinite recursion.
