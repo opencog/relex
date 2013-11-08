@@ -1,22 +1,69 @@
+/*
+ * Copyright 2013 OpenCog Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Alex van der Peet <alex.van.der.peet@gmail.com>
+ */
 package relex.output;
 
 import relex.feature.FeatureNode;
-import relex.logic.*;
+import relex.logic.Loader;
+import relex.logic.RuleSet;
 import relex.ParsedSentence;
 
-// Description: Class based on SimpleView, to allow similar calling from relex.relationExtractor.
-
+/**
+ * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
+ * @version     1.0                 (current version number of program)
+ * @since       2013-11-08          (the version of the package this class was first added to)
+ */
 public class LogicView {
+	/**
+	 * Loader for the rules to be loaded into ReLex2LogicRules from the supplied text file.
+	 */
+	private Loader _relex2LogicRuleLoader = new Loader();
 
-	// Loader for the rules to be loaded into ReLex2LogicRules from the supplied text file.
-	private ReLex2LogicRuleLoader _relex2LogicRuleLoader = new ReLex2LogicRuleLoader();
-
-	// Summary: Loads the ReLex2LogicRules from the rule file.
-	public void loadRules(String ruleFileName) {
-		_relex2LogicRuleLoader.loadRules(ruleFileName);
+	/**
+	 * Loads the ReLex2LogicRules from the rule file.
+	 * @see relex.logic.Loader
+	 */
+	public void loadRules() {
+		String ruleFileName = System.getProperty("relex.orfile");
+		
+		if (ruleFileName!=null)
+		{
+			java.io.File f = new java.io.File(ruleFileName);
+			if(f.exists())
+			{
+				// Print RelEx-2-Logic output
+				_relex2LogicRuleLoader.loadRules(ruleFileName);
+			}
+			else
+			{
+				System.out.println("Rule file could not be found / does not exist (" + ruleFileName + ")");
+			}
+		}
+		else
+		{
+			System.out.println("No rule file supplied, use JVM parameter: -Drelex.orfile=/path/filename.txt");
+		}
 	}
 
-	// Summary: Main function, applies the loaded rules to the parsed sentence.
+	/**
+	 * Main function, applies the loaded rules to the parsed sentence.
+	 * @param parse The ParsedSentence provided by ReLex
+	 * @return The Scheme output as rewritten by the LogicProcessor.
+	 */
 	public String printRelationsNew(ParsedSentence parse) {
 		FeatureNode root = parse.getLeft();
 
@@ -24,7 +71,7 @@ public class LogicView {
 		headSet.set("head", root.get("head"));
 		headSet.set("background", root.get("background"));
 
-		ReLex2LogicRuleSet relexRuleSet = _relex2LogicRuleLoader.getFreshRuleSet();
+		RuleSet relexRuleSet = _relex2LogicRuleLoader.getFreshRuleSet();
 
 		LogicProcessor ruleProcessor = new LogicProcessor(relexRuleSet);
 
@@ -32,33 +79,4 @@ public class LogicView {
 
 		return schemeOutput;
 	}
-
-	// Summary: Dev function for printing the children of a node recursively,
-	// not required for ReLex2Logic to work.
-/*	private static void printKids(FeatureNode fn, int callerLevel) {
-		for (String key : fn.getFeatureNames()) {
-			FeatureNode fnKid = fn.get(key);
-
-			if (fnKid.isValued()) {
-				System.out.println(callerLevel + " - Key: " + key + ", Value: " + fn.getValue());
-			} else {
-				int newCallerLevel = callerLevel + 1;
-				printKids(fnKid, newCallerLevel);
-			}
-		}
-	}*/
-
-	// Summary: Dev function for printing the features of a node, not required for ReLex2Logic to work.
-	/*public static void printFeatureNodeDetails(FeatureNode nodeToPrint) {
-		if (nodeToPrint.isValued()) {
-			System.out.println("Printing details for FeatureNode '" + nodeToPrint.getValue() + "'...");
-		} else {
-			System.out.println("Printing details for FeatureNode unnamed...");
-
-			for (String strFeatureName : nodeToPrint.getFeatureNames()) {
-				System.out.println("It has a feature called '" + strFeatureName + "'");
-			}
-		}
-	}*/
-
 }

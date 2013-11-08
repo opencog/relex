@@ -1,3 +1,20 @@
+/*
+ * Copyright 2013 OpenCog Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Alex van der Peet <alex.van.der.peet@gmail.com>
+ */
 package relex.output;
 
 import java.util.ArrayList;
@@ -5,30 +22,43 @@ import java.util.HashSet;
 import java.util.List;
 
 import relex.feature.FeatureNode;
-import relex.logic.ReLex2LogicRule;
-import relex.logic.ReLex2LogicRuleCriterium;
-import relex.logic.ReLex2LogicRuleSet;
+import relex.logic.Rule;
+import relex.logic.Criterium;
+import relex.logic.RuleSet;
 
-// Description: Class that takes a ReLex2LogicRuleSet and applies it to a dependency graph through its root FeatureNode.
+/** LogicProcessor, for applying a relex.logic.RuleSet to a sentence parse.
+ * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
+ * @version     1.0                 (current version number of program)
+ * @since       2013-11-08          (the version of the package this class was first added to)
+ */
 public class LogicProcessor {
 
-	// Relex2LogicRuleSet that contains a fresh rule set.
-	private ReLex2LogicRuleSet _relex2LogicRuleSet;
+	/**
+	 * Relex2LogicRuleSet that contains a fresh rule set.
+	 */
+	private RuleSet _relex2LogicRuleSet;
 
-	// Boolean to control verbose output
-	private Boolean bVerboseMode = true;
+	/**
+	 * Boolean to control verbose output
+	 */
+	private Boolean bVerboseMode = false;
 
-	// Summary: Constructor, receives a fresh rule set.
-	public LogicProcessor(ReLex2LogicRuleSet relex2LogicRuleSet) {
+	/**
+	 * Constructor, receives a fresh rule set.
+	 * @param relex2LogicRuleSet a RuleSet to be applied.
+	 */
+	public LogicProcessor(RuleSet relex2LogicRuleSet) {
 		_relex2LogicRuleSet = relex2LogicRuleSet;
 	}
 
-	// Summary: Checks whether a rule can be applied, but does not apply it. It does however register the values 
-	// for found candidates that match the variables in the criteria.
-	// Parameter 'relexRule': the rule which should be checked for applicability.
-	// Parameter 'rootNode': the FeatureNode from which to start the application search.
-	// Parameter 'appliedRules': the rules which have already been applied, so that application of mutually exclusive rules is not attempted.
-	public Boolean checkRuleApplicability(ReLex2LogicRule relexRule, FeatureNode rootNode, List<String> appliedRules)
+	/**
+	 * Checks whether a rule can be applied, but does not apply it. It does however register the values for found candidates that match the variables in the criteria.
+	 * @param relexRule The rule which should be checked for applicability.
+	 * @param rootNode The FeatureNode from which to start the application search.
+	 * @param appliedRules The rules which have already been applied, so that application of mutually exclusive rules is not attempted.
+	 * @return Boolean indicating if the rule can be applied or not.
+	 */
+	public Boolean checkRuleApplicability(Rule relexRule, FeatureNode rootNode, List<String> appliedRules)
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
@@ -44,7 +74,7 @@ public class LogicProcessor {
 		
 		if (bNotMutuallyExclusive)
 		{
-			for (ReLex2LogicRuleCriterium ruleCriterium: relexRule.getCriteria())
+			for (Criterium ruleCriterium: relexRule.getCriteria())
 			{
 				if (bVerboseMode)
 					System.out.println("  Matching criterium: " + ruleCriterium.getCriteriumString() + "...");
@@ -128,29 +158,31 @@ public class LogicProcessor {
 		return bResult;
 	}
 	
-	// Summary: Retrieves the Scheme output from a rule whose applicability has been established, rewriting the variables in the rule
-	//          to the values that have been determined in the verification process.
-	// Parameter 'ruleToApply': The rule that has been determined applicable, and contains the established values for the variable criteria.
-	// Parameter 'schemeBuilder': A StringBuilder to which to append the Scheme output.
-	private void applyRule(ReLex2LogicRule ruleToApply, StringBuilder schemeBuilder)
+	/**
+	 * Retrieves the Scheme output from a rule whose applicability has been established, rewriting the variables in the rule to the values that have been determined in the verification process.
+	 * @param ruleToApply The rule that has been determined applicable, and contains the established values for the variable criteria.
+	 * @param schemeBuilder A StringBuilder to which to append the Scheme output.
+	 */
+	private void applyRule(Rule ruleToApply, StringBuilder schemeBuilder)
 	{
 		String schemeOutput = ruleToApply.getSchemeOutput();
 		schemeBuilder.append(schemeOutput);
 		schemeBuilder.append("\n");
 	}
 	
-	// Summary: Applies the local ruleset to the dependency graph that starts with rootNode.
-	// Parameter 'rootNode': The root of the dependency graph.
+	/**
+	 * Applies the local ruleset to the dependency graph that starts with rootNode.
+	 * @param rootNode The root of the dependency graph.
+	 * @return
+	 */
 	public String applyRulesToParse(FeatureNode rootNode)
 	{
 		StringBuilder schemeBuilder = new StringBuilder();
 		List<String> appliedRules = new ArrayList<String>();
 		
-		List<ReLex2LogicRule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
+		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
 		
-		// int numberOfRules = ruleSet.size();
-		
-		for (ReLex2LogicRule relexRule: ruleSet) {
+		for (Rule relexRule: ruleSet) {
 			
 			if (bVerboseMode)
 				System.out.println("Matching rule '" + relexRule.getName() + "'...");
@@ -167,6 +199,11 @@ public class LogicProcessor {
 		return schemeBuilder.toString();
 	}
 	
+	/**
+	 * Retries the value of the name feature of the head.
+	 * @param rootNode The root of the dependency graph.
+	 * @return
+	 */
 	private String getHeadNameValue(FeatureNode rootNode)
 	{
 		String headNameValue = "";
@@ -188,8 +225,14 @@ public class LogicProcessor {
 	}
 
 
-	// Summary: Finds a node based on it having a node within it's feature
-	// 'links' that matches childLinkName.
+	/**
+	 * Finds a node based on it having a node within it's feature 'links' that matches childLinkName.
+	 * @param nodeToSearchThrough The FeatureNode from which to begin the search.
+	 * @param childLinkName The name of the link that the returned nodes should posess.
+	 * @param alreadyVisited HashSet to prevent revisiting of nodes that have already been visited.
+	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
+	 * @return A List<FeatureNode> that match the provided criteria.
+	 */
 	public static List<FeatureNode> findFeatureNodeByChildLinkName(FeatureNode nodeToSearchThrough, String childLinkName, HashSet<FeatureNode> alreadyVisited,
 			List<FeatureNode> alreadyFound) {
 		if (alreadyFound == null)
@@ -229,12 +272,14 @@ public class LogicProcessor {
 		return alreadyFound;
 	}
 
-	// Summary: Searches the passed nodeToSearchThrough for one or more nodes
-	// with name 'name'.
-	// Parameter 'alreadyVisited': a list of nodes that has already been visited
-	// to avoid infinite recursion.
-	// Parameter 'alreadyFound': a list of nodes that has already been found to
-	// avoid duplicates in the results.
+	/**
+	 * Searches the passed nodeToSearchThrough for one or more nodes with name 'name'.
+	 * @param nodeToSearchThrough The FeatureNode from which to begin the search.
+	 * @param name The name of the node to find.
+	 * @param alreadyVisited A list of nodes that has already been visited to avoid infinite recursion.
+	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
+	 * @return A List<FeatureNode> that match the provided criteria.
+	 */
 	public static List<FeatureNode> findFeatureNodes(FeatureNode nodeToSearchThrough, String name, HashSet<FeatureNode> alreadyVisited,
 			List<FeatureNode> alreadyFound) {
 		if (alreadyFound == null)
@@ -272,10 +317,13 @@ public class LogicProcessor {
 		return alreadyFound;
 	}
 
-	// Summary: Searches the passed nodeToSearchThrough for a single node with
-	// name 'name'.
-	// Parameter 'alreadyVisited': a list of nodes that has already been visited
-	// to avoid infinite recursion.
+	/**
+	 * 
+	 * @param nodeToSearchThrough The FeatureNode from which to begin the search.
+	 * @param name The name of the node to find.
+	 * @param alreadyVisited A list of nodes that has already been visited to avoid infinite recursion.
+	 * @return The node, if it exists, that matches the provided name.
+	 */
 	public static FeatureNode findFeatureNode(FeatureNode nodeToSearchThrough, String name, HashSet<FeatureNode> alreadyVisited) {
 		FeatureNode foundNode = null;
 		if (alreadyVisited == null)
