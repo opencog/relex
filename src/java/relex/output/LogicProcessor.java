@@ -1,14 +1,13 @@
 package relex.output;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import relex.feature.FeatureNode;
-import relex2logic.ReLex2LogicRule;
-import relex2logic.ReLex2LogicRuleCriterium;
-import relex2logic.ReLex2LogicRuleSet;
+import relex.logic.ReLex2LogicRule;
+import relex.logic.ReLex2LogicRuleCriterium;
+import relex.logic.ReLex2LogicRuleSet;
 
 // Description: Class that takes a ReLex2LogicRuleSet and applies it to a dependency graph through its root FeatureNode.
 public class LogicProcessor {
@@ -149,7 +148,7 @@ public class LogicProcessor {
 		
 		List<ReLex2LogicRule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
 		
-		int numberOfRules = ruleSet.size();
+		// int numberOfRules = ruleSet.size();
 		
 		for (ReLex2LogicRule relexRule: ruleSet) {
 			

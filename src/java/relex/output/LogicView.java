@@ -1,7 +1,7 @@
 package relex.output;
 
 import relex.feature.FeatureNode;
-import relex2logic.*;
+import relex.logic.*;
 import relex.ParsedSentence;
 
 // Description: Class based on SimpleView, to allow similar calling from relex.relationExtractor.
