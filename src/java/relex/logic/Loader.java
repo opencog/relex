@@ -1,3 +1,21 @@
+/*
+ * Copyright 2013 OpenCog Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Alex van der Peet <alex.van.der.peet@gmail.com>
+ */
+
 package relex.logic;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,12 +37,23 @@ import java.util.Scanner;
 [POSS2] {8} <POSS1A, POSS1B> _poss($N, $W) & pos($W, noun) => (possesive-rule $N (get_instance_name $V word_index sentence_index) $W (get_instance_name $W word_index sentence_index))
 */
 
-public class ReLex2LogicRuleLoader
+/** Loads a text file with ReLex2Logic rules into a RuleSet class with Rule objects.
+ * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
+ * @version     1.0                 (current version number of program)
+ * @since       2013-11-08          (the version of the package this class was first added to)
+ */
+public class Loader
 {
-	// The rules once they are loaded
-	private ReLex2LogicRuleSet _relex2SchemeRuleSet = new ReLex2LogicRuleSet();
+	/**
+	 * The rules once they are loaded
+	 */
+	private RuleSet _relex2SchemeRuleSet = new RuleSet();
 	
-	// Summary: Processes a rule file and loads them into _relex2SchemeRuleSet
+	/**
+	 * Processes a rule file and loads them into _relex2SchemeRuleSet
+	 * @param ruleFile The full path to the rule file.
+	 * @return Boolean indicating whether the rules were loaded succesfully.
+	 */
 	public Boolean loadRules(String ruleFile)
 	{
 		Boolean loadSuccesful = false;
@@ -51,7 +80,7 @@ public class ReLex2LogicRuleLoader
 			    {
 			    	if (!nextLine.substring(0, 1).equals("#"))
 		    		{
-					    ReLex2LogicRule newRule = new ReLex2LogicRule(nextLine);
+					    Rule newRule = new Rule(nextLine);
 
 					    _relex2SchemeRuleSet.addRule(newRule);
 					    
@@ -66,7 +95,7 @@ public class ReLex2LogicRuleLoader
 
 			input.close();
 			
-			System.out.println("Loaded " + iRules + " rule(s) succesfully.");
+			System.out.println("Loaded " + iRules + " ReLex2Logic rule(s) succesfully.");
 			
 			loadSuccesful = true;
 		}
@@ -74,13 +103,16 @@ public class ReLex2LogicRuleLoader
 		return loadSuccesful;
 	}
 	
-	// Summary: Get an ‘unused’ set of the rules, could be used later for batch processing
-	public ReLex2LogicRuleSet getFreshRuleSet()
+	/**
+	 * Get an ‘unused’ set of the rules, could be used later for batch processing
+	 * @return A RuleSet object with a fresh set of rules.
+	 */
+	public RuleSet getFreshRuleSet()
 	{
-		ReLex2LogicRuleSet freshRuleSet = new ReLex2LogicRuleSet();
+		RuleSet freshRuleSet = new RuleSet();
 		
-		for (ReLex2LogicRule rule: _relex2SchemeRuleSet.getRules()) {
-			freshRuleSet.addRule(new ReLex2LogicRule(rule.getRuleString()));
+		for (Rule rule: _relex2SchemeRuleSet.getRules()) {
+			freshRuleSet.addRule(new Rule(rule.getRuleString()));
 		}
 		
 		return freshRuleSet;
