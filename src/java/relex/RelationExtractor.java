@@ -618,13 +618,13 @@ public class RelationExtractor
 						if (html != null)
 							html.printf("<td valign='top'><pre>%s</pre></td>\n", escape(SimpleView.printRelations(parse)));
 					}
-					
+
 					if (commandMap.get("--or") != null)
 					{
 						LogicView logicView = new LogicView();
-						
+
 						logicView.loadRules();
-						
+
 						System.out.println("\n======\n");
 						System.out.println("Relex2Logic output:");
 						System.out.println(logicView.printRelationsNew(parse));
