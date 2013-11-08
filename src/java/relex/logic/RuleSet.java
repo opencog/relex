@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 package relex.logic;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/** RuleSet, for managing a collection of Rule objects. 
+/** RuleSet, for managing a collection of Rule objects.
  * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
  * @version     1.0                 (current version number of program)
  * @since       2013-11-08          (the version of the package this class was first added to)
@@ -34,7 +34,7 @@ public class RuleSet {
 	private List<Rule> _relex2SchemeRules = new ArrayList<Rule>();
 
 	/**
-	 * Adds a Rule to this RuleSet. 
+	 * Adds a Rule to this RuleSet.
 	 * @param rule
 	 */
 	public void addRule(Rule rule) {
@@ -47,22 +47,22 @@ public class RuleSet {
 	public List<Rule> getRules() {
 		return _relex2SchemeRules;
 	}
-	
+
 	/**
 	 * @return The rules in this ruleset sorted by the number of criteria they have, in descending order.
 	 */
 	public List<Rule> getRulesByCriteriaCountDesc() {
 		Collections.sort(_relex2SchemeRules, RuleComparator.getComparator(RuleComparator.CRITERIA_COUNT_DESC));
-		
+
 		return _relex2SchemeRules;
 	}
-	
+
 	/**
 	 * @return The rules in this ruleset sorted by their priority they have.
 	 */
 	public List<Rule> getRulesByPriority() {
 		Collections.sort(_relex2SchemeRules, RuleComparator.getComparator(RuleComparator.PRIORITY));
-		
+
 		return _relex2SchemeRules;
 	}
 
@@ -71,7 +71,7 @@ public class RuleSet {
 	 */
 	public List<Rule> getRulesByPriorityAndCriteriaCountDesc() {
 		Collections.sort(_relex2SchemeRules, RuleComparator.getComparator(RuleComparator.PRIORITY, RuleComparator.CRITERIA_COUNT_DESC));
-		
+
 		return _relex2SchemeRules;
 	}
 

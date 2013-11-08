@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 package relex.logic;
@@ -24,10 +24,10 @@ import java.util.regex.Pattern;
 
 // Description: Class to store the details of a rule, namely its name, priority, mutually exclusive rules (if any), criteria (in the form of ReLex2LogicCriterium).
 
-// Textual definition of a rule from the rule file: 
+// Textual definition of a rule from the rule file:
 // [SVO]  {2} <SV, SVP> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index) $z (get_instance_name $z word_index sentence_index))
 
-/** Stores Rule details and Criteria 
+/** Stores Rule details and Criteria
  * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
  * @version     1.0                 (current version number of program)
  * @since       2013-11-08          (the version of the package this class was first added to)
@@ -56,7 +56,7 @@ public class Rule {
 
 	/**
 	 * Constructor to build a ReLex2LogicRule from a string in the rule file.
-	 * @param ruleString A rule string 
+	 * @param ruleString A rule string
 	 * @see relex.logic.Loader
 	 */
 	public Rule(String ruleString) {
@@ -64,7 +64,7 @@ public class Rule {
 	}
 
 	/**
-	 * Checks all criteria in this rule to check whether their variables have been satisfied. 
+	 * Checks all criteria in this rule to check whether their variables have been satisfied.
 	 * Once all criteria of a rule have been satisfied, the output can be written out.
 	 * @return Boolean indicating whether all criteria have been satisfied.
 	 */

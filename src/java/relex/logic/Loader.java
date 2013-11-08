@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 
@@ -48,7 +48,7 @@ public class Loader
 	 * The rules once they are loaded
 	 */
 	private RuleSet _relex2SchemeRuleSet = new RuleSet();
-	
+
 	/**
 	 * Processes a rule file and loads them into _relex2SchemeRuleSet
 	 * @param ruleFile The full path to the rule file.
@@ -57,52 +57,51 @@ public class Loader
 	public Boolean loadRules(String ruleFile)
 	{
 		Boolean loadSuccesful = false;
-		
+
 		File file = new File(ruleFile);
 		Scanner input = null;
-		
+
 		try {
 			input = new Scanner(file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (input != null) {
 			// Parse file
 			int iRules = 0;
-			
+
 			while(input.hasNext()) {
 				// Get line
-			    String nextLine = input.nextLine();
-			    
-			    if (!nextLine.equals(""))
-			    {
-			    	if (!nextLine.substring(0, 1).equals("#"))
-		    		{
-					    Rule newRule = new Rule(nextLine);
+				String nextLine = input.nextLine();
 
-					    _relex2SchemeRuleSet.addRule(newRule);
-					    
-					    iRules++;		    		
-		    		}
-			    	
-			    }
-			    // Parse line
-			    
-			    // (SVO-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index) $z (get_instance_name $z word_index sentence_index))
+				if (!nextLine.equals(""))
+				{
+					if (!nextLine.substring(0, 1).equals("#"))
+					{
+						Rule newRule = new Rule(nextLine);
+
+						_relex2SchemeRuleSet.addRule(newRule);
+
+						iRules++;
+					}
+				}
+				// Parse line
+
+				// (SVO-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index) $z (get_instance_name $z word_index sentence_index))
 			}
 
 			input.close();
-			
+
 			System.out.println("Loaded " + iRules + " ReLex2Logic rule(s) succesfully.");
-			
+
 			loadSuccesful = true;
 		}
-		
+
 		return loadSuccesful;
 	}
-	
+
 	/**
 	 * Get an ‘unused’ set of the rules, could be used later for batch processing
 	 * @return A RuleSet object with a fresh set of rules.
@@ -110,13 +109,11 @@ public class Loader
 	public RuleSet getFreshRuleSet()
 	{
 		RuleSet freshRuleSet = new RuleSet();
-		
+
 		for (Rule rule: _relex2SchemeRuleSet.getRules()) {
 			freshRuleSet.addRule(new Rule(rule.getRuleString()));
 		}
-		
+
 		return freshRuleSet;
 	}
-	
-	
 }
