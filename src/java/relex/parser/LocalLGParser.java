@@ -126,6 +126,9 @@ public class LocalLGParser extends LGParser
 				String wordString = LinkGrammar.getLinkageWord(w);
 				if (verbosity >= 5) System.err.println(" Processing Word " + wordString);
 
+				// In Russian, some words (suffixes) can be zero-length.
+				if (0 == wordString.length()) continue;
+
 				if (wordString.equals("RIGHT-WALL"))
 				{
 					ignoreLast = true;
