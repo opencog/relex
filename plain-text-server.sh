@@ -41,8 +41,6 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/xercesImpl.jar:\
 "
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
-
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --relex --stanford --port 3333
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --link --relex --stanford --port 3333
 
 

@@ -122,7 +122,7 @@ public class PlainTextServer
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
-		if (!relex_on && !link_on)
+		if (!relex_on && !stanford_on && !link_on)
 		{
 			// By default just export RelEx output.
 			relex_on = true;
@@ -199,6 +199,11 @@ public class PlainTextServer
 					int ialt = i+1;
 					out.println("==== Parse alternative " + ialt + " ====\n");
 
+					if (link_on)
+					{
+						out.println("Link Grammar parse diagram:");
+						out.println(parse.getLinkString());
+					}
 					if (relex_on)
 					{
 						out.println("Phrase Structure parse:\n");

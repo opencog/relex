@@ -344,7 +344,7 @@ public class RelationExtractor
 			" [--expand-preps (show expanded prepositions)]" +
 			" [-h (show this help)]" +
 			" [-i (show output for generation)]" +
-			" [-l (show parse links)]" +
+			" [-l (show Link Grammar parse diagram)]" +
 			" [-m (show parse metadata)]" +
 			" [--maxParseSeconds N]" +
 			" [-n max number of parses to display]" +
