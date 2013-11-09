@@ -27,7 +27,8 @@ import relex.ParsedSentence;
  * @version     1.0                 (current version number of program)
  * @since       2013-11-08          (the version of the package this class was first added to)
  */
-public class LogicView {
+public class LogicView
+{
 	/**
 	 * Loader for the rules to be loaded into ReLex2LogicRules from the supplied text file.
 	 */
@@ -37,25 +38,26 @@ public class LogicView {
 	 * Loads the ReLex2LogicRules from the rule file.
 	 * @see relex.logic.Loader
 	 */
-	public void loadRules() {
+	public void loadRules()
+	{
 		String ruleFileName = System.getProperty("relex.orfile");
 
-		if (ruleFileName!=null)
+		if (ruleFileName != null)
 		{
 			java.io.File f = new java.io.File(ruleFileName);
-			if(f.exists())
+			if (f.exists())
 			{
 				// Print RelEx-2-Logic output
 				_relex2LogicRuleLoader.loadRules(ruleFileName);
 			}
 			else
 			{
-				System.out.println("Rule file could not be found / does not exist (" + ruleFileName + ")");
+				throw new RuntimeException("Rule file could not be found / does not exist (" + ruleFileName + ")");
 			}
 		}
 		else
 		{
-			System.out.println("No rule file supplied, use JVM parameter: -Drelex.orfile=/path/filename.txt");
+			throw new RuntimeException("No rule file supplied, use JVM parameter: -Drelex.orfile=/path/filename.txt");
 		}
 	}
 
@@ -64,7 +66,8 @@ public class LogicView {
 	 * @param parse The ParsedSentence provided by ReLex
 	 * @return The Scheme output as rewritten by the LogicProcessor.
 	 */
-	public String printRelationsNew(ParsedSentence parse) {
+	public String printRelationsNew(ParsedSentence parse)
+	{
 		FeatureNode root = parse.getLeft();
 
 		FeatureNode headSet = new FeatureNode();

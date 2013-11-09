@@ -31,8 +31,8 @@ import relex.logic.RuleSet;
  * @version     1.0                 (current version number of program)
  * @since       2013-11-08          (the version of the package this class was first added to)
  */
-public class LogicProcessor {
-
+public class LogicProcessor
+{
 	/**
 	 * Relex2LogicRuleSet that contains a fresh rule set.
 	 */
@@ -47,15 +47,19 @@ public class LogicProcessor {
 	 * Constructor, receives a fresh rule set.
 	 * @param relex2LogicRuleSet a RuleSet to be applied.
 	 */
-	public LogicProcessor(RuleSet relex2LogicRuleSet) {
+	public LogicProcessor(RuleSet relex2LogicRuleSet)
+	{
 		_relex2LogicRuleSet = relex2LogicRuleSet;
 	}
 
 	/**
-	 * Checks whether a rule can be applied, but does not apply it. It does however register the values for found candidates that match the variables in the criteria.
+	 * Checks whether a rule can be applied, but does not apply it.
+	 * It does however register the values for found candidates that
+	 * match the variables in the criteria.
 	 * @param relexRule The rule which should be checked for applicability.
 	 * @param rootNode The FeatureNode from which to start the application search.
-	 * @param appliedRules The rules which have already been applied, so that application of mutually exclusive rules is not attempted.
+	 * @param appliedRules The rules which have already been applied,
+	 *        so that application of mutually exclusive rules is not attempted.
 	 * @return Boolean indicating if the rule can be applied or not.
 	 */
 	public Boolean checkRuleApplicability(Rule relexRule, FeatureNode rootNode, List<String> appliedRules)
@@ -159,8 +163,11 @@ public class LogicProcessor {
 	}
 
 	/**
-	 * Retrieves the Scheme output from a rule whose applicability has been established, rewriting the variables in the rule to the values that have been determined in the verification process.
-	 * @param ruleToApply The rule that has been determined applicable, and contains the established values for the variable criteria.
+	 * Retrieves the Scheme output from a rule whose applicability has
+	 * been established, rewriting the variables in the rule to the
+	 * values that have been determined in the verification process.
+	 * @param ruleToApply The rule that has been determined applicable,
+	 *         and contains the established values for the variable criteria.
 	 * @param schemeBuilder A StringBuilder to which to append the Scheme output.
 	 */
 	private void applyRule(Rule ruleToApply, StringBuilder schemeBuilder)
@@ -195,7 +202,6 @@ public class LogicProcessor {
 			}
 		}
 
-
 		return schemeBuilder.toString();
 	}
 
@@ -220,7 +226,6 @@ public class LogicProcessor {
 					headNameValue = nameNode.getValue();
 			}
 		}
-
 		return headNameValue;
 	}
 
@@ -233,8 +238,12 @@ public class LogicProcessor {
 	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
 	 * @return A List<FeatureNode> that match the provided criteria.
 	 */
-	public static List<FeatureNode> findFeatureNodeByChildLinkName(FeatureNode nodeToSearchThrough, String childLinkName, HashSet<FeatureNode> alreadyVisited,
-			List<FeatureNode> alreadyFound) {
+	public static List<FeatureNode> findFeatureNodeByChildLinkName(
+		FeatureNode nodeToSearchThrough,
+		String childLinkName,
+		HashSet<FeatureNode> alreadyVisited,
+		List<FeatureNode> alreadyFound)
+	{
 		if (alreadyFound == null)
 			alreadyFound = new ArrayList<FeatureNode>();
 
@@ -268,7 +277,6 @@ public class LogicProcessor {
 				}
 			}
 		}
-
 		return alreadyFound;
 	}
 
@@ -280,8 +288,12 @@ public class LogicProcessor {
 	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
 	 * @return A List<FeatureNode> that match the provided criteria.
 	 */
-	public static List<FeatureNode> findFeatureNodes(FeatureNode nodeToSearchThrough, String name, HashSet<FeatureNode> alreadyVisited,
-			List<FeatureNode> alreadyFound) {
+	public static List<FeatureNode> findFeatureNodes(
+		FeatureNode nodeToSearchThrough,
+		String name,
+		HashSet<FeatureNode> alreadyVisited,
+		List<FeatureNode> alreadyFound)
+	{
 		if (alreadyFound == null)
 			alreadyFound = new ArrayList<FeatureNode>();
 
@@ -313,7 +325,6 @@ public class LogicProcessor {
 				}
 			}
 		}
-
 		return alreadyFound;
 	}
 
@@ -324,7 +335,11 @@ public class LogicProcessor {
 	 * @param alreadyVisited A list of nodes that has already been visited to avoid infinite recursion.
 	 * @return The node, if it exists, that matches the provided name.
 	 */
-	public static FeatureNode findFeatureNode(FeatureNode nodeToSearchThrough, String name, HashSet<FeatureNode> alreadyVisited) {
+	public static FeatureNode findFeatureNode(
+		FeatureNode nodeToSearchThrough,
+		String name,
+		HashSet<FeatureNode> alreadyVisited)
+	{
 		FeatureNode foundNode = null;
 		if (alreadyVisited == null)
 			alreadyVisited = new HashSet<FeatureNode>();
@@ -360,8 +375,6 @@ public class LogicProcessor {
 				}
 			}
 		}
-
 		return foundNode;
 	}
-
 }
