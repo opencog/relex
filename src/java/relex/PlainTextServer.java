@@ -47,10 +47,16 @@ import relex.Version;
  * <li><b>maxLinkages</b> - maximum number of parses to return in the
  *      result. Note that this does not affect the parser behavior which
  *      computes all parses anyway.</li>
- * <li><b>getLinkages</b> B
- * <li><b>getRelex</b>
- * <li><b>getStanford</b>
+ * <li><b>showLinkages</b> Return the link-grammar parse diagram</li>
+ * <li><b>showPhrase</b> Return the Phrase Structure tree</li>
+ * <li><b>showRelex</b> Return the RelEx dependency relations</li>
+ * <li><b>showStanford</b> Return the Stanford Dependency relations</li>
+ * <li><b>showOpenCog</b> Return link-grammar and relex output in OpenCog scheme format.</li>
+ * <li><b>showLogic</b>  Return relations in OpenCog Logic format</li>
  * </ul>
+ *
+ * Example usage:
+ * echo "maxLinkages:1,showLink:true,showLogic:true,text:this is a test" | netcat localhost 3333
  */
 
 public class PlainTextServer
