@@ -267,7 +267,8 @@ public class RelationExtractor
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
 			sent = parser.parse(sentence);
 		} else {
-			System.err.println("Sentence too long!: " + sentence);
+			System.err.println("Sentence too long, len=" + sentence.length()
+				+ " : " + sentence);
 			sent = new Sentence();
 		}
 		return sent;

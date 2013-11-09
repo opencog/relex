@@ -24,6 +24,8 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
+import org.linkgrammar.JSONUtils;
 import relex.output.SimpleView;
 import relex.output.StanfordView;
 import relex.Version;
@@ -174,16 +176,38 @@ public class PlainTextServer
 			System.err.println("Info: Socket accept");
 			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 			PrintWriter out = new PrintWriter(outs, true);
+			JSONUtils msgreader = new JSONUtils();
 
 			try {
+/*
 				String line = in.readLine();
 				if (line == null)
 					continue;
 				System.err.println("Info: recv input: \"" + line + "\"");
+*/
+
+				String line = "";
+				try {
+					Map<String, String> msg = msgreader.readMsg(in);
+					line = msg.get("text");
+				} catch (RuntimeException e) {
+					line = msgreader.getRawText();
+					line = line.trim();
+				}
+
 				Sentence sntc = r.processSentence(line);
 				if (sntc.getParses().size() == 0)
 				{
 					out.println("; NO PARSES");
+					try
+					{
+						out_sock.close();
+						System.err.println("Info: Closed socket");
+					}
+					catch (IOException e)
+					{
+						System.err.println("Error: Socket close failed");
+					}
 					continue;
 				}
 
