@@ -41,23 +41,20 @@ public class LogicView
 	public void loadRules()
 	{
 		String ruleFileName = System.getProperty("relex.orfile");
-
-		if (ruleFileName != null)
+		if (ruleFileName == null)
 		{
-			java.io.File f = new java.io.File(ruleFileName);
-			if (f.exists())
-			{
-				// Print RelEx-2-Logic output
-				_relex2LogicRuleLoader.loadRules(ruleFileName);
-			}
-			else
-			{
-				throw new RuntimeException("Rule file could not be found / does not exist (" + ruleFileName + ")");
-			}
+			ruleFileName = "./data/relex2logic-rules.txt";
+		}
+
+		java.io.File f = new java.io.File(ruleFileName);
+		if (f.exists())
+		{
+			// Print RelEx-2-Logic output
+			_relex2LogicRuleLoader.loadRules(ruleFileName);
 		}
 		else
 		{
-			throw new RuntimeException("No rule file supplied, use JVM parameter: -Drelex.orfile=/path/filename.txt");
+			throw new RuntimeException("Rule file could not be found / does not exist (" + ruleFileName + ")");
 		}
 	}
 

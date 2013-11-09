@@ -132,7 +132,7 @@ public class AlgorithmApplier
 		{
 			InputStream in = null;
 			String algsFileName = System.getProperty(prop);
-			if (algsFileName!=null)
+			if (algsFileName != null)
 			{
 				in = new FileInputStream(algsFileName);
 				if (in != null)
