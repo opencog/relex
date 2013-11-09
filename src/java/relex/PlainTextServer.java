@@ -138,9 +138,9 @@ public class PlainTextServer
 
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		RelationExtractor r = new RelationExtractor(false);
-		if (null != lang) r.getParser().setLanguage(lang);
-		if (null != dict_path) r.getParser().setDictPath(dict_path);
+		RelationExtractor r = new RelationExtractor();
+		if (null != lang) r.setLanguage(lang);
+		if (null != dict_path) r.setDictPath(dict_path);
 
 		PlainTextServer s = new PlainTextServer();
 		s.listen_port = listen_port;

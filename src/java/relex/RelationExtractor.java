@@ -78,6 +78,11 @@ public class RelationExtractor
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
 	public static final int DEFAULT_MAX_PARSE_COST = 1000;
 
+	private boolean _is_inited;
+	private boolean _use_sock;
+	private String _lang;
+	private String _dict_path;
+
 	/** The LinkParserClient to be used - this class isn't thread safe! */
 	private RelexContext context;
 
@@ -117,15 +122,23 @@ public class RelationExtractor
 
 	public RelationExtractor()
 	{
-		init(false);
+		_is_inited = false;
+		_use_sock = false;
+		_lang = "en";
+		_dict_path = null;
 	}
 	public RelationExtractor(boolean useSocket)
 	{
-		init(useSocket);
+		_is_inited = false;
+		_use_sock = useSocket;
+		_lang = "en";
+		_dict_path = null;
 	}
-	private void init(boolean useSocket)
+	private void init()
 	{
-		parser = useSocket ? new RemoteLGParser() : new LocalLGParser();
+		parser = _use_sock ? new RemoteLGParser() : new LocalLGParser();
+		if (null != _lang) parser.setLanguage(_lang);
+		if (null != _dict_path) parser.setDictPath(_dict_path);
 		parser.getConfig().setStoreConstituentString(true);
 		parser.getConfig().setStoreSense(true);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
@@ -153,16 +166,22 @@ public class RelationExtractor
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
 		cnttime = new TreeMap<String,Long>();
+
+		_is_inited = true;
 	}
 
 	public String getVersion()
 	{
+		if (!_is_inited) init();
 		return parser.getVersion() + "\t" + Version.getVersion();
 	}
-
-	public LGParser getParser()
+	public void setLanguage(String lang)
 	{
-		return parser;
+		_lang = lang;
+	}
+	public void setDictPath(String dict_path)
+	{
+		_dict_path = dict_path;
 	}
 
 	/* ---------------------------------------------------------- */
@@ -174,18 +193,22 @@ public class RelationExtractor
 	 */
 	public void setMaxParses(int maxParses)
 	{
+		if (!_is_inited) init();
 		parser.getConfig().setMaxLinkages(maxParses);
 	}
 
 	public void setMaxCost(int maxCost) {
+		if (!_is_inited) init();
 		parser.getConfig().setMaxCost(maxCost);
 	}
 
 	public void setAllowSkippedWords(boolean allow) {
+		if (!_is_inited) init();
 		parser.getConfig().setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds) {
+		if (!_is_inited) init();
 		parser.getConfig().setMaxParseSeconds(maxParseSeconds);
 	}
 
@@ -201,12 +224,14 @@ public class RelationExtractor
 	 */
 	public void clear()
 	{
+		if (!_is_inited) init();
 		antecedents.clear();
 		hobbs = new Hobbs(antecedents);
 	}
 
 	public Sentence processSentence(String sentence)
 	{
+		if (!_is_inited) init();
 		starttime = System.currentTimeMillis();
 
 		Sentence sntc = null;
@@ -435,7 +460,7 @@ public class RelationExtractor
 
 		if (html != null) html.println("<html>");
 
-		RelationExtractor re = new RelationExtractor(false);
+		RelationExtractor re = new RelationExtractor();
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
