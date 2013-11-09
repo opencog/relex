@@ -26,6 +26,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import org.linkgrammar.JSONUtils;
+import relex.output.LogicView;
+import relex.output.OpenCogScheme;
 import relex.output.SimpleView;
 import relex.output.StanfordView;
 import relex.Version;
@@ -141,6 +143,13 @@ public class PlainTextServer
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
+		LogicView lv = new LogicView();
+		lv.loadRules();
+		OpenCogScheme oc = new OpenCogScheme();
+		oc.setShowLinkage(true);
+		oc.setShowRelex(true);
+		oc.setShowAnaphora(true);
+
 		if (anaphora_on)
 		{
 			System.err.println("Info: Anaphora output on.");
@@ -200,14 +209,18 @@ public class PlainTextServer
 				boolean show_phrase = phrase_on;
 				boolean show_relex = relex_on;
 				boolean show_stanford = stanford_on;
+				boolean show_opencog = false;
+				boolean show_logic = false;
 				try {
 					Map<String, String> msg = msgreader.readMsg(in);
 					line = msg.get("text");
 					num_show = JSONUtils.getInt("maxLinkages", msg, num_show);
-					show_link = JSONUtils.getBool("showLink", msg, link_on);
-					show_phrase = JSONUtils.getBool("showPhrase", msg, phrase_on);
-					show_relex = JSONUtils.getBool("showRelex", msg, relex_on);
-					show_stanford = JSONUtils.getBool("showStanford", msg, stanford_on);
+					show_link = JSONUtils.getBool("showLink", msg, show_link);
+					show_phrase = JSONUtils.getBool("showPhrase", msg, show_phrase);
+					show_relex = JSONUtils.getBool("showRelex", msg, show_relex);
+					show_stanford = JSONUtils.getBool("showStanford", msg, show_stanford);
+					show_opencog = JSONUtils.getBool("showOpenCog", msg, show_opencog);
+					show_logic = JSONUtils.getBool("showLogic", msg, show_logic);
 				} catch (RuntimeException e) {
 					line = msgreader.getRawText();
 					line = line.trim();
@@ -267,8 +280,6 @@ public class PlainTextServer
 					if (show_relex)
 					{
 						out.println("Dependency relations:\n");
-
-						// String fin = SimpleView.printRelationsAlt(parse);
 						String fin = SimpleView.printRelations(parse);
 						out.println(fin);
 					}
@@ -276,6 +287,22 @@ public class PlainTextServer
 					{
 						out.println("Stanford-style dependency relations:\n");
 						String fin = StanfordView.printRelations(parse, true, "    ");
+						out.println(fin);
+					}
+					if (show_opencog)
+					{
+						out.println("OpenCog Scheme:\n");
+						oc.setParse(parse);
+						out.println(oc.toString());
+						out.println("(ListLink (stv 1 1)");
+						out.println("   (AnchorNode \"# New Parsed Sentence\")");
+						out.println("   (SentenceNode \"" + sntc.getID() + "\")");
+						out.println(")");
+					}
+					if (show_logic)
+					{
+						out.println("Logic relations:\n");
+						String fin = lv.printRelationsNew(parse);
 						out.println(fin);
 					}
 					if (verbose)
