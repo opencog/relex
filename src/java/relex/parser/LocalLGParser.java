@@ -45,14 +45,15 @@ public class LocalLGParser extends LGParser
 
 	public void init()
 	{
-		if (!initialized.get())
-			LinkGrammar.init();
-
+		// Must set language or dictionary path BEFORE initializing!
 		if (_lang != null)
 			LinkGrammar.setLanguage(_lang);
 
 		if (_dict_path != null)
 			LinkGrammar.setDictionariesPath(_dict_path);
+
+		if (!initialized.get())
+			LinkGrammar.init();
 
 		LGService.configure(_config);
 		initialized.set(Boolean.TRUE);
