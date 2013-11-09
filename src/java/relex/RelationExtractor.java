@@ -160,6 +160,11 @@ public class RelationExtractor
 		return parser.getVersion() + "\t" + Version.getVersion();
 	}
 
+	public LGParser getParser()
+	{
+		return parser;
+	}
+
 	/* ---------------------------------------------------------- */
 	/* Control parameters, etc. */
 	/**

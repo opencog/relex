@@ -72,6 +72,9 @@ public class PlainTextServer
 	{
 		int listen_port = 3333;
 		boolean verbose = false;
+		String lang = "en";
+		String dict_path = null;
+
 		String usageString = "Plain-text RelEx server.\n" +
 			"Given a sentence, it returns a plain-output parse.\n" +
 			" -p number  \t Port number to listen on (default: 3333)\n" +
@@ -89,9 +92,21 @@ public class PlainTextServer
 			}
 			else if (args[i].equals("--lang"))
 			{
+				i++;
+				if (i >= args.length) {
+					System.err.println("Error: Expected a language after the --lang flag.");
+					System.exit(1);
+				}
+				lang = args[i];
 			}
 			else if (args[i].equals("--dict"))
 			{
+				i++;
+				if (i >= args.length) {
+					System.err.println("Error: Expected a dictionary path after the --lang flag.");
+					System.exit(1);
+				}
+				dict_path = args[i];
 			}
 			else if (args[i].equals("--port") || args[i].equals("-p"))
 			{
@@ -124,6 +139,9 @@ public class PlainTextServer
 		System.err.println("Info: Version: " + Version.getVersion());
 
 		RelationExtractor r = new RelationExtractor(false);
+		if (null != lang) r.getParser().setLanguage(lang);
+		if (null != dict_path) r.getParser().setDictPath(dict_path);
+
 		PlainTextServer s = new PlainTextServer();
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;

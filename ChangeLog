@@ -8,6 +8,7 @@ New in version 1.5.0 (XXX 2014)
  * Remove the obsolete frame code (2.8KLOC java, 11.2 KLOC rules)
  * Remove the obsolete GATE entity tagger (1.7 KLOC Java code)
  * Add a new Relex2Logic output style, from Alex van der Peet.
+ * Allow different languages and dictionary locations to be set.
 
 New in version 1.4.2 (24 October 2013)
  * Updated maven pom file, from Krzysztof Wezowski.

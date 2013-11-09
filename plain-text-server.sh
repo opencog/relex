@@ -41,7 +41,7 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/xercesImpl.jar:\
 "
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --link --phrase --relex --stanford --port 3333
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333 --lang ru
 
 
