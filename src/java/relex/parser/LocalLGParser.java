@@ -47,7 +47,14 @@ public class LocalLGParser extends LGParser
 	{
 		if (!initialized.get())
 			LinkGrammar.init();
-		LGService.configure(config);
+
+		if (_lang != null)
+			LinkGrammar.setLanguage(_lang);
+
+		if (_dict_path != null)
+			LinkGrammar.setDictionariesPath(_dict_path);
+
+		LGService.configure(_config);
 		initialized.set(Boolean.TRUE);
 	}
 
@@ -78,14 +85,14 @@ public class LocalLGParser extends LGParser
 		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
 		if ((numParses < 1) ||
-		    (!config.isAllowSkippedWords() && LinkGrammar.getNumSkippedWords() > 0))
+		    (!_config.isAllowSkippedWords() && LinkGrammar.getNumSkippedWords() > 0))
 		{
 			System.err.println("Warning: No parses found for:\n" +
 			     sentence);
 			return sntc;
 		}
 
-		for (int i = 0; i < numParses && i < config.getMaxLinkages(); i++)
+		for (int i = 0; i < numParses && i < _config.getMaxLinkages(); i++)
 		{
 			if (verbosity >= 5) System.err.println("making linkage for parse " + i);
 			LinkGrammar.makeLinkage(i);
@@ -199,8 +206,8 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast, config.isStoreSense());
-			if (config.isStoreConstituentString())
+			addLinkageStructure(s, ignoreFirst, ignoreLast, _config.isStoreSense());
+			if (_config.isStoreConstituentString())
 			{
 				if (verbosity >= 5) System.err.println("Adding Tree Structure");
 				s.setPhraseString(LinkGrammar.getConstituentString());

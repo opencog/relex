@@ -20,16 +20,28 @@ import org.linkgrammar.LGConfig;
 
 public abstract class LGParser implements IParser
 {
-	protected LGConfig config = new LGConfig();
+	protected LGConfig _config = new LGConfig();
+	protected String _dict_path = null;
+	protected String _lang = "en";
 
 	public LGConfig getConfig()
 	{
-		return config;
+		return _config;
 	}
 
 	public void setConfig(LGConfig config)
 	{
-		this.config = config;
+		_config = config;
+	}	
+	
+	public void setDictPath(String path)
+	{
+		_dict_path = path;
+	}	
+	
+	public void setLanguage(String lang)
+	{
+		_lang = lang;
 	}	
 	
 	public abstract String getVersion();

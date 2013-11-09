@@ -36,7 +36,7 @@ public class RemoteLGParser extends LGParser
 		sntc.setSentence(parseResult.getText());
 
 		if (parseResult.getLinkages().isEmpty() ||
-			!config.isAllowSkippedWords() && parseResult.getNumSkippedWords() > 0)
+			!_config.isAllowSkippedWords() && parseResult.getNumSkippedWords() > 0)
 			return sntc;
 
 		String lowerCaseText = parseResult.getText().toLowerCase();
