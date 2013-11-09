@@ -76,17 +76,13 @@ public class PlainTextServer
 			"Given a sentence, it returns a plain-output parse.\n" +
 			" -p number  \t Port number to listen on (default: 3333)\n" +
 			" --port num \t Port number to listen on (default: 3333)\n" +
-			" --lang     \t Language (en, fr, de, ru) default: en\n";
-			" --dict     \t Dictionary location, default: data/en \n";
+			" --lang     \t Language (en, fr, de, ru) default: en\n" +
+			" --dict     \t Dictionary location, default: data/en \n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
 		for (int i = 0; i < args.length; i++)
 		{
-			if (args[i].equals("--anaphora"))
-			{
-				anaphora_on = true;
-			}
-			else if (args[i].equals("--help") || args[i].equals("-h"))
+			if (args[i].equals("--help") || args[i].equals("-h"))
 			{
 				System.out.println(usageString);
 				System.exit(0);
