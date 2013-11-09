@@ -68,13 +68,16 @@ public class Loader
 			e.printStackTrace();
 		}
 
-		if (input != null) {
+		if (input != null)
+		{
 			// Parse file
 			int iRules = 0;
 
-			while(input.hasNext()) {
+			while (input.hasNext())
+			{
 				// Get line
 				String nextLine = input.nextLine();
+				if (null == nextLine) break;
 
 				if (!nextLine.equals(""))
 				{
