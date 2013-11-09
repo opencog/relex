@@ -303,7 +303,7 @@ public class PlainTextServer
 						out.println("(ListLink (stv 1 1)");
 						out.println("   (AnchorNode \"# New Parsed Sentence\")");
 						out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-						out.println(")");
+						out.println(")\n");
 					}
 					if (show_logic)
 					{
