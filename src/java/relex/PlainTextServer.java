@@ -37,6 +37,18 @@ import relex.Version;
  * generate plain-text parse output.
  *
  * It is intended that this server be used for on-line web demos, and nothing more.
+ *
+ * This class understans a quasi-JSON format. The followig parameters
+ * are recognized:
+ *
+ * <ul>
+ * <li><b>maxLinkages</b> - maximum number of parses to return in the
+ *      result. Note that this does not affect the parser behavior which
+ *      computes all parses anyway.</li>
+ * <li><b>getLinkages</b> B
+ * <li><b>getRelex</b>
+ * <li><b>getStanford</b>
+ * </ul>
  */
 
 public class PlainTextServer
@@ -55,14 +67,15 @@ public class PlainTextServer
 		boolean link_on = false;
 		boolean anaphora_on = false;
 		boolean stanford_on = false;
+		boolean phrase_on = false;
 		boolean verbose = false;
 		String usageString = "Plain-text RelEx server.\n" +
 			"Given a sentence, it returns a plain-output parse.\n" +
 			" -p number  \t Port number to listen on (default: 3333)\n" +
 			" --port num \t Port number to listen on (default: 3333)\n" +
-			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
-			" --anaphora \t Output anaphore references\n" +
+			" --phrase   \t Output Phrase Structure\n" +
+			" --relex    \t Output RelEx relations\n" +
 			" --stanford \t Output Standford-format relations\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
@@ -80,6 +93,10 @@ public class PlainTextServer
 			else if (args[i].equals("--link"))
 			{
 				link_on = true;
+			}
+			else if (args[i].equals("--phrase"))
+			{
+				phrase_on = true;
 			}
 			else if (args[i].equals("--port") || args[i].equals("-p"))
 			{
@@ -124,11 +141,6 @@ public class PlainTextServer
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
-		if (!relex_on && !stanford_on && !link_on)
-		{
-			// By default just export RelEx output.
-			relex_on = true;
-		}
 		if (anaphora_on)
 		{
 			System.err.println("Info: Anaphora output on.");
@@ -136,6 +148,10 @@ public class PlainTextServer
 		if (link_on)
 		{
 			System.err.println("Info: Link grammar output on.");
+		}
+		if (phrase_on)
+		{
+			System.err.println("Info: Phrase structure output on.");
 		}
 		if (relex_on)
 		{
@@ -179,20 +195,34 @@ public class PlainTextServer
 			JSONUtils msgreader = new JSONUtils();
 
 			try {
-/*
-				String line = in.readLine();
-				if (line == null)
-					continue;
-				System.err.println("Info: recv input: \"" + line + "\"");
-*/
 
 				String line = "";
+				int num_show = 3;
+				boolean show_link = link_on;
+				boolean show_phrase = phrase_on;
+				boolean show_relex = relex_on;
+				boolean show_stanford = stanford_on;
 				try {
 					Map<String, String> msg = msgreader.readMsg(in);
 					line = msg.get("text");
+					num_show = JSONUtils.getInt("maxLinkages", msg, num_show);
+					show_link = JSONUtils.getBool("showLink", msg, link_on);
+					show_phrase = JSONUtils.getBool("showPhrase", msg, phrase_on);
+					show_relex = JSONUtils.getBool("showRelex", msg, relex_on);
+					show_stanford = JSONUtils.getBool("showStanford", msg, stanford_on);
 				} catch (RuntimeException e) {
 					line = msgreader.getRawText();
 					line = line.trim();
+				}
+				System.err.println("Info: recv input: \"" + line + "\"");
+
+				if (!show_link && !show_phrase && !show_relex && !show_stanford)
+				{
+					// Turn everything on by default
+					show_link = true;
+					show_phrase = true;
+					show_relex = true;
+					show_stanford = true;
 				}
 
 				Sentence sntc = r.processSentence(line);
@@ -211,10 +241,10 @@ public class PlainTextServer
 					continue;
 				}
 
-				int num_show = sntc.getParses().size();
-				if (3 < num_show) num_show = 3;
+				int num_parses = sntc.getParses().size();
+				if (num_parses < num_show) num_show = num_parses;
 
-				for (int i=0; i< num_show; i++)
+				for (int i=0; i < num_show; i++)
 				{
 					ParsedSentence parse = sntc.getParses().get(i);
 
@@ -223,22 +253,25 @@ public class PlainTextServer
 					int ialt = i+1;
 					out.println("==== Parse alternative " + ialt + " ====\n");
 
-					if (link_on)
+					if (show_link)
 					{
 						out.println("Link Grammar parse diagram:");
 						out.println(parse.getLinkString());
 					}
-					if (relex_on)
+					if (show_phrase)
 					{
 						out.println("Phrase Structure parse:\n");
 						out.println("    " + parse.getPhraseString());
+					}
+					if (show_relex)
+					{
 						out.println("Dependency relations:\n");
 
 						// String fin = SimpleView.printRelationsAlt(parse);
 						String fin = SimpleView.printRelations(parse);
 						out.println(fin);
 					}
-					if (stanford_on)
+					if (show_stanford)
 					{
 						out.println("Stanford-style dependency relations:\n");
 						String fin = StanfordView.printRelations(parse, true, "    ");
