@@ -119,15 +119,22 @@ public class LocalLGParser extends LGParser
 			 */
 			int startChar = 0;
 			HashMap<String,Integer> timesTokenSeen = new HashMap<String,Integer>();
-			// System.err.println("LINKPARSER NUMWORDS=" + numWords + "
-			// SKIPPED=" + cNumSkippedWords());
+
+			int skip_count = 0;
+			int[] skip_map = new int[numWords];
 			for (int w = 0; w < numWords; w++)
 			{
 				String wordString = LinkGrammar.getLinkageWord(w);
 				if (verbosity >= 5) System.err.println(" Processing Word " + wordString);
 
 				// In Russian, some words (suffixes) can be zero-length.
-				if (0 == wordString.length()) continue;
+				if (0 == wordString.length())
+				{
+					skip_count ++;
+					skip_map[w] = w-skip_count;
+					continue;
+				}
+				skip_map[w] = w-skip_count;
 
 				if (wordString.equals("RIGHT-WALL"))
 				{
@@ -184,7 +191,7 @@ public class LocalLGParser extends LGParser
 					timesTokenSeen.put(tokenString, new Integer(timesSeen + 1));
 					int endChar = (startChar >= 0 ? startChar + tokenString.length() : -1);
 					// System.err.println("INFO IS " + startChar + "," + endChar);
-					LinkableView.setCharIndices(fn, startChar, endChar, w);
+					LinkableView.setCharIndices(fn, startChar, endChar, w-skip_count);
 
 					// Increment index to start looking for next tokenString
 					// after the current one. Use "max" to prevent decreasing
@@ -210,7 +217,7 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast, _config.isStoreSense());
+			addLinkageStructure(s, ignoreFirst, ignoreLast, _config.isStoreSense(), skip_map);
 			if (_config.isStoreConstituentString())
 			{
 				if (verbosity >= 5) System.err.println("Adding Tree Structure");
@@ -239,9 +246,15 @@ public class LocalLGParser extends LGParser
 	private void addLinkageStructure(ParsedSentence s,
 	                                 boolean ignoreFirst,
 	                                 boolean ignoreLast,
-	                                 boolean load_senses)
+	                                 boolean load_senses,
+	                                 int[] skip_map)
 	{
-		int length = LinkGrammar.getNumWords();
+		// Russian sentences can have 'blank words' in them which we skip.
+		// That means that the count of actual non-empty words no longer
+		// matches the link-parser count.  Technically, this is a link-parser
+		// bug, but fixing it would require a major re-write of the parser.
+		// int length = LinkGrammar.getNumWords();
+		int length = skip_map[skip_map.length-1] + 1;
 		int numLinks = LinkGrammar.getNumLinks();
 		s.setLinkString(LinkGrammar.getLinkString());
 		for (int i = 0; i < numLinks; i++)
@@ -249,6 +262,8 @@ public class LocalLGParser extends LGParser
 			boolean bad = false;
 			int left = LinkGrammar.getLinkLWord(i);
 			int right = LinkGrammar.getLinkRWord(i);
+			left = skip_map[left];
+			right = skip_map[right];
 			if (ignoreLast && (right == length - 1))
 			{
 				bad = true;
