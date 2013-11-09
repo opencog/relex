@@ -160,8 +160,6 @@ public class PlainTextServer
 		if (stanford_on)
 		{
 			System.err.println("Info: Stanford output on.");
-			r.do_stanford = true;
-			r.do_penn_tagging = true;
 		}
 
 		try
@@ -225,10 +223,13 @@ public class PlainTextServer
 					show_stanford = true;
 				}
 
+				r.do_stanford = show_stanford;
+				r.do_penn_tagging = show_stanford;
+
 				Sentence sntc = r.processSentence(line);
 				if (sntc.getParses().size() == 0)
 				{
-					out.println("; NO PARSES");
+					out.println("==== END OF SENTENCE ====");
 					try
 					{
 						out_sock.close();
