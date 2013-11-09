@@ -136,6 +136,9 @@ public class RelationExtractor
 	}
 	private void init()
 	{
+		if (_is_inited) return;
+		_is_inited = true;
+
 		parser = _use_sock ? new RemoteLGParser() : new LocalLGParser();
 		if (null != _lang) parser.setLanguage(_lang);
 		if (null != _dict_path) parser.setDictPath(_dict_path);
@@ -166,8 +169,6 @@ public class RelationExtractor
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
 		cnttime = new TreeMap<String,Long>();
-
-		_is_inited = true;
 	}
 
 	public String getVersion()
