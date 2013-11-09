@@ -71,20 +71,13 @@ public class PlainTextServer
 	public static void main(String[] args)
 	{
 		int listen_port = 3333;
-		boolean relex_on = false;
-		boolean link_on = false;
-		boolean anaphora_on = false;
-		boolean stanford_on = false;
-		boolean phrase_on = false;
 		boolean verbose = false;
 		String usageString = "Plain-text RelEx server.\n" +
 			"Given a sentence, it returns a plain-output parse.\n" +
 			" -p number  \t Port number to listen on (default: 3333)\n" +
 			" --port num \t Port number to listen on (default: 3333)\n" +
-			" --link     \t Output Link Grammar Linkages\n" +
-			" --phrase   \t Output Phrase Structure\n" +
-			" --relex    \t Output RelEx relations\n" +
-			" --stanford \t Output Standford-format relations\n" +
+			" --lang     \t Language (en, fr, de, ru) default: en\n";
+			" --dict     \t Dictionary location, default: data/en \n";
 			" --verbose  \t Print parse output to server stdout.\n";
 
 		for (int i = 0; i < args.length; i++)
@@ -98,13 +91,11 @@ public class PlainTextServer
 				System.out.println(usageString);
 				System.exit(0);
 			}
-			else if (args[i].equals("--link"))
+			else if (args[i].equals("--lang"))
 			{
-				link_on = true;
 			}
-			else if (args[i].equals("--phrase"))
+			else if (args[i].equals("--dict"))
 			{
-				phrase_on = true;
 			}
 			else if (args[i].equals("--port") || args[i].equals("-p"))
 			{
@@ -120,14 +111,6 @@ public class PlainTextServer
 					System.err.println("Error: Expected a port number after the -p flag.");
 					System.exit(1);
 				}
-			}
-			else if (args[i].equals("--relex"))
-			{
-				relex_on = true;
-			}
-			else if (args[i].equals("--stanford"))
-			{
-				stanford_on = true;
 			}
 			else if (args[i].equals("--verbose") )
 			{
@@ -155,27 +138,6 @@ public class PlainTextServer
 		oc.setShowLinkage(true);
 		oc.setShowRelex(true);
 		oc.setShowAnaphora(true);
-
-		if (anaphora_on)
-		{
-			System.err.println("Info: Anaphora output on.");
-		}
-		if (link_on)
-		{
-			System.err.println("Info: Link grammar output on.");
-		}
-		if (phrase_on)
-		{
-			System.err.println("Info: Phrase structure output on.");
-		}
-		if (relex_on)
-		{
-			System.err.println("Info: RelEx output on.");
-		}
-		if (stanford_on)
-		{
-			System.err.println("Info: Stanford output on.");
-		}
 
 		try
 		{
@@ -211,10 +173,10 @@ public class PlainTextServer
 
 				String line = "";
 				int num_show = 3;
-				boolean show_link = link_on;
-				boolean show_phrase = phrase_on;
-				boolean show_relex = relex_on;
-				boolean show_stanford = stanford_on;
+				boolean show_link = false;
+				boolean show_phrase = false;
+				boolean show_relex = false;
+				boolean show_stanford = false;
 				boolean show_opencog = false;
 				boolean show_logic = false;
 				try {
@@ -233,13 +195,15 @@ public class PlainTextServer
 				}
 				System.err.println("Info: recv input: \"" + line + "\"");
 
-				if (!show_link && !show_phrase && !show_relex && !show_stanford)
+				if (!show_link && !show_phrase && !show_relex &&
+				    !show_stanford && !show_opencog && !show_logic)
 				{
 					// Turn everything on by default
 					show_link = true;
 					show_phrase = true;
 					show_relex = true;
 					show_stanford = true;
+					show_logic = true;
 				}
 
 				r.do_stanford = show_stanford;
@@ -248,7 +212,7 @@ public class PlainTextServer
 				Sentence sntc = r.processSentence(line);
 				if (sntc.getParses().size() == 0)
 				{
-					out.println("==== END OF SENTENCE ====");
+					out.println("==== NO PARSES ====");
 					try
 					{
 						out_sock.close();
