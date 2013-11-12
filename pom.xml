@@ -43,7 +43,11 @@
         <filtering>false</filtering>
         <directory>${basedir}/data</directory>
         <includes>
+          <include>relex2logic-rules.txt</include>
+          <include>relex-penn-tagging-algs.txt</include>
           <include>relex-semantic-algs.txt</include>
+          <include>relex-stanford-algs.txt</include>
+          <include>relex-tagging-algs.txt</include>
         </includes>
       </resource>
       <resource>
@@ -60,15 +64,6 @@
         <directory>${basedir}/data/sentence-detector</directory>
         <includes>
           <include>EnglishSD.bin.gz</include>
-        </includes>
-      </resource>
-      <resource>
-        <targetPath>./</targetPath>
-        <filtering>false</filtering>
-        <directory>${basedir}/data/frame</directory>
-        <includes>
-          <include>concept_vars.txt</include>
-          <include>mapping_rules.txt</include>
         </includes>
       </resource>
     </resources>
@@ -94,11 +89,6 @@
       <groupId>org.apache.opennlp</groupId>
       <artifactId>opennlp</artifactId>
       <version>1.5.2-incubating</version>
-    </dependency>
-    <dependency>
-      <groupId>uk.ac.gate</groupId>
-      <artifactId>gate-core</artifactId>
-      <version>7.0</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.owlapi</groupId>
