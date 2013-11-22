@@ -1,3 +1,6 @@
+New in version 1.5.1 (XXX 2014)
+ * ???
+
 New in version 1.5.0 (21 November 2013)
  * Minor cleanup of windows *.bat file, build and config files.
  * Fix the link-grammar-server.sh file so that it works.
