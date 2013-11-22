@@ -34,13 +34,6 @@ bin:\
 ../../share/java/commons-logging.jar:\
 ../../share/java/gnu-getopt.jar:\
 ../../share/java/link-grammar-4.4.2.jar:\
-../../share/java/xercesImpl.jar:\
-../../share/java/gate.jar:\
-../../share/java/jdom.jar:\
-../../share/java/jasper-compiler-jdt.jar:\
-../../share/java/nekohtml-0.9.5.jar:\
-../../share/java/ontotext.jar:\
-../../share/java/jaxp-1.3.jar:\
 "
 
 function parseit {
