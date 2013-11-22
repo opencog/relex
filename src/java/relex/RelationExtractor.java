@@ -120,20 +120,32 @@ public class RelationExtractor
 	/* ---------------------------------------------------------- */
 	/* Constructors, etc. */
 
-	public RelationExtractor()
+	private void set_defaults()
 	{
 		_is_inited = false;
 		_use_sock = false;
 		_lang = "en";
 		_dict_path = null;
+
+		do_anaphora_resolution = false;
+		do_tree_markup = false;
+
+		do_stanford = false;
+		do_penn_tagging = false;
+		do_expand_preps = false;
 	}
+
+	public RelationExtractor()
+	{
+		set_defaults();
+	}
+
 	public RelationExtractor(boolean useSocket)
 	{
-		_is_inited = false;
+		set_defaults();
 		_use_sock = useSocket;
-		_lang = "en";
-		_dict_path = null;
 	}
+
 	private void init()
 	{
 		if (_is_inited) return;
@@ -153,18 +165,12 @@ public class RelationExtractor
 		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
 
+		// Hobbs-algo stuff.
 		phraseMarkup = new PhraseMarkup();
 		antecedents = new Antecedents();
 		hobbs = new Hobbs(antecedents);
-		do_anaphora_resolution = false;
 
 		doco = new Document();
-
-		do_tree_markup = false;
-
-		do_stanford = false;
-		do_penn_tagging = false;
-		do_expand_preps = false;
 
 		stats = new ParseStats();
 		sumtime = new TreeMap<String,Long>();
@@ -198,17 +204,20 @@ public class RelationExtractor
 		parser.getConfig().setMaxLinkages(maxParses);
 	}
 
-	public void setMaxCost(int maxCost) {
+	public void setMaxCost(int maxCost)
+	{
 		if (!_is_inited) init();
 		parser.getConfig().setMaxCost(maxCost);
 	}
 
-	public void setAllowSkippedWords(boolean allow) {
+	public void setAllowSkippedWords(boolean allow)
+	{
 		if (!_is_inited) init();
 		parser.getConfig().setAllowSkippedWords(allow);
 	}
 
-	public void setMaxParseSeconds(int maxParseSeconds) {
+	public void setMaxParseSeconds(int maxParseSeconds)
+	{
 		if (!_is_inited) init();
 		parser.getConfig().setMaxParseSeconds(maxParseSeconds);
 	}
