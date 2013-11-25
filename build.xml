@@ -160,6 +160,12 @@
             <classpath refid="relex.classpath"/>
             <arg line=""/>
         </java>
+        <java classname="relex.test.TestRelEx" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="relex.classpath"/>
+            <arg line=""/>
+        </java>
     </target>
 
     <!-- Build a jar file, for public consumption -->

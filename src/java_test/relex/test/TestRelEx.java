@@ -22,7 +22,7 @@ import java.util.Collections;
 import relex.ParsedSentence;
 import relex.RelationExtractor;
 import relex.Sentence;
-import relex.output.StanfordView;
+import relex.output.SimpleView;
 
 public class TestRelEx
 {
@@ -61,7 +61,7 @@ public class TestRelEx
 		re.do_penn_tagging = false;
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
-		String rs = StanfordView.printRelations(parse, false);
+		String rs = SimpleView.printBinaryRelations(parse);
 
 		ArrayList<String> exp = split(sf);
 		ArrayList<String> got = split(rs);
@@ -96,9 +96,18 @@ public class TestRelEx
 		boolean rc = true;
 
 		rc &= ts.test_sentence ("Some people like pigs less than dogs.",
-			"nsubj(invented-2, who-1)\n" +
-			"amod(bread-4, sliced-3)\n" + 
-			"dobj(invented-2, bread-4)");
+			"_advmod(like, less)\n" +
+			"_obj(like, pig)\n" +
+			"_quantity(people, some)\n" +
+			"_subj(like, people)\n" +
+			"than(people, dog)\n");
+
+		rc &= ts.test_sentence ("Some people like pigs more than dogs.",
+			"_advmod(like, more)\n" +
+			"_obj(like, pig)\n" +
+			"_quantity(people, some)\n" +
+			"_subj(like, people)\n" +
+			"than(people, dog)\n");
 
 		if (rc)
 		{
