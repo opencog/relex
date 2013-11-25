@@ -95,6 +95,15 @@ public class SimpleView
 		return v.binary_str + "\n" + v.unary_str;
 	}
 
+	public static String printBinaryRelations(ParsedSentence parse)
+	{
+		Visit v = new Visit();
+		v.binary_str = "";
+		v.unary_str = "";
+		parse.foreach(v);
+		return v.binary_str;
+	}
+
 	private static class Visit implements RelationCallback
 	{
 		// Map associating a feature-node to a unique ID string.
@@ -102,9 +111,9 @@ public class SimpleView
 
 		public boolean unaryStyle = false;
 		public boolean show_uuid = false;
-		public String indent;
-		public String binary_str;
-		public String unary_str;
+		public String indent = "";
+		public String binary_str = "";
+		public String unary_str = "";
 		public Boolean BinaryHeadCB(FeatureNode node) { return false; }
 		public Boolean BinaryRelationCB(String relName,
 		                                FeatureNode srcNode,
