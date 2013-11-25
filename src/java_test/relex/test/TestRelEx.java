@@ -100,14 +100,14 @@ public class TestRelEx
 			"_obj(like, pig)\n" +
 			"_quantity(people, some)\n" +
 			"_subj(like, people)\n" +
-			"than(people, dog)\n");
+			"than(pig, dog)\n");
 
 		rc &= ts.test_sentence ("Some people like pigs more than dogs.",
 			"_advmod(like, more)\n" +
 			"_obj(like, pig)\n" +
 			"_quantity(people, some)\n" +
 			"_subj(like, people)\n" +
-			"than(people, dog)\n");
+			"than(pig, dog)\n");
 
 		if (rc)
 		{
