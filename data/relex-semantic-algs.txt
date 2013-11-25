@@ -127,6 +127,8 @@ ind_deter
 <LAB> = \D\.*
 <F_R ref definite-FLAG> = T
 <F_R POS> = noun
+<F_L str> != the|THE|'s|'
+<F_L POSSESSIVE-FLAG> != T
 =
 <F_R det>= <F_L ref>
 ;
@@ -319,6 +321,7 @@ INV-SUBJECT_LINKING
 <LAB> = \AF\.*
 <F_R obj> = %
 <F_R FILLER-OBJ-FLAG> != T
+<F_L str> != than
 =
 <F_L subj> = <F_R subj>
 ;
@@ -335,10 +338,33 @@ PREDICATIVE_ADJECTIVE_LINKING
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
-<F_L str> = be
+<F_L str> = be|is
 =
 <F_L subj links _predadj> += <F_R ref>
+;<F_L subj> = %
+; predictive adjective for comparatives
+;e.g. Jack is more/less ingenious than Ben is crazy. 
+;_predadj(Ben, crazy) plus we dont need _subj(is,Ben)
+#TemplateActionAlg
+PREDICATIVE_comparatives1
+<LAB> = \Paf
+<F_L str> = than
+=
+<F_L temp_pred> += <F_R ref>
 ;
+#TemplateActionAlg
+PREDICATIVE_comparatives
+<LAB> = \Cta
+<F_L temp_pred> != %
+=
+<F_R ref links _predadj> += <F_L temp_pred>
+<F_L subj> = %
+<F_L temp_pred> = %
+#TemplateActionAlg
+CLEAR_SUNJ_comparatives
+<LAB> = \AFd
+=
+<F_R subj> = %
 ;
 #TemplateActionAlg
 OBJECT_LINKING
@@ -994,6 +1020,8 @@ TOBE1
 <LAB> = \Pa\.*
 <F_L str> != be
 <F_R head-word> = %
+<F_R degree> = %
+<F_L str> != than
 =
 <F_L to-be> += <F_R ref>
 ;
@@ -1003,6 +1031,7 @@ INV_TOBE
 ;//Look how big Pat seems.
 <LAB> = \AF\.*
 <F_R str> != be
+<LAB> != \AFd
 =
 <F_R to-be> += <F_L ref>
 ;
@@ -1011,6 +1040,8 @@ TOBE1z
 <LAB> = \Pa\.*
 <F_L str> != be
 <F_R head-word> != %
+<F_R degree> = %
+<F_L str> != than
 =
 <F_L to-be> += <F_R head-word ref>
 ;
@@ -1276,6 +1307,13 @@ PREDET
 =
 <F_L linkR1 F_R ref links _predet> = <F_L ref> 
 
+; For sentences like "I want aisle seats on all my flights"
+#TemplateActionAlg
+PREDET2
+<LAB> = \AL\.*
+<F_L linkR0 LAB> = \J\.*
+=
+<F_L linkR0 F_R ref links _predet> = <F_L ref> 
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; SUPERLATIVES
@@ -1318,12 +1356,22 @@ SUPERLATIVE-3
 CONJ_AMOD
 <F_R ref links _amod> != %
 <F_L conj> != %
-<LAB> != \SJr\.*
+<LAB> != \VJ\.*|\AJ\.*|\SJ\.*|\MJ\.*|\RJ\.*
+;<LAB> != \SJr\.*
 =
 <F_R ref links _amod> = %
 <F_R ref links _amod> += <F_L conj member0 ref>
 <F_R ref links _amod> += <F_L conj member1 ref>
-
+#TemplateActionAlg
+CONJ_PREDADJ
+<F_L subj links _predadj> != %
+<F_R conj> != %
+;<LAB> != \SJ\.*|\AJ\.*
+<LAB> != \VJ\.*|\AJ\.*|\SJ\.*|\MJ\.*|\RJ\.*
+=
+<F_L subj links _predadj> = %
+<F_L subj links _predadj> += <F_R conj member0 ref>
+<F_L subj links _predadj> += <F_R conj member1 ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1344,8 +1392,9 @@ CONJ_AMOD
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
-<F_R str> != not
+<F_R str> != not|more|less
 <F_L head-word> != %
+<F_R degree> = %
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
@@ -1395,6 +1444,7 @@ ADV3
 ;  Jim runs very quickly  --   EE(very,quickly) 
 ;  Jim ate a very fat chicken -- has EA(very, fat)
 <LAB> = \EE\.* | EA
+<F_L str> != more
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
@@ -1423,7 +1473,37 @@ CONJ_ADVMOD
 <F_L ref links _advmod> = %
 <F_L ref links _advmod> += <F_R conj member0 ref>
 <F_L ref links _advmod> += <F_R conj member1 ref>
-
+;
+#TemplateActionAlg
+COMP_ADVMOD_1
+<LAB> = \EBmm|\MVm|\EAm
+<F_R str> = less
+=
+<F_L advmod> += <F_R ref>
+#TemplateActionAlg
+COMP_ADVMOD_2
+<LAB> = \Paf
+<F_L advmod> != %
+=
+<F_R ref links _advmod> += <F_L advmod>
+<F_L advmod> = %
+#TemplateActionAlg
+COMP_ADVMOD_3
+<LAB> = \EAm
+<F_L str> = less
+=
+<F_R advmod> += <F_L ref>
+#TemplateActionAlg
+COMP_ADVMOD_4
+<LAB> = \ECa
+<F_R str> = more|less
+=
+<F_R ref links _advmod> += <F_L ref>
+#TemplateActionAlg
+ADVMOD_TO_LINKS
+<advmod> != %
+=
+<ref links _advmod> = <advmod>
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Parataxis
@@ -1513,7 +1593,7 @@ QUERY_INDEFINATE_DETERMINER2
 #TemplateActionAlg
 QUANTITY_EXCEPTION
 <LAB> = \D\.*|\DD\.*
-<F_L str> = more|More|'s|fewer|Fewer
+<F_L str> = more|More|'s|fewer|Fewer|'|’s|’
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
 ;
@@ -1524,6 +1604,7 @@ NUMBER-1
 <LAB> = \D\.*|\NW\.*
 <LAB> != \D..y
 <LAB> != \D..w
+<LAB> != \Dmcn
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
@@ -1532,6 +1613,28 @@ NUMBER-1
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
 ;
+;#TemplateActionAlg
+;NUMBER-2
+;<LAB> = \AL\.*
+;=
+;<F_R temp_q> += <F_L ref>
+;#TemplateActionAlg
+;NUMBER-3
+;<LAB> = \D\.*
+;<F_L temp_q> != %
+;=
+;<F_R ref links _quantity> = <F_L temp_q>
+;<F_L temp_q> = %
+#TemplateActionAlg
+NUMBER-NUMERIC-QUANTIFIERS
+<LAB> = \Dmcn
+<F_L DETERMINER_FLAG> != T
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
+<F_L POSSESSIVE-FLAG> != T
+<F_L QUANTITY-EXCEPTION-FLAG> != T
+=
+<F_R ref links _num_quantity> = <F_L ref>
+<F_L IS-NUMBER-FLAG> = T
 #TemplateActionAlg
 NUMBER-1a
 <LAB> = \ND\.*|\NI\.*
@@ -1667,36 +1770,226 @@ COMPARATIVE_RELATION1
 <F_R comparative-relation-word> = <F_L>
 <F_R COMP-SUBJ-FLAG> = T
 ;
-; Puts a reference to object of 'than' in the word 'than'
+;General case for than and than1
+#TemplateActionAlg
+COMPARATIVE_1
+<LAB> = \Ss
+<F_R inflection> =.v
+<LAB> != \Sp
+=
+<F_R temp> += <F_L ref>
+#TemplateActionAlg
+COMPARATIVE_2
+<LAB> = \S\.*|\AN
+<LAB> != \Ss|\Sp
+=
+<F_R temp> += <F_L ref>
+#TemplateActionAlg
+COMPARATIVE_3
+<LAB> = \Ju
+=
+<F_L set_flag> = T
+<F_L temp> += <F_R ref>
+#TemplateActionAlg
+COMPARATIVE_4
+<LAB> = \Ss
+<F_R inflection> =.v-d
+=
+<F_L temp1> += <F_R ref>
+;
+;Rule for Dependency Relation "than"--> comp_temp is used for temporary storage purpose.
+#TemplateActionAlg
+RELATION_THAN_1
+<LAB> = \MVpn
+=
+<F_L comp_temp2> = %
+<F_L comp_temp2> = <F_R ref>
 ;
 #TemplateActionAlg
-COMPARATIVE_OBJ1
-<LAB> = \U\.c\.*|\O\.c\.*
+RELATION_THAN_2
+<LAB> = \MVpn
+<F_L comp_temp2> != %
+=
+<F_R ref links than> += <F_L comp_temp2>
+<F_L comp_temp2> = %
+<F_L SET> = T
+#TemplateActionAlg
+RELATION_THAN_3
+<LAB> = \CX|\Bc|\Mpc|\Opc|\Upc|\MV\.*
+<F_L str> = than|as
+<F_R temp> != %
+=
+<F_L set> = T
+<F_L comp_temp> += <F_R temp>
+<F_R temp> = %
+#TemplateActionAlg
+RELATION_THAN_4
+<LAB> = \O\.*|\C\.*|\S\.*|\U\.*|\Bc
+<F_L str> = than|as
+<F_L set> != T
+=
+<F_L comp_temp> = %
+<F_L comp_temp> += <F_R ref>
+<F_R comp_temp> = %
+#TemplateActionAlg
+RELATION_THAN_5
+<LAB> = \Pafc
 <F_L str> = than|as
 =
-<F_L comparative-obj-word> = <F_R>
-;
-; Brings the comparative object into the controlling verb
+<F_L comp_temp_1> += <F_R ref>
+#TemplateActionAlg
+RELATION_THAN_6
+<LAB> = \MVt
+<F_R comp_temp_1> != %
+=
+<F_L ref links than> += <F_R comp_temp_1>
+<F_R comp_temp_1> = %
+#TemplateActionAlg
+RELATION_THAN_7
+<LAB> = \MVt\.*
+<F_R comp_temp> != %
+<F_L SET> != T
+=
+<F_L comp_temp> = %
+<F_L comp_temp> += <F_R comp_temp>
+<F_R comp_temp> = %
+#TemplateActionAlg
+RELATION_THAN_8
+<LAB> = \Pa\.*|\I\.*
+<F_R comp_temp> != %
+=
+<F_L comp_temp> += <F_R comp_temp>
+;<F_R comp_temp> = %
+#TemplateActionAlg
+RELATION_THAN_9
+<LAB> = \Paf|\Ma
+<F_R comp_temp> != %
+=
+<F_L comp_var> += <F_R comp_temp>
+<F_R comp_temp> = %
+#TemplateActionAlg
+RELATION_THAN_10
+<LAB> = \Opn
+<F_R comp_var> != %
+=
+<F_R SET> = T
+<F_L comp_var> += <F_R comp_var>
+<F_R comp_var> = %
+#TemplateActionAlg
+RELATION_THAN_11
+<LAB> = \MVp
+<F_L comp_temp> != %
+<F_R set_flag> = T
+=
+<F_R temp> = %
+<F_R comp_var> += <F_L comp_temp>
+<F_L comp_temp> = %
 ;
 #TemplateActionAlg
-COMPARATIVE_OBJ2
-<LAB> = \MV[tz]\.*
-<F_R comparative-obj-word> != %
+RELATION_THAN_12
+<LAB> =\Ma
+<F_R comp_temp> != %
+<F_L SET> != T
 =
-<F_L comparative-obj-word> = <F_R comparative-obj-word>
+<F_L ref links than> += <F_R comp_temp>
+<F_R comp_temp> = %
+#TemplateActionAlg
+RELATION_THAN_13
+<LAB> = \Ju|\O\.*
+<F_L comp_var> != %
+=
+<F_L SET> = T
+<F_R ref links than> += <F_L comp_var>
+<F_L comp_var> = %
+#TemplateActionAlg
+RELATION_THAN_14
+<LAB> = \MV\.*|\Usc\.*|\Os\.*
+<F_L str> = than|as
+<F_R str> != in|on 
+<F_R inflection> !=.m
+=
+<F_L comp_temp1> += <F_R ref>
+;
+#TemplateActionAlg
+RELATION_THAN_15
+<LAB> = \MVt\.*
+<F_R comp_temp1> != %
+=
+<F_L comp_temp1> += <F_R comp_temp1>
+<F_R comp_temp1> = %
+;
+#TemplateActionAlg
+RELATION_THAN_16
+<LAB> =\Ou\.*
+<F_L comp_temp1> != %
+=
+<F_R ref links than> += <F_L comp_temp1>
+<F_L comp_temp1> = %
+<F_L comp_temp> = %
+;
+#TemplateActionAlg
+RELATION_THAN_17
+<LAB> = \S\.*|\SX
+<F_R comp_temp> != %
+<F_R SET> != T
+=
+<F_L ref links than> += <F_R comp_temp>
+<F_R comp_temp> = %
+<F_R comp_temp1> = %
+;
+#TemplateActionAlg
+RELATION_THAN_18
+<LAB> = \MVa
+<F_L comp_temp1> != %
+=
+<F_R ref links than> += <F_L comp_temp1>
+<F_L comp_temp1> = %
+;
+;Rule for Dependency Relation "than1".comp_temp1 is used for temporary storage purpose.
+#TemplateActionAlg
+RELATION_THAN1_1
+<LAB> = \Paf\.*
+<LAB> != \Pafc
+<F_L str> = than
+=
+<F_L comp_temp1> += <F_R ref>
+#TemplateActionAlg
+RELATION_THAN1_2
+<LAB> = \C\.* 
+<LAB> != \Cta
+<F_R temp1> != %
+=
+<F_L comp_temp1> += <F_R temp1>
+<F_R temp1> = %
+#TemplateActionAlg
+RELATION_THAN1_3
+<LAB> = \MVt\.*
+<F_R comp_temp1> != %
+=
+<F_L ref links than1> += <F_R comp_temp1>
+<F_R comp_temp1> = %
+;
+;END OF THAN AND THAN1
+;
+;#TemplateActionAlg
+;COMPARATIVE_OBJ2
+;<LAB> = \MV[tz]\.*
+;<F_R comparative-obj-word> != %
+;=
+;<F_L comparative-obj-word> = <F_R comparative-obj-word>
 ;
 ; Brings the object and comparative 2nd-part into the comparative subject
 ; But only if there's a 2nd part -- "She likes more pasta" doesn't have
 ; have a comparative object.
 ;
-#TemplateActionAlg
-COMPARATIVE_OBJ3A
-<LAB> = \O\.*
-<F_R COMP-SUBJ-FLAG> = T
-<F_L comparative-obj-word> != %
-=
-<F_R comparative-cvar name> = _$cVar
-<F_R comparative-cvar links _$crVar> = <F_L comparative-obj-word ref>
+;#TemplateActionAlg
+;COMPARATIVE_OBJ3A
+;<LAB> = \O\.*
+;<F_R COMP-SUBJ-FLAG> = T
+;<F_L comparative-obj-word> != %
+;=
+;<F_R comparative-cvar name> = _$cVar
+;<F_R comparative-cvar links _$crVar> = <F_L comparative-obj-word ref>
 ;
 ; Use the prep alg to handle the rest.
 ;
@@ -1716,6 +2009,128 @@ PREP_TO_LINKS
 <ref prep-links> != %
 =
 <ref links> <= <ref prep-links>
+;
+; Extracting comparative relations from Non-equal-gradable senteces such as 
+; "He is more/less intelligent than John"
+; 'temp' is used to denote the label is temporary 
+; relWord-temp = a temporary element carrying the relation Word type more|less
+; feat-temp = a temporary element carrying the feature on which the comparison is made on.
+; is-temp = a temporary element carrying the subject for to-be verbs
+; "is_set" =  used to point that a comparative form has been found and set 
+#TemplateActionAlg
+MORE_OR_LESS1a
+<LAB> = \EAm|\EEm|\Dm\.*m
+<F_L str> = more|less|many|much|little
+=
+<F_R relWord-temp> += <F_L str>
+#TemplateActionAlg
+MORE_OR_LESS1b
+<LAB> = \MVm|\Om\.*|EBmm
+<F_R str> = more|less
+=
+<F_L relWord-temp> += <F_R str>
+#TemplateActionAlg
+TO_BE_TEMP
+<LAB> = \S\.*
+<F_R str> = is|was
+=
+<F_R is-temp> += <F_L ref>
+#TemplateActionAlg
+MORE_OR_LESS7a1
+<LAB> = \Pa\.*
+<F_L is-temp> != %
+<F_R relWord-temp> != %
+<F_R relWord-temp> = more|many|much
+=
+<F_R ref links more> += <F_L is-temp>
+<F_L is-temp> = %
+<F_R relWord-temp> = %
+#TemplateActionAlg
+MORE_OR_LESS7a2
+<LAB> = \Pa\.*
+<F_L is-temp> != %
+<F_R relWord-temp> != %
+<F_R relWord-temp> = less|little
+=
+<F_R ref links _more> += <F_L is-temp>
+<F_L is-temp> = %
+<F_R relWord-temp> = %
+#TemplateActionAlg
+MORE_OR_LESS7b1
+<LAB> = \MVa|\Ou\.*|\Op
+<F_R relWord-temp> != %
+<F_R relWord-temp> = more|many|much
+=
+<F_R ref links more> += <F_L ref>
+<F_R relWord-temp> = %
+#TemplateActionAlg
+MORE_OR_LESS7b2
+<LAB> = \MVa|\Ou\.*|\Op
+<F_R relWord-temp> != %
+<F_R relWord-temp> = less|little
+=
+<F_R ref links _more> += <F_L ref>
+<F_R relWord-temp> = %
+#TemplateActionAlg
+MORE_OR_LESS7c1
+<LAB> = \Opn|\MVa|\Oun
+<F_L relWord-temp> != %
+<F_R str> != much
+<F_L relWord-temp> = more|many|much
+=
+<F_R ref links more> += <F_L ref>
+<F_L relWord-temp> = %
+<F_L relWord-temp> = is_set
+#TemplateActionAlg
+MORE_OR_LESS7c2
+<LAB> = \Opn|\MVa|Oun
+<F_L relWord-temp> != %
+<F_R str> != much
+<F_L relWord-temp> = less|little
+=
+<F_R ref links _more> += <F_L ref>
+<F_L relWord-temp> = %
+<F_L relWord-temp> = is_set
+#TemplateActionAlg
+MORE_OR_LESS7d1
+<LAB> = \Om\.*
+<F_L relWord-temp> != is_set
+<F_R str> = more|many|much
+=
+<F_R ref links more> += <F_L ref>
+#TemplateActionAlg
+MORE_OR_LESS7d2
+<LAB> = \Om\.*
+<F_L relWord-temp> != is_set
+<F_R str> = less|little
+=
+<F_R ref links _more> += <F_L ref>
+#TemplateActionAlg
+MORE_OR_LESS7e1
+<LAB> = \Pa\.*
+<F_L is-temp> != %
+<F_L relWord-temp> != %
+<F_L relWord-temp> = more|many|much
+=
+<F_R ref links more> += <F_L is-temp>
+<F_L is-temp> = %
+<F_L relWord-temp> = %
+#TemplateActionAlg
+MORE_OR_LESS7e2
+<LAB> = \Pa\.*
+<F_L is-temp> != %
+<F_L relWord-temp> != %
+<F_L relWord-temp> = less|little
+=
+<F_R ref links _more> += <F_L is-temp>
+<F_L is-temp> = %
+<F_L relWord-temp> = %
+#TemplateActionAlg
+NO_MORE_OR_LESS
+<LAB> = \MVb
+<F_R degree> = comparative
+=
+<F_R ref links _more> += <F_L ref>
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////

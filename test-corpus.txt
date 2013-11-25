@@ -1,3 +1,8 @@
+Fewer people like pigs than dogs.
+More people like pigs than dogs.
+Some people like pigs more than dogs.
+Some people like pigs less than dogs.
+END.
 GPU-Accelerated LIBSVM is exploiting the GPU, using the CUDA interface, to
 speed-up the training process. This package contains a new executable for
 training classifiers "svm-train-gpu.exe" together with the original one.
