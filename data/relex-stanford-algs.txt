@@ -429,6 +429,15 @@ QUANTITY_TO_SF
 <sf-links _det> = %
 
 ;
+; Be sure to blank out _det if number is specified!
+#TemplateActionAlg
+NUM_QUANTITY_TO_SF
+<links _num_quantity> != %
+=
+<sf-links _num> += <links _num_quantity>
+<sf-links _det> = %
+
+;
 #TemplateActionAlg
 QUANTITY_MULT_TO_SF
 <links _quantity_mult> != %
