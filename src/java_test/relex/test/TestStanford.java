@@ -70,7 +70,8 @@ public class TestStanford
 		{
 			System.err.println("Error: size miscompare:\n" +
 				"\tStanford = " + sfa + "\n" +
-				"\tRelEx    = " + rsa );
+				"\tRelEx    = " + rsa + "\n" +
+				"\tSentence = " + sent);
 			fail ++;
 			return false;
 		}
@@ -80,7 +81,8 @@ public class TestStanford
 			{
 				System.err.println("Error: content miscompare:\n" +
 					"\tStanford = " + sfa + "\n" +
-					"\tRelEx    = " + rsa );
+					"\tRelEx    = " + rsa + "\n" +
+					"\tSentence = " + sent);
 				fail ++;
 				return false;
 			}
@@ -103,7 +105,8 @@ public class TestStanford
 		{
 			System.err.println("Error: size miscompare:\n" +
 				"\tStanford = " + sfa + "\n" +
-				"\tRelEx    = " + rsa );
+				"\tRelEx    = " + rsa + "\n" +
+				"\tSentence = " + sent);
 			fail ++;
 			return false;
 		}
@@ -113,7 +116,8 @@ public class TestStanford
 			{
 				System.err.println("Error: content miscompare:\n" +
 					"\tStanford = " + sfa + "\n" +
-					"\tRelEx    = " + rsa );
+					"\tRelEx    = " + rsa + "\n" +
+					"\tSentence = " + sent);
 				fail ++;
 				return false;
 			}

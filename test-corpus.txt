@@ -1,3 +1,11 @@
+The book was destroyed.
+This book was destroyed.
+That book was destroyed.
+A book was destroyed.
+Some book was destroyed.
+Another book was destroyed.
+Which book was destroyed?
+END.
 Fewer people like pigs than dogs.
 More people like pigs than dogs.
 Some people like pigs more than dogs.
