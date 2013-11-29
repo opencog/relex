@@ -69,7 +69,8 @@ public class TestRelEx
 		{
 			System.err.println("Error: size miscompare:\n" +
 				"\tExpected = " + exp + "\n" +
-				"\tGot      = " + got );
+				"\tGot      = " + got + "\n" +
+				"\tSentence = " + sent);
 			fail ++;
 			return false;
 		}
@@ -79,7 +80,8 @@ public class TestRelEx
 			{
 				System.err.println("Error: content miscompare:\n" +
 					"\tExpected = " + exp + "\n" +
-					"\tGot      = " + got );
+					"\tGot      = " + got + "\n" +
+					"\tSentence = " + sent);
 				fail ++;
 				return false;
 			}
