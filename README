@@ -53,8 +53,8 @@ The following packages are required pre-requisites for building RelEx.
 	are available for download at
 	http://www.abisource.com/projects/link-grammar/#download
 
-   Link-grammar version 4.7.0 or later is needed; changes in the
-   conjunction handling requires that version 4.7.0 or later be used.
+	Link-grammar version 4.7.0 or later is needed; changes in the
+	conjunction handling requires that version 4.7.0 or later be used.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
@@ -96,11 +96,15 @@ The following packages are required pre-requisites for building RelEx.
 	jwnl.jar, but the GATE version of jwnl.jar is not compatible
 	(welcome to java DLL hell).
 
+	When copying jwnl.jar: verify the file permisions! Be sure to issue
+	the following command: "chmod 644 jwnl.jar", as otherwise, you'll
+	get strange "java cannot unzip jar" error messages.
+
 - Apache commons logging
-   The JWNL package requires that the Apache commons logging
-   jar file be installed. In Debian/Ubuntu, this is supplied by
-   the "libcommons-logging-java" package. In RedHat/CentOS systems,
-   the package name is "jakarta-commons-logging".
+	The JWNL package requires that the Apache commons logging
+	jar file be installed. In Debian/Ubuntu, this is supplied by
+	the "libcommons-logging-java" package. In RedHat/CentOS systems,
+	the package name is "jakarta-commons-logging".
 
 
 Optional packages
@@ -111,8 +115,8 @@ function.
 
 - OpenNLP
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
-   to find sentence boundaries in free text. If OpenNLP is not found, 
-   then the less accurate java.text.BreakIterator class is used.
+	to find sentence boundaries in free text. If OpenNLP is not found, 
+	then the less accurate java.text.BreakIterator class is used.
 
 	The OpenNLP home page is at http://opennlp.sourceforge.net/
 	Download and install OpenNLP tools, and verify that the 
@@ -138,16 +142,16 @@ function.
 	http://trove4j.sourceforge.net/
 
 	Since trove is optimized, using it may improve performance and/or
-   decrease memory usage, as compared to the standard Sun JDK
-   implementation of the java.util hierarchy.
+	decrease memory usage, as compared to the standard Sun JDK
+	implementation of the java.util hierarchy.
 
-   ***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
-   work with version 2.0 !!
+	***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
+	work with version 2.0 !!
 
 - xercesImpl.jar
-   Older versions of the OpenNLP package require that the Xerces2
-   XML parser package be installed. In Debian/Ubunutu, this is supplied
-   by the "libxerces2-java" package.
+	Older versions of the OpenNLP package require that the Xerces2
+	XML parser package be installed. In Debian/Ubunutu, this is supplied
+	by the "libxerces2-java" package.
 
 
 Building
