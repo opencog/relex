@@ -99,7 +99,8 @@ The following packages are required pre-requisites for building RelEx.
 - Apache commons logging
    The JWNL package requires that the Apache commons logging
    jar file be installed. In Debian/Ubuntu, this is supplied by
-   the "libcommons-logging-java" package.
+   the "libcommons-logging-java" package. In RedHat/CentOS systems,
+   the package name is "jakarta-commons-logging".
 
 
 Optional packages
