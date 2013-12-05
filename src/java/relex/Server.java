@@ -50,6 +50,7 @@ public class Server
 	public static void main(String[] args)
 	{
 		int listen_port = 4444;
+		int max_parses = 1;
 		boolean relex_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
@@ -60,6 +61,7 @@ public class Server
 			" -p number  \t Port number to listen on (default: 4444)\n" +
 			" --port num \t Port number to listen on (default: 4444)\n" +
 			" --lang lang\t Set langauge (default: en)\n" +
+			" -n number  \t Max number of parses to return (default: 1)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --anaphora \t Output anaphore references\n" +
@@ -88,6 +90,21 @@ public class Server
 			else if (args[i].equals("--link"))
 			{
 				link_on = true;
+			}
+			else if (args[i].equals("-n"))
+			{
+				i++;
+				if (i >= args.length) {
+					System.err.println("Error: Expected a number after the -n option.");
+					System.exit(1);
+				}
+
+				try {
+					max_parses = Integer.parseInt(args[i]);
+				} catch (NumberFormatException nfe) {
+					System.err.println("Error: Expected a number after the -n flag.");
+					System.exit(1);
+				}
 			}
 			else if (args[i].equals("--port") || args[i].equals("-p"))
 			{
@@ -125,8 +142,9 @@ public class Server
 
 		// -----------------------------------------------------------------
 		// After parsing the commmand arguments, set up the assorted classes.
-		RelationExtractor r = new RelationExtractor(false);
-		r.setLanguage(lang);
+		RelationExtractor re = new RelationExtractor(false);
+		re.setLanguage(lang);
+		re.setMaxParses(max_parses);
 		OpenCogScheme opencog = new OpenCogScheme();
 		Server s = new Server();
 		s.listen_port = listen_port;
@@ -154,7 +172,7 @@ public class Server
 		}
 		else
 		{
-			r.do_apply_algs = false;
+			re.do_apply_algs = false;
 		}
 
 		// -----------------------------------------------------------------
@@ -195,7 +213,7 @@ public class Server
 				if (line == null)
 					continue;
 				System.err.println("Info: recv input: \"" + line + "\"");
-				Sentence sntc = r.processSentence(line);
+				Sentence sntc = re.processSentence(line);
 				if (sntc.getParses().size() == 0)
 				{
 					out.println("; NO PARSES");
