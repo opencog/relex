@@ -62,9 +62,10 @@ public class Server
 		String host_name = null;
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
 			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
+			"Options:\n" +
 			" -p number  \t Port number to listen on (default: 4444)\n" +
 			" --port num \t Port number to listen on (default: 4444)\n" +
-			" --host host:port\t Send output to indicated host:port\n" +
+			" --host host:port\t Send output to indicated host:port (example: localhost:17001)\n" +
 			" --lang lang\t Set langauge (default: en)\n" +
 			" -n number  \t Max number of parses to return (default: 1)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
@@ -142,9 +143,6 @@ public class Server
 		re.setLanguage(lang);
 		re.setMaxParses(max_parses);
 		OpenCogScheme opencog = new OpenCogScheme();
-		Server s = new Server();
-		s.listen_port = listen_port;
-		ServerSocket listen_sock = null;
 
 		if (!relex_on && !link_on)
 		{
@@ -173,6 +171,12 @@ public class Server
 
 		// -----------------------------------------------------------------
 		// Socket setup
+		Server s = new Server();
+		s.listen_port = listen_port;
+		ServerSocket listen_sock = null;
+		Socket send_sock = null;
+		OutputStream outs = null;
+
 		try
 		{
 			listen_sock = new ServerSocket(s.listen_port);
@@ -185,12 +189,12 @@ public class Server
 		System.err.println("Info: Listening on port " + s.listen_port);
 
 		// send output to some other place, rather than returning it.
-		Socket sendSocket = null;
 		if (host_name != null)
 		{
 			try
 			{
-				sendSocket = new Socket(host_name, host_port);
+				send_sock = new Socket(host_name, host_port);
+				outs = send_sock.getOutputStream();
 			}
 			catch (Exception e)
 			{
@@ -204,15 +208,17 @@ public class Server
 		// Main loop
 		while(true)
 		{
-			Socket out_sock = null;
-			OutputStream outs = null;
+			Socket in_sock = null;
 			InputStream ins = null;
 			try {
-				out_sock = listen_sock.accept();
-				ins = out_sock.getInputStream();
-				outs = out_sock.getOutputStream();
+				in_sock = listen_sock.accept();
+				ins = in_sock.getInputStream();
+
+				// If no end-point, return data on same socket.
+				if (send_sock == null)
+					outs = in_sock.getOutputStream();
 			} catch (IOException e) {
-				System.err.println("Error: Accept failed");
+				System.err.println("Error: Accept failed: " + e.getMessage());
 				continue;
 			}
 
@@ -271,12 +277,12 @@ public class Server
 
 			try
 			{
-				out_sock.close();
+				in_sock.close();
 				System.err.println("Info: Closed socket");
 			}
 			catch (IOException e)
 			{
-				System.err.println("Error: Socket close failed");
+				System.err.println("Error: Socket close failed: " + e.getMessage());
 				continue;
 			}
 		}
