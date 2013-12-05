@@ -201,18 +201,22 @@ public class Server
 					out.println("; NO PARSES");
 					continue;
 				}
-				ParsedSentence parse = sntc.getParses().get(0);
-
-				// Print the phrase string .. why ??
-				out.println("; " + parse.getPhraseString());
-
-				if (verbose)
+				int pn;
+				for (pn = 0; pn < max_parses; pn++)
 				{
-					String fin = SimpleView.printRelationsAlt(parse);
-					System.out.print(fin);
+					ParsedSentence parse = sntc.getParses().get(pn);
+
+					// Print the phrase string ... handy for debugging.
+					out.println("; " + parse.getPhraseString());
+
+					if (verbose)
+					{
+						String fin = SimpleView.printRelationsAlt(parse);
+						System.out.print(fin);
+					}
+					opencog.setParse(parse);
+					out.println(opencog.toString());
 				}
-				opencog.setParse(parse);
-				out.println(opencog.toString());
 
 				// Add a special tag to tell the cog server that it's
 				// just recieved a brand new sentence. The OpenCog scheme
