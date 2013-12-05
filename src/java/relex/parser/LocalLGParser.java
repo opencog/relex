@@ -53,7 +53,21 @@ public class LocalLGParser extends LGParser
 			LinkGrammar.setDictionariesPath(_dict_path);
 
 		if (!initialized.get())
-			LinkGrammar.init();
+		{
+			try
+			{
+				LinkGrammar.init();
+			}
+      	catch (Exception e)
+			{
+				String msg = "Error: LinkGrammar initialization error";
+				if (_lang != null)
+					msg = "Error: LinkGrammar: Unknown language \"" + _lang + "\"";
+				if (_dict_path != null)
+					msg = "Error: LinkGrammar: Invalid dictionary path \"" + _dict_path + "\"";
+				throw new RuntimeException(msg);
+			}
+		}
 
 		LGService.configure(_config);
 		initialized.set(Boolean.TRUE);

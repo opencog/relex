@@ -293,7 +293,7 @@ public class RelationExtractor
 				hobbs.resolve(sntc);
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			System.err.println("Error: Failed to process sentence: " + sentence);
 			e.printStackTrace();
