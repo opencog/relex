@@ -194,6 +194,7 @@ public class Server
 			try
 			{
 				send_sock = new Socket(host_name, host_port);
+				send_sock.setKeepAlive(true);
 				outs = send_sock.getOutputStream();
 			}
 			catch (Exception e)
@@ -225,6 +226,20 @@ public class Server
 			System.err.println("Info: Socket accept");
 			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 			PrintWriter out = new PrintWriter(outs, true);
+
+			// Attempt to detect a dead socket. For some reason, this fails ...
+			if (send_sock != null)
+			{
+				try
+				{
+					// Send a lone newline char.
+					outs.write(10);
+				}
+				catch (Exception e)
+				{
+					System.err.println("Error: Remote end has closed socket! " + e.getMessage());
+				}
+			}
 
 			try {
 				String line = in.readLine();
