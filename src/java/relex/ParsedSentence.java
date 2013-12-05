@@ -64,7 +64,7 @@ public class ParsedSentence
 	private String idString;
 
 	// Back-pointer to collection of other parses for this sentence
-	private Sentence sentence;
+	private Sentence _sentence;
 
 	// String containing the original sentence
 	private String original;
@@ -120,11 +120,11 @@ public class ParsedSentence
 	}
 
 	public Sentence getSentence() {
-		return sentence;
+		return _sentence;
 	}
 
 	public void setSentence(Sentence s) {
-		sentence = s;
+		_sentence = s;
 	}
 
 	public void setIDString(String str) {

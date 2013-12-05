@@ -33,11 +33,11 @@ import relex.feature.FeatureNode;
  * As the same sentence can have multiple parses, this class only
  * displays a single, particular parse.
  *
- * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
+ * Copyright (c) 2007, 2008, 2013 Linas Vepstas <linas@linas.org>
  */
 public class OpenCogScheme
 {
-	private ParsedSentence parse = null;
+	private ParsedSentence _parse = null;
 	private String orig_sentence = null;
 
 	private OpenCogSchemeLink link_scheme;
@@ -66,18 +66,19 @@ public class OpenCogScheme
 	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
 	public boolean getShowAnaphora() { return do_show_anaphora; }
 
-	public void setParse(ParsedSentence _parse)
+	public void setParse(ParsedSentence parse)
 	{
-		parse = _parse;
+		_parse = parse;
 
 		orig_sentence += printWords();
+		orig_sentence += printParse();
 		orig_sentence += printSentence();
 
-		link_scheme.setParse(parse);
-		rel_scheme.setParse(parse);
+		link_scheme.setParse(_parse);
+		rel_scheme.setParse(_parse);
 
 		anaphora_scheme.clear();
-		anaphora_scheme.setSentence(parse);
+		anaphora_scheme.setSentence(_parse);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -118,7 +119,7 @@ public class OpenCogScheme
 	{
 		String str = "";
 
-		FeatureNode fn = parse.getLeft();
+		FeatureNode fn = _parse.getLeft();
 		fn = fn.get("NEXT");
 		while (fn != null)
 		{
@@ -132,7 +133,7 @@ public class OpenCogScheme
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
-			       "   (ParseNode \"" + parse.getIDString() + "\")\n" +
+			       "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
 			       ")\n";
 
 			fn = fn.get("NEXT");
@@ -141,16 +142,16 @@ public class OpenCogScheme
 	}
 
 	/**
-	 * Print the original sentence, as made up out of word instances,
+	 * Print the words in the parse, as made up out of word instances,
 	 * maintaining the proper word order in the sentence.
 	 */
-	public String printSentence()
+	public String printParse()
 	{
 		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-		             "   (ParseNode \"" + parse.getIDString() + "\")\n" +
+		             "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
 		             "   (ListLink\n";
 
-		FeatureNode fn = parse.getLeft();
+		FeatureNode fn = _parse.getLeft();
 		fn = fn.get("NEXT"); // skip LEFT-WALL
 		while (fn != null)
 		{
@@ -161,6 +162,15 @@ public class OpenCogScheme
 
 		str += "   )\n" +
 		       ")\n";
+		return str;
+	}
+
+	public String printSentence()
+	{
+		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
+		             "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
+		             "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
+		             ")\n";
 		return str;
 	}
 
