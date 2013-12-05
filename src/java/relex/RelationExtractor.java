@@ -105,13 +105,16 @@ public class RelationExtractor
 	/** Document - holder of sentences */
 	Document doco;
 
+	/** Apply the relex algs to the parse */
+	public boolean do_algs;
+
 	/** Stanford parser compatibility mode */
 	public boolean do_stanford;
 
 	/** Penn tagset compatibility mode */
 	public boolean do_penn_tagging;
 
-	/** Expand preposition markup to two dependencies. */
+	/** Expand preposition markup into two dependencies. */
 	public boolean do_expand_preps;
 
 	/** Statistics */
@@ -130,6 +133,7 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 		do_tree_markup = false;
 
+		do_algs = true;
 		do_stanford = false;
 		do_penn_tagging = false;
 		do_expand_preps = false;
@@ -150,6 +154,10 @@ public class RelationExtractor
 	{
 		if (_is_inited) return;
 		_is_inited = true;
+
+		// At this time, we only have algs for English.
+		// So, don't waste CPU time on algs if its not English.
+		if (null != _lang && "en" != _lang) do_algs = false;
 
 		parser = _use_sock ? new RemoteLGParser() : new LocalLGParser();
 		if (null != _lang) parser.setLanguage(_lang);
@@ -259,7 +267,7 @@ public class RelationExtractor
 				}
 
 				// The actual relation extraction is done here.
-				sentenceAlgorithmApplier.applyAlgs(parse, context);
+				if (do_algs) sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
 
