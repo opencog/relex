@@ -54,10 +54,12 @@ public class Server
 		boolean link_on = false;
 		boolean anaphora_on = false;
 		boolean verbose = false;
+		String lang = "en";
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
 			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
 			" -p number  \t Port number to listen on (default: 4444)\n" +
 			" --port num \t Port number to listen on (default: 4444)\n" +
+			" --lang lang\t Set langauge (default: en)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --anaphora \t Output anaphore references\n" +
@@ -74,6 +76,15 @@ public class Server
 				System.out.println(usageString);
 				System.exit(0);
 			}
+			else if (args[i].equals("--lang"))
+			{
+				i++;
+				if (i >= args.length) {
+					System.err.println("Error: Expected a language after the --lang option.");
+					System.exit(1);
+				}
+				lang = args[i];
+			}
 			else if (args[i].equals("--link"))
 			{
 				link_on = true;
@@ -82,7 +93,7 @@ public class Server
 			{
 				i++;
 				if (i >= args.length) {
-					System.err.println("Error: Expected a port number after the -p flag.");
+					System.err.println("Error: Expected a port number after the -p option.");
 					System.exit(1);
 				}
 
@@ -112,7 +123,10 @@ public class Server
 
 		System.err.println("Info: Version: " + Version.getVersion());
 
+		// -----------------------------------------------------------------
+		// After parsing the commmand arguments, set up the assorted classes.
 		RelationExtractor r = new RelationExtractor(false);
+		r.setLanguage(lang);
 		OpenCogScheme opencog = new OpenCogScheme();
 		Server s = new Server();
 		s.listen_port = listen_port;
@@ -138,7 +152,13 @@ public class Server
 			System.err.println("Info: RelEx output on.");
 			opencog.setShowRelex(relex_on);
 		}
+		else
+		{
+			r.do_apply_algs = false;
+		}
 
+		// -----------------------------------------------------------------
+		// Socket setup
 		try
 		{
 			listen_sock = new ServerSocket(s.listen_port);
@@ -150,6 +170,8 @@ public class Server
 		}
 		System.err.println("Info: Listening on port " + s.listen_port);
 
+		// -----------------------------------------------------------------
+		// Main loop
 		while(true)
 		{
 			Socket out_sock = null;
