@@ -394,6 +394,7 @@ public class RelationExtractor
 			" [-h (show this help)]" +
 			" [-i (show output for generation)]" +
 			" [-l (show Link Grammar parse diagram)]" +
+			" [--lang language (default en for English)]" +
 			" [-m (show parse metadata)]" +
 			" [--maxParseSeconds N]" +
 			" [-n max number of parses to display]" +
@@ -434,11 +435,14 @@ public class RelationExtractor
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("-s");
-		opts.add("--maxParseSeconds");
 		opts.add("--html");
+		opts.add("--lang");
+		opts.add("--maxParseSeconds");
 		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
 
+		// Things that can be set via command line flags; cache till needed.
 		String sentence = null;
+		String language = "en";
 		int maxParses = 1;
 		int maxParseSeconds = 6;
 		PrintWriter html = null;
@@ -452,11 +456,14 @@ public class RelationExtractor
 			opt = commandMap.get("-n");
 			if (opt != null) maxParses = Integer.parseInt(opt);
 
-			opt = commandMap.get("--maxParseSeconds");
-			if (opt != null) maxParseSeconds = Integer.parseInt(opt);
-
 			opt = commandMap.get("--html");
 			if (opt != null) html = new PrintWriter(new FileWriter(opt));
+
+			opt = commandMap.get("--lang");
+			if (opt != null) language = opt;
+
+			opt = commandMap.get("--maxParseSeconds");
+			if (opt != null) maxParseSeconds = Integer.parseInt(opt);
 		}
 		catch (Exception e)
 		{
@@ -482,6 +489,7 @@ public class RelationExtractor
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
+		re.setLanguage(language);
 		System.out.println("; Version: " + re.getVersion());
 
 		// Don't run anaphora if -o is set, this will be done in a
@@ -544,7 +552,7 @@ public class RelationExtractor
 
 		int sentence_count = 0;
 		boolean more_input = true;
-		while(more_input)
+		while (more_input)
 		{
 			// If no sentence specified on the command line
 			// (with the "-s" flag), then read it from stdin.
