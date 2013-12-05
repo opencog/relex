@@ -106,7 +106,7 @@ public class RelationExtractor
 	Document doco;
 
 	/** Apply the relex algs to the parse */
-	public boolean do_algs;
+	public boolean do_apply_algs;
 
 	/** Stanford parser compatibility mode */
 	public boolean do_stanford;
@@ -133,7 +133,7 @@ public class RelationExtractor
 		do_anaphora_resolution = false;
 		do_tree_markup = false;
 
-		do_algs = true;
+		do_apply_algs = true;
 		do_stanford = false;
 		do_penn_tagging = false;
 		do_expand_preps = false;
@@ -157,7 +157,7 @@ public class RelationExtractor
 
 		// At this time, we only have algs for English.
 		// So, don't waste CPU time on algs if its not English.
-		if (null != _lang && "en" != _lang) do_algs = false;
+		if (null != _lang && "en" != _lang) do_apply_algs = false;
 
 		parser = _use_sock ? new RemoteLGParser() : new LocalLGParser();
 		if (null != _lang) parser.setLanguage(_lang);
@@ -267,7 +267,7 @@ public class RelationExtractor
 				}
 
 				// The actual relation extraction is done here.
-				if (do_algs) sentenceAlgorithmApplier.applyAlgs(parse, context);
+				if (do_apply_algs) sentenceAlgorithmApplier.applyAlgs(parse, context);
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
 
@@ -486,10 +486,11 @@ public class RelationExtractor
 		if (html != null) html.println("<html>");
 
 		RelationExtractor re = new RelationExtractor();
+		// careful: set language *before* doing other  things, to avoid call to init()
+		re.setLanguage(language);
 		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
-		re.setLanguage(language);
 		System.out.println("; Version: " + re.getVersion());
 
 		// Don't run anaphora if -o is set, this will be done in a
@@ -665,7 +666,8 @@ public class RelationExtractor
 						 	parse.getLeft().toString(LinkView.getFilter()));
 
 					if ((commandMap.get("-q") == null) &&
-					    (commandMap.get("-o") == null))
+					    (commandMap.get("-o") == null) &&
+					    re.do_apply_algs)
 					{
 						System.out.println("\n======\n");
 						System.out.println("Dependency relations:\n");
