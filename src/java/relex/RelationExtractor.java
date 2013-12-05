@@ -655,8 +655,9 @@ public class RelationExtractor
 					{
 						// Print simple parse ranking
 						Double confidence = parse.getTruthValue().getConfidence();
-						String pconfidence = confidence.toString().substring(0,6);
-						System.out.println("Parse confidence: " + pconfidence);
+						String prt_cnfd = confidence.toString();
+						prt_cnfd = prt_cnfd.substring(0, Math.min(6, prt_cnfd.length()));
+						System.out.println("Parse confidence: " + prt_cnfd);
 						System.out.println(
 							"cost vector = (UNUSED=" + parse.getNumSkippedWords() +
 							" DIS=" + parse.getDisjunctCost() +
