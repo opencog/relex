@@ -581,6 +581,10 @@ public class RelationExtractor
 			{
 				System.out.println("; SENTENCE: ["+sentence+"]");
 				Sentence sntc = re.processSentence(sentence);
+
+				// Crazy error condition ... the parser is broken somehow ... 
+				if (null == sntc) { sentence = ds.getNextSentence(); break; }
+
 				re.doco.addSentence(sntc);
 
 				if (html != null)
