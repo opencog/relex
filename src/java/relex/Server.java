@@ -24,6 +24,8 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
+import java.util.Map;
 import relex.output.SimpleView;
 import relex.output.OpenCogScheme;
 import relex.Version;
@@ -67,75 +69,55 @@ public class Server
 			" --anaphora \t Output anaphore references\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
-		for (int i = 0; i < args.length; i++)
+		HashSet<String> flags = new HashSet<String>();
+		flags.add("-h");
+		flags.add("--anaphora");
+		flags.add("--help");
+		flags.add("--link");
+		flags.add("--relex");
+		flags.add("--verbose");
+		HashSet<String> opts = new HashSet<String>();
+		opts.add("-n");
+		opts.add("-p");
+		opts.add("--lang");
+		opts.add("--port");
+		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
+
+		try
 		{
-			if (args[i].equals("--anaphora"))
-			{
-				anaphora_on = true;
-			}
-			else if (args[i].equals("--help") || args[i].equals("-h"))
-			{
-				System.out.println(usageString);
-				System.exit(0);
-			}
-			else if (args[i].equals("--lang"))
-			{
-				i++;
-				if (i >= args.length) {
-					System.err.println("Error: Expected a language after the --lang option.");
-					System.exit(1);
-				}
-				lang = args[i];
-			}
-			else if (args[i].equals("--link"))
-			{
-				link_on = true;
-			}
-			else if (args[i].equals("-n"))
-			{
-				i++;
-				if (i >= args.length) {
-					System.err.println("Error: Expected a number after the -n option.");
-					System.exit(1);
-				}
+			String opt = commandMap.get("--lang");
+			if (opt != null) lang = opt;
 
-				try {
-					max_parses = Integer.parseInt(args[i]);
-				} catch (NumberFormatException nfe) {
-					System.err.println("Error: Expected a number after the -n flag.");
-					System.exit(1);
-				}
-			}
-			else if (args[i].equals("--port") || args[i].equals("-p"))
-			{
-				i++;
-				if (i >= args.length) {
-					System.err.println("Error: Expected a port number after the -p option.");
-					System.exit(1);
-				}
+			opt = commandMap.get("-n");
+			if (opt != null) max_parses = Integer.parseInt(opt);
 
-				try {
-					listen_port = Integer.parseInt(args[i]);
-				} catch (NumberFormatException nfe) {
-					System.err.println("Error: Expected a port number after the -p flag.");
-					System.exit(1);
-				}
-			}
-			else if (args[i].equals("--relex"))
-			{
-				relex_on = true;
-			}
-			else if (args[i].equals("--verbose") )
-			{
-				System.err.println("Info: Verbose server mode set.");
-				verbose = true;
-			}
-			else
-			{
-				System.err.println("Error: Unknown option " + args[i]);
-				System.err.println(usageString);
-				System.exit(1);
-			}
+			opt = commandMap.get("-p");
+			if (opt != null) listen_port = Integer.parseInt(opt);
+
+			opt = commandMap.get("--port");
+			if (opt != null) listen_port = Integer.parseInt(opt);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Unrecognized parameter.");
+			System.err.println(usageString);
+			System.exit(1);
+		}
+
+		if (commandMap.get("-h") != null ||
+		    commandMap.get("--help") != null)
+		{
+			System.err.println(usageString);
+			System.exit(0);
+		}
+		if (commandMap.get("--anaphora") != null) anaphora_on = true;
+		if (commandMap.get("--link") != null) link_on = true;
+		if (commandMap.get("--relex") != null) relex_on = true;
+
+		if (commandMap.get("--verbose") != null)
+		{
+			System.err.println("Info: Verbose server mode set.");
+			verbose = true;
 		}
 
 		System.err.println("Info: Version: " + Version.getVersion());
