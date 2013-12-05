@@ -202,7 +202,8 @@ public class Server
 					continue;
 				}
 				int pn;
-				for (pn = 0; pn < max_parses; pn++)
+				int np = Math.min(max_parses, sntc.getParses().size());
+				for (pn = 0; pn < np; pn++)
 				{
 					ParsedSentence parse = sntc.getParses().get(pn);
 
