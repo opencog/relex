@@ -144,6 +144,7 @@ public class Server
 		RelationExtractor re = new RelationExtractor(false);
 		re.setLanguage(lang);
 		re.setMaxParses(max_parses);
+		if (1000 < max_parses) re.setMaxParses(max_parses+100);
 		OpenCogScheme opencog = new OpenCogScheme();
 		DocSplitter ds = DocSplitterFactory.create();
 

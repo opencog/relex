@@ -69,6 +69,7 @@ public class LocalLGParser extends LGParser
 			}
 		}
 
+		LinkGrammar.setMaxLinkages(_max_linkages);
 		LGService.configure(_config);
 		initialized.set(Boolean.TRUE);
 	}

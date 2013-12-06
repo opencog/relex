@@ -1,5 +1,6 @@
 /*
  * Copyright 2009 Borislav Iordanov
+ * Copyright 2013 Linas Vepstas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +24,7 @@ public abstract class LGParser implements IParser
 	protected LGConfig _config = new LGConfig();
 	protected String _dict_path = null;
 	protected String _lang = "en";
+	protected int _max_linkages = 1000; // consistent with jni-client.h in link-graammar
 
 	public LGConfig getConfig()
 	{
@@ -42,6 +44,11 @@ public abstract class LGParser implements IParser
 	public void setLanguage(String lang)
 	{
 		_lang = lang;
+	}	
+	
+	public void setMaxLinkages(int ml)
+	{
+		_max_linkages = ml;
 	}	
 	
 	public abstract String getVersion();

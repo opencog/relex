@@ -207,13 +207,36 @@ public class RelationExtractor
 	/* Control parameters, etc. */
 	/**
 	 * Set the max number of parses.
-	 * This will NOT reduce processing time; all parses are still computed,
-	 * but only this many are returned.
+	 * This will NOT reduce processing time; up to 1000 parses are
+	 * still computed, but only this many are returned.  To reduce
+	 * processing time, use setMaxLinkages below.
 	 */
 	public void setMaxParses(int maxParses)
 	{
 		if (!_is_inited) init();
 		parser.getConfig().setMaxLinkages(maxParses);
+	}
+
+	/**
+	 * Set the max number of parses that are computed.
+	 * Default: 1000; default is set in link-grammar/jni-client.c
+	 *
+	 * Sets the max number of linkages (parses) that are computed by
+	 * link-grammar. This should be set to a value that is significantly
+	 * larger than the expected number of parses for a sentence.  Setting
+	 * this below 1000 is strongly discourged, you won't get what you want.
+	 * Use setMaxParses() above to control the number of parses displayed.
+	 *
+	 * Caution: Setting this number too low will result in a **random**
+	 * subset of possible linakges to be explored. This random subset
+	 * might not include the best (highest-scoring) linkages, which is
+	 * probably not what you want. This method is here really so as to
+	 * increase the number of linakges about 1000 (for the ANY language).
+	 */
+	public void setMaxLinkages(int maxLinkages)
+	{
+		if (!_is_inited) init();
+		parser.setMaxLinkages(maxLinkages);
 	}
 
 	public void setMaxCost(int maxCost)
