@@ -46,6 +46,9 @@ bin:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
+# This will return parsed text on the input socket.
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora --port 4444
 
+# This will send the parsed output to an opencog server on localhost at port 17001
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --port 4444 --host localhost:17001
 
