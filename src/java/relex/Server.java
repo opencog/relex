@@ -176,6 +176,7 @@ public class Server
 		ServerSocket listen_sock = null;
 		Socket send_sock = null;
 		OutputStream outs = null;
+		PrintWriter out = null;
 
 		try
 		{
@@ -196,6 +197,12 @@ public class Server
 				send_sock = new Socket(host_name, host_port);
 				send_sock.setKeepAlive(true);
 				outs = send_sock.getOutputStream();
+				out = new PrintWriter(outs, true);
+
+				// Assume we're talking to an opencog server.
+				// Escape it into a scheme shell.
+				out.println("scm");
+				out.flush();
 			}
 			catch (Exception e)
 			{
@@ -217,7 +224,10 @@ public class Server
 
 				// If no end-point, return data on same socket.
 				if (send_sock == null)
+				{
 					outs = in_sock.getOutputStream();
+					out = new PrintWriter(outs, true);
+				}
 			} catch (IOException e) {
 				System.err.println("Error: Accept failed: " + e.getMessage());
 				continue;
@@ -225,9 +235,10 @@ public class Server
 
 			System.err.println("Info: Socket accept");
 			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
-			PrintWriter out = new PrintWriter(outs, true);
 
-			// Attempt to detect a dead socket. For some reason, this fails ...
+			// Attempt to detect a dead socket. This could happen if the
+			// remote end died. This should be easy to do, but for some
+			// reason, the below fails ... programming in Java sucks. Oh well.
 			if (send_sock != null)
 			{
 				try
