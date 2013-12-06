@@ -26,6 +26,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Map;
+import relex.corpus.DocSplitter;
+import relex.corpus.DocSplitterFactory;
 import relex.output.SimpleView;
 import relex.output.OpenCogScheme;
 import relex.Version;
@@ -143,6 +145,7 @@ public class Server
 		re.setLanguage(lang);
 		re.setMaxParses(max_parses);
 		OpenCogScheme opencog = new OpenCogScheme();
+		DocSplitter ds = DocSplitterFactory.create();
 
 		if (!relex_on && !link_on)
 		{
@@ -189,7 +192,8 @@ public class Server
 		}
 		System.err.println("Info: Listening on port " + s.listen_port);
 
-		// send output to some other place, rather than returning it.
+		// Send output to an opencog server, instead of returning it on
+		// the input socket.
 		if (host_name != null)
 		{
 			try
@@ -212,6 +216,7 @@ public class Server
 			}
 			System.err.println("Info: Will send output to " + host_name + ":" + host_port);
 		}
+
 		// -----------------------------------------------------------------
 		// Main loop
 		while(true)
@@ -252,28 +257,52 @@ public class Server
 				}
 			}
 
-			// Loop over multiple input lines.
+			// Loop over multiple sentences.
 			while (true)
 			{
-				try {
-					// Break if EOF encountered.  This should have been easy
-					// to figure out, but its not. Java sux rox. What is wrong
-					// with these people? Are they all stupid, or what? Arghhhh.
-					int one_char = in.read();
-					if (-1 == one_char)
+				// Loop over multiple input lines, looking for one complete sentence.
+				String sentence = null;
+				while (null == sentence)
+				{
+					try {
+						// Break if EOF encountered.  This should have been easy
+						// to figure out, but its not. Java sux rox. What is wrong
+						// with these people? Are they all stupid, or what? Arghhhh.
+						int one_char = in.read();
+						if (-1 == one_char)
+						{
+							sentence = ds.getRemainder();
+							break;
+						}
+						if ('\r' == one_char)
+							continue;
+						if ('\n' == one_char)
+							continue;
+
+						// Another bright shining example of more java idiocy.
+						char junk[] = {(char)one_char};
+						String line = new String(junk);
+						line += in.readLine();
+
+						System.err.println("Info: recv input: \"" + line + "\"");
+
+						ds.addText(line + " ");
+						sentence = ds.getNextSentence();
+					}
+					catch (Exception e)
+					{
+						System.err.println("Error: Read of input failed:" + e.getMessage());
 						break;
-					if ('\r' == one_char)
-						continue;
-					if ('\n' == one_char)
-						continue;
+					}
+				}
 
-					// Another bright shining example of more java idiocy.
-					char junk[] = {(char)one_char};
-					String line = new String(junk);
-					line += in.readLine();
+				// If the sentence is null; we've run out of input.
+				if (null == sentence)
+					break;
 
-					System.err.println("Info: recv input: \"" + line + "\"");
-					Sentence sntc = re.processSentence(line);
+				try
+				{
+					Sentence sntc = re.processSentence(sentence);
 					if (sntc.getParses().size() == 0)
 					{
 						out.println("; NO PARSES");
@@ -309,10 +338,10 @@ public class Server
 					out.println("; END OF SENTENCE");
 					out.flush();
 				}
-				catch (IOException e)
+				catch (Exception e)
 				{
-					System.err.println("Error: Processing input failed");
-break;
+					System.err.println("Error: Failed to parse: " + e.getMessage());
+					break;
 				}
 			}
 
