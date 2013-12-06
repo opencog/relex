@@ -218,8 +218,8 @@ public class Server
 		}
 
 		// -----------------------------------------------------------------
-		// Main loop
-		while(true)
+		// Main loop -- listen for connections, accept them, and process.
+		while (true)
 		{
 			Socket in_sock = null;
 			InputStream ins = null;
@@ -257,7 +257,7 @@ public class Server
 				}
 			}
 
-			// Loop over multiple sentences.
+			// Loop over multiple sentences that may be present in input.
 			while (true)
 			{
 				// Loop over multiple input lines, looking for one complete sentence.
@@ -326,6 +326,7 @@ public class Server
 						opencog.setParse(parse);
 						out.println(opencog.toString());
 						out.flush();
+						System.err.println("Info: sent parse " + pn + " of " + np);
 					}
 
 					// Add a special tag to tell the cog server that it's
