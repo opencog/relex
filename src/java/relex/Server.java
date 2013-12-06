@@ -297,11 +297,12 @@ public class Server
 				}
 
 				// If the sentence is null; we've run out of input.
-				if (null == sentence)
+				if (null == sentence || "" == sentence)
 					break;
 
 				try
 				{
+					System.err.println("Info: sentence: \"" + sentence + "\"");
 					Sentence sntc = re.processSentence(sentence);
 					if (sntc.getParses().size() == 0)
 					{
@@ -324,6 +325,7 @@ public class Server
 						}
 						opencog.setParse(parse);
 						out.println(opencog.toString());
+						out.flush();
 					}
 
 					// Add a special tag to tell the cog server that it's
