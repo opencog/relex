@@ -280,9 +280,7 @@ public class Server
 				out.println(")");
 
 				out.println("; END OF SENTENCE");
-
-				out.close();
-				System.err.println("Info: Closed printer");
+				out.flush();
 			}
 			catch (IOException e)
 			{
@@ -293,7 +291,7 @@ public class Server
 			try
 			{
 				in_sock.close();
-				System.err.println("Info: Closed socket");
+				System.err.println("Info: Closed input socket");
 			}
 			catch (IOException e)
 			{
