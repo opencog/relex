@@ -200,12 +200,13 @@ public class Server
 			{
 				send_sock = new Socket(host_name, host_port);
 				send_sock.setKeepAlive(true);
+				// send_sock.shutdownInput();
 				outs = send_sock.getOutputStream();
 				out = new PrintWriter(outs, true);
 
 				// Assume we're talking to an opencog server.
 				// Escape it into a scheme shell.
-				out.println("scm");
+				out.println("scm hush");
 				out.flush();
 			}
 			catch (Exception e)
