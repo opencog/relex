@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright 2013 Linas Vepstas <linasvepstas@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -196,12 +197,19 @@ public class DocSplitterOpenNLP14Impl implements DocSplitter
 		return trimmedSentence;
 	}
 
+	public String getRemainder()
+	{
+		String s = buffer;
+		buffer = null;
+		return s;
+	}
+
 	/* --------------------------------------------------------------- */
-	int start;
-	int end;
-	int trimmedStart;
-	int trimmedEnd;
-	String trimmedSentence;
+	private int start;
+	private int end;
+	private int trimmedStart;
+	private int trimmedEnd;
+	private String trimmedSentence;
 
 	private Boolean foundSentence(String docText)
 	{

@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright 2013 Linas Vepstas <linasvepstas@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,6 +64,13 @@ public interface DocSplitter
 	 * @return null if there are no complete sentences in the buffer.
 	 */
 	String getNextSentence();
+
+	/**
+	 * Gets the remainder of any text in the buffer. Empties the buffer.
+	 * Returns something, even if it's not a complete sentence.
+	 * @return entire contents of buffer.
+	 */
+	String getRemainder();
 
 	/**
 	 * Splits a document text string into sentences.

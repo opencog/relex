@@ -10,6 +10,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Copyright (c) 2010, 2013 Linas Vepstas <linasvepstas@gmail.com>
  */
 package relex.corpus;
 
@@ -95,6 +97,18 @@ public class DocSplitterFallbackImpl implements DocSplitter
 			return s;
 		}
 		return null;
+	}
+
+	public String getRemainder()
+	{
+		// Trim away previously issued text.
+		String s = buffer.substring(start);
+		s = s.trim();
+		if (s == "") s = null;
+
+		// Reset the buffer state.
+		clearBuffer();
+		return s;
 	}
 
 	/* --------------------------------------------------------------- */
