@@ -199,7 +199,7 @@ public class Server
 			}
 			catch (Exception e)
 			{
-				System.err.println("Error: Unable to connect to " + 
+				System.err.println("Error: Unable to connect to " +
 				   host_name + ":" + host_port + " : " + e.getMessage());
 				System.exit(-1);
 			}
@@ -241,51 +241,68 @@ public class Server
 				}
 			}
 
-			try {
-				String line = in.readLine();
-				if (line == null)
-					continue;
-				System.err.println("Info: recv input: \"" + line + "\"");
-				Sentence sntc = re.processSentence(line);
-				if (sntc.getParses().size() == 0)
-				{
-					out.println("; NO PARSES");
-					continue;
-				}
-				int pn;
-				int np = Math.min(max_parses, sntc.getParses().size());
-				for (pn = 0; pn < np; pn++)
-				{
-					ParsedSentence parse = sntc.getParses().get(pn);
-
-					// Print the phrase string ... handy for debugging.
-					out.println("; " + parse.getPhraseString());
-
-					if (verbose)
-					{
-						String fin = SimpleView.printRelationsAlt(parse);
-						System.out.print(fin);
-					}
-					opencog.setParse(parse);
-					out.println(opencog.toString());
-				}
-
-				// Add a special tag to tell the cog server that it's
-				// just recieved a brand new sentence. The OpenCog scheme
-				// code depends on this being visible, in order to find
-				// the new sentence.
-				out.println("(ListLink (stv 1 1)");
-				out.println("   (AnchorNode \"# New Parsed Sentence\")");
-				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-				out.println(")");
-
-				out.println("; END OF SENTENCE");
-				out.flush();
-			}
-			catch (IOException e)
+			// Loop over multiple input lines.
+			while (true)
 			{
-				System.err.println("Error: Processing input failed");
-				continue;
+				try {
+					// Break if EOF encountered.  This should have been easy
+					// to figure out, but its not. Java sux rox. What is wrong
+					// with these people? Are they all stupid, or what? Arghhhh.
+					int one_char = in.read();
+					if (-1 == one_char)
+						break;
+					if ('\r' == one_char)
+						continue;
+					if ('\n' == one_char)
+						continue;
+
+					// Another bright shining example of more java idiocy.
+					char junk[] = {(char)one_char};
+					String line = new String(junk);
+					line += in.readLine();
+
+					System.err.println("Info: recv input: \"" + line + "\"");
+					Sentence sntc = re.processSentence(line);
+					if (sntc.getParses().size() == 0)
+					{
+						out.println("; NO PARSES");
+						continue;
+					}
+					int pn;
+					int np = Math.min(max_parses, sntc.getParses().size());
+					for (pn = 0; pn < np; pn++)
+					{
+						ParsedSentence parse = sntc.getParses().get(pn);
+
+						// Print the phrase string ... handy for debugging.
+						out.println("; " + parse.getPhraseString());
+
+						if (verbose)
+						{
+							String fin = SimpleView.printRelationsAlt(parse);
+							System.out.print(fin);
+						}
+						opencog.setParse(parse);
+						out.println(opencog.toString());
+					}
+
+					// Add a special tag to tell the cog server that it's
+					// just recieved a brand new sentence. The OpenCog scheme
+					// code depends on this being visible, in order to find
+					// the new sentence.
+					out.println("(ListLink (stv 1 1)");
+					out.println("   (AnchorNode \"# New Parsed Sentence\")");
+					out.println("   (SentenceNode \"" + sntc.getID() + "\")");
+					out.println(")");
+
+					out.println("; END OF SENTENCE");
+					out.flush();
+				}
+				catch (IOException e)
+				{
+					System.err.println("Error: Processing input failed");
+break;
+				}
 			}
 
 			try

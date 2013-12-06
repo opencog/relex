@@ -165,6 +165,9 @@ public class RelationExtractor
 		if (null != _dict_path) parser.setDictPath(_dict_path);
 		parser.getConfig().setStoreConstituentString(true);
 		parser.getConfig().setStoreSense(true);
+
+		// XXX TODO: this is loading the English Language morphy;
+		// we need to load a generic language handler.
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(parser, morphy);
 
