@@ -165,10 +165,18 @@ public class OpenCogScheme
 		return str;
 	}
 
+	/**
+	 * Print a parseLink that attaches a specific parse to the sentence
+	 * that its a part of.  Attach a truth value that represents the 
+	 * parse ranking for the parse.
+	 */
 	public String printSentence()
 	{
-		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-		             "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
+		String str = "(ParseLink (stv 1 1)\n" +
+		             "   (ParseNode \"" + _parse.getIDString() + "\"(stv 1.0 ";
+
+		Double confidence = _parse.getTruthValue().getConfidence();
+		str += confidence.toString().substring(0,6) + "))\n" +
 		             "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
 		             ")\n";
 		return str;

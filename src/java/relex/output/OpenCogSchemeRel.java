@@ -199,24 +199,9 @@ class OpenCogSchemeRel
 
 	/* ----------------------------------------------------------- */
 
-	private String printRank()
-	{
-		String ret =
-		"(ParseLink (stv 1 1)\n" +
-		"   (ParseNode \"" + parse.getIDString() + "\" (stv 1.0 ";
-
-		Double confidence = parse.getTruthValue().getConfidence();
-		ret += confidence.toString().substring(0,6) + "))\n" +
-		"   (SentenceNode \"" + parse.getSentence().getID() + "\")\n)\n";
-		return ret;
-	}
-
-	/* ----------------------------------------------------------- */
-
 	public String toString()
 	{
 		String ret = "";
-		ret += printRank();
 		ret += printWordRefs();
 		ret += printRelations();
 		return ret;
