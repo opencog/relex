@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Novamente LLC
+ * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +26,10 @@ import relex.feature.LinkForeach;
  * The OpenCogSchemeLink object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
  * is described in greater detail in the README file in the opencog
- * source code directory src/nlp/wsd/README.
+ * source code directory opencog/nlp/wsd/README.
  *
  * As the same sentence can have multiple parses, this class only
  * displays a single, particular parse.
- *
- * Copyright (C) 2007,2008 Linas Vepstas <linas@linas.org>
  */
 class OpenCogSchemeLink
 {
