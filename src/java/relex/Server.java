@@ -226,6 +226,7 @@ public class Server
 			Socket in_sock = null;
 			InputStream ins = null;
 			try {
+				System.err.println("Info: Waiting for socket connection");
 				in_sock = listen_sock.accept();
 				ins = in_sock.getInputStream();
 
@@ -346,6 +347,7 @@ public class Server
 				catch (Exception e)
 				{
 					System.err.println("Error: Failed to parse: " + e.getMessage());
+					e.printStackTrace();
 					break;
 				}
 			}

@@ -172,11 +172,16 @@ public class OpenCogScheme
 	 */
 	public String printSentence()
 	{
-		String str = "(ParseLink (stv 1 1)\n" +
-		             "   (ParseNode \"" + _parse.getIDString() + "\"(stv 1.0 ";
-
 		Double confidence = _parse.getTruthValue().getConfidence();
-		str += confidence.toString().substring(0,6) + "))\n" +
+
+		// Why the fuck is string formating so fucked in Java? WTF?
+		String scf = confidence.toString();
+		int strl = Math.min(6, scf.length());
+		scf = scf.substring(0, strl);
+
+		String str = "(ParseLink (stv 1 1)\n" +
+		             "   (ParseNode \"" + _parse.getIDString() +
+                             "\"(stv 1.0 " + scf + "))\n" +
 		             "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
 		             ")\n";
 		return str;
