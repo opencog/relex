@@ -173,7 +173,7 @@ public class NLGInputView
 			FeatureNode attr = srcNode.get(attrName);
 			if (!attr.isValued()) return false;
 			String value = attr.getValue();
-			if ((attrName.equals("inflection-TAG")) && (value.equals(".n")) && (!entities.contains(srcNode)))
+			if ((attrName.equals("subscript-TAG")) && (value.equals(".n")) && (!entities.contains(srcNode)))
 			{
 				entities.add(srcNode);
 				str += "lemma(" + entities.size() + ", " + srcNode.get("name").getValue() + ")\n";

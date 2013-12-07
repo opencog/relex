@@ -1,3 +1,5 @@
+This is a test.
+END.
 The book was destroyed.
 This book was destroyed.
 That book was destroyed.

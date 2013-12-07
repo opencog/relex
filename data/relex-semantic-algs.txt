@@ -1769,34 +1769,40 @@ COMPARATIVE_RELATION1
 =
 <F_R comparative-relation-word> = <F_L>
 <F_R COMP-SUBJ-FLAG> = T
-;
-;General case for than and than1
+
+; General case for than and than1
 #TemplateActionAlg
 COMPARATIVE_1
 <LAB> = \Ss
-<F_R inflection> =.v
+<F_R POS> = verb
 <LAB> != \Sp
 =
 <F_R temp> += <F_L ref>
+
 #TemplateActionAlg
 COMPARATIVE_2
 <LAB> = \S\.*|\AN
 <LAB> != \Ss|\Sp
 =
 <F_R temp> += <F_L ref>
+
 #TemplateActionAlg
 COMPARATIVE_3
 <LAB> = \Ju
 =
 <F_L set_flag> = T
 <F_L temp> += <F_R ref>
+
+
+; XXX why is the below looking for past tense ??
 #TemplateActionAlg
 COMPARATIVE_4
 <LAB> = \Ss
-<F_R inflection> =.v-d
+<F_R POS> = verb
+<F_R tense val> = past
 =
 <F_L temp1> += <F_R ref>
-;
+
 ;Rule for Dependency Relation "than"--> comp_temp is used for temporary storage purpose.
 #TemplateActionAlg
 RELATION_THAN_1
@@ -1893,6 +1899,7 @@ RELATION_THAN_12
 =
 <F_L ref links than> += <F_R comp_temp>
 <F_R comp_temp> = %
+
 #TemplateActionAlg
 RELATION_THAN_13
 <LAB> = \Ju|\O\.*
@@ -1901,12 +1908,14 @@ RELATION_THAN_13
 <F_L SET> = T
 <F_R ref links than> += <F_L comp_var>
 <F_L comp_var> = %
+
+; XXX FIXME WTF? .. why is the below looking at teh gender !!??
 #TemplateActionAlg
 RELATION_THAN_14
 <LAB> = \MV\.*|\Usc\.*|\Os\.*
 <F_L str> = than|as
 <F_R str> != in|on 
-<F_R inflection> !=.m
+; <F_R GENDER> != masculine
 =
 <F_L comp_temp1> += <F_R ref>
 ;

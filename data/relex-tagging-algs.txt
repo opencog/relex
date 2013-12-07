@@ -33,14 +33,14 @@
 ; adjectives
 #TemplateActionAlg
 SUBSCR_POS_A
-<inflection> = .a
+<subscript> = .a
 =
 <POS> = adj
 
 ; Comparative adjectives
 #TemplateActionAlg
 SUBSCR_POS_A-C
-<inflection> = .a-c
+<subscript> = .a-c
 =
 <POS> = adj
 <degree> = comparative
@@ -48,7 +48,7 @@ SUBSCR_POS_A-C
 ; Superlative adjectives
 #TemplateActionAlg
 SUBSCR_POS_A-S
-<inflection> = .a-s
+<subscript> = .a-s
 =
 <POS> = adj
 <degree> = superlative
@@ -56,7 +56,7 @@ SUBSCR_POS_A-S
 ; b == both -- male or female given name.
 #TemplateActionAlg
 SUBSCR_POS_B
-<inflection> = .b
+<subscript> = .b
 =
 <POS> = noun
 <PERSON-FLAG> = T
@@ -64,7 +64,7 @@ SUBSCR_POS_B
 ; c == currency
 #TemplateActionAlg
 SUBSCR_POS_C
-<inflection> = .c
+<subscript> = .c
 =
 <POS> = noun
 <MONEY-FLAG> = T
@@ -72,7 +72,7 @@ SUBSCR_POS_C
 ; e -- adverb
 #TemplateActionAlg
 SUBSCR_POS_E
-<inflection> = .e
+<subscript> = .e
 =
 <POS> = adv
 ;
@@ -80,7 +80,7 @@ SUBSCR_POS_E
 ; n-f -- common noun, feminine -- e.g. duchess, grandmother, milkmaid, sister, etc
 #TemplateActionAlg
 SUBSCR_POS_F
-<inflection> = .f|.n-f
+<subscript> = .f|.n-f
 =
 <POS> = noun
 <PERSON-FLAG> = T
@@ -89,7 +89,7 @@ SUBSCR_POS_F
 ; g -- gerund -- tag as noun, for now; if verb, then override later.
 #TemplateActionAlg
 SUBSCR_POS_G
-<inflection> = .g
+<subscript> = .g
 =
 <POS> = noun
 
@@ -97,14 +97,14 @@ SUBSCR_POS_G
 ; .j-a, .j-b .j-c .j-g .j-n .j-o .j-p .j-r .j-ru .j-v 
 #TemplateActionAlg
 SUBSCR_POS_CONJ
-<inflection> = .j-.
+<subscript> = .j-.
 =
 <POS> = conjunction
 
 ; l -- location
 #TemplateActionAlg
 SUBSCR_POS_L
-<inflection> = .l
+<subscript> = .l
 =
 <POS> = noun
 <ref location-FLAG> = T
@@ -113,7 +113,7 @@ SUBSCR_POS_L
 ; n-m -- common noun, masculine: e.g. uncle, grandfather, duke, brother.
 #TemplateActionAlg
 SUBSCR_POS_M
-<inflection> = .m|.n-m
+<subscript> = .m|.n-m
 =
 <POS> = noun
 <PERSON-FLAG> = T
@@ -122,14 +122,14 @@ SUBSCR_POS_M
 ; n -- plain old common noun
 #TemplateActionAlg
 SUBSCR_POS_N
-<inflection> = .n
+<subscript> = .n
 =
 <POS> = noun
 
 ; n-u uncountable (mass) noun
 #TemplateActionAlg
 SUBSCR_POS_N-U
-<inflection> = .n-u
+<subscript> = .n-u
 =
 <POS> = noun
 <num> = uncountable
@@ -137,7 +137,7 @@ SUBSCR_POS_N-U
 ; o -- organization
 #TemplateActionAlg
 SUBSCR_POS_O
-<inflection> = .o
+<subscript> = .o
 =
 <POS> = noun
 <ORGANIZATION-FLAG> = T
@@ -145,21 +145,21 @@ SUBSCR_POS_O
 ; p -- plural count nouns
 #TemplateActionAlg
 SUBSCR_POS_P
-<inflection> = .p
+<subscript> = .p
 =
 <POS> = noun
 
 ; q -- ordinary verb (in paraphrasing & question type sentences)
 #TemplateActionAlg
 SUBSCR_POS_Q
-<inflection> = .q
+<subscript> = .q
 =
 <POS> = verb
 
 ; q-d -- ordinary verb, past tense
 #TemplateActionAlg
 SUBSCR_POS_Q-D
-<inflection> = .q-d
+<subscript> = .q-d
 =
 <POS> = verb
 <tense val> = past
@@ -167,7 +167,7 @@ SUBSCR_POS_Q-D
 ; s -- singular count nouns
 #TemplateActionAlg
 SUBSCR_POS_S
-<inflection> = .s
+<subscript> = .s
 =
 <POS> = noun
 
@@ -175,14 +175,14 @@ SUBSCR_POS_S
 ; XXX fixme -- to the left or right of title/role is a persons name -- 
 #TemplateActionAlg
 SUBSCR_POS_T
-<inflection> = .t
+<subscript> = .t
 =
 <ROLE-FLAG> = T
 
 ; u -- unit of measurement
 #TemplateActionAlg
 SUBSCR_POS_U
-<inflection> = .u
+<subscript> = .u
 =
 <POS> = noun
 <MEASURE-FLAG> = T
@@ -190,14 +190,14 @@ SUBSCR_POS_U
 ; v -- ordinary verb
 #TemplateActionAlg
 SUBSCR_POS_V
-<inflection> = .v
+<subscript> = .v
 =
 <POS> = verb
 
 ; v-d -- ordinary verb, past tense
 #TemplateActionAlg
 SUBSCR_POS_V-D
-<inflection> = .v-d
+<subscript> = .v-d
 =
 <POS> = verb
 <tense val> = past
@@ -205,14 +205,14 @@ SUBSCR_POS_V-D
 ; w -- ordinary verb (special cases)
 #TemplateActionAlg
 SUBSCR_POS_W
-<inflection> = .w
+<subscript> = .w
 =
 <POS> = verb
 
 ; w-d -- ordinary verb, past tense
 #TemplateActionAlg
 SUBSCR_POS_W-D
-<inflection> = .w-d
+<subscript> = .w-d
 =
 <POS> = verb
 <tense val> = past
@@ -220,14 +220,14 @@ SUBSCR_POS_W-D
 ; x -- prefix abbreviation e.g. Mr.
 #TemplateActionAlg
 SUBSCR_POS_X
-<inflection> = .x
+<subscript> = .x
 =
 <POS> = abbr
 
 ; y -- postfix abbreviation e.g. Ave.
 #TemplateActionAlg
 SUBSCR_POS_Y
-<inflection> = .y
+<subscript> = .y
 =
 <POS> = abbr
 
@@ -947,9 +947,9 @@ ENTITY-EMOTICON
 ;
 #TemplateActionAlg
 INFLECTION_TAG
-<inflection> != %
+<subscript> != %
 =
-<ref inflection-TAG> = <inflection>
+<ref subscript-TAG> = <subscript>
 ;
 #TemplateActionAlg
 LABEL_IDIOMS

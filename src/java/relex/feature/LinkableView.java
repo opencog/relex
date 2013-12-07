@@ -35,7 +35,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	private static String RIGHT_LINK_PREFIX = "linkR";
 
 	private static String POS_FEATURE_NAME = "POS";
-	private static String INFLECTION_NAME = "inflection";
+	private static String SUBSCRIPT_NAME = "subscript";
 
 	private static String WORD_STRING_FEATURE_NAME = "str";
 
@@ -214,13 +214,13 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 			ths.set(featname, new FeatureNode(featval));
 	}
 
-	public void setInflection(String inf) {
-		setInflection(fn(), inf);
+	public void setSubscript(String inf) {
+		setSubscript(fn(), inf);
 	}
 
-	public static void setInflection(FeatureNode ths, String inf)
+	public static void setSubscript(FeatureNode ths, String inf)
 	{
-		setFeat(ths, INFLECTION_NAME, inf);
+		setFeat(ths, SUBSCRIPT_NAME, inf);
 	}
 
 	public void setPOS(String pos) {
@@ -249,20 +249,20 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 	}
 
 	/**
-	 * This method is expecting an "inflected" link-grammar
-	 * word, such as "knows.v" or "ball.n", indicating that
-	 * the word was a verb, noun, etc.
+	 * This method is expecting a subscripted link-grammar word, such
+	 * as "knows.v" or "ball.n".  The subscripts help indicate the
+	 * part-of-speech (verb, noun, etc.) of the word.  The subscripting
+	 * in link-grammar is not really rigorous; it gives a general first
+	 * attempt at getting part-of-speech correct, but is not foolproof.
 	 */
 	public static void setWordAndPos(FeatureNode ths, String wordString)
 	{
 		throwIfNoFN(ths);
 		setPOS(ths, POS_WORD);
 
-		// Inflections may be one letter, or they may be longer.
-		// Link-grammar calls these "word subscripts"; perhaps we should
-		// stop mis-using the term "inflection" here ...
-		// Note that numerical quantities might have a perion in them,
-		// e.g. 3.2 million. Don't treat numerics as inlections.
+		// Subscripts may be one letter, or they may be longer.
+		// Note that numerical quantities might have a period in them,
+		// e.g. 3.2 million. Don't treat numerics as subscripts.
 		int len = wordString.length();
 		int dot = wordString.lastIndexOf('.');
 
@@ -278,7 +278,7 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 				// If we are here, its not a number.
 				String infl = wordString.substring(dot);
 				wordString = w;
-				setInflection(ths, infl);
+				setSubscript(ths, infl);
 			}
 		}
 
