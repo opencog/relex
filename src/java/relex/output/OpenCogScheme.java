@@ -120,11 +120,12 @@ public class OpenCogScheme
 		String str = "";
 
 		FeatureNode fn = _parse.getLeft();
-		fn = fn.get("NEXT");
 		while (fn != null)
 		{
 			String word = fn.get("orig_str").getValue();
 			String guid_word = fn.get("uuid").getValue();
+			if (word.equals("LEFT-WALL"))
+				word = "###LEFT-WALL###";
 
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
