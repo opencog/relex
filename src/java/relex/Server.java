@@ -59,6 +59,7 @@ public class Server
 		boolean relex_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
+		boolean free_text = false;
 		boolean verbose = false;
 		String lang = "en";
 		String host_name = null;
@@ -73,6 +74,7 @@ public class Server
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --anaphora \t Output anaphore references\n" +
+			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
 		HashSet<String> flags = new HashSet<String>();
@@ -81,6 +83,7 @@ public class Server
 		flags.add("--help");
 		flags.add("--link");
 		flags.add("--relex");
+		flags.add("--free-text");
 		flags.add("--verbose");
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
@@ -130,6 +133,7 @@ public class Server
 		if (commandMap.get("--anaphora") != null) anaphora_on = true;
 		if (commandMap.get("--link") != null) link_on = true;
 		if (commandMap.get("--relex") != null) relex_on = true;
+		if (commandMap.get("--free-text") != null) free_text = true;
 
 		if (commandMap.get("--verbose") != null)
 		{
@@ -289,8 +293,18 @@ public class Server
 
 						System.err.println("Info: recv input: \"" + line + "\"");
 
-						ds.addText(line + " ");
-						sentence = ds.getNextSentence();
+						// If the free-text flag is set, then use the document
+						// splitter to find sentence boundaries. Otherwise,
+						// Assume one sentence per line.
+						if (free_text)
+						{
+							ds.addText(line + " ");
+							sentence = ds.getNextSentence();
+						}
+						else
+						{
+							sentence = line;
+						}
 					}
 					catch (Exception e)
 					{
@@ -350,6 +364,9 @@ public class Server
 					e.printStackTrace();
 					break;
 				}
+
+				// Only one sentence per connection in the non-free-text mode.
+				if (!free_text) break;
 			}
 
 			try
