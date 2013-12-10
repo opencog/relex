@@ -276,9 +276,11 @@ public class Server
 						// to figure out, but its not. Java sux rox. What is wrong
 						// with these people? Are they all stupid, or what? Arghhhh.
 						int one_char = in.read();
-						if (-1 == one_char)
+						// 0x4 is ASCII EOT aka ctrl-D via telnet.
+						if (-1 == one_char || 4 == one_char)
 						{
 							sentence = ds.getRemainder();
+							sentence = sentence.trim();
 							break;
 						}
 						if ('\r' == one_char)
@@ -314,7 +316,7 @@ public class Server
 				}
 
 				// If the sentence is null; we've run out of input.
-				if (null == sentence || "" == sentence)
+				if (null == sentence || sentence.equals(""))
 					break;
 
 				try
