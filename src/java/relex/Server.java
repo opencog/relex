@@ -370,7 +370,7 @@ public class Server
                                                     out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", parse.getSentence().getID()));
                                                 }
 						out.flush();
-						System.err.println("Info: sent parse " + ++pn + " of " + np);
+						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
 					}
 
 					// Add a special tag to tell the cog server that it's
