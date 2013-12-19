@@ -43,6 +43,10 @@ public class Criterium {
 	 */
 	private HashMap<String, String> _variableValues = new HashMap<String, String>();
 	/**
+	 * Set to keep track of the UUID that criteria variables have been matched to.
+	 */
+	private HashMap<String, String> _variableValueUUIDs = new HashMap<String, String>();
+	/**
 	 * The original criterium string
 	 */
 	private String _criteriumString;
@@ -180,5 +184,37 @@ public class Criterium {
 			variableValue = _variableValues.get(variableName);
 
 		return variableValue;
+	}
+
+	/**
+	 * Sets the UUID of a variable value, once it is found in the dependency graph.
+	 * @param variableName The name of the variable that will have its value's UUID set.
+	 * @param variableValueUUID The UUID of the variable value.
+	 */
+	public void setVariableValueUUID(String variableName, String variableValueUUID)
+	{
+		if (_variableValueUUIDs.get(variableName) == null)
+		{
+			_variableValueUUIDs.put(variableName, variableValueUUID);
+		}
+		else
+		{
+			_variableValueUUIDs.put(variableName, variableValueUUID);
+		}
+	}
+
+	/**
+	 * Returns the value of a variable, used for retrieving variable values when writing the output of a rule.
+	 * @param variableName The name of the variable for which the value is to be retrieved.
+	 * @return
+	 */
+	public String getVariableValueUUID(String variableName)
+	{
+		String variableValueUUID = "";
+
+		if (_variableValueUUIDs.containsKey(variableName))
+			variableValueUUID = _variableValueUUIDs.get(variableName);
+
+		return variableValueUUID;
 	}
 }
