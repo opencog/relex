@@ -130,9 +130,9 @@ public class Rule {
                                 String variableValueUUID = criterium.getVariableValueUUID(variableName);
                                 
 				schemeOutput = schemeOutput.replaceAll(
-                                Pattern.quote(variableName), variableValue);
+                                Pattern.quote(variableName), "\"" + variableValue + "\"");
                                 schemeOutput = schemeOutput.replaceAll(
-                                Pattern.quote("word_index"), variableValueUUID);
+                                Pattern.quote("word_index"), "\"" + variableValueUUID + "\"");
                                 
 			}
 		}
