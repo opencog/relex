@@ -4,6 +4,7 @@ New in version 1.5.1 (XXX 2014)
  * Bugfix multi-language support.
  * OpenCog server can now return multiple parses.
  * Rename Inflection-TAG to Subscript-TAG.
+ * Update Wikipedia processing scripts, including sentence splitter.
 
 New in version 1.5.0 (21 November 2013)
  * Minor cleanup of windows *.bat file, build and config files.
