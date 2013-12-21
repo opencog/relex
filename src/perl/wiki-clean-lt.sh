@@ -2,7 +2,7 @@
 #
 # Delete unwanted article types from the wikipedia article space.
 # We won't be parsing these; they (mostly) don't contain any valid
-# English-language sentences.
+# Lithuanian-language sentences.
 #
 # Copyright (c) 2008 Linas Vepstas <linas@linas.org>
 

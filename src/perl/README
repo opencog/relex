@@ -2,19 +2,24 @@
                    Miscellaneous Utilities
                    -----------------------
 
-The wiki-scrub.pl utility will take a wikipedia page, marked up in the
-standard Wikipedia XML format, and remove all markup, leaving only
-plain text. The goal is to have clean text that can be input into
-Relex.
+The wiki-scrub.pl utility will take a Wikipedia XML database dump,
+marked up in the standard Wikipedia XML format, and split it into
+multiple articles, one per file. In the process, it will remove all
+markup, leaving only plain text. The goal is to have clean text that
+can be input into Relex.  Runtime is roughly 5 minutes per 100K
+articles, or one hour per million articles.
 
 The wiki-clean-en.sh shell script will remove certain unwanted wikipedia
 pages (templates, images, categories, etc.) for the English-language
-wikipedia.
+wikipedia. These files contain almost no parsable text.
 
-wiki-clean-lt.sh As above for ltwiki
+wiki-clean-fr.sh As above for frwiki (French)
+wiki-clean-lt.sh As above for ltwiki (Lithuantian)
+wiki-clean-pl.sh As above for plwiki (Polish)
 
 The wiki-alpha.sh shell script will move wikipedia articles to 
-alphabetical directories. 
+alphabetical directories.  This can simplify and speed up article
+processing.
 
 The cff-to-opencog.pl utility will convert the relex compact file format
 (written out by relex.WebFormat via output/CompactView.java), and
