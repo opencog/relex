@@ -15,7 +15,7 @@
 # in a directory "wiki-stripped", which must already exist. This
 # directory name is user-configurable, see immediately below.
 #
-# Copyright (c) 2008 Linas Vepstas <linas@linas.org>
+# Copyright (c) 2008, 2013 Linas Vepstas <linas@linas.org>
 #
 #--------------------------------------------------------------------
 #
@@ -237,6 +237,18 @@ while (<>)
 	s/&lt;\/FONT&gt;//g;
 	s/&lt;span .+?&gt;//g;
 	s/&lt;\/span&gt;//g;
+	s/&lt;h1&gt;//g;
+	s/&lt;h1 .+?&gt;//g;
+	s/&lt;\/h1&gt;//g;
+	s/&lt;h2&gt;//g;
+	s/&lt;h2 .+?&gt;//g;
+	s/&lt;\/h2&gt;//g;
+	s/&lt;h3&gt;//g;
+	s/&lt;h3 .+?&gt;//g;
+	s/&lt;\/h3&gt;//g;
+	s/&lt;h4&gt;//g;
+	s/&lt;h4 .+?&gt;//g;
+	s/&lt;\/h4&gt;//g;
 	s/&lt;br&gt;//g;
 	s/&lt;BR&gt;//g;
 	s/&lt;\/br&gt;//g;
