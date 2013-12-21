@@ -1,15 +1,20 @@
 #!/usr/bin/perl -w
-
+#
+# Multi-language sentence splitter.
+# 
+# Derived from the moses-smt (Moses Statistica Machine Translation)
+# sentece splitter; modified slightly for our needs.
+#
+# moses-smt and this file is licensed under the LGPL.
 # Based on Preprocessor written by Philipp Koehn
 
 binmode(STDIN, ":utf8");
 binmode(STDOUT, ":utf8");
 binmode(STDERR, ":utf8");
 
-use FindBin qw($RealBin);
 use strict;
 
-my $mydir = "$RealBin/../../share/nonbreaking_prefixes";
+my $mydir = "./nonbreaking_prefixes";
 
 my %NONBREAKING_PREFIX = ();
 my $language = "en";
@@ -24,7 +29,7 @@ while (@ARGV) {
 }
 
 if ($HELP) {
-    print "Usage ./split-sentences.perl (-l [en|de|...]) < textfile > splitfile\n";
+	print "Usage ./split-sentences.perl (-l [en|de|...]) < textfile > splitfile\n";
 	exit;
 }
 if (!$QUIET) {
@@ -37,8 +42,7 @@ my $prefixfile = "$mydir/nonbreaking_prefix.$language";
 #default back to English if we don't have a language-specific prefix file
 if (!(-e $prefixfile)) {
 	$prefixfile = "$mydir/nonbreaking_prefix.en";
-	print STDERR "WARNING: No known abbreviations for language '$language', attempting
-fall-back to English version...\n";
+	print STDERR "WARNING: No known abbreviations for language '$language', attempting fall-back to English version...\n";
 	die ("ERROR: No abbreviations files found in $mydir\n") unless (-e $prefixfile);
 }
 
@@ -106,8 +110,7 @@ sub preprocess {
 	# add breaks for sentences that end with some sort of punctuation inside a quote or
 	# parenthetical and are followed by a possible sentence starter punctuation and upper
 	# case
-	$text =~ s/([?!\.][\ ]*[\'\"\)\]\p{IsPf}]+) +([\'\"\(\[\¿\¡\p{IsPi}]*[\
-]*[\p{IsUpper}])/$1\n$2/g;
+	$text =~ s/([?!\.][\ ]*[\'\"\)\]\p{IsPf}]+) +([\'\"\(\[\¿\¡\p{IsPi}]*[\ ]*[\p{IsUpper}])/$1\n$2/g;
 		
 	# add breaks for sentences that end with some sort of punctuation are followed by a
 	# sentence starter punctuation and upper case
@@ -123,28 +126,25 @@ sub preprocess {
 			#check if $1 is a known honorific and $2 is empty, never break
 			my $prefix = $1;
 			my $starting_punct = $2;
-			if($prefix && $NONBREAKING_PREFIX{$prefix} && $NONBREAKING_PREFIX{$prefix} == 1 &&
-!$starting_punct) {
+			if($prefix && $NONBREAKING_PREFIX{$prefix} && $NONBREAKING_PREFIX{$prefix} == 1 && !$starting_punct) {
 				#not breaking;
 			} elsif ($words[$i] =~ /(\.)[\p{IsUpper}\-]+(\.+)$/) {
 				#not breaking - upper case acronym	
 			} elsif($words[$i+1] =~ /^([ ]*[\'\"\(\[\¿\¡\p{IsPi}]*[ ]*[\p{IsUpper}0-9])/) {
-				#the next word has a bunch of initial quotes, maybe a space, then either upper
-case or a number
-				$words[$i] = $words[$i]."\n" unless ($prefix && $NONBREAKING_PREFIX{$prefix} &&
-$NONBREAKING_PREFIX{$prefix} == 2 && !$starting_punct && ($words[$i+1] =~ /^[0-9]+/));
-				#we always add a return for these unless we have a numeric non-breaker and a
-number start
+				# The next word has a bunch of initial quotes, maybe a
+				# space, then either upper case or a number
+				$words[$i] = $words[$i]."\n" unless ($prefix && $NONBREAKING_PREFIX{$prefix} && $NONBREAKING_PREFIX{$prefix} == 2 && !$starting_punct && ($words[$i+1] =~ /^[0-9]+/));
+				#we always add a return for these unless we have a numeric non-breaker and a number start
 			}
 			
 		}
 		$text = $text.$words[$i]." ";
 	}
 	
-	#we stopped one token from the end to allow for easy look-ahead. Append it now.
+	# We stopped one token from the end to allow for easy look-ahead. Append it now.
 	$text = $text.$words[$i];
 	
-	# clean up spaces at head and tail of each line as well as any double-spacing
+	# Clean up spaces at head and tail of each line as well as any double-spacing
 	$text =~ s/ +/ /g;
 	$text =~ s/\n /\n/g;
 	$text =~ s/ \n/\n/g;
