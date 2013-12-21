@@ -3,7 +3,7 @@
 # Create subdirectories for alphabetized wikipedia articles,
 # Move articles from main dir into subdirs.
 #
-# Copyright (c) 2008 Linas Vepstas <linas@linas.org>
+# Copyright (c) 2008, 2013 Linas Vepstas <linas@linas.org>
 
 mkdir A
 mkdir B
@@ -70,5 +70,5 @@ time find ../wiki-stripped -name 'X*' -exec mv {} X \;
 time find ../wiki-stripped -name 'Y*' -exec mv {} Y \;
 time find ../wiki-stripped -name 'Z*' -exec mv {} Z \;
 time find ../wiki-stripped -name '[0-9]*' -exec mv {} num \;
-time find ../wiki-stripped -name '*[a-z]*' -exec mv {} misc \;
+time find ../wiki-stripped -name '*' -type f -exec mv {} misc \;
 
