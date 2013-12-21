@@ -1,8 +1,10 @@
-#Anything in this file, followed by a period (and an upper-case word), does NOT indicate an end-of-sentence marker.
-#Special cases are included for prefixes that ONLY appear before 0-9 numbers.
+# Anything in this file, followed by a period (and an upper-case word),
+# does NOT indicate an end-of-sentence marker.
+# Special cases are included for prefixes that ONLY appear before 0-9 numbers.
 
-#any single upper case letter  followed by a period is not a sentence ender (excluding I occasionally, but we leave it in)
-#usually upper case letters are initials in a name
+# Any single upper case letter  followed by a period is not a sentence ender
+# (excluding I occasionally, but we leave it in)
+# usually upper case letters are initials in a name
 A
 Ā
 B
@@ -41,7 +43,8 @@ Y
 Z
 Ž
 
-#List of titles. These are often followed by upper-case names, but do not indicate sentence breaks
+# List of titles. These are often followed by upper-case names, but do
+# not indicate sentence breaks
 dr
 Dr
 med
@@ -57,7 +60,9 @@ v.i
 vietn
 Vietn
 
-#misc - odd period-ending items that NEVER indicate breaks (p.m. does NOT fall into this category - it sometimes ends a sentence)
+# misc - odd period-ending items that NEVER indicate breaks (p.m. does NOT 
+# fall into this category - it sometimes ends a sentence)
+# XXX TODO .. not correct/incomplete.
 a.l
 t.p
 pārb
