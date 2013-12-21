@@ -7,8 +7,11 @@ standard Wikipedia XML format, and remove all markup, leaving only
 plain text. The goal is to have clean text that can be input into
 Relex.
 
-The wiki-clean.sh shell script will remove certain unwanted wikipedia
-pages (templates, images, categories, etc.)
+The wiki-clean-en.sh shell script will remove certain unwanted wikipedia
+pages (templates, images, categories, etc.) for the English-language
+wikipedia.
+
+wiki-clean-lt.sh As above for ltwiki
 
 The wiki-alpha.sh shell script will move wikipedia articles to 
 alphabetical directories. 
