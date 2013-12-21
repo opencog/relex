@@ -70,4 +70,5 @@ time find ../wiki-stripped -name 'X*' -exec mv {} X \;
 time find ../wiki-stripped -name 'Y*' -exec mv {} Y \;
 time find ../wiki-stripped -name 'Z*' -exec mv {} Z \;
 time find ../wiki-stripped -name '[0-9]*' -exec mv {} num \;
-time find ../wiki-stripped -name '*' -exec mv {} misc \;
+time find ../wiki-stripped -name '*[a-z]*' -exec mv {} misc \;
+
