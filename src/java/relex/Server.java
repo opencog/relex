@@ -325,11 +325,15 @@ public class Server
 					Sentence sntc = re.processSentence(sentence);
 					if (sntc.getParses().size() == 0)
 					{
+						System.err.println("Info: no parses!");
 						out.println("; NO PARSES");
+
+						// Only one sentence per connection in the non-free-text mode.
+						if (!free_text) break;
 						continue;
 					}
-					int pn;
 					int np = Math.min(max_parses, sntc.getParses().size());
+					int pn;
 					for (pn = 0; pn < np; pn++)
 					{
 						ParsedSentence parse = sntc.getParses().get(pn);
