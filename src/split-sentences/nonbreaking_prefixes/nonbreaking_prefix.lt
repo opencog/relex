@@ -43,8 +43,38 @@ Y
 Z
 Ž
 
+# Abbreviations m. menesis d. diena
+m.
+d.
+
+# Day and month abbreviations
+# Gerbiamasis Pirmadienis Penktadienis
+Gerb
+Pr
+Pn
+Pirm
+Antr
+Treč
+Ketv
+Penkt
+Šešt
+Sekm
+Saus
+Vas
+Kov
+Bal
+Geg
+Birž
+Liep
+Rugpj
+Rugs
+Spal
+Lapkr
+Gruod
+
 # List of titles. These are often followed by upper-case names, but do
 # not indicate sentence breaks
+# XXX TODO .. Below are not correct, copied from latvian
 dr
 Dr
 med
@@ -60,9 +90,10 @@ v.i
 vietn
 Vietn
 
-# misc - odd period-ending items that NEVER indicate breaks (p.m. does NOT 
+# misc - odd period-ending items that NEVER indicate breaks (p.m. does NOT
 # fall into this category - it sometimes ends a sentence)
-# XXX TODO .. not correct/incomplete.
+
+# XXX TODO .. Below are not correct, copied from latvian
 a.l
 t.p
 pārb
@@ -102,4 +133,5 @@ Hum
 # add NUMERIC_ONLY after the word for this function
 #This case is mostly for the english "No." which can either be a sentence of its own, or
 #if followed by a number, a non-breaking prefix
-Nr #NUMERIC_ONLY# 
+No #NUMERIC_ONLY#
+Nr #NUMERIC_ONLY#
