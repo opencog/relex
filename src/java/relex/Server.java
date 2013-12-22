@@ -325,7 +325,7 @@ public class Server
 					Sentence sntc = re.processSentence(sentence);
 					if (sntc.getParses().size() == 0)
 					{
-						System.err.println("Info: no parses!");
+						System.err.println("Info: No parses!");
 						out.println("; NO PARSES");
 
 						// Only one sentence per connection in the non-free-text mode.
