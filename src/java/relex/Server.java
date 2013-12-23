@@ -62,7 +62,7 @@ public class Server
 		boolean link_on = false;
 		boolean anaphora_on = false;
 		boolean free_text = false;
-		boolean verbose = false;               
+		boolean verbose = false;
 		String lang = "en";
 		String host_name = null;
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
@@ -363,7 +363,7 @@ public class Server
 						out.println(opencog.toString());
                                                 out.flush();
                                                 System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
-                                                
+
                                                 if (logic_on)
                                                 {
                                                     LogicView logicView = new LogicView();
@@ -371,10 +371,10 @@ public class Server
                                                     out.println("scm hash");
                                                     out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")"));
                                                     out.flush();
-                                                    System.err.println("Info: called relex2logic functiions")
+                                                    System.err.println("Info: called relex2logic functiions");
                                                 }
-						
-						
+
+
 					}
 
 					// Add a special tag to tell the cog server that it's
@@ -415,4 +415,3 @@ public class Server
 		}
 	}
 }
-
