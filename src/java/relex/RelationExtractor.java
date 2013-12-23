@@ -609,7 +609,7 @@ public class RelationExtractor
 				System.out.println("; SENTENCE: ["+sentence+"]");
 				Sentence sntc = re.processSentence(sentence);
 
-				// Crazy error condition ... the parser is broken somehow ... 
+				// Crazy error condition ... the parser is broken somehow ...
 				if (null == sntc) { sentence = ds.getNextSentence(); break; }
 
 				re.doco.addSentence(sntc);
@@ -718,7 +718,7 @@ public class RelationExtractor
 
 						System.out.println("\n======\n");
 						System.out.println("Relex2Logic output:");
-						System.out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode " + parse.getIDString() + ")"));
+						System.out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")"));
 						System.out.println("\n======\n");
 					}
 
