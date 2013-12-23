@@ -361,16 +361,20 @@ public class Server
 						}
 						opencog.setParse(parse);
 						out.println(opencog.toString());
+                                                out.flush();
+                                                System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
                                                 
                                                 if (logic_on)
                                                 {
                                                     LogicView logicView = new LogicView();
                                                     logicView.loadRules();
-//                                                    out.println("scm");
-                                                    out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", parse.getSentence().getID()));
+                                                    out.println("scm hash");
+                                                    out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")"));
+                                                    out.flush();
+                                                    System.err.println("Info: called relex2logic functiions")
                                                 }
-						out.flush();
-						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
+						
+						
 					}
 
 					// Add a special tag to tell the cog server that it's
