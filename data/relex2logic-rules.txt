@@ -1,6 +1,10 @@
 [SVO]  {2} <SV, SVP> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
 
+[SV] {3} <SVO, SVP> _subj($y, $x) => (SV-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index))
+
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
+
+[SVP] {4} <SVO, SV> _preadj($y, $x) => (SVP-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index))
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
