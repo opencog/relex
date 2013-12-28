@@ -383,8 +383,10 @@ public class Server
 			catch (IOException e)
 			{
 				System.err.println("Error: Socket close failed: " + e.getMessage());
-				continue;
 			}
+
+			// Something here is leaking memory ... 10GB a day ... can this help?
+			System.gc();
 		}
 	}
 }
