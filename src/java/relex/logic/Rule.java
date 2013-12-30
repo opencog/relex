@@ -133,8 +133,7 @@ public class Rule {
                                 schemeOutput = schemeOutput.replaceAll(
                                         Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"), 
                                         "\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
-                                System.out.println(schemeOutput + "\n ---------------\n");
-                                
+                                                                
 			}
 		}
 
