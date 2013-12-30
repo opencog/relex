@@ -126,11 +126,22 @@ public class OpenCogScheme
 			String guid_word = fn.get("uuid").getValue();
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
-
-			str += "(ReferenceLink (stv 1.0 1.0)\n" +
+                        if(word.matches("[-+]?[0-9]*?\\.?[0-9]+"))
+                        {
+                            str += "(ReferenceLink (stv 1.0 1.0)\n" +
+			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
+			       "   (NumberNode " + word + ")\n" +
+			       ")\n";                            
+                        } 
+                        else 
+                        {
+                           str += "(ReferenceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
 			       "   (WordNode \"" + word + "\")\n" +
-			       ")\n";
+			       ")\n"; 
+                        }
+
+			
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
