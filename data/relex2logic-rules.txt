@@ -36,7 +36,7 @@
 
 [ENTITYFLAG] {2} <> entity-FLAG($W, $T) => (entity-rule $W (get_instance_name $W word_index sentence_index) $T)
 
-[PERSON] {2} <> person-FLAG($W, T) & gender($W, $gender) => (person-rule $W (get_instance_name $W word_index sentence_index) $gender)
+[GENDER] {2} <> person-FLAG($W, T) & gender($W, $gender) => (gender-rule $W (get_instance_name $W word_index sentence_index) $gender)
 
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get_instance_name $V word_index sentence_index) $N (get_instance_name $N word_index sentence_index))
 
