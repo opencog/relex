@@ -24,3 +24,21 @@
 
 [NUM] {1} <> _num_quantity($W, $Num) => (number-rule $W (get-instance-name $W word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
 
+[TODO1] {1} <TODO2> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S) => (to-do-rule-1 $V1 (get_instance_name $V1 word_index sentence_index) $V2 (get_instance_name $V2 word_index sentence_index) $S (get_instance_name $S word_index sentence_index) $O (get_instance_name $O word_index sentence_index))
+
+[TODO2] {1} <TODO1> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S1) & _subj($V2, $S2) => (to-do-rule-2 $V1 (get_instance_name $V1 word_index sentence_index) $V2 (get_instance_name $V2 word_index sentence_index) $S1 (get_instance_name $S1 word_index sentence_index) $S2 (get_instance_name $S2 word_index sentence_index) $O (get_instance_name $O word_index sentence_index))
+
+[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get_instance_name $verb word_index sentence_index) $adj (get_instance_name $adj word_index sentence_index) $subj (get_instance_name $subj word_index sentence_index))
+
+[ALLRULE1] {2} <ALLRULE2> _quantity($noun, all) => (all-rule $noun (get_instance_name $noun word_index sentence_index))
+
+[ALLRULE2] {2} <ALLRULE1> _quantity($noun, all) & _poss($noun, $W) => (all-rule $noun (get_instance_name $noun word_index sentence_index))
+
+[ENTITYFLAG] {2} <> entity-FLAG($W, $T) => (entity-rule $W (get_instance_name $W word_index sentence_index) $T)
+
+[PERSON] {2} <> person-FLAG($W, T) & gender($W, $gender) => (person-rule $W (get_instance_name $W word_index sentence_index) $gender)
+
+[ABOUT] {2} <> about($V, $N) => (about-rule $V (get_instance_name $V word_index sentence_index) $N (get_instance_name $N word_index sentence_index))
+
+[PRENOMINAL] <> _nn($N1, $N2) => (nn-rule $N1 (get_instance_name $N1 word_index sentence_index) $N2 (get_instance_name $N2 word_index sentence_index))
+
