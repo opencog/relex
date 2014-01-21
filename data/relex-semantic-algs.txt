@@ -1316,6 +1316,23 @@ PREDET2
 <F_L linkR0 F_R ref links _predet> = <F_L ref> 
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+;Adjective-clause rule (for relex2logic adjectival clause rule)
+;for sentence with adjective clause.
+;eg. "The boy who we met yesterday is very nice."
+;    "The woman who lives next door is a registered nurse."
+#TemplateActionAlg
+Adjective-clause-1
+<LAB> = \RS\.*|\CV
+<F_L str> = who|WHO
+=
+<F_L adj-mod> += <F_R ref>
+#TemplateActionAlg
+Adjective-clause-2
+<LAB> = \R
+<F_R str> = who|WHO
+=
+<F_L ref links who> += <F_R adj-mod>
+;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
 ; L is a superlative modifying a determiner on the left.
