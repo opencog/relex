@@ -110,6 +110,14 @@ public class TestRelEx
 			"_quantity(people, some)\n" +
 			"_subj(like, people)\n" +
 			"than(pig, dog)\n");
+		rc &= ts.test_sentence ("I like the man who gave me chocolate.",
+   			"_obj(like, man)\n" +
+   			"_subj(like, I)\n" +
+   			"_iobj(give, me)\n" +
+    			"_obj(give, chocolate)\n" +
+    			"_subj(give, man)\n" +
+    			"who(man, give)\n");
+
 
 		if (rc)
 		{

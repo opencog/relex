@@ -1322,16 +1322,16 @@ PREDET2
 ;    "The woman who lives next door is a registered nurse."
 #TemplateActionAlg
 Adjective-clause-1
-<LAB> = \RS\.*|\CV
+<LAB> = \RS\.*
 <F_L str> = who|WHO
 =
-<F_L adj-mod> += <F_R ref>
+<F_R adj-mod> = <F_R ref>
 #TemplateActionAlg
 Adjective-clause-2
-<LAB> = \R
-<F_R str> = who|WHO
+<LAB> = \B\.*
+<F_R adj-mod> != %
 =
-<F_L ref links who> += <F_R adj-mod>
+<F_L ref links who> += <F_R ref>
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
