@@ -1325,13 +1325,25 @@ Adjective-clause-1
 <LAB> = \RS\.*
 <F_L str> = who|WHO
 =
-<F_R adj-mod> = <F_R ref>
+<F_R adj-mod-who> = <F_R ref>
 #TemplateActionAlg
 Adjective-clause-2
+<LAB> = \RS\.*|\B\.*
+<F_L str> = which|WHICH
+=
+<F_L adj-mod-which> += <F_R ref>
+#TemplateActionAlg
+Adjective-clause-3
 <LAB> = \B\.*
-<F_R adj-mod> != %
+<F_R adj-mod-who> != %
 =
 <F_L ref links who> += <F_R ref>
+#TemplateActionAlg
+Adjective-clause-3
+<LAB> = \R\.*|\MX\.*
+<F_R adj-mod-which> != %
+=
+<F_L ref links which> += <F_R adj-mod-which>
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
