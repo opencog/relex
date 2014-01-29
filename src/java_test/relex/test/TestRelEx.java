@@ -117,9 +117,29 @@ public class TestRelEx
     			"_obj(give, chocolate)\n" +
     			"_subj(give, man)\n" +
     			"who(man, give)\n");
-
-
-		if (rc)
+              rc &= ts.test_sentence ("The woman who lives next door is a registered nurse.",
+			"_obj(be, nurse)\n" +
+    			"_subj(be, woman)\n" +
+    			"_amod(nurse, registered)\n" +
+    			"_advmod(live, next_door)\n" +
+   			"_subj(live, woman)\n" +
+    			"who(woman, live)\n");
+   	      rc &= ts.test_sentence ("A player who is injured has to leave the field.",
+			"_to-do(have, leave)\n" +
+    			"_subj(have, player)\n" +
+    			"_obj(leave, field)\n" +
+    			"_predadj(player, injured)\n" +
+   			"who(player, injured)\n" ); 
+ 	     rc &= ts.test_sentence ("Pizza, which most people love, is not very healthy.",
+			"_advmod(very, not)\n" +
+    			"_advmod(healthy, very)\n" +
+    			"_obj(love, Pizza)\n" +
+    			"_quantity(people, most)\n" +
+			"which(Pizza, love)\n" +
+                        "_subj(love, people)\n" +
+   			"_predadj(Pizza, healthy)\n" );   
+    
+   		if (rc)
 		{
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
 		}

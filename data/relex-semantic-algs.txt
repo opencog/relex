@@ -1330,25 +1330,33 @@ Adjective-clause-1
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
 #TemplateActionAlg
 Adjective-clause-2
+<LAB> = \S\.*
+<F_L linkL0 LAB> = \Cr\.*
+<F_L linkL0 F_L str> = who|WHO
+=
+<F_L adm_set> = <F_L ref>
+<F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-3
 <LAB> = \RS\.*
 <F_L str> = who|WHO
 <F_R adm_set> = %
 =
 <F_R adj-mod-who> = <F_R ref>
 #TemplateActionAlg
-Adjective-clause-3
+Adjective-clause-4
 <LAB> = \RS\.*|\B\.*
 <F_L str> = which|WHICH
 =
 <F_L adj-mod-which> += <F_R ref>
 #TemplateActionAlg
-Adjective-clause-4
+Adjective-clause-5
 <LAB> = \B\.*
 <F_R adj-mod-who> != %
 =
 <F_L ref links who> += <F_R ref>
 #TemplateActionAlg
-Adjective-clause-5
+Adjective-clause-6
 <LAB> = \R\.*|\MX\.*
 <F_R adj-mod-which> != %
 =
