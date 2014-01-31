@@ -1361,6 +1361,13 @@ Adjective-clause-6
 <F_R adj-mod-which> != %
 =
 <F_L ref links which> += <F_R adj-mod-which>
+#TemplateActionAlg
+Adjective-clause-7
+<LAB> = \D\.*
+<F_L linkL0 LAB> = \Mr\.*
+<F_L str> = whose|WHOSE
+=
+<F_L linkL0 F_L ref links whose> += <F_R ref> 
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
