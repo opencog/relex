@@ -1325,6 +1325,7 @@ PREDET2
 Adjective-clause-1
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
+<F_L linkL1 F_L str> = who|WHO
 =
 <F_L adm_set> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
@@ -1364,6 +1365,21 @@ Adjective-clause-6
 #TemplateActionAlg
 Adjective-clause-7
 <LAB> = \D\.*
+<F_L linkL0 LAB> = \Mr\.*
+<F_L str> = whose|WHOSE
+=
+<F_L linkL0 F_L ref links whose> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-8
+<LAB> = \S\.*
+<F_L linkL0 LAB> = \Cr\.*
+<F_L linkL0 F_L str> = that|THAT
+=
+<F_L adm_set> = <F_L ref>
+<F_L linkL0 F_L linkL0 F_L ref links _which> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-9
+<LAB> = \RS
 <F_L linkL0 LAB> = \Mr\.*
 <F_L str> = whose|WHOSE
 =

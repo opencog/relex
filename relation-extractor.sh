@@ -64,7 +64,7 @@ bin:\
 #/usr/lib/jvm/java-6-sun/bin/java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -r -a -s "Alice ate the mushroom."
 reset
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -r -a -s "Alice ate the mushroom."
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -a --or --stanford --penn -s  "They passed some shop whose windows were decorated for independence day."
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 1 -l -t -a --or --stanford --penn -s  "Many of the topic that are presented in this course will enhance your social work practice."
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \
