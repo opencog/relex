@@ -3,9 +3,12 @@
 # RelEx install script for Ubuntu/Debian systems
 # Tested on Ubuntu 12.04 LTS (Precise Pangolin)
 #
-# Usage: sudo ./relex-install-ubuntu.sh
+# Usage:
+#   wget https://raw.github.com/opencog/relex/master/relex-install-ubuntu.sh && chmod +x ./relex-install-ubuntu.sh && sudo ./relex-install-ubuntu.sh
+#
 # Authors: David Hart, Cosmo Harrigan
 
+# Dependencies
 apt-get -y install build-essential 
 apt-get -y install wordnet-dev wordnet-sense-index
 apt-get -y install openjdk-7-jdk 
