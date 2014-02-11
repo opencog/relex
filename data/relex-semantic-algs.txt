@@ -1330,13 +1330,19 @@ Adjective-clause-1
 <F_L adm_set> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-2
-<LAB> = \S\.*
-<F_L linkL0 LAB> = \Cr\.*
-<F_L linkL0 F_L str> = who|WHO
+Adjective-clause-1.1
+<LAB> = \P\.*
+<F_L linkL1 LAB> = \RS\.*
+<F_L linkL1 F_L str> = which|WHICH
 =
-<F_L adm_set> = <F_L ref>
-<F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
+<F_L adm_set_which> = <F_L ref>
+<F_L linkL1 F_L linkL0 F_L ref links which> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-2
+<LAB> = \RS\.*
+<F_L linkL1 F_L linkL0 F_L> = who|WHO
+=
+<F_L linkL1 F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
 #TemplateActionAlg
 Adjective-clause-3
 <LAB> = \RS\.*
@@ -1348,6 +1354,7 @@ Adjective-clause-3
 Adjective-clause-4
 <LAB> = \RS\.*|\B\.*
 <F_L str> = which|WHICH
+<F_R adm_set_which> = %
 =
 <F_L adj-mod-which> += <F_R ref>
 #TemplateActionAlg
@@ -1358,27 +1365,32 @@ Adjective-clause-5
 <F_L ref links who> += <F_R ref>
 #TemplateActionAlg
 Adjective-clause-6
+<LAB> = \B\.*
+<F_R adj-mod-which> = %
+<F_L linkR2 F_R str> = which|WHICH
+=
+<F_L ref links which> += <F_R ref>
+#TemplateActionAlg
+Adjective-clause-7
 <LAB> = \R\.*|\MX\.*
 <F_R adj-mod-which> != %
 =
 <F_L ref links which> += <F_R adj-mod-which>
 #TemplateActionAlg
-Adjective-clause-7
+Adjective-clause-8
 <LAB> = \D\.*
 <F_L linkL0 LAB> = \Mr\.*
 <F_L str> = whose|WHOSE
 =
 <F_L linkL0 F_L ref links whose> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-8
-<LAB> = \S\.*
-<F_L linkL0 LAB> = \Cr\.*
-<F_L linkL0 F_L str> = that|THAT
-=
-<F_L adm_set> = <F_L ref>
-<F_L linkL0 F_L linkL0 F_L ref links _which> += <F_R ref> 
-#TemplateActionAlg
 Adjective-clause-9
+<LAB> = \CV\.*
+<F_L str> = that|THAT
+=
+<F_L linkL0 F_L ref links _which> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-10
 <LAB> = \RS
 <F_L linkL0 LAB> = \Mr\.*
 <F_L str> = whose|WHOSE
