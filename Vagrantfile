@@ -9,7 +9,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
-  config.vm.hostname = "cogbox"
+  config.vm.hostname = "relexbox"
   config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu.com/hk.archive.ubuntu.com/g' /etc/apt/sources.list"
   config.vm.provision "shell", inline: "apt-get update -y"
   config.vm.provision "shell", inline: "apt-get install -y python-software-properties"
@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "ln -v -s /vagrant/relex ~vagrant"
 
   config.vm.provider :virtualbox do |vb|
-      vb.name = "cogbox"
+      vb.name = "relexbox"
       vb.customize [
                    "modifyvm", :id,
                    "--memory", "1024",
