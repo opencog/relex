@@ -28,6 +28,14 @@ The source download and project management site is at
 Build and install of the core package is discussed below.
 
 
+Installing on Ubuntu/Debian
+---------------------------
+This script will install the dependencies and build RelEx. It has been tested on Ubuntu 12.04.
+
+  wget https://raw.github.com/opencog/relex/master/relex-install-ubuntu.sh && chmod +x ./relex-install-ubuntu.sh && sudo ./relex-install-ubuntu.sh
+
+For other systems, follow the instructions below.
+
 Dependencies
 -------------
 To build and use RelEx, the following packages are required to be 
