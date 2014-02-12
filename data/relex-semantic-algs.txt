@@ -1322,7 +1322,7 @@ PREDET2
 ;    "Anyone who is afraid of doing too much will end up doing to little."
 ;    "I like the trees which have coffee beans."
 #TemplateActionAlg
-Adjective-clause-1
+Adjective-clause-who-1
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
 <F_L linkL1 F_L str> = who|WHO
@@ -1330,7 +1330,29 @@ Adjective-clause-1
 <F_L adm_set> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-1.1
+Adjective-clause-who-2
+<LAB> = \RS\.*
+<F_L str> = who|WHO
+<F_R adm_set> = %
+=
+<F_L linkL0 F_L ref links who> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-who-3
+<LAB> = \RS\.*
+<F_L linkL0 LAB> = \CV
+<F_L linkL0 F_L str> = who|WHO
+<F_R adm_set> = %
+=
+<F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-who-4
+<LAB> = \MX\.*
+<F_R str> = who|WHO
+<F_R linkR1 LAB> = \S\.*
+=
+<F_L ref links who> +=  <F_R linkR1 F_R ref > 
+#TemplateActionAlg
+Adjective-clause-which-1
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
 <F_L linkL1 F_L str> = which|WHICH
@@ -1338,64 +1360,59 @@ Adjective-clause-1.1
 <F_L adm_set_which> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links which> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-2
+Adjective-clause-which-2
 <LAB> = \RS\.*
-<F_L linkL1 F_L linkL0 F_L> = who|WHO
-=
-<F_L linkL1 F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
-#TemplateActionAlg
-Adjective-clause-3
-<LAB> = \RS\.*
-<F_L str> = who|WHO
-<F_R adm_set> = %
-=
-<F_R adj-mod-who> = <F_R ref>
-#TemplateActionAlg
-Adjective-clause-4
-<LAB> = \RS\.*|\B\.*
 <F_L str> = which|WHICH
 <F_R adm_set_which> = %
 =
 <F_L adj-mod-which> += <F_R ref>
+<F_L linkL0 F_L ref links which> += <F_R ref>
 #TemplateActionAlg
-Adjective-clause-5
-<LAB> = \B\.*
-<F_R adj-mod-who> != %
+Adjective-clause-which-3
+<LAB> = \MX\.*
+<F_R str> = which|WHICH
 =
-<F_L ref links who> += <F_R ref>
+<F_L ref links which> += <F_R linkR1 F_R ref>
 #TemplateActionAlg
-Adjective-clause-6
-<LAB> = \B\.*
+Adjective-clause-which-4
+<LAB> = \R\.*
 <F_R adj-mod-which> = %
-<F_L linkR2 F_R str> = which|WHICH
+<F_R str> = which|WHICH
+<F_R linkR0 LAB> = \CV
 =
-<F_L ref links which> += <F_R ref>
+<F_L ref links which> += <F_R linkR0 F_R ref>
 #TemplateActionAlg
-Adjective-clause-7
-<LAB> = \R\.*|\MX\.*
-<F_R adj-mod-which> != %
-=
-<F_L ref links which> += <F_R adj-mod-which>
-#TemplateActionAlg
-Adjective-clause-8
+Adjective-clause-whose-1
 <LAB> = \D\.*
 <F_L linkL0 LAB> = \Mr\.*
 <F_L str> = whose|WHOSE
 =
 <F_L linkL0 F_L ref links whose> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-9
+Adjective-clause-whose-2
+<LAB> = \MX\.*
+<F_R str> = whose|WHOSE
+=
+<F_L ref links whose> += <F_R linkR1 F_R ref> 
+#TemplateActionAlg
+Adjective-clause-that-1
 <LAB> = \CV\.*
 <F_L str> = that|THAT
 =
 <F_L linkL0 F_L ref links _which> += <F_R ref> 
 #TemplateActionAlg
-Adjective-clause-10
-<LAB> = \RS
-<F_L linkL0 LAB> = \Mr\.*
-<F_L str> = whose|WHOSE
+Adjective-clause-that-2
+<LAB> = \P\.*
+<F_L linkL1 LAB> = \RS\.*
+<F_L linkL1 F_L str> = that|THAT
 =
-<F_L linkL0 F_L ref links whose> += <F_R ref> 
+<F_L linkL1 F_L linkL0 F_L ref links _which> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-that-3
+<LAB> = \RS\.*
+<F_L str> = that|THAT
+=
+<F_L linkL0 F_L ref links _which> += <F_R ref> 
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
