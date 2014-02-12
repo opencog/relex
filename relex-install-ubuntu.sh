@@ -13,7 +13,7 @@ apt-get -y install build-essential
 apt-get -y install wordnet-dev wordnet-sense-index
 apt-get -y install openjdk-7-jdk 
 apt-get -y install ant libcommons-logging-java
-apt-get -y install bzr
+apt-get -y install git
 
 # link-grammar
 wget http://www.abisource.com/downloads/link-grammar/4.8.6/link-grammar-4.8.6.tar.gz
@@ -35,6 +35,6 @@ wget http://download.java.net/maven/2/gnu/getopt/java-getopt/1.0.13/java-getopt-
 cp -v java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar && chmod 0644 /usr/share/java/gnu-getopt.jar
 
 # relex
-bzr branch lp:relex
+git clone https://github.com/opencog/relex
 cd relex
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
