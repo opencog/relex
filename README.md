@@ -30,12 +30,9 @@ Build and install of the core package is discussed below.
 
 Installing on Ubuntu/Debian
 ---------------------------
-This will clone the repository, install the dependencies, and build and test RelEx. It has been tested on Ubuntu 12.04.
 
-	git clone https://github.com/opencog/relex
-	cd relex
-	sudo ./install-scripts/install-ubuntu-dependencies.sh
-  
+An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/install-scripts/) directory.
+ 
 For other systems, follow the instructions below.
 
 Dependencies
