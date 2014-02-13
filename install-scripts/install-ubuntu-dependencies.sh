@@ -19,15 +19,18 @@ apt-get -y install ant libcommons-logging-java
 # link-grammar
 wget http://www.abisource.com/downloads/link-grammar/4.8.6/link-grammar-4.8.6.tar.gz
 tar -xvf link-grammar-4.8.6.tar.gz
+rm link-grammar-4.8.6.tar.gz
 cd link-grammar-4.8.6
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64  ./configure 
 make 
 make install
 ln -v -s /usr/local/lib/liblink-grammar.so.4 /usr/lib/liblink-grammar.so.4
+cd ..
 
 # jwnl
 wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
 unzip jwnl14-rc2.zip
+rm jwnl14-rc2.zip
 cp -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
 chmod 0644 /usr/local/share/java/jwnl.jar 
 
