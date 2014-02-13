@@ -1407,7 +1407,7 @@ Adjective-clause-that-1
 <LAB> = \CV\.*
 <F_L str> = that|THAT
 =
-<F_L linkL0 F_L ref links _which> += <F_R ref> 
+<F_L linkL0 F_L ref links that_adj> += <F_R ref> 
 ;Example: Andrew stopped the police car that was driving fast.
 #TemplateActionAlg
 Adjective-clause-that-2
@@ -1416,7 +1416,7 @@ Adjective-clause-that-2
 <F_L linkL1 F_L str> = that|THAT
 =
 <F_L temp_that> = <F_R ref>
-<F_L linkL1 F_L linkL0 F_L ref links _which> += <F_R ref> 
+<F_L linkL1 F_L linkL0 F_L ref links that_adj> += <F_R ref> 
 ;Example: Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
 #TemplateActionAlg
 Adjective-clause-that-3
@@ -1424,7 +1424,7 @@ Adjective-clause-that-3
 <F_L str> = that|THAT
 <F_R temp_that> = %
 =
-<F_L linkL0 F_L ref links _which> += <F_R ref> 
+<F_L linkL0 F_L ref links that_adj> += <F_R ref> 
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;

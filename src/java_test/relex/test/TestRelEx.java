@@ -155,7 +155,7 @@ public class TestRelEx
     			"_iobj(lend, book)\n" +
     			"_obj(lend, me)\n" +
     			"_subj(lend, Bob)\n" +
-    			"_which(book, lend)\n" +
+    			"that_adj(book, lend)\n" +
     			"_predadj(book, boring)\n");
                rc &= ts.test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
        			"_obj(eat, curry)\n" +
@@ -192,7 +192,7 @@ public class TestRelEx
    			"_subj(stop, Bob)\n" +
    			"_advmod(drive, fast)\n" +
    			"_subj(drive, car)\n" +
-    			"_which(car, drive)\n" +
+    			"that_adj(car, drive)\n" +
    			"_nn(car, police)\n");
 	      rc &= ts.test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
 			"_obj(stop, car)\n" +
@@ -200,7 +200,7 @@ public class TestRelEx
     			"_advmod(stop, just)\n" +
     			"on(stand, street)\n" +
     			"_subj(stand, sign)\n" +
-   			"_which(sign, stand)\n" +
+   			"that_adj(sign, stand)\n" +
    			"_nn(sign, traffic)\n" +
     			"before(just, crossroads)\n");
    		if (rc)
