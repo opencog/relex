@@ -37,7 +37,7 @@ chmod 0644 /usr/local/share/java/jwnl.jar
 
 # getopt
 wget http://download.java.net/maven/2/gnu/getopt/java-getopt/1.0.13/java-getopt-1.0.13.jar
-cp -v java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar && chmod 0644 /usr/share/java/gnu-getopt.jar
+mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar && chmod 0644 /usr/share/java/gnu-getopt.jar
 
 # test relex
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
