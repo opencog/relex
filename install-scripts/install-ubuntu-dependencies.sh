@@ -4,7 +4,9 @@
 # Tested on Ubuntu 12.04 LTS (Precise Pangolin)
 #
 # Usage:
-#   wget https://raw.github.com/opencog/relex/master/relex-install-ubuntu.sh && chmod +x ./relex-install-ubuntu.sh && sudo ./relex-install-ubuntu.sh
+#   git clone https://github.com/opencog/relex
+#   cd relex
+#   sudo ./install-scripts/install-ubuntu-dependencies.sh
 #
 # Authors: David Hart, Cosmo Harrigan
 
@@ -13,7 +15,6 @@ apt-get -y install build-essential
 apt-get -y install wordnet-dev wordnet-sense-index
 apt-get -y install openjdk-7-jdk 
 apt-get -y install ant libcommons-logging-java
-apt-get -y install git
 
 # link-grammar
 wget http://www.abisource.com/downloads/link-grammar/4.8.6/link-grammar-4.8.6.tar.gz
@@ -34,7 +35,5 @@ chmod 0644 /usr/local/share/java/jwnl.jar
 wget http://download.java.net/maven/2/gnu/getopt/java-getopt/1.0.13/java-getopt-1.0.13.jar
 cp -v java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar && chmod 0644 /usr/share/java/gnu-getopt.jar
 
-# relex
-git clone https://github.com/opencog/relex
-cd relex
+# test relex
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
