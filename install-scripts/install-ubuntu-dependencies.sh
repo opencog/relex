@@ -11,6 +11,7 @@
 # Authors: David Hart, Cosmo Harrigan
 
 # Dependencies
+apt-get -y update 
 apt-get -y install build-essential 
 apt-get -y install wordnet-dev wordnet-sense-index
 apt-get -y install openjdk-7-jdk 
