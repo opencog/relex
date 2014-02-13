@@ -33,7 +33,7 @@ Dependencies
 
 ### Installing on Ubuntu/Debian
 
-An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/install-scripts/) directory.
+An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/tree/master/install-scripts) directory.
 
 ### Installing on all other systems
  
