@@ -30,6 +30,14 @@ Build and install of the core package is discussed below.
 
 Dependencies
 -------------
+
+### Installing on Ubuntu/Debian
+
+An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/tree/master/install-scripts) directory.
+
+### Installing on all other systems
+ 
+For other systems, follow the instructions below.
 To build and use RelEx, the following packages are required to be 
 installed:
 
