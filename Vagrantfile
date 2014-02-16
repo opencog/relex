@@ -10,11 +10,9 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.hostname = "relexbox"
-  config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu.com/hk.archive.ubuntu.com/g' /etc/apt/sources.list"
-  config.vm.provision "shell", inline: "apt-get update -y"
-  config.vm.provision "shell", inline: "apt-get install -y python-software-properties"
-  config.vm.provision "shell", path:   "/vagrant/install-scripts/install-ubuntu-dependencies.sh"
-  config.vm.provision "shell", inline: "ln -v -s /vagrant/relex ~vagrant"
+  config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu.com/au.archive.ubuntu.com/g' /etc/apt/sources.list"
+  config.vm.provision "shell", inline: "ln -v -s /vagrant /home/vagrant/relex"
+  config.vm.provision "shell", inline: "/vagrant/install-scripts/install-ubuntu-dependencies.sh"
 
   config.vm.provider :virtualbox do |vb|
       vb.name = "relexbox"

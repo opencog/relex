@@ -13,4 +13,4 @@ This will clone the repository, install the dependencies, and build and test Rel
 	git clone https://github.com/opencog/relex
 	cd relex
 	sudo ./install-scripts/install-ubuntu-dependencies.sh
-
+        ant run
