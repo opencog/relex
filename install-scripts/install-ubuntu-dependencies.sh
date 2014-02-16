@@ -12,7 +12,7 @@
 
 # Dependencies
 apt-get -y update 
-apt-get -y install build-essential 
+apt-get -y install build-essential unzip
 apt-get -y install wordnet-dev wordnet-sense-index
 apt-get -y install openjdk-7-jdk 
 apt-get -y install ant libcommons-logging-java
@@ -30,14 +30,12 @@ cd ..
 
 # jwnl
 wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
-unzip jwnl14-rc2.zip
-rm jwnl14-rc2.zip
-cp -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
-chmod 0644 /usr/local/share/java/jwnl.jar 
+unzip jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
+mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+chmod -v 0644 /usr/local/share/java/jwnl.jar 
 
 # getopt
 wget http://download.java.net/maven/2/gnu/getopt/java-getopt/1.0.13/java-getopt-1.0.13.jar
-mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar && chmod 0644 /usr/share/java/gnu-getopt.jar
-
-# test relex
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
+mv -v java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar
+chmod -v 0644 /usr/share/java/gnu-getopt.jar
