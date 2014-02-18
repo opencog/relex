@@ -1322,14 +1322,14 @@ PREDET2
 Adjective-clause-who-1
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
-<F_L linkL1 F_L str> = who|WHO
+<F_L linkL1 F_L str> = who
 =
 <F_L adm_set> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
 #TemplateActionAlg
 Adjective-clause-who-2
 <LAB> = \RS\.*
-<F_L str> = who|WHO
+<F_L str> = who
 <F_R adm_set> = %
 =
 <F_L linkL0 F_L ref links who> += <F_R ref> 
@@ -1338,7 +1338,7 @@ Adjective-clause-who-2
 Adjective-clause-who-3
 <LAB> = \RS\.*
 <F_L linkL0 LAB> = \CV
-<F_L linkL0 F_L str> = who|WHO
+<F_L linkL0 F_L str> = who
 <F_R adm_set> = %
 =
 <F_L linkL0 F_L linkL0 F_L ref links who> += <F_R ref> 
@@ -1346,7 +1346,7 @@ Adjective-clause-who-3
 #TemplateActionAlg
 Adjective-clause-who-4
 <LAB> = \MX\.*
-<F_R str> = who|WHO
+<F_R str> = who
 <F_R linkR1 LAB> = \S\.*
 =
 <F_L ref links who> +=  <F_R linkR1 F_R ref>
@@ -1355,7 +1355,7 @@ Adjective-clause-who-4
 Adjective-clause-which-1
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
-<F_L linkL1 F_L str> = which|WHICH
+<F_L linkL1 F_L str> = which
 =
 <F_L adm_set_which> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links which> += <F_R ref> 
@@ -1363,7 +1363,7 @@ Adjective-clause-which-1
 #TemplateActionAlg
 Adjective-clause-which-2
 <LAB> = \RS\.*
-<F_L str> = which|WHICH
+<F_L str> = which
 <F_R adm_set_which> = %
 =
 <F_L adj-mod-which> += <F_R ref>
@@ -1372,7 +1372,7 @@ Adjective-clause-which-2
 #TemplateActionAlg
 Adjective-clause-which-3
 <LAB> = \MX\.*
-<F_R str> = which|WHICH
+<F_R str> = which
 =
 <F_L ref links which> += <F_R linkR1 F_R ref>
 ;Example: The books which I read in the library were written by Charles Dickens. 
@@ -1380,7 +1380,7 @@ Adjective-clause-which-3
 Adjective-clause-which-4
 <LAB> = \R\.*
 <F_R adj-mod-which> = %
-<F_R str> = which|WHICH
+<F_R str> = which
 <F_R linkR0 LAB> = \CV
 =
 <F_L ref links which> += <F_R linkR0 F_R ref>
@@ -1389,21 +1389,21 @@ Adjective-clause-which-4
 Adjective-clause-whose-1
 <LAB> = \D\.*
 <F_L linkL0 LAB> = \Mr\.*
-<F_L str> = whose|WHOSE
+<F_L str> = whose
 =
 <F_L linkL0 F_L ref links whose> += <F_R ref>
 ;Example: Bob, whose name is in that book, is the student near the window. 
 #TemplateActionAlg
 Adjective-clause-whose-2
 <LAB> = \MX\.*
-<F_R str> = whose|WHOSE
+<F_R str> = whose
 =
 <F_L ref links whose> += <F_R linkR1 F_R ref> 
 ;Example: The book that she lent me is very boring.
 #TemplateActionAlg
 Adjective-clause-that-1
 <LAB> = \CV\.*
-<F_L str> = that|THAT
+<F_L str> = that
 =
 <F_L linkL0 F_L ref links that_adj> += <F_R ref> 
 ;Example: Andrew stopped the police car that was driving fast.
@@ -1411,7 +1411,7 @@ Adjective-clause-that-1
 Adjective-clause-that-2
 <LAB> = \P\.*
 <F_L linkL1 LAB> = \RS\.*
-<F_L linkL1 F_L str> = that|THAT
+<F_L linkL1 F_L str> = that
 =
 <F_L temp_that> = <F_R ref>
 <F_L linkL1 F_L linkL0 F_L ref links that_adj> += <F_R ref> 
@@ -1419,7 +1419,7 @@ Adjective-clause-that-2
 #TemplateActionAlg
 Adjective-clause-that-3
 <LAB> = \RS\.*
-<F_L str> = that|THAT
+<F_L str> = that
 <F_R temp_that> = %
 =
 <F_L linkL0 F_L ref links that_adj> += <F_R ref> 
