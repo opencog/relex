@@ -110,6 +110,7 @@ public class TestRelEx
                                 "_subj(like, people)\n" +
                                 "than(pig, dog)\n");
 
+	//Extrapositions examples
         rc &= ts.test_sentence ("The woman who lives next door is a registered nurse.",
                                 "_obj(be, nurse)\n" +
                                 "_subj(be, woman)\n" +

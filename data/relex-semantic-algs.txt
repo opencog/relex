@@ -1315,10 +1315,9 @@ PREDET2
 =
 <F_L linkR0 F_R ref links _predet> = <F_L ref> 
 ;/////////////////////////////////////////////////////////////////////////////
-;Adjective-clause
-;For Relex2Logic adjective-clause rule
+; Rules  for handling Extrapositions
 ;
-;Example: A player who is injured has to leave the field. 
+; Example: "The woman who lives next door is a nurse."
 #TemplateActionAlg
 Adjective-clause-who-1
 <LAB> = \P\.*
@@ -1327,7 +1326,6 @@ Adjective-clause-who-1
 =
 <F_L adm_set> = <F_L ref>
 <F_L linkL1 F_L linkL0 F_L ref links who> += <F_R ref> 
-;Example: The woman who lives next door is a registered nurse. 
 #TemplateActionAlg
 Adjective-clause-who-2
 <LAB> = \RS\.*
