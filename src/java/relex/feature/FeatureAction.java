@@ -247,7 +247,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		 * System.out.println(f + "\nexecuting: " +a3); a3.doAction(f);
 		 * System.out.println(f);
 		 */
-		FeatureNode f = new FeatureNode("<x y> = 3\n" + "<x z> = 2");
+		FeatureNode f = new FeatureNode();
+		f.set("test1", new FeatureNode("<x y> = 3\n" + "<x z> = 2"));
 		FeatureAction a1 = new FeatureAction("<x zz> = <x z>");
 		FeatureAction a2 = new FeatureAction("<x double> += <x z>");
 		FeatureAction a3 = new FeatureAction("<x y> = <x double>");
@@ -267,8 +268,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		System.out.println(f);
 
 		System.out.println("\n\nTest 2:\n");
-		f = new FeatureNode("<x zz name> = MOVE\n" + "<x zz arg0> = <x y>\n"
-				+ "<x y name> = BALL\n" + "<x z name> = JIM");
+		f .set("test2", new FeatureNode("<x zz name> = MOVE\n" + "<x zz arg0> = <x y>\n"
+				+ "<x y name> = BALL\n" + "<x z name> = JIM"));
 
 		FeatureAction a4 = new FeatureAction("<x double> += <x zz>");
 		FeatureAction a5 = new FeatureAction("<x arg0> += <x zz arg0>");
