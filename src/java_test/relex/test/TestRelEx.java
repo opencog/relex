@@ -26,208 +26,201 @@ import relex.output.SimpleView;
 
 public class TestRelEx
 {
-    private RelationExtractor re;
-    private int pass;
-    private int fail;
+	private RelationExtractor re;
+	private int pass;
+	private int fail;
 
-    public TestRelEx()
-    {
-        re = new RelationExtractor();
-        pass = 0;
-        fail = 0;
-    }
+	public TestRelEx()
+	{
+		re = new RelationExtractor();
+		pass = 0;
+		fail = 0;
+	}
 
-    public ArrayList<String> split(String a)
-    {
-        String[] sa = a.split("\n");
-        ArrayList<String> saa = new ArrayList<String>();
-        for (String s : sa)
-        {
-            saa.add(s);
-        }
-        Collections.sort (saa);
-        return saa;
-    }
+	public ArrayList<String> split(String a)
+	{
+		String[] sa = a.split("\n");
+		ArrayList<String> saa = new ArrayList<String>();
+		for (String s : sa) {
+			saa.add(s);
+		}
+		Collections.sort (saa);
+		return saa;
+	}
 
-    /**
-     * First argument is the sentence.
-     * Second argument is a list of the relations that the
-     * Stanford parser generates.
-     * Return true if relex generates that same dependencies
-     * as the second argument.
-     */
-    public boolean test_sentence (String sent, String sf)
-    {
-        re.do_penn_tagging = false;
-        Sentence sntc = re.processSentence(sent);
-        ParsedSentence parse = sntc.getParses().get(0);
-        String rs = SimpleView.printBinaryRelations(parse);
+	/**
+	 * First argument is the sentence.
+	 * Second argument is a list of the relations that the
+	 * Stanford parser generates.
+	 * Return true if relex generates that same dependencies
+	 * as the second argument.
+	 */
+	public boolean test_sentence (String sent, String sf)
+	{
+		re.do_penn_tagging = false;
+		Sentence sntc = re.processSentence(sent);
+		ParsedSentence parse = sntc.getParses().get(0);
+		String rs = SimpleView.printBinaryRelations(parse);
 
-        ArrayList<String> exp = split(sf);
-        ArrayList<String> got = split(rs);
-        if (exp.size() != got.size())
-        {
-            System.err.println("Error: size miscompare:\n" +
-                               "\tExpected = " + exp + "\n" +
-                               "\tGot      = " + got + "\n" +
-                               "\tSentence = " + sent);
-            fail ++;
-            return false;
-        }
-        for (int i=0; i< exp.size(); i++)
-        {
-            if (!exp.get(i).equals (got.get(i)))
-            {
-                System.err.println("Error: content miscompare:\n" +
-                                   "\tExpected = " + exp + "\n" +
-                                   "\tGot      = " + got + "\n" +
-                                   "\tSentence = " + sent);
-                fail ++;
-                return false;
-            }
-        }
+		ArrayList<String> exp = split(sf);
+		ArrayList<String> got = split(rs);
+		if (exp.size() != got.size()) {
+			System.err.println("Error: size miscompare:\n" +
+			                   "\tExpected = " + exp + "\n" +
+			                   "\tGot      = " + got + "\n" +
+			                   "\tSentence = " + sent);
+			fail ++;
+			return false;
+		}
+		for (int i=0; i< exp.size(); i++) {
+			if (!exp.get(i).equals (got.get(i))) {
+				System.err.println("Error: content miscompare:\n" +
+				                   "\tExpected = " + exp + "\n" +
+				                   "\tGot      = " + got + "\n" +
+				                   "\tSentence = " + sent);
+				fail ++;
+				return false;
+			}
+		}
 
-        pass ++;
-        return true;
-    }
+		pass ++;
+		return true;
+	}
 
 
-    public static void main(String[] args)
-    {
-        TestRelEx ts = new TestRelEx();
-        boolean rc = true;
-        rc &= ts.test_sentence ("Some people like pigs less than dogs.",
-                                "_advmod(like, less)\n" +
-                                "_obj(like, pig)\n" +
-                                "_quantity(people, some)\n" +
-                                "_subj(like, people)\n" +
-                                "than(pig, dog)\n");
+	public static void main(String[] args)
+	{
+		TestRelEx ts = new TestRelEx();
+		boolean rc = true;
+		rc &= ts.test_sentence ("Some people like pigs less than dogs.",
+		                        "_advmod(like, less)\n" +
+		                        "_obj(like, pig)\n" +
+		                        "_quantity(people, some)\n" +
+		                        "_subj(like, people)\n" +
+		                        "than(pig, dog)\n");
 
-        rc &= ts.test_sentence ("Some people like pigs more than dogs.",
-                                "_advmod(like, more)\n" +
-                                "_obj(like, pig)\n" +
-                                "_quantity(people, some)\n" +
-                                "_subj(like, people)\n" +
-                                "than(pig, dog)\n");
+		rc &= ts.test_sentence ("Some people like pigs more than dogs.",
+		                        "_advmod(like, more)\n" +
+		                        "_obj(like, pig)\n" +
+		                        "_quantity(people, some)\n" +
+		                        "_subj(like, people)\n" +
+		                        "than(pig, dog)\n");
 
-	//Extrapositions examples
-        rc &= ts.test_sentence ("The woman who lives next door is a registered nurse.",
-                                "_obj(be, nurse)\n" +
-                                "_subj(be, woman)\n" +
-                                "_amod(nurse, registered)\n" +
-                                "_advmod(live, next_door)\n" +
-                                "_subj(live, woman)\n" +
-                                "who(woman, live)\n");
+		//Extrapositions examples
+		rc &= ts.test_sentence ("The woman who lives next door is a registered nurse.",
+		                        "_obj(be, nurse)\n" +
+		                        "_subj(be, woman)\n" +
+		                        "_amod(nurse, registered)\n" +
+		                        "_advmod(live, next_door)\n" +
+		                        "_subj(live, woman)\n" +
+		                        "who(woman, live)\n");
 
-        rc &= ts.test_sentence ("A player who is injured has to leave the field.",
-                                "_to-do(have, leave)\n" +
-                                "_subj(have, player)\n" +
-                                "_obj(leave, field)\n" +
-                                "_predadj(player, injured)\n" +
-                                "who(player, injured)\n" );
+		rc &= ts.test_sentence ("A player who is injured has to leave the field.",
+		                        "_to-do(have, leave)\n" +
+		                        "_subj(have, player)\n" +
+		                        "_obj(leave, field)\n" +
+		                        "_predadj(player, injured)\n" +
+		                        "who(player, injured)\n" );
 
-        rc &= ts.test_sentence ("Pizza, which most people love, is not very healthy.",
-                                "_advmod(very, not)\n" +
-                                "_advmod(healthy, very)\n" +
-                                "_obj(love, Pizza)\n" +
-                                "_quantity(people, most)\n" +
-                                "which(Pizza, love)\n" +
-                                "_subj(love, people)\n" +
-                                "_predadj(Pizza, healthy)\n" );
+		rc &= ts.test_sentence ("Pizza, which most people love, is not very healthy.",
+		                        "_advmod(very, not)\n" +
+		                        "_advmod(healthy, very)\n" +
+		                        "_obj(love, Pizza)\n" +
+		                        "_quantity(people, most)\n" +
+		                        "which(Pizza, love)\n" +
+		                        "_subj(love, people)\n" +
+		                        "_predadj(Pizza, healthy)\n" );
 
-        rc &= ts.test_sentence ("The restaurant  which belongs to my aunt is very famous.",
-                                "_advmod(famous, very)\n" +
-                                "to(belong, aunt)\n" +
-                                "_subj(belong, restaurant)\n" +
-                                "_poss(aunt, me)\n" +
-                                "which(restaurant, belong)\n" +
-                                "_predadj(restaurant, famous)\n");
+		rc &= ts.test_sentence ("The restaurant  which belongs to my aunt is very famous.",
+		                        "_advmod(famous, very)\n" +
+		                        "to(belong, aunt)\n" +
+		                        "_subj(belong, restaurant)\n" +
+		                        "_poss(aunt, me)\n" +
+		                        "which(restaurant, belong)\n" +
+		                        "_predadj(restaurant, famous)\n");
 
-        rc &= ts.test_sentence ("The books which I read in the library were written by Charles Dickens.",
-                                "_obj(write, book)\n" +
-                                "by(write, Charles_Dickens)\n" +
-                                "_obj(read, book)\n" +
-                                "in(read, library)\n" +
-                                "_subj(read, I)\n" +
-                                "which(book, read)\n");
+		rc &= ts.test_sentence ("The books which I read in the library were written by Charles Dickens.",
+		                        "_obj(write, book)\n" +
+		                        "by(write, Charles_Dickens)\n" +
+		                        "_obj(read, book)\n" +
+		                        "in(read, library)\n" +
+		                        "_subj(read, I)\n" +
+		                        "which(book, read)\n");
 
-        rc &= ts.test_sentence("This is the book  whose author I met in a library.",
-                               "_obj(be, book)\n" +
-                               "_subj(be, this)\n" +
-                               "_obj(meet, author)\n" +
-                               "in(meet, library)\n" +
-                               "_subj(meet, I)\n" +
-                               "whose(book, author)\n");
+		rc &= ts.test_sentence("This is the book  whose author I met in a library.",
+		                       "_obj(be, book)\n" +
+		                       "_subj(be, this)\n" +
+		                       "_obj(meet, author)\n" +
+		                       "in(meet, library)\n" +
+		                       "_subj(meet, I)\n" +
+		                       "whose(book, author)\n");
 
-        rc &= ts.test_sentence("The book that Bob lent me is very boring.",
-                               "_advmod(boring, very)\n" +
-                               "_iobj(lend, book)\n" +
-                               "_obj(lend, me)\n" +
-                               "_subj(lend, Bob)\n" +
-                               "that_adj(book, lend)\n" +
-                               "_predadj(book, boring)\n");
+		rc &= ts.test_sentence("The book that Bob lent me is very boring.",
+		                       "_advmod(boring, very)\n" +
+		                       "_iobj(lend, book)\n" +
+		                       "_obj(lend, me)\n" +
+		                       "_subj(lend, Bob)\n" +
+		                       "that_adj(book, lend)\n" +
+		                       "_predadj(book, boring)\n");
 
-        rc &= ts.test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
-                               "_obj(eat, curry)\n" +
-                               "_subj(eat, they)\n" +
-                               "_obj(recommend, curry)\n" +
-                               "by(recommend, owner)\n" +
-                               "_poss(owner, restaurant)\n" +
-                               "which(curry, recommend)\n" +
-                               "_amod(curry, special)\n");
+		rc &= ts.test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
+		                       "_obj(eat, curry)\n" +
+		                       "_subj(eat, they)\n" +
+		                       "_obj(recommend, curry)\n" +
+		                       "by(recommend, owner)\n" +
+		                       "_poss(owner, restaurant)\n" +
+		                       "which(curry, recommend)\n" +
+		                       "_amod(curry, special)\n");
 
-        rc &= ts.test_sentence("The dog who Bob said chased me was black.",
-                               "_obj(chase, me)\n" +
-                               "_subj(chase, dog)\n" +
-                               "_subj(say, Bob)\n" +
-                               "_predadj(dog, black)\n" +
-                               "who(dog, chase)\n");
+		rc &= ts.test_sentence("The dog who Bob said chased me was black.",
+		                       "_obj(chase, me)\n" +
+		                       "_subj(chase, dog)\n" +
+		                       "_subj(say, Bob)\n" +
+		                       "_predadj(dog, black)\n" +
+		                       "who(dog, chase)\n");
 
-        rc &= ts.test_sentence("Bob, who hosted the party, is my cousin.",
-                               "_obj(be, cousin)\n" +
-                               "_subj(be, Bob)\n" +
-                               "_poss(cousin, me)\n" +
-                               "_obj(host, party)\n" +
-                               "_subj(host, Bob)\n" +
-                               "who(Bob, host)\n");
+		rc &= ts.test_sentence("Bob, who hosted the party, is my cousin.",
+		                       "_obj(be, cousin)\n" +
+		                       "_subj(be, Bob)\n" +
+		                       "_poss(cousin, me)\n" +
+		                       "_obj(host, party)\n" +
+		                       "_subj(host, Bob)\n" +
+		                       "who(Bob, host)\n");
 
-        rc &= ts.test_sentence("Bob, whose name is in that book, is the student near the window.",
-                               "near(be, window)\n" +
-                               "_obj(be, student)\n" +
-                               "_subj(be, Bob)\n" +
-                               "_obj(near, window)\n" +
-                               "_pobj(in, book)\n" +
-                               "_psubj(in, name)\n" +
-                               "_det(book, that)\n" +
-                               "whose(Bob, name)\n");
+		rc &= ts.test_sentence("Bob, whose name is in that book, is the student near the window.",
+		                       "near(be, window)\n" +
+		                       "_obj(be, student)\n" +
+		                       "_subj(be, Bob)\n" +
+		                       "_obj(near, window)\n" +
+		                       "_pobj(in, book)\n" +
+		                       "_psubj(in, name)\n" +
+		                       "_det(book, that)\n" +
+		                       "whose(Bob, name)\n");
 
-        rc &= ts.test_sentence("Bob stopped the police car that was driving fast.",
-                               "_obj(stop, car)\n" +
-                               "_subj(stop, Bob)\n" +
-                               "_advmod(drive, fast)\n" +
-                               "_subj(drive, car)\n" +
-                               "that_adj(car, drive)\n" +
-                               "_nn(car, police)\n");
+		rc &= ts.test_sentence("Bob stopped the police car that was driving fast.",
+		                       "_obj(stop, car)\n" +
+		                       "_subj(stop, Bob)\n" +
+		                       "_advmod(drive, fast)\n" +
+		                       "_subj(drive, car)\n" +
+		                       "that_adj(car, drive)\n" +
+		                       "_nn(car, police)\n");
 
-        rc &= ts.test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
-                               "_obj(stop, car)\n" +
-                               "by(stop, sign)\n" +
-                               "_advmod(stop, just)\n" +
-                               "on(stand, street)\n" +
-                               "_subj(stand, sign)\n" +
-                               "that_adj(sign, stand)\n" +
-                               "_nn(sign, traffic)\n" +
-                               "before(just, crossroads)\n");
+		rc &= ts.test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
+		                       "_obj(stop, car)\n" +
+		                       "by(stop, sign)\n" +
+		                       "_advmod(stop, just)\n" +
+		                       "on(stand, street)\n" +
+		                       "_subj(stand, sign)\n" +
+		                       "that_adj(sign, stand)\n" +
+		                       "_nn(sign, traffic)\n" +
+		                       "before(just, crossroads)\n");
 
-        if (rc)
-        {
-            System.err.println("Tested " + ts.pass + " sentences, test passed OK");
-        }
-        else
-        {
-            System.err.println("Test failed\n\t" +
-                               ts.fail + " sentences failed\n\t" +
-                               ts.pass + " sentences passed");
-        }
-    }
+		if (rc) {
+			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
+		} else {
+			System.err.println("Test failed\n\t" +
+			                   ts.fail + " sentences failed\n\t" +
+			                   ts.pass + " sentences passed");
+		}
+	}
 }
