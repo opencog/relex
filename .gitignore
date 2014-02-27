@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 *.swp
 .vagrant/
 bin/
 java-getopt-1.0.13.*
 jwnl14-rc2.*
 link-grammar-*
+=======
+.vagrant/
+bin/
+*.swp
+jwnl14-rc2/
+link-grammar-4.8.6/
+>>>>>>> use sudo, fix permissions
