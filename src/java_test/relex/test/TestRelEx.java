@@ -29,12 +29,16 @@ public class TestRelEx
 	private RelationExtractor re;
 	private int pass;
 	private int fail;
+	private int subpass;
+	private int subfail;
 
 	public TestRelEx()
 	{
 		re = new RelationExtractor();
 		pass = 0;
 		fail = 0;
+		subpass = 0;
+		subfail = 0;
 	}
 
 	public ArrayList<String> split(String a)
@@ -64,50 +68,72 @@ public class TestRelEx
 
 		ArrayList<String> exp = split(sf);
 		ArrayList<String> got = split(rs);
-		if (exp.size() != got.size()) {
+		if (exp.size() != got.size())
+		{
 			System.err.println("Error: size miscompare:\n" +
 			                   "\tExpected = " + exp + "\n" +
 			                   "\tGot      = " + got + "\n" +
 			                   "\tSentence = " + sent);
+			subfail ++;
 			fail ++;
 			return false;
 		}
-		for (int i=0; i< exp.size(); i++) {
-			if (!exp.get(i).equals (got.get(i))) {
+		for (int i=0; i< exp.size(); i++)
+		{
+			if (!exp.get(i).equals (got.get(i)))
+			{
 				System.err.println("Error: content miscompare:\n" +
 				                   "\tExpected = " + exp + "\n" +
 				                   "\tGot      = " + got + "\n" +
 				                   "\tSentence = " + sent);
+				subfail ++;
 				fail ++;
 				return false;
 			}
 		}
 
+		subpass ++;
 		pass ++;
 		return true;
 	}
 
-
-	public static void main(String[] args)
+	public void report(boolean rc, String subsys)
 	{
-		TestRelEx ts = new TestRelEx();
+		if (rc) {
+			System.err.println(subsys + ": Tested " + pass + " sentences, test passed OK");
+		} else {
+			System.err.println(subsys + ": Test failed\n\t" +
+			                   fail + " sentences failed\n\t" +
+			                   pass + " sentences passed");
+		}
+		subpass = 0;
+		subfail = 0;
+	}
+
+	public boolean test_comparatives()
+	{
 		boolean rc = true;
-		rc &= ts.test_sentence ("Some people like pigs less than dogs.",
-		                        "_advmod(like, less)\n" +
-		                        "_obj(like, pig)\n" +
-		                        "_quantity(people, some)\n" +
-		                        "_subj(like, people)\n" +
-		                        "than(pig, dog)\n");
+		rc &= test_sentence ("Some people like pigs less than dogs.",
+		                     "_advmod(like, less)\n" +
+		                     "_obj(like, pig)\n" +
+		                     "_quantity(people, some)\n" +
+		                     "_subj(like, people)\n" +
+		                     "than(pig, dog)\n");
 
-		rc &= ts.test_sentence ("Some people like pigs more than dogs.",
-		                        "_advmod(like, more)\n" +
-		                        "_obj(like, pig)\n" +
-		                        "_quantity(people, some)\n" +
-		                        "_subj(like, people)\n" +
-		                        "than(pig, dog)\n");
+		rc &= test_sentence ("Some people like pigs more than dogs.",
+		                     "_advmod(like, more)\n" +
+		                     "_obj(like, pig)\n" +
+		                     "_quantity(people, some)\n" +
+		                     "_subj(like, people)\n" +
+		                     "than(pig, dog)\n");
+		report(rc, "Comparatives");
+		return rc;
+	}
 
-		//Extrapositions examples
-		rc &= ts.test_sentence ("The woman who lives next door is a registered nurse.",
+	public boolean test_extraposition()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("The woman who lives next door is a registered nurse.",
 		                        "_obj(be, nurse)\n" +
 		                        "_subj(be, woman)\n" +
 		                        "_amod(nurse, registered)\n" +
@@ -115,14 +141,14 @@ public class TestRelEx
 		                        "_subj(live, woman)\n" +
 		                        "who(woman, live)\n");
 
-		rc &= ts.test_sentence ("A player who is injured has to leave the field.",
+		rc &= test_sentence ("A player who is injured has to leave the field.",
 		                        "_to-do(have, leave)\n" +
 		                        "_subj(have, player)\n" +
 		                        "_obj(leave, field)\n" +
 		                        "_predadj(player, injured)\n" +
 		                        "who(player, injured)\n" );
 
-		rc &= ts.test_sentence ("Pizza, which most people love, is not very healthy.",
+		rc &= test_sentence ("Pizza, which most people love, is not very healthy.",
 		                        "_advmod(very, not)\n" +
 		                        "_advmod(healthy, very)\n" +
 		                        "_obj(love, Pizza)\n" +
@@ -131,7 +157,7 @@ public class TestRelEx
 		                        "_subj(love, people)\n" +
 		                        "_predadj(Pizza, healthy)\n" );
 
-		rc &= ts.test_sentence ("The restaurant  which belongs to my aunt is very famous.",
+		rc &= test_sentence ("The restaurant which belongs to my aunt is very famous.",
 		                        "_advmod(famous, very)\n" +
 		                        "to(belong, aunt)\n" +
 		                        "_subj(belong, restaurant)\n" +
@@ -139,7 +165,7 @@ public class TestRelEx
 		                        "which(restaurant, belong)\n" +
 		                        "_predadj(restaurant, famous)\n");
 
-		rc &= ts.test_sentence ("The books which I read in the library were written by Charles Dickens.",
+		rc &= test_sentence ("The books which I read in the library were written by Charles Dickens.",
 		                        "_obj(write, book)\n" +
 		                        "by(write, Charles_Dickens)\n" +
 		                        "_obj(read, book)\n" +
@@ -147,7 +173,7 @@ public class TestRelEx
 		                        "_subj(read, I)\n" +
 		                        "which(book, read)\n");
 
-		rc &= ts.test_sentence("This is the book  whose author I met in a library.",
+		rc &= test_sentence("This is the book whose author I met in a library.",
 		                       "_obj(be, book)\n" +
 		                       "_subj(be, this)\n" +
 		                       "_obj(meet, author)\n" +
@@ -155,7 +181,7 @@ public class TestRelEx
 		                       "_subj(meet, I)\n" +
 		                       "whose(book, author)\n");
 
-		rc &= ts.test_sentence("The book that Bob lent me is very boring.",
+		rc &= test_sentence("The book that Bob lent me is very boring.",
 		                       "_advmod(boring, very)\n" +
 		                       "_iobj(lend, book)\n" +
 		                       "_obj(lend, me)\n" +
@@ -163,7 +189,7 @@ public class TestRelEx
 		                       "that_adj(book, lend)\n" +
 		                       "_predadj(book, boring)\n");
 
-		rc &= ts.test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
+		rc &= test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
 		                       "_obj(eat, curry)\n" +
 		                       "_subj(eat, they)\n" +
 		                       "_obj(recommend, curry)\n" +
@@ -172,14 +198,14 @@ public class TestRelEx
 		                       "which(curry, recommend)\n" +
 		                       "_amod(curry, special)\n");
 
-		rc &= ts.test_sentence("The dog who Bob said chased me was black.",
+		rc &= test_sentence("The dog who Bob said chased me was black.",
 		                       "_obj(chase, me)\n" +
 		                       "_subj(chase, dog)\n" +
 		                       "_subj(say, Bob)\n" +
 		                       "_predadj(dog, black)\n" +
 		                       "who(dog, chase)\n");
 
-		rc &= ts.test_sentence("Bob, who hosted the party, is my cousin.",
+		rc &= test_sentence("Bob, who hosted the party, is my cousin.",
 		                       "_obj(be, cousin)\n" +
 		                       "_subj(be, Bob)\n" +
 		                       "_poss(cousin, me)\n" +
@@ -187,7 +213,7 @@ public class TestRelEx
 		                       "_subj(host, Bob)\n" +
 		                       "who(Bob, host)\n");
 
-		rc &= ts.test_sentence("Bob, whose name is in that book, is the student near the window.",
+		rc &= test_sentence("Bob, whose name is in that book, is the student near the window.",
 		                       "near(be, window)\n" +
 		                       "_obj(be, student)\n" +
 		                       "_subj(be, Bob)\n" +
@@ -197,7 +223,7 @@ public class TestRelEx
 		                       "_det(book, that)\n" +
 		                       "whose(Bob, name)\n");
 
-		rc &= ts.test_sentence("Bob stopped the police car that was driving fast.",
+		rc &= test_sentence("Bob stopped the police car that was driving fast.",
 		                       "_obj(stop, car)\n" +
 		                       "_subj(stop, Bob)\n" +
 		                       "_advmod(drive, fast)\n" +
@@ -205,7 +231,7 @@ public class TestRelEx
 		                       "that_adj(car, drive)\n" +
 		                       "_nn(car, police)\n");
 
-		rc &= ts.test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
+		rc &= test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
 		                       "_obj(stop, car)\n" +
 		                       "by(stop, sign)\n" +
 		                       "_advmod(stop, just)\n" +
@@ -214,6 +240,19 @@ public class TestRelEx
 		                       "that_adj(sign, stand)\n" +
 		                       "_nn(sign, traffic)\n" +
 		                       "before(just, crossroads)\n");
+
+		report(rc, "Extrapostion");
+		return rc;
+	}
+
+
+	public static void main(String[] args)
+	{
+		TestRelEx ts = new TestRelEx();
+		boolean rc = true;
+
+		rc &= ts.test_comparatives();
+		rc &= ts.test_extraposition();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
