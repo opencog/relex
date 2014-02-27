@@ -66,6 +66,7 @@ public class LogicProcessor
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
+                Boolean flag = false;
 
 		for (String appliedRule : appliedRules)
 		{
@@ -98,6 +99,24 @@ public class LogicProcessor
 							{
 								if (bVerboseMode)
 									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
+                                                                if(relexRule.getName().compareTo("maybe")==0)
+                                                                    {
+                                                                            
+                                                                            ArrayList<String> sVar= new ArrayList<String>();
+                                                                            ScopeVariables s = new ScopeVariables ();
+                                                                            sVar=s.loadVarScope();
+                                                                            int i =0;
+                                                                            while(i<sVar.size() && !flag)
+                                                                            {
+                                                                                if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!=0)
+                                                                                i++;
+                                                                                else
+                                                                                flag=true;
+                                                                                                                    
+                                                                            }
+                                                                            
+                                                                           
+                                                                       }
 
 								String secondVariableName = ruleCriterium.getSecondVariableName();
 								String secondVariableValue = foundNode.get("name").getValue();
@@ -147,6 +166,8 @@ public class LogicProcessor
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
 
 				bResult = true;
+                                if(relexRule.getName().compareTo("maybe")==0 && !flag)                               
+                              		bResult = false; 
 			}
 			else
 			{

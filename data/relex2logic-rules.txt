@@ -16,3 +16,5 @@
 
 [POSS2] {8} <POSS1A, POSS1B> _poss($N, $W) & pos($W, noun) => (possesive-rule $N (get_instance_name $V word_index sentence_index) $W (get_instance_name $W word_index sentence_index))
 
+[maybe] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
+

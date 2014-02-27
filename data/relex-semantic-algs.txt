@@ -1315,7 +1315,86 @@ PREDET2
 =
 <F_L linkR0 F_R ref links _predet> = <F_L ref> 
 ;/////////////////////////////////////////////////////////////////////////////
+; Rules  for handling Extrapositions
 ;
+; Example: "The woman who lives next door is a nurse."
+#TemplateActionAlg
+Adjective-clause-who-1
+<LAB> = \B\.*
+<F_L linkR2 F_R str> = who
+<F_R str> != be|has
+=
+<F_L ref links who> += <F_R ref> 
+#TemplateActionAlg
+Adjective-clause-who-2
+<LAB> = \RS.*
+<F_L str> = who
+<F_R str> = be|has
+=
+<F_L linkL0 F_L ref links who> += <F_R linkR0 F_R ref>
+;Example: Alana Bishop, who hosted the party, is my cousin.
+#TemplateActionAlg
+Adjective-clause-who-3
+<LAB> = \MX\.*
+<F_R str> = who
+=
+<F_L ref links who> +=  <F_R linkR1 F_R ref>
+;Example: They ate a special curry which was recommended by the restaurant’s owner. 
+#TemplateActionAlg
+Adjective-clause-which-1
+<LAB> = \B\.*
+<F_L linkR2 F_R str> = which
+<F_R str> != be|has
+=
+<F_L ref links which> += <F_R ref> 
+;Example: The restaurant  which belongs to my aunt is very famous.
+#TemplateActionAlg
+Adjective-clause-which-2
+<LAB> = \RS.*
+<F_L str> = which
+<F_R str> = be|has
+=
+<F_L linkL0 F_L ref links which> += <F_R linkR0 F_R ref>
+;Example:  Pizza, which most people love, is not very healthy. 
+#TemplateActionAlg
+Adjective-clause-which-3
+<LAB> = \MX\.*
+<F_R str> = which
+=
+<F_L ref links which> += <F_R linkR1 F_R ref>
+;Example: The books which I read in the library were written by Charles Dickens. 
+#TemplateActionAlg
+Adjective-clause-whose-1
+<LAB> = \D\.*
+<F_L linkL0 LAB> = \Mr\.*
+<F_L str> = whose
+=
+<F_L linkL0 F_L ref links whose> += <F_R ref>
+;Example: Bob, whose name is in that book, is the student near the window. 
+#TemplateActionAlg
+Adjective-clause-whose-2
+<LAB> = \MX\.*
+<F_R str> = whose
+=
+<F_L ref links whose> += <F_R linkR1 F_R ref> 
+;Example: The book that she lent me is very boring.
+#TemplateActionAlg
+Adjective-clause-that-1
+<LAB> = \B\.*
+<F_L linkR2 F_R str> = that
+<F_R str> != be|has
+=
+<F_L ref links that_adj> += <F_R ref> 
+;Example: Andrew stopped the police car that was driving fast.
+#TemplateActionAlg
+Adjective-clause-that-2
+<LAB> = \RS.*
+<F_L str> = that
+<F_R str> = be|has
+=
+<F_L linkL0 F_L ref links that_adj> += <F_R linkR0 F_R ref>
+;Example: Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
+;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
 ; L is a superlative modifying a determiner on the left.
