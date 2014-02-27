@@ -1,5 +1,5 @@
 ;
-; relex-stanford-algs.txt
+; relex-stanford.algs
 ;
 ; Rules to generate Stanford-parser-style relationships.
 ; The goal here is to be as compatible with the Stanford
@@ -12,6 +12,8 @@
 ; and, for some others, the correct behaviour is unclear/under-documented.
 ; However, a large-scale corpus accuracy test has not been attempted,
 ; and there may still be a number of bugs.
+;
+; Copyright (c) 2009 Linas Vepstas
 ;
 ;///////////////////////////////////////////////////////////////////////
 ;

@@ -1,9 +1,13 @@
 ;
-; relex-semantic-algs.txt
+; relex-semantic.algs
 ;
 ; Rules to extract semantic relationships, based on link-grammar
 ; linkages. The POS, gender, tense, noun-number tagging stage should be 
 ; performed prior to running these rules.
+;
+; Copyright (c) 2005 Novamente LLC
+; Copyright (c) 2009 Linas Vepstas
+; Copyright (c) 2014 Rodas Solomon
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;

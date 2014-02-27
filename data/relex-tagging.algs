@@ -1,8 +1,11 @@
 ;
-; relex-tagging-algs.txt
+; relex-tagging.algs
 ;
 ; Perform part-of-speech, tense, noun-number, gender and entity tagging.
 ; This tagging must be performed before relationship extraction is done.
+;
+; Copyright (c) 2005 Novamente LLC
+; Copyright (c) 2009 Linas Vepstas
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;

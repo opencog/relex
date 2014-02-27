@@ -1,5 +1,5 @@
 ;
-; relex-penn-tagging-algs.txt
+; relex-penn-tagging.algs
 ;
 ; Provide Penn Treebank-style part-of-speech tags.
 ;
@@ -29,6 +29,8 @@
 ; appears to provide the correct tagging for a few dozen test sentences, but
 ; has not been validated on any sort of large corpus.  No doubt, there are
 ; some subtle tagging variations that have not yet been addressed.
+;
+; Copyright (c) 2009 Linas Vepstas
 ;
 #TemplateActionAlg
 PENN_DETERMINER
