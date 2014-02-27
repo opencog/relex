@@ -143,10 +143,10 @@
                 <attribute name="Implementation-Version" value="${REVISION}"/>
                 <attribute name="Main-Class" value="relex.RelationExtractor"/>
             </manifest>
-            <fileset file="data/relex-penn-tagging-algs.txt" />
-            <fileset file="data/relex-semantic-algs.txt" />
-            <fileset file="data/relex-stanford-algs.txt" />
-            <fileset file="data/relex-tagging-algs.txt" />
+            <fileset file="data/relex-penn-tagging.algs" />
+            <fileset file="data/relex-semantic.algs" />
+            <fileset file="data/relex-stanford.algs" />
+            <fileset file="data/relex-tagging.algs" />
             <fileset file="data/frame/concept_vars.txt" />
             <fileset file="data/frame/mapping_rules.txt" />
             <fileset file="data/wordnet/file_properties.xml" />
@@ -186,10 +186,10 @@
                 <include name="test-corpus.txt"/>
                 <include name="data/frame/concept_vars.txt"/>
                 <include name="data/frame/mapping_rules.txt"/>
-                <include name="data/relex-penn-tagging-algs.txt"/>
-                <include name="data/relex-semantic-algs.txt"/>
-                <include name="data/relex-stanford-algs.txt"/>
-                <include name="data/relex-tagging-algs.txt"/>
+                <include name="data/relex-penn-tagging.algs"/>
+                <include name="data/relex-semantic.algs"/>
+                <include name="data/relex-stanford.algs"/>
+                <include name="data/relex-tagging.algs"/>
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/wordnet/file_properties.xml"/>
                 <include name="src/java/relex/anaphora/test-corpus.txt"/>
@@ -222,10 +222,10 @@
         <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
-            <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging-algs.txt"/>
-            <jvmarg line="-Drelex.semalgpath=data/relex-semantic-algs.txt"/>
-            <jvmarg line="-Drelex.sfalgpath=data/relex-stanford-algs.txt"/>
-            <jvmarg line="-Drelex.tagalgpath=data/relex-tagging-algs.txt"/>
+            <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging.algs"/>
+            <jvmarg line="-Drelex.semalgpath=data/relex-semantic.algs"/>
+            <jvmarg line="-Drelex.sfalgpath=data/relex-stanford.algs"/>
+            <jvmarg line="-Drelex.tagalgpath=data/relex-tagging.algs"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
             <classpath refid="relex.classpath"/>
             <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>

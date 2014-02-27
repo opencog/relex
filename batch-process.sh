@@ -21,7 +21,7 @@ VM_OPTS="-Xmx1024m"
 
 RELEX_OPTS="\
 	-Djava.library.path=/usr/lib:/usr/lib/jni:/usr/local/lib:/usr/local/lib/jni \
-	-Drelex.algpath=data/relex-semantic-algs.txt \
+	-Drelex.algpath=data/relex-semantic.algs \
 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
 	"
 

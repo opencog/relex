@@ -36,7 +36,7 @@ VM_OPTS="-Xmx1024m \
 # Alternately, they are taken from the default paths, which are the
 # same as those immediate below.
 # RELEX_OPTS="\
-# 	-Drelex.algpath=data/relex-semantic-algs.txt \
+# 	-Drelex.algpath=data/relex-semantic.algs \
 # 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
 # 	"
 

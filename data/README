@@ -2,7 +2,7 @@
                        Rules
                        -----
 
-The relex-semantic-algs.txt file contains rules for extracting 
+The relex-semantic.algs file contains rules for extracting 
 relationship types from the link grammar.  
 
 ; General remaks about the structure of the files:

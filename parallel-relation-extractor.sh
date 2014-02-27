@@ -7,7 +7,7 @@ VM_OPTS="\
 	"
 
 RELEX_OPTS="\
-	-Drelex.algpath=data/relex-semantic-algs.txt \
+	-Drelex.algpath=data/relex-semantic.algs \
 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
 	"
 

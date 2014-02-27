@@ -38,13 +38,13 @@ public class SentenceAlgorithmApplier
 	public SentenceAlgorithmApplier()
 	{
 		tagger = new AlgorithmApplier(
-			"relex.tagalgpath", "relex-tagging-algs.txt");
+			"relex.tagalgpath", "relex-tagging.algs");
 		semant = new AlgorithmApplier(
-			"relex.semalgpath", "relex-semantic-algs.txt");
+			"relex.semalgpath", "relex-semantic.algs");
 		penn = new AlgorithmApplier(
-			"relex.pennalgpath", "relex-penn-tagging-algs.txt");
+			"relex.pennalgpath", "relex-penn-tagging.algs");
 		stanford = new AlgorithmApplier(
-			"relex.sfalgpath", "relex-stanford-algs.txt");
+			"relex.sfalgpath", "relex-stanford.algs");
 	}
 
 	public void tagFeatures(ParsedSentence sentence, RelexContext context)
