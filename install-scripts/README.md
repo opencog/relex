@@ -10,7 +10,8 @@ Ubuntu/Debian
 
 This will clone the repository, install the dependencies, and build and test RelEx. It has been tested on Ubuntu 12.04.
 
-	git clone https://github.com/opencog/relex
-	cd relex
-	sudo ./install-scripts/install-ubuntu-dependencies.sh
-        ant run
+    git clone https://github.com/opencog/relex
+    cd relex
+    install-scripts/install-ubuntu-dependencies.sh
+(note: will ask for sudo password)
+    
