@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "relexbox"
   config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu.com/us.archive.ubuntu.com/g' /etc/apt/sources.list"
   config.vm.provision "shell", inline: "ln -v -s /vagrant /home/vagrant/relex"
+  config.vm.provision "shell", inline: "apt-get install unzip"
   config.vm.provision "shell", inline: "/vagrant/install-scripts/install-ubuntu-dependencies.sh"
 
   config.vm.provider :virtualbox do |vb|
