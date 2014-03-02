@@ -13,7 +13,7 @@
 
 # Dependencies
 sudo apt-get -y update 
-sudo apt-get -y install build-essential 
+sudo apt-get -y install build-essential unzip
 sudo apt-get -y install wordnet-dev wordnet-sense-index
 sudo apt-get -y install openjdk-7-jdk 
 sudo apt-get -y install ant libcommons-logging-java
