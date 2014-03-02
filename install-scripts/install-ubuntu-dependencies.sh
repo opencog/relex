@@ -42,11 +42,12 @@ sudo mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar
 sudo chmod 0644 /usr/share/java/gnu-getopt.jar
 
 # test relex
-cd ~
 CURRENT_DIR=$(pwd)
-if [ "/root" == "$CURRENT_DIR" ]
-# test relex when run from vagrant
+cd ~
+HOME_DIR=$(pwd)
+if [ "/root" != "$HOME_DIR" ]
   then
-    cd /vagrant
+    cd $CURRENT_DIR
+    JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
 fi
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
+
