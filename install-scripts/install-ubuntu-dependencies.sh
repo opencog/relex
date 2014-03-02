@@ -42,4 +42,7 @@ sudo mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar
 sudo chmod 0644 /usr/share/java/gnu-getopt.jar
 
 # test relex
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
+if [[ $EUID -ne 0 ]]
+  then
+    JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
+fi
