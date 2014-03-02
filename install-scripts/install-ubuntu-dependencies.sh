@@ -42,12 +42,7 @@ sudo mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar
 sudo chmod 0644 /usr/share/java/gnu-getopt.jar
 
 # test relex
-CURRENT_DIR=$(pwd)
-cd ~
-HOME_DIR=$(pwd)
-if [ "/root" != "$HOME_DIR" ]
+if [[ $EUID -ne 0 ]]
   then
-    cd $CURRENT_DIR
     JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
 fi
-
