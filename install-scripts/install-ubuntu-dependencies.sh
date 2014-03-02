@@ -31,15 +31,13 @@ cd ..
 
 # jwnl
 wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
-unzip jwnl14-rc2.zip
-rm jwnl14-rc2.zip
-sudo cp -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
-sudo chmod 0644 /usr/local/share/java/jwnl.jar 
+unzip jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
+sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
+
 
 # getopt
 wget http://download.java.net/maven/2/gnu/getopt/java-getopt/1.0.13/java-getopt-1.0.13.jar
 sudo mv java-getopt-1.0.13.jar /usr/share/java/gnu-getopt.jar 
 sudo chmod 0644 /usr/share/java/gnu-getopt.jar
-
-# test relex
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 ant run
