@@ -29,6 +29,7 @@ import java.util.Map;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.output.SimpleView;
+import relex.output.LogicView;
 import relex.output.OpenCogScheme;
 import relex.Version;
 
@@ -57,6 +58,7 @@ public class Server
 		int listen_port = 4444;
 		int max_parses = 1;
 		boolean relex_on = false;
+		boolean logic_on = false;
 		boolean link_on = false;
 		boolean anaphora_on = false;
 		boolean free_text = false;
@@ -72,6 +74,7 @@ public class Server
 			" --lang lang\t Set langauge (default: en)\n" +
 			" -n number  \t Max number of parses to return (default: 1)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
+			" --logic    \t Output of Relex2Logic scheme function calls and Relex relations" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --anaphora \t Output anaphore references\n" +
 			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
@@ -85,6 +88,7 @@ public class Server
 		flags.add("--relex");
 		flags.add("--free-text");
 		flags.add("--verbose");
+		flags.add("--logic");
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("-p");
@@ -134,6 +138,11 @@ public class Server
 		if (commandMap.get("--link") != null) link_on = true;
 		if (commandMap.get("--relex") != null) relex_on = true;
 		if (commandMap.get("--free-text") != null) free_text = true;
+		if (commandMap.get("--logic") != null)
+		{
+			logic_on = true;
+			relex_on = true;
+		 }
 
 		if (commandMap.get("--verbose") != null)
 		{
@@ -166,6 +175,10 @@ public class Server
 		{
 			System.err.println("Info: Link grammar output on.");
 			opencog.setShowLinkage(link_on);
+		}
+		if (logic_on)
+		{
+			System.err.println("Info: Relex2Logic ouptut on");
 		}
 		if (relex_on)
 		{
@@ -349,7 +362,17 @@ public class Server
 						opencog.setParse(parse);
 						out.println(opencog.toString());
 						out.flush();
-						System.err.println("Info: sent parse " + pn + " of " + np);
+						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
+
+						if (logic_on)
+						{
+							LogicView logicView = new LogicView();
+							logicView.loadRules();
+							out.println("scm hash");
+							out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")"));
+							out.flush();
+							System.err.println("Info: called relex2logic functiions");
+						}
 					}
 
 					// Add a special tag to tell the cog server that it's
@@ -390,4 +413,3 @@ public class Server
 		}
 	}
 }
-

@@ -127,15 +127,25 @@ public class OpenCogScheme
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 
+			if(word.matches("[-+]?[0-9]*?\\.?[0-9]+"))
+			{
+				str += "(ReferenceLink (stv 1.0 1.0)\n" +
+						"   (WordInstanceNode \"" + guid_word + "\")\n" +
+						"   (NumberNode " + word + ")\n" +
+						")\n";
+			}
+			else 
+			{
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
-			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
-			       "   (WordNode \"" + word + "\")\n" +
-			       ")\n";
+					"   (WordInstanceNode \"" + guid_word + "\")\n" +
+					"   (WordNode \"" + word + "\")\n" +
+					")\n"; 
+			}
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
-			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
-			       "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
-			       ")\n";
+					"   (WordInstanceNode \"" + guid_word + "\")\n" +
+					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
+					")\n";
 
 			fn = fn.get("NEXT");
 		}
@@ -149,20 +159,20 @@ public class OpenCogScheme
 	public String printParse()
 	{
 		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-		             "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
-		             "   (ListLink\n";
+					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
+					"   (ListLink\n";
 
 		FeatureNode fn = _parse.getLeft();
 		fn = fn.get("NEXT"); // skip LEFT-WALL
 		while (fn != null)
 		{
 			String guid = fn.get("uuid").getValue();
-			str += "      (WordInstanceNode \"" + guid + "\")\n";
+			str += "     (WordInstanceNode \"" + guid + "\")\n";
 			fn = fn.get("NEXT");
 		}
 
 		str += "   )\n" +
-		       ")\n";
+			  ")\n";
 		return str;
 	}
 
@@ -181,10 +191,10 @@ public class OpenCogScheme
 		scf = scf.substring(0, strl);
 
 		String str = "(ParseLink (stv 1 1)\n" +
-		             "   (ParseNode \"" + _parse.getIDString() +
-                             "\"(stv 1.0 " + scf + "))\n" +
-		             "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
-		             ")\n";
+					"   (ParseNode \"" + _parse.getIDString() +
+					    "\"(stv 1.0 " + scf + "))\n" +
+				   "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
+				   ")\n";
 		return str;
 	}
 
@@ -195,14 +205,14 @@ public class OpenCogScheme
 	public String printDocument(Document doco)
 	{
 		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-		             "   (DocumentNode \"" + doco.getID() + "\")\n" +
-		             "   (ListLink\n";
+				   "   (DocumentNode \"" + doco.getID() + "\")\n" +
+				   "   (ListLink\n";
 
 		ArrayList<Sentence> sentence_list = doco.getSentences();
 		for (int i=0; i<sentence_list.size(); i++)
 		{
 			str += "      (SentenceNode \"" +
-			       sentence_list.get(i).getID() + "\")\n";
+				  sentence_list.get(i).getID() + "\")\n";
 		}
 
 		str += "   )\n" +

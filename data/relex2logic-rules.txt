@@ -1,20 +1,44 @@
-[SVO]  {2} <SV, SVP> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get_instance_name $x word_index sentence_index) $y (get_instance_name $y word_index sentence_index) $z (get_instance_name $z word_index sentence_index))
+[SVO]  {2} <SV, SVP> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
 
-[AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get_instance_name $N word_index sentence_index) $A (get_instance_name $A word_index sentence_index))
+[SV] {3} <SVO, SVP> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
-[ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get_instance_name $V word_index sentence_index) $ADV (get_instance_name $ADV word_index sentence_index))
+[AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
-[TENSEPOS] {5} <> tense($W, $Tense) & pos($W, verb) => (tense-rule $W (get_instance_name $W word_index sentence_index) $Tense)
+[SVP] {4} <SVO, SV> _preadj($y, $x) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
-[DET] {6} <> _det($W, those) => (those-rule $W (get_instance_name $W word_index sentence_index) choose_var_name)
+[ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
-[NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get_instance_name $V word_index sentence_index))
+[TENSEPOS] {5} <> tense($W, $Tense) & pos($W, verb) => (tense-rule $W (get-instance-name $W word_index sentence_index) $Tense)
 
-[POSS1A] {8} <POSS1B, POSS2> _poss($N, $W) & pos($W, adj) => (possesive-rule $N (get_instance_name $N word_index sentence_index) $W (get_instance_name $W word_index sentence_index))
+[DET] {6} <> _det($W, $x) => (det-rule $W (get-instance-name $W word_index sentence_index) choose_var_name $x)
 
-[POSS1B] {8} <POSS1A, POSS2> _poss($N, $W) & pos($W, noun) & person-FLAG($W, T) => (possesive-rule $N (get_instance_name $N word_index sentence_index) $W (get_instance_name $W word_index sentence_index))
+[NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get-instance-name $V word_index sentence_index))
 
-[POSS2] {8} <POSS1A, POSS1B> _poss($N, $W) & pos($W, noun) => (possesive-rule $N (get_instance_name $V word_index sentence_index) $W (get_instance_name $W word_index sentence_index))
+[POSS1A] {8} <POSS1B, POSS2> _poss($N, $W) & pos($W, adj) => (possesive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
 
-[maybe] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
+[POSS1B] {8} <POSS1A, POSS2> _poss($N, $W) & pos($W, noun) & person-FLAG($W, T) => (possesive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
+
+[POSS2] {8} <POSS1A, POSS1B> _poss($N, $W) & pos($W, noun) => (possesive-rule $N (get-instance-name $V word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
+
+[MAYBE] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
+
+[NUM] {1} <> _num_quantity($W, $Num) => (number-rule $W (get-instance-name $W word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
+
+[TODO1] {1} <TODO2> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S) => (to-do-rule-1 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S (get-instance-name $S word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
+
+[TODO2] {1} <TODO1> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S1) & _subj($V2, $S2) => (to-do-rule-2 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S1 (get-instance-name $S1 word_index sentence_index) $S2 (get-instance-name $S2 word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
+
+[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
+
+[ALLRULE1] {2} <ALLRULE2> _quantity($noun, all) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
+
+[ALLRULE2] {2} <ALLRULE1> _quantity($noun, all) & _poss($noun, $W) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
+
+[ENTITYFLAG] {2} <> entity-FLAG($W, $T) => (entity-rule $W (get-instance-name $W word_index sentence_index) $T)
+
+[GENDER] {2} <> person-FLAG($W, T) & gender($W, $gender) => (gender-rule $W (get-instance-name $W word_index sentence_index) $gender)
+
+[ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
+
+[PRENOMINAL] <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 

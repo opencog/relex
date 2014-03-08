@@ -12,6 +12,7 @@
 # [--maxParseSeconds N]
 # [-n max number of parses to display] 
 # [-o (show opencog scheme output)] 
+# [--or (show opencog rule-based scheme output)]
 # [--pa (show phrase-based lexical chunks)] 
 # [--pb (show pattern-based lexical chunks)]
 # [--pc (show relational lexical chunks)] 
