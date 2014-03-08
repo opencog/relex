@@ -186,6 +186,7 @@ class OpenCogSchemeRel
 				// The word instance, and its associated lemma form
 				refs += "(LemmaLink (stv 1.0 1.0)\n";
 				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
+
 				if(lemma.matches("[-+]?[0-9]*?\\.?[0-9]+"))
 				{
 					refs += "   (NumberNode \"" + lemma + "\")\n";

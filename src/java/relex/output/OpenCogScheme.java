@@ -167,7 +167,7 @@ public class OpenCogScheme
 		while (fn != null)
 		{
 			String guid = fn.get("uuid").getValue();
-			str += "	 (WordInstanceNode \"" + guid + "\")\n";
+			str += "     (WordInstanceNode \"" + guid + "\")\n";
 			fn = fn.get("NEXT");
 		}
 

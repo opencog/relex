@@ -66,7 +66,7 @@ public class LogicProcessor
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
-			 Boolean flag = false;
+		Boolean flag = false;
 
 		for (String appliedRule : appliedRules)
 		{
@@ -99,6 +99,7 @@ public class LogicProcessor
 							{
 								if (bVerboseMode)
 									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
+
 								if(relexRule.getName().compareTo("maybe")==0)
 								{
 									ArrayList<String> sVar= new ArrayList<String>();
@@ -189,7 +190,7 @@ public class LogicProcessor
 	 * been established, rewriting the variables in the rule to the
 	 * values that have been determined in the verification process.
 	 * @param ruleToApply The rule that has been determined applicable,
-	 *	    and contains the established values for the variable criteria.
+	 *    and contains the established values for the variable criteria.
 	 * @param schemeBuilder A StringBuilder to which to append the Scheme output.
 	 */
 	private void applyRule(Rule ruleToApply, StringBuilder schemeBuilder)
