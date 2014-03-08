@@ -127,13 +127,12 @@ public class Rule {
 		for (Criterium criterium : _criteria) {
 			for (String variableName : criterium.getVariables()) {
 				String variableValue = criterium.getVariableValue(variableName);
-                                String variableValueUUID = criterium.getVariableValueUUID(variableName);
+				String variableValueUUID = criterium.getVariableValueUUID(variableName);
 				schemeOutput = schemeOutput.replaceAll(
-                                        Pattern.quote(variableName), "\"" + variableValue + "\"");
-                                schemeOutput = schemeOutput.replaceAll(
-                                        Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"), 
-                                        "\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
-                                                                
+				Pattern.quote(variableName), "\"" + variableValue + "\"");
+				schemeOutput = schemeOutput.replaceAll(
+				Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+							"\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
 			}
 		}
 

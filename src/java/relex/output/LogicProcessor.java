@@ -66,7 +66,7 @@ public class LogicProcessor
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
-                Boolean flag = false;
+			 Boolean flag = false;
 
 		for (String appliedRule : appliedRules)
 		{
@@ -99,41 +99,37 @@ public class LogicProcessor
 							{
 								if (bVerboseMode)
 									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
-                                                                if(relexRule.getName().compareTo("maybe")==0)
-                                                                    {
-                                                                            
-                                                                            ArrayList<String> sVar= new ArrayList<String>();
-                                                                            ScopeVariables s = new ScopeVariables ();
-                                                                            sVar=s.loadVarScope();
-                                                                            int i =0;
-                                                                            while(i<sVar.size() && !flag)
-                                                                            {
-                                                                                if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!=0)
-                                                                                i++;
-                                                                                else
-                                                                                flag=true;
-                                                                                                                    
-                                                                            }
-                                                                            
-                                                                           
-                                                                       }
+								if(relexRule.getName().compareTo("maybe")==0)
+								{
+									ArrayList<String> sVar= new ArrayList<String>();
+									ScopeVariables s = new ScopeVariables ();
+									sVar=s.loadVarScope();
+									int i =0;
+									while(i<sVar.size() && !flag)
+									{
+										if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!=0)
+										i++;
+										else
+										flag=true;
+									}
+								}
 
 								String secondVariableName = ruleCriterium.getSecondVariableName();
 								String secondVariableValue = foundNode.get("name").getValue();
-                                                                String secondVariableUUID = getNameSourceUUIDValue(foundNode);
+								String secondVariableUUID = getNameSourceUUIDValue(foundNode);
 
 								if (bVerboseMode)
 									System.out.println("   I just recorded the value of '" + secondVariableName + "' to be '" + secondVariableValue + "'");
 
 								String firstVariableName = ruleCriterium.getFirstVariableName();
 								String firstVariableValue = getHeadNameValue(rootNode);
-                                                                String firstVariableUUID = getNameSourceUUIDValue(rootNode.get("head"));
+								String firstVariableUUID = getNameSourceUUIDValue(rootNode.get("head"));
 								List<FeatureNode> suitableParents = findFeatureNodeByChildLinkName(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
 
 								for (FeatureNode suitableParent : suitableParents)
 								{
 									firstVariableValue = suitableParent.get("name").getValue();
-                                                                        firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
+									firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
 								
 								}
 
@@ -141,9 +137,9 @@ public class LogicProcessor
 									System.out.println("   I just recorded the value of '" + firstVariableName + "' to be '" + firstVariableValue + "'");
 
 								ruleCriterium.setVariableValue(firstVariableName, firstVariableValue);
-                                                                ruleCriterium.setVariableValueUUID(firstVariableName, firstVariableUUID);
+								ruleCriterium.setVariableValueUUID(firstVariableName, firstVariableUUID);
 								ruleCriterium.setVariableValue(secondVariableName, secondVariableValue);
-                                                                ruleCriterium.setVariableValueUUID(secondVariableName, secondVariableUUID);
+								ruleCriterium.setVariableValueUUID(secondVariableName, secondVariableUUID);
 							}
 						}
 						else
@@ -171,8 +167,8 @@ public class LogicProcessor
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
 
 				bResult = true;
-                                if(relexRule.getName().compareTo("maybe")==0 && !flag)                               
-                              		bResult = false; 
+				if(relexRule.getName().compareTo("maybe")==0 && !flag)
+					bResult = false; 
 			}
 			else
 			{
@@ -193,7 +189,7 @@ public class LogicProcessor
 	 * been established, rewriting the variables in the rule to the
 	 * values that have been determined in the verification process.
 	 * @param ruleToApply The rule that has been determined applicable,
-	 *         and contains the established values for the variable criteria.
+	 *	    and contains the established values for the variable criteria.
 	 * @param schemeBuilder A StringBuilder to which to append the Scheme output.
 	 */
 	private void applyRule(Rule ruleToApply, StringBuilder schemeBuilder)
@@ -222,8 +218,7 @@ public class LogicProcessor
 
 			if (checkRuleApplicability(relexRule, rootNode, appliedRules))
 			{
-				applyRule(relexRule, schemeBuilder);                           
-
+				applyRule(relexRule, schemeBuilder);
 				appliedRules.add(relexRule.getName());
 			}
 		}
@@ -255,7 +250,7 @@ public class LogicProcessor
 		return headNameValue;
 	}
 
-        /**
+	/**
 	 * Returns the value of the uuid feature of the nameSource Node.
 	 * @param rootNode The root of the dependency graph.
 	 * @return the uuid value
@@ -273,12 +268,12 @@ public class LogicProcessor
 			if (uuidNode != null)
 			{
 				if (uuidNode.isValued())
-                                    uuidValue = uuidNode.getValue();
+					uuidValue = uuidNode.getValue();
 			}
 		}
 		return uuidValue;
 	}
-       
+
 	/**
 	 * Finds a node based on it having a node within it's feature 'links' that matches childLinkName.
 	 * @param nodeToSearchThrough The FeatureNode from which to begin the search.
