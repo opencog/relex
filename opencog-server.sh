@@ -52,3 +52,8 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora --port 4444
 # This will send the parsed output to an opencog server on localhost at port 17001
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --port 4444 --host localhost:17001
 
+# This will send the RelEx OpenCog output and the RelEx2Logic function calls to
+# an opencog server on localhost at port 17001
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4444 --host localhost:17001
+
+
