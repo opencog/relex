@@ -19,7 +19,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "/vagrant/install-scripts/install-ubuntu-dependencies.sh"
 
   # For working with OpenCog, change the relex-server-host variable value
-  # from "127.0.0.1" to 192.168.50.3 in  "opencog/scm/config.scm" file.
+  # from "127.0.0.1" to 192.168.50.3 in  "opencog/scm/config.scm" file, or
+  # run (define relex-server-host "192.168.50.3") from the scheme shell of
+  # the cogserver.
   config.vm.network "private_network", ip: "192.168.50.3"
 
   config.vm.provider :virtualbox do |vb|
