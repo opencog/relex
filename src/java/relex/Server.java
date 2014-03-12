@@ -369,7 +369,7 @@ public class Server
 							LogicView logicView = new LogicView();
 							logicView.loadRules();
 							out.println("scm hush");
-							out.println(logicView.printRelationsNew(parse).replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")"));
+							out.println(logicView.printRelationsNew(parse));
 							out.flush();
 							System.err.println("Info: called relex2logic functiions");
 						}

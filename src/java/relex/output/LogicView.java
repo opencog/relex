@@ -76,6 +76,7 @@ public class LogicView
 		LogicProcessor ruleProcessor = new LogicProcessor(relexRuleSet);
 
 		String schemeOutput = ruleProcessor.applyRulesToParse(headSet);
+		schemeOutput = schemeOutput.replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")");
 
 		return schemeOutput;
 	}
