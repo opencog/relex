@@ -100,7 +100,7 @@ public class LogicProcessor
 								if (bVerboseMode)
 									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
 
-								if(relexRule.getName().compareTo("maybe")==0)
+								if(relexRule.getName().compareTo("MAYBE")==0)
 								{
 									ArrayList<String> sVar= new ArrayList<String>();
 									ScopeVariables s = new ScopeVariables ();
@@ -168,7 +168,7 @@ public class LogicProcessor
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
 
 				bResult = true;
-				if(relexRule.getName().compareTo("maybe")==0 && !flag)
+				if(relexRule.getName().compareTo("MAYBE")==0 && !flag)
 					bResult = false; 
 			}
 			else
