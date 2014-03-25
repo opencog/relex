@@ -1,10 +1,10 @@
-[SVO]  {2} <SV, SVP> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
+[SVO]  {2} <SV, SVIO> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
 
-[SV] {3} <SVO, SVP> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[SV] {3} <SVO, SVIO> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
-[SVP] {4} <SVO, SV> _preadj($y, $x) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[SVP] {4} <> _predadj($y, $x) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
@@ -41,4 +41,9 @@
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
 
 [PRENOMINAL] <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
+
+[WHICHRULE] <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
+
+[SVIO] {1} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
+
 
