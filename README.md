@@ -1,6 +1,6 @@
 RelEx Semantic Relation Extractor
 =================================
-*Version 1.5.0  21 November 2013*
+*Version 1.5.1  3 April 2014*
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -10,16 +10,16 @@ semantic framing tags based on syntax and semantic categories.
 There are multiple inter-related parts to RelEx. The core component
 extracts the dependency relationships. Additional parts perform
 functions such as anaphora resolution, provide semantic frame output,
-provide output in various formats, including a format suitable for 
+provide output in various formats, including one format suitable for 
 later batch post-processing, another format suitable for input to 
 OpenCog, and an W3C OWL format. There are also a small assortment of
-perl scripts for cleaning up web pages, &c.
+perl scripts for cleaning up web and wiki pages, &c.
 
 The main RelEx website is at 
 
 > http://opencog.org/wiki/RelEx
 
-It provides broader overview, as well as detailed documentation.
+It provides an overview of the project, as well as detailed documentation.
 
 The source download and project management site is at
 
@@ -63,28 +63,28 @@ The following packages are required pre-requisites for building RelEx.
 	
 	> http://www.abisource.com/projects/link-grammar/#download
 
-	Link-grammar version 4.7.0 or later is needed; changes in the
-	conjunction handling requires that version 4.7.0 or later be used.
+	Link-grammar version 5.0.0 or later is needed to obtain a variety
+	of required fixes.
 
 	The Link Grammar Parser is the underlying engine, providing
 	the core sentence parsing ability.
 
-	If the parser is installed in an unusual location,
+	If the parser is not installed in the default location,
 	be sure to modify `-Djava.library.path` appropriately in 
-	`relation-extractor.sh`.
+	`relation-extractor.sh` and other shell scripts.
 
 - GNU getopt
 	This is a standard command-line option parsing library. 
 	For Ubuntu, install the `libgetopt-java` package.
 
 - Wordnet
-	Wordnet is used by RelEx to provide basic English morphology,
-	such as singular versions of (plural) nouns, base forms (lemmas)
-	of adjectives, adverbs and infinitive forms of verbs.
+	Wordnet is used by RelEx to provide basic English morphology
+	analysis, such as singular versions of (plural) nouns, base forms
+	(lemmas) of adjectives, adverbs and infinitive forms of verbs.
 
 	Download, unpack and install WordNet 3.0.  The install directory
-	then needs to be specified in `data/wordnet/file_properties.xml`,
-	with the `name="dictionary_path"` property in this file.
+	needs to be specified in `data/wordnet/file_properties.xml`, with
+	the `name="dictionary_path"` property in this file.
 
 	Some typical install locations are:
 	
@@ -157,7 +157,7 @@ function.
 	of the java.util class hierarchy, which may or may not be included
 	in the installed JDK.  If needed, download trove from:
 
-    > http://trove4j.sourceforge.net/
+	  > http://trove4j.sourceforge.net/
 
 	Since trove is optimized, using it may improve performance and/or
 	decrease memory usage, as compared to the standard Sun JDK

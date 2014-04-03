@@ -1,4 +1,4 @@
-New in version 1.6.0 (XXX 2014)
+New in version 1.5.1 (3 April 2014)
  * Extensive fixes for comparatives, from Rodas Solomon.
  * New TestRelEx.java adds more unit test cases.
  * Bugfix multi-language support.

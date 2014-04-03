@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex">
-    <property name="VERSION" value="1.5"/>    <!-- this is relex version 1.5.0 -->
-    <property name="REVISION" value="1.5.0"/> <!-- this is relex version 1.5.0 -->
+    <property name="VERSION" value="1.5"/>    <!-- this is relex version 1.5.1 -->
+    <property name="REVISION" value="1.5.1"/> <!-- this is relex version 1.5.1 -->
 
     <!-- <property name="PREFIX" value="${basedir}/lib"/> -->
     <property name="PREFIX" value="/usr/share/java"/>
