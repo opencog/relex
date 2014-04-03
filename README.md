@@ -21,9 +21,14 @@ The main RelEx website is at
 
 It provides an overview of the project, as well as detailed documentation.
 
-The source download and project management site is at
+The source code management system is at
 
 > http://github.com/opencog/relex
+
+Source tarballs may be downloaded from either of two locations:
+
+> https://launchpad.net/relex/+download
+> http://www.abisource.com/downloads/link-grammar/relex/
 
 Build and install of the core package is discussed below.
 
