@@ -66,7 +66,7 @@ public class LogicProcessor
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
-		Boolean flag = false;
+		Boolean hasScopedVariable = false;
 
 		for (String appliedRule : appliedRules)
 		{
@@ -93,72 +93,8 @@ public class LogicProcessor
 						if (bVerboseMode)
 							System.out.println("   Found node '" + ruleCriterium.getCriteriumLabel() + "'");
 
-						if (!foundNode.isValued())
-						{
-							if (foundNode.getFeatureNames().contains("name"))
-							{
-								if (bVerboseMode)
-									System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
-
-								if(relexRule.getName().compareTo("MAYBE")==0)
-								{
-									ArrayList<String> sVar= new ArrayList<String>();
-									ScopeVariables s = new ScopeVariables ();
-									sVar=s.loadVarScope();
-									int i =0;
-									while(i < sVar.size() && !flag)
-									{
-										if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!= 0)
-										    i++;
-										else
-										    flag=true;
-									}
-								}
-
-								String secondVariableName = ruleCriterium.getSecondVariableName();
-								String secondVariableValue = foundNode.get("name").getValue();
-								String secondVariableUUID = getNameSourceUUIDValue(foundNode);
-
-								if (bVerboseMode)
-									System.out.println("   I just recorded the value of '" + secondVariableName + "' to be '" + secondVariableValue + "'");
-
-								String firstVariableName = ruleCriterium.getFirstVariableName();
-								String firstVariableValue = getHeadNameValue(rootNode);
-								String firstVariableUUID = getNameSourceUUIDValue(rootNode.get("head"));
-								List<FeatureNode> suitableParents = findFeatureNodeByChildLinkName(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
-
-								for (FeatureNode suitableParent : suitableParents)
-								{
-									firstVariableValue = suitableParent.get("name").getValue();
-									firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
-								
-								}
-
-								if (bVerboseMode)
-									System.out.println("   I just recorded the value of '" + firstVariableName + "' to be '" + firstVariableValue + "'");
-
-								ruleCriterium.setVariableValue(firstVariableName, firstVariableValue);
-								ruleCriterium.setVariableValueUUID(firstVariableName, firstVariableUUID);
-								ruleCriterium.setVariableValue(secondVariableName, secondVariableValue);
-								ruleCriterium.setVariableValueUUID(secondVariableName, secondVariableUUID);
-							}
-						}
-						else
-						{
-							if (bVerboseMode)
-								System.out.println("   It is valued, the value is '" + foundNode.getValue() + "'");
-
-							if (ruleCriterium.getSecondVariableName().equals(foundNode.getValue()))
-							{
-								if (bVerboseMode)
-									System.out.println("   This value matches the one specified in the rule!");
-
-								ruleCriterium.setVariableValue(ruleCriterium.getFirstVariableName(), getHeadNameValue(rootNode));
-								ruleCriterium.setVariableValue(foundNode.getValue(), foundNode.getValue());
-							}
-						}
+						hasScopedVariable = groundRuleCriterium(rootNode, foundNode, relexRule, ruleCriterium);
 					}
-
 				}
 			}
 
@@ -168,7 +104,7 @@ public class LogicProcessor
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
 
 				bResult = true;
-				if(relexRule.getName().compareTo("MAYBE")==0 && !flag)
+				if(relexRule.getName().compareTo("MAYBE")==0 && !hasScopedVariable)
 					bResult = false; 
 			}
 			else
@@ -421,5 +357,87 @@ public class LogicProcessor
 			}
 		}
 		return foundNode;
+	}
+
+	/**
+	 * Grounds the variable of the Criterium.
+	 * @param rootNode The FeatureNode from which other FeatureNode are derived.
+	 * @param foundNode One of the FeatureNodes that satisfies Citerium.
+	 * @param relexRule The rule from which the Criterium is derived.
+	 * @param ruleCriterium The Criterium whose variables are being grounded.
+	 * @return Used to denote the existance of a restricted-scope variable in the rule.
+	 */
+	private Boolean groundRuleCriterium(
+		FeatureNode rootNode,
+		FeatureNode foundNode,
+		Rule relexRule,
+		Criterium ruleCriterium)
+	{
+		Boolean flag = false;
+		if (!foundNode.isValued())
+		{
+			if (foundNode.getFeatureNames().contains("name"))
+			{
+				if (bVerboseMode)
+					System.out.println("   Its 'name' is '" + foundNode.get("name") + "'");
+
+				if(relexRule.getName().compareTo("MAYBE")==0)
+				{
+					ArrayList<String> sVar = new ArrayList<String>();
+					ScopeVariables s = new ScopeVariables ();
+					sVar = s.loadVarScope();
+					int i =0;
+					while(i < sVar.size() && !flag)
+					{
+						if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!= 0)
+						    i++;
+						else
+						    flag = true;
+					}
+				}
+
+				String secondVariableName = ruleCriterium.getSecondVariableName();
+				String secondVariableValue = foundNode.get("name").getValue();
+				String secondVariableUUID = getNameSourceUUIDValue(foundNode);
+
+				if (bVerboseMode)
+					System.out.println("   I just recorded the value of '" + secondVariableName + "' to be '" + secondVariableValue + "'");
+
+				String firstVariableName = ruleCriterium.getFirstVariableName();
+				String firstVariableValue = getHeadNameValue(rootNode);
+				String firstVariableUUID = getNameSourceUUIDValue(rootNode.get("head"));
+				List<FeatureNode> suitableParents = findFeatureNodeByChildLinkName(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
+
+				for (FeatureNode suitableParent : suitableParents)
+				{
+					firstVariableValue = suitableParent.get("name").getValue();
+					firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
+
+				}
+
+				if (bVerboseMode)
+					System.out.println("   I just recorded the value of '" + firstVariableName + "' to be '" + firstVariableValue + "'");
+
+				ruleCriterium.setVariableValue(firstVariableName, firstVariableValue);
+				ruleCriterium.setVariableValueUUID(firstVariableName, firstVariableUUID);
+				ruleCriterium.setVariableValue(secondVariableName, secondVariableValue);
+				ruleCriterium.setVariableValueUUID(secondVariableName, secondVariableUUID);
+			}
+		}
+		else
+		{
+			if (bVerboseMode)
+				System.out.println("   It is valued, the value is '" + foundNode.getValue() + "'");
+
+			if (ruleCriterium.getSecondVariableName().equals(foundNode.getValue()))
+			{
+				if (bVerboseMode)
+					System.out.println("   This value matches the one specified in the rule!");
+
+				ruleCriterium.setVariableValue(ruleCriterium.getFirstVariableName(), getHeadNameValue(rootNode));
+				ruleCriterium.setVariableValue(foundNode.getValue(), foundNode.getValue());
+			}
+		}
+		return flag;
 	}
 }
