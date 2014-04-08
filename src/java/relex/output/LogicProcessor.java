@@ -106,12 +106,12 @@ public class LogicProcessor
 									ScopeVariables s = new ScopeVariables ();
 									sVar=s.loadVarScope();
 									int i =0;
-									while(i<sVar.size() && !flag)
+									while(i < sVar.size() && !flag)
 									{
-										if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!=0)
-										i++;
+										if((foundNode.get("name").getValue().compareTo(sVar.get(i)))!= 0)
+										    i++;
 										else
-										flag=true;
+										    flag=true;
 									}
 								}
 
