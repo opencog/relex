@@ -18,6 +18,7 @@
 package relex.output;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -79,12 +80,14 @@ public class LogicProcessor
 
 		if (bNotMutuallyExclusive)
 		{
+			HashMap criteriaFeatureNodes = getCriteriaFeatureNodes(rootNode, relexRule);
+
 			for (Criterium ruleCriterium: relexRule.getCriteria())
 			{
 				if (bVerboseMode)
 					System.out.println("  Matching criterium: " + ruleCriterium.getCriteriumString() + "...");
 
-				List<FeatureNode> criteriumFeatureNodes = findFeatureNodes(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
+				List<FeatureNode> criteriumFeatureNodes = (List<FeatureNode>) criteriaFeatureNodes.get(ruleCriterium.getCriteriumString());
 
 				if (criteriumFeatureNodes != null)
 				{
@@ -365,7 +368,7 @@ public class LogicProcessor
 	 * @param foundNode One of the FeatureNodes that satisfies Citerium.
 	 * @param relexRule The rule from which the Criterium is derived.
 	 * @param ruleCriterium The Criterium whose variables are being grounded.
-	 * @return Used to denote the existance of a restricted-scope variable in the rule.
+	 * @return A boolean value used to denote the existance of a restricted-scope variable in the rule.
 	 */
 	private Boolean groundRuleCriterium(
 		FeatureNode rootNode,
@@ -440,4 +443,39 @@ public class LogicProcessor
 		}
 		return flag;
 	}
+
+	/**
+	 * Traverses the parse graph and return possible FeatureNodes that might
+	 * help ground the criteria of the RelEx rule.
+	 * @param rootNode The FeatureNode from which other FeatureNode are derived.
+	 * @param relexRule The rule for which FeatureNodes are extracted.
+	 * @return The mapping from a Criterium-string to a list of FeatureNodes
+	 *	that could possibly ground the variables of a Criterium constructed
+	 *	of the Criterium-string.
+	 */
+	public HashMap<String, List<FeatureNode>> getCriteriaFeatureNodes(
+		FeatureNode rootNode,
+		Rule relexRule)
+	{
+		HashMap<String, List<FeatureNode>> criteriaFeatureNodes = new HashMap<String, List<FeatureNode>>();
+
+		for (Criterium ruleCriterium: relexRule.getCriteria())
+		{
+			List<FeatureNode> criteriumFeatureNodes = findFeatureNodes(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
+			List<FeatureNode> filteredFeatureNodes = new ArrayList<FeatureNode>();
+
+			for(FeatureNode foundNode : criteriumFeatureNodes)
+			{
+				Criterium aCriterium = new Criterium(ruleCriterium.getCriteriumString());
+				groundRuleCriterium(rootNode, foundNode, relexRule, aCriterium);
+				if(aCriterium.getAllVariablesSatisfied())
+					filteredFeatureNodes.add(foundNode);
+			}
+
+			criteriaFeatureNodes.put(ruleCriterium.getCriteriumString(), filteredFeatureNodes);
+		}
+
+		return criteriaFeatureNodes;
+	}
+
 }
