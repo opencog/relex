@@ -19,6 +19,7 @@ package relex.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -233,5 +234,31 @@ public class Rule {
 	 */
 	public String getRuleString() {
 		return _ruleString;
+	}
+
+	/**
+	 * Maps the Variable names  of a Criterium to the Criterium that use the variable.
+	 * @return The mapping from a variable name to a list of Ctirerium-strings.
+	 */
+	public HashMap<String, List<String>> mapVariableNameToCriterium()
+	{
+		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+
+		for (Criterium ruleCriterium: getCriteria())
+		{
+			for(String variable : ruleCriterium.getVariables())
+			{
+				if(map.containsKey(variable))
+					map.get(variable).add(ruleCriterium.getCriteriumString());
+				else
+				{
+					List aList = new ArrayList();
+					aList.add(ruleCriterium.getCriteriumString());
+					map.put(variable, aList);
+				}
+			}
+		}
+
+		return map;
 	}
 }
