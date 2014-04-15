@@ -80,7 +80,7 @@ public class LogicProcessor
 
 		if (bNotMutuallyExclusive)
 		{
-			HashMap criteriaFeatureNodes = getCriteriaFeatureNodes(rootNode, relexRule);
+			HashMap<String, List<FeatureNode>> criteriaFeatureNodes = getCriteriaFeatureNodes(rootNode, relexRule);
 
 			for (Criterium ruleCriterium: relexRule.getCriteria())
 			{
@@ -413,8 +413,11 @@ public class LogicProcessor
 
 				for (FeatureNode suitableParent : suitableParents)
 				{
-					firstVariableValue = suitableParent.get("name").getValue();
-					firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
+					if(suitableParent.get("links").get(ruleCriterium.getCriteriumLabel()).get("name").getValue() == secondVariableValue)
+					{
+						firstVariableValue = suitableParent.get("name").getValue();
+						firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
+					}
 
 				}
 
@@ -445,13 +448,13 @@ public class LogicProcessor
 	}
 
 	/**
-	 * Traverses the parse graph and return possible FeatureNodes that might
-	 * help ground the criteria of the RelEx rule.
+	 * Traverses the parse graph and return FeatureNodes that can help ground
+	 * the criteria of the RelEx rule.
 	 * @param rootNode The FeatureNode from which other FeatureNode are derived.
-	 * @param relexRule The rule for which FeatureNodes are extracted.
+	 * @param relexRule The rule for which FeatureNodes are extracted for.
 	 * @return The mapping from a Criterium-string to a list of FeatureNodes
-	 *	that could possibly ground the variables of a Criterium constructed
-	 *	of the Criterium-string.
+	 *	that can ground the variables of a Criterium constructed from
+	 *	the Criterium-string.
 	 */
 	public HashMap<String, List<FeatureNode>> getCriteriaFeatureNodes(
 		FeatureNode rootNode,
@@ -468,6 +471,7 @@ public class LogicProcessor
 			{
 				Criterium aCriterium = new Criterium(ruleCriterium.getCriteriumString());
 				groundRuleCriterium(rootNode, foundNode, relexRule, aCriterium);
+
 				if(aCriterium.getAllVariablesSatisfied())
 					filteredFeatureNodes.add(foundNode);
 			}
