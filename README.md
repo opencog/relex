@@ -1,6 +1,6 @@
 RelEx Semantic Relation Extractor
 =================================
-*Version 1.5.1  3 April 2014*
+*Version 1.5.2  XXX 2014*
 
 RelEx is a syntactic dependency extractor and semantic framing generator;
 it will parse English language sentences and return the dependency 
@@ -39,6 +39,19 @@ Dependencies
 ### Installing on Ubuntu/Debian
 
 An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/tree/master/install-scripts) directory.
+
+### Install and run via Docker
+
+This distrubution includes a Dockerfile for easy use with Docker
+(http://www.docker.io).  To use this, simply say:
+
+   $ docker build -t test/relex .
+   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh plain-text-server.sh
+
+or
+
+   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh opencog-server.sh
+
 
 ### Installing on all other systems
  
