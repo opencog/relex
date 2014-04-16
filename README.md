@@ -46,11 +46,12 @@ This distrubution includes a Dockerfile for easy use with Docker
 (http://www.docker.io).  To use this, simply say:
 
    $ docker build -t test/relex .
-   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh plain-text-server.sh
+   $ docker run -i -t -p :3333 -w /home/Downloads/relex mine/relex /bin/sh plain-text-server.sh
 
 or
 
-   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh opencog-server.sh
+   $ docker run -i -t -p :4444 -w /home/Downloads/relex mine/relex /bin/sh opencog-server.sh
+   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh link-grammar-server.sh
 
 
 ### Installing on all other systems
