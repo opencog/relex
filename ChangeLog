@@ -1,5 +1,6 @@
 New in version 1.5.2 (XXX 2014)
  * Update install-ubuntu-dependencies.sh for latest link-grammar
+ * Dockerfile from Danny Brian
 
 New in version 1.5.1 (3 April 2014)
  * Extensive fixes for comparatives, from Rodas Solomon.
