@@ -252,8 +252,6 @@ public class Server
 				{
 					outs = in_sock.getOutputStream();
 					out = new PrintWriter(outs, true);
-					out.println("scm hush");
-					out.flush();
 				}
 			} catch (IOException e) {
 				System.err.println("Error: Accept failed: " + e.getMessage());
