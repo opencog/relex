@@ -34,8 +34,8 @@ RUN (curl -O http://tcpdiag.dl.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/
 RUN (unzip jwnl14-rc2.zip; cd jwnl14-rc2; cp jwnl.jar /usr/share/java/; chmod 777 /usr/share/java/jwnl.jar)
 
 # Link Parser
-RUN (curl -O http://www.abisource.com/downloads/link-grammar/5.0.5/link-grammar-5.0.5.tar.gz)
-RUN (tar zxvf link-grammar-5.0.5.tar.gz; cd link-grammar-5.0.5/; ./configure; make; sudo make install; ldconfig)
+RUN (curl -O http://www.abisource.com/downloads/link-grammar/5.0.8/link-grammar-5.0.8.tar.gz)
+RUN (tar zxvf link-grammar-5.0.8.tar.gz; cd link-grammar-5.0.8/; ./configure; make; sudo make install; ldconfig)
 
 # OpenNPL
 RUN (curl -O http://www.gaidso.com/apache//opennlp/opennlp-1.5.3/apache-opennlp-1.5.3-bin.tar.gz)
