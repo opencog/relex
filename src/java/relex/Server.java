@@ -368,11 +368,14 @@ public class Server
 
 						if (logic_on)
 						{
+							// XXX FIXME .. do we really have to create a new
+							// one, and load all the rules for *every*
+							// sentence??  This seems awfully inefficient!
 							LogicView logicView = new LogicView();
 							logicView.loadRules();
 							out.println(logicView.printRelationsNew(parse));
 							out.flush();
-							System.err.println("Info: called relex2logic functiions");
+							System.err.println("Info: called relex2logic functions");
 						}
 					}
 
