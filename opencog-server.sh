@@ -44,16 +44,21 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/xercesImpl.jar:\
 "
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
 # This will return parsed text on the input socket.
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora --port 4444
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora
 
-# This will send the parsed output to an opencog server on localhost at port 17001
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --port 4444 --host localhost:17001
+# Return Link Grammar, Relex and anaphora output.
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
-# This will send the RelEx OpenCog output and the RelEx2Logic function calls to
-# an opencog server on localhost at port 17001
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4444 --host localhost:17001
+# Return with RelEx2Logic output
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic
+
+# Like the above, but listens on a non-default port
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4242
+
+# Like the above, but sents the output to a different host, instead of
+# replying on the same socket.
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4242 --host somewhere.com:17001
 
 
