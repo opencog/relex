@@ -14,11 +14,7 @@
 
 [NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get-instance-name $V word_index sentence_index))
 
-[POSS1A] {8} <POSS1B, POSS2> _poss($N, $W) & pos($W, adj) => (possesive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
-
-[POSS1B] {8} <POSS1A, POSS2> _poss($N, $W) & pos($W, noun) & person-FLAG($W, T) => (possesive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
-
-[POSS2] {8} <POSS1A, POSS1B> _poss($N, $W) & pos($W, noun) => (possesive-rule $N (get-instance-name $V word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
+[POSS1A] {8} <> _poss($N, $W) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
 
 [MAYBE] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
 
