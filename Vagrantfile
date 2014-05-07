@@ -11,8 +11,9 @@
 # 3. Change to provider vagrant-lxc on Linux
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.box = "trusty64"
+  config.vm.box_url = "http://files.vagrantup.com/trusty64.box"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   config.vm.hostname = "relexbox"
   config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu.com/us.archive.ubuntu.com/g' /etc/apt/sources.list"
   config.vm.provision "shell", inline: "ln -v -s /vagrant /home/vagrant/relex"
