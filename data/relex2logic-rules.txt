@@ -30,7 +30,7 @@
 
 [ALLRULE2] {2} <ALLRULE1> _quantity($noun, all) & _poss($noun, $W) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
 
-[ENTITYFLAG] {2} <> entity-FLAG($W, $T) => (entity-rule $W (get-instance-name $W word_index sentence_index) $T)
+[ENTITYFLAG] {2} <> entity-FLAG($W, T) => (entity-rule $W (get-instance-name $W word_index sentence_index))
 
 [GENDER] {2} <> person-FLAG($W, T) & gender($W, $gender) => (gender-rule $W (get-instance-name $W word_index sentence_index) $gender)
 
