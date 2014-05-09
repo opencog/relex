@@ -151,11 +151,11 @@ public class TestRelEx
 		rc &= test_sentence ("Pizza, which most people love, is not very healthy.",
 		                        "_advmod(very, not)\n" +
 		                        "_advmod(healthy, very)\n" +
-		                        "_obj(love, Pizza)\n" +
+		                        "_obj(love, pizza)\n" +
 		                        "_quantity(people, most)\n" +
-		                        "which(Pizza, love)\n" +
+		                        "which(pizza, love)\n" +
 		                        "_subj(love, people)\n" +
-		                        "_predadj(Pizza, healthy)\n" );
+		                        "_predadj(pizza, healthy)\n" );
 
 		rc &= test_sentence ("The restaurant which belongs to my aunt is very famous.",
 		                        "_advmod(famous, very)\n" +
@@ -181,11 +181,11 @@ public class TestRelEx
 		                       "_subj(meet, I)\n" +
 		                       "whose(book, author)\n");
 
-		rc &= test_sentence("The book that Bob lent me is very boring.",
+		rc &= test_sentence("The book that Jack lent me is very boring.",
 		                       "_advmod(boring, very)\n" +
 		                       "_iobj(lend, book)\n" +
 		                       "_obj(lend, me)\n" +
-		                       "_subj(lend, Bob)\n" +
+		                       "_subj(lend, Jack)\n" +
 		                       "that_adj(book, lend)\n" +
 		                       "_predadj(book, boring)\n");
 
@@ -198,34 +198,34 @@ public class TestRelEx
 		                       "which(curry, recommend)\n" +
 		                       "_amod(curry, special)\n");
 
-		rc &= test_sentence("The dog who Bob said chased me was black.",
+		rc &= test_sentence("The dog who Jack said chased me was black.",
 		                       "_obj(chase, me)\n" +
 		                       "_subj(chase, dog)\n" +
-		                       "_subj(say, Bob)\n" +
+		                       "_subj(say, Jack)\n" +
 		                       "_predadj(dog, black)\n" +
 		                       "who(dog, chase)\n");
 
-		rc &= test_sentence("Bob, who hosted the party, is my cousin.",
+		rc &= test_sentence("Jack, who hosted the party, is my cousin.",
 		                       "_obj(be, cousin)\n" +
-		                       "_subj(be, Bob)\n" +
+		                       "_subj(be, Jack)\n" +
 		                       "_poss(cousin, me)\n" +
 		                       "_obj(host, party)\n" +
-		                       "_subj(host, Bob)\n" +
-		                       "who(Bob, host)\n");
+		                       "_subj(host, Jack)\n" +
+		                       "who(Jack, host)\n");
 
-		rc &= test_sentence("Bob, whose name is in that book, is the student near the window.",
+		rc &= test_sentence("Jack, whose name is in that book, is the student near the window.",
 		                       "near(be, window)\n" +
 		                       "_obj(be, student)\n" +
-		                       "_subj(be, Bob)\n" +
+		                       "_subj(be, Jack)\n" +
 		                       "_obj(near, window)\n" +
 		                       "_pobj(in, book)\n" +
 		                       "_psubj(in, name)\n" +
 		                       "_det(book, that)\n" +
-		                       "whose(Bob, name)\n");
+		                       "whose(Jack, name)\n");
 
-		rc &= test_sentence("Bob stopped the police car that was driving fast.",
+		rc &= test_sentence("Jack stopped the police car that was driving fast.",
 		                       "_obj(stop, car)\n" +
-		                       "_subj(stop, Bob)\n" +
+		                       "_subj(stop, Jack)\n" +
 		                       "_advmod(drive, fast)\n" +
 		                       "_subj(drive, car)\n" +
 		                       "that_adj(car, drive)\n" +
