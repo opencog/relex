@@ -19,6 +19,7 @@ package relex.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -128,11 +129,14 @@ public class Rule {
 			for (String variableName : criterium.getVariables()) {
 				String variableValue = criterium.getVariableValue(variableName);
 				String variableValueUUID = criterium.getVariableValueUUID(variableName);
-				schemeOutput = schemeOutput.replaceAll(
-								Pattern.quote(variableName), "\"" + variableValue + "\"");
-				schemeOutput = schemeOutput.replaceAll(
-								Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-											"\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
+				if(variableName.substring(0, 1).equals("$"))
+				{
+					schemeOutput = schemeOutput.replaceAll(
+									Pattern.quote(variableName), "\"" + variableValue + "\"");
+					schemeOutput = schemeOutput.replaceAll(
+									Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+												"\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
+				}
 			}
 		}
 
@@ -233,5 +237,31 @@ public class Rule {
 	 */
 	public String getRuleString() {
 		return _ruleString;
+	}
+
+	/**
+	 * Maps the Variable names  of a Criterium to the Criterium that use the variable.
+	 * @return The mapping from a variable name to a list of Ctirerium-strings.
+	 */
+	public HashMap<String, List<String>> mapVariableNameToCriterium()
+	{
+		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+
+		for (Criterium ruleCriterium: getCriteria())
+		{
+			for(String variable : ruleCriterium.getVariables())
+			{
+				if(map.containsKey(variable))
+					map.get(variable).add(ruleCriterium.getCriteriumString());
+				else
+				{
+					List aList = new ArrayList();
+					aList.add(ruleCriterium.getCriteriumString());
+					map.put(variable, aList);
+				}
+			}
+		}
+
+		return map;
 	}
 }
