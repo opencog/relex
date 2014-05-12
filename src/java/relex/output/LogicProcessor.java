@@ -400,7 +400,11 @@ public class LogicProcessor
 				}
 
 				String secondVariableName = ruleCriterium.getSecondVariableName();
-				String secondVariableValue = foundNode.get("name").getValue();
+				String secondVariableValue = new String();
+				if(secondVariableName.substring(0, 1).equals("$"))
+					secondVariableValue = foundNode.get("name").getValue();
+				else
+					secondVariableValue = secondVariableName;
 				String secondVariableUUID = getNameSourceUUIDValue(foundNode);
 
 				if (bVerboseMode)
