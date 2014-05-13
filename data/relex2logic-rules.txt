@@ -42,3 +42,4 @@
 
 [SVIO] {1} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
+[BE] {1} <> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
