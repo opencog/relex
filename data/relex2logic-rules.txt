@@ -24,6 +24,8 @@
 
 [TODO2] {1} <TODO1> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S1) & _subj($V2, $S2) => (to-do-rule-2 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S1 (get-instance-name $S1 word_index sentence_index) $S2 (get-instance-name $S2 word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
 
+[TODO3] {1} <> _to-do($V1, $V2) & _predadj($V3, $V1)  => (to-do-rule-3 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $V3 (get-instance-name $V3 word_index sentence_index))
+
 [TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
 [ALLRULE1] {2} <ALLRULE2> _quantity($noun, all) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
