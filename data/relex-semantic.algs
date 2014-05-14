@@ -277,7 +277,7 @@ REL_INDIR_OBJ
 CONJ_OBJ
 <F_L obj> != %
 <F_R conj> != %
-<F_L POS> = conjunction
+<F_R POS> = conjunction
 =
 <F_L obj> = %
 <F_L obj> += <F_R conj member0 ref>
