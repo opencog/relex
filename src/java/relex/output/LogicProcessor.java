@@ -45,7 +45,7 @@ public class LogicProcessor
 	/**
 	 * Boolean to control verbose output
 	 */
-	private Boolean bVerboseMode = true;
+	private Boolean bVerboseMode = false;
 
 	/**
 	 * Constructor, receives a fresh rule set.
@@ -57,7 +57,9 @@ public class LogicProcessor
 	}
 
 	
-
+	/**
+	 * Implement the RelationCallback to crawl the Feature Structure.
+	 */
 	private static class RuleChecker implements RelationCallback
 	{
 		// input
@@ -303,9 +305,6 @@ public class LogicProcessor
 			return null;
 		}
 	}
-	
-	
-	
 	
 	
 	/**
