@@ -1,4 +1,6 @@
-[BE] {1} <SVO, SV> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[BE] {1} <SVO, SV, BE-DET> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+
+[BE-DET] {1} <SVO, SV, BE> _subj(be, $x) & _obj(be, $y) & _det($x, $det) => (be-inheritance-det-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $det)
 
 [SVO]  {2} <SV, SVIO, BE> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
 
