@@ -29,6 +29,7 @@ public class TestStanford
 	private RelationExtractor re;
 	private int pass;
 	private int fail;
+        private static ArrayList<String> sentfail= new ArrayList<String>();
 
 	public TestStanford()
 	{
@@ -73,6 +74,7 @@ public class TestStanford
 				"\tRelEx    = " + rsa + "\n" +
 				"\tSentence = " + sent);
 			fail ++;
+                        sentfail.add(sent);
 			return false;
 		}
 		for (int i=0; i< sfa.size(); i++)
@@ -84,6 +86,7 @@ public class TestStanford
 					"\tRelEx    = " + rsa + "\n" +
 					"\tSentence = " + sent);
 				fail ++;
+                                sentfail.add(sent);
 				return false;
 			}
 		}
@@ -543,5 +546,15 @@ rcmod(man-4, love-8)
 				ts.fail + " sentences failed\n\t" +
 				ts.pass + " sentences passed");
 		}
+                
+                System.err.println("*********************");
+                System.err.println("Failed test sentences");
+                System.err.println("*********************");
+                if(sentfail.isEmpty())
+                   System.err.println("All test sentences passed"); 
+                for(String temp : sentfail){
+                    System.err.println(temp);
+                }
+                System.err.println("*********************");
 	}
 }
