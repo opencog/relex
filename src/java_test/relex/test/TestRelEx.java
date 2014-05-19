@@ -31,7 +31,7 @@ public class TestRelEx
 	private int fail;
 	private int subpass;
 	private int subfail;
-        private static ArrayList<String> sentfail= new ArrayList<String>();
+	private static ArrayList<String> sentfail= new ArrayList<String>();
 
 	public TestRelEx()
 	{
@@ -77,7 +77,7 @@ public class TestRelEx
 			                   "\tSentence = " + sent);
 			subfail ++;
 			fail ++;
-                        sentfail.add(sent);
+			sentfail.add(sent);
 			return false;
 		}
 		for (int i=0; i< exp.size(); i++)
@@ -90,7 +90,7 @@ public class TestRelEx
 				                   "\tSentence = " + sent);
 				subfail ++;
 				fail ++;
-                                sentfail.add(sent);
+				sentfail.add(sent);
 				return false;
 			}
 		}
@@ -264,15 +264,15 @@ public class TestRelEx
 			                   ts.fail + " sentences failed\n\t" +
 			                   ts.pass + " sentences passed");
 		}
-                
-                System.err.println("******************************");
-                System.err.println("Failed test sentences on Relex");
-                System.err.println("******************************");
-                if(sentfail.isEmpty())
-                        System.err.println("All test sentences passed");
-                for(String temp : sentfail){
-                        System.err.println(temp);
-                }
-                System.err.println("******************************\n");
+
+		System.err.println("******************************");
+		System.err.println("Failed test sentences on Relex");
+		System.err.println("******************************");
+		if(sentfail.isEmpty())
+			System.err.println("All test sentences passed");
+		for(String temp : sentfail){
+			System.err.println(temp);
+		}
+		System.err.println("******************************\n");
 	}
 }

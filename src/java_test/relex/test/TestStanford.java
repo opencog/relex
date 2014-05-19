@@ -29,9 +29,9 @@ public class TestStanford
 	private RelationExtractor re;
 	private int pass;
 	private int fail;
-        private static ArrayList<String> sentfail= new ArrayList<String>();
-        private static ArrayList<String> sentfailpostag= new ArrayList<String>();
-        
+	private static ArrayList<String> sentfail= new ArrayList<String>();
+	private static ArrayList<String> sentfailpostag= new ArrayList<String>();
+
 	public TestStanford()
 	{
 		re = new RelationExtractor();
@@ -75,7 +75,7 @@ public class TestStanford
 				"\tRelEx    = " + rsa + "\n" +
 				"\tSentence = " + sent);
 			fail ++;
-                        sentfail.add(sent);
+			sentfail.add(sent);
 			return false;
 		}
 		for (int i=0; i< sfa.size(); i++)
@@ -87,7 +87,7 @@ public class TestStanford
 					"\tRelEx    = " + rsa + "\n" +
 					"\tSentence = " + sent);
 				fail ++;
-                                sentfail.add(sent);
+				sentfail.add(sent);
 				return false;
 			}
 		}
@@ -112,7 +112,7 @@ public class TestStanford
 				"\tRelEx    = " + rsa + "\n" +
 				"\tSentence = " + sent);
 			fail ++;
-                        sentfailpostag.add(sent);
+			sentfailpostag.add(sent);
 			return false;
 		}
 		for (int i=0; i< sfa.size(); i++)
@@ -124,7 +124,7 @@ public class TestStanford
 					"\tRelEx    = " + rsa + "\n" +
 					"\tSentence = " + sent);
 				fail ++;
-                                sentfailpostag.add(sent);
+				sentfailpostag.add(sent);
 				return false;
 			}
 		}
@@ -545,33 +545,33 @@ rcmod(man-4, love-8)
 		}
 		else
 		{
-                        System.err.println("Test failed\n\t" + 
+			System.err.println("Test failed\n\t" + 
 				ts.fail + " sentences failed\n\t" +
 				ts.pass + " sentences passed");
 		}
-                
-                System.err.println("********************************************************");
-                System.err.println("Failed test sentences on Stanford with POS tagging FALSE");
-                System.err.println("********************************************************");
-                
-                if(sentfail.isEmpty())
-                        System.err.println("All test sentences passed");
-                
-                for(String temp : sentfail){
-                        System.err.println(temp);
-                }
-                System.err.println("********************************************************\n");
-                
-                System.err.println("********************************************************");
-                System.err.println("Failed test sentences on Stanford with POS tagging TRUE");
-                System.err.println("********************************************************");
-                
-                if(sentfailpostag.isEmpty())
-                        System.err.println("All test sentences passed");
-                
-                for(String temp : sentfailpostag){
-                        System.err.println(temp);
-                }
-                System.err.println("********************************************************\n");
+
+		System.err.println("********************************************************");
+		System.err.println("Failed test sentences on Stanford with POS tagging FALSE");
+		System.err.println("********************************************************");
+
+		if(sentfail.isEmpty())
+			System.err.println("All test sentences passed");
+
+		for(String temp : sentfail){
+			System.err.println(temp);
+		}
+		System.err.println("********************************************************\n");
+
+		System.err.println("********************************************************");
+		System.err.println("Failed test sentences on Stanford with POS tagging TRUE");
+		System.err.println("********************************************************");
+
+		if(sentfailpostag.isEmpty())
+			System.err.println("All test sentences passed");
+
+		for(String temp : sentfailpostag){
+			System.err.println(temp);
+		}
+		System.err.println("********************************************************\n");
 	}
 }
