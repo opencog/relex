@@ -1,10 +1,12 @@
-[BE] {2} <SVO, SV, BE-DET> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[BE] {2} <SVO, SV, BE-DET, BE-DET2> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
-[BE-DET] {1} <SVO, SV, BE> _subj(be, $x) & _obj(be, $y) & _det($x, $det) => (be-inheritance-det-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $det)
+[BE-DET] {1} <SVO, SV, BE> _subj(be, $x) & _obj(be, $y) & definite-FLAG($x, T) => (be-inheritance-det-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) "the")
 
-[SVO]  {3} <SV, SVIO, BE> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
+[BE-DET2] {1} <SVO, SV, BE> _subj(be, $x) & _obj(be, $y) & _det($x, $det) => (be-inheritance-det-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $det)
 
-[SV] {4} <SVO, SVIO, BE> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[SVO]  {3} <SV, SVIO, BE, BE-DET, BE-DET2> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
+
+[SV] {4} <SVO, SVIO, BE, BE-DET, BE-DET2> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [AMOD] {4} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
