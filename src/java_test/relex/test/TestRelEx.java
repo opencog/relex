@@ -265,14 +265,14 @@ public class TestRelEx
 			                   ts.pass + " sentences passed");
 		}
                 
-                System.err.println("*********************");
-                System.err.println("Failed test sentences");
-                System.err.println("*********************");
+                System.err.println("******************************");
+                System.err.println("Failed test sentences on Relex");
+                System.err.println("******************************");
                 if(sentfail.isEmpty())
-                   System.err.println("All test sentences passed");
+                        System.err.println("All test sentences passed");
                 for(String temp : sentfail){
-                    System.err.println(temp);
+                        System.err.println(temp);
                 }
-                System.err.println("*********************");
+                System.err.println("******************************\n");
 	}
 }
