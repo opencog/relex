@@ -138,6 +138,11 @@ public class TestStanford
 		TestStanford ts = new TestStanford();
 		boolean rc = true;
 
+		// The parses below were compared to the Stanford parser, circa
+		// 2009.  Since then, it is likely that Stanford has changed.
+		// The tests below should not be changed, unless a) they are
+		// changed to be comaptible with current-day Stanford, and b) they
+		// pass.
 		rc &= ts.test_sentence ("Who invented sliced bread?",
 			"nsubj(invented-2, who-1)\n" +
 			"amod(bread-4, sliced-3)\n" + 
