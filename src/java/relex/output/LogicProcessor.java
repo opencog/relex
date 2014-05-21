@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Iterator;
 
 import relex.feature.FeatureNode;
+import relex.feature.RelationCallback;
+import relex.feature.RelationForeach;
 import relex.logic.Rule;
 import relex.logic.Criterium;
 import relex.logic.RuleSet;
@@ -53,6 +56,257 @@ public class LogicProcessor
 		_relex2LogicRuleSet = relex2LogicRuleSet;
 	}
 
+	
+	/**
+	 * Implement the RelationCallback to crawl the Feature Structure.
+	 */
+	private static class RuleChecker implements RelationCallback
+	{
+		// input
+		public String ruleName;
+		public List<Criterium> criteriums;
+		
+		// output
+		public HashMap<String, String> valuesMap;
+		public HashMap<String, String> uuidsMap;
+		public Boolean maybeCheck;
+				
+		/**
+		 * Helper class for returning both child and parent nodes.
+		 */
+		private static class ChildParentPair
+		{
+			public FeatureNode child;
+			public FeatureNode parent;	
+			
+			public ChildParentPair(FeatureNode c, FeatureNode p)
+			{
+				child = c;
+				parent = p;
+			}
+		}
+		
+		
+		/**
+		 * The main callback for binary relations.
+		 */
+		public Boolean BinaryHeadCB(FeatureNode parentNode) 
+		{
+			return ApplyToLink(parentNode, "links");
+		}
+		
+		/**
+		 * This method is not needed.
+		 */
+		public Boolean BinaryRelationCB(String relName,	FeatureNode srcNode, FeatureNode tgtNode)
+		{
+			return false;
+		}
+
+		/**
+		 * This method is used for "sf-links", which is needed for Stanford-relations such as _det.
+		 */
+		public Boolean UnaryRelationCB(FeatureNode srcNode, String attrName)
+		{
+			if (attrName.equals("sf-links"))
+				return ApplyToLink(srcNode, "sf-links");
+			
+			return false;
+		}
+		
+
+		/**
+		 * Check whether the list of criteriums can be applied to this linked relations,
+		 * and store how it can be applied.
+		 * @param parentNode	The parent Feature Node of the linked relations
+		 * @param linkName		The type of link we are using
+		 * @return				True if rule can be applied, false otherwise.
+		 */
+		public Boolean ApplyToLink(FeatureNode parentNode, String linkName) 
+		{
+			valuesMap = new HashMap<String, String>();
+			uuidsMap = new HashMap<String, String>();
+			maybeCheck = false;
+			
+			List<FeatureNode> nodes = new ArrayList<FeatureNode>();
+			List<FeatureNode> parents = new ArrayList<FeatureNode>();
+			
+			for (Criterium thisCriterium : criteriums)
+			{
+				ChildParentPair foundPair = FindMatchingNode(parentNode, thisCriterium.getCriteriumLabel(), linkName, new HashSet<FeatureNode>());
+				
+				// if following this node will not satisfy all criteriums, give up on this node
+				if (foundPair == null)
+				{
+					valuesMap.clear();
+					uuidsMap.clear();
+					return false;
+				}
+				
+				// FIXME this check is OK now since each rule can only be applied once with the
+				// current algorithm, but once that is fixed this needs to be changed too
+				// XXX what if multiple nodes of same name link together and only one satisfy rule?
+				if (!foundPair.child.isValued() && foundPair.child.get("member0") != null)
+					nodes.add(foundPair.child.get("member0"));
+				else
+					nodes.add(foundPair.child);
+				
+				parents.add(foundPair.parent);
+				
+				// special treatment for maybe-rule where different words can be matched
+				if (ruleName.compareTo("MAYBE") == 0)
+				{
+					ArrayList<String> sVar = new ArrayList<String>();
+					ScopeVariables s = new ScopeVariables ();
+					sVar = s.loadVarScope();
+					int i = 0;
+					
+					FeatureNode justAdded = nodes.get(nodes.size() - 1);
+					
+					while (i < sVar.size() && !maybeCheck)
+					{
+						if (!justAdded.isValued() && justAdded.get("name").getValue().compareTo(sVar.get(i)) !=  0)
+						    i++;
+						else
+							maybeCheck = true;
+					}
+				}
+				
+				// check and add first variable name, and handle constants
+				if (!valuesMap.containsKey(thisCriterium.getFirstVariableName()))
+				{
+					uuidsMap.put(thisCriterium.getFirstVariableName(), null);
+					
+					if (thisCriterium.getFirstVariableName().charAt(0) == '$')
+						valuesMap.put(thisCriterium.getFirstVariableName(), null);
+					else
+						valuesMap.put(thisCriterium.getFirstVariableName(), thisCriterium.getFirstVariableName());
+				}
+				
+				// check and add second variable name, and handle constants
+				if (!valuesMap.containsKey(thisCriterium.getSecondVariableName()))
+				{
+					uuidsMap.put(thisCriterium.getSecondVariableName(),  null);
+					
+					if (thisCriterium.getSecondVariableName().charAt(0) == '$')
+						valuesMap.put(thisCriterium.getSecondVariableName(), null);
+					else
+						valuesMap.put(thisCriterium.getSecondVariableName(), thisCriterium.getSecondVariableName());
+				}
+			}
+
+			Iterator<Criterium> iterCriteriums = criteriums.iterator();
+			Iterator<FeatureNode> iterNodes = nodes.iterator();
+			Iterator<FeatureNode> iterParents = parents.iterator();
+			Boolean allMatched = true;
+			
+			// check the actual values
+			while (iterCriteriums.hasNext() && iterNodes.hasNext() && iterParents.hasNext())
+			{
+				Criterium thisCriterium = iterCriteriums.next();
+				FeatureNode thisNode = iterNodes.next();
+				FeatureNode thisParent = iterParents.next();
+								
+				// if a variable already has a value, check it against the value at the node, else assign it
+				if (valuesMap.get(thisCriterium.getFirstVariableName()) != null)
+				{
+					// the first variable will always be the 'name' of the parent node
+					// XXX can also add checks to UUID, but would requires more logic for constants
+					if (!valuesMap.get(thisCriterium.getFirstVariableName()).equals(thisParent.get("name").getValue()))
+					{
+						allMatched = false;
+						break;
+					}
+				}
+				else
+				{
+					valuesMap.put(thisCriterium.getFirstVariableName(), thisParent.get("name").getValue());
+					uuidsMap.put(thisCriterium.getFirstVariableName(), thisParent.get("nameSource").get("uuid").getValue());
+				}
+				
+				// check the 2nd variable of this criterium
+				if (valuesMap.get(thisCriterium.getSecondVariableName()) != null)
+				{
+					// the second value is at different place depends on whether the node is valued
+					if (!(thisNode.isValued() && valuesMap.get(thisCriterium.getSecondVariableName()).equals(thisNode.getValue()))
+							&& !(!thisNode.isValued() && valuesMap.get(thisCriterium.getSecondVariableName()).equals(thisNode.get("name").getValue())))
+					{
+						allMatched = false;
+						break;
+					}
+				}
+				else
+				{
+					if (thisNode.isValued())
+						valuesMap.put(thisCriterium.getSecondVariableName(), thisNode.getValue());
+					else
+					{
+						valuesMap.put(thisCriterium.getSecondVariableName(), thisNode.get("name").getValue());
+						uuidsMap.put(thisCriterium.getSecondVariableName(), thisNode.get("nameSource").get("uuid").getValue());
+					}
+				}
+			}
+			
+			if (allMatched)
+				return true;
+			
+			valuesMap.clear();
+			uuidsMap.clear();
+			
+			return false;
+		}
+		
+		
+		/**
+		 * Recursive method for finding the child/parent pair following the links node.
+		 * 
+		 * XXX RelationForeach is already going through the Feature Structure, so it might
+		 * be better to let it do the job instead of writing another recursive walker here.
+		 * 
+		 * @param parentNode		The parent of the current recursion level.
+		 * @param name				The name of the node we want to find.
+		 * @param linkName			The name of the link node we follow.
+		 * @param alreadyVisited	For complex sentence it is possible to have loops.
+		 * @return					The child/parent FeatureNode pair.
+		 */
+		private ChildParentPair FindMatchingNode(FeatureNode parentNode, String name, String linkName, HashSet<FeatureNode> alreadyVisited)
+		{
+			if (alreadyVisited.contains(parentNode))
+				return null;
+
+			alreadyVisited.add(parentNode);
+			
+			if (parentNode.isValued())
+				return null;
+			
+			FeatureNode node = parentNode.get(name);
+			
+			if (node != null)
+				return new ChildParentPair(node, parentNode);
+			
+			FeatureNode linksNode = parentNode.get(linkName);
+			
+			if (linksNode != null)
+			{
+				if (linksNode.get(name) != null)
+					return new ChildParentPair(linksNode.get(name), parentNode);
+				
+				// follow deeper into the links
+				for (String linkToName : linksNode.getFeatureNames())
+				{
+					FeatureNode subNode = linksNode.get(linkToName);
+					ChildParentPair pair = FindMatchingNode(subNode, name, linkName, alreadyVisited);
+					
+					if (pair != null)
+						return pair;
+				}
+			}
+			
+			return null;
+		}
+	}
+	
+	
 	/**
 	 * Checks whether a rule can be applied, but does not apply it.
 	 * It does however register the values for found candidates that
@@ -67,7 +321,6 @@ public class LogicProcessor
 	{
 		Boolean bResult = false;
 		Boolean bNotMutuallyExclusive = true;
-		Boolean hasScopedVariable = false;
 
 		for (String appliedRule : appliedRules)
 		{
@@ -77,29 +330,41 @@ public class LogicProcessor
 					bNotMutuallyExclusive = false;
 			}
 		}
-
+		
 		if (bNotMutuallyExclusive)
 		{
-			HashMap<String, List<FeatureNode>> criteriaFeatureNodes = getCriteriaFeatureNodes(rootNode, relexRule);
+			RuleChecker rcheck = new RuleChecker();
+			rcheck.ruleName = relexRule.getName();
+			rcheck.criteriums = relexRule.getCriteria();
 
-			for (Criterium ruleCriterium: relexRule.getCriteria())
+			// if rule can be applied
+			if (RelationForeach.foreach(rootNode, rcheck))
 			{
 				if (bVerboseMode)
-					System.out.println("  Matching criterium: " + ruleCriterium.getCriteriumString() + "...");
-
-				List<FeatureNode> criteriumFeatureNodes = (List<FeatureNode>) criteriaFeatureNodes.get(ruleCriterium.getCriteriumString());
-
-				if (criteriumFeatureNodes != null)
 				{
-					for (FeatureNode foundNode : criteriumFeatureNodes)
+					System.out.println("  All criteriums satisfied.");
+				
+					for (String key: rcheck.valuesMap.keySet())
 					{
-						if (bVerboseMode)
-							System.out.println("   Found node '" + ruleCriterium.getCriteriumLabel() + "'");
-
-						hasScopedVariable = groundRuleCriterium(rootNode, foundNode, relexRule, ruleCriterium);
-					}
+			            String value = rcheck.valuesMap.get(key);
+			            String uuid = rcheck.uuidsMap.get(key);
+			            System.out.println("    " + key + ", " + value + ", " + uuid);  
+			        }
 				}
-			}
+				
+				// actually write the matched values into the rule
+				for (Criterium thisCriterium : relexRule.getCriteria())
+				{
+					String name1 = thisCriterium.getFirstVariableName();
+					String name2 = thisCriterium.getSecondVariableName();
+							
+					thisCriterium.setVariableValue(name1, rcheck.valuesMap.get(name1));
+					thisCriterium.setVariableValueUUID(name1, rcheck.uuidsMap.get(name1));
+					thisCriterium.setVariableValue(name2, rcheck.valuesMap.get(name2));
+					thisCriterium.setVariableValueUUID(name2, rcheck.uuidsMap.get(name2));
+				}
+			}			
+			
 
 			if (relexRule.getAllCriteriaSatisfied())
 			{
@@ -107,7 +372,7 @@ public class LogicProcessor
 					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
 
 				bResult = true;
-				if(relexRule.getName().compareTo("MAYBE")==0 && !hasScopedVariable)
+				if (relexRule.getName().compareTo("MAYBE") == 0 && !rcheck.maybeCheck)
 					bResult = false; 
 			}
 			else
@@ -151,6 +416,10 @@ public class LogicProcessor
 
 		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
 
+
+		// FIXME This is going through rules first, then relations, which might be wrong.
+		// Should try to go into relation first, then see which rules (multiple) can be applied.
+		// This would allow the same rule (such as tense) to be applied to multiple word in the sentence.
 		for (Rule relexRule: ruleSet) {
 
 			if (bVerboseMode)
@@ -171,6 +440,7 @@ public class LogicProcessor
 	 * @param rootNode The root of the dependency graph.
 	 * @return
 	 */
+	@Deprecated
 	private String getHeadNameValue(FeatureNode rootNode)
 	{
 		String headNameValue = "";
@@ -195,6 +465,7 @@ public class LogicProcessor
 	 * @param rootNode The root of the dependency graph.
 	 * @return the uuid value
 	 */
+	@Deprecated
 	private String getNameSourceUUIDValue(FeatureNode rootNode)
 	{
 		String uuidValue = "";
@@ -222,6 +493,7 @@ public class LogicProcessor
 	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
 	 * @return A List<FeatureNode> that match the provided criteria.
 	 */
+	@Deprecated
 	public static List<FeatureNode> findFeatureNodeByChildLinkName(
 		FeatureNode nodeToSearchThrough,
 		String childLinkName,
@@ -272,6 +544,7 @@ public class LogicProcessor
 	 * @param alreadyFound List to prevent adding of nodes that have already been added to the resultset.
 	 * @return A List<FeatureNode> that match the provided criteria.
 	 */
+	@Deprecated
 	public static List<FeatureNode> findFeatureNodes(
 		FeatureNode nodeToSearchThrough,
 		String name,
@@ -319,6 +592,7 @@ public class LogicProcessor
 	 * @param alreadyVisited A list of nodes that has already been visited to avoid infinite recursion.
 	 * @return The node, if it exists, that matches the provided name.
 	 */
+	@Deprecated
 	public static FeatureNode findFeatureNode(
 		FeatureNode nodeToSearchThrough,
 		String name,
@@ -370,6 +644,7 @@ public class LogicProcessor
 	 * @param ruleCriterium The Criterium whose variables are being grounded.
 	 * @return A boolean value used to denote the existance of a restricted-scope variable in the rule.
 	 */
+	@Deprecated
 	private Boolean groundRuleCriterium(
 		FeatureNode rootNode,
 		FeatureNode foundNode,
@@ -415,12 +690,16 @@ public class LogicProcessor
 				String firstVariableUUID = getNameSourceUUIDValue(rootNode.get("head"));
 				List<FeatureNode> suitableParents = findFeatureNodeByChildLinkName(rootNode, ruleCriterium.getCriteriumLabel(), null, null);
 
+				System.out.println("Originally start with " + firstVariableValue + ", " + firstVariableUUID);
+				
 				for (FeatureNode suitableParent : suitableParents)
 				{
 					if(suitableParent.get("links").get(ruleCriterium.getCriteriumLabel()).get("name").getValue() == secondVariableValue)
 					{
 						firstVariableValue = suitableParent.get("name").getValue();
 						firstVariableUUID = suitableParent.get("nameSource").get("uuid").getValue();
+						
+						System.out.println("Replacing with " + firstVariableValue + ", " + firstVariableUUID);
 					}
 
 				}
@@ -460,6 +739,7 @@ public class LogicProcessor
 	 *	that can ground the variables of a Criterium constructed from
 	 *	the Criterium-string.
 	 */
+	@Deprecated
 	public HashMap<String, List<FeatureNode>> getCriteriaFeatureNodes(
 		FeatureNode rootNode,
 		Rule relexRule)
@@ -485,5 +765,4 @@ public class LogicProcessor
 
 		return criteriaFeatureNodes;
 	}
-
 }
