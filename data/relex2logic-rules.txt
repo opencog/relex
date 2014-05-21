@@ -1,3 +1,4 @@
+# Examples: "Socrates is man", "Cats are animals", "Trees are plants"
 [BE] {1} <SVO, SV> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [SVO]  {2} <SV, SVIO, BE> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
