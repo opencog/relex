@@ -55,9 +55,9 @@ public class TestRelEx
 
 	/**
 	 * First argument is the sentence.
-	 * Second argument is a list of the relations that the
-	 * Stanford parser generates.
-	 * Return true if relex generates that same dependencies
+	 * Second argument is a list of the relations that RelEx
+	 * should be generating.
+	 * Return true if RelEx generates the same dependencies
 	 * as the second argument.
 	 */
 	public boolean test_sentence (String sent, String sf)
