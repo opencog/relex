@@ -68,7 +68,7 @@ public class LogicProcessor
 		// output
 		public StringBuilder schemeBuilder;
 
-		private List<Rule> allAppliedRules;
+		private List<Rule> allAppliedRules;		// keep track of all the rules that has been applied
 
 		/**
 		 * Helper class for returning both child and parent nodes.
@@ -87,6 +87,9 @@ public class LogicProcessor
 			}
 		}
 
+		/**
+		 * Helper class for storing the result of applying a rule.
+		 */
 		private static class RuleResult
 		{
 			public Boolean passed;
@@ -114,7 +117,7 @@ public class LogicProcessor
 		 */
 		public Boolean BinaryHeadCB(FeatureNode node)
 		{
-			matchAndApplyRules(node);
+			applyRules(node);
 
 			return false;
 		}
@@ -136,7 +139,12 @@ public class LogicProcessor
 		}
 
 
-		public void matchAndApplyRules(FeatureNode startNode)
+		/**
+		 * Checks which rules can be applied to the linked relations under this path, and applys them.
+		 *
+		 * @param startNode   The start node to begin path searching.
+		 */
+		public void applyRules(FeatureNode startNode)
 		{
 			// clone the rules set before applying because data will be written into the rule
 			// and we want a clean set of rules that can be re-applied
@@ -163,7 +171,6 @@ public class LogicProcessor
 					{
 						if (appliedRule.equalsIgnoreCase(mutuallyExclusiveRule))
 						{
-							System.out.println("Mutually exclusive found.");
 							bNotMutuallyExclusive = false;
 							break;
 						}
@@ -173,82 +180,118 @@ public class LogicProcessor
 						break;
 				}
 
-				if (bNotMutuallyExclusive)
+				if (!bNotMutuallyExclusive)
+					continue;
+
+				// create structure to store all the times rules can be applied to this node
+				List<RuleResult> results = new ArrayList<RuleResult>();
+
+				// search all possible path starting from this node
+				recursiveMatchAndApply(thisRule, startNode, new HashSet<FeatureNode>(), new HashSet<Criterium>(thisRule.getCriteria()), new Stack<ChildParentPair>(), results);
+
+				for (RuleResult ruleResult : results)
 				{
-					// find all the times this rule can be applied to this link
-					List<RuleResult> results = new ArrayList<RuleResult>();
+					// create another copy again since the same rule can be applied multiple times
+					// even to the same node (by choosing different sub-node)
+					Rule tempRule = new Rule(thisRule.getRuleString());
 
-					findMatchingLink(thisRule, startNode, new HashSet<FeatureNode>(), new HashSet<Criterium>(thisRule.getCriteria()), new Stack<ChildParentPair>(), results);
-
-					for (RuleResult ruleResult : results)
+					if (ruleResult.passed)
 					{
-						Rule tempRule = new Rule(thisRule.getRuleString());
+						System.out.println("Rule " + tempRule.getName() + " passed at node " + startNode.get("name"));
 
-						if (ruleResult.passed)
+						for (String key : ruleResult.valuesMap.keySet())
 						{
-							System.out.println("Rule " + tempRule.getName() + " passed at node " + startNode.get("name"));
+							String value = ruleResult.valuesMap.get(key);
+							String uuid = ruleResult.uuidsMap.get(key);
 
-							for (String key : ruleResult.valuesMap.keySet())
+							System.out.println(" " + key + ", " + value + ", " + uuid);
+						}
+
+						// actually write the matched values into the rule
+						for (Criterium thisCriterium : tempRule.getCriteria())
+						{
+							String name1 = thisCriterium.getFirstVariableName();
+							String name2 = thisCriterium.getSecondVariableName();
+
+							thisCriterium.setVariableValue(name1, ruleResult.valuesMap.get(name1));
+							thisCriterium.setVariableValueUUID(name1, ruleResult.uuidsMap.get(name1));
+							thisCriterium.setVariableValue(name2, ruleResult.valuesMap.get(name2));
+							thisCriterium.setVariableValueUUID(name2, ruleResult.uuidsMap.get(name2));
+						}
+
+						if (tempRule.getAllCriteriaSatisfied())
+						{
+							System.out.println(tempRule.getName() + " satisfied.");
+
+							if (tempRule.getName().compareTo("MAYBE") != 0 || ruleResult.maybeCheck)
 							{
-								String value = ruleResult.valuesMap.get(key);
-								String uuid = ruleResult.uuidsMap.get(key);
+								Boolean applied = false;
 
-								System.out.println(" " + key + ", " + value + ", " + uuid);
-							}
-
-
-							// actually write the matched values into the rule
-							for (Criterium thisCriterium : tempRule.getCriteria())
-							{
-								String name1 = thisCriterium.getFirstVariableName();
-								String name2 = thisCriterium.getSecondVariableName();
-
-								thisCriterium.setVariableValue(name1, ruleResult.valuesMap.get(name1));
-								thisCriterium.setVariableValueUUID(name1, ruleResult.uuidsMap.get(name1));
-								thisCriterium.setVariableValue(name2, ruleResult.valuesMap.get(name2));
-								thisCriterium.setVariableValueUUID(name2, ruleResult.uuidsMap.get(name2));
-							}
-
-							if (tempRule.getAllCriteriaSatisfied())
-							{
-								System.out.println(tempRule.getName() + " satisfied.");
-
-								if (tempRule.getName().compareTo("MAYBE") != 0 || ruleResult.maybeCheck)
+								// dumb way to check this rule against all others and make sure the exact same one was not created
+								for (Rule otherRule : allAppliedRules)
 								{
-									Boolean applied = false;
-
-									// dumb way to check this rule against all others and make sure the exact same one was not created
-									for (Rule otherRule : allAppliedRules)
+									if (tempRule.getSchemeOutput().equals(otherRule.getSchemeOutput()))
 									{
-										if (tempRule.getSchemeOutput().equals(otherRule.getSchemeOutput()))
-										{
-											applied = true;
-											break;
-										}
-									}
-
-									if (!applied)
-									{
-										// apply the rule
-										String schemeOutput = tempRule.getSchemeOutput();
-										schemeBuilder.append(schemeOutput);
-										schemeBuilder.append("\n");
-
-										allAppliedRules.add(tempRule);
+										applied = true;
+										break;
 									}
 								}
 
-								appliedRules.add(tempRule.getName());
+								if (!applied)
+								{
+									// apply the rule
+									String schemeOutput = tempRule.getSchemeOutput();
+									schemeBuilder.append(schemeOutput);
+									schemeBuilder.append("\n");
+
+									allAppliedRules.add(tempRule);
+								}
 							}
+
+							appliedRules.add(tempRule.getName());
 						}
 					}
 				}
 			}
 		}
 
-
-
-		private void findMatchingLink(
+		/**
+		 * Recursive method to examine all possible linked path under a node, and check/apply the rule
+		 * as many times as possible.
+		 *
+		 * eg. [word1 [links [rel1 [member0 word2 [links [rel5 ...
+		 *                         [member1 ...
+		 *                         ....
+		 *                   [rel2 [member0 ...
+		 *                         ....
+		 *                   [rel3 [member0 ...
+		 *                         ....
+		 *                   [rel4 wordN [links ...
+		 *
+		 * We would want to examine paths such as:
+		 *
+		 *     word1->rel1->member0->word2->rel5->...
+		 *     word1->rel1->member1->...
+		 *     word1->rel2->member0->...
+		 *     word1->rel3->member0->...
+		 *     word1->rel4->...
+		 *
+		 * If we have 2 rules:
+		 *
+		 *     rule1: (rel1($a, $b) & rel2($a, $c) & rel3($a, $d) & rel4($a, $e)
+		 *     rule2: (rel1($a, $b) & rel2($a, $c) & rel3($a, $d) & rel4($a, $e) & rel5($b, $f)
+		 *
+		 * we want to make sure all possible combination of member# are checked for matches and also
+		 * all possible path formed by choosing each combination of members.
+		 *
+		 * @param rule           The current rule we are checking
+		 * @param parentNode     The parent node at the current recursion level
+		 * @param visitedNodes   Parent nodes visited from previous recursion level
+		 * @param criteriums     The remaining criteriums that has not been matched yet
+		 * @param matchedPairs   The matched nodes collected from previous recursion level
+		 * @param results        All possible results set
+		 */
+		private void recursiveMatchAndApply(
 				Rule rule,
 				FeatureNode parentNode,
 				HashSet<FeatureNode> visitedNodes,
@@ -261,7 +304,7 @@ public class LogicProcessor
 
 			visitedNodes.add(parentNode);
 
-			// base case, all criteriums matched
+			// base case of the recursion, all criteriums matched
 			if (criteriums.isEmpty())
 			{
 				RuleResult newResult = checkValues(rule, matchedPairs);
@@ -274,10 +317,10 @@ public class LogicProcessor
 			List<Criterium> foundCriteriums = new ArrayList<Criterium>();
 
 			// find all criteriums that can be matched on this node and its immediate links,
-			// and build the child parent pairs
+			// and build the child/parent pairs
 			matchCriteriums(parentNode, criteriums, foundPairs, foundCriteriums);
 
-			// if no criteriums, maybe subsequent node will satisfy some criteria
+			// if no criteriums matched, maybe subsequent node will satisfy some criteria
 			if (foundPairs.size() == 0)
 			{
 				if (!parentNode.isValued())
@@ -297,7 +340,7 @@ public class LogicProcessor
 								Integer n = 0;
 								while (memberNode != null)
 								{
-									findMatchingLink(rule, memberNode, visitedNodes, criteriums, matchedPairs, results);
+									recursiveMatchAndApply(rule, memberNode, visitedNodes, criteriums, matchedPairs, results);
 
 									n++;
 									String memberName = "member" + n.toString();
@@ -306,7 +349,7 @@ public class LogicProcessor
 							}
 							else
 							{
-								findMatchingLink(rule, subNode, visitedNodes, criteriums, matchedPairs, results);
+								recursiveMatchAndApply(rule, subNode, visitedNodes, criteriums, matchedPairs, results);
 							}
 						}
 					}
@@ -349,7 +392,7 @@ public class LogicProcessor
 				for (ChildParentPair pair : pairs)
 				{
 					System.out.println("          going deeper");
-					findMatchingLink(rule, pair.child, visitedNodes, criteriums, matchedPairs, results);
+					recursiveMatchAndApply(rule, pair.child, visitedNodes, criteriums, matchedPairs, results);
 				}
 
 				for (int i = 0; i < pairs.size(); i++)
@@ -362,6 +405,14 @@ public class LogicProcessor
 			visitedNodes.remove(parentNode);
 		}
 
+		/**
+		 * Helper method to find criteriums that can be satisfied by the current node and its immediate links.
+		 *
+		 * @param parentNode       The parent node we are looking at
+		 * @param criteriums       The list of criteriums to check
+		 * @param foundPairs       Returns all child/parent nodes pair that are matched to a criterium
+		 * @param foundCriteriums  Returns all criteriums that got matched
+		 */
 		private void matchCriteriums(FeatureNode parentNode, HashSet<Criterium> criteriums, List<ChildParentPair> foundPairs, List<Criterium> foundCriteriums)
 		{
 			// find all criteriums that can be satisfied by the current node and its immediate links
@@ -392,6 +443,28 @@ public class LogicProcessor
 			}
 		}
 
+		/**
+		 * Given several nodes "links" to a parent node, each with its own set of member# nodes, generate
+		 * all possible combination.
+		 *
+		 * ie. [word1 [links [rel1 [member0 word2 [links [rel5 ...
+		 *                         [member1 ...
+		 *                         ....
+		 *                   [rel2 [member0 ...
+		 *                         ....
+		 *                   [rel3 [member0 ...
+		 *                         ....
+		 *                   [rel4 wordN [links ...
+		 * needs <rel1 member0, rel2 member0, rel3 member0, rel4>,
+		 *       <rel1 member0, rel2 member0, rel3 member1, rel4> ... etc.
+		 *
+		 * So this is essentially a "combination of items in a list of lists problem".
+		 *
+		 * @param pairs      A list of child/parent pair, each child could have multiple member#
+		 * @param depth      Current depth of recursion
+		 * @param allComb    Returns a list of all possible combination
+		 * @param currComb   The current combination in the making
+		 */
 		private void generateAllComb(List<ChildParentPair> pairs, int depth, List<List<ChildParentPair>> allComb, Stack<ChildParentPair> currComb)
 		{
 			// base case reached
@@ -442,9 +515,13 @@ public class LogicProcessor
 			}
 		}
 
-
-
-
+		/**
+		 * Method to assign and match variables and constants in the rule.
+		 *
+		 * @param thisRule      The current rule we are looking at
+		 * @param matchedPairs  The list of matched child/parent pairs we are considering for this rule
+		 * @return              A RuleResult object
+		 */
 		private RuleResult checkValues(Rule thisRule, Stack<ChildParentPair> matchedPairs)
 		{
 			RuleResult ruleResult = new RuleResult();
@@ -553,114 +630,15 @@ public class LogicProcessor
 
 			if (allMatched)
 			{
-				System.out.println("All matched.");
 				ruleResult.passed = true;
 				return ruleResult;
 			}
 
-			System.out.println("Not all matched.");
 			ruleResult.passed = false;
 			return ruleResult;
 		}
 	}
 
-
-//	/**
-//	 * Checks whether a rule can be applied, but does not apply it.
-//	 * It does however register the values for found candidates that
-//	 * match the variables in the criteria.
-//	 * @param relexRule The rule which should be checked for applicability.
-//	 * @param rootNode The FeatureNode from which to start the application search.
-//	 * @param appliedRules The rules which have already been applied,
-//	 *        so that application of mutually exclusive rules is not attempted.
-//	 * @return Boolean indicating if the rule can be applied or not.
-//	 */
-//	public Boolean checkRuleApplicability(Rule relexRule, FeatureNode rootNode, List<String> appliedRules)
-//	{
-//		Boolean bResult = false;
-//		Boolean bNotMutuallyExclusive = true;
-//
-//		for (String appliedRule : appliedRules)
-//		{
-//			for (String mutuallyExclusiveRule: relexRule.getMutuallyExclusiveRuleNames())
-//			{
-//				if (appliedRule.equalsIgnoreCase(mutuallyExclusiveRule))
-//					bNotMutuallyExclusive = false;
-//			}
-//		}
-//
-//		if (bNotMutuallyExclusive)
-//		{
-//			RuleChecker rcheck = new RuleChecker();
-//			rcheck.ruleName = relexRule.getName();
-//			rcheck.criteriums = relexRule.getCriteria();
-//
-//			// if rule can be applied
-//			if (RelationForeach.foreach(rootNode, rcheck))
-//			{
-//				if (bVerboseMode)
-//				{
-//					System.out.println("  All criteriums satisfied.");
-//
-//					for (String key: rcheck.valuesMap.keySet())
-//					{
-//			            String value = rcheck.valuesMap.get(key);
-//			            String uuid = rcheck.uuidsMap.get(key);
-//			            System.out.println("    " + key + ", " + value + ", " + uuid);
-//			        }
-//				}
-//
-//				// actually write the matched values into the rule
-//				for (Criterium thisCriterium : relexRule.getCriteria())
-//				{
-//					String name1 = thisCriterium.getFirstVariableName();
-//					String name2 = thisCriterium.getSecondVariableName();
-//
-//					thisCriterium.setVariableValue(name1, rcheck.valuesMap.get(name1));
-//					thisCriterium.setVariableValueUUID(name1, rcheck.uuidsMap.get(name1));
-//					thisCriterium.setVariableValue(name2, rcheck.valuesMap.get(name2));
-//					thisCriterium.setVariableValueUUID(name2, rcheck.uuidsMap.get(name2));
-//				}
-//			}
-//
-//
-//			if (relexRule.getAllCriteriaSatisfied())
-//			{
-//				if (bVerboseMode)
-//					System.out.println("   All criteria for rule '" + relexRule.getName() + "' satisfied, scheme output: " + relexRule.getSchemeOutput());
-//
-//				bResult = true;
-//				if (relexRule.getName().compareTo("MAYBE") == 0 && !rcheck.maybeCheck)
-//					bResult = false;
-//			}
-//			else
-//			{
-//				if (bVerboseMode)
-//					System.out.println("   Not all criteria for rule '" + relexRule.getName() + "' satisfied :(");
-//			}
-//		}
-//		else
-//		{
-//			System.out.println("   Cannot apply rule '" + relexRule.getName() + "' due to mutual exclusivity");
-//		}
-//
-//		return bResult;
-//	}
-//
-//	/**
-//	 * Retrieves the Scheme output from a rule whose applicability has
-//	 * been established, rewriting the variables in the rule to the
-//	 * values that have been determined in the verification process.
-//	 * @param ruleToApply The rule that has been determined applicable,
-//	 *    and contains the established values for the variable criteria.
-//	 * @param schemeBuilder A StringBuilder to which to append the Scheme output.
-//	 */
-//	private void applyRule(Rule ruleToApply, StringBuilder schemeBuilder)
-//	{
-//		String schemeOutput = ruleToApply.getSchemeOutput();
-//		schemeBuilder.append(schemeOutput);
-//		schemeBuilder.append("\n");
-//	}
 
 	/**
 	 * Applies the local ruleset to the dependency graph that starts with rootNode.
@@ -669,29 +647,7 @@ public class LogicProcessor
 	 */
 	public String applyRulesToParse(FeatureNode rootNode)
 	{
-//		StringBuilder schemeBuilder = new StringBuilder();
-//		List<String> appliedRules = new ArrayList<String>();
-
 		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
-
-		System.out.println(rootNode);
-
-		// create rulechecker here
-		// pass ruleset to rulechecker
-		// in rulechecker, for each node, check all rules
-		// there's a possibility for circular links
-		// the current method will look down the links for a particular rule, ie. the tense rule can be applied to subnode even if cannot be applied to parent
-		// then crawler reached the subnode... rule reapplied???? how to stop it?
-		// even if keeping check of which nodes was visited on the current callback, we do want some rules such as tense to apply multiple times within same link
-		// ** only check rule if one of the condition matches the parent node?  no way, the parent node is just a word, not relation
-		// *** use the BinaryRelationCB which returns relation and the two words, but how to find the other relations?
-		// **** instead of checking rules, build a list of relations (storing the word and uuid)
-
-		// 1. on current node, loop each rule
-		// 2. for each rule, find nodes like before but stop if reached a checked node
-		// 3. once all nodes found, discard if the current node is not involved, since the same rule can be applied when visiting subsequent node
-		// 4. once all rules checked, mark current node checked
-
 
 		RuleChecker rc = new RuleChecker();
 		rc.orderedRulesSet = ruleSet;
@@ -699,24 +655,6 @@ public class LogicProcessor
 		RelationForeach.foreach(rootNode, rc);
 
 		return rc.schemeBuilder.toString();
-
-
-//		// FIXME This is going through rules first, then relations, which might be wrong.
-//		// Should try to go into relation first, then see which rules (multiple) can be applied.
-//		// This would allow the same rule (such as tense) to be applied to multiple word in the sentence.
-//		for (Rule relexRule: ruleSet) {
-//
-//			if (bVerboseMode)
-//				System.out.println("Matching rule '" + relexRule.getName() + "'...");
-//
-//			if (checkRuleApplicability(relexRule, rootNode, appliedRules))
-//			{
-//				applyRule(relexRule, schemeBuilder);
-//				appliedRules.add(relexRule.getName());
-//			}
-//		}
-//
-//		return schemeBuilder.toString();
 	}
 
 	/**
