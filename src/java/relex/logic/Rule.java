@@ -132,10 +132,10 @@ public class Rule {
 				if(variableName.substring(0, 1).equals("$"))
 				{
 					schemeOutput = schemeOutput.replaceAll(
-									Pattern.quote(variableName), "\"" + variableValue + "\"");
+							Pattern.quote(variableName), Matcher.quoteReplacement("\"" + variableValue + "\""));
 					schemeOutput = schemeOutput.replaceAll(
-									Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-												"\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
+							Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+										Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\""));
 				}
 			}
 		}
