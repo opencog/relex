@@ -157,12 +157,8 @@ public class LogicProcessor
 
 			List<String> appliedRules = new ArrayList<String>();
 
-			System.out.println("   Start check all rules on this node " + startNode.get("name"));
-
 			for (Rule thisRule: clonedRulesSet)
 			{
-				System.out.println("  Checking rule " + thisRule.getName());
-
 				Boolean bNotMutuallyExclusive = true;
 
 				for (String appliedRule : appliedRules)
@@ -197,16 +193,6 @@ public class LogicProcessor
 
 					if (ruleResult.passed)
 					{
-						System.out.println("Rule " + tempRule.getName() + " passed at node " + startNode.get("name"));
-
-						for (String key : ruleResult.valuesMap.keySet())
-						{
-							String value = ruleResult.valuesMap.get(key);
-							String uuid = ruleResult.uuidsMap.get(key);
-
-							System.out.println(" " + key + ", " + value + ", " + uuid);
-						}
-
 						// actually write the matched values into the rule
 						for (Criterium thisCriterium : tempRule.getCriteria())
 						{
@@ -221,8 +207,6 @@ public class LogicProcessor
 
 						if (tempRule.getAllCriteriaSatisfied())
 						{
-							System.out.println(tempRule.getName() + " satisfied.");
-
 							if (tempRule.getName().compareTo("MAYBE") != 0 || ruleResult.maybeCheck)
 							{
 								Boolean applied = false;
@@ -359,8 +343,6 @@ public class LogicProcessor
 				return;
 			}
 
-			System.out.println("  " + foundCriteriums.size() + " criteriums matched");
-
 			// criteriums matched, remove them all for the next level
 			criteriums.removeAll(foundCriteriums);
 
@@ -378,22 +360,15 @@ public class LogicProcessor
 			List<List<ChildParentPair>> allComb = new ArrayList<List<ChildParentPair>>();
 			generateAllComb(foundPairs, 0, allComb, new Stack<ChildParentPair>());
 
-			System.out.println("    " + allComb.size() + " combinations found");
-
 			// for each combination, search deeper for more criteriums
 			for (List<ChildParentPair> pairs : allComb)
 			{
-				System.out.println("       Size of this combination is " + pairs.size());
-
 				for (ChildParentPair pair : pairs)
 					matchedPairs.push(pair);
 
 				// pick one node and search deeper, and do this for all nodes in this combination
 				for (ChildParentPair pair : pairs)
-				{
-					System.out.println("          going deeper");
 					recursiveMatchAndApply(rule, pair.child, visitedNodes, criteriums, matchedPairs, results);
-				}
 
 				for (int i = 0; i < pairs.size(); i++)
 					matchedPairs.pop();
