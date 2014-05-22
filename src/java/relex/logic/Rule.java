@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 // Description: Class to store the details of a rule, namely its name, priority, mutually exclusive rules (if any), criteria (in the form of ReLex2LogicCriterium).
 
