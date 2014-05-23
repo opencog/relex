@@ -56,6 +56,9 @@ public class Rule {
 	 */
 	private List<Criterium> _criteria;
 
+	private List<String> _exclusionList;
+
+
 	/**
 	 * Constructor to build a ReLex2LogicRule from a string in the rule file.
 	 * @param ruleString A rule string
@@ -64,8 +67,9 @@ public class Rule {
 	public Rule(String ruleString) {
 		_ruleString = ruleString;
 
-		// build the required criteriums immediately
+		// build the required data immediately
 		getCriteria();
+		getMutuallyExclusiveRuleNames();
 	}
 
 	/**
@@ -185,16 +189,39 @@ public class Rule {
 		return getCriteriaStrings().size();
 	}
 
+
+	/**
+	 * Check if a rule name matches one in the exclusion list.  Regular Expression
+	 * @param otherName   The rule name to check
+	 * @return            True if excluded, false otherwise
+	 */
+	public Boolean isRuleMutuallyExlusive(String otherName)
+	{
+		for (String ruleRegex : _exclusionList)
+		{
+			if (otherName.matches(ruleRegex))
+				return true;
+		}
+
+		return false;
+	}
+
+
 	/**
 	 * @return A <List>String of the names of rules that are mutually exclusive to this rule
 	 */
 	public List<String> getMutuallyExclusiveRuleNames() {
-		String mutuallyExclusiveRuleSection = getStringSection("<", ">");
+		if (_exclusionList == null)
+		{
+			String mutuallyExclusiveRuleSection = getStringSection("<", ">");
 
-		String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
-				.split(", ");
+			String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
+					.split(", ");
+			_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+		}
 
-		return Arrays.asList(mutuallyExclusiveRuleNames);
+		// return a copy, don't really want a reference to private variable to leave this object
+		return new ArrayList<String>(_exclusionList);
 	}
 
 	/**
