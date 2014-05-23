@@ -63,6 +63,9 @@ public class Rule {
 	 */
 	public Rule(String ruleString) {
 		_ruleString = ruleString;
+
+		// build the required criteriums immediately
+		getCriteria();
 	}
 
 	/**
@@ -133,10 +136,10 @@ public class Rule {
 				if(variableName.substring(0, 1).equals("$"))
 				{
 					schemeOutput = schemeOutput.replaceAll(
-							Pattern.quote(variableName), Matcher.quoteReplacement("\"" + variableValue + "\""));
+											Pattern.quote(variableName), Matcher.quoteReplacement("\"" + variableValue + "\""));
 					schemeOutput = schemeOutput.replaceAll(
-							Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-										Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\""));
+											Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+											Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\""));
 				}
 			}
 		}
