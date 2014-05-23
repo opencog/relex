@@ -278,11 +278,21 @@ CONJ_OBJ
 <F_L obj> != %
 <F_R conj> != %
 <F_R POS> = conjunction
+<LAB> != \VJ\.*
 =
 <F_L obj> = %
 <F_L obj> += <F_R conj member0 ref>
 <F_L obj> += <F_R conj member1 ref>
 ;
+;Example: Scientists make observations and ask questions.
+#TemplateActionAlg
+CONJ_OBJ2
+<F_L obj> != %
+<F_L conj> != %
+<F_L POS> = conjunction
+<LAB> = \VJ\.*
+=
+<F_R obj> += <F_L obj>
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ;  SYNTACTIC ARGUMENT LINKING
