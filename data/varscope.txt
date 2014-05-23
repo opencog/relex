@@ -1,4 +1,4 @@
-[maybe,possibly,perhaps]
+[maybe,possibly,perhaps,probably]
 [correct, right, wrong]
-[exactly, definitely, certainlY]
+[exactly, definitely, certainly]
 
