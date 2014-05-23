@@ -195,7 +195,7 @@ public class Rule {
 	 * @param otherName   The rule name to check
 	 * @return            True if excluded, false otherwise
 	 */
-	public Boolean isRuleMutuallyExlusive(String otherName)
+	public Boolean isRuleMutuallyExclusive(String otherName)
 	{
 		for (String ruleRegex : _exclusionList)
 		{
