@@ -132,7 +132,24 @@ public class TestRelEx
 		report(rc, "Comparatives");
 		return rc;
 	}
-
+        public boolean test_Conjunction()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("Scientists make observations and ask questions.",
+		                     "_obj(make, observation)\n" +
+		                     "_obj(ask, question)\n" +
+		                     "_subj(make, scientist)\n" +
+		                     "_subj(ask, scientist)\n" +
+		                     "conj_and(make, ask)\n");
+              
+		rc &= test_sentence ("She is a student and an employee.",
+		                     "_obj(be, student)\n" +
+		                     "_obj(be, employee)\n" +
+		                     "_subj(be, she)\n" +
+        	                     "conj_and(student, employee)\n");
+                report(rc, "Conjunction");
+		return rc;
+	}
 	public boolean test_extraposition()
 	{
 		boolean rc = true;
@@ -256,6 +273,7 @@ public class TestRelEx
 
 		rc &= ts.test_comparatives();
 		rc &= ts.test_extraposition();
+                rc &= ts.test_Conjunction();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
