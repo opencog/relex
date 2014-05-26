@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 // Description: Class to store the details of a rule, namely its name, priority, mutually exclusive rules (if any), criteria (in the form of ReLex2LogicCriterium).
 
@@ -55,6 +56,9 @@ public class Rule {
 	 */
 	private List<Criterium> _criteria;
 
+	private List<String> _exclusionList;
+
+
 	/**
 	 * Constructor to build a ReLex2LogicRule from a string in the rule file.
 	 * @param ruleString A rule string
@@ -62,6 +66,10 @@ public class Rule {
 	 */
 	public Rule(String ruleString) {
 		_ruleString = ruleString;
+
+		// build the required data immediately
+		getCriteria();
+		getMutuallyExclusiveRuleNames();
 	}
 
 	/**
@@ -132,10 +140,10 @@ public class Rule {
 				if(variableName.substring(0, 1).equals("$"))
 				{
 					schemeOutput = schemeOutput.replaceAll(
-									Pattern.quote(variableName), "\"" + variableValue + "\"");
+											Pattern.quote(variableName), Matcher.quoteReplacement("\"" + variableValue + "\""));
 					schemeOutput = schemeOutput.replaceAll(
-									Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-												"\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\"");
+											Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+											Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\""));
 				}
 			}
 		}
@@ -181,16 +189,39 @@ public class Rule {
 		return getCriteriaStrings().size();
 	}
 
+
+	/**
+	 * Check if a rule name matches one in the exclusion list.  Regular Expression
+	 * @param otherName   The rule name to check
+	 * @return            True if excluded, false otherwise
+	 */
+	public Boolean isRuleMutuallyExclusive(String otherName)
+	{
+		for (String ruleRegex : _exclusionList)
+		{
+			if (otherName.matches(ruleRegex))
+				return true;
+		}
+
+		return false;
+	}
+
+
 	/**
 	 * @return A <List>String of the names of rules that are mutually exclusive to this rule
 	 */
 	public List<String> getMutuallyExclusiveRuleNames() {
-		String mutuallyExclusiveRuleSection = getStringSection("<", ">");
+		if (_exclusionList == null)
+		{
+			String mutuallyExclusiveRuleSection = getStringSection("<", ">");
 
-		String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
-				.split(", ");
+			String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
+					.split(", ");
+			_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+		}
 
-		return Arrays.asList(mutuallyExclusiveRuleNames);
+		// return a copy, don't really want a reference to private variable to leave this object
+		return new ArrayList<String>(_exclusionList);
 	}
 
 	/**
