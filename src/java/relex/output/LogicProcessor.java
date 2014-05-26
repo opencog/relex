@@ -155,17 +155,17 @@ public class LogicProcessor
 				clonedRulesSet.add(new Rule(thisRule.getRuleString()));
 			}
 
-			List<String> appliedRules = new ArrayList<String>();
+			List<Rule> appliedRules = new ArrayList<Rule>();
 
 			for (Rule thisRule: clonedRulesSet)
 			{
 				Boolean bNotMutuallyExclusive = true;
 
-				for (String appliedRule : appliedRules)
+				for (Rule appliedRule : appliedRules)
 				{
 					for (String mutuallyExclusiveRule: thisRule.getMutuallyExclusiveRuleNames())
 					{
-						if (appliedRule.equalsIgnoreCase(mutuallyExclusiveRule))
+						if (appliedRule.isRuleMutuallyExclusive(mutuallyExclusiveRule))
 						{
 							bNotMutuallyExclusive = false;
 							break;
@@ -232,7 +232,7 @@ public class LogicProcessor
 								}
 							}
 
-							appliedRules.add(tempRule.getName());
+							appliedRules.add(tempRule);
 						}
 					}
 				}
