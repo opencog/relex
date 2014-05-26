@@ -1562,7 +1562,7 @@ CONJ_ADVMOD
 #TemplateActionAlg
 COMP_ADVMOD_1
 <LAB> = \EBmm|\MVm|\EAm
-<F_R str> = less 
+<F_R str> = less | more
 =
 <F_L advmod> += <F_R ref>
 #TemplateActionAlg
