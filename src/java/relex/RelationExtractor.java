@@ -577,6 +577,13 @@ public class RelationExtractor
 				opencog.setShowAnaphora(true);
 			}
 		}
+		
+		boolean do_logic_output = false;
+		LogicView logicView =new LogicView();
+		if(commandMap.get("--or") != null){
+			do_logic_output = true;
+			logicView.loadRules();
+		}
 
 		int sentence_count = 0;
 		boolean more_input = true;
@@ -710,12 +717,8 @@ public class RelationExtractor
 							html.printf("<td valign='top'><pre>%s</pre></td>\n", escape(SimpleView.printRelations(parse)));
 					}
 
-					if (commandMap.get("--or") != null)
+					if (do_logic_output)
 					{
-						LogicView logicView = new LogicView();
-
-						logicView.loadRules();
-
 						System.out.println("\n======\n");
 						System.out.println("Relex2Logic output:");
 						System.out.println(logicView.printRelationsNew(parse));

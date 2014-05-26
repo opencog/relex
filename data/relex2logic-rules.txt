@@ -1,3 +1,4 @@
+# Examples: "Socrates is man", "Cats are animals", "Trees are plants"
 [BE] {1} <SVO, SV> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [SVO]  {2} <SV, SVIO, BE> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
@@ -12,7 +13,7 @@
 
 [TENSEPOS] {5} <> tense($W, $Tense) & pos($W, verb) => (tense-rule $W (get-instance-name $W word_index sentence_index) $Tense)
 
-[DET] {6} <> _det($W, $x) => (det-rule $W (get-instance-name $W word_index sentence_index) choose_var_name $x)
+[DET] {6} <> _det($W, $x) => (det-rule $W (get-instance-name $W word_index sentence_index) choose-var-name $x)
 
 [NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get-instance-name $V word_index sentence_index))
 
@@ -42,6 +43,10 @@
 
 [PRENOMINAL] <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 
-[WHICHRULE] {10} <> which($N,$V) => (combine $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
+[WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
 
 [SVIO] {1} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
+
+[PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A,past_passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
+
+[PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A,present_passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))

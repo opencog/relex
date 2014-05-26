@@ -31,6 +31,7 @@ public class TestRelEx
 	private int fail;
 	private int subpass;
 	private int subfail;
+	private static ArrayList<String> sentfail= new ArrayList<String>();
 
 	public TestRelEx()
 	{
@@ -54,9 +55,9 @@ public class TestRelEx
 
 	/**
 	 * First argument is the sentence.
-	 * Second argument is a list of the relations that the
-	 * Stanford parser generates.
-	 * Return true if relex generates that same dependencies
+	 * Second argument is a list of the relations that RelEx
+	 * should be generating.
+	 * Return true if RelEx generates the same dependencies
 	 * as the second argument.
 	 */
 	public boolean test_sentence (String sent, String sf)
@@ -76,6 +77,7 @@ public class TestRelEx
 			                   "\tSentence = " + sent);
 			subfail ++;
 			fail ++;
+			sentfail.add(sent);
 			return false;
 		}
 		for (int i=0; i< exp.size(); i++)
@@ -88,6 +90,7 @@ public class TestRelEx
 				                   "\tSentence = " + sent);
 				subfail ++;
 				fail ++;
+				sentfail.add(sent);
 				return false;
 			}
 		}
@@ -129,7 +132,24 @@ public class TestRelEx
 		report(rc, "Comparatives");
 		return rc;
 	}
-
+        public boolean test_Conjunction()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("Scientists make observations and ask questions.",
+		                     "_obj(make, observation)\n" +
+		                     "_obj(ask, question)\n" +
+		                     "_subj(make, scientist)\n" +
+		                     "_subj(ask, scientist)\n" +
+		                     "conj_and(make, ask)\n");
+              
+		rc &= test_sentence ("She is a student and an employee.",
+		                     "_obj(be, student)\n" +
+		                     "_obj(be, employee)\n" +
+		                     "_subj(be, she)\n" +
+        	                     "conj_and(student, employee)\n");
+                report(rc, "Conjunction");
+		return rc;
+	}
 	public boolean test_extraposition()
 	{
 		boolean rc = true;
@@ -253,6 +273,7 @@ public class TestRelEx
 
 		rc &= ts.test_comparatives();
 		rc &= ts.test_extraposition();
+                rc &= ts.test_Conjunction();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
@@ -261,5 +282,15 @@ public class TestRelEx
 			                   ts.fail + " sentences failed\n\t" +
 			                   ts.pass + " sentences passed");
 		}
+
+		System.err.println("******************************");
+		System.err.println("Failed test sentences on Relex");
+		System.err.println("******************************");
+		if(sentfail.isEmpty())
+			System.err.println("All test sentences passed");
+		for(String temp : sentfail){
+			System.err.println(temp);
+		}
+		System.err.println("******************************\n");
 	}
 }
