@@ -1572,7 +1572,7 @@ CONJ_ADVMOD
 #TemplateActionAlg
 COMP_ADVMOD_1
 <LAB> = \EBmm|\MVm|\EAm
-<F_R str> = less
+<F_R str> = less | more
 =
 <F_L advmod> += <F_R ref>
 #TemplateActionAlg
@@ -2032,7 +2032,17 @@ RELATION_THAN_16
 <F_L comp_temp> = %
 ;
 #TemplateActionAlg
-RELATION_THAN_17
+RELATION_THAN_17_1
+<LAB> = \Op
+<F_L comp_temp> != %
+<F_L SET> != T
+=
+<F_R ref links than> += <F_L comp_temp>
+<F_L comp_temp> = %
+<F_L comp_temp1> = %
+
+#TemplateActionAlg
+RELATION_THAN_17_2
 <LAB> = \S\.*|\SX
 <F_R comp_temp> != %
 <F_R SET> != T
