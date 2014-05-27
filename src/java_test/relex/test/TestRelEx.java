@@ -221,7 +221,15 @@ public class TestRelEx
                                      "_advmod(white, very)\n" +
                                      "conj_and(long, white)\n" +
               	                     "_advmod(long, very)\n");    
-    
+               //adjectival modifiers on conjoined object
+                rc &= test_sentence ("The collision was between the little car and the big truck.",
+		                     "_pobj(between, car)\n" +
+		                     "_pobj(between, truck)\n" +
+		                     "_psubj(between, collision)\n" +
+                                     "_amod(truck, big)\n" +
+                                     "_amod(car, little)\n" +
+                                     "conj_and(car, truck)\n");
+              	                    
                 report(rc, "Conjunction");
 		return rc;
 	}
