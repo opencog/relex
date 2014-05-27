@@ -211,7 +211,16 @@ public class TestRelEx
 		                     "_advmod(handle, quickly)\n" +
                                      "_advmod(handle, gracefully)\n" +
                                      "_subj(handle, she)\n" +
-              	                     "conj_and(quickly, gracefully)\n");           
+              	                     "conj_and(quickly, gracefully)\n"); 
+               //modifiers on conjoined adjectives
+                rc &= test_sentence ("He had very long and very white hair.",
+		                     "_obj(have, hair)\n" +
+		                     "_subj(have, he)\n" +
+		                     "_amod(hair, long)\n" +
+                                     "_amod(hair, white)\n" +
+                                     "_advmod(white, very)\n" +
+                                     "conj_and(long, white)\n" +
+              	                     "_advmod(long, very)\n");    
     
                 report(rc, "Conjunction");
 		return rc;
