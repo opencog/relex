@@ -229,7 +229,13 @@ public class TestRelEx
                                      "_amod(truck, big)\n" +
                                      "_amod(car, little)\n" +
                                      "conj_and(car, truck)\n");
-              	                    
+                //Names Modifiers  and conjunction
+                rc &= test_sentence ("Big Tom and Angry Sue went to the movies.",
+		                     "to(go, movie)\n" +
+		                     "_subj(go, Big_Tom)\n" +
+		                     "_subj(go, Angry_Sue)\n" +
+                                     "conj_and(Big_Tom, Angry_Sue)\n");  
+
                 report(rc, "Conjunction");
 		return rc;
 	}
