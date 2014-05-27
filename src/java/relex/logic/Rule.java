@@ -19,6 +19,7 @@ package relex.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -197,6 +198,9 @@ public class Rule {
 	 */
 	public Boolean isRuleMutuallyExclusive(String otherName)
 	{
+		if (_exclusionList == null)
+			return false;
+
 		for (String ruleRegex : _exclusionList)
 		{
 			if (otherName.matches(ruleRegex))
@@ -215,10 +219,17 @@ public class Rule {
 		{
 			String mutuallyExclusiveRuleSection = getStringSection("<", ">");
 
-			String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
-					.split(", ");
-			_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+			if (mutuallyExclusiveRuleSection.length() > 0)
+			{
+				String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
+						.split(", ");
+
+				_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+			}
 		}
+
+		if (_exclusionList == null)
+			return Collections.emptyList();
 
 		// return a copy, don't really want a reference to private variable to leave this object
 		return new ArrayList<String>(_exclusionList);
