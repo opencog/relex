@@ -147,6 +147,55 @@ public class TestRelEx
 		                     "_obj(be, employee)\n" +
 		                     "_subj(be, she)\n" +
         	                     "conj_and(student, employee)\n");
+                //conjoined adjectives
+		rc &= test_sentence ("I hailed a black and white taxi.",
+		                     "_obj(hail, taxi)\n" +
+		                     "_subj(hail, I)\n" +
+		                     "_amod(taxi, black)\n" +
+                                     "_amod(taxi, white)\n" +
+        	                     "conj_and(black, white)\n");
+                //conjoined adverbs
+		rc &= test_sentence ("She ran quickly and quietly.",
+		                     "_advmod(run, quickly)\n" +
+		                     "_advmod(run, quietly)\n" +
+		                     "_subj(run, she)\n" +
+        	                     "conj_and(quickly, quietly)\n");
+                //adjectival modifiers on conjoined subject          
+		rc &= test_sentence ("The big truck and the little car collided.",
+		                     "_amod(car, little)\n" +
+		                     "_amod(truck, big)\n" +
+		                     "_subj(collide, truck)\n" +
+                                     "_subj(collide, car)\n" +
+        	                     "conj_and(truck, car)\n");
+                //verbs with modifiers
+                rc &= test_sentence ( "We ate dinner at home and went to the movies.",
+		                     "_obj(eat, dinner)\n" +
+		                     "conj_and(eat, go)\n" +
+		                     "at(eat, home)\n" +
+                                     "_subj(eat, we)\n" +
+                                     "to(go, movie)\n" +
+        	                     "_subj(go, we)\n");
+                //verb with more modifiers
+                rc &= test_sentence ("We ate a late dinner at home and went out to the movies afterwards.",
+		                     "_obj(eat, dinner)\n" +
+		                     "conj_and(eat, go_out)\n" +
+		                     "at(eat, home)\n" +
+                                     "_subj(eat, we)\n" +
+                                     "to(go_out, movie)\n" +
+                                     "_advmod(go_out, afterwards)\n" +
+                                     "_subj(go_out, we)\n" +
+        	                     "_amod(dinner, late)\n");
+
+                //conjoined ditransitive verbs 
+                rc &= test_sentence ("She baked him a cake and sang him a song.",
+		                     "_iobj(sing, him)\n" +
+		                     "_obj(sing, song)\n" +
+		                     "_subj(sing, she)\n" +
+                                     "_iobj(bake, him)\n" +
+                                     "_obj(bake, cake)\n" +
+                                     "conj_and(bake, sing)\n" +
+           	                     "_subj(bake, she)\n"); 
+    
                 report(rc, "Conjunction");
 		return rc;
 	}
