@@ -196,6 +196,22 @@ public class TestRelEx
                                      "_obj(bake, cake)\n" +
                                      "conj_and(bake, sing)\n" +
            	                     "_subj(bake, she)\n"); 
+                //conjoined adverbs with modifiers
+                rc &= test_sentence ("she ran very quickly and extremely quietly.",
+		                     "_advmod(run, quickly)\n" +
+		                     "_advmod(run, quietly)\n" +
+		                     "_subj(run, she)\n" +
+                                     "_advmod(quietly, extremely)\n" +
+                                     "conj_and(quickly, quietly)\n" +
+              	                     "_advmod(quickly, very)\n"); 
+               //conjoined adverbs with out modifiers
+                rc &= test_sentence ("She handled it quickly and gracefully.",
+		                     "_obj(handle, quickly)\n" +
+		                     "_obj(handle, gracefully)\n" +
+		                     "_advmod(handle, quickly)\n" +
+                                     "_advmod(handle, gracefully)\n" +
+                                     "_subj(handle, she)\n" +
+              	                     "conj_and(quickly, gracefully)\n");           
     
                 report(rc, "Conjunction");
 		return rc;
