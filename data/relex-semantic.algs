@@ -1231,6 +1231,15 @@ SPECIAL_PREP_RULE
 <F_R ref links _obj> = %
 ;
 #TemplateActionAlg
+CONJ_PREP_RULE
+<F_L ref links _pobj> != %
+<F_R conj> != %
+=
+<F_L ref links _pobj> = %
+<F_L ref links _pobj> += <F_R conj member0 ref>
+<F_L ref links _pobj> += <F_R conj member1 ref>
+;
+#TemplateActionAlg
 SPECIAL_PREP_RULE_WHERE
 <LAB> = \PF\.*
 <F_L str> = where
