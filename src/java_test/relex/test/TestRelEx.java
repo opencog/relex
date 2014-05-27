@@ -135,13 +135,14 @@ public class TestRelEx
         public boolean test_Conjunction()
 	{
 		boolean rc = true;
+                //conjoined verbs
 		rc &= test_sentence ("Scientists make observations and ask questions.",
 		                     "_obj(make, observation)\n" +
 		                     "_obj(ask, question)\n" +
 		                     "_subj(make, scientist)\n" +
 		                     "_subj(ask, scientist)\n" +
 		                     "conj_and(make, ask)\n");
-              
+                //conjoined nouns              
 		rc &= test_sentence ("She is a student and an employee.",
 		                     "_obj(be, student)\n" +
 		                     "_obj(be, employee)\n" +
