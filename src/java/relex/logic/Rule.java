@@ -19,6 +19,7 @@ package relex.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -191,16 +192,31 @@ public class Rule {
 
 
 	/**
-	 * Check if a rule name matches one in the exclusion list.  Regular Expression
-	 * @param otherName   The rule name to check
+	 * Check if two rules are mutually exclusive.  Both rules' exclusion list
+	 * are checked, so the exclusion relationship is non-directional.  Regular expression
+	 * is allowed.
+	 *
+	 * @param otherRule   The other rule to check
 	 * @return            True if excluded, false otherwise
 	 */
-	public Boolean isRuleMutuallyExclusive(String otherName)
+	public Boolean isMutuallyExclusive(Rule otherRule)
 	{
-		for (String ruleRegex : _exclusionList)
+		if (_exclusionList != null)
 		{
-			if (otherName.matches(ruleRegex))
-				return true;
+			for (String ruleRegex : _exclusionList)
+			{
+				if (otherRule.getName().matches(ruleRegex))
+					return true;
+			}
+		}
+
+		if (otherRule._exclusionList != null)
+		{
+			for (String ruleRegex : otherRule._exclusionList)
+			{
+				if (getName().matches(ruleRegex))
+					return true;
+			}
 		}
 
 		return false;
@@ -215,10 +231,17 @@ public class Rule {
 		{
 			String mutuallyExclusiveRuleSection = getStringSection("<", ">");
 
-			String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
-					.split(", ");
-			_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+			if (mutuallyExclusiveRuleSection.length() > 0)
+			{
+				String[] mutuallyExclusiveRuleNames = mutuallyExclusiveRuleSection
+						.split(", ");
+
+				_exclusionList = Arrays.asList(mutuallyExclusiveRuleNames);
+			}
 		}
+
+		if (_exclusionList == null)
+			return Collections.emptyList();
 
 		// return a copy, don't really want a reference to private variable to leave this object
 		return new ArrayList<String>(_exclusionList);

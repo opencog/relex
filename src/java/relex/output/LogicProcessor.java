@@ -163,14 +163,7 @@ public class LogicProcessor
 
 				for (Rule appliedRule : appliedRules)
 				{
-					for (String mutuallyExclusiveRule: thisRule.getMutuallyExclusiveRuleNames())
-					{
-						if (appliedRule.isRuleMutuallyExclusive(mutuallyExclusiveRule))
-						{
-							bNotMutuallyExclusive = false;
-							break;
-						}
-					}
+					bNotMutuallyExclusive = !thisRule.isMutuallyExclusive(appliedRule);
 
 					if (!bNotMutuallyExclusive)
 						break;
