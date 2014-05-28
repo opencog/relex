@@ -201,22 +201,22 @@ public class Rule {
 	 */
 	public Boolean isMutuallyExclusive(Rule otherRule)
 	{
-		if (_exclusionList == null)
-			return false;
-
-		for (String ruleRegex : _exclusionList)
+		if (_exclusionList != null)
 		{
-			if (otherRule.getName().matches(ruleRegex))
-				return true;
+			for (String ruleRegex : _exclusionList)
+			{
+				if (otherRule.getName().matches(ruleRegex))
+					return true;
+			}
 		}
 
-		if (otherRule._exclusionList == null)
-			return false;
-
-		for (String ruleRegex : otherRule._exclusionList)
+		if (otherRule._exclusionList != null)
 		{
-			if (getName().matches(ruleRegex))
-				return true;
+			for (String ruleRegex : otherRule._exclusionList)
+			{
+				if (getName().matches(ruleRegex))
+					return true;
+			}
 		}
 
 		return false;
