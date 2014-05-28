@@ -192,18 +192,30 @@ public class Rule {
 
 
 	/**
-	 * Check if a rule name matches one in the exclusion list.  Regular Expression
-	 * @param otherName   The rule name to check
+	 * Check if two rules are mutually exclusive.  Both rules' exclusion list
+	 * are checked, so the exclusion relationship is non-directional.  Regular expression
+	 * is allowed.
+	 *
+	 * @param otherRule   The other rule to check
 	 * @return            True if excluded, false otherwise
 	 */
-	public Boolean isRuleMutuallyExclusive(String otherName)
+	public Boolean isMutuallyExclusive(Rule otherRule)
 	{
 		if (_exclusionList == null)
 			return false;
 
 		for (String ruleRegex : _exclusionList)
 		{
-			if (otherName.matches(ruleRegex))
+			if (otherRule.getName().matches(ruleRegex))
+				return true;
+		}
+
+		if (otherRule._exclusionList == null)
+			return false;
+
+		for (String ruleRegex : otherRule._exclusionList)
+		{
+			if (getName().matches(ruleRegex))
 				return true;
 		}
 
