@@ -1563,6 +1563,16 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
+;Pizza, which most people love, is not very healthy.
+;making "not" adverb of "is"
+#TemplateActionAlg
+ADV5
+<LAB> = \EBm
+<F_R str> = not
+<F_L str> = be|is
+<F_L advmod> = %
+=
+<F_L advmod> += <F_R ref>
 ;
 ; Fix up conjunctions; link not to the conjunction,
 ; but to each conjoined modifier.
@@ -1585,7 +1595,17 @@ COMP_ADVMOD_1
 =
 <F_L advmod> += <F_R ref>
 #TemplateActionAlg
-COMP_ADVMOD_2
+;Pizza, which most people love, is not very healthy.
+;to handle binary relationship _advmod(very,not)
+COMP_ADVMOD_2_1
+<LAB> = \Paf
+<F_L advmod> != %
+<F_R linkL1 F_L> != %
+=
+<F_R linkL1 F_L ref links _advmod> += <F_L advmod> 
+<F_L advmod> = %
+#TemplateActionAlg
+COMP_ADVMOD_2_2
 <LAB> = \Paf
 <F_L advmod> != %
 =
