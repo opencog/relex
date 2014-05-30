@@ -63,6 +63,7 @@ public class TestRelEx
 	public boolean test_sentence (String sent, String sf)
 	{
 		re.do_penn_tagging = false;
+		re.setMaxParses(1);
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
 		String rs = SimpleView.printBinaryRelations(parse);
