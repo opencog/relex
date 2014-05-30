@@ -63,6 +63,7 @@ public class TestRelEx
 	public boolean test_sentence (String sent, String sf)
 	{
 		re.do_penn_tagging = false;
+		re.setMaxParses(1);
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
 		String rs = SimpleView.printBinaryRelations(parse);
@@ -260,11 +261,11 @@ public class TestRelEx
 		rc &= test_sentence ("Pizza, which most people love, is not very healthy.",
 		                        "_advmod(very, not)\n" +
 		                        "_advmod(healthy, very)\n" +
-		                        "_obj(love, pizza)\n" +
+		                        "_obj(love, Pizza)\n" +
 		                        "_quantity(people, most)\n" +
-		                        "which(pizza, love)\n" +
+		                        "which(Pizza, love)\n" +
 		                        "_subj(love, people)\n" +
-		                        "_predadj(pizza, healthy)\n" );
+		                        "_predadj(Pizza, healthy)\n" );
 
 		rc &= test_sentence ("The restaurant which belongs to my aunt is very famous.",
 		                        "_advmod(famous, very)\n" +
