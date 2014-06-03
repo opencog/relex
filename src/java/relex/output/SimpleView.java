@@ -103,6 +103,15 @@ public class SimpleView
 		parse.foreach(v);
 		return v.binary_str;
 	}
+        
+	public static String printUnaryRelations(ParsedSentence parse)
+	{
+		Visit v = new Visit();
+		v.binary_str = "";
+		v.unary_str = "";
+		parse.foreach(v);
+		return v.unary_str;
+	}
 
 	private static class Visit implements RelationCallback
 	{
