@@ -434,6 +434,13 @@ POS_ADV_INVERTED
 <F_L POS> = WORD
 =
 <F_L POS> = adv
+; adverbial comparatives
+#TemplateActionAlg
+SUBSCR_POS_E-C
+<LAB> = \MVa
+<F_R linkL1 LAB> = \EEm
+=
+<F_R ref degree> = comparative
 ;
 ;--------------------------------------------------------
 ; Oddball cases
