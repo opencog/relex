@@ -58,3 +58,9 @@
 [PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A,past_passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
 
 [PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A,present_passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
+
+# Example: "I did my homework, and I went to school."
+[AND1] {1} <and-rule2> conj_and($var1, $var2) & pos($var1, verb) & pos($var2, verb) => (and-rule1 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
+
+#Example: "John and Madison eat the cake."
+[AND2] {2} <and-rule1> conj_and($var1, $var2) => (and-rule2 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
