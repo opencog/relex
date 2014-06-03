@@ -67,33 +67,48 @@ public class TestRelEx
 		Sentence sntc = re.processSentence(sent);
 		ParsedSentence parse = sntc.getParses().get(0);
 		String rs = SimpleView.printBinaryRelations(parse);
+		String urs = SimpleView.printUnaryRelations(parse);
 
 		ArrayList<String> exp = split(sf);
-		ArrayList<String> got = split(rs);
-		if (exp.size() != got.size())
+		ArrayList<String> brgot = split(rs);
+		ArrayList<String> urgot = split(urs);
+		
+		//add number of binary relation got to total number of relationships got
+		int sizeOfGotRelations= brgot.size();
+		//check expected binary and unary relations
+		for (int i=0; i< exp.size(); i++)
+		{	
+			if(!brgot.contains((String)exp.get(i)))
+			{
+				if(!urgot.contains(exp.get(i)))
+				{
+					System.err.println("Error: content miscompare:\n" +
+						    "\tExpected = " + exp + "\n" +
+						    "\tGot Binary Relations = " + brgot + "\n" +
+						    "\tGot Uinary Relations = " + urgot + "\n" +
+						    "\tSentence = " + sent);
+					subfail ++;
+					fail ++;
+					sentfail.add(sent);
+					return false;
+				}
+				//add the unary relation, count to totoal number of binary relations
+				sizeOfGotRelations++;
+			}
+			
+		}
+		//check output resulted more relationships than expected relations
+		if (exp.size() < sizeOfGotRelations)
 		{
 			System.err.println("Error: size miscompare:\n" +
-			                   "\tExpected = " + exp + "\n" +
-			                   "\tGot      = " + got + "\n" +
-			                   "\tSentence = " + sent);
+					    "\tExpected = " + exp + "\n" +
+					    "\tGot Binary Relations = " + brgot + "\n" +
+					    "\tGot Uinary Relations = " + urgot + "\n" +
+					    "\tSentence = " + sent);
 			subfail ++;
 			fail ++;
 			sentfail.add(sent);
 			return false;
-		}
-		for (int i=0; i< exp.size(); i++)
-		{
-			if (!exp.get(i).equals (got.get(i)))
-			{
-				System.err.println("Error: content miscompare:\n" +
-				                   "\tExpected = " + exp + "\n" +
-				                   "\tGot      = " + got + "\n" +
-				                   "\tSentence = " + sent);
-				subfail ++;
-				fail ++;
-				sentfail.add(sent);
-				return false;
-			}
 		}
 
 		subpass ++;
@@ -130,6 +145,13 @@ public class TestRelEx
 		                     "_quantity(people, some)\n" +
 		                     "_subj(like, people)\n" +
 		                     "than(pig, dog)\n");
+		//Non-equal Gradable : Two entities one feature /more
+		rc &= test_sentence ("He runs more quickly than John.",
+				    "_advmod(run, quickly)\n" +
+				    "_subj(run, he)\n" +
+				    "than(he, John)\n" +
+				    "more(quickly, run)\n" +
+				    "degree(quickly, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
