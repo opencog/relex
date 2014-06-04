@@ -324,6 +324,13 @@ public class TestRelEx
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
 				    "degree(fast, comparative)\n");
+		
+		rc &= test_sentence ("I have more chairs than Ben.",
+				    "_obj(have, chair)\n"+
+				    "_subj(have, I)\n"+
+				    "than(I,ben)\n"+
+				    "more(chair,have)\n"+
+				    "degree(many, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
