@@ -291,6 +291,12 @@ public class TestRelEx
 				    "_num_mod(ten, almost)\n"+
 				    "_num_quantity(miles, ten)\n"+
 				    "degree(many, comparative)\n");
+						
+		rc &= test_sentence ("He runs more often than John.",
+				    "_subj(run, he)\n"+
+				    "more(often, run)\n"+
+				    "than(he, John)\n"+
+				    "degree(often, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
