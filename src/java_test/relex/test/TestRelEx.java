@@ -280,7 +280,7 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "more(mile, run)\n"+
 				    "_num_quantity(miles, ten)\n" +
-				    "many, comparative)\n");
+				    "degree(many, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
