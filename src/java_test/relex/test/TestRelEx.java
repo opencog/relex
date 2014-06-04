@@ -156,12 +156,19 @@ public class TestRelEx
 		                     "than(pig, dog)\n");
 		//Non-equal Gradable : Two entities one feature "more/less"
 		
+		rc &= test_sentence ("He is more intelligent than John.",
+				    "than(he, John)\n" +
+				    "more(intelligent,he)\n" +
+				    "degree(intelligent,comparative)\n"+
+				    "_predadj(he, intelligent)\n");
+				
 		rc &= test_sentence ("He runs more quickly than John.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n" +
 				    "more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
+		
 		rc &= test_sentence ("He runs less quickly than John.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
@@ -169,6 +176,7 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "_more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
+		
 		rc &= test_sentence ("He runs more quickly than John does.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
@@ -176,6 +184,7 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
+		
 		rc &= test_sentence ("He runs less quickly than John does.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
