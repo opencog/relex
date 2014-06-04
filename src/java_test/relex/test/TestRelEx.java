@@ -76,6 +76,10 @@ public class TestRelEx
 		//add number of binary relation got to total number of relationships got
 		int sizeOfGotRelations= brgot.size();
 		//check expected binary and unary relations
+		//the below for-loop checks whether all expected binary relations are
+		//contaied in the parser-binary-relation-output arrayList brgot.
+		//if any unary relations are expected in the output it checks the 
+		//parser-unary-relation-output arrayList urgot for unary relationships
 		for (int i=0; i< exp.size(); i++)
 		{	
 			if(!brgot.contains((String)exp.get(i)))
@@ -85,7 +89,7 @@ public class TestRelEx
 					System.err.println("Error: content miscompare:\n" +
 						    "\tExpected = " + exp + "\n" +
 						    "\tGot Binary Relations = " + brgot + "\n" +
-						    "\tGot Uinary Relations = " + urgot + "\n" +
+						    "\tGot Unary Relations = " + urgot + "\n" +
 						    "\tSentence = " + sent);
 					subfail ++;
 					fail ++;
@@ -97,13 +101,18 @@ public class TestRelEx
 			}
 			
 		}
-		//check output resulted more relationships than expected relations
+		//The size checking of the expected relationships vs output relationships
+		//is done here purposefully, to accommodate if there is any unary relationships present 
+		//in the expected output(see above for-loop also).
+		//However it only checks whether parser-output resulted more relationships(binary+unary) than expected relations
+		//If the parser-output resulted less relationships(binary+unary) than expected it would 
+		//catch that in the above for-loop
 		if (exp.size() < sizeOfGotRelations)
 		{
 			System.err.println("Error: size miscompare:\n" +
 					    "\tExpected = " + exp + "\n" +
 					    "\tGot Binary Relations = " + brgot + "\n" +
-					    "\tGot Uinary Relations = " + urgot + "\n" +
+					    "\tGot Unary Relations = " + urgot + "\n" +
 					    "\tSentence = " + sent);
 			subfail ++;
 			fail ++;
