@@ -73,13 +73,13 @@ public class TestRelEx
 		ArrayList<String> brgot = split(rs);
 		ArrayList<String> urgot = split(urs);
 		
-		//add number of binary relation got to total number of relationships got
+		//add number of binary relations from parser-output, to total number of relationships got
 		int sizeOfGotRelations= brgot.size();
 		//check expected binary and unary relations
 		//the below for-loop checks whether all expected binary relations are
-		//contaied in the parser-binary-relation-output arrayList brgot.
+		//contained in the parser-binary-relation-output arrayList "brgot".
 		//if any unary relations are expected in the output it checks the 
-		//parser-unary-relation-output arrayList urgot for unary relationships
+		//parser-unary-relation-output arrayList "urgot" for unary relationships
 		for (int i=0; i< exp.size(); i++)
 		{	
 			if(!brgot.contains((String)exp.get(i)))
