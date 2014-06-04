@@ -153,8 +153,8 @@ public class TestRelEx
 		                     "_obj(like, pig)\n" +
 		                     "_quantity(people, some)\n" +
 		                     "_subj(like, people)\n" +
-		                     "than(pig, dog)\n");		
-		//Non-equal Gradable : Two entities one feature "more/less"	
+		                     "than(pig, dog)\n");
+		//Non-equal Gradable : Two entities one feature "more/less"
 		
 		rc &= test_sentence ("He is more intelligent than John.",
 				    "than(he, John)\n" +
@@ -260,7 +260,7 @@ public class TestRelEx
 				    "more(mile, run)\n"+
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +		    
+				    "_subj(do, John)\n" +
 				    "_quantity(mile, many)\n"+
 				    "degree(many, comparative)\n");
 		
@@ -269,9 +269,18 @@ public class TestRelEx
 				    "_more(mile, run)\n"+
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +		    
+				    "_subj(do, John)\n" +
 				    "_quantity(mile, many)\n"+
 				    "degree(little, comparative)\n");
+		
+		rc &= test_sentence ("He runs ten more miles than John.",
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n" +
+				    "_quantity(mile, many)\n"+
+				    "than(he, John)\n" +
+				    "more(mile, run)\n"+
+				    "_num_quantity(miles, ten)\n" +
+				    "many, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
