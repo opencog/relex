@@ -158,14 +158,14 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He is more intelligent than John.",
 				    "than(he, John)\n" +
-				    "more(intelligent,he)\n" +
-				    "degree(intelligent,comparative)\n"+
+				    "more(intelligent, he)\n" +
+				    "degree(intelligent, comparative)\n"+
 				    "_predadj(he, intelligent)\n");
 		
 		rc &= test_sentence ("He is less intelligent than John.",
 				    "than(he, John)\n" +
-				    "_more(intelligent,he)\n" +
-				    "degree(intelligent,comparative)\n"+
+				    "_more(intelligent, he)\n" +
+				    "degree(intelligent, comparative)\n"+
 				    "_advmod(intelligent, less)\n"+
 				    "_predadj(he, intelligent)\n");
 				
@@ -204,30 +204,38 @@ public class TestRelEx
 		rc &= test_sentence ("He runs more than John.",
 				    "_obj(run, more)\n" +
 				    "_subj(run, he)\n" +
-				    "than(he,John)\n"+
-				    "more(more,run)\n"+
+				    "than(he, John)\n"+
+				    "more(more, run)\n"+
 				    "degree(quickly, comparative)\n");
 		
 		rc &= test_sentence ("He runs less than John.",
 				    "_obj(run, less)\n" +
 				    "_subj(run, he)\n" +
-				    "than(he,John)\n"+
-				    "_more(more,run)\n"+
+				    "than(he, John)\n"+
+				    "_more(more, run)\n"+
 				    "degree(quickly, comparative)\n");
 		
 		rc &= test_sentence ("He runs faster than John.",
-				    "than(He,John)\n" +
-				    "_more(fast,run)\n" +
+				    "than(He, John)\n" +
+				    "_more(fast, run)\n" +
 				    "_subj(run, He)\n"+
 				    "_advmod(run, fast)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("He runs more slowly than John.",
-				    "than(He,John)\n" +
+				    "than(He, John)\n" +
 				    "_subj(run, He)\n" +
-				    "more(slowly,run)\n"+
-				    "_advmod(run,slowly)\n"+
+				    "more(slowly, run)\n"+
+				    "_advmod(run, slowly)\n"+
 				    "degree(slowly, comparative)\n");
+		
+		rc &= test_sentence ("He runs less slowly than John.",
+				    "than(He, John)\n" +
+				    "_subj(run, He)\n" +
+				    "_more(slowly, run)\n"+
+				    "_advmod(run, slowly)\n"+
+				    "_advmod(slowly, less)\n"+
+				    "degree(slowly, comparative)\n");		
 		report(rc, "Comparatives");
 		return rc;
 	}
