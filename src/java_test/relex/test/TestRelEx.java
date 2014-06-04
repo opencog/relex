@@ -221,6 +221,13 @@ public class TestRelEx
 				    "_subj(run, He)\n"+
 				    "_advmod(run, fast)\n"+
 				    "degree(fast, comparative)\n");
+		
+		rc &= test_sentence ("He runs more slowly than John.",
+				    "than(He,John)\n" +
+				    "_subj(run, He)\n" +
+				    "more(slowly,run)\n"+
+				    "_advmod(run,slowly)\n"+
+				    "degree(slowly, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
