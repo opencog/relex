@@ -154,7 +154,8 @@ public class TestRelEx
 		                     "_quantity(people, some)\n" +
 		                     "_subj(like, people)\n" +
 		                     "than(pig, dog)\n");
-		//Non-equal Gradable : Two entities one feature more/less
+		//Non-equal Gradable : Two entities one feature "more/less"
+		
 		rc &= test_sentence ("He runs more quickly than John.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
@@ -167,6 +168,13 @@ public class TestRelEx
 				    "_advmod(quickly, less)\n"+
 				    "than(he, John)\n" +
 				    "_more(quickly, run)\n" +
+				    "degree(quickly, comparative)\n");
+		rc &= test_sentence ("He runs more quickly than John does.",
+				    "_advmod(run, quickly)\n" +
+				    "_subj(run, he)\n" +
+				    "_subj(do, John)\n"+
+				    "than(he, John)\n" +
+				    "more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
