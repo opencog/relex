@@ -348,6 +348,14 @@ public class TestRelEx
 				    "_quantity(money,less)\n"+
 				    "_advmod(more, much)\n"+
 				    "degree(much,comparative)\n");
+		
+		rc &= test_sentence ("He earns much less money than I do.",
+				    "than(he, I)\n"+
+				    "_more(money, earn)\n"+
+				    "_advmod(earn, much)\n"+
+				    "_quantity(money, less)\n"+
+				    "_advmod(less, much)\n"+
+				    "degree(little, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
