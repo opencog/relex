@@ -281,6 +281,16 @@ public class TestRelEx
 				    "more(mile, run)\n"+
 				    "_num_quantity(miles, ten)\n" +
 				    "degree(many, comparative)\n");
+						
+		rc &= test_sentence ("He runs almost ten more miles than John does.",
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n"+
+				    "more(mile, run)\n"+
+				    "_subj(do, John)\n"+
+				    "than(he, John)\n"+
+				    "_num_mod(ten, almost)\n"+
+				    "_num_quantity(miles, ten)\n"+
+				    "degree(many, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
