@@ -331,6 +331,15 @@ public class TestRelEx
 				    "than(I,ben)\n"+
 				    "more(chair,have)\n"+
 				    "degree(many, comparative)\n");
+		
+		rc &= test_sentence ("I have less chairs than Ben.",
+				    "_obj(have, chair)\n"+
+				    "_subj(have, I)\n"+
+				    "than(I,ben)\n"+
+				    "_more(chair,have)\n"+
+				    "_quantity(chairs,little)\n"+
+				    "_advmod(have, less)\n"+
+				    "degree(many, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
