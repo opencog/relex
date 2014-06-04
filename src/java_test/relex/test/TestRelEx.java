@@ -356,6 +356,14 @@ public class TestRelEx
 				    "_quantity(money, less)\n"+
 				    "_advmod(less, much)\n"+
 				    "degree(little, comparative)\n");
+		
+		rc &= test_sentence ("She comes here more often than her husband.",
+				    "_advmod(come, here)\n"+
+				    "_subj(come, she)\n"+
+				    "_poss(husband, her)\n"+
+				    "more(often, come)\n"+
+				    "than(she, husband)\n"+
+				    "degree(often, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
