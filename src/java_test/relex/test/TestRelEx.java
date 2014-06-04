@@ -317,6 +317,13 @@ public class TestRelEx
 				    "_subj(be, John)\n"+
 				    "more(fast, be)\n"+
 				    "degree(fast, comparative)\n");
+		
+		rc &= test_sentence ("His speed is faster than John's.",
+				    "_subj(is, speed)\n"+
+				    "than(speed, John's)\n"+
+				    "_predadj(speed, fast)\n"+
+				    "_poss(speed, him)\n"+
+				    "degree(fast, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
