@@ -310,6 +310,13 @@ public class TestRelEx
 				    "_predadj(he, fast)\n"+
 				    "more(fast, be)\n"+
 				    "degree(fast, comparative)\n");
+		
+		rc &= test_sentence ("He is faster than John is.",
+				    "than(he, John)\n"+
+				    "_predadj(he, fast)\n"+
+				    "_subj(be, John)\n"+
+				    "more(fast, be)\n"+
+				    "degree(fast, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
