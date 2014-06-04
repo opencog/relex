@@ -364,6 +364,15 @@ public class TestRelEx
 				    "more(often, come)\n"+
 				    "than(she, husband)\n"+
 				    "degree(often, comparative)\n");
+		
+		rc &= test_sentence ("She comes here less often than her husband.",
+				    "_advmod(come, here)\n"+
+				    "_subj(come, she)\n"+
+				    "_poss(husband, her)\n"+
+				    "_more(often, come)\n"+
+				    "than(she, husband)\n"+
+				    "_advmod(often, less)\n"+
+				    "degree(often, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
