@@ -434,7 +434,11 @@ POS_ADV_INVERTED
 <F_L POS> = WORD
 =
 <F_L POS> = adv
-; adverbial comparatives
+;The Construction of "More/ Less" Phrases in Comparatives
+;e.g - He runs more quickly than John.
+;the word "more" is serving as an adverb to "quickly".( adverbial comparative)
+;In this case, the connector between "more" and "quickly" is specially
+;subscripted with "EEm" (the special subscript "m") to handle such "more/less" cases.
 #TemplateActionAlg
 SUBSCR_POS_E-C
 <LAB> = \MVa
