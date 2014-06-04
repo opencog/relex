@@ -161,6 +161,13 @@ public class TestRelEx
 				    "more(intelligent,he)\n" +
 				    "degree(intelligent,comparative)\n"+
 				    "_predadj(he, intelligent)\n");
+		
+		rc &= test_sentence ("He is less intelligent than John.",
+				    "than(he, John)\n" +
+				    "_more(intelligent,he)\n" +
+				    "degree(intelligent,comparative)\n"+
+				    "_advmod(intelligent, less)\n"+
+				    "_predadj(he, intelligent)\n");
 				
 		rc &= test_sentence ("He runs more quickly than John.",
 				    "_advmod(run, quickly)\n" +
