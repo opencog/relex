@@ -373,6 +373,15 @@ public class TestRelEx
 				    "than(she, husband)\n"+
 				    "_advmod(often, less)\n"+
 				    "degree(often, comparative)\n");
+		
+		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
+				    "_subj(is, grammar)\n"+
+				    "more(difficult, grammar)\n"+
+				    "than(grammar, grammar)\n"+
+				    "_nn(grammar, Russian)\n"+
+				    "_predadj(grammar, difficult)\n"+
+				    "_amod(grammar, English)\n"+
+				    "degree(difficult, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
