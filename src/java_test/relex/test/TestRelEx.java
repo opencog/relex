@@ -382,6 +382,16 @@ public class TestRelEx
 				    "_predadj(grammar, difficult)\n"+
 				    "_amod(grammar, English)\n"+
 				    "degree(difficult, comparative)\n");
+		
+		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
+				    "_subj(is, grammar)\n"+
+				    "_more(difficult, grammar)\n"+
+				    "than(grammar, grammar)\n"+
+				    "_nn(grammar, Russian)\n"+
+				    "_predadj(grammar, difficult)\n"+
+				    "_amod(grammar, English)\n"+
+				    "_advmod(difficult, less)\n"+
+				    "degree(difficult, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
