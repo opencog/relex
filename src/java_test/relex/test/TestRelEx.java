@@ -411,6 +411,16 @@ public class TestRelEx
 				    "_more(intelligent, sister)\n"+
 				    "_advmod(intelligent, less)\n"+
 				    "degree(intelligent, comparative)\n");
+		
+		rc &= test_sentence ("I find maths lessons more enjoyable than science lessons.",
+				    "_iobj(find, math)\n"+
+				    "_obj(find, lesson)\n"+
+				    "_subj(find, I)\n"+
+				    "_amod(lesson, enjoyable)\n"+
+				    "_nn(lesson, science)\n"+
+				    "than(maths, science)\n"+
+				    "more(enjoy, maths)\n"+
+				    "degree(enjoyable, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
