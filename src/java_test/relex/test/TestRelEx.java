@@ -401,6 +401,16 @@ public class TestRelEx
 				    "than(sister, me)\n"+
 				    "more(intelligent, sister)\n"+
 				    "degree(intelligent, comparative)\n");
+		
+		rc &= test_sentence ("My sister is much less intelligent than me.",
+				    "_obj(is, much)\n"+
+				    "_subj(is, sister)\n"+
+				    "_amod(much, intelligent)\n"+
+				    "_poss(sister, me)\n"+
+				    "than(sister, me)\n"+
+				    "_more(intelligent, sister)\n"+
+				    "_advmod(intelligent, less)\n"+
+				    "degree(intelligent, comparative)\n");
 		report(rc, "Comparatives");
 		return rc;
 	}
