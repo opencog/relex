@@ -468,6 +468,15 @@ SUBSCR_POS_E-C_2
 <F_L linkR2 LAB> = \Omm | \Om
 =
 <F_R ref degree> = comparative
+;e.g - He runs more/less than John.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+SUBSCR_POS_E-C_3
+<LAB> = \MVt
+<F_L linkR1 LAB> = \Omm | \Om
+=
+<F_L linkR1 F_R ref degree> = comparative
 ;
 ;--------------------------------------------------------
 ; Oddball cases
