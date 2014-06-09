@@ -195,12 +195,14 @@ PASS_OBJ
 ; Must check for own tag value to be AND-SAFE
 ; "I gave him the car." 
 ; "This is the car I gave the man." (B has not had a chance to identify object)
-;
+; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.   
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
+<LAB> != \Omm | \Om
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
@@ -238,11 +240,14 @@ ALG3
 ; If there is already an object, then O-link defines indirect object
 ;   "He was given the car."
 ;   "This is the man given the car."
+; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.
 #TemplateActionAlg
 INDIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
+<LAB> != \Omm |\Om
 <F_L OBJ-LINK-TAG> != O|UNSET
 =
 <F_L iobj> += <F_R ref>
@@ -253,7 +258,10 @@ REL_OBJ
 ; Checks to make sure Mv/Pv or O have not already filled the object
 ; Identifies a relative object and fills the argument
 ; "This is the dog and cat Pat and I chased and ate."
+; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
+; than relationship but not to link direct and indirect objects
 <LAB> = \B\.*|\BW\.*
+<LAB> != \Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
 =
@@ -265,7 +273,10 @@ REL_INDIR_OBJ
 ; If O or Mv/Pv have already filled the object, B identifies indirect
 ; "This is the car I gave the man." (O fills before B)
 ; "This is the car the man was given." (Pv fills before B)
+; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
+; than relationship but not to link direct and indirect objects
 <LAB> = \B\.*|\BW\.*
+<LAB> != \Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
