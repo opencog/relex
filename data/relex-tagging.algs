@@ -439,7 +439,7 @@ POS_ADV_INVERTED
 ;See link-grammar dictionary under MV, Comparatives II: The Construction of "More" Phrases
 ;http://www.abisource.com/projects/link-grammar/dict/section-MV.html 
 ;--------------------------------------------------------
-;e.g - He runs more quickly than John.
+;e.g - He runs more/less quickly than John.
 ;the word "more" is serving as an adverb to "quickly".( adverbial comparative)
 ;In this case, the connector between "more" and "quickly" is specially
 ;subscripted with "EEm" (the special subscript "m") to handle such "more/less" cases.
@@ -449,14 +449,23 @@ SUBSCR_POS_E-C
 <F_R linkL1 LAB> = \EEm
 =
 <F_R ref degree> = comparative
-;e.g - He is more intelligent than John.
+;e.g - He is more/less intelligent than John.
 ;"more" is serving as an adjectival adverb
-;In this case, the connector between "more" and "intelligent" is specially
+;In this case, the connector between "more/less" and "intelligent" is specially
 ;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
 #TemplateActionAlg
 SUBSCR_POS_A-C_2
 <LAB> = \Paf
 <F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
+;e.g - He runs more/less quickly than John does.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+SUBSCR_POS_E-C_2
+<LAB> = \MVa
+<F_L linkR2 LAB> = \Omm | \Om
 =
 <F_R ref degree> = comparative
 ;
