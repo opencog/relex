@@ -17,6 +17,7 @@
 package relex.output;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import relex.Document;
 import relex.ParsedSentence;
@@ -30,7 +31,7 @@ import relex.feature.FeatureNode;
  * is described in greater detail in the opencog wiki page
  * http://wiki.opencog.org/w/RelEx_OpenCog_format
  *
- * See also the README file in 
+ * See also the README file in
  * https://github.com/opencog/opencog/tree/master/opencog/nlp/wsd
  *
  * This class prints just one parse at a time.
@@ -49,6 +50,7 @@ public class OpenCogScheme
 	private boolean do_show_relex = false;
 	private boolean do_show_anaphora = false;
 	private int seqno = 1;
+	private HashSet<String> previous_sents;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -155,12 +157,12 @@ public class OpenCogScheme
 						"   (NumberNode " + word + ")\n" +
 						")\n";
 			}
-			else 
+			else
 			{
 				str += "(ReferenceLink (stv 1.0 1.0)\n" +
 					"   (WordInstanceNode \"" + guid_word + "\")\n" +
 					"   (WordNode \"" + word + "\")\n" +
-					")\n"; 
+					")\n";
 			}
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
@@ -180,7 +182,7 @@ public class OpenCogScheme
 
 	/**
 	 * Print a parseLink that attaches a specific parse to the sentence
-	 * that its a part of.  Attach a truth value that represents the 
+	 * that its a part of.  Attach a truth value that represents the
 	 * parse ranking for the parse.
 	 */
 	public String printSentence()
@@ -192,11 +194,25 @@ public class OpenCogScheme
 		int strl = Math.min(6, scf.length());
 		scf = scf.substring(0, strl);
 
+		String sent_id = _parse.getSentence().getID();
+
 		String str = "(ParseLink (stv 1 1)\n" +
 					"   (ParseNode \"" + _parse.getIDString() +
 					    "\"(stv 1.0 " + scf + "))\n" +
-				   "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
+				   "   (SentenceNode \"" + sent_id + "\")\n" +
 				   ")\n";
+
+		// If we haven't seen this sentence before, then issue a
+		// sequence number for this sentence. This is used by opencog
+		// to determine teh order in which sentences were seen.
+		if (!previous_sents.contains(sent_id))
+		{
+			str += "(SentenceSequenceLink (stv 1 1)\n" +
+					"	(SentenceNode \"" + sent_id + "\")\n" +
+					"	(NumberNode \"" + getSeqNo() + "\")\n" +
+				   ")\n";
+			previous_sents.add(sent_id);
+		}
 		return str;
 	}
 
