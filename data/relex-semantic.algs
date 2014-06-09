@@ -1759,13 +1759,69 @@ NUMBER-NUMERIC-QUANTIFIERS
 =
 <F_R ref links _num_quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
+;
+;Different uses of the NI connectors are handled separately. 
+;
+;NUMBER-1a handles "15 kDa to 20 kDa" and "15 kDa"
+;
 #TemplateActionAlg
 NUMBER-1a
-<LAB> = \ND\.*|\NI\.*
+;<LAB> = \ND\.*|\NI\.*
+<LAB> = \ND\.*
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
+<F_R NOT_NUMBER_FLAG> = T
+;
+;The three algorithmhs below handle "15 to 20 kDa"
+;
+#TemplateActionAlg
+NUMERICAL_RANGES_L
+<LAB> = \NIf\.*
+<F_L NOT_NUMBER_FLAG> = %
+=
+<F_R numerical_ranges> += <F_L>
+;
+#TemplateActionAlg
+NUMERICAL_RANGES_R
+<LAB> = \NIt\.*
+<F_R NOT_NUMBER_FLAG> = %
+=
+<F_L numerical_ranges> += <F_R>
+;
+#TemplateActionAlg
+NUMBER-NUMERICAL_RANGES
+<F_R ref links _quantity> != %
+<F_L numerical_ranges> != %
+<F_L numerical_ranges member0 QUANTITY-EXCEPTION-FLAG> != T
+<F_L numerical_ranges member1 QUANTITY-EXCEPTION-FLAG> != T
+=
+<F_R ref links _quantity> = %
+<F_R ref links _quantity> = <F_L numerical_ranges member0 ref>
+<F_R ref links _quantity> += <F_L numerical_ranges member1 ref>
+<F_L numerical_ranges member0 IS-NUMBER-FLAG> = T
+<F_L numerical_ranges member1 IS-NUMBER-FLAG> = T
+;
+;Handles all other cases of NI connectors
+;
+#TemplateActionAlg
+NUMBER-1c
+<LAB> = \NI\.*
+<LAB> != \NIf\.*
+<LAB> != \NIt\.*
+<LAB> != \NIr\.*
+<F_L QUANTITY-EXCEPTION-FLAG> != T
+=
+<F_R ref links _quantity> = <F_L ref>
+<F_L IS-NUMBER-FLAG> = T
+;
+#TemplateActionAlg
+TIME
+<F_R ref name> = AM|PM|am|pm|a.m.|p.m.
+=
+<F_R ref links _time> = <F_R ref links _quantity>
+<F_R ref links _quantity> = %
 ;
 #TemplateActionAlg
 NUMBER-2
