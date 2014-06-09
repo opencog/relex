@@ -33,6 +33,8 @@ import relex.feature.FeatureNode;
  * See also the README file in 
  * https://github.com/opencog/opencog/tree/master/opencog/nlp/wsd
  *
+ * This class prints just one parse at a time.
+ *
  * Copyright (c) 2007, 2008, 2013, 2014 Linas Vepstas <linas@linas.org>
  */
 public class OpenCogScheme
@@ -67,6 +69,11 @@ public class OpenCogScheme
 	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
 	public boolean getShowAnaphora() { return do_show_anaphora; }
 
+	/**
+	 * Set the parse that is to be printed. After setting this, call
+	 * the toString() method to get a string representation of the
+	 * sentence.
+	 */
 	public void setParse(ParsedSentence parse)
 	{
 		_parse = parse;
@@ -82,6 +89,11 @@ public class OpenCogScheme
 	}
 
 	/* -------------------------------------------------------------------- */
+
+	/**
+	 * Return the the string representation of the parse, previously
+	 * specified with setParse().
+	 */
 	public String toString()
 	{
 		String ret = "";
