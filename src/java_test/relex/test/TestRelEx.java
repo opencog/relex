@@ -206,32 +206,32 @@ public class TestRelEx
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n"+
 				    "more(more, run)\n"+
-				    "degree(quickly, comparative)\n");
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs less than John.",
 				    "_obj(run, less)\n" +
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n"+
 				    "_more(more, run)\n"+
-				    "degree(quickly, comparative)\n");
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs faster than John.",
-				    "than(He, John)\n" +
+				    "than(he, John)\n" +
 				    "_more(fast, run)\n" +
-				    "_subj(run, He)\n"+
+				    "_subj(run, he)\n"+
 				    "_advmod(run, fast)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("He runs more slowly than John.",
-				    "than(He, John)\n" +
-				    "_subj(run, He)\n" +
+				    "than(he, John)\n" +
+				    "_subj(run, he)\n" +
 				    "more(slowly, run)\n"+
 				    "_advmod(run, slowly)\n"+
 				    "degree(slowly, comparative)\n");
 		
 		rc &= test_sentence ("He runs less slowly than John.",
-				    "than(He, John)\n" +
-				    "_subj(run, He)\n" +
+				    "than(he, John)\n" +
+				    "_subj(run, he)\n" +
 				    "_more(slowly, run)\n"+
 				    "_advmod(run, slowly)\n"+
 				    "_advmod(slowly, less)\n"+
@@ -239,7 +239,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs more miles than John does.",
 				    "than(he, John)\n" +
-				    "_subj(run, He)\n" +
+				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "_obj(run, mile)\n"+
 				    "more(mile, run)\n"+
@@ -248,7 +248,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs less miles than John does.",
 				    "than(he, John)\n" +
-				    "_subj(run, He)\n" +
+				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "_obj(run, mile)\n"+
 				    "_more(mile, run)\n"+
