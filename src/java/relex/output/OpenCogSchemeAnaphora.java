@@ -32,6 +32,11 @@ import relex.feature.FeatureNode;
 /**
  * Implements opencog scheme output from hobbs anaphora resolution.
  *
+ * XXX  This is or soon will be obsolete; anaphora resolution is being
+ * implemented within opencog itself (by Hujie Wang, GSOC 2014).  Thus,
+ * if all goes well, this file should be removed after the summer of
+ * 2014.
+ *
  * @author fabricio <fabricio@vettalabs.com>
  * @author Linas Vepstas <linasvepstas@gmail.com>
  *

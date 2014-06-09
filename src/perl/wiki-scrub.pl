@@ -17,7 +17,7 @@
 #
 # Copyright (c) 2008, 2013 Linas Vepstas <linas@linas.org>
 #
-# TODO: Remove }} .. there seem to be a bunchy of these left over.
+# TODO: Remove }} .. there seem to be a bunch of these left over.
 # also img pix stuff seems to stick around ...
 #
 #--------------------------------------------------------------------
