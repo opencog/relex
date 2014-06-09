@@ -197,8 +197,8 @@ public class OpenCogScheme
 		String sent_id = _parse.getSentence().getID();
 
 		String str = "(ParseLink (stv 1 1)\n" +
-					"   (ParseNode \"" + _parse.getIDString() +
-					    "\"(stv 1.0 " + scf + "))\n" +
+				   "   (ParseNode \"" + _parse.getIDString() +
+			           "\"(stv 1.0 " + scf + "))\n" +
 				   "   (SentenceNode \"" + sent_id + "\")\n" +
 				   ")\n";
 
@@ -208,9 +208,9 @@ public class OpenCogScheme
 		if (!previous_sents.contains(sent_id))
 		{
 			str += "(SentenceSequenceLink (stv 1 1)\n" +
-					"	(SentenceNode \"" + sent_id + "\")\n" +
-					"	(NumberNode \"" + getSeqNo() + "\")\n" +
-				   ")\n";
+			      "	(SentenceNode \"" + sent_id + "\")\n" +
+			      "	(NumberNode \"" + getSeqNo() + "\")\n" +
+			      ")\n";
 			previous_sents.add(sent_id);
 		}
 		return str;
@@ -222,19 +222,31 @@ public class OpenCogScheme
 	 */
 	public String printDocument(Document doco)
 	{
-		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-				   "   (DocumentNode \"" + doco.getID() + "\")\n" +
-				   "   (ListLink\n";
+		String doco_id = doco.getID();
+		String str = "";
 
 		ArrayList<Sentence> sentence_list = doco.getSentences();
 		for (int i=0; i<sentence_list.size(); i++)
 		{
-			str += "      (SentenceNode \"" +
-				  sentence_list.get(i).getID() + "\")\n";
+			String sent_id = sentence_list.get(i).getID();
+			str += "(SentenceLink (stv 1 1)\n" +
+				   "   (SentenceNode \"" + sent_id + "\")\n" +
+				   "   (DocumentNode \"" + doco_id + "\")\n" +
+				   ")\n";
+
+			// If we haven't seen this sentence before, then issue a
+			// sequence number for this sentence. This is used by opencog
+			// to determine teh order in which sentences were seen.
+			if (!previous_sents.contains(sent_id))
+			{
+				str += "(SentenceSequenceLink (stv 1 1)\n" +
+				      "	(SentenceNode \"" + sent_id + "\")\n" +
+				      "	(NumberNode \"" + getSeqNo() + "\")\n" +
+				      ")\n";
+				previous_sents.add(sent_id);
+			}
 		}
 
-		str += "   )\n" +
-		       ")\n";
 		return str;
 	}
 
