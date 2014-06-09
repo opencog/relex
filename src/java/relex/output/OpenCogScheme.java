@@ -33,10 +33,7 @@ import relex.feature.FeatureNode;
  * See also the README file in 
  * https://github.com/opencog/opencog/tree/master/opencog/nlp/wsd
  *
- * As the same sentence can have multiple parses, this class only
- * displays a single, particular parse.
- *
- * Copyright (c) 2007, 2008, 2013 Linas Vepstas <linas@linas.org>
+ * Copyright (c) 2007, 2008, 2013, 2014 Linas Vepstas <linas@linas.org>
  */
 public class OpenCogScheme
 {
@@ -49,6 +46,7 @@ public class OpenCogScheme
 	private boolean do_show_linkage = false;
 	private boolean do_show_relex = false;
 	private boolean do_show_anaphora = false;
+	private int seqno = 1;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -74,7 +72,6 @@ public class OpenCogScheme
 		_parse = parse;
 
 		orig_sentence += printWords();
-		orig_sentence += printParse();
 		orig_sentence += printSentence();
 
 		link_scheme.setParse(_parse);
@@ -159,32 +156,13 @@ public class OpenCogScheme
 					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
 					")\n";
 
+			str += "(WordSequenceLink (stv 1.0 1.0)\n" +
+					"     (WordInstanceNode \"" + guid_word + "\")\n" +
+					"     (NumberNode \"" + getSeqNo() + "\")\n" +
+					")\n";
+
 			fn = fn.get("NEXT");
 		}
-		return str;
-	}
-
-	/**
-	 * Print the words in the parse, as made up out of word instances,
-	 * maintaining the proper word order in the sentence.
-	 */
-	public String printParse()
-	{
-		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
-					"   (ListLink\n";
-
-		FeatureNode fn = _parse.getLeft();
-		fn = fn.get("NEXT"); // skip LEFT-WALL
-		while (fn != null)
-		{
-			String guid = fn.get("uuid").getValue();
-			str += "     (WordInstanceNode \"" + guid + "\")\n";
-			fn = fn.get("NEXT");
-		}
-
-		str += "   )\n" +
-			  ")\n";
 		return str;
 	}
 
@@ -239,6 +217,11 @@ public class OpenCogScheme
 	public void setAnaphoraHistory(SentenceHistory history)
 	{
 		anaphora_scheme.setHistory(history);
+	}
+
+	public int getSeqNo()
+	{
+		return seqno++;
 	}
 
 } // end OpenCogScheme
