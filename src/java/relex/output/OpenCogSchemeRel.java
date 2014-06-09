@@ -23,8 +23,9 @@ import relex.feature.RelationCallback;
 /**
  * The OpenCogSchemeRel object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
- * is described in greater detail in the README file in the opencog
- * source code directory src/nlp/wsd/README.
+ * is described in greater detail in the opencog wiki, at
+ * http://wiki.opencog.org/w/RelEx_OpenCog_format
+ * see also the opencog source code directory opencog/nlp/wsd/README.
  *
  * As the same sentence can have multiple parses, this class only
  * displays a single, particular parse.
