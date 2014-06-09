@@ -2175,7 +2175,7 @@ MORE_OR_LESS1b
 #TemplateActionAlg
 TO_BE_TEMP
 <LAB> = \S\.*
-<F_R str> = is|was
+<F_R str> = is|was|be
 =
 <F_R is-temp> += <F_L ref>
 #TemplateActionAlg
