@@ -1513,6 +1513,19 @@ ADV1
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+;e.g. He runs less quickly than John does.
+;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
+;runs (quickly,less)
+;Following rule make the  binary relationship _advmod(quickly, less)
+#TemplateActionAlg
+ADV1_1
+<LAB> = \MVa
+<F_R str> != not|more|less
+<F_L head-word> != %
+<F_R degree> = %
+<F_L linkR2 F_R str> = less 
+=
+<F_R ref links _advmod> += < F_L linkR2 F_R ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
