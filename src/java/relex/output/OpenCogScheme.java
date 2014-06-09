@@ -50,6 +50,7 @@ public class OpenCogScheme
 	private boolean do_show_relex = false;
 	private boolean do_show_anaphora = false;
 	private int seqno = 1;
+	private HashSet<String> previous_words;
 	private HashSet<String> previous_sents;
 
 	/* -------------------------------------------------------------------- */
@@ -60,6 +61,8 @@ public class OpenCogScheme
 		link_scheme = new OpenCogSchemeLink();
 		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
+		previous_words = new HashSet<String>();
+		previous_sents = new HashSet<String>();
 	}
 
 	public void setShowLinkage(boolean t) { do_show_linkage = t; }
@@ -170,10 +173,17 @@ public class OpenCogScheme
 					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
 					")\n";
 
-			str += "(WordSequenceLink (stv 1.0 1.0)\n" +
-					"     (WordInstanceNode \"" + guid_word + "\")\n" +
-					"     (NumberNode \"" + getSeqNo() + "\")\n" +
-					")\n";
+			// If we've never printed the sequence number for this word
+			// before, do so now.  Opencog uses this to determine the
+			// order in which the words appear in a sentence.
+			if (!previous_words.contains(guid_word))
+			{
+				str += "(WordSequenceLink (stv 1.0 1.0)\n" +
+						"     (WordInstanceNode \"" + guid_word + "\")\n" +
+						"     (NumberNode \"" + getSeqNo() + "\")\n" +
+						")\n";
+				previous_words.add(guid_word);
+			}
 
 			fn = fn.get("NEXT");
 		}
