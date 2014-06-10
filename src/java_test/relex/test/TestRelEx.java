@@ -311,6 +311,13 @@ public class TestRelEx
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 		
+		rc &= test_sentence ("He runs here less often than John.",
+				    "_advmod(run, here)\n"+
+				    "_subj(run, he)\n"+
+				    "_more(often, run)\n"+
+				    "than(he, John)\n"+
+				    "degree(often, comparative)\n");
+		
 		rc &= test_sentence ("He is faster than John.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
