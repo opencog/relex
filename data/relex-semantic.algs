@@ -207,6 +207,18 @@ DIR_OBJ1
 =
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
+;e.g. He runs more than John. This sentence produces two parse trees that have exactly the same cost. 
+;i.e. (run, more) connected through Omm AND MVm. 
+;So one can argue it forms a _obj(run, more) relationship and above rule DIR_OBJ1 avoids that.
+; So when <LAB> = \Omm | \Om occurs this rule applies to form object relationships. 
+#TemplateActionAlg
+DIR_OBJ1_1
+<LAB> = \Omm | \Om
+<F_L linkR0 LAB> = \MVt
+<F_L OBJ-LINK-TAG> = O|UNSET
+=
+<F_L OBJ-LINK-TAG> = O
+<F_L obj> += <F_R ref>
 ;
 ;START BUG 3 Solution #################################
 ;   "I want you to eat cake."
