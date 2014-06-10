@@ -297,6 +297,12 @@ public class TestRelEx
 				    "more(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
+		
+		rc &= test_sentence ("He runs less often than John.",
+				    "_subj(run, he)\n"+
+				    "_more(often, run)\n"+
+				    "than(he, John)\n"+
+				    "degree(often, comparative)\n");
 							
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
