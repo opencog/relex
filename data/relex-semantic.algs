@@ -1538,6 +1538,20 @@ ADV1_1
 <F_L linkR2 F_R str> = less 
 =
 <F_R ref links _advmod> += < F_L linkR2 F_R ref>
+;e.g. He runs faster than John.
+;Above ADV1 rule won't make _advmod(run, fast) relationship due to "faster" is 
+;POS tagged with ".a-c" and relex-tagging.algs make it's degree as comparative.
+;Following rule make the  binary relationship _advmod(run, fast)
+#TemplateActionAlg
+ADV1_2
+<LAB> = \MVb
+<F_R str> != not|more|less
+<F_L head-word> != %
+<F_R degree> != %
+<F_L head-word BACKGROUND-FLAG> != T 
+=
+<F_L head-word BACKGROUND-FLAG> = T
+<F_L head-word ref links _advmod> += <F_R ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
