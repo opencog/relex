@@ -195,12 +195,26 @@ PASS_OBJ
 ; Must check for own tag value to be AND-SAFE
 ; "I gave him the car." 
 ; "This is the car I gave the man." (B has not had a chance to identify object)
-;
+; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.   
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
+<LAB> != \Omm | \Om
+<F_L OBJ-LINK-TAG> = O|UNSET
+=
+<F_L OBJ-LINK-TAG> = O
+<F_L obj> += <F_R ref>
+;e.g. He runs more than John. This sentence produces two parse trees that have exactly the same cost. 
+;i.e. (run, more) connected through Omm AND MVm. 
+;So one can argue it forms a _obj(run, more) relationship and above rule DIR_OBJ1 avoids that.
+; So when <LAB> = \Omm | \Om occurs this rule applies to form object relationships. 
+#TemplateActionAlg
+DIR_OBJ1_1
+<LAB> = \Omm | \Om
+<F_L linkR0 LAB> = \MVt
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
@@ -238,11 +252,14 @@ ALG3
 ; If there is already an object, then O-link defines indirect object
 ;   "He was given the car."
 ;   "This is the man given the car."
+; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.
 #TemplateActionAlg
 INDIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
+<LAB> != \Omm |\Om
 <F_L OBJ-LINK-TAG> != O|UNSET
 =
 <F_L iobj> += <F_R ref>
@@ -253,7 +270,10 @@ REL_OBJ
 ; Checks to make sure Mv/Pv or O have not already filled the object
 ; Identifies a relative object and fills the argument
 ; "This is the dog and cat Pat and I chased and ate."
+; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
+; than relationship but not to link direct and indirect objects
 <LAB> = \B\.*|\BW\.*
+<LAB> != \Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
 =
@@ -265,7 +285,10 @@ REL_INDIR_OBJ
 ; If O or Mv/Pv have already filled the object, B identifies indirect
 ; "This is the car I gave the man." (O fills before B)
 ; "This is the car the man was given." (Pv fills before B)
+; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
+; than relationship but not to link direct and indirect objects
 <LAB> = \B\.*|\BW\.*
+<LAB> != \Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
@@ -1502,6 +1525,19 @@ ADV1
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+;e.g. He runs less quickly than John does.
+;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
+;runs (quickly,less)
+;Following rule make the  binary relationship _advmod(quickly, less)
+#TemplateActionAlg
+ADV1_1
+<LAB> = \MVa
+<F_R str> != not|more|less
+<F_L head-word> != %
+<F_R degree> = %
+<F_L linkR2 F_R str> = less 
+=
+<F_R ref links _advmod> += < F_L linkR2 F_R ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
@@ -2244,7 +2280,7 @@ MORE_OR_LESS1b
 #TemplateActionAlg
 TO_BE_TEMP
 <LAB> = \S\.*
-<F_R str> = is|was
+<F_R str> = is|was|be
 =
 <F_R is-temp> += <F_L ref>
 #TemplateActionAlg
