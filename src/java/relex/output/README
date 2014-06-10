@@ -1,11 +1,13 @@
+                 RelEx Output Modules
+                 --------------------
 
 There are several distinct, code-wise unrelated, but conceptually
 similar systems in this directory.  All of these are focused on
 providing printed output of the RelEx graph, or the concept frames.
 
 There are other (older) output routines in other directories, including
-printZHeads and LinakbleView.  These older output routines should be
-migrated here, or possibly deprecated.
+printZHeads and LinakbleView.  These older output routines should
+probably be removed.
 
 This directory contains:
 
@@ -34,9 +36,11 @@ OpenCogScheme.java:
 OpenCogSchemeRel.java:
 OpenCogSchemeLink.java:
 	Generates OpenCog Scheme. Only the OpenCog class is public; the
-	other two are helpers. SchemeRel generates output that corresponds
+	other two are helpers.  SchemeRel generates output that corresponds
 	to the basic RelEx feature graph.  SchemeLink generates the
-	link-grammar relations.
+	link-grammar relations.  See documentation at:
+	http://wiki.opencog.org/w/RelEx_OpenCog_format
+	https://github.com/opencog/opencog/tree/master/opencog/nlp/wsd
 
 OWLView.java:
 	Generates W3C Semantic Web OWL format. The org.semanticweb jar files

@@ -17,6 +17,7 @@
 package relex.output;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import relex.Document;
 import relex.ParsedSentence;
@@ -27,13 +28,15 @@ import relex.feature.FeatureNode;
 /**
  * The OpenCogScheme object outputs a ParsedSentence in the
  * OpenCog-style Scheme format. The actual format used, and its rationale,
- * is described in greater detail in the README file in the opencog
- * source code directory src/nlp/wsd/README.
+ * is described in greater detail in the opencog wiki page
+ * http://wiki.opencog.org/w/RelEx_OpenCog_format
  *
- * As the same sentence can have multiple parses, this class only
- * displays a single, particular parse.
+ * See also the README file in
+ * https://github.com/opencog/opencog/tree/master/opencog/nlp/wsd
  *
- * Copyright (c) 2007, 2008, 2013 Linas Vepstas <linas@linas.org>
+ * This class prints just one parse at a time.
+ *
+ * Copyright (c) 2007, 2008, 2013, 2014 Linas Vepstas <linas@linas.org>
  */
 public class OpenCogScheme
 {
@@ -46,6 +49,9 @@ public class OpenCogScheme
 	private boolean do_show_linkage = false;
 	private boolean do_show_relex = false;
 	private boolean do_show_anaphora = false;
+	private int seqno = 1;
+	private HashSet<String> previous_words;
+	private HashSet<String> previous_sents;
 
 	/* -------------------------------------------------------------------- */
 	/* Constructors, and setters/getters for private members. */
@@ -55,6 +61,8 @@ public class OpenCogScheme
 		link_scheme = new OpenCogSchemeLink();
 		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
+		previous_words = new HashSet<String>();
+		previous_sents = new HashSet<String>();
 	}
 
 	public void setShowLinkage(boolean t) { do_show_linkage = t; }
@@ -66,12 +74,16 @@ public class OpenCogScheme
 	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
 	public boolean getShowAnaphora() { return do_show_anaphora; }
 
+	/**
+	 * Set the parse that is to be printed. After setting this, call
+	 * the toString() method to get a string representation of the
+	 * sentence.
+	 */
 	public void setParse(ParsedSentence parse)
 	{
 		_parse = parse;
 
 		orig_sentence += printWords();
-		orig_sentence += printParse();
 		orig_sentence += printSentence();
 
 		link_scheme.setParse(_parse);
@@ -82,6 +94,11 @@ public class OpenCogScheme
 	}
 
 	/* -------------------------------------------------------------------- */
+
+	/**
+	 * Return the the string representation of the parse, previously
+	 * specified with setParse().
+	 */
 	public String toString()
 	{
 		String ret = "";
@@ -127,19 +144,28 @@ public class OpenCogScheme
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 
-			if(word.matches("[-+]?[0-9]*?\\.?[0-9]+"))
+			// XXX FIXME -- this is a bit of a crazy hack that attempts
+			// to handle numbers, but does it wrong.  Why is this wrong?
+			// 1) because Europeans use a comma for a decimal, and a period
+			//    for a thousands separator
+			// 2) Because americans use a comma for a thousands separator,
+			// 3) This fails to handle number words, like "one two three"
+			// 4) This fails to handle time, dates, etc.
+			// In my opinion, the below whould be removed, and higher
+			// mathematics should be handled in Opencog, and not here...
+			if (word.matches("[-+]?[0-9]*?\\.?[0-9]+"))
 			{
 				str += "(ReferenceLink (stv 1.0 1.0)\n" +
 						"   (WordInstanceNode \"" + guid_word + "\")\n" +
 						"   (NumberNode " + word + ")\n" +
 						")\n";
 			}
-			else 
+			else
 			{
-			str += "(ReferenceLink (stv 1.0 1.0)\n" +
+				str += "(ReferenceLink (stv 1.0 1.0)\n" +
 					"   (WordInstanceNode \"" + guid_word + "\")\n" +
 					"   (WordNode \"" + word + "\")\n" +
-					")\n"; 
+					")\n";
 			}
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
@@ -147,38 +173,26 @@ public class OpenCogScheme
 					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
 					")\n";
 
+			// If we've never printed the sequence number for this word
+			// before, do so now.  Opencog uses this to determine the
+			// order in which the words appear in a sentence.
+			if (!previous_words.contains(guid_word))
+			{
+				str += "(WordSequenceLink (stv 1.0 1.0)\n" +
+						"     (WordInstanceNode \"" + guid_word + "\")\n" +
+						"     (NumberNode \"" + getSeqNo() + "\")\n" +
+						")\n";
+				previous_words.add(guid_word);
+			}
+
 			fn = fn.get("NEXT");
 		}
-		return str;
-	}
-
-	/**
-	 * Print the words in the parse, as made up out of word instances,
-	 * maintaining the proper word order in the sentence.
-	 */
-	public String printParse()
-	{
-		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
-					"   (ListLink\n";
-
-		FeatureNode fn = _parse.getLeft();
-		fn = fn.get("NEXT"); // skip LEFT-WALL
-		while (fn != null)
-		{
-			String guid = fn.get("uuid").getValue();
-			str += "     (WordInstanceNode \"" + guid + "\")\n";
-			fn = fn.get("NEXT");
-		}
-
-		str += "   )\n" +
-			  ")\n";
 		return str;
 	}
 
 	/**
 	 * Print a parseLink that attaches a specific parse to the sentence
-	 * that its a part of.  Attach a truth value that represents the 
+	 * that its a part of.  Attach a truth value that represents the
 	 * parse ranking for the parse.
 	 */
 	public String printSentence()
@@ -190,11 +204,25 @@ public class OpenCogScheme
 		int strl = Math.min(6, scf.length());
 		scf = scf.substring(0, strl);
 
+		String sent_id = _parse.getSentence().getID();
+
 		String str = "(ParseLink (stv 1 1)\n" +
-					"   (ParseNode \"" + _parse.getIDString() +
-					    "\"(stv 1.0 " + scf + "))\n" +
-				   "   (SentenceNode \"" + _parse.getSentence().getID() + "\")\n" +
+				   "   (ParseNode \"" + _parse.getIDString() +
+			           "\"(stv 1.0 " + scf + "))\n" +
+				   "   (SentenceNode \"" + sent_id + "\")\n" +
 				   ")\n";
+
+		// If we haven't seen this sentence before, then issue a
+		// sequence number for this sentence. This is used by opencog
+		// to determine teh order in which sentences were seen.
+		if (!previous_sents.contains(sent_id))
+		{
+			str += "(SentenceSequenceLink (stv 1 1)\n" +
+			      "	(SentenceNode \"" + sent_id + "\")\n" +
+			      "	(NumberNode \"" + getSeqNo() + "\")\n" +
+			      ")\n";
+			previous_sents.add(sent_id);
+		}
 		return str;
 	}
 
@@ -204,19 +232,31 @@ public class OpenCogScheme
 	 */
 	public String printDocument(Document doco)
 	{
-		String str = "(ReferenceLink (stv 1.0 1.0)\n" +
-				   "   (DocumentNode \"" + doco.getID() + "\")\n" +
-				   "   (ListLink\n";
+		String doco_id = doco.getID();
+		String str = "";
 
 		ArrayList<Sentence> sentence_list = doco.getSentences();
 		for (int i=0; i<sentence_list.size(); i++)
 		{
-			str += "      (SentenceNode \"" +
-				  sentence_list.get(i).getID() + "\")\n";
+			String sent_id = sentence_list.get(i).getID();
+			str += "(SentenceLink (stv 1 1)\n" +
+				   "   (SentenceNode \"" + sent_id + "\")\n" +
+				   "   (DocumentNode \"" + doco_id + "\")\n" +
+				   ")\n";
+
+			// If we haven't seen this sentence before, then issue a
+			// sequence number for this sentence. This is used by opencog
+			// to determine teh order in which sentences were seen.
+			if (!previous_sents.contains(sent_id))
+			{
+				str += "(SentenceSequenceLink (stv 1 1)\n" +
+				      "	(SentenceNode \"" + sent_id + "\")\n" +
+				      "	(NumberNode \"" + getSeqNo() + "\")\n" +
+				      ")\n";
+				previous_sents.add(sent_id);
+			}
 		}
 
-		str += "   )\n" +
-		       ")\n";
 		return str;
 	}
 
@@ -227,6 +267,11 @@ public class OpenCogScheme
 	public void setAnaphoraHistory(SentenceHistory history)
 	{
 		anaphora_scheme.setHistory(history);
+	}
+
+	public int getSeqNo()
+	{
+		return seqno++;
 	}
 
 } // end OpenCogScheme
