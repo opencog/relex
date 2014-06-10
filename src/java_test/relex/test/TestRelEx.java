@@ -262,7 +262,7 @@ public class TestRelEx
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
 				    "_quantity(mile, many)\n"+
-				    "degree(many, comparative)\n");
+				    "degree(much, comparative)\n");
 		
 		rc &= test_sentence ("He runs many less miles than John does.",
 				    "than(he, John)\n" +
@@ -339,7 +339,7 @@ public class TestRelEx
 				    "_more(chair,have)\n"+
 				    "_quantity(chairs,little)\n"+
 				    "_advmod(have, less)\n"+
-				    "degree(many, comparative)\n");
+				    "degree(little, comparative)\n");
 		
 		rc &= test_sentence ("He earns much more money than I do.",
 				    "than(he,I)\n"+
