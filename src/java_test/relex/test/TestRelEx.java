@@ -244,7 +244,7 @@ public class TestRelEx
 				    "_obj(run, mile)\n"+
 				    "more(mile, run)\n"+
 				    "_quantity(mile, many)\n"+
-				    "degree(much, comparative)\n");
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs less miles than John does.",
 				    "than(he, John)\n" +
@@ -264,14 +264,14 @@ public class TestRelEx
 				    "_quantity(mile, many)\n"+
 				    "degree(much, comparative)\n");
 		
-		rc &= test_sentence ("He runs many less miles than John does.",
+		rc &= test_sentence ("He runs fewer miles than John does.",
 				    "than(he, John)\n" +
 				    "_more(mile, run)\n"+
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
-				    "_quantity(mile, many)\n"+
-				    "degree(little, comparative)\n");
+				    "_quantity(mile, fewer)\n"+
+				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("He runs ten more miles than John.",
 				    "_obj(run, mile)\n"+
@@ -288,7 +288,7 @@ public class TestRelEx
 				    "more(mile, run)\n"+
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n"+
-				    "_num_mod(ten, almost)\n"+
+				    "_quantity_mod(ten, almost)\n"+
 				    "_num_quantity(miles, ten)\n"+
 				    "degree(many, comparative)\n");
 						
@@ -345,14 +345,14 @@ public class TestRelEx
 				    "more(chair,have)\n"+
 				    "degree(many, comparative)\n");
 		
-		rc &= test_sentence ("I have less chairs than Ben.",
+		rc &= test_sentence ("I have fewer chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
-				    "than(I,ben)\n"+
-				    "_more(chair,have)\n"+
-				    "_quantity(chairs,little)\n"+
-				    "_advmod(have, less)\n"+
-				    "degree(little, comparative)\n");
+				    "than(I, ben)\n"+
+				    "_more(chair, have)\n"+
+				    "_quantity(chairs, fewer)\n"+
+				    "_advmod(have, fewer)\n"+
+				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("He earns much more money than I do.",
 				    "than(he,I)\n"+
@@ -391,7 +391,7 @@ public class TestRelEx
 				    "_subj(is, grammar)\n"+
 				    "more(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
-				    "_nn(grammar, Russian)\n"+
+				    "_amod(grammar, Russian)\n"+ //When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version
 				    "_predadj(grammar, difficult)\n"+
 				    "_amod(grammar, English)\n"+
 				    "degree(difficult, comparative)\n");
@@ -400,7 +400,7 @@ public class TestRelEx
 				    "_subj(is, grammar)\n"+
 				    "_more(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
-				    "_nn(grammar, Russian)\n"+
+				    "_amod(grammar, Russian)\n"+
 				    "_predadj(grammar, difficult)\n"+
 				    "_amod(grammar, English)\n"+
 				    "_advmod(difficult, less)\n"+
