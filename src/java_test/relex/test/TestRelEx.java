@@ -203,12 +203,12 @@ public class TestRelEx
 				    "degree(quickly, comparative)\n");
 		
 		rc &= test_sentence ("He runs slower than John does.",
-				    "_advmod(run, slower)\n" +
+				    "_advmod(run, slow)\n" +
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n" +
-				    "_more(slower, run)\n" +
-				    "degree(slower, comparative)\n");
+				    "_more(slow, run)\n" +
+				    "degree(slow, comparative)\n");
 		
 		rc &= test_sentence ("He runs more than John.",
 				    "_obj(run, more)\n" +
