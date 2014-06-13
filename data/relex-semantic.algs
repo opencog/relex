@@ -1533,7 +1533,7 @@ ADV1
 ;Following rule make the  binary relationship _advmod(quickly, less)
 ;Note- The above example sentence is ungrammatical. 
 ;But sentence is commonly used by non-native English speakers.
-So below rule is adding support for common, ungrammatical sentences. 
+;So below rule is adding support for common, ungrammatical sentences. 
 #TemplateActionAlg
 ADV1_1
 <LAB> = \MVa
