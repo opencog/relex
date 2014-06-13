@@ -464,7 +464,7 @@ SUBSCR_POS_A-C_2
 ;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
 ;Note- The "He runs less quickly than John does" sentence is ungrammatical. 
 ;But sentence is commonly used by non-native English speakers.
-So below rule is adding support for common, ungrammatical sentences.
+;So below rule is adding support for common, ungrammatical sentences.
 #TemplateActionAlg
 SUBSCR_POS_E-C_2
 <LAB> = \MVa
