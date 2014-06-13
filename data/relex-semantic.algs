@@ -1820,7 +1820,10 @@ NUMBER-NUMERIC-QUANTIFIERS
 ;
 ;Different uses of the NI connectors are handled separately. 
 ;
-;NUMBER-1a handles "15 kDa to 20 kDa" and "15 kDa"
+;NUMBER-1a handles the following sentences 
+;"It is 6 m in length." -- _quantity(m, 6)
+;"It is from 6 m to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
+;
 ;
 #TemplateActionAlg
 NUMBER-1a
@@ -1832,7 +1835,9 @@ NUMBER-1a
 <F_L IS-NUMBER-FLAG> = T
 <F_R NOT_NUMBER_FLAG> = T
 ;
-;The three algorithmhs below handle "15 to 20 kDa"
+;The three algorithmhs below (NUMERICAL_RANGES_L, NUMERICAL_RANGES_R, NUMBER-NUMERICAL_RANGES)
+;handle the sentence "It is from 6 to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
+;
 ;
 #TemplateActionAlg
 NUMERICAL_RANGES_L
@@ -1873,6 +1878,14 @@ NUMBER-1c
 =
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
+;
+;
+;Converts all _quantity relations that have been created before to _time when the first argument of the relation is
+;AM,PM,am,pm,a.m.,or p.m. 
+;"She came at 6 pm." -- _time(pm,6).
+;"It lasted from 2 pm to 6 pm." -- _time(pm, 2) and _time(pm, 6).
+;"It lasted from 2 to 6 pm." -- _time(pm, 2) and _time(pm, 6).
+;
 ;
 #TemplateActionAlg
 TIME
