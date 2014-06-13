@@ -462,6 +462,9 @@ SUBSCR_POS_A-C_2
 ;e.g - He runs more/less quickly than John does.
 ;In this case, the connector between "more/less" and "quickly" is specially
 ;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+;Note- The "He runs less quickly than John does" sentence is ungrammatical. 
+;But sentence is commonly used by non-native English speakers.
+So below rule is adding support for common, ungrammatical sentences.
 #TemplateActionAlg
 SUBSCR_POS_E-C_2
 <LAB> = \MVa
@@ -477,6 +480,26 @@ SUBSCR_POS_E-C_3
 <F_L linkR1 LAB> = \Omm | \Om
 =
 <F_L linkR1 F_R ref degree> = comparative
+;e.g - He runs less miles than John does.
+;In this case, the connector between "less" and "runs" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "less" cases.
+#TemplateActionAlg
+SUBSCR_POS_E-C_4
+<LAB> = \MVp
+<F_L linkR2 LAB> = \Omm | \Om
+=
+<F_L linkR2 F_R ref degree> = comparative
+;Here "more" is serving as a noun-phrase, the number of the noun in the "more" phrase is
+;indicated by the D link ( it should be either noun-phrase  or as determiner of
+;a noun ); if it is a "Dmum", the noun is
+;singular, whereas if it is "Dmcm", the noun is plural.
+;Here it forms the degree relationship of the noun-phrase
+#TemplateActionAlg
+SUBSCR_POS_E-C_5 <--- TO_DO
+<LAB> = \Dmcm | \Dmum
+<F_L str> = more | much
+=
+<F_L ref degree> = comparative
 ;
 ;--------------------------------------------------------
 ; Oddball cases
