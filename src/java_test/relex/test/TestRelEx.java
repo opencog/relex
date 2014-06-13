@@ -192,6 +192,7 @@ public class TestRelEx
 				    "more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
 		
+		//This sentence is ungrammatical but commonly used by non-native English speakers 
 		rc &= test_sentence ("He runs less quickly than John does.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
@@ -200,6 +201,14 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "_more(quickly, run)\n" +
 				    "degree(quickly, comparative)\n");
+		
+		rc &= test_sentence ("He runs slower than John does.",
+				    "_advmod(run, slower)\n" +
+				    "_subj(run, he)\n" +
+				    "_subj(do, John)\n"+
+				    "than(he, John)\n" +
+				    "_more(slower, run)\n" +
+				    "degree(slower, comparative)\n");
 		
 		rc &= test_sentence ("He runs more than John.",
 				    "_obj(run, more)\n" +
