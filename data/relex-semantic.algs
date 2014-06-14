@@ -33,13 +33,19 @@ CONJ_AND_L
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
-
 #TemplateActionAlg
-CONJ_AND_R
+CONJ_AND_R_1
+<LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
+<F_R str> = and
+<F_R linkL1 LAB> = \VJl\.*
+=
+;<F_L conj> = %
+<F_L conj> += <F_R linkL1 F_L>
+#TemplateActionAlg
+CONJ_AND_R_2
 <LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
 =
 <F_L conj> += <F_R>
-
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Identifying subjects
