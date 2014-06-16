@@ -36,7 +36,7 @@ CONJ_AND_L
 #TemplateActionAlg
 CONJ_AND_R_1
 <LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
-<F_R str> = and
+<F_R str> = and|or|but
 <F_R linkL1 LAB> = \VJl\.*
 =
 ;<F_L conj> = %
