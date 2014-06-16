@@ -33,6 +33,7 @@ CONJ_AND_L
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
+;for sentences with many conjunctions
 ;Example- "I need to find a hong kong engineer , who knows Java and python and
 ; worked at Oracle and went to stanford and is a VP."
 #TemplateActionAlg
