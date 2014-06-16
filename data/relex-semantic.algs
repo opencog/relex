@@ -33,6 +33,8 @@ CONJ_AND_L
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
+;Example- "I need to find a hong kong engineer , who knows Java and python and
+; worked at Oracle and went to stanford and is a VP."
 #TemplateActionAlg
 CONJ_AND_R_1
 <LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
