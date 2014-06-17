@@ -364,14 +364,20 @@ public class TestRelEx
 				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("He earns much more money than I do.",
+				    "_obj(earn, money)\n"+
+				    "_subj(do, I)\n"+
+				    "_subj(earn, he)\n"+
 				    "than(he,I)\n"+
 				    "more(money,earn)\n"+
 				    "_advmod(earn, much)\n"+
-				    "_quantity(money,less)\n"+
+				    "_quantity(money, more)\n"+
 				    "_advmod(more, much)\n"+
 				    "degree(much,comparative)\n");
 		
 		rc &= test_sentence ("He earns much less money than I do.",
+				    "_obj(earn, money)\n"+
+				    "_subj(do, I)\n"+
+				    "_subj(earn, he)\n"+
 				    "than(he, I)\n"+
 				    "_more(money, earn)\n"+
 				    "_advmod(earn, much)\n"+
