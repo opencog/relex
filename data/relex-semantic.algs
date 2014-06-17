@@ -196,13 +196,15 @@ PASS_OBJ
 ; "I gave him the car." 
 ; "This is the car I gave the man." (B has not had a chance to identify object)
 ; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
-; connecting direct or indirect objects. e.g. He runs more quickly than John does.   
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.
+;<F_R linkL1 LAB> != \Dmum --> e.g. avoid relationship of _obj(earn, money), sentence "He earns much more money than I do."  
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
 <LAB> != \Omm | \Om
+;<F_R linkL1 LAB> != \Dmum
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
@@ -1557,6 +1559,17 @@ ADV1_2
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+;e.g.She comes here less often than her husband. 
+;Following rule make the  binary relationship _advmod(often, less)
+;Note- but we want to avoid relationship _advmod(often, less) in the sentence "She comes here more often than her husband."
+#TemplateActionAlg
+ADV1_3
+<LAB> = \MVa
+<F_R str> != not|more|less
+<F_R linkL1 LAB> = \EEm 
+<F_R linkL1 F_L str> = less 
+=
+<F_R ref links _advmod> += < F_R linkL1 F_L ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
