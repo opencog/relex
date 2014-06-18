@@ -304,17 +304,20 @@ public class TestRelEx
 		rc &= test_sentence ("He runs more often than John.",
 				    "_subj(run, he)\n"+
 				    "more(often, run)\n"+
+				    "_advmod(run, often)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
 				    "_more(often, run)\n"+
+				    "_advmod(run, often)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 							
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "more(often, run)\n"+
 				    "than(he, John)\n"+
@@ -322,6 +325,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "_more(often, run)\n"+
 				    "than(he, John)\n"+
