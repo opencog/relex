@@ -1521,7 +1521,7 @@ CONJ_PREDADJ
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
-<F_R str> != not|more|less|often
+<F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> = %
 =
@@ -1537,7 +1537,7 @@ ADV1
 #TemplateActionAlg
 ADV1_1
 <LAB> = \MVa
-<F_R str> != not|more|less|often
+<F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> = %
 <F_L linkR2 F_R str> = less 
@@ -1550,7 +1550,7 @@ ADV1_1
 #TemplateActionAlg
 ADV1_2
 <LAB> = \MVb
-<F_R str> != not|more|less|often
+<F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> != %
 <F_L head-word BACKGROUND-FLAG> != T 
