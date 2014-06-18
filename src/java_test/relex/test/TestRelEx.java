@@ -403,7 +403,7 @@ public class TestRelEx
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
-				    "_subj(is, grammar)\n"+
+				    "_subj(be, grammar)\n"+
 				    "more(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_amod(grammar, Russian)\n"+ //When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version
@@ -412,7 +412,7 @@ public class TestRelEx
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
-				    "_subj(is, grammar)\n"+
+				    "_subj(be, grammar)\n"+
 				    "_more(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_amod(grammar, Russian)\n"+
