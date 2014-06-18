@@ -2,7 +2,7 @@
 #
 # Delete unwanted article types from the Tagalog wikipedia article space.
 # We won't be parsing these; they (mostly) don't contain any valid
-# English-language sentences.
+# Tagalog-language sentences.
 #
 # Copyright (c) 2014 Lariena Milambiling
 
