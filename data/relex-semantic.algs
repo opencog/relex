@@ -2342,18 +2342,10 @@ MORE_OR_LESS7a2
 <F_L is-temp> = %
 <F_R relWord-temp> = %
 #TemplateActionAlg
-MORE_OR_LESS7b1
+MORE_OR_LESS7b
 <LAB> = \MVa|\Ou\.*|\Op
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much
-=
-<F_R ref links _comparative> += <F_L ref>
-<F_R relWord-temp> = %
-#TemplateActionAlg
-MORE_OR_LESS7b2
-<LAB> = \MVa|\Ou\.*|\Op
-<F_R relWord-temp> != %
-<F_R relWord-temp> = less|little
+<F_R relWord-temp> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
