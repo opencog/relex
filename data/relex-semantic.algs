@@ -2392,21 +2392,11 @@ MORE_OR_LESS7d2
 =
 <F_R ref links _comparative> += <F_L ref>
 #TemplateActionAlg
-MORE_OR_LESS7e1
+MORE_OR_LESS7e
 <LAB> = \Pa\.*
 <F_L is-temp> != %
 <F_L relWord-temp> != %
-<F_L relWord-temp> = more|many|much
-=
-<F_R ref links _comparative> += <F_L is-temp>
-<F_L is-temp> = %
-<F_L relWord-temp> = %
-#TemplateActionAlg
-MORE_OR_LESS7e2
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_L relWord-temp> != %
-<F_L relWord-temp> = less|little
+<F_L relWord-temp> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
