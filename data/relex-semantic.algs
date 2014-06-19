@@ -1519,11 +1519,14 @@ CONJ_PREDADJ
 ; Jim runs quickly.
 ; MVr: "She handled it quickly and gracefully."
 ; MVb: "He sang louder and stronger."
+;case <F_R str> != often  --> e.g. "He runs more often than John."
+;above sentence generating the _advmod(run,often) and duplicates the information
+;it generates through the binary relationships 
 #TemplateActionAlg
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
-<F_R str> != not|more|less
+<F_R str> != not|more|less|often
 <F_L head-word> != %
 <F_R degree> = %
 =
@@ -1539,7 +1542,7 @@ ADV1
 #TemplateActionAlg
 ADV1_1
 <LAB> = \MVa
-<F_R str> != not|more|less
+<F_R str> != not|more|less|often
 <F_L head-word> != %
 <F_R degree> = %
 <F_L linkR2 F_R str> = less 
@@ -1552,7 +1555,7 @@ ADV1_1
 #TemplateActionAlg
 ADV1_2
 <LAB> = \MVb
-<F_R str> != not|more|less
+<F_R str> != not|more|less|often
 <F_L head-word> != %
 <F_R degree> != %
 <F_L head-word BACKGROUND-FLAG> != T 
@@ -1561,7 +1564,7 @@ ADV1_2
 <F_L head-word ref links _advmod> += <F_R ref>
 ;e.g.She comes here less often than her husband. 
 ;Following rule make the  binary relationship _advmod(often, less)
-;Note- but we want to avoid relationship _advmod(often, less) in the sentence "She comes here more often than her husband."
+;Note- but we want to avoid relationship _advmod(often, more) in the sentence "She comes here more often than her husband."
 #TemplateActionAlg
 ADV1_3
 <LAB> = \MVa
@@ -2325,7 +2328,7 @@ MORE_OR_LESS7a1
 <F_R relWord-temp> != %
 <F_R relWord-temp> = more|many|much
 =
-<F_R ref links more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_R relWord-temp> = %
 #TemplateActionAlg
@@ -2335,7 +2338,7 @@ MORE_OR_LESS7a2
 <F_R relWord-temp> != %
 <F_R relWord-temp> = less|little
 =
-<F_R ref links _more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_R relWord-temp> = %
 #TemplateActionAlg
@@ -2344,7 +2347,7 @@ MORE_OR_LESS7b1
 <F_R relWord-temp> != %
 <F_R relWord-temp> = more|many|much
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
 #TemplateActionAlg
 MORE_OR_LESS7b2
@@ -2352,7 +2355,7 @@ MORE_OR_LESS7b2
 <F_R relWord-temp> != %
 <F_R relWord-temp> = less|little
 =
-<F_R ref links _more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
 #TemplateActionAlg
 MORE_OR_LESS7c1
@@ -2361,7 +2364,7 @@ MORE_OR_LESS7c1
 <F_R str> != much
 <F_L relWord-temp> = more|many|much
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_L relWord-temp> = %
 <F_L relWord-temp> = is_set
 #TemplateActionAlg
@@ -2371,7 +2374,7 @@ MORE_OR_LESS7c2
 <F_R str> != much
 <F_L relWord-temp> = less|little
 =
-<F_R ref links _more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_L relWord-temp> = %
 <F_L relWord-temp> = is_set
 #TemplateActionAlg
@@ -2380,14 +2383,14 @@ MORE_OR_LESS7d1
 <F_L relWord-temp> != is_set
 <F_R str> = more|many|much
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 #TemplateActionAlg
 MORE_OR_LESS7d2
 <LAB> = \Om\.*
 <F_L relWord-temp> != is_set
 <F_R str> = less|little
 =
-<F_R ref links _more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 #TemplateActionAlg
 MORE_OR_LESS7e1
 <LAB> = \Pa\.*
@@ -2395,7 +2398,7 @@ MORE_OR_LESS7e1
 <F_L relWord-temp> != %
 <F_L relWord-temp> = more|many|much
 =
-<F_R ref links more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_L relWord-temp> = %
 #TemplateActionAlg
@@ -2405,7 +2408,7 @@ MORE_OR_LESS7e2
 <F_L relWord-temp> != %
 <F_L relWord-temp> = less|little
 =
-<F_R ref links _more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_L relWord-temp> = %
 ;Creating more() binary relationships when there is no "more" terms in the sentence
@@ -2418,14 +2421,14 @@ MORE_OR_LESS7f1
 <LAB> = \Pam
 <F_L str> = is|are|be 
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_L is-temp> = %
 #TemplateActionAlg
 NO_MORE_OR_LESS
 <LAB> = \MVb
 <F_R degree> = comparative
 =
-<F_R ref links _more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
