@@ -444,7 +444,7 @@ public class TestRelEx
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons more enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
@@ -454,7 +454,7 @@ public class TestRelEx
 				    "degree(enjoyable, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons less enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
