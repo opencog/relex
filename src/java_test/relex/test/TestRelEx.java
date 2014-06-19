@@ -310,7 +310,6 @@ public class TestRelEx
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
-				    "_advmod(often, less)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 							
@@ -323,7 +322,6 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
-				    "_advmod(often, less)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -401,7 +399,6 @@ public class TestRelEx
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
 				    "than(she, husband)\n"+
-				    "_advmod(often, less)\n"+
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
