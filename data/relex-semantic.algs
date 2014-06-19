@@ -2322,21 +2322,11 @@ TO_BE_TEMP
 =
 <F_R is-temp> += <F_L ref>
 #TemplateActionAlg
-MORE_OR_LESS7a1
+MORE_OR_LESS7a
 <LAB> = \Pa\.*
 <F_L is-temp> != %
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much
-=
-<F_R ref links _comparative> += <F_L is-temp>
-<F_L is-temp> = %
-<F_R relWord-temp> = %
-#TemplateActionAlg
-MORE_OR_LESS7a2
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_R relWord-temp> != %
-<F_R relWord-temp> = less|little
+<F_R relWord-temp> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
