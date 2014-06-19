@@ -2358,21 +2358,11 @@ MORE_OR_LESS7b2
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
 #TemplateActionAlg
-MORE_OR_LESS7c1
+MORE_OR_LESS7c
 <LAB> = \Opn|\MVa|\Oun
 <F_L relWord-temp> != %
 <F_R str> != much
-<F_L relWord-temp> = more|many|much
-=
-<F_R ref links _comparative> += <F_L ref>
-<F_L relWord-temp> = %
-<F_L relWord-temp> = is_set
-#TemplateActionAlg
-MORE_OR_LESS7c2
-<LAB> = \Opn|\MVa|Oun
-<F_L relWord-temp> != %
-<F_R str> != much
-<F_L relWord-temp> = less|little
+<F_L relWord-temp> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_L relWord-temp> = %
