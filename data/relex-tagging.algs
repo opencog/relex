@@ -459,6 +459,16 @@ SUBSCR_POS_A-C_2
 <F_R linkL1 LAB> = \EAm
 =
 <F_R ref degree> = comparative
+;e.g - I find maths lessons more/less enjoyable than science lessons.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "enjoyable" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+SUBSCR_POS_A-C_3
+<LAB> = \Ma
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
 ;e.g - He runs more/less quickly than John does.
 ;In this case, the connector between "more/less" and "quickly" is specially
 ;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
