@@ -1562,17 +1562,6 @@ ADV1_2
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
-;e.g.She comes here less often than her husband. 
-;Following rule make the  binary relationship _advmod(often, less)
-;Note- but we want to avoid relationship _advmod(often, more) in the sentence "She comes here more often than her husband."
-#TemplateActionAlg
-ADV1_3
-<LAB> = \MVa
-<F_R str> != not|more|less
-<F_R linkL1 LAB> = \EEm 
-<F_R linkL1 F_L str> = less 
-=
-<F_R ref links _advmod> += < F_R linkL1 F_L ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
