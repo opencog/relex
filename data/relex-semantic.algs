@@ -2368,16 +2368,6 @@ MORE_OR_LESS7d
 <F_R str> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
-#TemplateActionAlg
-MORE_OR_LESS7e
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_L relWord-temp> != %
-<F_L relWord-temp> = more|many|much|less|little
-=
-<F_R ref links _comparative> += <F_L is-temp>
-<F_L is-temp> = %
-<F_L relWord-temp> = %
 ;Creating more() binary relationships when there is no "more" terms in the sentence
 ;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
