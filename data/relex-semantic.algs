@@ -2378,17 +2378,10 @@ MORE_OR_LESS7c2
 <F_L relWord-temp> = %
 <F_L relWord-temp> = is_set
 #TemplateActionAlg
-MORE_OR_LESS7d1
+MORE_OR_LESS7d
 <LAB> = \Om\.*
 <F_L relWord-temp> != is_set
-<F_R str> = more|many|much
-=
-<F_R ref links _comparative> += <F_L ref>
-#TemplateActionAlg
-MORE_OR_LESS7d2
-<LAB> = \Om\.*
-<F_L relWord-temp> != is_set
-<F_R str> = less|little
+<F_R str> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
 #TemplateActionAlg
