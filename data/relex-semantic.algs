@@ -842,6 +842,18 @@ SUBJ_TO_LINKS
 <subj> != %
 =
 <ref links _subj> = <subj>
+;above rules applies when the verb is the main verb of the sentence. i.e. <HEAD-FLAG> = T
+;when it is the main verb of the sentence. This rules forms relationships when there are other verbs 
+;e.g. He is faster than John is. forming _subj(be, John) relationship
+#TemplateActionAlg
+SUBJ_TO_LINKS_2
+<LAB> = \Ss
+<F_R linkL0 LAB> = \AFd
+<F_R HEAD-FLAG> = %
+<F_R POS> = verb
+<F_L POS> = noun
+=
+<F_R ref links _subj> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
