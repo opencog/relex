@@ -210,13 +210,15 @@ PASS_OBJ
 ; "I gave him the car." 
 ; "This is the car I gave the man." (B has not had a chance to identify object)
 ; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
-; connecting direct or indirect objects. e.g. He runs more quickly than John does.   
+; connecting direct or indirect objects. e.g. He runs more quickly than John does.
+;<F_R linkL1 LAB> != \Dmum --> e.g. avoid relationship of _obj(earn, money), sentence "He earns much more money than I do."  
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
 <LAB> != \Omm | \Om
+;<F_R linkL1 LAB> != \Dmum
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
@@ -286,6 +288,7 @@ REL_OBJ
 ; "This is the dog and cat Pat and I chased and ate."
 ; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
 ; than relationship but not to link direct and indirect objects
+;<LAB> != \Bcd e.g. He runs more quickly than John does.
 <LAB> = \B\.*|\BW\.*
 <LAB> != \Bcd
 <F_R RS-FLAG> != T
@@ -301,6 +304,7 @@ REL_INDIR_OBJ
 ; "This is the car the man was given." (Pv fills before B)
 ; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
 ; than relationship but not to link direct and indirect objects
+;<LAB> != \Bcd e.g. He runs more quickly than John does.
 <LAB> = \B\.*|\BW\.*
 <LAB> != \Bcd
 <F_R RS-FLAG> != T
@@ -1529,11 +1533,14 @@ CONJ_PREDADJ
 ; Jim runs quickly.
 ; MVr: "She handled it quickly and gracefully."
 ; MVb: "He sang louder and stronger."
+;case <F_R str> != often  --> e.g. "He runs more often than John."
+;above sentence generating the _advmod(run,often) and duplicates the information
+;it generates through the binary relationships 
 #TemplateActionAlg
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
-<F_R str> != not|more|less
+<F_R str> != not|more|less|often
 <F_L head-word> != %
 <F_R degree> = %
 =
@@ -1543,15 +1550,32 @@ ADV1
 ;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
 ;runs (quickly,less)
 ;Following rule make the  binary relationship _advmod(quickly, less)
+;Note- The above example sentence is ungrammatical. 
+;But sentence is commonly used by non-native English speakers.
+;So below rule is adding support for common, ungrammatical sentences. 
 #TemplateActionAlg
 ADV1_1
 <LAB> = \MVa
-<F_R str> != not|more|less
+<F_R str> != not|more|less|often
 <F_L head-word> != %
 <F_R degree> = %
 <F_L linkR2 F_R str> = less 
 =
 <F_R ref links _advmod> += < F_L linkR2 F_R ref>
+;e.g. He runs faster than John.
+;Above ADV1 rule won't make _advmod(run, fast) relationship due to "faster" is 
+;POS tagged with ".a-c" and relex-tagging.algs make it's degree as comparative.
+;Following rule make the  binary relationship _advmod(run, fast)
+#TemplateActionAlg
+ADV1_2
+<LAB> = \MVb
+<F_R str> != not|more|less|often
+<F_L head-word> != %
+<F_R degree> != %
+<F_L head-word BACKGROUND-FLAG> != T 
+=
+<F_L head-word BACKGROUND-FLAG> = T
+<F_L head-word ref links _advmod> += <F_R ref>
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
@@ -1597,8 +1621,11 @@ ADV2_HEADLESS
 ADV3
 ;  Jim runs very quickly  --   EE(very,quickly) 
 ;  Jim ate a very fat chicken -- has EA(very, fat)
+;We want to avoid _advmod(less,often) relationships
+;e.g. He runs less often than John.
 <LAB> = \EE\.* | EA
 <F_L str> != more
+<F_R str> != often
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
@@ -2298,101 +2325,68 @@ TO_BE_TEMP
 =
 <F_R is-temp> += <F_L ref>
 #TemplateActionAlg
-MORE_OR_LESS7a1
+MORE_OR_LESS7a
 <LAB> = \Pa\.*
 <F_L is-temp> != %
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much
+<F_R relWord-temp> = more|many|much|less|little
 =
-<F_R ref links more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_R relWord-temp> = %
 #TemplateActionAlg
-MORE_OR_LESS7a2
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_R relWord-temp> != %
-<F_R relWord-temp> = less|little
-=
-<F_R ref links _more> += <F_L is-temp>
-<F_L is-temp> = %
-<F_R relWord-temp> = %
-#TemplateActionAlg
-MORE_OR_LESS7b1
+MORE_OR_LESS7b
 <LAB> = \MVa|\Ou\.*|\Op
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much
+<F_R relWord-temp> = more|many|much|less|little
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
 #TemplateActionAlg
-MORE_OR_LESS7b2
-<LAB> = \MVa|\Ou\.*|\Op
-<F_R relWord-temp> != %
-<F_R relWord-temp> = less|little
-=
-<F_R ref links _more> += <F_L ref>
-<F_R relWord-temp> = %
-#TemplateActionAlg
-MORE_OR_LESS7c1
+MORE_OR_LESS7c
 <LAB> = \Opn|\MVa|\Oun
 <F_L relWord-temp> != %
 <F_R str> != much
-<F_L relWord-temp> = more|many|much
+<F_L relWord-temp> = more|many|much|less|little
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 <F_L relWord-temp> = %
 <F_L relWord-temp> = is_set
 #TemplateActionAlg
-MORE_OR_LESS7c2
-<LAB> = \Opn|\MVa|Oun
-<F_L relWord-temp> != %
-<F_R str> != much
-<F_L relWord-temp> = less|little
-=
-<F_R ref links _more> += <F_L ref>
-<F_L relWord-temp> = %
-<F_L relWord-temp> = is_set
-#TemplateActionAlg
-MORE_OR_LESS7d1
+MORE_OR_LESS7d
 <LAB> = \Om\.*
 <F_L relWord-temp> != is_set
-<F_R str> = more|many|much
+<F_R str> = more|many|much|less|little
 =
-<F_R ref links more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 #TemplateActionAlg
-MORE_OR_LESS7d2
-<LAB> = \Om\.*
-<F_L relWord-temp> != is_set
-<F_R str> = less|little
-=
-<F_R ref links _more> += <F_L ref>
-#TemplateActionAlg
-MORE_OR_LESS7e1
+MORE_OR_LESS7e
 <LAB> = \Pa\.*
 <F_L is-temp> != %
 <F_L relWord-temp> != %
-<F_L relWord-temp> = more|many|much
+<F_L relWord-temp> = more|many|much|less|little
 =
-<F_R ref links more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_L relWord-temp> = %
+;Creating more() binary relationships when there is no "more" terms in the sentence
+;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
+;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
+;So these these adjectives and adverbs are given special subscripts
+;e.g. He is faster than John. (is,faster ) adjective is given special connecter "Pam"
 #TemplateActionAlg
-MORE_OR_LESS7e2
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_L relWord-temp> != %
-<F_L relWord-temp> = less|little
+MORE_OR_LESS7f1
+<LAB> = \Pam
+<F_L str> = is|are|be 
 =
-<F_R ref links _more> += <F_L is-temp>
+<F_R ref links _comparative> += <F_L ref>
 <F_L is-temp> = %
-<F_L relWord-temp> = %
 #TemplateActionAlg
 NO_MORE_OR_LESS
 <LAB> = \MVb
 <F_R degree> = comparative
 =
-<F_R ref links _more> += <F_L ref>
+<F_R ref links _comparative> += <F_L ref>
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
