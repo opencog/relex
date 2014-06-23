@@ -1368,6 +1368,15 @@ ADJ2
 =
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
+;this rules applies for adjective-focused comparatives
+;e.g. My sister is much more intelligent than me.
+; ECa is used in connection (much,more) and more is acting as a adjectival adverb for "intelligent".
+#TemplateActionAlg
+ADJ3
+<LAB> = \EAm
+<F_L linkL0 LAB> = \ECa
+=
+<F_L linkL0 F_L ref links _amod> += <F_R ref>
 ;
 ; Predeterminer
 ; All the boys are here. - _predet(boy, all)
