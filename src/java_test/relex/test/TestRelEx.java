@@ -345,6 +345,7 @@ public class TestRelEx
 				    "than(speed, John's)\n"+
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
+				    "_comparative(fast, be)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("I have more chairs than Ben.",
@@ -440,23 +441,23 @@ public class TestRelEx
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons more enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
 				    "_nn(lesson, science)\n"+
 				    "than(maths, science)\n"+
-				    "_comparative(enjoy, maths)\n"+
+				    "_comparative(enjoyable, maths)\n"+
 				    "degree(enjoyable, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons less enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
 				    "_nn(lesson, science)\n"+
 				    "than(maths, science)\n"+
-				    "_comparative(enjoy, maths)\n"+
+				    "_comparative(enjoyable, maths)\n"+
 				    "_advmod(enjoyable, less)\n"+
 				    "degree(enjoyable, comparative)\n");
 		report(rc, "Comparatives");
