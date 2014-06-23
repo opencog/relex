@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Delete unwanted article types from the wikipedia article space.
+# Delete unwanted article types from the Polish wikipedia article space.
 # We won't be parsing these; they (mostly) don't contain any valid
 # Polish-language sentences.
 #

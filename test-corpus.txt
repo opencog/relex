@@ -1,5 +1,10 @@
-This is the man given a dog by me.
+I need to find a Hong Kong engineer, who knows Java and Python and worked at Oracle and went to Stanford and is a VP.
 END.
+He runs more than the robots.
+He runs a lot more often than the robots.
+He is a lot more intelligent than the robots.
+He runs here a lot less often than John.
+This is the man given a dog by me.
 They ate a special curry which was recommended by the restaurant’s owner.
 A player who is injured has to leave the field.
 Scientists that study physics are physicists.

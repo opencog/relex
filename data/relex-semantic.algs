@@ -28,18 +28,32 @@
 ;
 ; Locate conjunctions
 ;
+; First pull the left-hand side over.
 #TemplateActionAlg
-CONJ_AND_L
+CONJ_AND_LEFT_SIDE
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
-
+;
+; Next, deal with multiple conjunctions.
+; Example: "I visited London, Rome and Paris."
+; "I need to find a Hong Kong engineer, who knows Java and Python and
+;    worked at Oracle and went to Stanford and is a VP."
+;
 #TemplateActionAlg
-CONJ_AND_R
+CONJ_AND_RIGHT_MULTI
+<LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
+<F_R linkL1 LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
+=
+<F_L conj> += <F_R linkL1 F_L>
+;
+; Finally, pick upt the remaining right side of the conjunction.
+#TemplateActionAlg
+CONJ_AND_SINGLE_RIGHT_SIDE
 <LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
 =
 <F_L conj> += <F_R>
-
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Identifying subjects
