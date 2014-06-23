@@ -1706,10 +1706,14 @@ COMP_ADVMOD_3
 <F_L str> = less
 =
 <F_R advmod> += <F_L ref>
+;case "<F_L str> != much" was introduced to form relationships such as _advmod(more, much)
+;e.g. My sister is much more intelligent than me. 
+;would form a _advmod(more, much) relationship without above condition 
 #TemplateActionAlg
 COMP_ADVMOD_4
 <LAB> = \ECa
 <F_R str> = more|less
+<F_L str> != much
 =
 <F_R ref links _advmod> += <F_L ref>
 #TemplateActionAlg
