@@ -420,18 +420,16 @@ public class TestRelEx
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("My sister is much more intelligent than me.",
-				    "_obj(is, much)\n"+
-				    "_subj(is, sister)\n"+
 				    "_amod(much, intelligent)\n"+
+				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("My sister is much less intelligent than me.",
-				    "_obj(is, much)\n"+
-				    "_subj(is, sister)\n"+
 				    "_amod(much, intelligent)\n"+
+				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
