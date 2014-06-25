@@ -2126,6 +2126,7 @@ RELATION_THAN_3
 #TemplateActionAlg
 RELATION_THAN_4
 <LAB> = \O\.*|\C\.*|\S\.*|\U\.*|\Bc
+;<LAB> != \Osc
 <F_L str> = than|as
 <F_L set> != T
 =
@@ -2231,11 +2232,16 @@ RELATION_THAN_16
 <F_L comp_temp1> = %
 <F_L comp_temp> = %
 ;
+;Case <F_R linkL1 LAB> != \Dmcm 
+;e.g. I have fewer chairs than Ben. So this this sentence we want to form the than()
+;relationship using rule "RELATION_THAN_17_2". The rule "RELATION_THAN_17_1" would form 
+;than(chair, Ben) which is wrong, where correct form should be than(I, Ben) 
 #TemplateActionAlg
 RELATION_THAN_17_1
 <LAB> = \Op
 <F_L comp_temp> != %
 <F_L SET> != T
+<F_R linkL1 LAB> != \Dmcm
 =
 <F_R ref links than> += <F_L comp_temp>
 <F_L comp_temp> = %
@@ -2334,7 +2340,7 @@ PREP_TO_LINKS
 #TemplateActionAlg
 MORE_OR_LESS1a
 <LAB> = \EAm|\EEm|\Dm\.*m
-<F_L str> = more|less|many|much|little
+<F_L str> = more|less|many|much|little|fewer
 =
 <F_R relWord-temp> += <F_L str>
 #TemplateActionAlg
