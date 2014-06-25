@@ -350,14 +350,14 @@ public class TestRelEx
 		rc &= test_sentence ("I have more chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
-				    "than(I,Ben)\n"+
-				    "_comparative(chair,have)\n"+
+				    "than(I, Ben)\n"+
+				    "_comparative(chair, have)\n"+
 				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("I have fewer chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
-				    "than(I, ben)\n"+
+				    "than(I, Ben)\n"+
 				    "_comparative(chair, have)\n"+
 				    "_quantity(chairs, fewer)\n"+
 				    "_advmod(have, fewer)\n"+
