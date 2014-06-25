@@ -2376,7 +2376,7 @@ MORE_OR_LESS7a
 MORE_OR_LESS7b
 <LAB> = \MVa|\Ou\.*|\Op
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much|less|little
+<F_R relWord-temp> = more|many|much|less|little|fewer
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
