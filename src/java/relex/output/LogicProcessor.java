@@ -131,10 +131,16 @@ public class LogicProcessor
 		}
 
 		/**
-		 * This method is not needed.
+		 * For applying rules on nodes with no outgoing links.
 		 */
 		public Boolean UnaryRelationCB(FeatureNode srcNode, String attrName)
 		{
+			// to avoid processing the same srcNode multiple times
+			if (!attrName.equals("nameSource"))
+				return false;
+
+			applyRules(srcNode);
+
 			return false;
 		}
 
@@ -300,7 +306,8 @@ public class LogicProcessor
 			// if no criteriums matched, maybe subsequent node will satisfy some criteria
 			if (foundPairs.size() == 0)
 			{
-				if (!parentNode.isValued())
+				// only continue if the initial parent node satisfies some criteria
+				if (matchedPairs.size() > 0 && !parentNode.isValued())
 				{
 					FeatureNode linksNode = parentNode.get("links");
 
@@ -390,7 +397,7 @@ public class LogicProcessor
 					break;
 
 				String attrName = thisCriterium.getCriteriumLabel();
-				FeatureNode node = parentNode.get(attrName);
+				FeatureNode node = parentNode.get(attrName);	// check local stuff such as "tense"
 
 				if (node != null)
 				{
