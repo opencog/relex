@@ -139,6 +139,10 @@ public class LogicProcessor
 			if (!attrName.equals("nameSource"))
 				return false;
 
+			// skip binary relations as that is already processed
+			if (srcNode.get("links") != null)
+				return false;
+
 			applyRules(srcNode);
 
 			return false;
