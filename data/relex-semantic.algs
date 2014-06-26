@@ -1822,6 +1822,17 @@ QUANTITY_EXCEPTION
 <F_L str> = more|More|'s|fewer|Fewer|'|’s|’
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
+;e.g. "I have more chairs than Ben." Here "more" is used to indicate the quantity of chairs
+;to form the relationship _quantity(chair, more)  \Dmcm and \Op connectors are used. 
+#TemplateActionAlg
+QUANTIFIERS_1
+<LAB> = \Dmcm
+<F_L DETERMINER_FLAG> != T
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
+<F_L POSSESSIVE-FLAG> != T
+<F_R linkL0 LAB> = \Op
+=
+<F_R ref links _quantity> = <F_L ref>
 ;
 ; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
 ;
