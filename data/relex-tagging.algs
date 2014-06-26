@@ -459,6 +459,16 @@ SUBSCR_POS_A-C_2
 <F_R linkL1 LAB> = \EAm
 =
 <F_R ref degree> = comparative
+;e.g - I find maths lessons more/less enjoyable than science lessons.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "enjoyable" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+SUBSCR_POS_A-C_3
+<LAB> = \Ma
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
 ;e.g - He runs more/less quickly than John does.
 ;In this case, the connector between "more/less" and "quickly" is specially
 ;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
@@ -495,9 +505,9 @@ SUBSCR_POS_E-C_4
 ;singular, whereas if it is "Dmcm", the noun is plural.
 ;Here it forms the degree relationship of the noun-phrase
 #TemplateActionAlg
-SUBSCR_POS_E-C_5 <--- TO_DO
+SUBSCR_POS_E-C_5
 <LAB> = \Dmcm | \Dmum
-<F_L str> = more | much
+<F_L str> = more|much|fewer
 =
 <F_L ref degree> = comparative
 ;

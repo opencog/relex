@@ -341,23 +341,23 @@ public class TestRelEx
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("His speed is faster than John's.",
-				    "_subj(is, speed)\n"+
-				    "than(speed, John's)\n"+
+				    "than(speed, be)\n"+
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
+				    "_comparative(fast, be)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("I have more chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
-				    "than(I,ben)\n"+
-				    "_comparative(chair,have)\n"+
-				    "degree(many, comparative)\n");
+				    "than(I, Ben)\n"+
+				    "_comparative(chair, have)\n"+
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("I have fewer chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
-				    "than(I, ben)\n"+
+				    "than(I, Ben)\n"+
 				    "_comparative(chair, have)\n"+
 				    "_quantity(chairs, fewer)\n"+
 				    "_advmod(have, fewer)\n"+
@@ -402,7 +402,6 @@ public class TestRelEx
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
-				    "_subj(be, grammar)\n"+
 				    "_comparative(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_amod(grammar, Russian)\n"+ //When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version
@@ -411,7 +410,6 @@ public class TestRelEx
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
-				    "_subj(be, grammar)\n"+
 				    "_comparative(difficult, grammar)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_amod(grammar, Russian)\n"+
@@ -421,18 +419,16 @@ public class TestRelEx
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("My sister is much more intelligent than me.",
-				    "_obj(is, much)\n"+
-				    "_subj(is, sister)\n"+
 				    "_amod(much, intelligent)\n"+
+				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("My sister is much less intelligent than me.",
-				    "_obj(is, much)\n"+
-				    "_subj(is, sister)\n"+
 				    "_amod(much, intelligent)\n"+
+				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
@@ -440,23 +436,23 @@ public class TestRelEx
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons more enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
 				    "_nn(lesson, science)\n"+
 				    "than(maths, science)\n"+
-				    "_comparative(enjoy, maths)\n"+
+				    "_comparative(enjoyable, maths)\n"+
 				    "degree(enjoyable, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons less enjoyable than science lessons.",
-				    "_iobj(find, math)\n"+
+				    "_iobj(find, maths)\n"+
 				    "_obj(find, lesson)\n"+
 				    "_subj(find, I)\n"+
 				    "_amod(lesson, enjoyable)\n"+
 				    "_nn(lesson, science)\n"+
 				    "than(maths, science)\n"+
-				    "_comparative(enjoy, maths)\n"+
+				    "_comparative(enjoyable, maths)\n"+
 				    "_advmod(enjoyable, less)\n"+
 				    "degree(enjoyable, comparative)\n");
 		report(rc, "Comparatives");

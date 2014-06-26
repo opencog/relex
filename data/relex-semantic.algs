@@ -856,6 +856,18 @@ SUBJ_TO_LINKS
 <subj> != %
 =
 <ref links _subj> = <subj>
+;above rules applies when the verb is the main verb of the sentence. i.e. <HEAD-FLAG> = T
+;when it is the main verb of the sentence. This rules forms relationships when there are other verbs 
+;e.g. He is faster than John is. forming _subj(be, John) relationship
+#TemplateActionAlg
+SUBJ_TO_LINKS_2
+<LAB> = \Ss
+<F_R linkL0 LAB> = \AFd
+<F_R HEAD-FLAG> = %
+<F_R POS> = verb
+<F_L POS> = noun
+=
+<F_R ref links _subj> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
@@ -1356,6 +1368,15 @@ ADJ2
 =
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
+;this rules applies for adjective-focused comparatives
+;e.g. My sister is much more intelligent than me.
+; ECa is used in connection (much,more) and more is acting as a adjectival adverb for "intelligent".
+#TemplateActionAlg
+ADJ3
+<LAB> = \EAm
+<F_L linkL0 LAB> = \ECa
+=
+<F_L linkL0 F_L ref links _amod> += <F_R ref>
 ;
 ; Predeterminer
 ; All the boys are here. - _predet(boy, all)
@@ -1694,10 +1715,14 @@ COMP_ADVMOD_3
 <F_L str> = less
 =
 <F_R advmod> += <F_L ref>
+;case "<F_L str> != much" was introduced to form relationships such as _advmod(more, much)
+;e.g. My sister is much more intelligent than me. 
+;would form a _advmod(more, much) relationship without above condition 
 #TemplateActionAlg
 COMP_ADVMOD_4
 <LAB> = \ECa
 <F_R str> = more|less
+<F_L str> != much
 =
 <F_R ref links _advmod> += <F_L ref>
 #TemplateActionAlg
@@ -2101,6 +2126,7 @@ RELATION_THAN_3
 #TemplateActionAlg
 RELATION_THAN_4
 <LAB> = \O\.*|\C\.*|\S\.*|\U\.*|\Bc
+;<LAB> != \Osc
 <F_L str> = than|as
 <F_L set> != T
 =
@@ -2206,11 +2232,16 @@ RELATION_THAN_16
 <F_L comp_temp1> = %
 <F_L comp_temp> = %
 ;
+;Case <F_R linkL1 LAB> != \Dmcm 
+;e.g. I have fewer chairs than Ben. So this this sentence we want to form the than()
+;relationship using rule "RELATION_THAN_17_2". The rule "RELATION_THAN_17_1" would form 
+;than(chair, Ben) which is wrong, where correct form should be than(I, Ben) 
 #TemplateActionAlg
 RELATION_THAN_17_1
 <LAB> = \Op
 <F_L comp_temp> != %
 <F_L SET> != T
+<F_R linkL1 LAB> != \Dmcm
 =
 <F_R ref links than> += <F_L comp_temp>
 <F_L comp_temp> = %
@@ -2309,7 +2340,7 @@ PREP_TO_LINKS
 #TemplateActionAlg
 MORE_OR_LESS1a
 <LAB> = \EAm|\EEm|\Dm\.*m
-<F_L str> = more|less|many|much|little
+<F_L str> = more|less|many|much|little|fewer
 =
 <F_R relWord-temp> += <F_L str>
 #TemplateActionAlg
@@ -2318,6 +2349,13 @@ MORE_OR_LESS1b
 <F_R str> = more|less
 =
 <F_L relWord-temp> += <F_R str>
+#TemplateActionAlg
+;e.g. I find maths lessons more enjoyable than science lessons.
+;relAdj-temp creates the temp adjective for F_R of Opn connector
+MORE_OR_LESS1c
+<LAB> = \Opn
+=
+<F_R relAdj-temp> += <F_L linkR1 F_R ref>
 #TemplateActionAlg
 TO_BE_TEMP
 <LAB> = \S\.*
@@ -2338,7 +2376,7 @@ MORE_OR_LESS7a
 MORE_OR_LESS7b
 <LAB> = \MVa|\Ou\.*|\Op
 <F_R relWord-temp> != %
-<F_R relWord-temp> = more|many|much|less|little
+<F_R relWord-temp> = more|many|much|less|little|fewer
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
@@ -2359,16 +2397,18 @@ MORE_OR_LESS7d
 <F_R str> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
+;e.g. I find maths lessons more enjoyable than science lessons.
+;creating "_comparative(enjoyable, maths)" relationship
 #TemplateActionAlg
 MORE_OR_LESS7e
-<LAB> = \Pa\.*
-<F_L is-temp> != %
-<F_L relWord-temp> != %
-<F_L relWord-temp> = more|many|much|less|little
+<LAB> = \Ma
+<F_R relWord-temp> != %
+<F_L relAdj-temp> != %
+<F_R relWord-temp> = more|many|much|less|little
 =
-<F_R ref links _comparative> += <F_L is-temp>
-<F_L is-temp> = %
-<F_L relWord-temp> = %
+<F_R ref links _comparative> += <F_L relAdj-temp>
+<F_R relWord-temp> = %
+<F_L relAdj-temp> = %
 ;Creating more() binary relationships when there is no "more" terms in the sentence
 ;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
