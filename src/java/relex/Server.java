@@ -368,10 +368,16 @@ public class Server
 
 						if (logic_on)
 						{
+							out.println("; ##### START OF R2L #####");
 							out.println(logicView.printRelationsNew(parse));
 							out.flush();
 							System.err.println("Info: called relex2logic functions");
 						}
+
+						// This is for simplifying pre-processing of scheme string
+						// before evaluating it in opencog, for Relex2Logic.
+						out.println("; ##### END OF A PARSE #####");
+						out.flush();
 					}
 
 					// Add a special tag to tell the cog server that it's
