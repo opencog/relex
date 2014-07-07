@@ -360,7 +360,15 @@ public class TestRelEx
 				    "_comparative(less, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(less, comparative)\n");
-				
+		
+		rc &= test_sentence ("I run more miles than Ben.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, mile)\n"+
+				    "_quantity(mile, more)\n"+
+				    "_comparative(more, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(more, comparative)\n");
+		
 		rc &= test_sentence ("I run more often than Ben does.",
 				    "_subj(run, I)\n"+
 				    "_subj(do, Ben)\n"+
