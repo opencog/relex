@@ -346,7 +346,14 @@ public class TestRelEx
 				    "_poss(speed, him)\n"+
 				    "_comparative(fast, be)\n"+
 				    "degree(fast, comparative)\n");
-		
+
+		rc &= test_sentence ("I run more than Ben.",
+				    "_subj(run, I)\n"+
+				    "_adv(run, more)\n"+
+				    "_comparative(more, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(more, comparative)\n");
+				
 		rc &= test_sentence ("I run more often than Ben does.",
 				    "_subj(run, I)\n"+
 				    "_subj(do, Ben)\n"+
