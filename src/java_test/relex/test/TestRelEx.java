@@ -446,7 +446,31 @@ public class TestRelEx
 				    "than1(run, climb)\n"+
 				    "degree(often, comparative)\n"+
 				    "_advmod(often, less)\n");
-
+		
+		rc &= test_sentence ("I run more races than Ben wins contests.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, race)\n"+
+				    "_subj(win, Ben)\n"+
+				    "_obj(win, contest)\n"+
+				    "_quantity(race, more)\n"+
+				    "_comparative(race, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "than2(race, contest)\n"+
+				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run fewer races than Ben wins contests.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, race)\n"+
+				    "_subj(win, Ben)\n"+
+				    "_obj(win, contest)\n"+
+				    "_quantity(race, fewer)\n"+
+				    "_comparative(race, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "than2(race, contest)\n"+
+				    "degree(fewer, comparative)\n");
+		
 		rc &= test_sentence ("I have more chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
