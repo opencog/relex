@@ -14,11 +14,11 @@ This directory contains:
 SimpleView.java:
 	Provides a very simple, simplistic printing of the RelEx
 	relationship graph. This code should be consulted as an
-   example for how to write new output classes.
+	example for how to write new output classes.
 
 RawView.java:
 	Provides a full, complete dump of the entire RelEx graph.
-   It is *very* verbose.
+	It is *very* verbose.
 
 CompactView.java:
 	Provides a "compact-format" file, using an amalgamation of common
@@ -29,8 +29,8 @@ CompactView.java:
 	Strongly recommended for large projects. See goals below.
 
 LinkGraphGenerator.java:
-   Output GraphViz style markup, suitable for running through the
-   GraphViz software.
+	Output GraphViz style markup, suitable for running through the
+	GraphViz software.
 
 OpenCogScheme.java:
 OpenCogSchemeRel.java:
@@ -44,10 +44,23 @@ OpenCogSchemeLink.java:
 
 OWLView.java:
 	Generates W3C Semantic Web OWL format. The org.semanticweb jar files
-   need to be installed in order for this to be compiled.
+	need to be installed in order for this to be compiled.
 
 PrologList.java:
-   Generate Prolog output.
+	Generate Prolog output.
+
+LogicView.java:
+LogicProcessor.java:
+ScopeVariables.java:
+	Generates RelEx2Logic version of OpenCog Scheme.  Much of the work
+	are done by the helpers LogicProcessor and ScopeVariables.
+	See: http://wiki.opencog.org/w/Running_Relex2Logic_with_OpenCog
+
+NLGInputView.java:
+	Modification based on SimpleView using numbered indices.
+
+StandfordView.java:
+	Priting Stanford-parser relations.
 
 
 ========================================================
