@@ -252,7 +252,7 @@ public class TestRelEx
 				    "_subj(do, John)\n"+
 				    "_obj(run, mile)\n"+
 				    "_comparative(mile, run)\n"+
-				    "_quantity(mile, many)\n"+
+				    "_quantity(mile, more)\n"+
 				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs less miles than John does.",
@@ -261,8 +261,8 @@ public class TestRelEx
 				    "_subj(do, John)\n"+
 				    "_obj(run, mile)\n"+
 				    "_comparative(mile, run)\n"+
-				    "_quantity(mile, little)\n"+
-				    "degree(little, comparative)\n");
+				    "_quantity(mile, less)\n"+
+				    "degree(less, comparative)\n");
 		
 		rc &= test_sentence ("He runs many more miles than John does.",
 				    "than(he, John)\n" +
@@ -271,7 +271,7 @@ public class TestRelEx
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
 				    "_quantity(mile, many)\n"+
-				    "degree(much, comparative)\n");
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs fewer miles than John does.",
 				    "than(he, John)\n" +
@@ -285,11 +285,11 @@ public class TestRelEx
 		rc &= test_sentence ("He runs ten more miles than John.",
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
-				    "_quantity(mile, many)\n"+
+				    "_quantity(mile, more)\n"+
 				    "than(he, John)\n" +
 				    "_comparative(mile, run)\n"+
 				    "_num_quantity(miles, ten)\n" +
-				    "degree(many, comparative)\n");
+				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
 				    "_obj(run, mile)\n"+
@@ -299,7 +299,7 @@ public class TestRelEx
 				    "than(he, John)\n"+
 				    "_quantity_mod(ten, almost)\n"+
 				    "_num_quantity(miles, ten)\n"+
-				    "degree(many, comparative)\n");
+				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs more often than John.",
 				    "_subj(run, he)\n"+
@@ -346,6 +346,130 @@ public class TestRelEx
 				    "_poss(speed, him)\n"+
 				    "_comparative(fast, be)\n"+
 				    "degree(fast, comparative)\n");
+
+		rc &= test_sentence ("I run more than Ben.",
+				    "_subj(run, I)\n"+
+				    "_adv(run, more)\n"+
+				    "_comparative(more, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run less than Ben.",
+				    "_subj(run, I)\n"+
+				    "_adv(run, less)\n"+
+				    "_comparative(less, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(less, comparative)\n");
+		
+		rc &= test_sentence ("I run more miles than Ben.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, mile)\n"+
+				    "_quantity(mile, more)\n"+
+				    "_comparative(mile, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run fewer miles than Ben.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, mile)\n"+
+				    "_quantity(mile, fewer)\n"+
+				    "_comparative(mile, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(fewer, comparative)\n");
+		
+		rc &= test_sentence ("I run 10 more miles than Ben.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, mile)\n"+
+				    "_num_quantity(mile, 10)\n"+
+				    "_quantity_mod(10, more)\n"+
+				    "_comparative(mile, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run 10 fewer miles than Ben.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, mile)\n"+
+				    "_num_quantity(mile, 10)\n"+
+				    "_quantity_mod(10, fewer)\n"+
+				    "_comparative(mile, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(fewer, comparative)\n");
+		
+		rc &= test_sentence ("I run more often than Ben.",
+				    "_subj(run, I)\n"+
+				    "_advmod(run, often)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, more)\n");
+		
+		rc &= test_sentence ("I run less often than Ben.",
+				    "_subj(run, I)\n"+
+				    "_advmod(run, often)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, less)\n");
+
+		rc &= test_sentence ("I run more often than Ben does.",
+				    "_subj(run, I)\n"+
+				    "_subj(do, Ben)\n"+
+				    "_advmod(run, often)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, more)\n");
+		
+		rc &= test_sentence ("I run less often than Ben does.",
+				    "_subj(run, I)\n"+
+				    "_subj(do, Ben)\n"+
+				    "_advmod(run, often)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, less)\n");
+		
+		rc &= test_sentence ("I run more often than Ben climbs.",
+				    "_subj(run, I)\n"+
+				    "_subj(climb, Ben)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, more)\n");
+		
+		rc &= test_sentence ("I run less often than Ben climbs.",
+				    "_subj(run, I)\n"+
+				    "_subj(climb, Ben)\n"+
+				    "_comparative(often, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "degree(often, comparative)\n"+
+				    "_advmod(often, less)\n");
+		
+		rc &= test_sentence ("I run more races than Ben wins contests.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, race)\n"+
+				    "_subj(win, Ben)\n"+
+				    "_obj(win, contest)\n"+
+				    "_quantity(race, more)\n"+
+				    "_comparative(race, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "than2(race, contest)\n"+
+				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run fewer races than Ben wins contests.",
+				    "_subj(run, I)\n"+
+				    "_obj(run, race)\n"+
+				    "_subj(win, Ben)\n"+
+				    "_obj(win, contest)\n"+
+				    "_quantity(race, fewer)\n"+
+				    "_comparative(race, run)\n"+
+				    "than(I, Ben)\n"+
+				    "than1(run, climb)\n"+
+				    "than2(race, contest)\n"+
+				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("I have more chairs than Ben.",
 				    "_obj(have, chair)\n"+
@@ -372,7 +496,7 @@ public class TestRelEx
 				    "_advmod(earn, much)\n"+
 				    "_quantity(money, more)\n"+
 				    "_advmod(more, much)\n"+
-				    "degree(much,comparative)\n");
+				    "degree(more,comparative)\n");
 		
 		rc &= test_sentence ("He earns much less money than I do.",
 				    "_obj(earn, money)\n"+
@@ -383,7 +507,7 @@ public class TestRelEx
 				    "_advmod(earn, much)\n"+
 				    "_quantity(money, less)\n"+
 				    "_advmod(less, much)\n"+
-				    "degree(little, comparative)\n");
+				    "degree(less, comparative)\n");
 		
 		rc &= test_sentence ("She comes here more often than her husband.",
 				    "_advmod(come, here)\n"+
