@@ -353,6 +353,13 @@ public class TestRelEx
 				    "_comparative(more, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(more, comparative)\n");
+		
+		rc &= test_sentence ("I run less than Ben.",
+				    "_subj(run, I)\n"+
+				    "_adv(run, less)\n"+
+				    "_comparative(less, run)\n"+
+				    "than(I, Ben)\n"+
+				    "degree(less, comparative)\n");
 				
 		rc &= test_sentence ("I run more often than Ben does.",
 				    "_subj(run, I)\n"+
