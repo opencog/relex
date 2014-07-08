@@ -340,11 +340,20 @@ POS_NOUN_DET
 <F_R POS> = noun
 ;
 #TemplateActionAlg
-POS_PREP
+POS_PREP_1
 <LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
 <F_L POS> = WORD
 =
 <F_L POS> = prep
+;When \MVp and .p occur together this rules applies
+;It looked like a nice chair. 
+;The word "like" is pos tagged with .p and also connected with \MVp link
+#TemplateActionAlg
+POS_PREP_2
+<LAB> = \MVp
+<F_R subscript> = .p
+=
+<F_R POS> = prep
 ;
 #TemplateActionAlg
 POS_PREP_INVERTED
