@@ -652,7 +652,6 @@ public class TestRelEx
 		                       "near(be, window)\n" +
 		                       "_obj(be, student)\n" +
 		                       "_subj(be, Jack)\n" +
-		                       "_obj(near, window)\n" +
 		                       "_pobj(in, book)\n" +
 		                       "_psubj(in, name)\n" +
 		                       "_det(book, that)\n" +
