@@ -467,7 +467,7 @@ public class TestRelEx
 				    "_obj(run, race)\n"+
 				    "_subj(win, Ben)\n"+
 				    "_obj(win, contest)\n"+
-				    "_advmod(run, more)\n"+
+				    "_advmod(run, fewer)\n"+
 				    "_quantity(race, fewer)\n"+
 				    "_comparative(race, run)\n"+
 				    "than(I, Ben)\n"+
