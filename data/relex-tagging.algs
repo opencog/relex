@@ -1288,6 +1288,7 @@ PREP_RELATIVE_REF2
 PREP_RELATIVE_REF3
 <LAB> = \MX.j\.*|\Mj\.*
 <F_R RELATIVE-REF-LOC> != %
+<LAB> != \Mj
 ;The man, of whom I know, ...
 =
 <F_R RELATIVE-REF-LOC ref> += <F_L ref>
