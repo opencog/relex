@@ -142,6 +142,7 @@ public class Server
 		{
 			logic_on = true;
 			relex_on = true;
+			link_on = true;
 		 }
 
 		if (commandMap.get("--verbose") != null)
