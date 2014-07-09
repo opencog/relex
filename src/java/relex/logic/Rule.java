@@ -140,11 +140,12 @@ public class Rule {
 				String variableValueUUID = criterium.getVariableValueUUID(variableName);
 				if(variableName.substring(0, 1).equals("$"))
 				{
+					// matching "$A " and "$A)" and keeping what is after "$A"
 					schemeOutput = schemeOutput.replaceAll(
-											Pattern.quote(variableName), Matcher.quoteReplacement("\"" + variableValue + "\""));
+											Pattern.quote(variableName) + "([ )])", Matcher.quoteReplacement("\"" + variableValue + "\"") + "$1");
 					schemeOutput = schemeOutput.replaceAll(
 											Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-											Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " +"\"" + variableValueUUID + "\""));
+											Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " + "\"" + variableValueUUID + "\""));
 				}
 			}
 		}
