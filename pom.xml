@@ -64,7 +64,9 @@
 		</contributor>
 		<contributor>
 			<name>Jand Hashemi</name>
-			<id>Lucky-- IRC freenode</id>
+			<roles>
+				<role>Lucky-- IRC freenode</role>
+			</roles>
 		</contributor>
 		<contributor>
 			<name>Alex van der Peet</name>
@@ -78,7 +80,21 @@
 			<name>Danny Brian</name>
 			<email>danny@brians.org</email>
 		</contributor>
+		<contributor>
+			<name>Hendy Irawan</name>
+			<email>hendy@soluvas.com</email>
+			<url>http://www.hendyirawan.com/</url>
+			<organization>Soluvas</organization>
+			<organizationUrl>http://www.soluvas.com/</organizationUrl>
+			<timezone>Asia/Jakarta</timezone>
+			<roles>
+				<role>Maven, JUnit</role>
+			</roles>
+		</contributor>
 	</contributors>
+	<properties>
+		<skipTests>true</skipTests><!-- until JUnit work is done -->
+	</properties>
 	<build>
 		<sourceDirectory>${basedir}/src/java</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
@@ -90,6 +106,9 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+					<excludes>
+						<exclude>relex/corpus/DocSplitterOpenNLP14Impl.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -126,12 +145,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.jwordnet</groupId>
 			<artifactId>jwnl</artifactId>
 			<version>1.4_rc3</version>
@@ -151,6 +164,14 @@
 			<artifactId>owlapi-apibinding</artifactId>
 			<version>3.5.0</version>
 		</dependency>
+		
+		<!-- Tests -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -161,4 +182,13 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
