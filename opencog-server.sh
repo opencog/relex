@@ -51,7 +51,7 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora
 # Return Link Grammar, Relex and anaphora output.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
 
-# Return with RelEx2Logic output
+# Return with RelEx2Logic Link Grammar, and Relex output on default port 4444.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic
 
 # Like the above, but listens on a non-default port
