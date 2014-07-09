@@ -4,7 +4,7 @@
 	<groupId>org.opencog</groupId>
 	<artifactId>relex</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<name>relex</name>
 	<description>RelEx dependency relation extractor</description>
 	<url>http://wiki.opencog.org/w/RelEx_Dependency_Relationship_Extractor</url>
