@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
-import java.util.Set;
-import java.util.Collection;
 import java.util.Iterator;
 
 import relex.feature.FeatureNode;
