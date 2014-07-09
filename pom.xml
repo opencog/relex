@@ -1,99 +1,164 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.opencog</groupId>
-  <artifactId>relex</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0.0</version>
-  <name>relex</name>
-  <description>RelEx dependency relation extractor</description>
-  <url>http://maven.apache.org</url>
-  <repositories>
-    <repository>
-      <id>central</id>
-      <name>Maven Repository Switchboard</name>
-      <layout>default</layout>
-      <url>http://maven.apache.org</url>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-  </repositories>
-  <build>
-    <sourceDirectory>${basedir}/src/java</sourceDirectory>
-    <testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-    </plugins>
-    <resources>
-      <resource>
-        <targetPath>./</targetPath>
-        <filtering>false</filtering>
-        <directory>${basedir}/data</directory>
-        <includes>
-          <include>relex2logic-rules.txt</include>
-          <include>relex-penn-tagging-algs.txt</include>
-          <include>relex-semantic-algs.txt</include>
-          <include>relex-stanford-algs.txt</include>
-          <include>relex-tagging-algs.txt</include>
-        </includes>
-      </resource>
-      <resource>
-        <targetPath>./</targetPath>
-        <filtering>false</filtering>
-        <directory>${basedir}/data/wordnet</directory>
-        <includes>
-          <include>file_properties.xml</include>
-        </includes>
-      </resource>
-      <resource>
-        <targetPath>./</targetPath>
-        <filtering>false</filtering>
-        <directory>${basedir}/data/sentence-detector</directory>
-        <includes>
-          <include>EnglishSD.bin.gz</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.jwordnet</groupId>
-      <artifactId>jwnl</artifactId>
-      <version>1.4_rc3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache</groupId>
-      <artifactId>apache</artifactId>
-      <version>12</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.opennlp</groupId>
-      <artifactId>opennlp</artifactId>
-      <version>1.5.3</version>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.owlapi</groupId>
-      <artifactId>owlapi-api</artifactId>
-      <version>3.4.1</version>
-    </dependency>
-  </dependencies>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.opencog</groupId>
+	<artifactId>relex</artifactId>
+	<packaging>jar</packaging>
+	<version>1.5.1-SNAPSHOT</version>
+	<name>relex</name>
+	<description>RelEx dependency relation extractor</description>
+	<url>http://wiki.opencog.org/w/RelEx_Dependency_Relationship_Extractor</url>
+	<developers>
+		<developer>
+			<name>Mike Ross</name>
+			<email>mikenon@gmail.com</email>
+			<roles>
+				<role>in 2005</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Linas Vepstas</name>
+			<email>linasvepstas@gmail.com</email>
+			<url>http://linas.org/</url>
+			<roles>
+				<role>as of 2008</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Murilo Queiroz</name>
+			<email>muriloq@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Borislav Iordanov</name>
+			<email>borislav.iordanov@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Evgenii Philippov</name>
+			<email>efilippov@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Fabricio Silva</name>
+			<email>fabaguiarsilva@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Blake Lemoine</name>
+			<email>bal2277@louisiana.edu</email>
+		</contributor>
+		<contributor>
+			<name>Rui P. Costa</name>
+			<email>b4h0pe@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Jim White</name>
+			<email>james.paul.white@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Rodas Solomon</name>
+			<email>rodisolomon@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Lian Ruiting</name>
+			<email>lianlian1022@gmail.com</email>
+		</contributor>
+		<contributor>
+			<name>Jand Hashemi</name>
+			<id>Lucky-- IRC freenode</id>
+		</contributor>
+		<contributor>
+			<name>Alex van der Peet</name>
+			<email>alex@yutani.nl</email>
+		</contributor>
+		<contributor>
+			<name>David Hart</name>
+			<email>dhart@opencog.org</email>
+		</contributor>
+		<contributor>
+			<name>Danny Brian</name>
+			<email>danny@brians.org</email>
+		</contributor>
+	</contributors>
+	<build>
+		<sourceDirectory>${basedir}/src/java</sourceDirectory>
+		<testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<targetPath>./</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/data</directory>
+				<includes>
+					<include>relex2logic-rules.txt</include>
+					<include>relex-penn-tagging-algs.txt</include>
+					<include>relex-semantic-algs.txt</include>
+					<include>relex-stanford-algs.txt</include>
+					<include>relex-tagging-algs.txt</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>./</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/data/wordnet</directory>
+				<includes>
+					<include>file_properties.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>./</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/data/sentence-detector</directory>
+				<includes>
+					<include>EnglishSD.bin.gz</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jwordnet</groupId>
+			<artifactId>jwnl</artifactId>
+			<version>1.4_rc3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.linkgrammar</groupId>
+			<artifactId>linkgrammar</artifactId>
+			<version>5.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>owlapi-apibinding</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>bippo-nexus-public</id>
+			<url>http://nexus.bippo.co.id/nexus/content/groups/public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
