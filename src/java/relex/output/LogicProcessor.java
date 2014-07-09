@@ -75,13 +75,13 @@ public class LogicProcessor
 		 */
 		private static class ChildParentPair
 		{
-			public String relation;
+			public Criterium criterium;
 			public FeatureNode child;
 			public FeatureNode parent;
 
-			public ChildParentPair(String r, FeatureNode c, FeatureNode p)
+			public ChildParentPair(Criterium r, FeatureNode c, FeatureNode p)
 			{
-				relation = r;
+				criterium = r;
 				child = c;
 				parent = p;
 			}
@@ -300,15 +300,15 @@ public class LogicProcessor
 				return;
 			}
 
-			List<ChildParentPair> foundPairs = new ArrayList<ChildParentPair>();
-			List<Criterium> foundCriteriums = new ArrayList<Criterium>();
+			List<List<ChildParentPair>> foundPairsList = new ArrayList<List<ChildParentPair>>();
+			List<List<Criterium>> foundCriteriumsList = new ArrayList<List<Criterium>>();
 
 			// find all criteriums that can be matched on this node and its immediate links,
-			// and build the child/parent pairs
-			matchCriteriums(parentNode, criteriums, foundPairs, foundCriteriums);
+			// and build the child/parent pairs, in all possible combinations
+			matchCriteriums(parentNode, criteriums, foundPairsList, foundCriteriumsList);
 
 			// if no criteriums matched, maybe subsequent node will satisfy some criteria
-			if (foundPairs.size() == 0)
+			if (foundPairsList.size() == 0)
 			{
 				// only continue if the initial parent node satisfies some criteria
 				if (matchedPairs.size() > 0 && !parentNode.isValued())
@@ -352,53 +352,68 @@ public class LogicProcessor
 				return;
 			}
 
-			// criteriums matched, remove them all for the next level
-			criteriums.removeAll(foundCriteriums);
+			Iterator<List<ChildParentPair>> pairsListIter = foundPairsList.iterator();
+			Iterator<List<Criterium>> criteriumsListIter = foundCriteriumsList.iterator();
 
-			// generate all combinations between members of different matched links
-			// ie. [word1 [links [rel1 [member0 word2 [links [rel5 ...
-			//                         [member1 ...
-			//                         ....
-			//                   [rel2 [member0 ...
-			//                         ....
-			//                   [rel3 [member0 ...
-			//                         ....
-			//                   [rel4 wordN [links ...
-			// needs <rel1 member0, rel2 member0, rel3 member0, rel4>,
-			//       <rel1 member0, rel2 member0, rel3 member1, rel4> ... etc.
-			List<List<ChildParentPair>> allComb = new ArrayList<List<ChildParentPair>>();
-			generateAllComb(foundPairs, 0, allComb, new Stack<ChildParentPair>());
-
-			// for each combination, search deeper for more criteriums
-			for (List<ChildParentPair> pairs : allComb)
+			// check all combinations of unique match generated from matchCriteriums
+			while (pairsListIter.hasNext() && criteriumsListIter.hasNext())
 			{
-				for (ChildParentPair pair : pairs)
-					matchedPairs.push(pair);
+				List<ChildParentPair> foundPairs = pairsListIter.next();
+				List<Criterium> foundCriteriums = criteriumsListIter.next();
 
-				// pick one node and search deeper, and do this for all nodes in this combination
-				for (ChildParentPair pair : pairs)
-					recursiveMatchAndApply(rule, pair.child, visitedNodes, criteriums, matchedPairs, results);
+				// criteriums matched, remove them all for the next level
+				criteriums.removeAll(foundCriteriums);
 
-				for (int i = 0; i < pairs.size(); i++)
-					matchedPairs.pop();
+				// generate all combinations between members of different matched links
+				// ie. [word1 [links [rel1 [member0 word2 [links [rel5 ...
+				//                         [member1 ...
+				//                         ....
+				//                   [rel2 [member0 ...
+				//                         ....
+				//                   [rel3 [member0 ...
+				//                         ....
+				//                   [rel4 wordN [links ...
+				// needs <rel1 member0, rel2 member0, rel3 member0, rel4>,
+				//       <rel1 member0, rel2 member0, rel3 member1, rel4> ... etc.
+				List<List<ChildParentPair>> allComb = new ArrayList<List<ChildParentPair>>();
+				generateAllComb(foundPairs, 0, allComb, new Stack<ChildParentPair>());
+
+				// for each combination, search deeper for more criteriums
+				for (List<ChildParentPair> pairs : allComb)
+				{
+					for (ChildParentPair pair : pairs)
+						matchedPairs.push(pair);
+
+					// pick one node and search deeper, and do this for all nodes in this combination
+					for (ChildParentPair pair : pairs)
+						recursiveMatchAndApply(rule, pair.child, visitedNodes, criteriums, matchedPairs, results);
+
+					for (int i = 0; i < pairs.size(); i++)
+						matchedPairs.pop();
+				}
+
+				// add the criteriums back in, since the previous level might match
+				// the same criteriums with a different path
+				criteriums.addAll(foundCriteriums);
 			}
 
-			// add the criteriums back in, since the previous level might match
-			// the same criteriums with a different path
-			criteriums.addAll(foundCriteriums);
 			visitedNodes.remove(parentNode);
 		}
 
 		/**
 		 * Helper method to find criteriums that can be satisfied by the current node and its immediate links.
 		 *
-		 * @param parentNode       The parent node we are looking at
-		 * @param criteriums       The list of criteriums to check
-		 * @param foundPairs       Returns all child/parent nodes pair that are matched to a criterium
-		 * @param foundCriteriums  Returns all criteriums that got matched
+		 * @param parentNode           The parent node we are looking at
+		 * @param criteriums           The list of criteriums to check
+		 * @param foundPairsList       Returns all child/parent nodes pair that are matched to a criterium, in various combinations
+		 * @param foundCriteriumsList  Returns all criteriums that got matched, correspond to the child/parent list
 		 */
-		private void matchCriteriums(FeatureNode parentNode, HashSet<Criterium> criteriums, List<ChildParentPair> foundPairs, List<Criterium> foundCriteriums)
+		private void matchCriteriums(FeatureNode parentNode, HashSet<Criterium> criteriums, List<List<ChildParentPair>> foundPairsList, List<List<Criterium>> foundCriteriumsList)
 		{
+			HashSet<String> nameSet = new HashSet<String>();
+
+			List<ChildParentPair> foundPairs = new ArrayList<ChildParentPair>();
+
 			// find all criteriums that can be satisfied by the current node and its immediate links
 			for (Criterium thisCriterium : criteriums)
 			{
@@ -410,8 +425,8 @@ public class LogicProcessor
 
 				if (node != null)
 				{
-					foundPairs.add(new ChildParentPair(attrName, node, parentNode));
-					foundCriteriums.add(thisCriterium);
+					nameSet.add(attrName);
+					foundPairs.add(new ChildParentPair(thisCriterium, node, parentNode));
 				}
 
 				FeatureNode linksNode = parentNode.get("links");
@@ -420,10 +435,72 @@ public class LogicProcessor
 				{
 					if (linksNode.get(attrName) != null)
 					{
-						foundPairs.add(new ChildParentPair(attrName, linksNode.get(attrName), parentNode));
-						foundCriteriums.add(thisCriterium);
+						nameSet.add(attrName);
+						foundPairs.add(new ChildParentPair(thisCriterium, linksNode.get(attrName), parentNode));
 					}
 				}
+			}
+
+			// since some criteriums with same name might get matched, need to find all combinations
+			generateAllComb(nameSet, foundPairs, foundPairsList,  new Stack<ChildParentPair>());
+
+			//  get the corresponding criterium
+			for (Iterator<List<ChildParentPair>> iter1 = foundPairsList.iterator(); iter1.hasNext(); )
+			{
+				List<ChildParentPair> thisPairsComb = iter1.next();
+				List<Criterium> thisCriteriumsComb = new ArrayList<Criterium>();
+
+				for (Iterator<ChildParentPair> iter2 = thisPairsComb.iterator(); iter2.hasNext(); )
+				{
+					ChildParentPair thisPair = iter2.next();
+					thisCriteriumsComb.add(thisPair.criterium);
+				}
+
+				foundCriteriumsList.add(thisCriteriumsComb);
+			}
+		}
+
+		/**
+		 * When we have several criteriums with the same name (eg. that($A,$B) & pos($A,$C) & pos($B,$D))
+		 * and a node can satisfy it, we generate all possible combination of how this node can satisfy the rule.
+		 *
+		 * @param nameSet      The set of unique criteriums name matched
+		 * @param foundPairs   All criteriums that can be matched
+		 * @param allComb      Returns all possible combination where the criterium names will be unique
+		 * @param currComb     Store the current combination for recursion
+		 */
+		private void generateAllComb(HashSet<String> nameSet, List<ChildParentPair> foundPairs, List<List<ChildParentPair>> allComb, Stack<ChildParentPair> currComb)
+		{
+			// base case, all criterium names checked
+			if (nameSet.size() == 0)
+			{
+				List<ChildParentPair> newComb = new ArrayList<ChildParentPair>();
+				newComb.addAll(currComb);
+
+				allComb.add(newComb);
+				return;
+			}
+
+			// get the first key and find all Pair with that name
+			String name = nameSet.iterator().next();
+			List<ChildParentPair> namePairs = new ArrayList<ChildParentPair>();
+
+			for (ChildParentPair pair : foundPairs)
+			{
+				if (pair.criterium.getCriteriumLabel().equals(name))
+					namePairs.add(pair);
+			}
+
+			// create a nameMap without the current name
+			HashSet<String> newSet = new HashSet<String>();
+			newSet.addAll(nameSet);
+			newSet.remove(name);
+
+			for (ChildParentPair pair : namePairs)
+			{
+				currComb.push(pair);
+				generateAllComb(newSet, foundPairs, allComb, currComb);
+				currComb.pop();
 			}
 		}
 
@@ -490,7 +567,7 @@ public class LogicProcessor
 				{
 					String memberName = "member" + i.toString();
 					FeatureNode memberNode = pairs.get(depth).child.get(memberName);
-					ChildParentPair newPair = new ChildParentPair(pairs.get(depth).relation, memberNode, pairs.get(depth).parent);
+					ChildParentPair newPair = new ChildParentPair(pairs.get(depth).criterium, memberNode, pairs.get(depth).parent);
 
 					currComb.push(newPair);
 					generateAllComb(pairs, depth + 1, allComb, currComb);
@@ -545,7 +622,8 @@ public class LogicProcessor
 
 				for (ChildParentPair pair : matchedPairs)
 				{
-					if (pair.relation.equals(thisCriterium.getCriteriumLabel()))
+					// reference check; find the correct pair
+					if (pair.criterium == thisCriterium)
 					{
 						thisPair = pair;
 						break;
