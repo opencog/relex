@@ -321,6 +321,11 @@ public class LogicProcessor
 						for (String linkToName : linksNode.getFeatureNames())
 						{
 							FeatureNode subNode = linksNode.get(linkToName);
+
+							// to handle valued node like SIG in links (which appears for that-clause)
+							if (subNode.isValued())
+								continue;
+
 							FeatureNode memberNode = subNode.get("member0");
 
 							if (memberNode != null)
