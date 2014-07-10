@@ -20,6 +20,8 @@
 			<name>Linas Vepstas</name>
 			<email>linasvepstas@gmail.com</email>
 			<url>http://linas.org/</url>
+			<organization>OpenCog Foundation</organization>
+			<organizationUrl>http://opencog.org/</organizationUrl>
 			<roles>
 				<role>as of 2008</role>
 			</roles>
@@ -75,6 +77,16 @@
 		<contributor>
 			<name>David Hart</name>
 			<email>dhart@opencog.org</email>
+			<url>https://www.linkedin.com/in/davidhart</url>
+			<organization>OpenCog Foundation</organization>
+			<organizationUrl>http://opencog.org/</organizationUrl>
+			<roles>
+				<role>DevOps</role>
+				<role>Systems Integration</role>
+				<role>Artificial Intelligence</role>
+				<role>Robotics</role>
+				<role>Virtual Worlds</role>
+			</roles>
 		</contributor>
 		<contributor>
 			<name>Danny Brian</name>
