@@ -709,7 +709,7 @@ public class LogicProcessor
 	 */
 	public String applyRulesToParse(FeatureNode rootNode)
 	{
-		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByCriteriaCountDesc();
+		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByPriority();
 
 		RuleChecker rc = new RuleChecker();
 		rc.orderedRulesSet = ruleSet;
