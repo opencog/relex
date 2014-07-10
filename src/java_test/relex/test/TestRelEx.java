@@ -170,7 +170,8 @@ public class TestRelEx
 				    "_predadj(he, intelligent)\n");
 				
 		rc &= test_sentence ("He runs more quickly than John.",
-				    "_advmod(run, quickly)\n" +
+				    "_advmod(run, quickly)\n"+
+				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n" +
 				    "_comparative(quickly, run)\n" +
@@ -186,6 +187,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs more quickly than John does.",
 				    "_advmod(run, quickly)\n" +
+				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n" +
@@ -234,6 +236,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs more slowly than John.",
 				    "than(he, John)\n" +
 				    "_subj(run, he)\n" +
+				    "_advmod(slowly, more)\n"+
 				    "_comparative(slowly, run)\n"+
 				    "_advmod(run, slowly)\n"+
 				    "degree(slowly, comparative)\n");
@@ -303,18 +306,24 @@ public class TestRelEx
 						
 		rc &= test_sentence ("He runs more often than John.",
 				    "_subj(run, he)\n"+
+				    "_advmod(often, more)\n"+
+				    "_advmod(run, often)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
+				    "_advmod(often, less)\n"+
+				    "_advmod(run, often)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 							
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(often, more)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -322,6 +331,8 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(often, less)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -349,14 +360,14 @@ public class TestRelEx
 
 		rc &= test_sentence ("I run more than Ben.",
 				    "_subj(run, I)\n"+
-				    "_adv(run, more)\n"+
+				    "_obj(run, more)\n"+
 				    "_comparative(more, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("I run less than Ben.",
 				    "_subj(run, I)\n"+
-				    "_adv(run, less)\n"+
+				    "_obj(run, less)\n"+
 				    "_comparative(less, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(less, comparative)\n");
@@ -436,6 +447,7 @@ public class TestRelEx
 				    "than(I, Ben)\n"+
 				    "than1(run, climb)\n"+
 				    "degree(often, comparative)\n"+
+				    "_advmod(run, often)\n"+
 				    "_advmod(often, more)\n");
 		
 		rc &= test_sentence ("I run less often than Ben climbs.",
@@ -445,6 +457,7 @@ public class TestRelEx
 				    "than(I, Ben)\n"+
 				    "than1(run, climb)\n"+
 				    "degree(often, comparative)\n"+
+				    "_advmod(run, often)\n"+
 				    "_advmod(often, less)\n");
 		
 		rc &= test_sentence ("I run more races than Ben wins contests.",
@@ -477,7 +490,6 @@ public class TestRelEx
 				    "than(I, Ben)\n"+
 				    "_comparative(chair, have)\n"+
 				    "_quantity(chair, more)\n"+
-				    "_advmod(have, more)\n"+
 				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("I have fewer chairs than Ben.",
@@ -486,7 +498,6 @@ public class TestRelEx
 				    "than(I, Ben)\n"+
 				    "_comparative(chair, have)\n"+
 				    "_quantity(chair, fewer)\n"+
-				    "_advmod(have, fewer)\n"+
 				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("He earns much more money than I do.",
@@ -495,7 +506,6 @@ public class TestRelEx
 				    "_subj(earn, he)\n"+
 				    "than(he,I)\n"+
 				    "_comparative(money,earn)\n"+
-				    "_advmod(earn, much)\n"+
 				    "_quantity(money, more)\n"+
 				    "_advmod(more, much)\n"+
 				    "degree(more,comparative)\n");
@@ -506,13 +516,14 @@ public class TestRelEx
 				    "_subj(earn, he)\n"+
 				    "than(he, I)\n"+
 				    "_comparative(money, earn)\n"+
-				    "_advmod(earn, much)\n"+
 				    "_quantity(money, less)\n"+
 				    "_advmod(less, much)\n"+
 				    "degree(less, comparative)\n");
 		
 		rc &= test_sentence ("She comes here more often than her husband.",
 				    "_advmod(come, here)\n"+
+				    "_advmod(often, more)\n"+
+				    "_advmod(come, often)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
@@ -521,6 +532,8 @@ public class TestRelEx
 		
 		rc &= test_sentence ("She comes here less often than her husband.",
 				    "_advmod(come, here)\n"+
+				    "_advmod(often, less)\n"+
+				    "_advmod(come, often)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
