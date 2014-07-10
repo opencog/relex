@@ -187,6 +187,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs more quickly than John does.",
 				    "_advmod(run, quickly)\n" +
+				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n" +
@@ -306,6 +307,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs more often than John.",
 				    "_subj(run, he)\n"+
 				    "_advmod(often, more)\n"+
+				    "_advmod(run, often)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
@@ -313,6 +315,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
 				    "_advmod(often, less)\n"+
+				    "_advmod(run, often)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
@@ -320,6 +323,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
 				    "_advmod(often, more)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -328,6 +332,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
 				    "_advmod(often, less)\n"+
+				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -524,6 +529,7 @@ public class TestRelEx
 		rc &= test_sentence ("She comes here more often than her husband.",
 				    "_advmod(come, here)\n"+
 				    "_advmod(often, more)\n"+
+				    "_advmod(come, often)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
@@ -533,6 +539,7 @@ public class TestRelEx
 		rc &= test_sentence ("She comes here less often than her husband.",
 				    "_advmod(come, here)\n"+
 				    "_advmod(often, less)\n"+
+				    "_advmod(come, often)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
