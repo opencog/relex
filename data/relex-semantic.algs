@@ -1554,14 +1554,11 @@ CONJ_PREDADJ
 ; Jim runs quickly.
 ; MVr: "She handled it quickly and gracefully."
 ; MVb: "He sang louder and stronger."
-;case <F_R str> != often  --> e.g. "He runs more often than John."
-;above sentence generating the _advmod(run,often) and duplicates the information
-;it generates through the binary relationships 
 #TemplateActionAlg
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
 <LAB> != \EBx\.*
-<F_R str> != not|more|less|often
+<F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> = %
 =
@@ -1577,10 +1574,10 @@ ADV1
 #TemplateActionAlg
 ADV1_1
 <LAB> = \MVa
-<F_R str> != not|more|less|often
+<F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> = %
-<F_L linkR2 F_R str> = less 
+<F_L linkR2 F_R str> = more|less 
 =
 <F_R ref links _advmod> += < F_L linkR2 F_R ref>
 ;e.g. He runs faster than John.
