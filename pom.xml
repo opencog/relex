@@ -4,7 +4,7 @@
 	<groupId>org.opencog</groupId>
 	<artifactId>relex</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<name>relex</name>
 	<description>RelEx dependency relation extractor</description>
 	<url>http://wiki.opencog.org/w/RelEx_Dependency_Relationship_Extractor</url>
@@ -80,7 +80,21 @@
 			<name>Danny Brian</name>
 			<email>danny@brians.org</email>
 		</contributor>
+		<contributor>
+			<name>Hendy Irawan</name>
+			<email>hendy@soluvas.com</email>
+			<url>http://www.hendyirawan.com/</url>
+			<organization>Soluvas</organization>
+			<organizationUrl>http://www.soluvas.com/</organizationUrl>
+			<timezone>Asia/Jakarta</timezone>
+			<roles>
+				<role>Maven, JUnit</role>
+			</roles>
+		</contributor>
 	</contributors>
+	<properties>
+		<skipTests>true</skipTests><!-- until JUnit work is done -->
+	</properties>
 	<build>
 		<sourceDirectory>${basedir}/src/java</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
@@ -92,6 +106,9 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+					<excludes>
+						<exclude>relex/corpus/DocSplitterOpenNLP14Impl.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
