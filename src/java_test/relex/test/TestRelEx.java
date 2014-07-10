@@ -375,7 +375,6 @@ public class TestRelEx
 		rc &= test_sentence ("I run more miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_advmod(run, more)\n"+
 				    "_quantity(mile, more)\n"+
 				    "_comparative(mile, run)\n"+
 				    "than(I, Ben)\n"+
@@ -384,7 +383,6 @@ public class TestRelEx
 		rc &= test_sentence ("I run fewer miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_advmod(run, fewer)\n"+
 				    "_quantity(mile, fewer)\n"+
 				    "_comparative(mile, run)\n"+
 				    "than(I, Ben)\n"+
