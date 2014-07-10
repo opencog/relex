@@ -49,7 +49,7 @@
 
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
 
-[PRENOMINAL] <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
+[PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 
 [WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
 
