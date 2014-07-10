@@ -181,7 +181,7 @@
 
     <!-- Run tests -->
     <target name="test-stanford" depends="build-tests">
-        <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
+        <junit fork="true" printsummary="true" showoutput="true" maxmemory="1024m">
             <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
         	<classpath path="src/test/resources"/>
         	<classpath refid="cp.test"/>
@@ -191,7 +191,7 @@
         </junit>
     </target>
     <target name="test-relex" depends="build-tests">
-        <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
+        <junit fork="true" printsummary="true" showoutput="true" maxmemory="1024m">
             <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
         	<classpath path="src/test/resources"/>
         	<classpath refid="cp.test"/>
@@ -201,7 +201,7 @@
         </junit>
     </target>
     <target name="test-logic" depends="build-tests">
-        <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
+        <junit fork="true" printsummary="true" showoutput="false" maxmemory="1024m">
             <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
         	<classpath path="src/test/resources"/>
         	<classpath refid="cp.test"/>
