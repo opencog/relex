@@ -170,7 +170,8 @@ public class TestRelEx
 				    "_predadj(he, intelligent)\n");
 				
 		rc &= test_sentence ("He runs more quickly than John.",
-				    "_advmod(run, quickly)\n" +
+				    "_advmod(run, quickly)\n"+
+				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n" +
 				    "_comparative(quickly, run)\n" +
@@ -234,6 +235,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs more slowly than John.",
 				    "than(he, John)\n" +
 				    "_subj(run, he)\n" +
+				    "_advmod(slowly, more)\n"+
 				    "_comparative(slowly, run)\n"+
 				    "_advmod(run, slowly)\n"+
 				    "degree(slowly, comparative)\n");
@@ -303,18 +305,21 @@ public class TestRelEx
 						
 		rc &= test_sentence ("He runs more often than John.",
 				    "_subj(run, he)\n"+
+				    "_advmod(often, more)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 		
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
+				    "_advmod(often, less)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
 				    "degree(often, comparative)\n");
 							
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(often, more)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -322,6 +327,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
+				    "_advmod(often, less)\n"+
 				    "_subj(run, he)\n"+
 				    "_comparative(often, run)\n"+
 				    "than(he, John)\n"+
@@ -517,6 +523,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("She comes here more often than her husband.",
 				    "_advmod(come, here)\n"+
+				    "_advmod(often, more)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
@@ -525,6 +532,7 @@ public class TestRelEx
 		
 		rc &= test_sentence ("She comes here less often than her husband.",
 				    "_advmod(come, here)\n"+
+				    "_advmod(often, less)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
 				    "_comparative(often, come)\n"+
