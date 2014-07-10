@@ -506,7 +506,6 @@ public class TestRelEx
 				    "_subj(earn, he)\n"+
 				    "than(he,I)\n"+
 				    "_comparative(money,earn)\n"+
-				    "_advmod(earn, much)\n"+
 				    "_quantity(money, more)\n"+
 				    "_advmod(more, much)\n"+
 				    "degree(more,comparative)\n");
@@ -517,7 +516,6 @@ public class TestRelEx
 				    "_subj(earn, he)\n"+
 				    "than(he, I)\n"+
 				    "_comparative(money, earn)\n"+
-				    "_advmod(earn, much)\n"+
 				    "_quantity(money, less)\n"+
 				    "_advmod(less, much)\n"+
 				    "degree(less, comparative)\n");
