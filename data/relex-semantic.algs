@@ -1642,11 +1642,18 @@ ADV2_HEADLESS
 ADV3
 ;  Jim runs very quickly  --   EE(very,quickly) 
 ;  Jim ate a very fat chicken -- has EA(very, fat)
-;We want to avoid _advmod(less,often) relationships
-;e.g. He runs less often than John.
 <LAB> = \EE\.* | EA
 <F_L str> != more
-<F_R str> != often
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _advmod> += <F_L ref>
+;EE connects adverbs to other adverbs. Some adverbs can
+;modify other adverbs ("very", "quite"); these carry EE+connectors.
+;e.g. I run more often than Ben.
+#TemplateActionAlg
+ADV3_1
+<LAB> = \EE\.*
+<F_R linkL0 LAB> = \MVa
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
