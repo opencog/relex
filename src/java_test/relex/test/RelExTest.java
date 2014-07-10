@@ -29,6 +29,8 @@ import junitparams.JUnitParamsRunner;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import relex.ParsedSentence;
 import relex.RelationExtractor;
@@ -38,11 +40,12 @@ import relex.output.SimpleView;
 @RunWith(JUnitParamsRunner.class)
 public class RelExTest {
 	
+	private static final Logger log = LoggerFactory.getLogger(RelExTest.class);
 	private static RelationExtractor re;
 	
 	@BeforeClass
 	public static void setUpClass() {
-		System.err.println("Initializing RelEx...");
+		log.info("Initializing RelEx...");
 		re = new RelationExtractor();
 	}
 
