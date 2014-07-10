@@ -8,6 +8,16 @@
 	<name>relex</name>
 	<description>RelEx dependency relation extractor</description>
 	<url>http://wiki.opencog.org/w/RelEx_Dependency_Relationship_Extractor</url>
+	<scm>
+		<url>https://github.com/opencog/relex</url>
+		<connection>scm:git:git@github.com:opencog/relex.git</connection>
+	</scm>
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.spdx.org/licenses/Apache-2.0</url>
+		</license>
+	</licenses>
 	<developers>
 		<developer>
 			<name>Mike Ross</name>
@@ -104,9 +114,6 @@
 			</roles>
 		</contributor>
 	</contributors>
-	<properties>
-		<skipTests>true</skipTests><!-- until JUnit work is done -->
-	</properties>
 	<build>
 		<sourceDirectory>${basedir}/src/java</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
