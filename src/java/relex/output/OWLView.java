@@ -9,20 +9,34 @@ package relex.output;
 
 import java.net.URI;
 import java.util.HashMap;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.DefaultOntologyFormat;
-import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.util.OWLEntityURIConverter;
-
+import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationSubject;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChangeException;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
+import org.semanticweb.owlapi.model.OWLOntologyIRIMapper;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLProperty;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
+
+import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.RelationCallback;
-import relex.ParsedSentence;
-import uk.ac.manchester.cs.owl.owlapi.OWLAnnotationPropertyImpl;
 
 /**
  * Implements a very simple, direct printout of the
@@ -224,7 +238,7 @@ public class OWLView
 		}
 		catch (OWLException ex)
 		{
-			Logger.getLogger(ParseView.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(OWLView.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 

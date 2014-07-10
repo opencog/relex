@@ -125,7 +125,7 @@
 
     <!-- Run tests -->
     <target name="test" depends="build-tests">
-        <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
+        <java classname="relex.test.StanfordTest" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib:/usr/local/lib"/>
             <classpath refid="relex.classpath"/>
