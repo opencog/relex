@@ -145,6 +145,7 @@
             includeantruntime="false"
             source="${source}" target="${target}">
             <src path="src/java_test"/>
+        	<src path="src/test/resources"/>
         	<classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
         </javac>
@@ -182,6 +183,7 @@
     <target name="test-stanford" depends="build-tests">
         <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
             <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+        	<classpath path="src/test/resources"/>
         	<classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
         	<formatter type="plain" usefile="false"/>
@@ -191,13 +193,24 @@
     <target name="test-relex" depends="build-tests">
         <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
             <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+        	<classpath path="src/test/resources"/>
         	<classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
         	<formatter type="plain" usefile="false"/>
         	<test name="relex.test.RelExTest"/>
         </junit>
     </target>
-    <target name="test" depends="test-stanford, test-relex"/>
+    <target name="test-logic" depends="build-tests">
+        <junit fork="yes" printsummary="yes" showoutput="true" maxmemory="1024m">
+            <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+        	<classpath path="src/test/resources"/>
+        	<classpath refid="cp.test"/>
+            <classpath refid="relex.classpath"/>
+        	<formatter type="plain" usefile="false"/>
+        	<test name="relex.output.LogicViewTest"/>
+        </junit>
+    </target>
+    <target name="test" depends="test-stanford, test-relex, test-logic"/>
 
     <!-- Build a jar file, for public consumption -->
     <target name="jar" depends="build-project">
