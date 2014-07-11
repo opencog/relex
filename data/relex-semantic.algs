@@ -1848,27 +1848,14 @@ QUANTITY_EXCEPTION
 ;Os- and Op- connectors mark nouns as being singular or plural. 
 ;Ou|Oc marks nouns countable and uncountable
 #TemplateActionAlg
-QUANTIFIERS_1_1
+QUANTIFIERS_1
 <LAB> = \Dmcm |\Dmum
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
 <F_R linkL0 LAB> = \Op|\Os|\Ou|\Oc
-<F_L linkL0 LAB> != \ND
 =
 <F_R ref links _quantity> = <F_L ref>
-; This rule apply when  certain expressions require numerical determiners.
-;e.g. I run 10 more miles than Ben. 
-; "10" is a numerical modifier for "more miles"
-#TemplateActionAlg
-QUANTIFIERS_1_2
-<LAB> = \Dmcm
-<F_L DETERMINER_FLAG> != T
-<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
-<F_L POSSESSIVE-FLAG> != T
-<F_L linkL0 LAB> = \ND
-=
-<F_R ref links _num_quantity> = <F_L linkL0 F_L ref>
 ;
 ; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
 ;
@@ -1900,7 +1887,7 @@ NUMBER-1
 ;<F_L temp_q> = %
 #TemplateActionAlg
 NUMBER-NUMERIC-QUANTIFIERS
-<LAB> = \Dmcn
+<LAB> = \Dmcn 
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
@@ -1916,13 +1903,15 @@ NUMBER-NUMERIC-QUANTIFIERS
 ;"It is from 6 m to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
 ;
 ;ND connects numbers with certain expressions which require numerical determiners:
+;case <F_L str> !=many --> e.g. He runs many more miles than John does. avoid forming _num_quantity(many more, relationship)
 #TemplateActionAlg
 NUMBER-1a
 ;<LAB> = \ND\.*|\NI\.*
 <LAB> = \ND\.*
 <F_L QUANTITY-EXCEPTION-FLAG> != T
+<F_L str> !=many
 =
-<F_L ref links _quantity_mod> = <F_R ref>
+<F_R ref links _num_quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
 <F_R NOT_NUMBER_FLAG> = T
 ;
@@ -1995,6 +1984,14 @@ NUMBER-2
 #TemplateActionAlg
 NUMBER-MOD
 <LAB> = \EN\.*
+=
+<F_R ref links _quantity_mod> = <F_L ref>
+;When quantity modifier does not act on a numeric vale
+; e.g. He runs many more miles than John does. forming _num_quantity(many more) relationship
+#TemplateActionAlg
+NUMBER-MOD_2
+<LAB> = \ND
+<F_L str> = many
 =
 <F_R ref links _quantity_mod> = <F_L ref>
 ;
