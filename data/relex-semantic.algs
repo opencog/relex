@@ -1690,12 +1690,22 @@ CONJ_ADVMOD
 <F_L ref links _advmod> += <F_R conj member0 ref>
 <F_L ref links _advmod> += <F_R conj member1 ref>
 ;
+;EC connects adverbs and comparative adjectives:
+;EA connects adverbs to adjectives.
 #TemplateActionAlg
-COMP_ADVMOD_1
+COMP_ADVMOD_1_1
 <LAB> = \EBmm|\MVm|\EAm
 <F_R str> = less | more
 =
 <F_L advmod> += <F_R ref>
+;EC connects adverbs and comparative adjectives
+;ECn is used for noun-focused comparative
+;e.g. It is much bigger
+#TemplateActionAlg
+COMP_ADVMOD_1_2
+<LAB> = \ECn
+=
+<F_R advmod> += <F_L ref>
 #TemplateActionAlg
 ;Pizza, which most people love, is not very healthy.
 ;to handle binary relationship _advmod(very,not)
@@ -1830,20 +1840,35 @@ QUERY_INDEFINATE_DETERMINER2
 #TemplateActionAlg
 QUANTITY_EXCEPTION
 <LAB> = \D\.*|\DD\.*
-<F_L str> = more|More|'s|fewer|Fewer|'|’s|’
+<F_L str> = more|More|less|Less|'s|fewer|Fewer|'|’s|’
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
 ;e.g. "I have more chairs than Ben." Here "more" is used to indicate the quantity of chairs
 ;to form the relationship _quantity(chair, more)  \Dmcm and \Op connectors are used. 
+;Os- and Op- connectors mark nouns as being singular or plural. 
+;Ou|Oc marks nouns countable and uncountable
 #TemplateActionAlg
-QUANTIFIERS_1
+QUANTIFIERS_1_1
+<LAB> = \Dmcm |\Dmum
+<F_L DETERMINER_FLAG> != T
+<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
+<F_L POSSESSIVE-FLAG> != T
+<F_R linkL0 LAB> = \Op|\Os|\Ou|\Oc
+<F_L linkL0 LAB> != \ND
+=
+<F_R ref links _quantity> = <F_L ref>
+; This rule apply when  certain expressions require numerical determiners.
+;e.g. I run 10 more miles than Ben. 
+; "10" is a numerical modifier for "more miles"
+#TemplateActionAlg
+QUANTIFIERS_1_2
 <LAB> = \Dmcm
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
-<F_R linkL0 LAB> = \Op
+<F_L linkL0 LAB> = \ND
 =
-<F_R ref links _quantity> = <F_L ref>
+<F_R ref links _num_quantity> = <F_L linkL0 F_L ref>
 ;
 ; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
 ;
@@ -1890,14 +1915,14 @@ NUMBER-NUMERIC-QUANTIFIERS
 ;"It is 6 m in length." -- _quantity(m, 6)
 ;"It is from 6 m to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
 ;
-;
+;ND connects numbers with certain expressions which require numerical determiners:
 #TemplateActionAlg
 NUMBER-1a
 ;<LAB> = \ND\.*|\NI\.*
 <LAB> = \ND\.*
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
-<F_R ref links _quantity> = <F_L ref>
+<F_L ref links _quantity_mod> = <F_R ref>
 <F_L IS-NUMBER-FLAG> = T
 <F_R NOT_NUMBER_FLAG> = T
 ;
