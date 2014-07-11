@@ -288,10 +288,10 @@ public class TestRelEx
 		rc &= test_sentence ("He runs ten more miles than John.",
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
-				    "_quantity(mile, more)\n"+
+				    "_quantity_mod(ten, more)\n"+
 				    "than(he, John)\n" +
 				    "_comparative(mile, run)\n"+
-				    "_num_quantity(miles, ten)\n" +
+				    "_num_quantity(mile, ten)\n" +
 				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
@@ -504,11 +504,11 @@ public class TestRelEx
 				    "_obj(earn, money)\n"+
 				    "_subj(do, I)\n"+
 				    "_subj(earn, he)\n"+
-				    "than(he,I)\n"+
-				    "_comparative(money,earn)\n"+
+				    "than(he, I)\n"+
+				    "_comparative(money, earn)\n"+
 				    "_quantity(money, more)\n"+
 				    "_advmod(more, much)\n"+
-				    "degree(more,comparative)\n");
+				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He earns much less money than I do.",
 				    "_obj(earn, money)\n"+
