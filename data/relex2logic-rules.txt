@@ -66,3 +66,13 @@
 [AND2] {2} <and-rule1> conj_and($var1, $var2) => (and-rule2 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
 
 [DEFINITE] {1} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
+
+
+# skipping adjective clause
+[THAT-EXCL-1] {100} <> that($A, $B) & pos($A, noun) => ; ignoring adjective clause between $A and $B 
+[THAT-EXCL-2] {100} <> that($A, $B) & pos($B, noun) => ; ignoring adjective clause between $A and $B 
+
+# general that-rule works for any pos
+[THAT1] {110} <THAT-EXCL-1, THAT-EXCL-2> that($A, $B) & pos($A, $A_POS) & pos($B, $B_POS) => (that-rule $A (get-instance-name $A word_index sentence_index) $A_POS $B (get-instance-name $B word_index sentence_index) $B_POS)
+[THAT2] {110} <THAT-EXCL-1, THAT-EXCL-2> _that($A, $B) & pos($A, $A_POS) & pos($B, $B_POS) => (that-rule $A (get-instance-name $A word_index sentence_index) $A_POS $B (get-instance-name $B word_index sentence_index) $B_POS)
+
