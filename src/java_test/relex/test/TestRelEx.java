@@ -301,7 +301,7 @@ public class TestRelEx
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n"+
 				    "_quantity_mod(ten, almost)\n"+
-				    "_num_quantity(miles, ten)\n"+
+				    "_num_quantity(mile, ten)\n"+
 				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs more often than John.",
