@@ -516,7 +516,7 @@ SUBSCR_POS_E-C_4
 #TemplateActionAlg
 SUBSCR_POS_E-C_5
 <LAB> = \Dmcm | \Dmum
-<F_L str> = more|much|fewer
+<F_L str> = more|much|less|fewer
 =
 <F_L ref degree> = comparative
 ;
