@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="build" name="relex">
+<project basedir="." default="build" name="relex" xmlns:artifact="antlib:org.eclipse.aether.ant">
     <property name="VERSION" value="1.5"/>    <!-- this is relex version 1.5.1 -->
     <property name="REVISION" value="1.5.1"/> <!-- this is relex version 1.5.1 -->
 
@@ -59,10 +59,30 @@
         <!-- OpenNLP-1.4 and older require xerces -->
         <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
     </path>
+	<path id="aether-ant-tasks.classpath" path="antlib/aether-ant-tasks-uber.jar" />
+	<typedef resource="org/eclipse/aether/ant/antlib.xml"
+		uri="antlib:org.eclipse.aether.ant"
+		classpathref="aether-ant-tasks.classpath" />
 
     <!-- Steps to take on initialization -->
     <target name="init">
         <mkdir dir="bin"/>
+    	<get src="http://search.maven.org/remotecontent?filepath=org/eclipse/aether/aether-ant-tasks/1.0.0.v20140518/aether-ant-tasks-1.0.0.v20140518-uber.jar"
+    		dest="antlib/aether-ant-tasks-uber.jar" verbose="true" skipexisting="true"/>
+    	<fail message="Checksum mismatch for 'antlib/aether-ant-tasks-uber.jar'. Please delete it and rerun ant to redownload.">
+    		<condition>
+    			<not>
+		        	<checksum file="antlib/aether-ant-tasks-uber.jar" algorithm="SHA"
+		        		property="95dadd03392a75564904da45108cf048abe6e5bb" verifyproperty="checksum.matches"/>
+    			</not>
+    		</condition>
+		</fail>
+    	<artifact:pom file="pom.xml" />
+    	<artifact:resolve>
+    		<path refid="cp.compile" classpath="compile"/>
+    		<path refid="cp.test" classpath="test" />     		
+    		<path refid="cp.runtime" classpath="runtime"/>
+    	</artifact:resolve>
     </target>
 
     <!-- conditional compilation, check for OWL -->
@@ -112,6 +132,7 @@
             <exclude name="**/OWLView.java" unless="OWL.present" />
             <exclude name="**/DocSplitterOpenNLP15Impl.java" unless="OpenNLP15.present" />
             <exclude name="**/DocSplitterOpenNLP14Impl.java" unless="OpenNLP14.present" />
+            <classpath refid="cp.compile"/>
             <classpath refid="relex.classpath"/>
             <!-- <compilerarg value="-Wno-deadCode"/> -->
             <!-- <compilerarg value="-Wno-unused"/> -->
@@ -124,6 +145,7 @@
             includeantruntime="false"
             source="${source}" target="${target}">
             <src path="src/java_test"/>
+            <classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
@@ -161,12 +183,14 @@
         <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
             <arg line=""/>
         </java>
         <java classname="relex.test.TestRelEx" failonerror="true" fork="yes">
             <jvmarg line="-Xmx1024m"/>
             <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
             <arg line=""/>
         </java>

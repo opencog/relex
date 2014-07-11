@@ -19,6 +19,9 @@ package relex.test;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import relex.ParsedSentence;
 import relex.RelationExtractor;
 import relex.Sentence;
@@ -26,15 +29,19 @@ import relex.output.StanfordView;
 
 public class TestStanford
 {
-	private RelationExtractor re;
+	private static RelationExtractor re;
 	private int pass;
 	private int fail;
 	private static ArrayList<String> sentfail= new ArrayList<String>();
 	private static ArrayList<String> sentfailpostag= new ArrayList<String>();
 
+	@BeforeClass
+	public static void setUpClass() {
+		re = new RelationExtractor();
+	}
+	
 	public TestStanford()
 	{
-		re = new RelationExtractor();
 		re.do_stanford = true;
 		pass = 0;
 		fail = 0;
@@ -135,7 +142,13 @@ public class TestStanford
 
 	public static void main(String[] args)
 	{
+		setUpClass();
 		TestStanford ts = new TestStanford();
+	}
+	
+	@Test
+	public void runTests() {
+		TestStanford ts = this;
 		boolean rc = true;
 
 		// The parses below were compared to the Stanford parser, circa
