@@ -124,6 +124,9 @@
             includeantruntime="false"
             source="${source}" target="${target}">
             <src path="src/java_test"/>
+            <exclude name="**/LogicCases.java" />
+            <exclude name="**/LogicViewTest.java" />
+            <exclude name="**/RegexMatcher.java" />
             <classpath refid="relex.classpath"/>
         </javac>
     </target>
