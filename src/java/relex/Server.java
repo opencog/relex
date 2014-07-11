@@ -16,22 +16,20 @@
 
 package relex;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Map;
+
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
-import relex.output.SimpleView;
 import relex.output.LogicView;
 import relex.output.OpenCogScheme;
-import relex.Version;
+import relex.output.SimpleView;
 
 /**
  * The Server class provides a very simple socket-based parse server.
@@ -52,7 +50,7 @@ public class Server
 		listen_port = 4444;
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		int host_port = 0;
 		int listen_port = 4444;
@@ -197,10 +195,7 @@ public class Server
 		// Socket setup
 		Server s = new Server();
 		s.listen_port = listen_port;
-		ServerSocket listen_sock = null;
-		Socket send_sock = null;
-		OutputStream outs = null;
-		PrintWriter out = null;
+		final ServerSocket listen_sock;
 
 		try
 		{
@@ -210,212 +205,229 @@ public class Server
 		{
 			System.err.println("Error: Listen failed on port " + s.listen_port);
 			System.exit(-1);
+			return;
 		}
-		System.err.println("Info: Listening on port " + s.listen_port);
+		try {
+			System.err.println("Info: Listening on port " + s.listen_port);
+			Socket send_sock = null;
+			try {
+				PrintWriter serverSocketWriter = null;
+		
+				// Send output to an opencog server, instead of returning it on
+				// the input socket.
+				if (host_name != null)
+				{
+					try
+					{
+						send_sock = new Socket(host_name, host_port);
+						send_sock.setKeepAlive(true);
+						// send_sock.shutdownInput();
+						serverSocketWriter = new PrintWriter(send_sock.getOutputStream(), true);
+		
+						// Assume we're talking to an opencog server.
+						// Escape it into a scheme shell.
+						serverSocketWriter.println("scm hush");
+						serverSocketWriter.flush();
+					}
+					catch (Exception e)
+					{
+						System.err.println("Error: Unable to connect to " +
+						   host_name + ":" + host_port + " : " + e.getMessage());
+						System.exit(-1);
+						return;
+					}
+					System.err.println("Info: Will send output to " + host_name + ":" + host_port);
+				}
+		
+				// -----------------------------------------------------------------
+				// Main loop -- listen for connections, accept them, and process.
+				while (true)
+				{
+					final Socket in_sock;
+					try {
+						System.err.println("Info: Waiting for socket connection");
+						in_sock = listen_sock.accept();
+					} catch (IOException e) {
+						System.err.println("Error: Accept failed: " + e.getMessage());
+						continue;
+					}
+					try {
+						// If no end-point, return data on same socket.
+						final PrintWriter out = send_sock != null ? serverSocketWriter :
+							new PrintWriter(in_sock.getOutputStream(), true); 
+			
+						System.err.println("Info: Socket accept");
+						BufferedReader in = new BufferedReader(new InputStreamReader(in_sock.getInputStream()));
+			
+						// Attempt to detect a dead socket. This could happen if the
+						// remote end died. This should be easy to do, but for some
+						// reason, the below fails ... programming in Java sucks. Oh well.
+						if (send_sock != null)
+						{
+							try
+							{
+								// Send a lone newline char.
+								out.write(10);
+							}
+							catch (Exception e)
+							{
+								System.err.println("Error: Remote end has closed socket! " + e.getMessage());
+							}
+						}
+			
+						processSentences(max_parses, logic_on, free_text, verbose, re,
+								opencog, ds, logicView, out, in);
+					} finally {
+						try
+						{
+							in_sock.close();
+							System.err.println("Info: Closed input socket");
+						}
+						catch (IOException e)
+						{
+							System.err.println("Error: Socket close failed: " + e.getMessage());
+						}
+					}
+		
+					// Something here is leaking memory ... 10GB a day ... can this help?
+					System.gc();
+				}
+			} finally {
+				if (send_sock != null) {
+					send_sock.close();
+				}
+			}
+		} finally {
+			listen_sock.close();
+		}
+	}
 
-		// Send output to an opencog server, instead of returning it on
-		// the input socket.
-		if (host_name != null)
+	public static void processSentences(int max_parses, boolean logic_on,
+			boolean free_text, boolean verbose, RelationExtractor re,
+			OpenCogScheme opencog, DocSplitter ds, LogicView logicView,
+			PrintWriter out, BufferedReader in) {
+		// Loop over multiple sentences that may be present in input.
+		while (true)
 		{
+			// Loop over multiple input lines, looking for one complete sentence.
+			String sentence = null;
+			while (null == sentence)
+			{
+				try {
+					// Break if EOF encountered.  This should have been easy
+					// to figure out, but its not. Java sux rox. What is wrong
+					// with these people? Are they all stupid, or what? Arghhhh.
+					int one_char = in.read();
+					// 0x4 is ASCII EOT aka ctrl-D via telnet.
+					if (-1 == one_char || 4 == one_char)
+					{
+						sentence = ds.getRemainder();
+						sentence = sentence.trim();
+						break;
+					}
+					if ('\r' == one_char)
+						continue;
+					if ('\n' == one_char)
+						continue;
+
+					// Another bright shining example of more java idiocy.
+					char junk[] = {(char)one_char};
+					String line = new String(junk);
+					line += in.readLine();
+
+					System.err.println("Info: recv input: \"" + line + "\"");
+
+					// If the free-text flag is set, then use the document
+					// splitter to find sentence boundaries. Otherwise,
+					// Assume one sentence per line.
+					if (free_text)
+					{
+						ds.addText(line + " ");
+						sentence = ds.getNextSentence();
+					}
+					else
+					{
+						sentence = line;
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("Error: Read of input failed:" + e.getMessage());
+					break;
+				}
+			}
+
+			// If the sentence is null; we've run out of input.
+			if (null == sentence || sentence.equals(""))
+				break;
+
 			try
 			{
-				send_sock = new Socket(host_name, host_port);
-				send_sock.setKeepAlive(true);
-				// send_sock.shutdownInput();
-				outs = send_sock.getOutputStream();
-				out = new PrintWriter(outs, true);
+				System.err.println("Info: sentence: \"" + sentence + "\"");
+				Sentence sntc = re.processSentence(sentence);
+				if (sntc.getParses().size() == 0)
+				{
+					System.err.println("Info: No parses!");
+					out.println("; NO PARSES");
 
-				// Assume we're talking to an opencog server.
-				// Escape it into a scheme shell.
-				out.println("scm hush");
+					// Only one sentence per connection in the non-free-text mode.
+					if (!free_text) break;
+					continue;
+				}
+				int np = Math.min(max_parses, sntc.getParses().size());
+				int pn;
+				for (pn = 0; pn < np; pn++)
+				{
+					ParsedSentence parse = sntc.getParses().get(pn);
+
+					// Print the phrase string ... handy for debugging.
+					out.println("; " + parse.getPhraseString());
+
+					if (verbose)
+					{
+						String fin = SimpleView.printRelationsAlt(parse);
+						System.out.print(fin);
+					}
+					opencog.setParse(parse);
+					out.println(opencog.toString());
+					out.flush();
+					System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
+
+					if (logic_on)
+					{
+						out.println("; ##### START OF R2L #####");
+						out.println(logicView.printRelationsNew(parse));
+						out.flush();
+						System.err.println("Info: called relex2logic functions");
+					}
+
+					// This is for simplifying pre-processing of scheme string
+					// before evaluating it in opencog, for Relex2Logic.
+					out.println("; ##### END OF A PARSE #####");
+					out.flush();
+				}
+
+				// Add a special tag to tell the cog server that it's
+				// just recieved a brand new sentence. The OpenCog scheme
+				// code depends on this being visible, in order to find
+				// the new sentence.
+				out.println("(ListLink (stv 1 1)");
+				out.println("   (AnchorNode \"# New Parsed Sentence\")");
+				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
+				out.println(")");
+
+				out.println("; END OF SENTENCE");
 				out.flush();
 			}
 			catch (Exception e)
 			{
-				System.err.println("Error: Unable to connect to " +
-				   host_name + ":" + host_port + " : " + e.getMessage());
-				System.exit(-1);
-			}
-			System.err.println("Info: Will send output to " + host_name + ":" + host_port);
-		}
-
-		// -----------------------------------------------------------------
-		// Main loop -- listen for connections, accept them, and process.
-		while (true)
-		{
-			Socket in_sock = null;
-			InputStream ins = null;
-			try {
-				System.err.println("Info: Waiting for socket connection");
-				in_sock = listen_sock.accept();
-				ins = in_sock.getInputStream();
-
-				// If no end-point, return data on same socket.
-				if (send_sock == null)
-				{
-					outs = in_sock.getOutputStream();
-					out = new PrintWriter(outs, true);
-				}
-			} catch (IOException e) {
-				System.err.println("Error: Accept failed: " + e.getMessage());
-				continue;
+				System.err.println("Error: Failed to parse: " + e.getMessage());
+				e.printStackTrace();
+				break;
 			}
 
-			System.err.println("Info: Socket accept");
-			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
-
-			// Attempt to detect a dead socket. This could happen if the
-			// remote end died. This should be easy to do, but for some
-			// reason, the below fails ... programming in Java sucks. Oh well.
-			if (send_sock != null)
-			{
-				try
-				{
-					// Send a lone newline char.
-					outs.write(10);
-				}
-				catch (Exception e)
-				{
-					System.err.println("Error: Remote end has closed socket! " + e.getMessage());
-				}
-			}
-
-			// Loop over multiple sentences that may be present in input.
-			while (true)
-			{
-				// Loop over multiple input lines, looking for one complete sentence.
-				String sentence = null;
-				while (null == sentence)
-				{
-					try {
-						// Break if EOF encountered.  This should have been easy
-						// to figure out, but its not. Java sux rox. What is wrong
-						// with these people? Are they all stupid, or what? Arghhhh.
-						int one_char = in.read();
-						// 0x4 is ASCII EOT aka ctrl-D via telnet.
-						if (-1 == one_char || 4 == one_char)
-						{
-							sentence = ds.getRemainder();
-							sentence = sentence.trim();
-							break;
-						}
-						if ('\r' == one_char)
-							continue;
-						if ('\n' == one_char)
-							continue;
-
-						// Another bright shining example of more java idiocy.
-						char junk[] = {(char)one_char};
-						String line = new String(junk);
-						line += in.readLine();
-
-						System.err.println("Info: recv input: \"" + line + "\"");
-
-						// If the free-text flag is set, then use the document
-						// splitter to find sentence boundaries. Otherwise,
-						// Assume one sentence per line.
-						if (free_text)
-						{
-							ds.addText(line + " ");
-							sentence = ds.getNextSentence();
-						}
-						else
-						{
-							sentence = line;
-						}
-					}
-					catch (Exception e)
-					{
-						System.err.println("Error: Read of input failed:" + e.getMessage());
-						break;
-					}
-				}
-
-				// If the sentence is null; we've run out of input.
-				if (null == sentence || sentence.equals(""))
-					break;
-
-				try
-				{
-					System.err.println("Info: sentence: \"" + sentence + "\"");
-					Sentence sntc = re.processSentence(sentence);
-					if (sntc.getParses().size() == 0)
-					{
-						System.err.println("Info: No parses!");
-						out.println("; NO PARSES");
-
-						// Only one sentence per connection in the non-free-text mode.
-						if (!free_text) break;
-						continue;
-					}
-					int np = Math.min(max_parses, sntc.getParses().size());
-					int pn;
-					for (pn = 0; pn < np; pn++)
-					{
-						ParsedSentence parse = sntc.getParses().get(pn);
-
-						// Print the phrase string ... handy for debugging.
-						out.println("; " + parse.getPhraseString());
-
-						if (verbose)
-						{
-							String fin = SimpleView.printRelationsAlt(parse);
-							System.out.print(fin);
-						}
-						opencog.setParse(parse);
-						out.println(opencog.toString());
-						out.flush();
-						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
-
-						if (logic_on)
-						{
-							out.println("; ##### START OF R2L #####");
-							out.println(logicView.printRelationsNew(parse));
-							out.flush();
-							System.err.println("Info: called relex2logic functions");
-						}
-
-						// This is for simplifying pre-processing of scheme string
-						// before evaluating it in opencog, for Relex2Logic.
-						out.println("; ##### END OF A PARSE #####");
-						out.flush();
-					}
-
-					// Add a special tag to tell the cog server that it's
-					// just recieved a brand new sentence. The OpenCog scheme
-					// code depends on this being visible, in order to find
-					// the new sentence.
-					out.println("(ListLink (stv 1 1)");
-					out.println("   (AnchorNode \"# New Parsed Sentence\")");
-					out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-					out.println(")");
-
-					out.println("; END OF SENTENCE");
-					out.flush();
-				}
-				catch (Exception e)
-				{
-					System.err.println("Error: Failed to parse: " + e.getMessage());
-					e.printStackTrace();
-					break;
-				}
-
-				// Only one sentence per connection in the non-free-text mode.
-				if (!free_text) break;
-			}
-
-			try
-			{
-				in_sock.close();
-				System.err.println("Info: Closed input socket");
-			}
-			catch (IOException e)
-			{
-				System.err.println("Error: Socket close failed: " + e.getMessage());
-			}
-
-			// Something here is leaking memory ... 10GB a day ... can this help?
-			System.gc();
+			// Only one sentence per connection in the non-free-text mode.
+			if (!free_text) break;
 		}
 	}
 }
