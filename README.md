@@ -324,13 +324,13 @@ bullet-proof, although it might handle multi-line refs incorrectly.
 
 ### `relexd`, `relexd-relex`, `relexd-link`, `relexd-logic`
 
-If you built RelEx with Maven, these scripts can be used.
-They accept additional arguments to be passed to `relex.Server`.
+If you built RelEx with Maven, you can use the new Netty-based `relex.Server2`.
+Use `--help` to show the list of accepted arguments.
 
-1. `target/relex/bin/relexd`, which runs `java relex.Server ...`
-2. `target/relex/bin/relexd-relex`, which runs `java relex.Server --relex --anaphora ...`
-3. `target/relex/bin/relexd-link`, which runs `relex.Server --link --relex --anaphora --verbose ...`
-4. `target/relex/bin/relexd-logic`, which runs `java relex.Server --logic ...`
+1. `target/relex/bin/relexd`, which runs `java relex.Server2 ...`
+2. `target/relex/bin/relexd-relex`, which runs `java relex.Server2 --relex --anaphora ...`
+3. `target/relex/bin/relexd-link`, which runs `relex.Server2 --link --relex --anaphora --verbose ...`
+4. `target/relex/bin/relexd-logic`, which runs `java relex.Server2 --logic ...`
 
 
 Using RelEx in custom code
@@ -448,6 +448,37 @@ to find some work-around for this.
 Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
 
+
+### TODO - Make LinkGrammar-java thread-safe
+
+Attempting to access LinkGrammar concurrently crashes the JVM:
+
+	link-grammar: Info: Dictionary found at /usr/local/share/link-grammar/en/4.0.dict
+	#
+	# A fatal error has been detected by the Java Runtime Environment:
+	#
+	#  SIGSEGV (0xb) at pc=0x00007fde383279b6, pid=20841, tid=140592783210240
+	#
+	# JRE version: OpenJDK Runtime Environment (7.0_55-b14) (build 1.7.0_55-b14)
+	# Java VM: OpenJDK 64-Bit Server VM (24.51-b03 mixed mode linux-amd64 compressed oops)
+	# Problematic frame:
+	# C  [liblink-grammar.so.5+0x2d9b6]  dictopen+0xa6
+	#
+	# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+	#
+	# An error report file with more information is saved as:
+	# /home/ceefour/git/relex/hs_err_pid20841.log
+	#
+	# If you would like to submit a bug report, please include
+	# instructions on how to reproduce the bug and visit:
+	#   http://icedtea.classpath.org/bugzilla
+	# The crash happened outside the Java Virtual Machine in native code.
+	# See problematic frame for where to report the bug.
+	#
+
+Hendy tried adding `synchronized` to `LocalLGParser` but it seems to deadlock.
+So for now `relex.Server2` uses `synchronized` on the `RelationExtractor`,
+not optimal but works.
 
 Bugs
 ----

@@ -114,6 +114,15 @@
 			</roles>
 		</contributor>
 	</contributors>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>codehaus-snapshots</id>
+			<url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
 		<sourceDirectory>${basedir}/src/java</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/java_test</testSourceDirectory>
@@ -123,8 +132,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<excludes>
 						<exclude>relex/corpus/DocSplitterOpenNLP14Impl.java</exclude>
 					</excludes>
@@ -152,7 +161,7 @@
 					<programs>
 						<program>
 							<id>relexd</id>
-							<mainClass>relex.Server</mainClass>
+							<mainClass>relex.Server2</mainClass>
 							<jvmSettings>
 								<maxMemorySize>1024m</maxMemorySize>
 							</jvmSettings>
@@ -160,7 +169,7 @@
 						<program>
 							<!-- This will return parsed text on the input socket. -->
 							<id>relexd-relex</id>
-							<mainClass>relex.Server</mainClass>
+							<mainClass>relex.Server2</mainClass>
 							<jvmSettings>
 								<maxMemorySize>1024m</maxMemorySize>
 							</jvmSettings>
@@ -172,7 +181,7 @@
 						<program>
 							<!-- Return Link Grammar, Relex and anaphora output. -->
 							<id>relexd-link</id>
-							<mainClass>relex.Server</mainClass>
+							<mainClass>relex.Server2</mainClass>
 							<jvmSettings>
 								<maxMemorySize>1024m</maxMemorySize>
 							</jvmSettings>
@@ -184,7 +193,7 @@
 						<program>
 							<!-- Return with RelEx2Logic Link Grammar, and Relex output on default port 4444. -->
 							<id>relexd-logic</id>
-							<mainClass>relex.Server</mainClass>
+							<mainClass>relex.Server2</mainClass>
 							<jvmSettings>
 								<maxMemorySize>1024m</maxMemorySize>
 							</jvmSettings>
@@ -216,6 +225,9 @@
 		</plugins>
 		<resources>
 			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
 				<targetPath>./</targetPath>
 				<filtering>false</filtering>
 				<directory>${basedir}/data</directory>
@@ -246,7 +258,18 @@
 		</resources>
 	</build>
 	<dependencies>
-	
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
+			<version>4.1.0.Beta1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.35</version>
+		</dependency>		
+
 		<dependency>
 			<groupId>org.apache.odftoolkit</groupId>
 			<artifactId>odfdom-java</artifactId>
@@ -360,8 +383,14 @@
 		
 		<dependency>
 			<groupId>com.google.guava</groupId>
-			<artifactId>guava-jdk5</artifactId>
+			<artifactId>guava</artifactId>
 			<version>17.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>2.0.3</version>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- Logging -->
@@ -369,7 +398,7 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
-			<scope>runtime</scope>
+			<scope>compile</scope><!-- Used to set verbose mode -->
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
