@@ -41,6 +41,7 @@
 
 [ALLRULE1] {2} <ALLRULE2, ALLRULE3> _quantity($noun, all) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
 
+# not implemented yet
 [ALLRULE2] {2} <ALLRULE1, ALLRULE3> _quantity($noun, all) & _poss($noun, $W) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
 
 # Combination of ALLRULE and SVP: Deals specifically with sentences of the form "All Canadians are right-handed." (- Sebastian)
