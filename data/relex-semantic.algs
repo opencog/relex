@@ -32,8 +32,7 @@
 ; First pull the left-hand side over.
 #TemplateActionAlg
 CONJ_AND_LEFT_SIDE
-<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
-<F_L str> != and|or|but|,
+<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJ\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
 ;
@@ -3114,6 +3113,14 @@ CONJ_OR_MERGE
 <str> = or
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
+;
+#TemplateActionAlg
+CONJ_NOR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = nor
+=
+<conj member0 ref links conj_nor> = <conj member1 ref>
 
 ;/////////////////////////////////////////////////////////////////////////////
 ;
