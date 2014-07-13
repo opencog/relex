@@ -112,6 +112,7 @@
             <exclude name="**/OWLView.java" unless="OWL.present" />
             <exclude name="**/DocSplitterOpenNLP15Impl.java" unless="OpenNLP15.present" />
             <exclude name="**/DocSplitterOpenNLP14Impl.java" unless="OpenNLP14.present" />
+            <exclude name="**/Server2.java" /><!-- Requires Java7 -->
             <classpath refid="relex.classpath"/>
             <!-- <compilerarg value="-Wno-deadCode"/> -->
             <!-- <compilerarg value="-Wno-unused"/> -->

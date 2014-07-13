@@ -114,7 +114,7 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
-- didion.jwnl
+- *didion.jwnl* (not required if you use Maven, only required for Ant)
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at 
@@ -134,7 +134,7 @@ The following packages are required pre-requisites for building RelEx.
 	the following command: `chmod 644 jwnl.jar`, as otherwise, you'll
 	get strange "java cannot unzip jar" error messages.
 
-- Apache commons logging
+- *Apache Commons Logging* (not required for Maven, only required for Ant)
 	The JWNL package requires that the Apache commons logging
 	jar file be installed. In Debian/Ubuntu, this is supplied by
 	the `libcommons-logging-java` package. In RedHat/CentOS systems,
@@ -147,7 +147,7 @@ The following packages are optional. If they are found, then
 additional parts of RelEx will be built, enabling additional 
 function.
 
-- OpenNLP
+- OpenNLP (if you use Maven, this is already managed)
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
 	to find sentence boundaries in free text. If OpenNLP is not found, 
 	then the less accurate `java.text.BreakIterator` class is used.
@@ -185,7 +185,7 @@ function.
 	***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
 	work with version 2.0 !!
 
-- `xercesImpl.jar`
+- `xercesImpl.jar` (if you use Maven, this is already managed)
 	Older versions of the OpenNLP package require that the Xerces2
 	XML parser package be installed. In Debian/Ubunutu, this is supplied
 	by the `libxerces2-java` package.
@@ -193,6 +193,18 @@ function.
 
 Building
 --------
+
+### With Maven
+
+After the above are installed, RelEx can be built.
+Using [Maven](http://maven.apache.org/), the project model is in `pom.xml`.
+
+To build the project, including cross-platform scripts: `mvn -DskipTests package`
+
+To run tests: `mvn test`
+
+### With Ant
+
 After the above are installed, the relex java code can be built.
 The build system uses `ant`, and the ant build specifications
 are in `build.xml`. Simply saying `ant` at the command line
@@ -310,6 +322,16 @@ English-language sentences.  This  script removes wiki markup, URL's
 tables, images, & etc.  It currently seems to be pretty darned
 bullet-proof, although it might handle multi-line refs incorrectly.
 
+### `relexd`, `relexd-relex`, `relexd-link`, `relexd-logic`
+
+If you built RelEx with Maven, you can use the new Netty-based `relex.Server2`.
+Use `--help` to show the list of accepted arguments.
+
+1. `target/relex/bin/relexd`, which runs `java relex.Server2 ...`
+2. `target/relex/bin/relexd-relex`, which runs `java relex.Server2 --relex --anaphora ...`
+3. `target/relex/bin/relexd-link`, which runs `relex.Server2 --link --relex --anaphora --verbose ...`
+4. `target/relex/bin/relexd-logic`, which runs `java relex.Server2 --logic ...`
+
 
 Using RelEx in custom code
 --------------------------
@@ -426,6 +448,37 @@ to find some work-around for this.
 Would be nice to identify: "By the way" as a polyword.
 "Break a leg" as an idiom.
 
+
+### TODO - Make LinkGrammar-java thread-safe
+
+Attempting to access LinkGrammar concurrently crashes the JVM:
+
+	link-grammar: Info: Dictionary found at /usr/local/share/link-grammar/en/4.0.dict
+	#
+	# A fatal error has been detected by the Java Runtime Environment:
+	#
+	#  SIGSEGV (0xb) at pc=0x00007fde383279b6, pid=20841, tid=140592783210240
+	#
+	# JRE version: OpenJDK Runtime Environment (7.0_55-b14) (build 1.7.0_55-b14)
+	# Java VM: OpenJDK 64-Bit Server VM (24.51-b03 mixed mode linux-amd64 compressed oops)
+	# Problematic frame:
+	# C  [liblink-grammar.so.5+0x2d9b6]  dictopen+0xa6
+	#
+	# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+	#
+	# An error report file with more information is saved as:
+	# /home/ceefour/git/relex/hs_err_pid20841.log
+	#
+	# If you would like to submit a bug report, please include
+	# instructions on how to reproduce the bug and visit:
+	#   http://icedtea.classpath.org/bugzilla
+	# The crash happened outside the Java Virtual Machine in native code.
+	# See problematic frame for where to report the bug.
+	#
+
+Hendy tried adding `synchronized` to `LocalLGParser` but it seems to deadlock.
+So for now `relex.Server2` uses `synchronized` on the `RelationExtractor`,
+not optimal but works.
 
 Bugs
 ----
