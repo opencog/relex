@@ -1476,6 +1476,11 @@ Adjective-clause-whose-4
 
 ; ---------------------------------------------------------------
 ; that/which constructions.
+;
+; Note that many cases are handled by the PREP_CLAUSE_OBJECT rule
+; For example, "He is glad that she won." which uses a TH link to "that".
+; The rules below take care of various relative clauses that don't use
+; the TH connector.
 
 ; Example: They ate a special curry which was recommended by the restaurant’s owner. 
 ;
