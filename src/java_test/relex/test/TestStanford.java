@@ -144,6 +144,7 @@ public class TestStanford
 	{
 		setUpClass();
 		TestStanford ts = new TestStanford();
+		ts.runTests();
 	}
 	
 	@Test

@@ -77,7 +77,8 @@
     			</not>
     		</condition>
 		</fail>
-    	<artifact:pom file="pom.xml" />
+    	<artifact:settings file="java5.settings.xml"/>
+    	<artifact:pom file="pom.xml"/>
     	<artifact:resolve>
     		<path refid="cp.compile" classpath="compile"/>
     		<path refid="cp.test" classpath="test" />     		

@@ -195,7 +195,8 @@ Building
 --------
 After the above are installed, the relex java code can be built.
 The build system uses `ant`, and the ant build specifications
-are in `build.xml`. Simply saying `ant` at the command line
+are in `build.xml`. When running `ant` for the first time it will download the
+[Aether antlib](https://www.eclipse.org/aether/). Afterwards, simply saying `ant` at the command line
 should be enough to build. Saying `ant run` will run a basic
 demo of the system. The `ant test` command will run several tests
 verifying both regular parsing, and the Stanford-parser compatibility
