@@ -1,0 +1,16 @@
+<configuration scan="true" scanPeriod="15 seconds">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) | %magenta(%-16.16thread) %cyan(%-32.32logger{1}) | %msg%n</pattern>
+<!-- 			<pattern>%d{HH:mm:ss.SSS} %-5level | %-16.16thread %-32.32logger{1} | %msg%n</pattern> -->
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+	<logger name="relex" level="DEBUG"/>
+
+</configuration>

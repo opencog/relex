@@ -13,6 +13,7 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.5"/> <!-- this 1.5 is java, not relex -->
     <property name="source" value="1.5"/> <!-- this 1.5 is java, not relex -->
+    <property name="maven.profile" value="java5"/>
 
     <path id="relex.classpath">
         <pathelement location="bin"/>
@@ -77,7 +78,7 @@
     			</not>
     		</condition>
 		</fail>
-    	<artifact:settings file="java5.settings.xml"/>
+    	<artifact:settings file="${maven.profile}.settings.xml"/>
     	<artifact:pom file="pom.xml"/>
     	<artifact:resolve>
     		<path refid="cp.compile" classpath="compile"/>
@@ -180,22 +181,27 @@
     <target name="realclean" depends="clean"/>
 
     <!-- Run tests -->
-    <target name="test" depends="build-tests">
-        <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx1024m"/>
-            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+    <target name="test-stanford" depends="build-tests">
+        <junit fork="true" printsummary="true" showoutput="true" maxmemory="1024m">
+            <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
             <classpath refid="cp.test"/>
             <classpath refid="relex.classpath"/>
-            <arg line=""/>
-        </java>
-        <java classname="relex.test.TestRelEx" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx1024m"/>
-            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
-            <classpath refid="cp.test"/>
-            <classpath refid="relex.classpath"/>
-            <arg line=""/>
-        </java>
+            <classpath path="src/test/resources"/>
+            <formatter type="brief" usefile="false"/>
+            <test name="relex.test.TestStanford"/>
+        </junit>
     </target>
+    <target name="test-relex" depends="build-tests">
+        <junit fork="true" printsummary="true" showoutput="true" maxmemory="1024m">
+            <jvmarg value="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="cp.test"/>
+            <classpath refid="relex.classpath"/>
+            <classpath path="src/test/resources"/>
+            <formatter type="brief" usefile="false"/>
+            <test name="relex.test.TestRelEx"/>
+        </junit>
+    </target>
+    <target name="test" depends="test-stanford, test-relex"/>
 
     <!-- Build a jar file, for public consumption -->
     <target name="jar" depends="build-project">

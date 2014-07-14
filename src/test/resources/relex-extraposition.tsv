@@ -1,0 +1,107 @@
+Sentence	Relations
+The woman who lives next door is a registered nurse.
+	_obj(be, nurse)
+	_subj(be, woman)
+	_amod(nurse, registered)
+	_advmod(live, next_door)
+	_subj(live, woman)
+	who(woman, live)
+	
+A player who is injured has to leave the field.
+	_to-do(have, leave)
+	_subj(have, player)
+	_obj(leave, field)
+	_predadj(player, injured)
+	who(player, injured)
+	
+Pizza, which most people love, is not very healthy.
+	_advmod(very, not)
+	_advmod(healthy, very)
+	_obj(love, Pizza)
+	_quantity(people, most)
+	which(Pizza, love)
+	_subj(love, people)
+	_predadj(Pizza, healthy)
+	
+The restaurant which belongs to my aunt is very famous.
+	_advmod(famous, very)
+	to(belong, aunt)
+	_subj(belong, restaurant)
+	_poss(aunt, me)
+	which(restaurant, belong)
+	_predadj(restaurant, famous)
+	
+The books which I read in the library were written by Charles Dickens.
+	_obj(write, book)
+	by(write, Charles_Dickens)
+	_obj(read, book)
+	in(read, library)
+	_subj(read, I)
+	which(book, read)
+	
+This is the book whose author I met in a library.
+	_obj(be, book)
+	_subj(be, this)
+	_obj(meet, author)
+	in(meet, library)
+	_subj(meet, I)
+	whose(book, author)
+	
+The book that Jack lent me is very boring.
+	_advmod(boring, very)
+	_iobj(lend, book)
+	_obj(lend, me)
+	_subj(lend, Jack)
+	that(book, lend)
+	_predadj(book, boring)
+	
+They ate a special curry which was recommended by the restaurant’s owner.
+	_obj(eat, curry)
+	_subj(eat, they)
+	_obj(recommend, curry)
+	by(recommend, owner)
+	_poss(owner, restaurant)
+	which(curry, recommend)
+	_amod(curry, special)
+	
+The dog who Jack said chased me was black.
+	_obj(chase, me)
+	_subj(chase, dog)
+	_subj(say, Jack)
+	_predadj(dog, black)
+	who(dog, chase)
+	
+Jack, who hosted the party, is my cousin.
+	_obj(be, cousin)
+	_subj(be, Jack)
+	_poss(cousin, me)
+	_obj(host, party)
+	_subj(host, Jack)
+	who(Jack, host)
+	
+Jack, whose name is in that book, is the student near the window.
+	near(be, window)
+	_obj(be, student)
+	_subj(be, Jack)
+	_pobj(in, book)
+	_psubj(in, name)
+	_det(book, that)
+	whose(Jack, name)
+	
+Jack stopped the police car that was driving fast.
+	_obj(stop, car)
+	_subj(stop, Jack)
+	_advmod(drive, fast)
+	_subj(drive, car)
+	that(car, drive)
+	_nn(car, police)
+	
+Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
+	_obj(stop, car)
+	by(stop, sign)
+	_advmod(stop, just)
+	on(stand, street)
+	_subj(stand, sign)
+	that(sign, stand)
+	_nn(sign, traffic)
+	before(just, crossroads)
