@@ -2062,7 +2062,7 @@ ADV5
 CONJ_ADVMOD
 <F_L ref links _advmod> != %
 <F_R conj> != %
-<LAB> != \VJ\.*|\RJ\.*|\AJ\.*
+<LAB> != \VJ\.*|\RJ\.*|\AJ\.*|\O\.*
 =
 <F_L ref links _advmod> = %
 <F_L ref links _advmod> += <F_R conj member0 ref>
