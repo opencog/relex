@@ -1,34 +1,36 @@
-RelEx Semantic Relation Extractor
-=================================
-*Version 1.5.2  XXX 2014*
 
-RelEx is a syntactic dependency extractor and semantic framing generator;
-it will parse English language sentences and return the dependency 
-relationships between different parts of the sentence, and also provide
-semantic framing tags based on syntax and semantic categories.
+                 RelEx Semantic Relation Extractor
+                 =================================
+                    Version 1.6.0  XXX 2014
+
+
+RelEx is a dependency parser for the English language.  It extracts
+dependency relations from Link Grammar, and adds some shallow semantic
+analysis.  The primary use of RelEx is as a language input front-end
+to the OpenCog artificial general intelligence system.
 
 There are multiple inter-related parts to RelEx. The core component
-extracts the dependency relationships. Additional parts perform
-functions such as anaphora resolution, provide semantic frame output,
-provide output in various formats, including one format suitable for 
-later batch post-processing, another format suitable for input to 
-OpenCog, and an W3C OWL format. There are also a small assortment of
-perl scripts for cleaning up web and wiki pages, &c.
+extracts the dependency relationships. An experimental module provides
+some simple anaphora resolution suggestions.  Output is provided in
+various formats, including one format suitable for later batch
+post-processing, another format suitable for input to OpenCog, and an
+W3C OWL format. There are also a small assortment of perl scripts for
+cleaning up web and wiki pages, &c.
 
 The main RelEx website is at 
 
-> http://opencog.org/wiki/RelEx
+    http://opencog.org/wiki/RelEx
 
 It provides an overview of the project, as well as detailed documentation.
 
 The source code management system is at
 
-> http://github.com/opencog/relex
+   http://github.com/opencog/relex
 
 Source tarballs may be downloaded from either of two locations:
 
-> https://launchpad.net/relex/+download
-> http://www.abisource.com/downloads/link-grammar/relex/
+   https://launchpad.net/relex/+download
+   http://www.abisource.com/downloads/link-grammar/relex/
 
 Build and install of the core package is discussed below.
 
@@ -38,7 +40,8 @@ Dependencies
 
 ### Installing on Ubuntu/Debian
 
-An installation script for Ubuntu/Debian is provided in the [install-scripts](https://github.com/opencog/relex/tree/master/install-scripts) directory.
+An installation script for Ubuntu/Debian is provided in the [install-scripts]
+(https://github.com/opencog/relex/tree/master/install-scripts) directory.
 
 ### Install and run via Docker
 
@@ -76,7 +79,7 @@ The following packages are required pre-requisites for building RelEx.
 	Compile and install the Link Grammar Parser. This parser is
 	described at 
 	
-	> http://www.link.cs.cmu.edu/link/
+	http://abisource.com/projects/link-grammar/
 	
 	and sources	are available for download at
 	
@@ -154,14 +157,15 @@ function.
 
 	The OpenNLP home page is at 
 	
-	> http://opennlp.sourceforge.net/
+	     http://opennlp.sourceforge.net/
+
 	Download and install OpenNLP tools, and verify that the 
 	installed files are correctly identified in both `build.xml`
 	and in `relation-extractor.sh`.
 
 	OpenNLP also requires the installation of maxent from
 	
-	> http://maxent.sourceforge.net/  
+	   http://maxent.sourceforge.net/  
 
 	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.0.jar`.
 	
@@ -176,7 +180,7 @@ function.
 	of the java.util class hierarchy, which may or may not be included
 	in the installed JDK.  If needed, download trove from:
 
-	  > http://trove4j.sourceforge.net/
+	   http://trove4j.sourceforge.net/
 
 	Since trove is optimized, using it may improve performance and/or
 	decrease memory usage, as compared to the standard Sun JDK
