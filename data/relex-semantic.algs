@@ -3130,6 +3130,14 @@ CONJ_NOR_MERGE
 <str> = nor
 =
 <conj member0 ref links conj_nor> = <conj member1 ref>
+;
+#TemplateActionAlg
+CONJ_NOR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = but
+=
+<conj member0 ref links conj_but> = <conj member1 ref>
 
 ;/////////////////////////////////////////////////////////////////////////////
 ;
