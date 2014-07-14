@@ -2475,6 +2475,7 @@ DATE_YEAR
 #TemplateActionAlg
 ind_deter
 <LAB> = \D\.*
+<LAB> != \Dn
 <F_R ref definite-FLAG> = T
 <F_R POS> = noun
 <F_L str> != the|THE|'s|'
