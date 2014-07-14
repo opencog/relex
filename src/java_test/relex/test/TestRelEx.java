@@ -760,7 +760,7 @@ public class TestRelEx
 		                       "_iobj(lend, book)\n" +
 		                       "_obj(lend, me)\n" +
 		                       "_subj(lend, Jack)\n" +
-		                       "that_adj(book, lend)\n" +
+		                       "that(book, lend)\n" +
 		                       "_predadj(book, boring)\n");
 
 		rc &= test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
@@ -801,7 +801,7 @@ public class TestRelEx
 		                       "_subj(stop, Jack)\n" +
 		                       "_advmod(drive, fast)\n" +
 		                       "_subj(drive, car)\n" +
-		                       "that_adj(car, drive)\n" +
+		                       "that(car, drive)\n" +
 		                       "_nn(car, police)\n");
 
 		rc &= test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
@@ -810,7 +810,7 @@ public class TestRelEx
 		                       "_advmod(stop, just)\n" +
 		                       "on(stand, street)\n" +
 		                       "_subj(stand, sign)\n" +
-		                       "that_adj(sign, stand)\n" +
+		                       "that(sign, stand)\n" +
 		                       "_nn(sign, traffic)\n" +
 		                       "before(just, crossroads)\n");
 

@@ -966,6 +966,7 @@ HEAD-WORD_GROUP6
 ;  CLAUSAL COMPLEMENTS
 ;  (note that HEAD_TO_CLAUSE_AND_WALL must already have run.
 ;
+;/////////////////////////////////////////////////////////////////////////////
 ;
 ;
 #TemplateActionAlg
@@ -977,6 +978,7 @@ THAT1
 =
 <F_L that> += <F_R head-word ref>
 ;
+;
 #TemplateActionAlg
 THAT_TO_LINKS
 ; 'that' is handled in preposition section. (PREP_CLAUSE_OBJECT)
@@ -985,6 +987,7 @@ THAT_TO_LINKS
 <that> != %
 =
 <ref links _that> = <that>
+;
 ;
 #TemplateActionAlg
 RELATIVE_CLAUSE_TO_BACKGROUND
@@ -995,11 +998,13 @@ RELATIVE_CLAUSE_TO_BACKGROUND
 <F_L background wall> = <F_L wall>
 <F_L background BACKGROUND-FLAG> = T
 ;
+;
 #TemplateActionAlg
 MODIFYING_PHRASES_TO_BACKGROUND
 <LAB> = \Mv\.*|\Mg\.*
 =
 <F_R BACKGROUND-FLAG> = T
+;
 ;
 #TemplateActionAlg
 MARK_TOBE
@@ -1007,11 +1012,13 @@ MARK_TOBE
 =
 <F_L TO-BE-FLAG> = T
 ;
+;
 #TemplateActionAlg
 INV-MARK_TOBE
 <LAB> = \AF\.*
 =
 <F_R TO-BE-FLAG> = T
+;
 ;
 ; Extend the headword to left.
 #TemplateActionAlg
@@ -1034,6 +1041,8 @@ TO-HEAD-WORD
 ;  "I like running." -- _to-do(like, running)
 ; The exception for Pg*b prevents hypothetical for forms of be: 
 ; "They WERE RUNNING." and "what ARE they PLANNING?"
+;
+;
 #TemplateActionAlg
 TODO1z
 <LAB> = \I\.*|\Pg\.*
@@ -1043,12 +1052,14 @@ TODO1z
 =
 <F_L to-do> += <F_R head-word ref>
 ;
+;
 #TemplateActionAlg
 TODO2
 <LAB> = \TO\.*
 <F_R to-do> != %
 =
 <F_L to-do> += <F_R to-do>
+
 ;
 ; Transfer head links to ref.
 ;
@@ -1058,6 +1069,8 @@ TODO_TO_LINKS
 <to-do> != %
 =
 <ref links _to-do> = <to-do>
+
+
 ;
 ; For sentences such as "I had a plan to laugh."
 ; we want to have the option of having a to-do link from "have" to "laugh".
@@ -1069,6 +1082,7 @@ TODO_TO_LINK_FOR_NOUNS
 <to-do> != %
 =
 <ref links _to-do> = <to-do>
+
 ;
 ; For sentences such as "I had a plan to laugh."
 ; we want to have the option of having a to-do link from "have" to "laugh".
@@ -1399,10 +1413,16 @@ PREDET2
 <F_L linkR0 LAB> = \J\.*
 =
 <F_L linkR0 F_R ref links _predet> = <F_L ref> 
+
 ;/////////////////////////////////////////////////////////////////////////////
 ; Rules  for handling Extrapositions
+;/////////////////////////////////////////////////////////////////////////////
+;
+; ---------------------------------------------------------------
+; who, whose constructions
 ;
 ; Example: "The woman who lives next door is a nurse."
+;
 #TemplateActionAlg
 Adjective-clause-who-1
 <LAB> = \B\.*
@@ -1410,83 +1430,127 @@ Adjective-clause-who-1
 <F_R str> != be|has
 =
 <F_L ref links who> += <F_R ref> 
+
+;
+; Example: ... ???
+;
 #TemplateActionAlg
 Adjective-clause-who-2
-<LAB> = \RS.*
-<F_L str> = who
-<F_R str> = be|has
-=
-<F_L linkL0 F_L ref links who> += <F_R linkR0 F_R ref>
-;Example: Alana Bishop, who hosted the party, is my cousin.
-#TemplateActionAlg
-Adjective-clause-who-3
 <LAB> = \MX\.*
 <F_R str> = who
 =
 <F_L ref links who> +=  <F_R linkR1 F_R ref>
-;Example: They ate a special curry which was recommended by the restaurant’s owner. 
-#TemplateActionAlg
-Adjective-clause-which-1
-<LAB> = \RS\.*
-<F_R linkR0 LAB> = \P\.*
-<F_L str> = which 
-<F_R str> = be|has
-=
-<F_L linkL0 F_L ref links which> += <F_R linkR0 F_R ref> 
-;Example: The restaurant  which belongs to my aunt is very famous.
-#TemplateActionAlg
-Adjective-clause-which-2
-<LAB> = \RS\.*|\CV
-<F_L str> = which
-<F_R str> != be|has
-=
-<F_L linkL0 F_L ref links which> += <F_R ref>
-;Example:  Pizza, which most people love, is not very healthy. 
-#TemplateActionAlg
-Adjective-clause-which-3
-<LAB> = \MX\.*
-<F_R str> = which
-=
-<F_L ref links which> += <F_R linkR1 F_R ref>
-;Example: The books which I read in the library were written by Charles Dickens. 
-#TemplateActionAlg
-Adjective-clause-whose-1
-<LAB> = \D\.*
-<F_L linkL0 LAB> = \Mr\.*
-<F_L str> = whose
-=
-<F_L linkL0 F_L ref links whose> += <F_R ref>
-;Example: Bob, whose name is in that book, is the student near the window. 
+
+;
+; Example: ... ??? Identical to above...
+;
 #TemplateActionAlg
 Adjective-clause-whose-2
 <LAB> = \MX\.*
 <F_R str> = whose
 =
 <F_L ref links whose> += <F_R linkR1 F_R ref> 
-;Example: The book that she lent me is very boring.
+
+;
+; Example: Alana Bishop, who hosted the party, is my cousin.
+;
 #TemplateActionAlg
-Adjective-clause-that-1
-<LAB> = \RS\.* 
+Adjective-clause-who-3
+<LAB> = \RS.*
+<F_L str> = who
+<F_R str> = be|has
+=
+<F_L linkL0 F_L ref links who> += <F_R linkR0 F_R ref>
+
+;
+;Example: Bob, whose name is in that book, is the student near the window. 
+;
+#TemplateActionAlg
+Adjective-clause-whose-4
+<LAB> = \D\.*
+<F_L linkL0 LAB> = \Mr\.*
+<F_L str> = whose
+=
+<F_L linkL0 F_L ref links whose> += <F_R ref>
+
+
+; ---------------------------------------------------------------
+; that/which constructions.
+
+; Example: They ate a special curry which was recommended by the restaurant’s owner. 
+;
+#TemplateActionAlg
+Adjective-clause-which-1
+<LAB> = RS
+<F_R linkR0 LAB> = \P\.*
+<F_L str> = which 
+<F_R str> = be|has
+=
+<F_L linkL0 F_L ref links which> += <F_R linkR0 F_R ref> 
+
+;
+; Identical to above, except this uses "that" insted of "which".
+;
+#TemplateActionAlg
+Adjective-clause-THAT-1
+<LAB> = RS
 <F_R linkR0 LAB> = \P\.*
 <F_L str> = that
 <F_R str> = be|has
 =
-<F_L linkL0 F_L ref links that_adj> += <F_R linkR0 F_R ref> 
-;Example: Andrew stopped the police car that was driving fast.
+<F_L linkL0 F_L ref links that> += <F_R linkR0 F_R ref> 
+
+;-------
+;
+; Example: Andrew stopped the police car that was driving fast.
+; Example: Just before the crossroads, the car was stopped by a traffic sign which stood on the street.
+; Example: The books which I read in the library were written by Charles Dickens. 
+; Example: The restaurant which belongs to my aunt is very famous.
+; 
 #TemplateActionAlg
-Adjective-clause-that-2
-<LAB> = \RS\.*|\CV
+Adjective-clause-which-2
+<LAB> = RS | CV
+<F_L str> = which
+<F_R str> != be|has
+=
+<F_L linkL0 F_L ref links which> += <F_R ref>
+;
+;
+; Identical to the above, except this allows "that" instead of "which".
+; Example: He is glad that she won.
+; Example: The book that she lent me is very boring.
+; Example: Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
+; Example: The books that I read in the library were written by Charles Dickens. 
+; Example: The restaurant that belongs to my aunt is very famous.
+;
+#TemplateActionAlg
+Adjective-clause-THAT-2
+<LAB> = RS | CV
 <F_L str> = that
 <F_R str> != be|has
 =
-<F_L linkL0 F_L ref links that_adj> += <F_R ref>
-;Example: Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
+<F_L linkL0 F_L ref links that> += <F_R ref>
+
+;--------
+;
+; Example:  Pizza, which most people love, is not very healthy. 
+;
+#TemplateActionAlg
+Adjective-clause-which-3
+<LAB> = \MX\.*
+<F_R str> = which
+=
+<F_L ref links which> += <F_R linkR1 F_R ref>
+
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ; SUPERLATIVES
 ;
 ; L is a superlative modifying a determiner on the left.
 ; e.g. "Give me the biggest ball" or "Give me the last six paychecks" 
 ; Record the superlative.
+;/////////////////////////////////////////////////////////////////////////////
+;
 ;
 #TemplateActionAlg
 SUPERLATIVE-1

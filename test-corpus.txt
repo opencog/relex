@@ -1,5 +1,18 @@
-I need to find a Hong Kong engineer, who knows Java and Python and worked at Oracle and went to Stanford and is a VP.
+He is glad that she won.
+The restaurant that belongs to my aunt is very famous.
+The book that she lent me is very boring.
+Just before the crossroads, the car was stopped by a traffic sign that stood on the street.
+The books that I read in the library were written by Charles Dickens.
+The books which I read in the library were written by Charles Dickens.
 END.
+Just before the crossroads, the car was stopped by a traffic sign which stood on the street.
+Jack stopped the police car which was driving fast.
+The jar was filled with marbles.
+There were 769 households out of which 38.5% had children under the age of 18 living with them.
+I am taller than Ben.
+Go help him.
+Go to hell!
+I need to find a Hong Kong engineer, who knows Java and Python and worked at Oracle and went to Stanford and is a VP.
 He runs more than the robots.
 He runs a lot more often than the robots.
 He is a lot more intelligent than the robots.
