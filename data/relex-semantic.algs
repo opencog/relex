@@ -32,7 +32,7 @@
 ; First pull the left-hand side over.
 #TemplateActionAlg
 CONJ_AND_LEFT_SIDE
-<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJ\.*|\VJl\.*
+<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
 =
 <F_R conj> += <F_L>
 ;
@@ -53,6 +53,14 @@ CONJ_AND_RIGHT_MULTI
 <F_R str> = and|or|but|,
 =
 <F_L conj> += <F_R linkL1 F_L>
+;
+;Correlative conjunction
+;Example:"I could use neither the lorry nor the van. " 
+#TemplateActionAlg
+CORRELATIVE_CONJ
+<LAB> = \SJn\.*
+=
+<F_R conj> += <F_L>
 ;
 ; Finally, pick upt the remaining right side of the conjunction.
 #TemplateActionAlg
