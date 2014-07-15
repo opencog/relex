@@ -2043,16 +2043,6 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
-;Pizza, which most people love, is not very healthy.
-;making "not" adverb of "is"
-#TemplateActionAlg
-ADV5
-<LAB> = \EBm
-<F_R str> = not
-<F_L str> = be|is
-<F_L advmod> = %
-=
-<F_L advmod> += <F_R ref>
 ;
 ; Fix up conjunctions; link not to the conjunction,
 ; but to each conjoined modifier.
