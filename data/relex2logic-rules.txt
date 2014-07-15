@@ -1,7 +1,7 @@
 # relex2logic-rules.txt
 #
 # Rules for RelEx2Logic, format is:
-# [NAME] {PRIORITY} <EXCLUSION> RelEx criteria => Scheme function
+# [NAME] {PRIORITY} <EXCLUSION> RelEx criteria1 & criteria2 & ... => Scheme function
 #
 
 # ============================================
