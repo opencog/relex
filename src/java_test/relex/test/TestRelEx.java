@@ -1060,7 +1060,7 @@ public class TestRelEx
                 rc &= test_sentence ("I could use neither the lorry nor the van.",
                             "_to-do(could, use)\n"+
                             "_quantity(lorry, neither)\n"+
-                            "conj_nor(lorry, van)\n"+
+                            "conj_neither_nor(lorry, van)\n"+
                             "_obj(use, lorry)\n"+
                             "_obj(use, van)\n"+
                             "_subj(use, I)\n");
