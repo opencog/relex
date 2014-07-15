@@ -283,6 +283,7 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "_comparative(mile, run)\n"+
 				    "_quantity(mile, ten)\n" +
+				    "numeric-FLAG(ten, T)\n" +
 				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
@@ -293,6 +294,7 @@ public class TestRelEx
 				    "than(he, John)\n"+
 				    "_quantity_mod(ten, almost)\n"+
 				    "_quantity(mile, ten)\n"+
+				    "numeric-FLAG(ten, T)\n" +
 				    "degree(more, comparative)\n");
 
 		rc &= test_sentence ("He runs more often than John.",
@@ -383,8 +385,9 @@ public class TestRelEx
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
 				    "_quantity(mile, 10)\n"+
-				    "_comparative(mile, run)\n"+
+				    "_comparative(mile, run)\n"+			
 				    "than(I, Ben)\n"+
+				    "numeric-FLAG(10, T)\n" +
 				    "degree(more, comparative)\n");
 
 		rc &= test_sentence ("I run 10 fewer miles than Ben.",
@@ -393,6 +396,7 @@ public class TestRelEx
 				    "_quantity(mile, 10)\n"+
 				    "_comparative(mile, run)\n"+
 				    "than(I, Ben)\n"+
+				    "numeric-FLAG(10, T)\n" +
 				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("I run more often than Ben.",
