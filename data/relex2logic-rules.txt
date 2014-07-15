@@ -16,7 +16,7 @@
 
 [SV] {3} <SVO, SVIO, BE> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
-[SVP] {4} <ALLRULE3> _predadj($x, $y) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+[SVP] {4} <> _predadj($x, $y) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
 [TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
