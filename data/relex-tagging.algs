@@ -1087,6 +1087,12 @@ DEFINITE_ENTITIES
 <ENTITY-FLAG> = T
 =
 <ref definite-FLAG> = T
+;Numeric flag. Numbers appearing in links
+#TemplateActionAlg
+NUMERIC_ENTITIES
+<LAB> = \ND
+=
+<F_L ref numeric-FLAG> = T
 ;
 ; Dates, appearing in IN links, e.g. "in the 1940's"
 #TemplateActionAlg
