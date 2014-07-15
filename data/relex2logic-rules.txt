@@ -1,15 +1,40 @@
+# relex2logic-rules.txt
+#
+# Rules for RelEx2Logic, format is:
+# [NAME] {PRIORITY} <EXCLUSION> RelEx criteria1 & criteria2 & ... => Scheme function
+#
+
+# ============================================
+# SV and related rules
+# ============================================
 # Examples: "Socrates is man", "Cats are animals", "Trees are plants"
 [BE] {1} <SVO, SV> _subj(be, $x) & _obj(be, $y) => (be-inheritance-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
+
+[SVIO] {1} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
 [SVO]  {2} <SV, SVIO, BE> _subj($y, $x) & _obj($y, $z) => (SVO-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index) $z (get-instance-name $z word_index sentence_index))
 
 [SV] {3} <SVO, SVIO, BE> _subj($y, $x) => (SV-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
-[AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
-
 [SVP] {4} <ALLRULE3> _predadj($x, $y) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
+[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
+
+
+# ============================================
+# adjective, adverb rules
+# ============================================
+[AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
+
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
+
+
+# ============================================
+# unary rules
+# ============================================
+[ENTITYFLAG] {2} <> entity-FLAG($W, T) => (entity-rule $W (get-instance-name $W word_index sentence_index))
+
+[GENDER] {2} <> person-FLAG($W, T) & gender($W, $gender) => (gender-rule $W (get-instance-name $W word_index sentence_index) $gender)
 
 [TENSEPOS] {5} <> tense($W, $Tense) & pos($W, verb) => (tense-rule $W (get-instance-name $W word_index sentence_index) $Tense)
 
@@ -17,12 +42,27 @@
 
 [NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get-instance-name $V word_index sentence_index))
 
+# for definite words
+[DEFINITE] {8} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
+
+
+# ============================================
+# misc rules
+# ============================================
+[NUM] {1} <> _num_quantity($W, $Num) => (number-rule $W (get-instance-name $W word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
+
+[ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
+
+[PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
+
 [POSS1A] {8} <> _poss($N, $W) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
 
 [MAYBE] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
 
-[NUM] {1} <> _num_quantity($W, $Num) => (number-rule $W (get-instance-name $W word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
 
+# ============================================
+# "to do" rules
+# ============================================
 # Example: "She wants to help John."
 [TODO1] {1} <TODO2> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S) => (to-do-rule-1 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S (get-instance-name $S word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
 
@@ -37,8 +77,10 @@
 # Example: "She is nice to help with the project."
 [TODO3] {2} <TODO4> _to-do($V1, $V2) & _predadj($V3, $V1)  => (to-do-rule-3 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $V3 (get-instance-name $V3 word_index sentence_index))
 
-[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
+# ============================================
+# all rules
+# ============================================
 [ALLRULE1] {2} <ALLRULE2, ALLRULE3> _quantity($noun, all) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
 
 # not implemented yet
@@ -47,31 +89,28 @@
 # Combination of ALLRULE and SVP: Deals specifically with sentences of the form "All Canadians are right-handed." (- Sebastian)
 [ALLRULE3] {1} <> _quantity($x, all) & _predadj($x, $y) => (all-SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index)) 
 
-[ENTITYFLAG] {2} <> entity-FLAG($W, T) => (entity-rule $W (get-instance-name $W word_index sentence_index))
 
-[GENDER] {2} <> person-FLAG($W, T) & gender($W, $gender) => (gender-rule $W (get-instance-name $W word_index sentence_index) $gender)
-
-[ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
-
-[PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
-
-[WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
-
-[SVIO] {1} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
-
+# ============================================
+# passive verb rules
+# ============================================
 [PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A,past_passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
 
 [PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A,present_passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
+
+# ============================================
+# and rules
+# ============================================
 # Example: "I did my homework, and I went to school."
 [AND1] {1} <and-rule2> conj_and($var1, $var2) & pos($var1, verb) & pos($var2, verb) => (and-rule1 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
 
 #Example: "John and Madison eat the cake."
 [AND2] {2} <and-rule1> conj_and($var1, $var2) => (and-rule2 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
 
-[DEFINITE] {1} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
 
-
+# ============================================
+# that rules for object clause, content clause, complement clause, etc, but not adjective clause
+# ============================================
 # skipping adjective clause
 [THAT-EXCL-1] {100} <> that($A, $B) & pos($A, noun) => ; ignoring adjective clause between $A and $B 
 [THAT-EXCL-2] {100} <> that($A, $B) & pos($B, noun) => ; ignoring adjective clause between $A and $B 
@@ -79,4 +118,15 @@
 # general that-rule works for any pos
 [THAT1] {110} <THAT-EXCL-1, THAT-EXCL-2> that($A, $B) & pos($A, $A_POS) & pos($B, $B_POS) => (that-rule $A (get-instance-name $A word_index sentence_index) $A_POS $B (get-instance-name $B word_index sentence_index) $B_POS)
 [THAT2] {110} <THAT-EXCL-1, THAT-EXCL-2> _that($A, $B) & pos($A, $A_POS) & pos($B, $B_POS) => (that-rule $A (get-instance-name $A word_index sentence_index) $A_POS $B (get-instance-name $B word_index sentence_index) $B_POS)
+
+
+
+
+# ============================================
+# Unneeded, not working stuff, etc
+# ============================================
+# [WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
+
+
+
 
