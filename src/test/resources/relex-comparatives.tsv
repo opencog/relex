@@ -1,0 +1,455 @@
+Sentence	Relations
+Some people like pigs less than dogs.	
+	_advmod(like, less)
+	_obj(like, pig)
+	_quantity(people, some)
+	_subj(like, people)
+	than(pig, dog)
+	
+Some people like pigs more than dogs.	
+	_advmod(like, more)
+	_obj(like, pig)
+	_quantity(people, some)
+	_subj(like, people)
+	than(pig, dog)
+	
+//Non-equal Gradable : Two entities one feature more/less	
+He is more intelligent than John.	
+	than(he, John)
+	_comparative(intelligent, he)
+	degree(intelligent, comparative)
+	_predadj(he, intelligent)
+  	
+He is less intelligent than John.	
+	than(he, John)
+	_comparative(intelligent, he)
+	degree(intelligent, comparative)
+	_advmod(intelligent, less)
+	_predadj(he, intelligent)
+    	
+He runs more quickly than John.	
+	_advmod(run, quickly)
+	_advmod(quickly, more)
+	_subj(run, he)
+	than(he, John)
+	_comparative(quickly, run)
+	degree(quickly, comparative)
+  	
+He runs less quickly than John.	
+	_advmod(run, quickly)
+	_subj(run, he)
+	_advmod(quickly, less)
+	than(he, John)
+	_comparative(quickly, run)
+	degree(quickly, comparative)
+  	
+He runs more quickly than John does.	
+	_advmod(run, quickly)
+	_advmod(quickly, more)
+	_subj(run, he)
+	_subj(do, John)
+	than(he, John)
+	_comparative(quickly, run)
+	degree(quickly, comparative)
+  	
+//This sentence is ungrammatical but commonly used by non-native English speakers 	
+He runs less quickly than John does.	
+	_advmod(run, quickly)
+	_subj(run, he)
+	_subj(do, John)
+	_advmod(quickly, less)
+	than(he, John)
+	_comparative(quickly, run)
+	degree(quickly, comparative)
+  	
+He runs slower than John does.	
+	_advmod(run, slow)
+	_subj(run, he)
+	_subj(do, John)
+	than(he, John)
+	_comparative(slow, run)
+	degree(slow, comparative)
+  	
+He runs more than John.	
+	_obj(run, more)
+	_subj(run, he)
+	than(he, John)
+	_comparative(more, run)
+	degree(more, comparative)
+  	
+He runs less than John.	
+	_obj(run, less)
+	_subj(run, he)
+	than(he, John)
+	_comparative(less, run)
+	degree(less, comparative)
+  	
+He runs faster than John.	
+	than(he, John)
+	_comparative(fast, run)
+	_subj(run, he)
+	_advmod(run, fast)
+	degree(fast, comparative)
+  	
+He runs more slowly than John.	
+	than(he, John)
+	_subj(run, he)
+	_advmod(slowly, more)
+	_comparative(slowly, run)
+	_advmod(run, slowly)
+	degree(slowly, comparative)
+  	
+He runs less slowly than John.	
+	than(he, John)
+	_subj(run, he)
+	_comparative(slowly, run)
+	_advmod(run, slowly)
+	_advmod(slowly, less)
+	degree(slowly, comparative)
+  	
+He runs more miles than John does.	
+	than(he, John)
+	_subj(run, he)
+	_subj(do, John)
+	_obj(run, mile)
+	_comparative(mile, run)
+	_quantity(mile, more)
+	degree(more, comparative)
+  	
+He runs less miles than John does.	
+	than(he, John)
+	_subj(run, he)
+	_subj(do, John)
+	_obj(run, mile)
+	_comparative(mile, run)
+	_quantity(mile, less)
+	degree(less, comparative)
+  	
+He runs many more miles than John does.	
+	than(he, John)
+	_comparative(mile, run)
+	_obj(run, mile)
+	_subj(run, he)
+	_subj(do, John)
+	_quantity(mile, many)
+	degree(more, comparative)
+  	
+He runs fewer miles than John does.	
+	than(he, John)
+	_comparative(mile, run)
+	_obj(run, mile)
+	_subj(run, he)
+	_subj(do, John)
+	_quantity(mile, fewer)
+	degree(fewer, comparative)
+  	
+He runs ten more miles than John.	
+	_obj(run, mile)
+	_subj(run, he)
+	_quantity(mile, more)
+	than(he, John)
+	_comparative(mile, run)
+	_num_quantity(miles, ten)
+	degree(more, comparative)
+      	
+He runs almost ten more miles than John does.	
+	_obj(run, mile)
+	_subj(run, he)
+	_comparative(mile, run)
+	_subj(do, John)
+	than(he, John)
+	_quantity_mod(ten, almost)
+	_num_quantity(miles, ten)
+	degree(more, comparative)
+      	
+He runs more often than John.	
+	_subj(run, he)
+	_advmod(often, more)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(he, John)
+	degree(often, comparative)
+  	
+He runs less often than John.	
+	_subj(run, he)
+	_advmod(often, less)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(he, John)
+	degree(often, comparative)
+       	
+He runs here more often than John.	
+	_advmod(run, here)
+	_advmod(often, more)
+	_advmod(run, often)
+	_subj(run, he)
+	_comparative(often, run)
+	than(he, John)
+	degree(often, comparative)
+  	
+He runs here less often than John.	
+	_advmod(run, here)
+	_advmod(often, less)
+	_advmod(run, often)
+	_subj(run, he)
+	_comparative(often, run)
+	than(he, John)
+	degree(often, comparative)
+  	
+He is faster than John.	
+	than(he, John)
+	_predadj(he, fast)
+	_comparative(fast, be)
+	degree(fast, comparative)
+  	
+He is faster than John is.	
+	than(he, John)
+	_predadj(he, fast)
+	_subj(be, John)
+	_comparative(fast, be)
+	degree(fast, comparative)
+  	
+His speed is faster than John's.	
+	than(speed, be)
+	_predadj(speed, fast)
+	_poss(speed, him)
+	_comparative(fast, be)
+	degree(fast, comparative)
+	
+I run more than Ben.	
+	_subj(run, I)
+	_obj(run, more)
+	_comparative(more, run)
+	than(I, Ben)
+	degree(more, comparative)
+  	
+I run less than Ben.	
+	_subj(run, I)
+	_obj(run, less)
+	_comparative(less, run)
+	than(I, Ben)
+	degree(less, comparative)
+  	
+I run more miles than Ben.	
+	_subj(run, I)
+	_obj(run, mile)
+	_quantity(mile, more)
+	_comparative(mile, run)
+	than(I, Ben)
+	degree(more, comparative)
+  	
+I run fewer miles than Ben.	
+	_subj(run, I)
+	_obj(run, mile)
+	_quantity(mile, fewer)
+	_comparative(mile, run)
+	than(I, Ben)
+	degree(fewer, comparative)
+  	
+I run 10 more miles than Ben.	
+	_subj(run, I)
+	_obj(run, mile)
+	_num_quantity(mile, 10)
+	_quantity_mod(10, more)
+	_comparative(mile, run)
+	than(I, Ben)
+	degree(more, comparative)
+  	
+I run 10 fewer miles than Ben.	
+	_subj(run, I)
+	_obj(run, mile)
+	_num_quantity(mile, 10)
+	_quantity_mod(10, fewer)
+	_comparative(mile, run)
+	than(I, Ben)
+	degree(fewer, comparative)
+  	
+I run more often than Ben.	
+	_subj(run, I)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(I, Ben)
+	degree(often, comparative)
+	_advmod(often, more)
+  	
+I run less often than Ben.	
+	_subj(run, I)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(I, Ben)
+	degree(often, comparative)
+	_advmod(often, less)
+	
+I run more often than Ben does.	
+	_subj(run, I)
+	_subj(do, Ben)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(I, Ben)
+	degree(often, comparative)
+	_advmod(often, more)
+  	
+I run less often than Ben does.	
+	_subj(run, I)
+	_subj(do, Ben)
+	_advmod(run, often)
+	_comparative(often, run)
+	than(I, Ben)
+	degree(often, comparative)
+	_advmod(often, less)
+  	
+I run more often than Ben climbs.	
+	_subj(run, I)
+	_subj(climb, Ben)
+	_comparative(often, run)
+	than(I, Ben)
+	than1(run, climb)
+	degree(often, comparative)
+	_advmod(run, often)
+	_advmod(often, more)
+  	
+I run less often than Ben climbs.	
+	_subj(run, I)
+	_subj(climb, Ben)
+	_comparative(often, run)
+	than(I, Ben)
+	than1(run, climb)
+	degree(often, comparative)
+	_advmod(run, often)
+	_advmod(often, less)
+  	
+I run more races than Ben wins contests.	
+	_subj(run, I)
+	_obj(run, race)
+	_subj(win, Ben)
+	_obj(win, contest)
+	_quantity(race, more)
+	_comparative(race, run)
+	than(I, Ben)
+	than1(run, climb)
+	than2(race, contest)
+	degree(more, comparative)
+  	
+I run fewer races than Ben wins contests.	
+	_subj(run, I)
+	_obj(run, race)
+	_subj(win, Ben)
+	_obj(win, contest)
+	_quantity(race, fewer)
+	_comparative(race, run)
+	than(I, Ben)
+	than1(run, climb)
+	than2(race, contest)
+	degree(fewer, comparative)
+  	
+I have more chairs than Ben.	
+	_obj(have, chair)
+	_subj(have, I)
+	than(I, Ben)
+	_comparative(chair, have)
+	_quantity(chair, more)
+	degree(more, comparative)
+  	
+I have fewer chairs than Ben.	
+	_obj(have, chair)
+	_subj(have, I)
+	than(I, Ben)
+	_comparative(chair, have)
+	_quantity(chair, fewer)
+	degree(fewer, comparative)
+  	
+He earns much more money than I do.	
+	_obj(earn, money)
+	_subj(do, I)
+	_subj(earn, he)
+	than(he,I)
+	_comparative(money,earn)
+	_quantity(money, more)
+	_advmod(more, much)
+	degree(more,comparative)
+  	
+He earns much less money than I do.	
+	_obj(earn, money)
+	_subj(do, I)
+	_subj(earn, he)
+	than(he, I)
+	_comparative(money, earn)
+	_quantity(money, less)
+	_advmod(less, much)
+	degree(less, comparative)
+  	
+She comes here more often than her husband.	
+	_advmod(come, here)
+	_advmod(often, more)
+	_advmod(come, often)
+	_subj(come, she)
+	_poss(husband, her)
+	_comparative(often, come)
+	than(she, husband)
+	degree(often, comparative)
+  	
+She comes here less often than her husband.	
+	_advmod(come, here)
+	_advmod(often, less)
+	_advmod(come, often)
+	_subj(come, she)
+	_poss(husband, her)
+	_comparative(often, come)
+	than(she, husband)
+	degree(often, comparative)
+	
+//When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version	
+Russian grammar is more difficult than English grammar.	
+	_comparative(difficult, grammar)
+	than(grammar, grammar)
+	_amod(grammar, Russian)
+	_predadj(grammar, difficult)
+	_amod(grammar, English)
+	degree(difficult, comparative)
+  	
+Russian grammar is less difficult than English grammar.	
+	_comparative(difficult, grammar)
+	than(grammar, grammar)
+	_amod(grammar, Russian)
+	_predadj(grammar, difficult)
+	_amod(grammar, English)
+	_advmod(difficult, less)
+	degree(difficult, comparative)
+  	
+My sister is much more intelligent than me.	
+	_amod(much, intelligent)
+	_predadj(sister, intelligent)
+	_poss(sister, me)
+	than(sister, me)
+	_comparative(intelligent, sister)
+	degree(intelligent, comparative)
+  	
+My sister is much less intelligent than me.	
+	_amod(much, intelligent)
+	_predadj(sister, intelligent)
+	_poss(sister, me)
+	than(sister, me)
+	_comparative(intelligent, sister)
+	_advmod(intelligent, less)
+	degree(intelligent, comparative)
+  	
+I find maths lessons more enjoyable than science lessons.	
+	_iobj(find, maths)
+	_obj(find, lesson)
+	_subj(find, I)
+	_amod(lesson, enjoyable)
+	_nn(lesson, science)
+	than(maths, science)
+	_comparative(enjoyable, maths)
+	degree(enjoyable, comparative)
+  	
+I find maths lessons less enjoyable than science lessons.	
+	_iobj(find, maths)
+	_obj(find, lesson)
+	_subj(find, I)
+	_amod(lesson, enjoyable)
+	_nn(lesson, science)
+	than(maths, science)
+	_comparative(enjoyable, maths)
+	_advmod(enjoyable, less)
+	degree(enjoyable, comparative)

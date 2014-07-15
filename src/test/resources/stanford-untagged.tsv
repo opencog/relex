@@ -1,0 +1,402 @@
+// The parses below were compared to the Stanford parser, circa	
+// 2009.Since then, it is likely that Stanford has changed.	
+// The tests below should not be changed, unless a) they are	
+// changed to be compatible with current-day Stanford, and b) they	
+// pass.	
+Who invented sliced bread?
+	nsubj(invented-2, who-1)
+	amod(bread-4, sliced-3)
+	dobj(invented-2, bread-4)
+	
+Jim runs quickly.	
+	nsubj(runs-2, Jim-1)
+	advmod(runs-2, quickly-3)
+	
+The bird, a robin, sang sweetly.	
+	det(bird-2, the-1)
+	nsubj(sang-7, bird-2)
+	det(robin-5, a-4)
+	appos(bird-2, robin-5)
+	advmod(sang-7, sweetly-8)
+// wtf ?? dep is not documented .. not sure what to do here ... 	
+There is a place we can go.	
+	expl(is-2, there-1)
+	det(place-4, a-3)
+	nsubj(is-2, place-4)
+	nsubj(go-7, we-5)
+	aux(go-7, can-6)
+//dep(is-2, go-7)	
+	
+	
+The linebacker gave the quarterback a push.	
+	det(linebacker-2, the-1)
+	nsubj(gave-3, linebacker-2)
+	det(quarterback-5, the-4)
+	iobj(gave-3, quarterback-5)
+	det(push-7, a-6)
+	dobj(gave-3, push-7)
+	
+He stood at the goal line.	
+	nsubj(stood-2, he-1)
+	det(line-6, the-4)
+	nn(line-6, goal-5)
+	prep_at(stood-2, line-6)
+	
+// acomp example from Stanford docs	
+She looks very beautiful.	
+	nsubj(looks-2, she-1)
+	advmod(beautiful-4, very-3)
+	acomp(looks-2, beautiful-4)
+	
+// advcl example from Stanford docs	
+The accident happened as the night was falling.	
+	det(accident-2, the-1)
+	nsubj(happened-3, accident-2)
+	mark(falling-8, as-4)
+	det(night-6, the-5)
+	nsubj(falling-8, night-6)
+	aux(falling-8, was-7)
+	advcl(happened-3, falling-8)
+	
+// advcl example from Stanford docs	
+If you know who did it, you should tell the teacher.	
+	mark(know-3, if-1)
+	nsubj(know-3, you-2)
+	advcl(tell-10, know-3)
+	nsubj(did-5, who-4)
+	ccomp(know-3, did-5)
+	dobj(did-5, it-6)
+	nsubj(tell-10, you-8)
+	aux(tell-10, should-9)
+	det(teacher-12, the-11)
+	dobj(tell-10, teacher-12)
+	
+// agent example from Stanford docs	
+The man has been killed by the police.	
+	det(man-2, the-1)
+	nsubjpass(killed-5, man-2)
+	aux(killed-5, has-3)
+	auxpass(killed-5, been-4)
+	det(police-8, the-7)
+	agent(killed-5, police-8)
+	
+Effects caused by the protein are important.	
+	nsubj(important-7, effects-1)
+	partmod(effects-1, caused-2)
+	det(protein-5, the-4)
+	agent(caused-2, protein-5)
+	cop(important-7, are-6)
+	
+Sam, my brother, has arrived.	
+	nsubj(arrived-7, Sam-1)
+	poss(brother-4, my-3)
+	appos(Sam-1, brother-4)
+	aux(arrived-7, has-6)
+	
+What is that?
+	attr(is-2, what-1)
+	nsubj(is-2, that-3)
+	
+Reagan has died.	
+	nsubj(died-3, Reagan-1)
+	aux(died-3, has-2)
+	
+He should leave.	
+	nsubj(leave-3, he-1)
+	aux(leave-3, should-2)
+	
+Kennedy has been killed.	
+	nsubjpass(killed-4, Kennedy-1)
+	aux(killed-4, has-2)
+	auxpass(killed-4, been-3)
+	
+Kennedy was killed.	
+	nsubjpass(killed-3, Kennedy-1)
+	auxpass(killed-3, was-2)
+	
+Kennedy got killed.	
+	nsubjpass(killed-3, Kennedy-1)
+	auxpass(killed-3, got-2)
+	
+Bill is big.	
+	nsubj(big-3, Bill-1)
+	cop(big-3, is-2)
+	
+Bill is an honest man.	
+	nsubj(man-5, Bill-1)
+	cop(man-5, is-2)
+	det(man-5, an-3)
+	amod(man-5, honest-4)
+	
+What she said makes sense.	
+	dobj(said-3, what-1)
+	nsubj(said-3, she-2)
+	csubj(makes-4, said-3)
+	dobj(makes-4, sense-5)
+	
+What she said is not true.	
+	dobj(said-3, what-1)
+	nsubj(said-3, she-2)
+	csubj(true-6, said-3)
+	cop(true-6, is-4)
+	neg(true-6, not-5)
+	
+Which book do you prefer?
+	det(book-2, which-1)
+	dobj(prefer-5, book-2)
+	aux(prefer-5, do-3)
+	nsubj(prefer-5, you-4)
+	
+There is a ghost in the room.	
+	expl(is-2, there-1)
+	det(ghost-4, a-3)
+	nsubj(is-2, ghost-4)
+	det(room-7, the-6)
+	prep_in(is-2, room-7)
+	
+She gave me a raise.	
+	nsubj(gave-2, she-1)
+	iobj(gave-2, me-3)
+	det(raise-5, a-4)
+	dobj(gave-2, raise-5)
+	
+The director is 65 years old.	
+	det(director-2, the-1)
+	nsubj(old-6, director-2)
+	cop(old-6, is-3)
+	num(years-5, 65-4)
+	measure(old-6, years-5)
+	
+Sam eats 3 sheep.	
+	nsubj(eats-2, Sam-1)
+	num(sheep-4, 3-3)
+	dobj(eats-2, sheep-4)
+	
+//****************	
+// * I don't get it. Stanford makes a num/number distinction I can't grok.	
+//  I lost $ 3.2 billion.	
+//nsubj(lost-2, I-1)	
+//dobj(lost-2, $-3)	
+//number($-3, 3.2-4)	
+//number($-3, billion-5)	
+//***********/	
+	
+Truffles picked during the spring are tasty.	
+	nsubj(tasty-7, truffles-1)
+	partmod(truffles-1, picked-2)
+	det(spring-5, the-4)
+	prep_during(picked-2, spring-5)
+	cop(tasty-7, are-6)
+	
+//****************	
+// * Currently fails due to xcomp generation problems	
+// *	
+//  We went to their offices to get Bill's clothes.	
+//nsubj(went-2, we-1)	
+//xsubj(get-7, we-1)	
+//poss(offices-5, their-4)	
+//prep_to(went-2, offices-5)	
+//aux(get-7, to-6)	
+//xcomp(went-2, get-7)	
+//poss(clothes-10, Bill-8)	
+//dobj(get-7, clothes-10)	
+//***********/	
+	
+//****************	
+// * See README-Stanford for details.	
+//  All the boys are here.	
+//predet(boys-3, all-1)	
+//det(boys-3, the-2)	
+//nsubj(are-4, boys-3)	
+//advmod(are-4, here-5)	
+//***********/	
+	
+//****************	
+// * These are ambiguous parses.	
+// * Stanford picks the opposite choice from Relex.	
+// * See the README-Stanford for a discussion.	
+//  I saw a cat in a hat.	
+//nsubj(saw-2, I-1)	
+//det(cat-4, a-3)	
+//dobj(saw-2, cat-4)	
+//det(hat-7, a-6)	
+//prep_in(cat-4, hat-7)	
+//	
+//  I saw a cat with a telescope.	
+//nsubj(saw-2, I-1)	
+//det(cat-4, a-3)	
+//dobj(saw-2, cat-4)	
+//det(telescope-7, a-6)	
+//prep_with(cat-4, telescope-7)	
+//***********/	
+	
+He is responsible for meals.	
+	nsubj(responsible-3, he-1)
+	cop(responsible-3, is-2)
+	prep_for(responsible-3, meals-5)
+	
+They shut down the station.	
+	nsubj(shut-2, they-1)
+	prt(shut-2, down-3)
+	det(station-5, the-4)
+	dobj(shut-2, station-5)
+	
+About 200 people came to the party.	
+	quantmod(200-2, about-1)
+	num(people-3, 200-2)
+	nsubj(came-4, people-3)
+	det(party-7, the-6)
+	prep_to(came-4, party-7)
+	
+I saw the man who you love.	
+	nsubj(saw-2, I-1)
+	det(man-4, the-3)
+	dobj(saw-2, man-4)
+	dobj(love-7, man-4)
+	rel(love-7, who-5)
+	nsubj(love-7, you-6)
+	rcmod(man-4, love-7)
+	
+	
+//****************	
+// *	
+// * relex is failing to generate the following:	
+// * Almost got it w/the B** rules but not quite ... 	
+//	
+//rel(love-8, wife-6)	
+//rcmod(man-4, love-8)	
+//	
+//  I saw the man whose wife you love.	
+//nsubj(saw-2, I-1)	
+//det(man-4, the-3)	
+//dobj(saw-2, man-4)	
+//poss(wife-6, whose-5)	
+//dobj(love-8, wife-6)	
+//rel(love-8, wife-6)	
+//nsubj(love-8, you-7)	
+//rcmod(man-4, love-8)	
+//***********/	
+	
+I am ready to leave.	
+	nsubj(ready-3, I-1)
+	cop(ready-3, am-2)
+	aux(leave-5, to-4)
+	xcomp(ready-3, leave-5)
+	
+Tom likes to eat fish.	
+	nsubj(likes-2, Tom-1)
+	xsubj(eat-4, Tom-1)
+	aux(eat-4, to-3)
+	xcomp(likes-2, eat-4)
+	dobj(eat-4, fish-5)
+	
+//****************	
+//  He says that you like to swim.	
+//nsubj(says-2, he-1)	
+//complm(like-5, that-3)	
+//nsubj(like-5, you-4)	
+//ccomp(says-2, like-5)	
+//nsubj(swim-7, to-6) // NFW that this can be right.	
+//ccomp(like-5, swim-7)	
+//***********/	
+	
+//****************	
+//  The garage is next to the house.	
+//det(garage-2, the-1)	
+//nsubj(next-4, garage-2)	
+//cop(next-4, is-3)	
+//det(house-7, the-6)	
+//prep_to(next-4, house-7)	
+//***********/	
+	
+// =========================================================	
+// PENN PART_OF_SPEECH TAGGING	
+// =========================================================	
+//	
+Truffles picked during the spring are tasty.	
+	nsubj(tasty-7-JJ, truffles-1-NNS)
+	partmod(truffles-1-NNS, picked-2-VBN)
+	det(spring-5-NN, the-4-DT)
+	prep_during(picked-2-VBN, spring-5-NN)
+	cop(tasty-7-JJ, are-6-VBP)
+	
+I ate twelve truffles.	
+	nsubj(ate-2-VBD, I-1-PRP)
+	num(truffles-4-NNS, twelve-3-CD)
+	dobj(ate-2-VBD, truffles-4-NNS)
+	
+I have eaten twelve truffles.	
+	nsubj(eaten-3-VBN, I-1-PRP)
+	aux(eaten-3-VBN, have-2-VBP)
+	num(truffles-5-NNS, twelve-4-CD)
+	dobj(eaten-3-VBN, truffles-5-NNS)
+	
+I had eaten twelve truffles.	
+	nsubj(eaten-3-VBN, I-1-PRP)
+	aux(eaten-3-VBN, had-2-VBD)
+	num(truffles-5-NNS, twelve-4-CD)
+	dobj(eaten-3-VBN, truffles-5-NNS)
+	
+The truffles were eaten.	
+	det(truffles-2-NNS, the-1-DT)
+	nsubjpass(eaten-4-VBN, truffles-2-NNS)
+	auxpass(eaten-4-VBN, were-3-VBD)
+ 	
+	
+// Full disclosure:Stanford currently generates	
+// dep(time-4-NN, young-8-JJ) which just means it doesn't know	
+// the right answer (which is advcl, right?).	
+// It also generates advmod(young-8-JJ, when-5-WRB) in addition	
+// to rel(young-8-JJ, when-5-WRB) which is not quite right	
+// either.	
+There was a time when we were young.	
+	expl(was-2-VBD, there-1-EX)
+	det(time-4-NN, a-3-DT)
+	nsubj(was-2-VBD, time-4-NN)
+	rel(young-8-JJ, when-5-WRB)
+	nsubj(young-8-JJ, we-6-PRP)
+	cop(young-8-JJ, were-7-VBD)
+	advcl(time-4-NN, young-8-JJ)
+	
+Is there a better way?
+	expl(is-1-VBZ, there-2-EX)
+	det(way-5-NN, a-3-DT)
+	amod(way-5-NN, better-4-JJR)
+	nsubj(is-1-VBZ, way-5-NN)
+	
+Is this the largest you can find?
+	cop(largest-4-JJS, is-1-VBZ)
+	nsubj(largest-4-JJS, this-2-DT)
+	det(largest-4-JJS, the-3-DT)
+	nsubj(find-7-VB, you-5-PRP)
+	aux(find-7-VB, can-6-MD)
+	rcmod(largest-4-JJS, find-7-VB)
+	
+But my efforts to win his heart have failed.	
+	poss(efforts-3-NNS, my-2-PRP$)
+	nsubj(failed-9-VBN, efforts-3-NNS)
+	aux(win-5-VB, to-4-TO)
+	infmod(efforts-3-NNS, win-5-VB)
+	poss(heart-7-NN, his-6-PRP$)
+	dobj(win-5-VB, heart-7-NN)
+	aux(failed-9-VBN, have-8-VBP)
+	
+The undergrads are occasionally late.	
+	det(undergrads-2-NNS, the-1-DT)
+	nsubj(late-5-JJ, undergrads-2-NNS)
+	cop(late-5-JJ, are-3-VBP)
+	advmod(late-5-JJ, occasionally-4-RB)
+	
+The height of Mount Everest is 8,848 metres.	
+	det(height-2-NN, the-1-DT)
+	nsubj(metres-8-NNS, height-2-NN)
+	nn(Everest-5-NNP, Mount-4-NNP)
+	prep_of(height-2-NN, Everest-5-NNP)
+	cop(metres-8-NNS, is-6-VBZ)
+	num(metres-8-NNS, 8,848-7-CD)
+	
+It happened on December 3rd, 1990.	
+	nsubj(happened-2-VBD, it-1-PRP)
+	prep_on(happened-2-VBD, December-4-NNP)
+	num(December-4-NNP, 3rd-5-CD)
+	num(December-4-NNP, 1990-7-CD)

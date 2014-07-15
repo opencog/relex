@@ -163,6 +163,17 @@
 		</resources>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>net.sf.jwordnet</groupId>
+			<artifactId>jwnl</artifactId>
+			<version>1.4_rc3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	
 		<dependency>
 			<groupId>net.sf.opencsv</groupId>
@@ -239,6 +250,12 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<dependencies>
+				<dependency>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+					<version>17.0</version>
+				</dependency>
+
 				<dependency>
 					<groupId>org.apache.odftoolkit</groupId>
 					<artifactId>odfdom-java</artifactId>
@@ -318,17 +335,6 @@
 				</dependency>
 			
 				<dependency>
-					<groupId>net.sf.jwordnet</groupId>
-					<artifactId>jwnl</artifactId>
-					<version>1.4_rc3</version>
-					<exclusions>
-						<exclusion>
-							<artifactId>commons-logging</artifactId>
-							<groupId>commons-logging</groupId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				<dependency>
 					<groupId>org.linkgrammar</groupId>
 					<artifactId>linkgrammar</artifactId>
 					<version>5.0.8</version>
@@ -349,12 +355,6 @@
 						</exclusion>
 					</exclusions>
 				</dependency>
-				
-				<dependency>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava-jdk5</artifactId>
-					<version>17.0</version>
-				</dependency>
 			</dependencies>
 		</profile>
 		<profile>
@@ -371,6 +371,13 @@
 					</plugin>
 				</plugins>
 			</build>
+			<dependencies>
+				<dependency>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava-jdk5</artifactId>
+					<version>17.0</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

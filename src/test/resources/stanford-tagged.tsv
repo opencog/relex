@@ -1,0 +1,91 @@
+// =========================================================	
+// PENN PART_OF_SPEECH TAGGING	
+// =========================================================	
+//	
+Truffles picked during the spring are tasty.	
+	nsubj(tasty-7-JJ, truffles-1-NNS)
+	partmod(truffles-1-NNS, picked-2-VBN)
+	det(spring-5-NN, the-4-DT)
+	prep_during(picked-2-VBN, spring-5-NN)
+	cop(tasty-7-JJ, are-6-VBP)
+	
+I ate twelve truffles.	
+	nsubj(ate-2-VBD, I-1-PRP)
+	num(truffles-4-NNS, twelve-3-CD)
+	dobj(ate-2-VBD, truffles-4-NNS)
+	
+I have eaten twelve truffles.	
+	nsubj(eaten-3-VBN, I-1-PRP)
+	aux(eaten-3-VBN, have-2-VBP)
+	num(truffles-5-NNS, twelve-4-CD)
+	dobj(eaten-3-VBN, truffles-5-NNS)
+	
+I had eaten twelve truffles.	
+	nsubj(eaten-3-VBN, I-1-PRP)
+	aux(eaten-3-VBN, had-2-VBD)
+	num(truffles-5-NNS, twelve-4-CD)
+	dobj(eaten-3-VBN, truffles-5-NNS)
+	
+The truffles were eaten.	
+	det(truffles-2-NNS, the-1-DT)
+	nsubjpass(eaten-4-VBN, truffles-2-NNS)
+	auxpass(eaten-4-VBN, were-3-VBD)
+ 	
+	
+// Full disclosure:Stanford currently generates
+// dep(time-4-NN, young-8-JJ) which just means it doesn't know	
+// the right answer (which is advcl, right?).	
+// It also generates advmod(young-8-JJ, when-5-WRB) in addition	
+// to rel(young-8-JJ, when-5-WRB) which is not quite right	
+// either.	
+There was a time when we were young.	
+	expl(was-2-VBD, there-1-EX)
+	det(time-4-NN, a-3-DT)
+	nsubj(was-2-VBD, time-4-NN)
+	rel(young-8-JJ, when-5-WRB)
+	nsubj(young-8-JJ, we-6-PRP)
+	cop(young-8-JJ, were-7-VBD)
+	advcl(time-4-NN, young-8-JJ)
+	
+Is there a better way?
+	expl(is-1-VBZ, there-2-EX)
+	det(way-5-NN, a-3-DT)
+	amod(way-5-NN, better-4-JJR)
+	nsubj(is-1-VBZ, way-5-NN)
+	
+Is this the largest you can find?
+	cop(largest-4-JJS, is-1-VBZ)
+	nsubj(largest-4-JJS, this-2-DT)
+	det(largest-4-JJS, the-3-DT)
+	nsubj(find-7-VB, you-5-PRP)
+	aux(find-7-VB, can-6-MD)
+	rcmod(largest-4-JJS, find-7-VB)
+	
+But my efforts to win his heart have failed.	
+	poss(efforts-3-NNS, my-2-PRP$)
+	nsubj(failed-9-VBN, efforts-3-NNS)
+	aux(win-5-VB, to-4-TO)
+	infmod(efforts-3-NNS, win-5-VB)
+	poss(heart-7-NN, his-6-PRP$)
+	dobj(win-5-VB, heart-7-NN)
+	aux(failed-9-VBN, have-8-VBP)
+	
+The undergrads are occasionally late.	
+	det(undergrads-2-NNS, the-1-DT)
+	nsubj(late-5-JJ, undergrads-2-NNS)
+	cop(late-5-JJ, are-3-VBP)
+	advmod(late-5-JJ, occasionally-4-RB)
+	
+The height of Mount Everest is 8,848 metres.	
+	det(height-2-NN, the-1-DT)
+	nsubj(metres-8-NNS, height-2-NN)
+	nn(Everest-5-NNP, Mount-4-NNP)
+	prep_of(height-2-NN, Everest-5-NNP)
+	cop(metres-8-NNS, is-6-VBZ)
+	num(metres-8-NNS, 8,848-7-CD)
+	
+It happened on December 3rd, 1990.	
+	nsubj(happened-2-VBD, it-1-PRP)
+	prep_on(happened-2-VBD, December-4-NNP)
+	num(December-4-NNP, 3rd-5-CD)
+	num(December-4-NNP, 1990-7-CD)

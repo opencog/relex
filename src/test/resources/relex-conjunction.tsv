@@ -1,0 +1,101 @@
+Sentence	Relations
+//conjoined verbs	
+Scientists make observations and ask questions.
+	_obj(make, observation)
+	_obj(ask, question)
+	_subj(make, scientist)
+	_subj(ask, scientist)
+	conj_and(make, ask)
+//conjoined nouns     	
+She is a student and an employee.
+	_obj(be, student)
+	_obj(be, employee)
+	_subj(be, she)
+	conj_and(student, employee)
+//conjoined adjectives	
+I hailed a black and white taxi.
+	_obj(hail, taxi)
+	_subj(hail, I)
+	_amod(taxi, black)
+	_amod(taxi, white)
+	conj_and(black, white)
+//conjoined adverbs	
+She ran quickly and quietly.
+	_advmod(run, quickly)
+	_advmod(run, quietly)
+	_subj(run, she)
+	conj_and(quickly, quietly)
+//adjectival modifiers on conjoined subject 	
+The big truck and the little car collided.
+	_amod(car, little)
+	_amod(truck, big)
+	_subj(collide, truck)
+	_subj(collide, car)
+	conj_and(truck, car)
+//verbs with modifiers	
+We ate dinner at home and went to the movies.
+	_obj(eat, dinner)
+	conj_and(eat, go)
+	at(eat, home)
+	_subj(eat, we)
+	to(go, movie)
+	_subj(go, we)
+//verb with more modifiers	
+We ate a late dinner at home and went out to the movies afterwards.
+	_obj(eat, dinner)
+	conj_and(eat, go_out)
+	at(eat, home)
+	_subj(eat, we)
+	to(go_out, movie)
+	_advmod(go_out, afterwards)
+	_subj(go_out, we)
+	_amod(dinner, late)
+	
+//conjoined ditransitive verbs 	
+She baked him a cake and sang him a song.
+	_iobj(sing, him)
+	_obj(sing, song)
+	_subj(sing, she)
+	_iobj(bake, him)
+	_obj(bake, cake)
+	conj_and(bake, sing)
+	_subj(bake, she) 
+//conjoined adverbs with modifiers	
+she ran very quickly and extremely quietly.
+	_advmod(run, quickly)
+	_advmod(run, quietly)
+	_subj(run, she)
+	_advmod(quietly, extremely)
+	conj_and(quickly, quietly)
+	_advmod(quickly, very) 
+//conjoined adverbs with out modifiers	
+She handled it quickly and gracefully.
+	_obj(handle, quickly)
+	_obj(handle, gracefully)
+	_advmod(handle, quickly)
+	_advmod(handle, gracefully)
+	_subj(handle, she)
+	conj_and(quickly, gracefully) 
+//modifiers on conjoined adjectives	
+He had very long and very white hair.
+	_obj(have, hair)
+	_subj(have, he)
+	_amod(hair, long)
+	_amod(hair, white)
+	_advmod(white, very)
+	conj_and(long, white)
+	_advmod(long, very)    
+//adjectival modifiers on conjoined object	
+The collision was between the little car and the big truck.
+	_pobj(between, car)
+	_pobj(between, truck)
+	_psubj(between, collision)
+	_amod(truck, big)
+	_amod(car, little)
+	conj_and(car, truck)
+//Names Modifiers  and conjunction	
+Big Tom and Angry Sue went to the movies.
+	to(go, movie)
+	_subj(go, Big_Tom)
+	_subj(go, Angry_Sue)
+	conj_and(Big_Tom, Angry_Sue)  
