@@ -2970,9 +2970,23 @@ NO_MORE_OR_LESS
 NEGATIVE1
 <LAB> = \N\.*|\EB\.*
 <F_R str> = not
+<F_L tense first_verb head-word conj> = %
 =
 <F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
 <F_L tense first_verb head-word negation> += <F_R>
+;
+;negative in the case of conjunction
+;example- "Summer school is not easy but difficult."
+;NEGATIVE-FLAG(easy, T)
+#TemplateActionAlg
+NEGATIVE_CONJ
+<LAB> = \N\.*|\EB\.*
+<F_R str> = not
+<F_L tense first_verb head-word conj> != %
+=
+<F_L tense first_verb head-word ref NEGATIVE-FLAG> = %
+<F_L tense first_verb head-word conj member0 ref NEGATIVE-FLAG> += T
+<F_L tense first_verb head-word conj member0 negation> += <F_R>
 ;
 #TemplateActionAlg
 NEGATIVE_CONTR1
