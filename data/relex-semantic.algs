@@ -1854,6 +1854,7 @@ QUANTIFIERS_1
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
 <F_R linkL0 LAB> = \Op|\Os|\Ou|\Oc
+<F_L linkL0 LAB> != \ND
 =
 <F_R ref links _quantity> = <F_L ref>
 ;
@@ -1885,6 +1886,10 @@ NUMBER-1
 ;=
 ;<F_R ref links _quantity> = <F_L temp_q>
 ;<F_L temp_q> = %
+;The Dmcn determiner is used for numeric quantifiers
+;the "m" subscript is for "multiple", the "c" subscript is for "count"
+;so "n" here indicates "numeric". 
+;This connector has essentially the same meaning as the ND numeric determiner.
 #TemplateActionAlg
 NUMBER-NUMERIC-QUANTIFIERS
 <LAB> = \Dmcn 
@@ -1893,7 +1898,7 @@ NUMBER-NUMERIC-QUANTIFIERS
 <F_L POSSESSIVE-FLAG> != T
 <F_L QUANTITY-EXCEPTION-FLAG> != T
 =
-<F_R ref links _num_quantity> = <F_L ref>
+<F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
 ;
 ;Different uses of the NI connectors are handled separately. 
@@ -1903,15 +1908,14 @@ NUMBER-NUMERIC-QUANTIFIERS
 ;"It is from 6 m to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
 ;
 ;ND connects numbers with certain expressions which require numerical determiners:
-;case <F_L str> !=many --> e.g. He runs many more miles than John does. avoid forming _num_quantity(many more, relationship)
 #TemplateActionAlg
 NUMBER-1a
 ;<LAB> = \ND\.*|\NI\.*
 <LAB> = \ND\.*
 <F_L QUANTITY-EXCEPTION-FLAG> != T
-<F_L str> !=many
+<F_R linkR0 LAB> = \Dmcm|\Dmum
 =
-<F_R ref links _num_quantity> = <F_L ref>
+<F_R linkR0 F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
 <F_R NOT_NUMBER_FLAG> = T
 ;
@@ -1984,14 +1988,6 @@ NUMBER-2
 #TemplateActionAlg
 NUMBER-MOD
 <LAB> = \EN\.*
-=
-<F_R ref links _quantity_mod> = <F_L ref>
-;When quantity modifier does not act on a numeric vale
-; e.g. He runs many more miles than John does. forming _num_quantity(many more) relationship
-#TemplateActionAlg
-NUMBER-MOD_2
-<LAB> = \ND
-<F_L str> = many
 =
 <F_R ref links _quantity_mod> = <F_L ref>
 ;
