@@ -18,6 +18,8 @@
 
 [SVP] {4} <ALLRULE3> _predadj($x, $y) => (SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index))
 
+[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
+
 
 # ============================================
 # adjective, adverb rules
@@ -48,8 +50,6 @@
 # misc rules
 # ============================================
 [NUM] {1} <> _num_quantity($W, $Num) => (number-rule $W (get-instance-name $W word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
-
-[TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
 
