@@ -273,8 +273,7 @@ public class TestRelEx
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
-				    "_quantity(mile, more)\n"+
-				    "_quantity_mod(more, many)\n"+
+				    "_quantity(mile, many)\n"+
 				    "degree(more, comparative)\n");
 		
 		rc &= test_sentence ("He runs fewer miles than John does.",
@@ -283,16 +282,14 @@ public class TestRelEx
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
-				    "_quantity(mile, fewer)\n"+
 				    "degree(fewer, comparative)\n");
 		
 		rc &= test_sentence ("He runs ten more miles than John.",
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
-				    "_quantity(mile, more)\n"+
 				    "than(he, John)\n" +
 				    "_comparative(mile, run)\n"+
-				    "_num_quantity(more, ten)\n" +
+				    "_quantity(mile, ten)\n" +
 				    "degree(more, comparative)\n");
 						
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
@@ -301,9 +298,8 @@ public class TestRelEx
 				    "_comparative(mile, run)\n"+
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n"+
-				    "_quantity(mile, more)\n"+
 				    "_quantity_mod(ten, almost)\n"+
-				    "_num_quantity(more, ten)\n"+
+				    "_quantity(mile, ten)\n"+
 				    "degree(more, comparative)\n");
 
 		rc &= test_sentence ("He runs more often than John.",
@@ -393,8 +389,7 @@ public class TestRelEx
 		rc &= test_sentence ("I run 10 more miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_num_quantity(more, 10)\n"+
-				    "_quantity(mile, more)\n"+
+				    "_quantity(mile, 10)\n"+
 				    "_comparative(mile, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(more, comparative)\n");
@@ -402,8 +397,7 @@ public class TestRelEx
 		rc &= test_sentence ("I run 10 fewer miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_num_quantity(more, 10)\n"+
-				    "_quantity(mile, fewer)\n"+
+				    "_quantity(mile, 10)\n"+
 				    "_comparative(mile, run)\n"+
 				    "than(I, Ben)\n"+
 				    "degree(fewer, comparative)\n");
