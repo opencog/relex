@@ -588,6 +588,51 @@ public class TestRelEx
 				    "_comparative(enjoyable, maths)\n"+
 				    "_advmod(enjoyable, less)\n"+
 				    "degree(enjoyable, comparative)\n");
+		
+		//Comparatives Without More/less terms
+		rc &= test_sentence ("Her great-grandson is nicer than her great-granddaughter.",
+				    "_subj(is, great grandson)\n"+
+				    "than(great grandson, great granddaughter)\n"+
+				    "_predadj(great-grandson, nice)\n"+
+				    "_poss(great grandson, her)\n"+
+				    "_poss(great granddaughter, her)\n"+
+				    "_comparative(nicer, great grandson)\n"+
+				    "degree(nice, comparative\n");
+		
+		rc &= test_sentence ("George is cleverer than Norman.",
+				    "_subj(is, George)\n"+
+				    "than(George, Norman)\n"+
+				    "_predadj(George, clever)\n"+
+				    "_comparative(clever, George)\n"+
+				    "degree(clever, comparative)\n");
+		
+		rc &= test_sentence ("Kim is taller than Linda.",
+				    "_subj(is, Kim)\n"+
+				    "than(Kim, Linda)\n"+
+				    "_predadj(Kim, tall)\n"+
+				    "_comparative(tall, kim)\n"+
+				    "degree(tall, comparative)\n");	
+				
+		rc &= test_sentence ("Venus is brighter than Pluto.",
+				    "_subj(is, Venus)\n"+
+				    "than(Venus, Pluto)\n"+
+				    "_predadj(Venus, bright)\n"+
+				    "_comparative(bright, Venus)\n"+
+				    "degree(bright, comparative)\n");
+		
+		rc &= test_sentence ("Mary is shorter than Jane.",
+				    "_subj(is, Mary)\n"+
+				    "than(Mary, Jane)\n"+
+				    "_predadj(Mary, short)\n"+
+				    "_comparative(short, Mary)\n"+
+				    "degree(short, comparative)\n");
+		
+		rc &= test_sentence ("I am happier than you.",
+				    "_subj(am, I)\n"+
+				    "than(I, you)\n"+
+				    "_predadj(I, happy)\n"+
+				    "_comparative(happy, I)\n"+
+				    "degree(happy, comparative)");
 		report(rc, "Comparatives");
 		return rc;
 	}
