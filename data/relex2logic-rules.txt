@@ -55,7 +55,7 @@
 
 [PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 
-[POSS1A] {8} <> _poss($N, $W) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
+[POSS] {8} <> _poss($N, $W) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $W (get-instance-name $W word_index sentence_index))
 
 
 # ============================================
