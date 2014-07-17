@@ -681,7 +681,7 @@ public class TestRelEx
 		rc &= test_sentence ("Our car is bigger than your car.",
 				    "than(car, car)\n"+
 				    "_det(car, us)\n"+
-				    "_predadj(car, bigger)\n"+
+				    "_predadj(car, big)\n"+
 				    "_poss(car, us)\n"+
 				    "_det(car, you)\n"+
 				    "_poss(car, you)\n"+
