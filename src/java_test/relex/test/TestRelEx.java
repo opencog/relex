@@ -614,7 +614,7 @@ public class TestRelEx
 		rc &= test_sentence ("Venus is brighter than Mars.",
 				    "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
-				    "_comparative(bright, Venus)\n"+
+				    "_comparative(bright, be)\n"+
 				    "degree(bright, comparative)\n");
 		
 		rc &= test_sentence ("Mary is shorter than Jane.",
