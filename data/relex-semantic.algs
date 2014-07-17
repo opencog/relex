@@ -87,7 +87,8 @@ MAKE_STANDARD_SUBJ
 <F_R subj> += <F_L ref>
 ;
 ; Same as above, but there was a conjunction.
-; Create two subjects, in that case.
+; Create more than one subjects, in that case.
+;Example: "Apples, bananas and oranges are delicious."
 #TemplateActionAlg
 COMPLEX_CONJ_STANDARD_SUBJ
 <IS_SUBJ_LINK> = T
