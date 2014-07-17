@@ -78,6 +78,7 @@ STANDARD_SUBJ
 <LAB> != MX|MXs|MXp
 =
 <IS_SUBJ_LINK> = T
+;
 ; If we found the subject link, then create the subj dependency.
 #TemplateActionAlg
 MAKE_STANDARD_SUBJ
@@ -86,17 +87,10 @@ MAKE_STANDARD_SUBJ
 =
 <F_R subj> += <F_L ref>
 ;
-; Same as above, but there was a conjunction.
-; Create more than one subjects, in that case.
-;Example: "Apples, bananas and oranges are delicious."
-#TemplateActionAlg
-COMPLEX_CONJ_STANDARD_SUBJ
-<IS_SUBJ_LINK> = T
-<F_L conj> != %
-<F_L linkL1 LAB> = \SJl\.*
-<F_L linkL1 F_L conj> != %
-=
-<F_R subj> += <F_L linkL1 F_L conj member0 ref>
+;
+; Same as above, but the subject link pointed to a conjunction.
+; Create a _subj for each conjoined subject.
+; Example: "Apples and bananas are delicious."
 #TemplateActionAlg
 CONJ_STANDARD_SUBJ
 <IS_SUBJ_LINK> = T
@@ -106,13 +100,26 @@ CONJ_STANDARD_SUBJ
 <F_R subj> += <F_L conj member0 ref>
 <F_R subj> += <F_L conj member1 ref>
 ;
+;
+; Same as above, but the subject link pointed to a conjunction.
+; Create a _subj for each conjoined subject.
+; Example: "Apples, bananas and oranges are delicious."
+#TemplateActionAlg
+COMPLEX_CONJ_STANDARD_SUBJ
+<IS_SUBJ_LINK> = T
+<F_L conj> != %
+<F_L linkL1 LAB> = \SJl\.*
+<F_L linkL1 F_L conj> != %
+=
+<F_R subj> += <F_L linkL1 F_L conj member0 ref>
+;
 ; Inverted version of standard subject.
 #TemplateActionAlg
 INVERTED_SUBJ
 <LAB> = \SI\.*|\SXI\.*
 =
 <F_L subj> += <F_R ref>
-
+;
 ;  If a node has both B and RS, then get the subject from the B-link.
 ;  "This is the dog and cat that chased me."
 #TemplateActionAlg
@@ -396,8 +403,6 @@ INV-SUBJECT_LINKING
 =
 <F_L subj> = <F_R subj>
 ;
-#TemplateActionAlg
-PREDICATIVE_ADJECTIVE_LINKING
 ;  "Mr. Smith is late."  (as opposed to "The late Mr. Smith")
 ; But Pa must connect to copula, so reject "The rose smelled sweet"
 ; Use += because there may be several of these in a sentence.
@@ -406,6 +411,8 @@ PREDICATIVE_ADJECTIVE_LINKING
 ; and then later promot this to _predadj if we decide that things are
 ; peachy (the same say that subj becomes _subj). But for now, we put
 ; it straight in.
+#TemplateActionAlg
+PREDICATIVE_ADJECTIVE_LINKING
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
@@ -413,8 +420,11 @@ PREDICATIVE_ADJECTIVE_LINKING
 =
 <F_L subj links _predadj> += <F_R ref>
 ;<F_L subj> = %
+;
+; If the Pa object is a conjunction, then create a _predadj for
+; each of the conjoined objects.
 #TemplateActionAlg
-PREDICATIVE_ADJECTIVE_LINKING_CONJ
+PREDADJ_LINKING_CONJOIN
 <LAB> = \Pa\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
@@ -424,9 +434,11 @@ PREDICATIVE_ADJECTIVE_LINKING_CONJ
 <F_L subj member0 links _predadj> += <F_R ref>
 <F_L subj member1 links _predadj> += <F_R ref>
 <F_L subj member2 links _predadj> += <F_R ref>
+;
+;
 ; predictive adjective for comparatives
-;e.g. Jack is more/less ingenious than Ben is crazy. 
-;_predadj(Ben, crazy) plus we dont need _subj(is,Ben)
+; e.g. Jack is more/less ingenious than Ben is crazy. 
+; _predadj(Ben, crazy) plus we dont need _subj(is,Ben)
 #TemplateActionAlg
 PREDICATIVE_comparatives1
 <LAB> = \Paf
