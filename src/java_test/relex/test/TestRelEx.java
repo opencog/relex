@@ -670,11 +670,11 @@ public class TestRelEx
 				    "degree(big, comparative)\n");
 		
 		rc &= test_sentence ("That joke was funnier than his joke.",
-				    "_subj(was, joke)\n"+
+				    "_predadj(joke, funny)\n"+
 				    "than(joke, joke)\n"+
 				    "_det(joke, that)\n"+
 				    "_poss(joke, him)\n"+
-				    "_comparative(funny, joke)\n"+
+				    "_comparative(funny, be)\n"+
 				    "degree(funny, comparative)");
 		
 		rc &= test_sentence ("Our car is bigger than your car.",
