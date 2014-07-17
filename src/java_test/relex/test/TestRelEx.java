@@ -630,7 +630,6 @@ public class TestRelEx
 				    "degree(happy, comparative)");
 		
 		rc &= test_sentence ("His house is bigger than hers.",
-				    "_subj(is, house)\n"+
 				    "than(house, hers)\n"+
 				    "_predadj(house, big)\n"+
 				    "_poss(house, him)\n"+
