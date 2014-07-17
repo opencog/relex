@@ -596,8 +596,8 @@ public class TestRelEx
 				    "_predadj(great-grandson, nice)\n"+
 				    "_poss(great grandson, her)\n"+
 				    "_poss(great granddaughter, her)\n"+
-				    "_comparative(nicer, great grandson)\n"+
-				    "degree(nice, comparative\n");
+				    "_comparative(nice, great grandson)\n"+
+				    "degree(nice, comparative\n)");
 		
 		rc &= test_sentence ("George is cleverer than Norman.",
 				    "_subj(is, George)\n"+
@@ -613,9 +613,9 @@ public class TestRelEx
 				    "_comparative(tall, kim)\n"+
 				    "degree(tall, comparative)\n");	
 				
-		rc &= test_sentence ("Venus is brighter than Pluto.",
+		rc &= test_sentence ("Venus is brighter than Mars.",
 				    "_subj(is, Venus)\n"+
-				    "than(Venus, Pluto)\n"+
+				    "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
 				    "_comparative(bright, Venus)\n"+
 				    "degree(bright, comparative)\n");
@@ -637,43 +637,61 @@ public class TestRelEx
 		rc &= test_sentence ("His house is bigger than hers.",
 				    "_subj(is, house)\n"+
 				    "than(house, hers)\n"+
-				    "_predadj(house, bigger)\n"+
+				    "_predadj(house, big)\n"+
 				    "_poss(house, him)\n"+
-				    "_comparative(bigger ,house)\n"+
-				    "degree(bigger, comparative)");
+				    "_comparative(big ,house)\n"+
+				    "degree(big, comparative)");
 		
 		rc &= test_sentence ("She is two years older than me.",
 				    "_obj(is, year)\n"+
 				    "_subj(is, she)\n"+
-				    "_amod(year, old)\n"+
+				    "_amod(years, old)\n"+
 				    "_quantity(year, two)\n"+
 				    "numeric-FLAG(two, T)\n" +
 				    "than(she, me)\n"+
 				    "_comparative(old, she)\n"+
-				    "degree(older, comparative)");
+				    "degree(old, comparative)");
 		
 		rc &= test_sentence ("New York is much bigger than Boston.",
 				    "_subj(is, New_York)\n"+
-				    "_amod(much, bigger)\n"+
+				    "_amod(much, big)\n"+
 				    "than(New_York, Boston)\n"+
 				    "_comparative(big, New_York)\n"+
-				    "degree(biger, comparative)");
+				    "degree(big, comparative)");
 
 		rc &= test_sentence ("He is a better player than Ronaldo.",
 				    "_obj(is, player)\n"+
 				    "_subj(is, he)\n"+
 				    "_amod(player, well)\n"+
 				    "than(he, Ronaldo)\n"+
-				    "_comparative(well, he)\n"+
-				    "degree(better, comparative)");
+				    "_comparative(good, he)\n"+
+				    "degree(good, comparative)");
 
 		rc &= test_sentence ("France is a bigger country than Britain.",
 				    "_obj(is, country)\n"+
 				    "_subj(is, France)\n"+
-				    "_amod(country, bigger)\n"+
+				    "_amod(country, big)\n"+
 				    "than(France, Britain)\n"+
 				    "_comparative(big, France)\n"+
 				    "degree(big, comparative)\n");
+		
+		rc &= test_sentence ("That joke was funnier than his joke.",
+				    "_subj(was, joke)\n"+
+				    "than(joke, joke)\n"+
+				    "_det(joke, that)\n"+
+				    "_poss(joke, him)\n"+
+				    "_comparative(funny, joke)\n"+
+				    "degree(funny, comparative)");
+		
+		rc &= test_sentence ("Our car is bigger than your car.",
+				    "than(car, car)\n"+
+				    "_det(car, us)\n"+
+				    "_predadj(car, bigger)\n"+
+				    "_poss(car, us)\n"+
+				    "_det(car, you)\n"+
+				    "_poss(car, you)\n"+
+				    "_comparative(big, car)\n"+
+				    "degree(big, comparative)");
 		
 		report(rc, "Comparatives");
 		return rc;
