@@ -637,7 +637,6 @@ public class TestRelEx
 		
 		rc &= test_sentence ("She is two years older than me.",
 				    "_obj(is, year)\n"+
-				    "_subj(is, she)\n"+
 				    "_amod(years, old)\n"+
 				    "_quantity(year, two)\n"+
 				    "numeric-FLAG(two, T)\n" +
