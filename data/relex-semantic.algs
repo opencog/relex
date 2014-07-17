@@ -32,6 +32,7 @@
 #TemplateActionAlg
 CONJ_AND_LEFT_SIDE
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
+<F_L str> != and|or|but|,
 =
 <F_R conj> += <F_L>
 ;
@@ -41,9 +42,15 @@ CONJ_AND_LEFT_SIDE
 ;    worked at Oracle and went to Stanford and is a VP."
 ;
 #TemplateActionAlg
+CONJ_AND_LEFT_MULTI
+<LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
+<F_L str> = and|or|but|,
+=
+<F_R conj> += <F_L linkR1 F_R>
+#TemplateActionAlg
 CONJ_AND_RIGHT_MULTI
 <LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
-<F_R linkL1 LAB> = \AJr\.*|\MJr\.*|\QJr\.*|\RJr\.*|\SJr\.*|\VJr\.*
+<F_R str> = and|or|but|,
 =
 <F_L conj> += <F_R linkL1 F_L>
 ;
@@ -2589,7 +2596,7 @@ APPO_LEFT
 CONJ_AND_MERGE
 <conj member0> != %
 <conj member1> != %
-<str> = and
+<str> = and |,
 =
 <conj member0 ref links conj_and> = <conj member1 ref>
 
