@@ -591,9 +591,8 @@ public class TestRelEx
 		
 		//Comparatives Without More/less terms
 		rc &= test_sentence ("Her great-grandson is nicer than her great-granddaughter.",
-				    "_subj(is, great grandson)\n"+
 				    "than(great grandson, great granddaughter)\n"+
-				    "_predadj(great-grandson, nice)\n"+
+				    "_predadj(great grandson, nice)\n"+
 				    "_poss(great grandson, her)\n"+
 				    "_poss(great granddaughter, her)\n"+
 				    "_comparative(nice, great grandson)\n"+
