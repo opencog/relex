@@ -2523,9 +2523,10 @@ MORE_OR_LESS7e
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
 ;So these these adjectives and adverbs are given special subscripts
 ;e.g. He is faster than John. (is,faster ) adjective is given special connecter "Pam"
+;case--> <LAB> = \Pafm e.g. Her great-grandson is nicer than her great-granddaughter."
 #TemplateActionAlg
 MORE_OR_LESS7f1
-<LAB> = \Pam
+<LAB> = \Pam|\Pafm
 <F_L str> = is|are|be 
 =
 <F_R ref links _comparative> += <F_L ref>
