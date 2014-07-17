@@ -654,9 +654,9 @@ public class TestRelEx
 				    "degree(big, comparative)");
 
 		rc &= test_sentence ("He is a better player than Ronaldo.",
-				    "_obj(is, player)\n"+
-				    "_subj(is, he)\n"+
-				    "_amod(player, well)\n"+
+				    "_obj(be, player)\n"+
+				    "_subj(be, he)\n"+
+				    "_amod(player, good)\n"+
 				    "than(he, Ronaldo)\n"+
 				    "_comparative(good, he)\n"+
 				    "degree(good, comparative)");
