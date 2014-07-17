@@ -600,38 +600,33 @@ public class TestRelEx
 				    "degree(nice, comparative\n)");
 		
 		rc &= test_sentence ("George is cleverer than Norman.",
-				    "_subj(is, George)\n"+
 				    "than(George, Norman)\n"+
 				    "_predadj(George, clever)\n"+
-				    "_comparative(clever, George)\n"+
+				    "_comparative(clever, be)\n"+
 				    "degree(clever, comparative)\n");
 		
 		rc &= test_sentence ("Kim is taller than Linda.",
-				    "_subj(is, Kim)\n"+
 				    "than(Kim, Linda)\n"+
 				    "_predadj(Kim, tall)\n"+
-				    "_comparative(tall, kim)\n"+
+				    "_comparative(tall, be)\n"+
 				    "degree(tall, comparative)\n");	
 				
 		rc &= test_sentence ("Venus is brighter than Mars.",
-				    "_subj(is, Venus)\n"+
 				    "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
 				    "_comparative(bright, Venus)\n"+
 				    "degree(bright, comparative)\n");
 		
 		rc &= test_sentence ("Mary is shorter than Jane.",
-				    "_subj(is, Mary)\n"+
 				    "than(Mary, Jane)\n"+
 				    "_predadj(Mary, short)\n"+
-				    "_comparative(short, Mary)\n"+
+				    "_comparative(short, be)\n"+
 				    "degree(short, comparative)\n");
 		
 		rc &= test_sentence ("I am happier than you.",
-				    "_subj(am, I)\n"+
 				    "than(I, you)\n"+
 				    "_predadj(I, happy)\n"+
-				    "_comparative(happy, I)\n"+
+				    "_comparative(happy, be)\n"+
 				    "degree(happy, comparative)");
 		
 		rc &= test_sentence ("His house is bigger than hers.",
