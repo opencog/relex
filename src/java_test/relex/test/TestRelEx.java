@@ -601,31 +601,31 @@ public class TestRelEx
 		rc &= test_sentence ("George is cleverer than Norman.",
 				    "than(George, Norman)\n"+
 				    "_predadj(George, clever)\n"+
-				    "_comparative(clever, be)\n"+
+				    "_comparative(clever, George)\n"+
 				    "degree(clever, comparative)\n");
 		
 		rc &= test_sentence ("Kim is taller than Linda.",
 				    "than(Kim, Linda)\n"+
 				    "_predadj(Kim, tall)\n"+
-				    "_comparative(tall, be)\n"+
+				    "_comparative(tall, Kim)\n"+
 				    "degree(tall, comparative)\n");	
 				
 		rc &= test_sentence ("Venus is brighter than Mars.",
 				    "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
-				    "_comparative(bright, be)\n"+
+				    "_comparative(bright, Venus)\n"+
 				    "degree(bright, comparative)\n");
 		
 		rc &= test_sentence ("Mary is shorter than Jane.",
 				    "than(Mary, Jane)\n"+
 				    "_predadj(Mary, short)\n"+
-				    "_comparative(short, be)\n"+
+				    "_comparative(short, Mary)\n"+
 				    "degree(short, comparative)\n");
 		
 		rc &= test_sentence ("I am happier than you.",
 				    "than(I, you)\n"+
 				    "_predadj(I, happy)\n"+
-				    "_comparative(happy, be)\n"+
+				    "_comparative(happy, I)\n"+
 				    "degree(happy, comparative)");
 		
 		rc &= test_sentence ("His house is bigger than hers.",
