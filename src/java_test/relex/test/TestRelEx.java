@@ -601,31 +601,31 @@ public class TestRelEx
 		rc &= test_sentence ("George is cleverer than Norman.",
 				    "than(George, Norman)\n"+
 				    "_predadj(George, clever)\n"+
-				    "_comparative(clever, be)\n"+
+				    "_comparative(clever, George)\n"+
 				    "degree(clever, comparative)\n");
 		
 		rc &= test_sentence ("Kim is taller than Linda.",
 				    "than(Kim, Linda)\n"+
 				    "_predadj(Kim, tall)\n"+
-				    "_comparative(tall, be)\n"+
+				    "_comparative(tall, Kim)\n"+
 				    "degree(tall, comparative)\n");	
 				
 		rc &= test_sentence ("Venus is brighter than Mars.",
 				    "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
-				    "_comparative(bright, be)\n"+
+				    "_comparative(bright, Venus)\n"+
 				    "degree(bright, comparative)\n");
 		
 		rc &= test_sentence ("Mary is shorter than Jane.",
 				    "than(Mary, Jane)\n"+
 				    "_predadj(Mary, short)\n"+
-				    "_comparative(short, be)\n"+
+				    "_comparative(short, Mary)\n"+
 				    "degree(short, comparative)\n");
 		
 		rc &= test_sentence ("I am happier than you.",
 				    "than(I, you)\n"+
 				    "_predadj(I, happy)\n"+
-				    "_comparative(happy, be)\n"+
+				    "_comparative(happy, I)\n"+
 				    "degree(happy, comparative)");
 		
 		rc &= test_sentence ("His house is bigger than hers.",
@@ -684,6 +684,71 @@ public class TestRelEx
 				    "_poss(car, you)\n"+
 				    "_comparative(big, car)\n"+
 				    "degree(big, comparative)");
+		//Sentences need to check
+		rc &= test_sentence ("This computer is better than that one.", 
+				    "than(computer, one)\n"+
+				    "_det(computer, this)\n"+
+				    "_predadj(computer, well)\n"+
+				    "_det(one, that)\n"+
+				    "degree(well, comparative)\n"+
+				    "_comparative(well, computer)\n");
+		
+		rc &= test_sentence ("This computer is better than that one.", 
+				    "than(computer, one)\n"+
+				    "_det(computer, this)\n"+
+				    "_predadj(computer, well)\n"+
+				    "_det(one, that)\n"+
+				    "degree(well, comparative)\n"+
+				    "_comparative(well,computer)\n");
+		
+		rc &= test_sentence ("He’s simpler than I thought.",
+				    "than(He, I)\n"+
+				    "_subj(thought, I)\n"+
+				    "_comparative(simple, he)\n"+
+				    "_predadj(he, simple)\n");
+		
+		rc &= test_sentence ("She's stronger at chess than I am.",
+				    "at(strong, chess)\n"+
+				    "than(she, I)\n"+
+				    "_predadj(she, strong)\n"+
+				    "degree(strong, comparative)\n"+
+				    "_comparative(strong,she)\n");
+		
+		rc &= test_sentence ("She’s prettier than her mother.",
+				    "_subj(’s, she)\n"+
+				    "than(she, mother)\n"+
+				    "_det(mother, her)\n"+
+				    "_poss(mother, her)\n"+
+				    "_comparative(pretty, she)\n"+
+				    "degree(prettier, comparative)\n");
+		
+		rc &= test_sentence ("This exam was more difficult than the other.",
+				    "_subj(was, exam)\n"+
+				    "than(exam, other)\n"+ 
+				    "_det(exam, this)\n"+
+				    "_comparative(difficult, exam)\n");
+		
+		rc &= test_sentence ("It's much colder today than it was yesterday.",
+				    "than(today,yesterday)\n"+
+				    "_comparative(colder,is)\n"+
+				    "degree(cold,comparative)\n"+
+				    "_advmod(cold, today)\n"+
+				    "_advmod(cold, yesterday)\n"+
+				    "_predadj(it, cold)\n");
+		
+		rc &= test_sentence ("This grammar topic is easier than most others.",
+				    "than(topic, others)\n"+
+				    "_det(topic, this)\n"+
+				    "_nn(topic, grammar)\n"+
+				    "_predadj(topic, easier)\n"+
+				    "_quantity(others, most)\n"+
+				    "_comparative(easy,topic)\n");
+
+		rc &= test_sentence ("I find science more difficult than mathematics.",
+				    "_obj(find, science)\n"+
+				    "_subj(find, I)\n"+
+				    "than(science,mathematics)\n"+
+				    "_comparative(difficult,science)\n");
 		
 		report(rc, "Comparatives");
 		return rc;
