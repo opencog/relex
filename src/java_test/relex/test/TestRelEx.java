@@ -355,7 +355,7 @@ public class TestRelEx
 				    "than(speed, be)\n"+
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
-				    "_comparative(fast, him)\n"+
+				    "_comparative(fast, speed)\n"+
 				    "degree(fast, comparative)\n");
 
 		rc &= test_sentence ("I run more than Ben.",
