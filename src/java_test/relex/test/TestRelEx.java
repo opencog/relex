@@ -341,21 +341,21 @@ public class TestRelEx
 		rc &= test_sentence ("He is faster than John.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, he)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("He is faster than John is.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
 				    "_subj(be, John)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, he)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("His speed is faster than John's.",
 				    "than(speed, be)\n"+
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, speed)\n"+
 				    "degree(fast, comparative)\n");
 
 		rc &= test_sentence ("I run more than Ben.",
@@ -595,7 +595,7 @@ public class TestRelEx
 				    "_predadj(great grandson, nice)\n"+
 				    "_poss(great grandson, her)\n"+
 				    "_poss(great granddaughter, her)\n"+
-				    "_comparative(nice, be)\n"+
+				    "_comparative(nice, great grandson)\n"+
 				    "degree(nice, comparative)\n");
 		
 		rc &= test_sentence ("George is cleverer than Norman.",
@@ -672,7 +672,7 @@ public class TestRelEx
 				    "than(joke, joke)\n"+
 				    "_det(joke, that)\n"+
 				    "_poss(joke, him)\n"+
-				    "_comparative(funny, be)\n"+
+				    "_comparative(funny, joke)\n"+
 				    "degree(funny, comparative)");
 		
 		rc &= test_sentence ("Our car is bigger than your car.",
