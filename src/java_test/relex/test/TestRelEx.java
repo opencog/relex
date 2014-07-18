@@ -595,7 +595,7 @@ public class TestRelEx
 				    "_predadj(great grandson, nice)\n"+
 				    "_poss(great grandson, her)\n"+
 				    "_poss(great granddaughter, her)\n"+
-				    "_comparative(nice, be)\n"+
+				    "_comparative(nice, great grandson)\n"+
 				    "degree(nice, comparative)\n");
 		
 		rc &= test_sentence ("George is cleverer than Norman.",
