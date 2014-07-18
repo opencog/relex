@@ -2527,9 +2527,10 @@ MORE_OR_LESS7e
 #TemplateActionAlg
 MORE_OR_LESS7f1
 <LAB> = \Pam|\Pafm
-<F_L str> = is|are|be 
+<F_L str> = is|are|be|was 
+<F_L is-temp> != %
 =
-<F_R ref links _comparative> += <F_L ref>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 #TemplateActionAlg
 NO_MORE_OR_LESS
