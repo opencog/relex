@@ -672,7 +672,7 @@ public class TestRelEx
 				    "than(joke, joke)\n"+
 				    "_det(joke, that)\n"+
 				    "_poss(joke, him)\n"+
-				    "_comparative(funny, be)\n"+
+				    "_comparative(funny, joke)\n"+
 				    "degree(funny, comparative)");
 		
 		rc &= test_sentence ("Our car is bigger than your car.",
