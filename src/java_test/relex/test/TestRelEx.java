@@ -341,21 +341,21 @@ public class TestRelEx
 		rc &= test_sentence ("He is faster than John.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, he)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("He is faster than John is.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
 				    "_subj(be, John)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, he)\n"+
 				    "degree(fast, comparative)\n");
 		
 		rc &= test_sentence ("His speed is faster than John's.",
 				    "than(speed, be)\n"+
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, him)\n"+
-				    "_comparative(fast, be)\n"+
+				    "_comparative(fast, him)\n"+
 				    "degree(fast, comparative)\n");
 
 		rc &= test_sentence ("I run more than Ben.",
