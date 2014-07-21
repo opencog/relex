@@ -688,31 +688,24 @@ public class TestRelEx
 		rc &= test_sentence ("This computer is better than that one.", 
 				    "than(computer, one)\n"+
 				    "_det(computer, this)\n"+
-				    "_predadj(computer, well)\n"+
+				    "_predadj(computer, good)\n"+
 				    "_det(one, that)\n"+
-				    "degree(well, comparative)\n"+
-				    "_comparative(well, computer)\n");
-		
-		rc &= test_sentence ("This computer is better than that one.", 
-				    "than(computer, one)\n"+
-				    "_det(computer, this)\n"+
-				    "_predadj(computer, well)\n"+
-				    "_det(one, that)\n"+
-				    "degree(well, comparative)\n"+
-				    "_comparative(well,computer)\n");
+				    "degree(good, comparative)\n"+
+				    "_comparative(good, computer)\n");
 		
 		rc &= test_sentence ("He’s simpler than I thought.",
-				    "than(He, I)\n"+
+				    "than(he, I)\n"+
 				    "_subj(thought, I)\n"+
 				    "_comparative(simple, he)\n"+
-				    "_predadj(he, simple)\n");
+				    "_predadj(he, simple)\n"+
+				    "degree(simple, comparative)\n");
 		
 		rc &= test_sentence ("She's stronger at chess than I am.",
 				    "at(strong, chess)\n"+
 				    "than(she, I)\n"+
 				    "_predadj(she, strong)\n"+
 				    "degree(strong, comparative)\n"+
-				    "_comparative(strong,she)\n");
+				    "_comparative(strong, she)\n");
 		
 		rc &= test_sentence ("She’s prettier than her mother.",
 				    "_subj(’s, she)\n"+
@@ -726,15 +719,17 @@ public class TestRelEx
 				    "_subj(was, exam)\n"+
 				    "than(exam, other)\n"+ 
 				    "_det(exam, this)\n"+
-				    "_comparative(difficult, exam)\n");
+				    "_advmod(difficult, more)\n"+
+				    "_comparative(difficult, exam)\n"+
+				    "degree(prettier, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
 				    "than(today,yesterday)\n"+
-				    "_comparative(colder,is)\n"+
-				    "degree(cold,comparative)\n"+
 				    "_advmod(cold, today)\n"+
 				    "_advmod(cold, yesterday)\n"+
-				    "_predadj(it, cold)\n");
+				    "_predadj(it, cold)\n"+
+				    "_comparative(colder, is)\n"+
+				    "degree(cold, comparative)\n");
 		
 		rc &= test_sentence ("This grammar topic is easier than most others.",
 				    "than(topic, others)\n"+
