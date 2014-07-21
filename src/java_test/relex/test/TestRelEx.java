@@ -722,18 +722,19 @@ public class TestRelEx
 				    "degree(prettier, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
+				    "_subj(be, it)\n"+
 				    "than(today, yesterday)\n"+
 				    "_advmod(cold, today)\n"+
 				    "_advmod(cold, yesterday)\n"+
 				    "_predadj(it, cold)\n"+
-				    "_comparative(cold, be)\n"+
+				    "_comparative(cold, it)\n"+
 				    "degree(cold, comparative)\n");
 		
 		rc &= test_sentence ("This grammar topic is easier than most others.",
 				    "than(topic, others)\n"+
 				    "_det(topic, this)\n"+
 				    "_nn(topic, grammar)\n"+
-				    "_predadj(topic, easier)\n"+
+				    "_predadj(topic, easy)\n"+
 				    "_quantity(others, most)\n"+
 				    "_comparative(easy, topic)\n"+
 				    "degree(easy, comparative)\n");
