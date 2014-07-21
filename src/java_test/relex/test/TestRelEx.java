@@ -707,12 +707,11 @@ public class TestRelEx
 				    "_comparative(strong, she)\n");
 		
 		rc &= test_sentence ("She’s prettier than her mother.",
-				    "_subj(’s, she)\n"+
+				    "_predadj(she, pretty)\n"+
 				    "than(she, mother)\n"+
-				    "_det(mother, her)\n"+
 				    "_poss(mother, her)\n"+
 				    "_comparative(pretty, she)\n"+
-				    "degree(prettier, comparative)\n");
+				    "degree(pretty, comparative)\n");
 		
 		rc &= test_sentence ("This exam was more difficult than the other.",
 				    "_subj(was, exam)\n"+
@@ -723,11 +722,11 @@ public class TestRelEx
 				    "degree(prettier, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
-				    "than(today,yesterday)\n"+
+				    "than(today, yesterday)\n"+
 				    "_advmod(cold, today)\n"+
 				    "_advmod(cold, yesterday)\n"+
 				    "_predadj(it, cold)\n"+
-				    "_comparative(colder, is)\n"+
+				    "_comparative(cold, be)\n"+
 				    "degree(cold, comparative)\n");
 		
 		rc &= test_sentence ("This grammar topic is easier than most others.",
@@ -736,13 +735,16 @@ public class TestRelEx
 				    "_nn(topic, grammar)\n"+
 				    "_predadj(topic, easier)\n"+
 				    "_quantity(others, most)\n"+
-				    "_comparative(easy,topic)\n");
+				    "_comparative(easy, topic)\n"+
+				    "degree(easy, comparative)\n");
 
 		rc &= test_sentence ("I find science more difficult than mathematics.",
 				    "_obj(find, science)\n"+
 				    "_subj(find, I)\n"+
-				    "than(science,mathematics)\n"+
-				    "_comparative(difficult,science)\n");
+				    "_advmod(difficult, more)\n"+
+				    "than(science, mathematics)\n"+
+				    "_comparative(difficult, science)\n"+
+				    "degree(difficult, comparative)\n");
 		
 		report(rc, "Comparatives");
 		return rc;
