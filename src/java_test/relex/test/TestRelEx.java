@@ -591,11 +591,11 @@ public class TestRelEx
 		
 		//Comparatives Without More/less terms
 		rc &= test_sentence ("Her great-grandson is nicer than her great-granddaughter.",
-				    "than(great grandson, great granddaughter)\n"+
-				    "_predadj(great grandson, nice)\n"+
-				    "_poss(great grandson, her)\n"+
-				    "_poss(great granddaughter, her)\n"+
-				    "_comparative(nice, great grandson)\n"+
+				    "than(great-grandson, great-granddaughter)\n"+
+				    "_predadj(great-grandson, nice)\n"+
+				    "_poss(great-grandson, her)\n"+
+				    "_poss(great-granddaughter, her)\n"+
+				    "_comparative(nice, great-grandson)\n"+
 				    "degree(nice, comparative)\n");
 		
 		rc &= test_sentence ("George is cleverer than Norman.",
@@ -677,7 +677,6 @@ public class TestRelEx
 		
 		rc &= test_sentence ("Our car is bigger than your car.",
 				    "than(car, car)\n"+
-				    "_det(car, us)\n"+
 				    "_predadj(car, big)\n"+
 				    "_poss(car, us)\n"+
 				    "_det(car, you)\n"+
