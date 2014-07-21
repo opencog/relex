@@ -1088,9 +1088,10 @@ DEFINITE_ENTITIES
 =
 <ref definite-FLAG> = T
 ;Numeric flag. Numbers appearing in links
+;Dmcn is for ordinary noun-phrase number expressions:
 #TemplateActionAlg
 NUMERIC_ENTITIES
-<LAB> = \ND
+<LAB> = \ND|\Dmcn
 =
 <F_L ref numeric-FLAG> = T
 ;

@@ -2504,10 +2504,11 @@ MORE_OR_LESS1c
 <LAB> = \Opn
 =
 <F_R relAdj-temp> += <F_L linkR1 F_R ref>
+;SX is used to connect the first person pronoun "I" to the verbs "was" and "am".
 #TemplateActionAlg
 TO_BE_TEMP
-<LAB> = \S\.*
-<F_R str> = is|was|be
+<LAB> = \S\.*|\SX
+<F_R str> = is|was|be|am
 =
 <F_R is-temp> += <F_L ref>
 #TemplateActionAlg
@@ -2562,12 +2563,14 @@ MORE_OR_LESS7e
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
 ;So these these adjectives and adverbs are given special subscripts
 ;e.g. He is faster than John. (is,faster ) adjective is given special connecter "Pam"
+;case--> <LAB> = \Pafm e.g. Her great-grandson is nicer than her great-granddaughter."
 #TemplateActionAlg
 MORE_OR_LESS7f1
-<LAB> = \Pam
-<F_L str> = is|are|be 
+<LAB> = \Pam|\Pafm
+<F_L str> = is|are|be|was|am 
+<F_L is-temp> != %
 =
-<F_R ref links _comparative> += <F_L ref>
+<F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 #TemplateActionAlg
 NO_MORE_OR_LESS
