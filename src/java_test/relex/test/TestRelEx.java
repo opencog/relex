@@ -692,9 +692,9 @@ public class TestRelEx
 				    "degree(good, comparative)\n"+
 				    "_comparative(good, computer)\n");
 		
-		rc &= test_sentence ("He’s simpler than I thought.",
+		rc &= test_sentence ("He's simpler than I thought.",
 				    "than(he, I)\n"+
-				    "_subj(thought, I)\n"+
+				    "_subj(think, I)\n"+
 				    "_comparative(simple, he)\n"+
 				    "_predadj(he, simple)\n"+
 				    "degree(simple, comparative)\n");
@@ -706,7 +706,7 @@ public class TestRelEx
 				    "degree(strong, comparative)\n"+
 				    "_comparative(strong, she)\n");
 		
-		rc &= test_sentence ("She’s prettier than her mother.",
+		rc &= test_sentence ("She's prettier than her mother.",
 				    "_predadj(she, pretty)\n"+
 				    "than(she, mother)\n"+
 				    "_poss(mother, her)\n"+
