@@ -719,7 +719,7 @@ public class TestRelEx
 				    "_det(exam, this)\n"+
 				    "_advmod(difficult, more)\n"+
 				    "_comparative(difficult, exam)\n"+
-				    "degree(prettier, comparative)\n");
+				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
 				    "_subj(be, it)\n"+
