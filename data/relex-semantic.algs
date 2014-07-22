@@ -2243,11 +2243,6 @@ RELATION_THAN_4
 <F_L comp_temp> += <F_R ref>
 <F_R comp_temp> = %
 ;e.g. He earns more than I expected
-;This yields
-;		       +----Z----+
-;		       |   +--S--+
-;	               |   |     |                		
-;	He earns more than I expected	
 ;For this, "than" is given an Zc+ connector. 
 ;Z is also used in subordinate "as"-phrases like "He left, as I expected".
 #TemplateActionAlg
@@ -2288,7 +2283,7 @@ RELATION_THAN_8
 <F_R comp_temp> != %
 =
 <F_L comp_temp> += <F_R comp_temp>
-;<F_R comp_temp> = %
+<F_R comp_temp> = %
 #TemplateActionAlg
 RELATION_THAN_9
 <LAB> = \Paf|\Ma
