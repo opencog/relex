@@ -2281,6 +2281,19 @@ RELATION_THAN_4
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R ref>
 <F_R comp_temp> = %
+;e.g. He earns more than I expected
+;For this, "than" is given an Zc+ connector. 
+;Z is also used in subordinate "as"-phrases like "He left, as I expected".
+#TemplateActionAlg
+RELATION_THAN_4_1
+<LAB> = \Zc
+<F_R linkL1 LAB> = \S\.*
+<F_L str> = than|as
+<F_L set> != T
+=
+<F_L comp_temp> = %
+<F_L comp_temp> += <F_R linkL1 F_L ref>
+<F_R comp_temp> = %
 #TemplateActionAlg
 RELATION_THAN_5
 <LAB> = \Pafc
@@ -2309,10 +2322,21 @@ RELATION_THAN_8
 <F_R comp_temp> != %
 =
 <F_L comp_temp> += <F_R comp_temp>
-;<F_R comp_temp> = %
+<F_R comp_temp> = %
 #TemplateActionAlg
-RELATION_THAN_9
-<LAB> = \Paf|\Ma
+RELATION_THAN_9_1
+<LAB> = \Paf
+<F_R comp_temp> != %
+=
+<F_L comp_var> += <F_R comp_temp>
+<F_R comp_temp> = %
+;differentiate forming "than()" relationships when connected with "Ma" links
+;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
+;
+#TemplateActionAlg
+RELATION_THAN_9_2
+<LAB> = \Ma
+<F_L linkL0 LAB> = \Opn
 <F_R comp_temp> != %
 =
 <F_L comp_var> += <F_R comp_temp>
@@ -2478,7 +2502,7 @@ PREP_TO_LINKS
 =
 <ref links> <= <ref prep-links>
 ;
-; Extracting comparative relations from Non-equal-gradable senteces such as 
+; Extracting comparative relations from Non-equal-gradable sentences such as 
 ; "He is more/less intelligent than John"
 ; 'temp' is used to denote the label is temporary 
 ; relWord-temp = a temporary element carrying the relation Word type more|less
@@ -2558,6 +2582,15 @@ MORE_OR_LESS7e
 <F_R ref links _comparative> += <F_L relAdj-temp>
 <F_R relWord-temp> = %
 <F_L relAdj-temp> = %
+;e.g. I find science more difficult than mathematics. _comparative(difficult, science)
+#TemplateActionAlg
+MORE_OR_LESS7f
+<LAB> = \Ma
+<F_R relWord-temp> != %
+<F_R relWord-temp> = more|many|much|less|little
+=
+<F_R ref links _comparative> += <F_L ref>
+<F_R relWord-temp> = %
 ;Creating more() binary relationships when there is no "more" terms in the sentence
 ;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
@@ -2567,7 +2600,7 @@ MORE_OR_LESS7e
 #TemplateActionAlg
 MORE_OR_LESS7f1
 <LAB> = \Pam|\Pafm
-<F_L str> = is|are|be|was|am 
+<F_L str> = is|are|be|was|am
 <F_L is-temp> != %
 =
 <F_R ref links _comparative> += <F_L is-temp>
