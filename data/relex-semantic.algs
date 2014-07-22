@@ -2285,8 +2285,19 @@ RELATION_THAN_8
 <F_L comp_temp> += <F_R comp_temp>
 <F_R comp_temp> = %
 #TemplateActionAlg
-RELATION_THAN_9
-<LAB> = \Paf|\Ma
+RELATION_THAN_9_1
+<LAB> = \Paf
+<F_R comp_temp> != %
+=
+<F_L comp_var> += <F_R comp_temp>
+<F_R comp_temp> = %
+;differentiate forming "than()" relationships when connected with "Ma" links
+;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
+;
+#TemplateActionAlg
+RELATION_THAN_9_2
+<LAB> = \Ma
+<F_L linkL0 LAB> = \Opn
 <F_R comp_temp> != %
 =
 <F_L comp_var> += <F_R comp_temp>
