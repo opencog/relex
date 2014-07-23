@@ -233,9 +233,13 @@ PASS_OBJ
 ; Must check for own tag value to be AND-SAFE
 ; "I gave him the car." 
 ; "This is the car I gave the man." (B has not had a chance to identify object)
-; Case- <LAB> != \Omm | \Om ---> "Om" is used to Construct of "more\less" Phrases rather than 
-; connecting direct or indirect objects. e.g. He runs more quickly than John does.
-;<F_R linkL1 LAB> != \Dmum --> e.g. avoid relationship of _obj(earn, money), sentence "He earns much more money than I do."  
+; Case- <LAB> != \Omm | \Om ---> "Om" is used to construct "more\less"
+;       phrases rather than connecting direct or indirect objects.
+;       e.g. "He runs more quickly than John does."
+;
+; Case- <F_R linkL1 LAB> != \Dmum --> e.g. avoid relationship of 
+;       _obj(earn, money), sentence "He earns much more money than I do."  
+;
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
@@ -247,10 +251,15 @@ DIR_OBJ1
 =
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
-;e.g. He runs more than John. This sentence produces two parse trees that have exactly the same cost. 
-;i.e. (run, more) connected through Omm AND MVm. 
-;So one can argue it forms a _obj(run, more) relationship and above rule DIR_OBJ1 avoids that.
-; So when <LAB> = \Omm | \Om occurs this rule applies to form object relationships. 
+;
+;e.g. "He runs more than John." This sentence produces two parse 
+; trees that have exactly the same cost. 
+; i.e. (run, more) connected through Omm AND MVm. 
+; So one can argue it forms a _obj(run, more) relationship and above
+; rule DIR_OBJ1 avoids that.
+; So when <LAB> = \Omm | \Om occurs this rule applies to form object
+; relationships. 
+;
 #TemplateActionAlg
 DIR_OBJ1_1
 <LAB> = \Omm | \Om
@@ -259,6 +268,7 @@ DIR_OBJ1_1
 =
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
+;
 ;
 ;START BUG 3 Solution #################################
 ;   "I want you to eat cake."
