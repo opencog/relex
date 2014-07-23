@@ -425,6 +425,15 @@ POS_ADJ_INVERTED2
 =
 <F_R POS> = adj
 ;
+#TemplateActionAlg
+POS_ADJ_NUMBER
+<LAB> = NIn
+<F_L POS> = WORD
+=
+<F_L POS> = adj
+;
+; --------------------------------------------------------------
+;
 ; Adverbs: 
 ; "He plays better" uses MVb link.
 ; "He hears more" uses the MVm link.
@@ -1011,13 +1020,28 @@ DEFINITE_ENTITIES
 <ENTITY-FLAG> = T
 =
 <ref definite-FLAG> = T
-;Numeric flag. Numbers appearing in links
-;Dmcn is for ordinary noun-phrase number expressions:
+;
+; ------------------------------------------
+;
+; Numbers -- tag numbers appearing in the text with numeric-FLAG
+;
+; Dmcn is for ordinary noun-phrase number expressions:
+; Example for NIn: "I have 20 dollars"
 #TemplateActionAlg
 NUMERIC_ENTITIES
-<LAB> = \ND|\Dmcn
+<LAB> = ND| Dmcn | NIn
 =
 <F_L ref numeric-FLAG> = T
+;
+; Example: "Only twenty came", "Pope Pious XII said so."
+#TemplateActionAlg
+NUMERIC-FLAG-RIGHT
+<LAB> = EN | \NM\.*
+<LAB> != NMa
+=
+<F_R ref numeric-FLAG> = T
+;
+; ------------------------------------------
 ;
 ; Dates, appearing in IN links, e.g. "in the 1940's"
 #TemplateActionAlg
