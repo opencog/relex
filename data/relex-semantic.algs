@@ -8,6 +8,7 @@
 ; Copyright (c) 2005 Novamente LLC
 ; Copyright (c) 2009 Linas Vepstas
 ; Copyright (c) 2014 Rodas Solomon
+; Copyright (c) 2014 Kasun Perera
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1648,6 +1649,92 @@ CONJ_PREDADJ
 <F_L subj links _predadj> += <F_R conj member1 ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
+; COMPARATIVES of various kinds.
+;
+;--------------------------------------------------------
+;The Construction of "More/ Less" Phrases in Comparatives
+;See link-grammar dictionary under MV, Comparatives II: The Construction of "More" Phrases
+;http://www.abisource.com/projects/link-grammar/dict/section-MV.html 
+;--------------------------------------------------------
+;
+;e.g - He runs more/less quickly than John.
+;the word "more" is serving as an adverb to "quickly".( adverbial comparative)
+;In this case, the connector between "more" and "quickly" is specially
+;subscripted with "EEm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVa-EE
+<LAB> = \MVa
+<F_R linkL1 LAB> = \EEm
+=
+<F_R ref degree> = comparative
+;
+;e.g - He is more/less intelligent than John.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "intelligent" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_Paf-EAm
+<LAB> = \Paf
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
+;
+;e.g - I find maths lessons more/less enjoyable than science lessons.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "enjoyable" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_Ma-EAm
+<LAB> = \Ma
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
+;
+;e.g - He runs more/less quickly than John does.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+;Note- The "He runs less quickly than John does" sentence is ungrammatical. 
+;But sentence is commonly used by non-native English speakers.
+;So below rule is adding support for common, ungrammatical sentences.
+#TemplateActionAlg
+COMPARATIVE_MVa-Om
+<LAB> = \MVa
+<F_L linkR2 LAB> = \Omm | \Om
+=
+<F_R ref degree> = comparative
+;
+;e.g - He runs more/less than John.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVt-Om
+<LAB> = \MVt
+<F_L linkR1 LAB> = \Omm | \Om
+=
+<F_L linkR1 F_R ref degree> = comparative
+;e.g - He runs less miles than John does.
+;In this case, the connector between "less" and "runs" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVp-Om
+<LAB> = \MVp
+<F_L linkR2 LAB> = \Omm | \Om
+=
+<F_L linkR2 F_R ref degree> = comparative
+;
+;Here "more" is serving as a noun-phrase, the number of the noun in the "more" phrase is
+;indicated by the D link ( it should be either noun-phrase  or as determiner of
+;a noun ); if it is a "Dmum", the noun is
+;singular, whereas if it is "Dmcm", the noun is plural.
+;Here it forms the degree relationship of the noun-phrase
+#TemplateActionAlg
+COMPARATIVE_Dmum
+<LAB> = \Dmcm | \Dmum
+<F_L str> = more|much|less|fewer
+=
+<F_L ref degree> = comparative
+;
+;/////////////////////////////////////////////////////////////////////////////
 ;
 ; ADVERB MODIFICATIONS
 ;
@@ -1672,6 +1759,10 @@ ADV1
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+;
+; -------------------------------------------------------------
+; Adverb usage in comparaitves
+;
 ;e.g. He runs less quickly than John does.
 ;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
 ;runs (quickly,less)
@@ -1688,6 +1779,8 @@ ADV1_1
 <F_L linkR2 F_R str> = more|less 
 =
 <F_R ref links _advmod> += < F_L linkR2 F_R ref>
+;
+;
 ;e.g. He runs faster than John.
 ;Above ADV1 rule won't make _advmod(run, fast) relationship due to "faster" is 
 ;POS tagged with ".a-c" and relex-tagging.algs make it's degree as comparative.
@@ -2281,6 +2374,19 @@ RELATION_THAN_4
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R ref>
 <F_R comp_temp> = %
+;e.g. He earns more than I expected
+;For this, "than" is given an Zc+ connector. 
+;Z is also used in subordinate "as"-phrases like "He left, as I expected".
+#TemplateActionAlg
+RELATION_THAN_4_1
+<LAB> = \Zc
+<F_R linkL1 LAB> = \S\.*
+<F_L str> = than|as
+<F_L set> != T
+=
+<F_L comp_temp> = %
+<F_L comp_temp> += <F_R linkL1 F_L ref>
+<F_R comp_temp> = %
 #TemplateActionAlg
 RELATION_THAN_5
 <LAB> = \Pafc
@@ -2309,10 +2415,21 @@ RELATION_THAN_8
 <F_R comp_temp> != %
 =
 <F_L comp_temp> += <F_R comp_temp>
-;<F_R comp_temp> = %
+<F_R comp_temp> = %
 #TemplateActionAlg
-RELATION_THAN_9
-<LAB> = \Paf|\Ma
+RELATION_THAN_9_1
+<LAB> = \Paf
+<F_R comp_temp> != %
+=
+<F_L comp_var> += <F_R comp_temp>
+<F_R comp_temp> = %
+;differentiate forming "than()" relationships when connected with "Ma" links
+;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
+;
+#TemplateActionAlg
+RELATION_THAN_9_2
+<LAB> = \Ma
+<F_L linkL0 LAB> = \Opn
 <F_R comp_temp> != %
 =
 <F_L comp_var> += <F_R comp_temp>
@@ -2478,7 +2595,7 @@ PREP_TO_LINKS
 =
 <ref links> <= <ref prep-links>
 ;
-; Extracting comparative relations from Non-equal-gradable senteces such as 
+; Extracting comparative relations from Non-equal-gradable sentences such as 
 ; "He is more/less intelligent than John"
 ; 'temp' is used to denote the label is temporary 
 ; relWord-temp = a temporary element carrying the relation Word type more|less
@@ -2558,6 +2675,15 @@ MORE_OR_LESS7e
 <F_R ref links _comparative> += <F_L relAdj-temp>
 <F_R relWord-temp> = %
 <F_L relAdj-temp> = %
+;e.g. I find science more difficult than mathematics. _comparative(difficult, science)
+#TemplateActionAlg
+MORE_OR_LESS7f
+<LAB> = \Ma
+<F_R relWord-temp> != %
+<F_R relWord-temp> = more|many|much|less|little
+=
+<F_R ref links _comparative> += <F_L ref>
+<F_R relWord-temp> = %
 ;Creating more() binary relationships when there is no "more" terms in the sentence
 ;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
@@ -2567,7 +2693,7 @@ MORE_OR_LESS7e
 #TemplateActionAlg
 MORE_OR_LESS7f1
 <LAB> = \Pam|\Pafm
-<F_L str> = is|are|be|was|am 
+<F_L str> = is|are|be|was|am
 <F_L is-temp> != %
 =
 <F_R ref links _comparative> += <F_L is-temp>
