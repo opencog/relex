@@ -1648,6 +1648,92 @@ CONJ_PREDADJ
 <F_L subj links _predadj> += <F_R conj member1 ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
+; COMPARATIVES of various kinds.
+;
+;--------------------------------------------------------
+;The Construction of "More/ Less" Phrases in Comparatives
+;See link-grammar dictionary under MV, Comparatives II: The Construction of "More" Phrases
+;http://www.abisource.com/projects/link-grammar/dict/section-MV.html 
+;--------------------------------------------------------
+;
+;e.g - He runs more/less quickly than John.
+;the word "more" is serving as an adverb to "quickly".( adverbial comparative)
+;In this case, the connector between "more" and "quickly" is specially
+;subscripted with "EEm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVa-EE
+<LAB> = \MVa
+<F_R linkL1 LAB> = \EEm
+=
+<F_R ref degree> = comparative
+;
+;e.g - He is more/less intelligent than John.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "intelligent" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_Paf-EAm
+<LAB> = \Paf
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
+;
+;e.g - I find maths lessons more/less enjoyable than science lessons.
+;"more" is serving as an adjectival adverb
+;In this case, the connector between "more/less" and "enjoyable" is specially
+;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_Ma-EAm
+<LAB> = \Ma
+<F_R linkL1 LAB> = \EAm
+=
+<F_R ref degree> = comparative
+;
+;e.g - He runs more/less quickly than John does.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+;Note- The "He runs less quickly than John does" sentence is ungrammatical. 
+;But sentence is commonly used by non-native English speakers.
+;So below rule is adding support for common, ungrammatical sentences.
+#TemplateActionAlg
+COMPARATIVE_MVa-Om
+<LAB> = \MVa
+<F_L linkR2 LAB> = \Omm | \Om
+=
+<F_R ref degree> = comparative
+;
+;e.g - He runs more/less than John.
+;In this case, the connector between "more/less" and "quickly" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVt-Om
+<LAB> = \MVt
+<F_L linkR1 LAB> = \Omm | \Om
+=
+<F_L linkR1 F_R ref degree> = comparative
+;e.g - He runs less miles than John does.
+;In this case, the connector between "less" and "runs" is specially
+;subscripted with "Om" (the special subscript "m") to handle such "less" cases.
+#TemplateActionAlg
+COMPARATIVE_MVp-Om
+<LAB> = \MVp
+<F_L linkR2 LAB> = \Omm | \Om
+=
+<F_L linkR2 F_R ref degree> = comparative
+;
+;Here "more" is serving as a noun-phrase, the number of the noun in the "more" phrase is
+;indicated by the D link ( it should be either noun-phrase  or as determiner of
+;a noun ); if it is a "Dmum", the noun is
+;singular, whereas if it is "Dmcm", the noun is plural.
+;Here it forms the degree relationship of the noun-phrase
+#TemplateActionAlg
+COMPARATIVE_Dmum
+<LAB> = \Dmcm | \Dmum
+<F_L str> = more|much|less|fewer
+=
+<F_L ref degree> = comparative
+;
+;/////////////////////////////////////////////////////////////////////////////
 ;
 ; ADVERB MODIFICATIONS
 ;
@@ -1672,6 +1758,10 @@ ADV1
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+;
+; -------------------------------------------------------------
+; Adverb usage in comparaitves
+;
 ;e.g. He runs less quickly than John does.
 ;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
 ;runs (quickly,less)
@@ -1688,6 +1778,8 @@ ADV1_1
 <F_L linkR2 F_R str> = more|less 
 =
 <F_R ref links _advmod> += < F_L linkR2 F_R ref>
+;
+;
 ;e.g. He runs faster than John.
 ;Above ADV1 rule won't make _advmod(run, fast) relationship due to "faster" is 
 ;POS tagged with ".a-c" and relex-tagging.algs make it's degree as comparative.
