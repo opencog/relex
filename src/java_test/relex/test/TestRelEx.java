@@ -715,7 +715,7 @@ public class TestRelEx
 				    "than(she, mother)\n"+
 				    "_poss(mother, her)\n"+
 				    "_comparative(pretty, she)\n"+
-				    "degree(pretty, comparativ)\n");
+				    "degree(pretty, comparative)\n");
 		
 		rc &= test_sentence ("This exam was more difficult than the other.",
 				    "than(exam, other)\n"+ 
