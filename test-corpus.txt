@@ -1,5 +1,6 @@
-We told all the students about the meeting, but only some came.
+We told all the students about the meeting.
 END.
+We told all the students about the meeting, but only some came.
 I have twenty cookies.
 Only twenty came.
 Only twenty of them came.

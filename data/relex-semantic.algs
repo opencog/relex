@@ -245,8 +245,8 @@ DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
-<LAB> != \Omm | \Om
-;<F_R linkL1 LAB> != \Dmum
+<LAB> != Omm | Om
+;<F_R linkL1 LAB> != Dmum
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
@@ -262,13 +262,26 @@ DIR_OBJ1
 ;
 #TemplateActionAlg
 DIR_OBJ1_1
-<LAB> = \Omm | \Om
-<F_L linkR0 LAB> = \MVt
+<LAB> = Omm | Om
+<F_L linkR0 LAB> = MVt
 <F_L OBJ-LINK-TAG> = O|UNSET
 =
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
 ;
+; Fix up all/some/many determiners.  e.g
+; "We told all the students about the meeting"
+; the object should be _obj(told, student) and not _obj(told, all)
+;
+#TemplateActionAlg
+DIR_OBJ1_1
+<LAB> = O
+<F_R linkR0 LAB> = \J\.*
+<F_R linkR1 LAB> = \AL\.*
+=
+<F_L obj> = %
+<F_L obj> = <F_R linkR0 F_R ref>
+
 ;
 ;START BUG 3 Solution #################################
 ;   "I want you to eat cake."
@@ -280,7 +293,7 @@ DIR_OBJ1_1
 ; 
 #TemplateActionAlg
 ALG1
-<LAB> = \Ox
+<LAB> = Ox
 =
 <F_L temp1> += <F_R ref>
 #TemplateActionAlg
@@ -309,7 +322,7 @@ INDIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
-<LAB> != \Omm |\Om
+<LAB> != Omm |Om
 <F_L OBJ-LINK-TAG> != O|UNSET
 =
 <F_L iobj> += <F_R ref>
@@ -324,7 +337,7 @@ REL_OBJ
 ; than relationship but not to link direct and indirect objects
 ;<LAB> != \Bcd e.g. He runs more quickly than John does.
 <LAB> = \B\.*|\BW\.*
-<LAB> != \Bcd
+<LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
 =
@@ -340,7 +353,7 @@ REL_INDIR_OBJ
 ; than relationship but not to link direct and indirect objects
 ;<LAB> != \Bcd e.g. He runs more quickly than John does.
 <LAB> = \B\.*|\BW\.*
-<LAB> != \Bcd
+<LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
 =
