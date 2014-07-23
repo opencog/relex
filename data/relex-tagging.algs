@@ -5,7 +5,7 @@
 ; This tagging must be performed before relationship extraction is done.
 ;
 ; Copyright (c) 2005 Novamente LLC
-; Copyright (c) 2009 Linas Vepstas
+; Copyright (c) 2009,2014 Linas Vepstas
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1458,6 +1458,16 @@ TAG_REFLEXIVE_PRONOUNS
 #TemplateActionAlg
 TAG_PRONOUNS_WH
 <str> = all|another|any|anybody|anyone|anything|both|each|eachother|either|everybody|everyone|everything|few|little|many|more|most|much|neither|no_one|nobody|none|nothing|one|one_another|other|others|several|some|somebody|someone|something|that|these|this|those|what|whatever|whenever|which|whichever
+<POS> = noun
+=
+<ref pronoun-FLAG> = T
+; <ref ANAPHORA-FLAG> = T
+;
+; Indefinite pronouns
+;
+#TemplateActionAlg
+TAG_PRONOUNS_INDEFINITE
+<str> = all|another|any|anybody|anyone|anything|both|each|either|everybody|everyone|everything|few|many|neither|nobody|none|no|one|nothing|one|several|some|somebody|someone|something
 <POS> = noun
 =
 <ref pronoun-FLAG> = T
