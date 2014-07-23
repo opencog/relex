@@ -167,6 +167,7 @@ public class TestRelEx
 				    "than(he, John)\n" +
 				    "_comparative(intelligent, he)\n" +
 				    "degree(intelligent, comparative)\n"+
+				    "_advmod(intelligent, more)\n"+
 				    "_predadj(he, intelligent)\n");
 		
 		rc &= test_sentence ("He is less intelligent than John.",
@@ -540,6 +541,7 @@ public class TestRelEx
 				    "_amod(grammar, Russian)\n"+ //When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version
 				    "_predadj(grammar, difficult)\n"+
 				    "_amod(grammar, English)\n"+
+				    "_advmod(difficult, more)\n"+
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
@@ -557,6 +559,7 @@ public class TestRelEx
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
+				    "_advmod(intelligent, more)\n"+
 				    "degree(intelligent, comparative)\n");
 		
 		rc &= test_sentence ("My sister is much less intelligent than me.",
@@ -714,7 +717,6 @@ public class TestRelEx
 				    "degree(pretty, comparative)\n");
 		
 		rc &= test_sentence ("This exam was more difficult than the other.",
-				    "_subj(was, exam)\n"+
 				    "than(exam, other)\n"+ 
 				    "_det(exam, this)\n"+
 				    "_advmod(difficult, more)\n"+
@@ -722,7 +724,6 @@ public class TestRelEx
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
-				    "_subj(be, it)\n"+
 				    "than(today, yesterday)\n"+
 				    "_advmod(cold, today)\n"+
 				    "_advmod(cold, yesterday)\n"+
