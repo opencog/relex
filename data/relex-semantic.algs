@@ -1414,9 +1414,20 @@ ADJ1
 ; MVp usually modifies verbs, i.e. so its indicates an adverb.
 ; should probably check the POS on the left word to confirm.
 #TemplateActionAlg
-ADJ2
+ADJ2_1
 ; <LAB> = \Mp\.*|\MVp\.*|\Ma\.*
-<LAB> = \Mp\.*|\Ma\.*
+<LAB> = \Mp\.*
+<F_R PREP-OBJ> = %
+=
+<F_L BACKGROUND-FLAG> = T
+<F_L ref links _amod> += <F_R ref>
+;differentiate forming "_amod()" relationships when connected with "Ma" links
+;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
+;in the fist sentence it does have a _amod() relationship but it doesn't in 2nd sentence.
+#TemplateActionAlg
+ADJ2_2
+<LAB> = \Ma\.*
+<F_L linkL0 LAB> = \Opn
 <F_R PREP-OBJ> = %
 =
 <F_L BACKGROUND-FLAG> = T
@@ -1834,7 +1845,7 @@ COMP_ADVMOD_2_2
 #TemplateActionAlg
 COMP_ADVMOD_3
 <LAB> = \EAm
-<F_L str> = less
+<F_L str> = less|more
 =
 <F_R advmod> += <F_L ref>
 ;case "<F_L str> != much" was introduced to form relationships such as _advmod(more, much)
