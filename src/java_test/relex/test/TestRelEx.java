@@ -579,6 +579,7 @@ public class TestRelEx
 				    "_nn(lesson, science)\n"+
 				    "than(maths, science)\n"+
 				    "_comparative(enjoyable, maths)\n"+
+				    "_advmod(enjoyable, more)\n"+
 				    "degree(enjoyable, comparative)\n");
 		
 		rc &= test_sentence ("I find maths lessons less enjoyable than science lessons.",
@@ -714,16 +715,18 @@ public class TestRelEx
 				    "than(she, mother)\n"+
 				    "_poss(mother, her)\n"+
 				    "_comparative(pretty, she)\n"+
-				    "degree(pretty, comparative)\n");
+				    "degree(pretty, comparativ)\n");
 		
 		rc &= test_sentence ("This exam was more difficult than the other.",
 				    "than(exam, other)\n"+ 
 				    "_det(exam, this)\n"+
+				    "_predadj(exam, difficult)\n"+
 				    "_advmod(difficult, more)\n"+
 				    "_comparative(difficult, exam)\n"+
 				    "degree(difficult, comparative)\n");
 		
 		rc &= test_sentence ("It's much colder today than it was yesterday.",
+				    "_subj(be, it)\n"+
 				    "than(today, yesterday)\n"+
 				    "_advmod(cold, today)\n"+
 				    "_advmod(cold, yesterday)\n"+
