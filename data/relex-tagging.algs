@@ -1416,18 +1416,24 @@ NUM_TO_REF
 ; Perhaps this info could be obtained from the link grammar parser,
 ; but it seems easier to just make an exhaustive list.
 ;
+; Tag these as anaphora *only* if they are already tagged as nouns;
+; as otherwise, many of these can be adjectives, interjections.
+;
+; XXX Much of this is wrong, we need to be more careful here, and tag
+; only things that are appropriate per syntax: e.g. "Are those the ones?"
+; -- tag "those" because its subject.
+;
 #TemplateActionAlg
 IDENTIFY_POSSESSIVE
 <orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|thy|Thy|thine|Thine
 =
-<POSSESSIVE-FLAG> = T
+<possessive-FLAG> = T
 ;
 #TemplateActionAlg
 TAG_PRONOUNS
 <str> = I|i|Me|me|We|we|Us|us|You|you|He|he|Him|him|It|it|She|she|Them|them|They|they|who|Who|whoever|whom|whomever
 =
 <ref pronoun-FLAG> = T
-; <ref ANAPHORA-FLAG> = T
 ;
 ; We don't (currently) put a possesive tag on these pronouns; instead,
 ; we use a later rule to determine what is being possesed; e.g "your
@@ -1438,40 +1444,48 @@ TAG_PRONOUNS_POSS
 <str> = my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|Her|her|Hers|hers|His|his|Its|its|their|Their|thiers|Thiers|whose|Whose
 =
 <ref pronoun-FLAG> = T
-; <ref ANAPHORA-FLAG> = T
 ;
 #TemplateActionAlg
 TAG_REFLEXIVE_PRONOUNS
 <str> = Myself|myself|Ourselves|ourselves|yourself|Yourself|yourselves|ourselves|Himself|himself|Itself|itself|Herself|herself|Themselves|themselves
 =
 <ref pronoun-FLAG> = T
-; <ref ANAPHORA-FLAG> = T
-<ref REFLEXIVE-FLAG> = T
-;
-; Tag these as anaphora *only* if they are already tagged as nouns;
-; as otherwise, many of these can be adjectives, interjections.
-;
-; XXX This is wrong, need to be more careful here, tagging only things
-; appropriate per syntax: e.g. "Are those the ones?" -- tag "those"
-; because its subject.
-;
-#TemplateActionAlg
-TAG_PRONOUNS_WH
-<str> = all|another|any|anybody|anyone|anything|both|each|eachother|either|everybody|everyone|everything|few|little|many|more|most|much|neither|no_one|nobody|none|nothing|one|one_another|other|others|several|some|somebody|someone|something|that|these|this|those|what|whatever|whenever|which|whichever
-<POS> = noun
-=
-<ref pronoun-FLAG> = T
-; <ref ANAPHORA-FLAG> = T
+<ref reflexive-FLAG> = T
 ;
 ; Indefinite pronouns
 ;
 #TemplateActionAlg
 TAG_PRONOUNS_INDEFINITE
-<str> = all|another|any|anybody|anyone|anything|both|each|either|everybody|everyone|everything|few|many|neither|nobody|none|no|one|nothing|one|several|some|somebody|someone|something
+<str> = all|another|any|anybody|anyone|anything|both|each|eachother|each_other|either|everybody|everyone|everything|few|little|many|more|most|neither|nobody|none|noone|no_one|nothing|one|one_another|several|some|somebody|someone|something
 <POS> = noun
 =
 <ref pronoun-FLAG> = T
-; <ref ANAPHORA-FLAG> = T
+<ref indefinite-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS_DEMON
+<str> = other|others|that|these|this|those
+<POS> = noun
+=
+<ref pronoun-FLAG> = T
+<ref demonstrative-FLAG> = T
+;
+#TemplateActionAlg
+TAG_PRONOUNS_INTERROG
+<str> = who|whom|whose|which|what
+<POS> = noun
+=
+<ref pronoun-FLAG> = T
+<ref interrogative-FLAG> = T
+;
+;
+#TemplateActionAlg
+TAG_PRONOUNS_RELATIVE
+<str> = who|whoever|whom|whomever|whose|which|that|whatever|whenever|whichever
+<POS> = noun
+=
+<ref pronoun-FLAG> = T
+<ref relative-FLAG> = T
 ;
 ;
 ;/////////////////////////////////////////////////////////////////////////////
