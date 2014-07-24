@@ -80,13 +80,14 @@ public class TestRelEx
 		ArrayList<String> brgot = split(rs);
 		ArrayList<String> urgot = split(urs);
 
-		//add number of binary relations from parser-output, to total number of relationships got
+		// add number of binary relations from parser-output,
+		// to total number of relationships gotten
 		int sizeOfGotRelations= brgot.size();
-		//check expected binary and unary relations
-		//the below for-loop checks whether all expected binary relations are
-		//contained in the parser-binary-relation-output arrayList "brgot".
-		//if any unary relations are expected in the output it checks the
-		//parser-unary-relation-output arrayList "urgot" for unary relationships
+		// check expected binary and unary relations
+		// the below for-loop checks whether all expected binary relations are
+		// contained in the parser-binary-relation-output arrayList "brgot".
+		// if any unary relations are expected in the output it checks the
+		// parser-unary-relation-output arrayList "urgot" for unary relationships
 		for (int i=0; i< exp.size(); i++)
 		{
 			if(!brgot.contains(exp.get(i)))
@@ -103,17 +104,20 @@ public class TestRelEx
 					sentfail.add(sent);
 					return false;
 				}
-				//add the unary relation, count to totoal number of binary relations
+				// add the unary relation, count to total number of
+				// binary relations
 				sizeOfGotRelations++;
 			}
 
 		}
-		//The size checking of the expected relationships vs output relationships
-		//is done here purposefully, to accommodate if there is any unary relationships present
-		//in the expected output(see above for-loop also).
-		//However it only checks whether parser-output resulted more relationships(binary+unary) than expected relations
-		//If the parser-output resulted less relationships(binary+unary) than expected it would
-		//catch that in the above for-loop
+		// The size checking of the expected relationships vs output
+		// relationships is done here purposefully, to accommodate if
+		// there is any unary relationships present in the expected
+		// output(see above for-loop also).  However it only checks
+		// whether parser-output resulted more relationships(binary+unary)
+		// than expected relations.  If the parser-output resulted in
+		// fewer relationships(binary+unary) than expected it would
+		// catch that in the above for-loop.
 		if (exp.size() < sizeOfGotRelations)
 		{
 			System.err.println("Error: size miscompare:\n" +
@@ -135,7 +139,8 @@ public class TestRelEx
 	public void report(boolean rc, String subsys)
 	{
 		if (rc) {
-			System.err.println(subsys + ": Tested " + pass + " sentences, test passed OK");
+			System.err.println(subsys + ": Tested " + pass +
+			                   " sentences, test passed OK");
 		} else {
 			System.err.println(subsys + ": Test failed\n\t" +
 			                   fail + " sentences failed\n\t" +
@@ -143,6 +148,29 @@ public class TestRelEx
 		}
 		subpass = 0;
 		subfail = 0;
+	}
+
+	public boolean test_determiners()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("Ben ate my cookie.",
+		                     "_subj(eat, Ben)\n" +
+		                     "_obj(eat, cookie)\n" +
+		                     "_poss(cookie, me)\n");
+		rc &= test_sentence ("Ben that that cookie.",
+		                     "_subj(eat, Ben)\n" +
+		                     "_obj(eat, cookie)\n" +
+		                     "_det(cookie, that)\n");
+		rc &= test_sentence ("All my writings are bad.",
+		                     "_predet(writings, all)\n" +
+		                     "_poss(writings, me)\n" +
+		                     "_predadj(writings, bad)\n");
+		rc &= test_sentence ("All his designs are bad.",
+		                     "_predet(design, all)\n" +
+		                     "_poss(design, him)\n" +
+		                     "_predadj(design, bad)\n");
+		report(rc, "Determiners");
+		return rc;
 	}
 
 	public boolean test_comparatives()
@@ -837,7 +865,7 @@ public class TestRelEx
 		return rc;
 	}
 
-	public boolean test_Conjunction()
+	public boolean test_conjunctions()
 	{
 		boolean rc = true;
 		// conjoined verbs
@@ -1060,6 +1088,7 @@ public class TestRelEx
 	}
 
 
+
 	public static void main(String[] args)
 	{
 		setUpClass();
@@ -1072,9 +1101,10 @@ public class TestRelEx
 		TestRelEx ts = this;
 		boolean rc = true;
 
+		rc &= ts.test_determiners();
 		rc &= ts.test_comparatives();
 		rc &= ts.test_extraposition();
-		rc &= ts.test_Conjunction();
+		rc &= ts.test_conjunctions();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
