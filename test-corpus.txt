@@ -1,6 +1,9 @@
 Ben ate my cookie.
 Ben ate that cookie.
 All my writings are bad.
+All your writings are bad.
+All his writings are bad.
+All her writings are bad.
 END.
 I walk and talk.
 We told all the students about the meeting.

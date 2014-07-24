@@ -2087,13 +2087,6 @@ POSSRDET_TO_GERUND
 <F_R ref links _poss> += <F_L ref>
 ;
 ; Other Possessive Pronouns
-#TemplateActionAlg
-POSSR_DET_PRONOUNS
-<LAB> = \D\.*
-<F_L str> = me
-=
-<F_L POSSESSIVE-FLAG> = T
-<F_R ref links _poss> += <F_L ref>
 ;
 #TemplateActionAlg
 POSSR_TO_DET
