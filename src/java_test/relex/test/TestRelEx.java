@@ -169,6 +169,10 @@ public class TestRelEx
 		                     "_predet(design, all)\n" +
 		                     "_poss(design, him)\n" +
 		                     "_predadj(design, bad)\n");
+		rc &= test_sentence ("All the boys knew it.",
+		                     "_subj(know, all)\n" +
+		                     "_obj(know, it)\n" +
+		                     "_predet(boy, all)\n");
 		report(rc, "Determiners");
 		return rc;
 	}

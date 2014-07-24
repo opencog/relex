@@ -88,6 +88,21 @@ MAKE_STANDARD_SUBJ
 =
 <F_R subj> += <F_L ref>
 ;
+; predeterminers with standard subjects
+; "All the boys knew it." should have _subj(know, boys)
+; This erases the previously created subj, and replaces it
+; with the end of the J link. Kinda complicated .. 
+#TemplateActionAlg
+SUBJ_PREDET
+<LAB> = \AL\.*
+<F_L linkR1 LAB> = \J\.*
+<F_L linkR0 F_R subj> != %
+=
+<F_L linkR0 F_R subj> = %
+<F_L linkR0 F_R subj> = <F_L linkR1 F_R ref>
+
+;
+;
 ;
 ; Same as above, but the subject link pointed to a conjunction.
 ; Create a _subj for each conjoined subject.
