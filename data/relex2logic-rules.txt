@@ -40,7 +40,7 @@
 
 [DET] {6} <> _det($W, $x) => (det-rule $W (get-instance-name $W word_index sentence_index) (choose-var-name) $x)
 
-[NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule $V (get-instance-name $V word_index sentence_index))
+[NEGFLAG] {7} <> NEGATIVE-FLAG($V, T) => (negative-rule (get-instance-name $V word_index sentence_index))
 
 # for definite words
 [DEFINITE] {8} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
