@@ -64,6 +64,18 @@ CONJ_AND_SINGLE_RIGHT_SIDE
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; Locate predeterminers. These will become subjects, objects, etc.
+; in later rules.
+;
+#TemplateActionAlg
+FIND_PREDET
+<LAB> = \AL\.*
+<F_L linkR1 LAB> = \J\.*
+=
+<F_L predet> = <F_L linkR1 F_R ref>
+
+;/////////////////////////////////////////////////////////////////////////////
+;
 ; Identifying subjects
 ;
 ;/////////////////////////////////////////////////////////////////////////////
@@ -88,18 +100,18 @@ MAKE_STANDARD_SUBJ
 =
 <F_R subj> += <F_L ref>
 ;
-; predeterminers with standard subjects
+; predeterminer overrides standard subjects
 ; "All the boys knew it." should have _subj(know, boys)
-; This erases the previously created subj, and replaces it
-; with the end of the J link. Kinda complicated .. 
+; If the predeterminer is present, then the subject is erased and
+; replaced by the predeterminer.
+;
 #TemplateActionAlg
 SUBJ_PREDET
-<LAB> = \AL\.*
-<F_L linkR1 LAB> = \J\.*
-<F_L linkR0 F_R subj> != %
+<F_L predet> != %
+<F_R subj> != %
 =
-<F_L linkR0 F_R subj> = %
-<F_L linkR0 F_R subj> = <F_L linkR1 F_R ref>
+<F_R subj> = %
+<F_R subj> = <F_L predet>
 
 ;
 ;
