@@ -3120,7 +3120,16 @@ CONJ_AND_MERGE
 ; result is conj_or(Jack, Jill)
 ;
 #TemplateActionAlg
+CONJ_EITHER_OR_MERGE
+<LAB> = \XJo
+<F_R conj member0> != %
+<F_R conj member1> != %
+=
+<F_R either> = T
+<F_R conj member0 ref links conj_either_or> = <F_R conj member1 ref>
+#TemplateActionAlg
 CONJ_OR_MERGE
+<either> != T
 <conj member0> != %
 <conj member1> != %
 <str> = or
@@ -3141,7 +3150,7 @@ CONJ_NOR_MERGE
 <str> = but
 =
 <conj member0 ref links conj_but> = <conj member1 ref>
-
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; HYPOTHETICAL
