@@ -157,7 +157,7 @@ public class TestRelEx
 		                     "_subj(eat, Ben)\n" +
 		                     "_obj(eat, cookie)\n" +
 		                     "_poss(cookie, me)\n");
-		rc &= test_sentence ("Ben that that cookie.",
+		rc &= test_sentence ("Ben ate that cookie.",
 		                     "_subj(eat, Ben)\n" +
 		                     "_obj(eat, cookie)\n" +
 		                     "_det(cookie, that)\n");
