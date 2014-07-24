@@ -1457,7 +1457,7 @@ TAG_REFLEXIVE_PRONOUNS
 #TemplateActionAlg
 TAG_PRONOUNS_INDEFINITE
 <str> = all|another|any|anybody|anyone|anything|both|each|eachother|each_other|either|everybody|everyone|everything|few|little|many|more|most|neither|nobody|none|noone|no_one|nothing|one|one_another|several|some|somebody|someone|something
-<POS> = noun
+<POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref indefinite-FLAG> = T
@@ -1465,7 +1465,7 @@ TAG_PRONOUNS_INDEFINITE
 #TemplateActionAlg
 TAG_PRONOUNS_DEMON
 <str> = other|others|that|these|this|those
-<POS> = noun
+<POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref demonstrative-FLAG> = T
@@ -1473,7 +1473,7 @@ TAG_PRONOUNS_DEMON
 #TemplateActionAlg
 TAG_PRONOUNS_INTERROG
 <str> = who|whom|whose|which|what
-<POS> = noun
+<POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref interrogative-FLAG> = T
@@ -1482,11 +1482,16 @@ TAG_PRONOUNS_INTERROG
 #TemplateActionAlg
 TAG_PRONOUNS_RELATIVE
 <str> = who|whoever|whom|whomever|whose|which|that|whatever|whenever|whichever
-<POS> = noun
+<POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref relative-FLAG> = T
 ;
+#TemplateActionAlg
+TAG_PRONOUNS_ARE_NOUNS
+<ref pronoun-FLAG> = T
+=
+<POS> = noun
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
