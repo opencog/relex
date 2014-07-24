@@ -462,16 +462,15 @@ PREDICATIVE_ADJECTIVE_LINKING
 ; predeterminers with predicative adjectives
 ; "All my writings are bad." should have _predadj(writings, bad)
 ; This erases the previously created predadj, and replaces it
-; with the end of the J link. Kinda complicated .. 
+; with the predeterminer.
+;
 #TemplateActionAlg
 PREDADJ_PREDET
-<LAB> = \AL\.*
-<F_L linkR1 LAB> = \J\.*
-<F_L linkR0 F_R subj links _predadj> != %
+<F_L predet> != %
+<F_R subj links _predadj> != %
 =
-<F_L linkR1 F_R ref links _predadj> = <F_L linkR0 F_R subj links _predadj>
-<F_L linkR0 F_R subj links _predadj> = %
-
+<F_R subj links _predadj> = <F_L predet>
+;
 ;
 ; If the Pa object is a conjunction, then create a _predadj for
 ; each of the conjoined objects.
