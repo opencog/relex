@@ -2056,6 +2056,54 @@ NOUN-MOD
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; POSSESSIVES aka GENITIVES
+;
+; Example: The students' rooms are large. Mike's sister laughs.
+;
+; We generate _poss for this, although _gen is also in common usage
+; for this relation.
+;
+#TemplateActionAlg
+POSSR_TO_APOSTROPHE
+<LAB> = \YS\.* |\YP\.*
+=
+<F_R possessor> += <F_L ref>
+;
+#TemplateActionAlg
+POSSR_TO_POSS
+<LAB> = \D\.*
+<F_L possessor> != %
+=
+<F_R ref links _poss> += <F_L possessor>
+;
+; Possessive pronouns
+;
+; Using the DP link which connects possessive determiners to gerunds.
+; Example: Your singing is ugly.
+#TemplateActionAlg
+POSSRDET_TO_GERUND
+<LAB> = \DP\.*
+=
+<F_R ref links _poss> += <F_L ref>
+;
+; Other Possessive Pronouns
+#TemplateActionAlg
+POSSR_DET_PRONOUNS
+<LAB> = \D\.*
+<F_L str> = me
+=
+<F_L POSSESSIVE-FLAG> = T
+<F_R ref links _poss> += <F_L ref>
+;
+#TemplateActionAlg
+POSSR_TO_DET
+<LAB> = \D\.*
+<F_L POSSESSIVE-FLAG> = T
+=
+<F_R ref links _poss> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
 ; QUANTITY DETERMINERS
 ;
 ;
@@ -2295,54 +2343,6 @@ DATE_YEAR
 =
 <F_L ref links _date_year> = <F_R ref>
 <F_R IS-NUMBER-FLAG> = T
-;
-;/////////////////////////////////////////////////////////////////////////////
-;
-; POSSESSIVES aka GENITIVES
-;
-; Example: The students' rooms are large. Mike's sister laughs.
-;
-; We generate _poss for this, although _gen is also in common usage
-; for this relation.
-;
-#TemplateActionAlg
-POSSR_TO_APOSTROPHE
-<LAB> = \YS\.* |\YP\.*
-=
-<F_R possessor> += <F_L ref>
-;
-#TemplateActionAlg
-POSSR_TO_POSS
-<LAB> = \D\.*
-<F_L possessor> != %
-=
-<F_R ref links _poss> += <F_L possessor>
-;
-; Possessive pronouns
-;
-; Using the DP link which connects possessive determiners to gerunds.
-; Example: Your singing is ugly.
-#TemplateActionAlg
-POSSRDET_TO_GERUND
-<LAB> = \DP\.*
-=
-<F_R ref links _poss> += <F_L ref>
-;
-; Other Possessive Pronouns
-#TemplateActionAlg
-POSSR_DET_PRONOUNS
-<LAB> = \D\.*
-<F_L str> = me
-=
-<F_L POSSESSIVE-FLAG> = T
-<F_R ref links _poss> += <F_L ref>
-;
-#TemplateActionAlg
-POSSR_TO_DET
-<LAB> = \D\.*
-<F_L POSSESSIVE-FLAG> = T
-=
-<F_R ref links _poss> += <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ; Other misc determiners ...
