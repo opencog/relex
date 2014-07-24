@@ -54,14 +54,6 @@ CONJ_AND_RIGHT_MULTI
 =
 <F_L conj> += <F_R linkL1 F_L>
 ;
-;Correlative conjunction
-;Example:"I could use neither the lorry nor the van. " 
-#TemplateActionAlg
-CORRELATIVE_CONJ
-<LAB> = \SJn\.*
-=
-<F_R conj> += <F_L>
-;
 ; Finally, pick upt the remaining right side of the conjunction.
 #TemplateActionAlg
 CONJ_AND_SINGLE_RIGHT_SIDE
