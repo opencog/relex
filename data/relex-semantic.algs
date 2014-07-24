@@ -1723,6 +1723,24 @@ COMPARATIVE_Ma-EAm
 <F_R linkL1 LAB> = \EAm
 =
 <F_R ref degree> = comparative
+
+;e.g. He is more/less intelligent than attractive.
+;the connector between "more/less" and "is" is specially
+;subscripted with "EBmm" (the special subscript "mm") and "is" and "intelligent" connected with "Paf" link
+#TemplateActionAlg
+COMPARATIVE_Pa-EBmm
+<LAB> = \Pa\.*
+<F_L linkR1 LAB> = \EBmm
+=
+<F_R ref degree> = comparative
+
+;He did it more/less quickly than carefully.
+#TemplateActionAlg
+COMPARATIVE_MVa-MVm
+<LAB> = \MVa
+<F_L linkR2 LAB> = \MVm
+=
+<F_R ref degree> = comparative
 ;
 ;e.g - He runs more/less quickly than John does.
 ;In this case, the connector between "more/less" and "quickly" is specially
@@ -1953,7 +1971,7 @@ COMP_ADVMOD_2_1
 <F_L advmod> = %
 #TemplateActionAlg
 COMP_ADVMOD_2_2
-<LAB> = \Paf
+<LAB> = \Pa\.*
 <F_L advmod> != %
 =
 <F_R ref links _advmod> += <F_L advmod>
@@ -2662,12 +2680,25 @@ TO_BE_TEMP
 <F_R str> = is|was|be|am
 =
 <F_R is-temp> += <F_L ref>
+
 #TemplateActionAlg
-MORE_OR_LESS7a
+MORE_OR_LESS7a_1
 <LAB> = \Pa\.*
 <F_L is-temp> != %
 <F_R relWord-temp> != %
 <F_R relWord-temp> = more|many|much|less|little
+=
+<F_R ref links _comparative> += <F_L is-temp>
+<F_L is-temp> = %
+<F_R relWord-temp> = %
+
+;e.g. The dog was more/less hungry than angry. forming _comparative(hungry, dog) relationship
+#TemplateActionAlg
+MORE_OR_LESS7a_2
+<LAB> = \Pa\.*
+<F_L is-temp> != %
+<F_L relWord-temp> != %
+<F_L relWord-temp> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
