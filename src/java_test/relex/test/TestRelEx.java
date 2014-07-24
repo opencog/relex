@@ -831,7 +831,6 @@ public class TestRelEx
 				    "than(money, pleasure)\n"+
 				    "_comparative(less, play)\n"+
 				    "degree(less, comparative)\n");
-		
 		report(rc, "Comparatives");
 		return rc;
 	}
