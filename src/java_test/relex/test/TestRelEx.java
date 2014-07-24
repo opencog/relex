@@ -173,6 +173,15 @@ public class TestRelEx
 		                     "_subj(know, all)\n" +
 		                     "_obj(know, it)\n" +
 		                     "_predet(boy, all)\n");
+
+		rc &= test_sentence ("Joan thanked Susan for all the help she had given.",
+		                     "for(thank, help)" +
+		                     "_subj(thank, Joan)" +
+		                     "_obj(thank, Susan)" +
+		                     "_predet(help, all)" +
+		                     "_subj(give, she)" +
+		                     "_obj(give, help)");
+
 		report(rc, "Determiners");
 		return rc;
 	}

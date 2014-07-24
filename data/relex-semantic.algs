@@ -73,6 +73,16 @@ FIND_PREDET
 <F_L linkR1 LAB> = \J\.*
 =
 <F_L predet> = <F_L linkR1 F_R ref>
+;
+; The below is is needed to get propositions correct.
+; We have to stick the predet ref into the reference so it can be found.
+; This is kind-of wrong and ugly, but I see no other way...
+#TemplateActionAlg
+FIND_PREDET_FOR_PREPS
+<LAB> = \AL\.*
+<F_L linkR0 LAB> = \J\.*
+=
+<F_L ref xpredet> = <F_L linkR0 F_R ref>
 
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -1245,6 +1255,21 @@ PREP_CLAUSE_LINKING_WHERE
 =
 <F_L head-word> += <F_R>
 ;
+; The rule below replaces the predeterminer with its object.
+; Have to whack the existing object to do this.
+; Example: "Joan thanked Susan for all the help she had given."
+; We want to get for(thank, help) not for(thank, all)
+;
+#TemplateActionAlg
+PREP_X
+<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<F_R obj xpredet> != %
+=
+<F_R xobj> = <F_R obj xpredet>
+<F_R obj> = %
+<F_R obj> = <F_R xobj>
+<F_R xobj> = %
+;
 #PrepositionLinkAlg
 PREP_CLAUSE_LINKING
 ; The preposition modifies the preceeding word with a clause
@@ -1491,15 +1516,12 @@ ADJ3
 ;
 ; Predeterminer
 ; All the boys are here. - _predet(boy, all)
-; XXX FIXME .. this is kind of shaky. The problem is that
-; "boy" needs to be identified as the head-noun, and its not.
-; Thus, the subject is being identified as "all" instead of "boy"
 ;
-; linkR1 = Jp
 #TemplateActionAlg
 PREDET
 <LAB> = \AL\.*
 <F_L linkR1 LAB> = \J\.*
+; <F_L linkR1 LAB> = Jp
 =
 <F_L linkR1 F_R ref links _predet> = <F_L ref> 
 
