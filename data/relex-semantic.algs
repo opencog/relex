@@ -6,7 +6,7 @@
 ; performed prior to running these rules.
 ;
 ; Copyright (c) 2005 Novamente LLC
-; Copyright (c) 2009 Linas Vepstas
+; Copyright (c) 2009,2014 Linas Vepstas
 ; Copyright (c) 2014 Rodas Solomon
 ; Copyright (c) 2014 Kasun Perera
 ;
@@ -160,19 +160,6 @@ EXPLETIVE_SUBJ2
 <LAB> = \SFI\.*
 =
 <F_L expl> += <F_R ref>
-;
-; determiners for  Bug #200082 
-;  "Ben ate those cookies." "Ben ate that cookie."
-;
-#TemplateActionAlg
-ind_deter
-<LAB> = \D\.*
-<F_R ref definite-FLAG> = T
-<F_R POS> = noun
-<F_L str> != the|THE|'s|'
-<F_L POSSESSIVE-FLAG> != T
-=
-<F_R det>= <F_L ref>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ; Identifying objects
@@ -443,7 +430,21 @@ PREDICATIVE_ADJECTIVE_LINKING
 <F_L str> = be|is
 =
 <F_L subj links _predadj> += <F_R ref>
-;<F_L subj> = %
+;
+;
+; predeterminers with predicative adjectives
+; "All my writings are bad." should have _predadj(writings, bad)
+; This erases the previously created predadj, and replaces it
+; with the end of the J link. Kinda complicated .. 
+#TemplateActionAlg
+PREDADJ_PREDET
+<LAB> = \AL\.*
+<F_L linkR1 LAB> = \J\.*
+<F_L linkR0 F_R subj links _predadj> != %
+=
+<F_L linkR1 F_R ref links _predadj> = <F_L linkR0 F_R subj links _predadj>
+<F_L linkR0 F_R subj links _predadj> = %
+
 ;
 ; If the Pa object is a conjunction, then create a _predadj for
 ; each of the conjoined objects.
@@ -478,6 +479,8 @@ PREDICATIVE_comparatives
 <F_R ref links _predadj> += <F_L temp_pred>
 <F_L subj> = %
 <F_L temp_pred> = %
+;
+;
 #TemplateActionAlg
 CLEAR_SUNJ_comparatives
 <LAB> = \AFd
@@ -906,12 +909,6 @@ DO_QUESTION1
 ;
 ; TRANSFER LINKS TO REF
 ;
-;
-#TemplateActionAlg
-DET_TO_LINKS
-<det> != %
-=
-<ref links _det> = <det>
 ;
 #TemplateActionAlg
 SUBJ_TO_LINKS
@@ -2059,6 +2056,47 @@ NOUN-MOD
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; POSSESSIVES aka GENITIVES
+;
+; Example: The students' rooms are large. Mike's sister laughs.
+;
+; We generate _poss for this, although _gen is also in common usage
+; for this relation.
+;
+#TemplateActionAlg
+POSSR_TO_APOSTROPHE
+<LAB> = \YS\.* |\YP\.*
+=
+<F_R possessor> += <F_L ref>
+;
+#TemplateActionAlg
+POSSR_TO_POSS
+<LAB> = \D\.*
+<F_L possessor> != %
+=
+<F_R ref links _poss> += <F_L possessor>
+;
+; Possessive pronouns
+;
+; Using the DP link which connects possessive determiners to gerunds.
+; Example: Your singing is ugly.
+#TemplateActionAlg
+POSSRDET_TO_GERUND
+<LAB> = \DP\.*
+=
+<F_R ref links _poss> += <F_L ref>
+;
+; Other Possessive Pronouns
+;
+#TemplateActionAlg
+POSSR_TO_DET
+<LAB> = \D\.*
+<F_L POSSESSIVE-FLAG> = T
+=
+<F_R ref links _poss> += <F_L ref>
+;
+;/////////////////////////////////////////////////////////////////////////////
+;
 ; QUANTITY DETERMINERS
 ;
 ;
@@ -2300,44 +2338,21 @@ DATE_YEAR
 <F_R IS-NUMBER-FLAG> = T
 ;
 ;/////////////////////////////////////////////////////////////////////////////
+; Other misc determiners ...
 ;
-; POSSESSIVES aka GENITIVES
-;
-; Example: The students' rooms are large. Mike's sister laughs.
-;
-; We generate _poss for this, although _gen is also in common usage for this relation.
+; determiners for  Bug #200082 
+;  "Ben ate those cookies." "Ben ate that cookie."
 ;
 #TemplateActionAlg
-POSSR_TO_APOSTROPHE
-<LAB> = \YS\.* |\YP\.*
-=
-<F_R possessor> += <F_L ref>
-;
-#TemplateActionAlg
-POSSR_TO_POSS
+ind_deter
 <LAB> = \D\.*
-<F_L possessor> != %
+<F_R ref definite-FLAG> = T
+<F_R POS> = noun
+<F_L str> != the|THE|'s|'
+<F_L POSSESSIVE-FLAG> != T
 =
-<F_R ref links _poss> += <F_L possessor>
-;
-; Possessive pronouns
-;
-; Using the DP link which connects possessive determiners to gerunds.
-; Example: Your singing is ugly.
-#TemplateActionAlg
-POSSRDET_TO_GERUND
-<LAB> = \DP\.*
-=
-<F_R ref links _poss> += <F_L ref>
-;
-; Other Possessive Pronouns
-#TemplateActionAlg
-POSSR_TO_DET
-<LAB> = \D\.*
-<F_L POSSESSIVE-FLAG> = T
-=
-<F_R ref links _poss> += <F_L ref>
-;
+<F_R ref links _det>= <F_L ref>
+
 ;/////////////////////////////////////////////////////////////////////////////
 ; 
 ;  COMPARATIVES

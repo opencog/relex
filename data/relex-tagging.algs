@@ -1427,7 +1427,8 @@ NUM_TO_REF
 IDENTIFY_POSSESSIVE
 <orig_str> = his|His|her|Her|hers|Hers|their|Their|theirs|Theirs|my|My|mine|Mine|our|Our|ours|Ours|your|Your|yours|Yours|thy|Thy|thine|Thine
 =
-<possessive-FLAG> = T
+<POSSESSIVE-FLAG> = T
+<ref possessive-FLAG> = T
 ;
 #TemplateActionAlg
 TAG_PRONOUNS
