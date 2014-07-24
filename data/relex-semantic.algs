@@ -3128,19 +3128,11 @@ CONJ_OR_MERGE
 <conj member0 ref links conj_or> = <conj member1 ref>
 #TemplateActionAlg
 CONJ_NEITHER_NOR_MERGE
-<LAB> = \Dn
-<F_R linkR0 LAB> = \SJn
+<LAB> = \XJn
+<F_R conj member0> != %
+<F_R conj member1> != %
 =
-<F_R linkR0 F_R neither> += T
-;
-#TemplateActionAlg
-CONJ_NEITHER_NOR_MERGE1
-<conj member0> != %
-<conj member1> != %
-<str> = nor
-<neither> != %
-=
-<conj member0 ref links conj_neither_nor> = <conj member1 ref>
+<F_R conj member0 ref links conj_neither_nor> = <F_R conj member1 ref>
 ;
 #TemplateActionAlg
 CONJ_NOR_MERGE
