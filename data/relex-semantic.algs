@@ -1752,8 +1752,8 @@ COMPARATIVE_MVa-EE
 ;In this case, the connector between "more/less" and "intelligent" is specially
 ;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
 #TemplateActionAlg
-COMPARATIVE_Paf-EAm
-<LAB> = \Paf
+COMPARATIVE_Pa-EAm
+<LAB> = \Pa\.*
 <F_R linkL1 LAB> = \EAm
 =
 <F_R ref degree> = comparative
