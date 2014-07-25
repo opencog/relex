@@ -170,17 +170,17 @@ public class TestRelEx
 		                     "_poss(design, him)\n" +
 		                     "_predadj(design, bad)\n");
 		rc &= test_sentence ("All the boys knew it.",
-		                     "_subj(know, all)\n" +
+		                     "_subj(know, boy)\n" +
 		                     "_obj(know, it)\n" +
 		                     "_predet(boy, all)\n");
 
 		rc &= test_sentence ("Joan thanked Susan for all the help she had given.",
-		                     "for(thank, help)" +
-		                     "_subj(thank, Joan)" +
-		                     "_obj(thank, Susan)" +
-		                     "_predet(help, all)" +
-		                     "_subj(give, she)" +
-		                     "_obj(give, help)");
+		                     "for(thank, help)\n" +
+		                     "_subj(thank, Joan)\n" +
+		                     "_obj(thank, Susan)\n" +
+		                     "_predet(help, all)\n" +
+		                     "_subj(give, she)\n" +
+		                     "_obj(give, help)\n");
 
 		report(rc, "Determiners");
 		return rc;
