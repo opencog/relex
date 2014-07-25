@@ -2044,7 +2044,7 @@ ADV4
 CONJ_ADVMOD
 <F_L ref links _advmod> != %
 <F_R conj> != %
-<LAB> != \VJ\.*|\RJ\.*|\AJ\.*|\O\.*
+<LAB> != \VJ\.*|\RJ\.*|\AJ\.*
 =
 <F_L ref links _advmod> = %
 <F_L ref links _advmod> += <F_R conj member0 ref>
@@ -2457,7 +2457,6 @@ DATE_YEAR
 #TemplateActionAlg
 ind_deter
 <LAB> = \D\.*
-<LAB> != \Dn
 <F_R ref definite-FLAG> = T
 <F_R POS> = noun
 <F_L str> != the|THE|'s|'
