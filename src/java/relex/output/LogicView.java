@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 package relex.output;
@@ -67,15 +67,11 @@ public class LogicView
 	{
 		FeatureNode root = parse.getLeft();
 
-		FeatureNode headSet = new FeatureNode();
-		headSet.set("head", root.get("head"));
-		headSet.set("background", root.get("background"));
-
 		RuleSet relexRuleSet = _relex2LogicRuleLoader.getFreshRuleSet();
 
 		LogicProcessor ruleProcessor = new LogicProcessor(relexRuleSet);
 
-		String schemeOutput = ruleProcessor.applyRulesToParse(headSet);
+		String schemeOutput = ruleProcessor.applyRulesToParse(root);
 		schemeOutput = schemeOutput.replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")");
 
 		return schemeOutput;
