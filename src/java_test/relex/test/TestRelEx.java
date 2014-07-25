@@ -873,6 +873,35 @@ public class TestRelEx
 				    "than(money, pleasure)\n"+
 				    "_comparative(less, play)\n"+
 				    "degree(less, comparative)\n");
+		
+		//two entities two features
+		rc &= test_sentence ("Jack is more ingenious than Ben is crazy.", 
+				    "_predadj(Jack, ingenious)\n"+
+				    "_predadj(Ben, crazy)\n"+
+				    "_advmod(ingenious, less)\n"+
+				    "_comparative(ingenious, Jack)\n"+
+				    "than(Jack, Ben)\n"+
+				    "than1(ingenious, crazy)\n"+
+				    "degree(ingenious, comparative)\n");
+		
+		rc &= test_sentence ("Jack is less ingenious than Ben is crazy.", 
+				    "_predadj(Jack, ingenious)\n"+
+				    "_predadj(Ben, crazy)\n"+
+				    "_advmod(ingenious, less)\n"+
+				    "_comparative(ingenious, Jack)\n"+
+				    "than(Jack, Ben)\n"+
+				    "than1(ingenious, crazy)\n"+
+				    "degree(ingenious, comparative)\n");
+
+		//two entities two features Without More/less
+		rc &= test_sentence ("I slept longer than he worked",
+				    "_subj(sleep, I)\n"+
+				    "_subj(work, he)\n"+
+				    "_advmod(sleep, long)\n"+
+				    "than(I, he)\n"+
+				    "than1(sleep, work)\n"+
+				    "_comparative(long, sleep)\n"+
+				    "degree(long, comparative)\n");
 
 		report(rc, "Comparatives");
 		return rc;
