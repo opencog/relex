@@ -906,6 +906,41 @@ public class TestRelEx
 		report(rc, "Comparatives");
 		return rc;
 	}
+	
+		public boolean test_equatives()
+	{
+		boolean rc = true;
+		//Equative:two entities one feature
+		rc &= test_sentence ("Amen's hair is as long as Ben's.",
+			"_as(long, hair)\n"+
+			"_than(Amen, Ben)\n");
+
+		rc &= test_sentence ("Amen’s hair is same as Ben’s.",
+			"_as(same, hair)\n"+
+			"_than(Amen, Ben)\n");
+
+		rc &= test_sentence ("Jack’s hair color is similar to that of Ben’s.",
+			"_as(similar, color)\n"+
+			"_than(Jack, Ben)\n"+
+			"_nn(color, hair)\n");
+
+		rc &= test_sentence ("Jack is as intelligent as Ben.",
+			"_as(intelligent, Jack)\n"+
+			"_than(Jack, Ben)\n");
+
+		rc &= test_sentence ("The book’s color is same as that of the pen’s.",
+			"_as(same, color)\n"+
+			"_than(book, pen)\n"+
+			"_poss(color, book)\n");
+
+		rc &= test_sentence ("The snail is running  exactly as fast as the cheetah.",
+			"_as(fast, run)\n"+
+			"_than(snail, cheetah)\n"+
+			"_advmod(is, exactly)\n");
+		
+		report(rc, "Equatives");
+		return rc;
+	}
 
 	public boolean test_conjunctions()
 	{
@@ -1145,6 +1180,7 @@ public class TestRelEx
 
 		rc &= ts.test_determiners();
 		rc &= ts.test_comparatives();
+		rc &= ts.test_equatives();
 		rc &= ts.test_extraposition();
 		rc &= ts.test_conjunctions();
 
