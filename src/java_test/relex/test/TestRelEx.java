@@ -912,31 +912,43 @@ public class TestRelEx
 		boolean rc = true;
 		//Equative:two entities one feature
 		rc &= test_sentence ("Amen's hair is as long as Ben's.",
+			"_poss(hair, Amen)\n"+
+			"_predadj(hair, long)\n"+
 			"_as(long, hair)\n"+
 			"_than(Amen, Ben)\n");
 
 		rc &= test_sentence ("Amen’s hair is same as Ben’s.",
+			"_poss(hair, Amen)\n"+
+			"_predadj(hair, same)\n"+
 			"_as(same, hair)\n"+
 			"_than(Amen, Ben)\n");
 
 		rc &= test_sentence ("Jack’s hair color is similar to that of Ben’s.",
+			"_poss(color, Jack)\n"+
+			"_nn(color, hair)\n"+
+			"_predadj(color, similar)\n"+
+			"of(that, Ben)\n"+
+			"to(similar, that)\n"+
 			"_as(similar, color)\n"+
-			"_than(Jack, Ben)\n"+
-			"_nn(color, hair)\n");
+			"_than(Jack, Ben)\n");
 
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
+			"_predadj(Jack, intelligent)\n"+
 			"_as(intelligent, Jack)\n"+
 			"_than(Jack, Ben)\n");
 
 		rc &= test_sentence ("The book’s color is same as that of the pen’s.",
+			"_poss(color, book)\n"+
+			"_predadj(color, same)\n"+
+			"of(that, pen)\n"+
 			"_as(same, color)\n"+
-			"_than(book, pen)\n"+
-			"_poss(color, book)\n");
+			"_than(book, pen)\n");
 
 		rc &= test_sentence ("The snail is running  exactly as fast as the cheetah.",
+			"_predadj(snail, run)\n"+
 			"_as(fast, run)\n"+
-			"_than(snail, cheetah)\n"+
-			"_advmod(is, exactly)\n");
+			"_advmod(fast, exactly)\n"+
+			"_than(snail, cheetah)\n");
 		
 		report(rc, "Equatives");
 		return rc;
