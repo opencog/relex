@@ -78,14 +78,16 @@
 
 # ============================================
 # all rules
+#
+# "All Canadians are right-handed."
+# "All my writings are bad.",
+# "All Canadians give their dogs a hug."
+# "All Canadians write."
+# "All right-handed Canadians write."
 # ============================================
-[ALLRULE1] {2} <ALLRULE2, ALLRULE3> _quantity($noun, all) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
+[ALLRULE1] {1} <> _quantity($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
-# not implemented yet
-[ALLRULE2] {2} <ALLRULE1, ALLRULE3> _quantity($noun, all) & _poss($noun, $W) => (all-rule $noun (get-instance-name $noun word_index sentence_index))
-
-# Combination of ALLRULE and SVP: Deals specifically with sentences of the form "All Canadians are right-handed." (- Sebastian)
-[ALLRULE3] {1} <> _quantity($x, all) & _predadj($x, $y) => (all-SVP-rule $x (get-instance-name $x word_index sentence_index) $y (get-instance-name $y word_index sentence_index)) 
+[ALLRULE2] {1} <> _predet($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
 
 # ============================================
