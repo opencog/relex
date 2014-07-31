@@ -40,6 +40,7 @@
 
 [DET] {6} <> _det($W, $x) => (det-rule $W (get-instance-name $W word_index sentence_index) (choose-var-name) $x)
 
+# Example: "I do not eat injera.", "The cat is not small."
 [NEGFLAG] {7} <> NEGATIVE-FLAG($W, T) & pos($W, $W_POS) => (negative-rule (get-instance-name $W word_index sentence_index) $W_POS)
 
 # for definite words
@@ -104,7 +105,7 @@
 # Example: "I did my homework, and I went to school."
 [AND1] {1} <AND2> conj_and($var1, $var2) & pos($var1, verb) & pos($var2, verb) => (and-rule1 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
 
-#Example: "John and Madison eat the cake."
+# Example: "John and Madison eat the cake."
 [AND2] {2} <AND1> conj_and($var1, $var2) => (and-rule2 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
 
 
