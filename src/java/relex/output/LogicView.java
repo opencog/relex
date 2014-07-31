@@ -79,10 +79,10 @@ public class LogicView
 
 		// append the scheme function for post-processing markers
 		// TODO makes hypergraphs deletion works with SuReal
-		schemeOutput.concat("(r2l-marker-processing)\n");
+		schemeOutput = schemeOutput.concat("(r2l-marker-processing)\n");
 
 		// TODO integrate the following when the representation is finalized
-		// schemeOutput.concat("(create-abstract-version " + parseNode);
+		// schemeOutput = schemeOutput.concat("(create-abstract-version " + parseNode);
 
 		return schemeOutput;
 	}
