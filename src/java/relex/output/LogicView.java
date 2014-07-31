@@ -82,7 +82,7 @@ public class LogicView
 		schemeOutput = schemeOutput.concat("(r2l-marker-processing)\n");
 
 		// TODO integrate the following when the representation is finalized
-		// schemeOutput = schemeOutput.concat("(create-abstract-version " + parseNode);
+		// schemeOutput = schemeOutput.concat("(create-abstract-version " + parseNode + ")");
 
 		return schemeOutput;
 	}
