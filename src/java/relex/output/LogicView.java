@@ -72,7 +72,17 @@ public class LogicView
 		LogicProcessor ruleProcessor = new LogicProcessor(relexRuleSet);
 
 		String schemeOutput = ruleProcessor.applyRulesToParse(root);
-		schemeOutput = schemeOutput.replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")");
+		String parseNode = "(ParseNode \"" + parse.getIDString() + "\")";
+
+		// replace sentence_index to reference this parse
+		schemeOutput = schemeOutput.replaceAll("sentence_index", parseNode);
+
+		// append the scheme function for post-processing markers
+		// TODO makes hypergraphs deletion works with SuReal
+		schemeOutput.concat("(r2l-marker-processing)\n");
+
+		// TODO integrate the following when the representation is finalized
+		// schemeOutput.concat("(create-abstract-version " + parseNode);
 
 		return schemeOutput;
 	}

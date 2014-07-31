@@ -717,9 +717,6 @@ public class LogicProcessor
 
 		RelationForeach.foreach(rootNode, rc);
 
-		// append the scheme function for post-processing markers
-		rc.schemeBuilder.append("(r2l-marker-processing)\n");
-
 		return rc.schemeBuilder.toString();
 	}
 }
