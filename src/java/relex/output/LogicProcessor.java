@@ -656,7 +656,7 @@ public class LogicProcessor
 				{
 					// the first variable will always be the 'name' of the parent node
 					// XXX can also add checks to UUID, but would requires more logic for constants
-					if (!ruleResult.valuesMap.get(thisCriterium.getFirstVariableName()).equals(thisParent.get("name").getValue()))
+					if (!thisParent.get("name").getValue().matches(ruleResult.valuesMap.get(thisCriterium.getFirstVariableName())))
 					{
 						allMatched = false;
 						break;
@@ -671,9 +671,15 @@ public class LogicProcessor
 				// check the 2nd variable of this criterium
 				if (ruleResult.valuesMap.get(thisCriterium.getSecondVariableName()) != null)
 				{
+					String secondValue;
+
 					// the second value is at different place depends on whether the node is valued
-					if (!(thisNode.isValued() && ruleResult.valuesMap.get(thisCriterium.getSecondVariableName()).equals(thisNode.getValue()))
-							&& !(!thisNode.isValued() && ruleResult.valuesMap.get(thisCriterium.getSecondVariableName()).equals(thisNode.get("name").getValue())))
+					if (thisNode.isValued())
+						secondValue = thisNode.getValue();
+					else
+						secondValue = thisNode.get("name").getValue();
+
+					if (!secondValue.matches(ruleResult.valuesMap.get(thisCriterium.getSecondVariableName())))
 					{
 						allMatched = false;
 						break;
