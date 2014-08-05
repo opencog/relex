@@ -144,8 +144,8 @@ public class Rule {
 					schemeOutput = schemeOutput.replaceAll(
 											Pattern.quote(variableName) + "([ )])", Matcher.quoteReplacement("\"" + variableValue + "\"") + "$1");
 					schemeOutput = schemeOutput.replaceAll(
-											Pattern.quote("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
-											Matcher.quoteReplacement("\"" + variableValue + "\"" + " (get-instance-name " + "\"" + variableValue + "\" " + "\"" + variableValueUUID + "\""));
+											Pattern.quote(" (get-instance-name " + "\"" + variableValue + "\"" + " word_index"),
+											Matcher.quoteReplacement(" (get-instance-name " + "\"" + variableValue + "\" " + "\"" + variableValueUUID + "\""));
 				}
 			}
 		}

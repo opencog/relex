@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Alex van der Peet <alex.van.der.peet@gmail.com>
  */
 package relex.output;
@@ -67,16 +67,21 @@ public class LogicView
 	{
 		FeatureNode root = parse.getLeft();
 
-		FeatureNode headSet = new FeatureNode();
-		headSet.set("head", root.get("head"));
-		headSet.set("background", root.get("background"));
-
 		RuleSet relexRuleSet = _relex2LogicRuleLoader.getFreshRuleSet();
 
 		LogicProcessor ruleProcessor = new LogicProcessor(relexRuleSet);
 
-		String schemeOutput = ruleProcessor.applyRulesToParse(headSet);
-		schemeOutput = schemeOutput.replaceAll("sentence_index", "(ParseNode \"" + parse.getIDString() + "\")");
+		String schemeOutput = ruleProcessor.applyRulesToParse(root);
+		String parseNode = "(ParseNode \"" + parse.getIDString() + "\")";
+
+		// replace sentence_index to reference this parse
+		schemeOutput = schemeOutput.replaceAll("sentence_index", parseNode);
+
+		// append the scheme function for post-processing markers
+		schemeOutput = schemeOutput.concat("(r2l-marker-processing)\n");
+
+		// TODO integrate the following when the representation is finalized
+		// schemeOutput = schemeOutput.concat("(create-abstract-version " + parseNode + ")");
 
 		return schemeOutput;
 	}
