@@ -2579,7 +2579,6 @@ RELATION_THAN_6_3
 <F_R comp_temp_1> = %
 #TemplateActionAlg
 RELATION_THAN_7
-;<LAB> = \MVt\.*|\MVp
 <LAB> = \MV\.* 
 <F_R comp_temp> != %
 <F_L SET> != T
