@@ -2439,18 +2439,24 @@ COMPARATIVE_2
 
 #TemplateActionAlg
 COMPARATIVE_3
-<LAB> = \Ju
+<LAB> = \Ju 
 =
 <F_L set_flag> = T
 <F_L temp> += <F_R ref>
 
 
 ; XXX why is the below looking for past tense ??
+;the past tense makes no sense here for me.
+;I think, intension of one who wrote this is to STOP
+;forming a "than1()" relationship in sentences like below
+;He runs less quickly than John does.
+;He runs more miles than John does. 
+;I made a slight change in the rule "RELATION_THAN1_2" as a workaround for this
 #TemplateActionAlg
 COMPARATIVE_4
 <LAB> = \Ss
 <F_R POS> = verb
-<F_R tense val> = past
+;<F_R tense val> = past
 =
 <F_L temp1> += <F_R ref>
 
@@ -2502,14 +2508,47 @@ RELATION_THAN_4_1
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R linkL1 F_L ref>
 <F_R comp_temp> = %
+
+;J+ connects prepositions to their objects.
+;YS connects nouns to the possessive suffix "'s". "'s" then acts as a determiner
+;"possessor" tag is created by rule "POSSR_TO_APOSTROPHE"
+;e.g. Amen's hair is as long as Ben's.
+#TemplateActionAlg
+COMPARATIVE_3
+<LAB> = \J
+<F_R possessor> != %
+<F_L str> = as|of
+=
+<F_L comp_temp> += <F_R possessor>
+
 #TemplateActionAlg
 RELATION_THAN_5
 <LAB> = \Pafc
 <F_L str> = than|as
 =
 <F_L comp_temp_1> += <F_R ref>
+
+;e.g. Jack’s hair color is similar to that of Ben’s.
+;forming "than(Jack, Ben)" needs to link "Jack" and "Ben" through the "to that of" phrase
 #TemplateActionAlg
-RELATION_THAN_6
+RELATION_THAN_6_1
+<LAB> = \Mp|\Js
+<F_R comp_temp> != %
+=
+<F_L comp_temp> += <F_R comp_temp>
+<F_R comp_temp> = %
+
+#TemplateActionAlg
+RELATION_THAN_6_2
+<LAB> = \Js
+<F_L str> = as
+<F_L comp_temp> = %
+=
+<F_L comp_temp> += <F_R ref>
+
+
+#TemplateActionAlg
+RELATION_THAN_6_3
 <LAB> = \MVt
 <F_R comp_temp_1> != %
 =
@@ -2517,7 +2556,8 @@ RELATION_THAN_6
 <F_R comp_temp_1> = %
 #TemplateActionAlg
 RELATION_THAN_7
-<LAB> = \MVt\.*
+;<LAB> = \MVt\.*|\MVp
+<LAB> = \MV\.* 
 <F_R comp_temp> != %
 <F_L SET> != T
 =
@@ -2526,7 +2566,8 @@ RELATION_THAN_7
 <F_R comp_temp> = %
 #TemplateActionAlg
 RELATION_THAN_8
-<LAB> = \Pa\.*|\I\.*
+;<LAB> = \Pa\.*|\I\.*
+<LAB> = \P\.*|\I\.*
 <F_R comp_temp> != %
 =
 <F_L comp_temp> += <F_R comp_temp>
@@ -2627,8 +2668,22 @@ RELATION_THAN_17_1
 <F_L comp_temp> = %
 <F_L comp_temp1> = %
 
+;YS connects nouns to the possessive suffix "'s". "'s" then acts 
+;as a determiner, making a D connection to a noun.
+;e.g. Jane's dog is black
 #TemplateActionAlg
 RELATION_THAN_17_2
+<LAB> = \Ss
+<F_R comp_temp> != %
+<F_L linkL1 LAB> = \D\.*
+<F_L linkL1 F_L possessor> != %
+<F_R SET> != T
+=
+<F_L linkL1 F_L possessor links than> += <F_R comp_temp>
+<F_R comp_temp> = %
+
+#TemplateActionAlg
+RELATION_THAN_17_3
 <LAB> = \S\.*|\SX
 <F_R comp_temp> != %
 <F_R SET> != T
@@ -2656,7 +2711,7 @@ RELATION_THAN1_1
 #TemplateActionAlg
 RELATION_THAN1_2
 <LAB> = \C\.* 
-<LAB> != \Cta
+<LAB> != \Ct\.*
 <F_R temp1> != %
 =
 <F_L comp_temp1> += <F_R temp1>
