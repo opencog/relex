@@ -1289,6 +1289,8 @@ PREP_CLAUSE_LINKING
 <F_R> = $prep_source
 <F_R head-word ref> = $prep_obj
 =
+
+;this rule makes a $prep_obj that is to be used in the PREP_LINKING_1 rule below
 ;e.g Amen's hair is as long as Ben's.
 ;above sentence should generate "as(long, hair)" but NOT the as(long, be) using rule "PREP_LINKING"
 ;PREP_OBJ and PREP_LINKING_1 rules define the corret relationship
