@@ -1289,6 +1289,26 @@ PREP_CLAUSE_LINKING
 <F_R> = $prep_source
 <F_R head-word ref> = $prep_obj
 =
+;e.g Amen's hair is as long as Ben's.
+;above sentence should generate "as(long, hair)" but NOT the as(long, be) using rule "PREP_LINKING"
+;PREP_OBJ and PREP_LINKING_1 rules define the corret relationship
+#TemplateActionAlg
+PREP_OBJ
+<LAB> = \Ss
+<F_R linkR0 LAB> = \Pa
+=
+<F_R linkR0 F_R temp_pre_obj> += <F_L ref>
+
+#PrepositionLinkAlg
+PREP_LINKING_1
+<LAB> = \MVp\.*
+<F_L linkL0 LAB> = \Pa
+<F_R head-word> = %
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_L temp_pre_obj> = $prep_obj
+=
 ;
 ; The preposition modifies the preceeding word with a noun
 ; Fails if any of the template variables are not filled
@@ -1296,6 +1316,7 @@ PREP_CLAUSE_LINKING
 #PrepositionLinkAlg
 PREP_LINKING
 <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<F_L linkL0 LAB> != \Pa
 <F_R head-word> = %
 <F_L> = $modified
 <F_R str> = $prep
