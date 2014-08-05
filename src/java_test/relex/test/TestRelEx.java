@@ -929,7 +929,6 @@ public class TestRelEx
 			"_predadj(color, similar)\n"+
 			"of(that, Ben)\n"+
 			"to(similar, that)\n"+
-			"as(similar, color)\n"+
 			"than(Jack, Ben)\n");
 
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
