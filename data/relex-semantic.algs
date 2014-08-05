@@ -2462,7 +2462,7 @@ COMPARATIVE_2
 
 #TemplateActionAlg
 COMPARATIVE_3
-<LAB> = \Ju 
+<LAB> = \Ju
 =
 <F_L set_flag> = T
 <F_L temp> += <F_R ref>
