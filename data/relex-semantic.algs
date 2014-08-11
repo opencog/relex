@@ -263,10 +263,11 @@ PASS_OBJ
 ;
 ; Case- <F_R linkL1 LAB> != \Dmum --> e.g. avoid relationship of 
 ;       _obj(earn, money), sentence "He earns much more money than I do."  
-;
+; O*c+ connects comparatives
 #TemplateActionAlg
 DIR_OBJ1
 <LAB> = \O\.*|\OD\.*|\OT\.*
+<LAB> != \O\.c\.*
 <LAB> != \O\.n\.*
 <LAB> != \O\.i\.*
 <LAB> != Omm | Om
@@ -434,7 +435,11 @@ PASSIVE_OBJ_LINK
 SUBJECT_LINKING
 ; Works for gerund, verb-adj, verb-prep, progressive, TO-INF
 ;  "Jim wants to eat a cat"
-<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
+;Pg connects verbs that take present participles with present participles.
+;e.g. The snail is running
+;So \Pg can be removed here? 
+;<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
+<LAB> = \Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 =
@@ -459,9 +464,11 @@ INV-SUBJECT_LINKING
 ; and then later promot this to _predadj if we decide that things are
 ; peachy (the same say that subj becomes _subj). But for now, we put
 ; it straight in.
+;Pg connects verbs that take present participles with present participles.
+;e.g. The snail is running
 #TemplateActionAlg
 PREDICATIVE_ADJECTIVE_LINKING
-<LAB> = \Pa\.*
+<LAB> = \Pa\.* |\Pg\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 <F_L str> = be|is
@@ -1289,13 +1296,14 @@ PREP_CLAUSE_LINKING
 <F_R> = $prep_source
 <F_R head-word ref> = $prep_obj
 =
-;
+
 ; The preposition modifies the preceeding word with a noun
 ; Fails if any of the template variables are not filled
 
 #PrepositionLinkAlg
 PREP_LINKING
-<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+;<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
+<LAB> = \MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
 <F_R head-word> = %
 <F_L> = $modified
 <F_R str> = $prep
@@ -1304,6 +1312,51 @@ PREP_LINKING
 =
 <F_R prep-parts _prepobj> = <F_R obj>
 <F_L prep-parts _prepsubj> = <F_R ref>
+
+#TemplateActionAlg
+POSSR_TO_APOSTROPHE
+<LAB> = \YS\.* |\YP\.*
+=
+<F_R possessor> += <F_L ref>
+
+;\Mp --> e.g. Jack’s hair color is similar to that of Ben’s.
+;\MVp --> e.g. Amen's hair is as long as Ben's.
+#PrepositionLinkAlg
+PREP_LINKING
+<LAB> = \Mp\.*|\MVp\.*
+<F_R linkR0 LAB> = \J\.*
+<F_R linkR0 F_R possessor> != %
+<F_R head-word> = %
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R linkR0 F_R possessor> = $prep_obj
+=
+
+#PrepositionLinkAlg
+PREP_LINKING
+<LAB> = \Mp\.*|\MVp\.*
+<F_R linkR0 LAB> = \J\.*
+<F_R linkR0 F_R possessor> = %
+<F_R head-word> = %
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R obj> = $prep_obj
+=
+
+;e.g. The snail is running  exactly as fast as the cheetah.
+;this forms "as(run, cheetah)" relationship
+#PrepositionLinkAlg
+PREP_LINKING
+<LAB> = \MVz
+<F_R linkR0 LAB> = \Os\.*
+<F_L> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R linkR0 F_R ref> = $prep_obj
+=
+
 ;
 ; The preposition modifies the preceeding phrase
 ;
@@ -1930,14 +1983,18 @@ ADV2_HEADLESS
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
-;
-;
+
+;Jim runs very quickly  --   EE(very,quickly) 
+;Jim ate a very fat chicken -- has EA(very, fat)
+;"as.y" serves as an adverb, exactly as "more" does, 
+;which is the reason to omits "y" subscripts here
+;He is as smart		EAy+
+;He runs as quickly	EEy+
 ;
 #TemplateActionAlg
 ADV3
-;  Jim runs very quickly  --   EE(very,quickly) 
-;  Jim ate a very fat chicken -- has EA(very, fat)
 <LAB> = \EE\.* | EA
+<LAB> != \EEy | \EAy
 <F_L str> != more
 =
 <F_R BACKGROUND-FLAG> = T
@@ -1945,13 +2002,29 @@ ADV3
 ;EE connects adverbs to other adverbs. Some adverbs can
 ;modify other adverbs ("very", "quite"); these carry EE+connectors.
 ;e.g. I run more often than Ben.
+;"as.y" serves as an adverb, exactly as "more" does, 
+;which is the reason to omits "y" subscripts here
+;He is as smart		EAy+
+;He runs as quickly	EEy+
 #TemplateActionAlg
 ADV3_1
 <LAB> = \EE\.*
+<LAB> != \EEy
 <F_R linkL0 LAB> = \MVa
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
+
+;e.g. The snail is running  exactly as fast as the cheetah.
+;_advmod(fast, exactly)
+#TemplateActionAlg
+ADV3_2
+<LAB> = \EEy
+<F_R linkL0 LAB> = \MVa
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _advmod> += <F_R linkL0 F_L ref>
+
 ;
 #TemplateActionAlg
 ADV4
@@ -2111,11 +2184,12 @@ NOUN-MOD
 ; We generate _poss for this, although _gen is also in common usage
 ; for this relation.
 ;
-#TemplateActionAlg
-POSSR_TO_APOSTROPHE
-<LAB> = \YS\.* |\YP\.*
-=
-<F_R possessor> += <F_L ref>
+;POSSR_TO_APOSTROPHE rule is moved up
+;#TemplateActionAlg
+;POSSR_TO_APOSTROPHE
+;<LAB> = \YS\.* |\YP\.*
+;=
+;<F_R possessor> += <F_L ref>
 ;
 #TemplateActionAlg
 POSSR_TO_POSS
@@ -2446,11 +2520,17 @@ COMPARATIVE_3
 
 
 ; XXX why is the below looking for past tense ??
+;the past tense makes no sense here for me.
+;I think, intension of one who wrote this is to STOP
+;forming a "than1()" relationship in sentences like below
+;He runs less quickly than John does.
+;He runs more miles than John does. 
+;I made a slight change in the rule "RELATION_THAN1_2" as a workaround for this
 #TemplateActionAlg
 COMPARATIVE_4
 <LAB> = \Ss
 <F_R POS> = verb
-<F_R tense val> = past
+;<F_R tense val> = past
 =
 <F_L temp1> += <F_R ref>
 
@@ -2502,14 +2582,47 @@ RELATION_THAN_4_1
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R linkL1 F_L ref>
 <F_R comp_temp> = %
+
+;J+ connects prepositions to their objects.
+;YS connects nouns to the possessive suffix "'s". "'s" then acts as a determiner
+;"possessor" tag is created by rule "POSSR_TO_APOSTROPHE"
+;e.g. Amen's hair is as long as Ben's.
+#TemplateActionAlg
+COMPARATIVE_3
+<LAB> = \J
+<F_R possessor> != %
+<F_L str> = as|of
+=
+<F_L comp_temp> += <F_R possessor>
+
 #TemplateActionAlg
 RELATION_THAN_5
 <LAB> = \Pafc
 <F_L str> = than|as
 =
 <F_L comp_temp_1> += <F_R ref>
+
+;e.g. Jack’s hair color is similar to that of Ben’s.
+;forming "than(Jack, Ben)" needs to link "Jack" and "Ben" through the "to that of" phrase
 #TemplateActionAlg
-RELATION_THAN_6
+RELATION_THAN_6_1
+<LAB> = \Mp|\Js
+<F_R comp_temp> != %
+=
+<F_L comp_temp> += <F_R comp_temp>
+<F_R comp_temp> = %
+
+#TemplateActionAlg
+RELATION_THAN_6_2
+<LAB> = \Js
+<F_L str> = as
+<F_L comp_temp> = %
+=
+<F_L comp_temp> += <F_R ref>
+
+
+#TemplateActionAlg
+RELATION_THAN_6_3
 <LAB> = \MVt
 <F_R comp_temp_1> != %
 =
@@ -2517,7 +2630,7 @@ RELATION_THAN_6
 <F_R comp_temp_1> = %
 #TemplateActionAlg
 RELATION_THAN_7
-<LAB> = \MVt\.*
+<LAB> = \MV\.* 
 <F_R comp_temp> != %
 <F_L SET> != T
 =
@@ -2526,7 +2639,8 @@ RELATION_THAN_7
 <F_R comp_temp> = %
 #TemplateActionAlg
 RELATION_THAN_8
-<LAB> = \Pa\.*|\I\.*
+;<LAB> = \Pa\.*|\I\.*
+<LAB> = \P\.*|\I\.*
 <F_R comp_temp> != %
 =
 <F_L comp_temp> += <F_R comp_temp>
@@ -2627,8 +2741,22 @@ RELATION_THAN_17_1
 <F_L comp_temp> = %
 <F_L comp_temp1> = %
 
+;YS connects nouns to the possessive suffix "'s". "'s" then acts 
+;as a determiner, making a D connection to a noun.
+;e.g. Jane's dog is black
 #TemplateActionAlg
 RELATION_THAN_17_2
+<LAB> = \Ss
+<F_R comp_temp> != %
+<F_L linkL1 LAB> = \D\.*
+<F_L linkL1 F_L possessor> != %
+<F_R SET> != T
+=
+<F_L linkL1 F_L possessor links than> += <F_R comp_temp>
+<F_R comp_temp> = %
+
+#TemplateActionAlg
+RELATION_THAN_17_3
 <LAB> = \S\.*|\SX
 <F_R comp_temp> != %
 <F_R SET> != T
@@ -2656,7 +2784,7 @@ RELATION_THAN1_1
 #TemplateActionAlg
 RELATION_THAN1_2
 <LAB> = \C\.* 
-<LAB> != \Cta
+<LAB> != \Ct\.*
 <F_R temp1> != %
 =
 <F_L comp_temp1> += <F_R temp1>
