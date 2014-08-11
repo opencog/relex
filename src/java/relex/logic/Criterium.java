@@ -59,9 +59,12 @@ public class Criterium {
 	{
 		_criteriumString = criterium;
 
-		_criteriumLabel = criterium.substring(0, criterium.indexOf("("));
+		// store the name of the RelEx relation
+		_criteriumLabel = criterium.substring(0, criterium.indexOf('('));
 
-		String criteriumVariables[] = criterium.substring(criterium.indexOf("(") + 1).replace(" ", "").replace(")", "").split(",");
+		// retrieve the variables and constants
+		String temp = criterium.substring(criterium.indexOf('(') + 1, criterium.lastIndexOf(')')).replace(" ",  "");
+		String criteriumVariables[] = temp.split(",");
 
 		_variables = Arrays.asList(criteriumVariables);
 	}
