@@ -914,13 +914,13 @@ public class TestRelEx
 		rc &= test_sentence ("Amen's hair is as long as Ben's.",
 			"_poss(hair, Amen)\n"+
 			"_predadj(hair, long)\n"+
-			"as(long, hair)\n"+
+			"as(long, Ben)\n"+
 			"than(Amen, Ben)\n");
 
 		rc &= test_sentence ("Amen’s hair is same as Ben’s.",
 			"_poss(hair, Amen)\n"+
 			"_predadj(hair, same)\n"+
-			"as(same, hair)\n"+
+			"as(same, Ben)\n"+
 			"than(Amen, Ben)\n");
 
 		rc &= test_sentence ("Jack’s hair color is similar to that of Ben’s.",
@@ -933,22 +933,22 @@ public class TestRelEx
 
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
 			"_predadj(Jack, intelligent)\n"+
-			"as(intelligent, Jack)\n"+
+			"as(intelligent, Ben)\n"+
 			"than(Jack, Ben)\n");
 
 		rc &= test_sentence ("The book’s color is same as that of the pen’s.",
 			"_poss(color, book)\n"+
 			"_predadj(color, same)\n"+
 			"of(that, pen)\n"+
-			"as(same, color)\n"+
+			"as(same, that)\n"+
 			"than(book, pen)\n");
 
 		rc &= test_sentence ("The snail is running  exactly as fast as the cheetah.",
 			"_predadj(snail, run)\n"+
-			"as(fast, run)\n"+
+			"as(run, cheetah)\n"+
 			"_advmod(fast, exactly)\n"+
 			"than(snail, cheetah)\n");
-		
+			
 		report(rc, "Equatives");
 		return rc;
 	}
@@ -1157,7 +1157,7 @@ public class TestRelEx
 		                       "_obj(stop, car)\n" +
 		                       "_subj(stop, Jack)\n" +
 		                       "_advmod(drive, fast)\n" +
-		                       "_subj(drive, car)\n" +
+		                       "_predadj(car, drive)\n" +
 		                       "that(car, drive)\n" +
 		                       "_nn(car, police)\n");
 
