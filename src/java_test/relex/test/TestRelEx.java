@@ -948,6 +948,45 @@ public class TestRelEx
 			"as(run, cheetah)\n"+
 			"_advmod(fast, exactly)\n"+
 			"than(snail, cheetah)\n");
+		
+		//one entity one feature, through time
+		rc &= test_sentence ("The coffee tastes as same as it did last year.",
+			"_obj(do, year)\n"+
+			"_subj(do, taste)\n"+
+			"_as(same, taste)\n"+
+			"_amod(year, last)\n"+
+			"_nn(taste, coffee)\n"+
+			"_than(coffee, it)\n");
+
+		rc &= test_sentence ("The coffee tastes as it did last year.",
+			"_obj(do, year)\n"+
+			"_subj(do, it)\n"+
+			"_as(taste, it)\n"+
+			"_amod(year, last)\n"+
+			"_nn(taste, coffee)\n"+
+			"_than(coffee, it)\n");
+
+		rc &= test_sentence ("Mike runs as fast as he did last year.",
+			"_subj(do, he)\n"+
+			"_subj(run, Mike)\n"+
+			"_as(fast, he)\n"+
+			"_advmod(run, fast)\n"+
+			"_amod(year, last)\n"+
+			"_nn(color, hair)\n"+
+			"_than(Mike, he)\n");
+
+		rc &= test_sentence ("The kick was as soft as the first.",
+			"_predadj(kick, soft)\n"+
+			"_as(soft, first)\n"+
+			"_than(kick, first)\n");
+
+		rc &= test_sentence ("He is as smart as I ever expected him to be.",
+			"_predadj(he, smart)\n"+
+			"_subj(expect, I)\n"+
+			"_obj(expect, him)\n"+
+			"_as(smart, he)\n"+
+			"_advmod(expect, ever)\n"+
+			"_than(he, I)\n");
 			
 		report(rc, "Equatives");
 		return rc;
