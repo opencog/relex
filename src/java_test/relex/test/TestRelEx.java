@@ -990,8 +990,9 @@ public class TestRelEx
 			"_predadj(he, smart)\n"+
 			"_subj(expect, I)\n"+
 			"_obj(expect, him)\n"+
-			"as(smart, he)\n"+
-			"_advmod(expect, ever)\n");
+			"as(smart, expect)\n"+
+			"_advmod(expect, ever)\n"+
+			"_to-do(smart, be)\n");
 			
 		report(rc, "Equatives");
 		return rc;
