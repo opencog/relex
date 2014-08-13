@@ -957,42 +957,41 @@ public class TestRelEx
 			"than(snail, cheetah)\n");
 		
 		//one entity one feature, through time
-		rc &= test_sentence ("The coffee tastes as same as it did last year.",
+		rc &= test_sentence ("The coffee tastes the same as it did last year.",
 			"_obj(do, year)\n"+
 			"_subj(do, taste)\n"+
-			"_as(same, taste)\n"+
+			"as(same, taste)\n"+
 			"_amod(year, last)\n"+
 			"_nn(taste, coffee)\n"+
-			"_than(coffee, it)\n");
+			"than(coffee, it)\n");
 
 		rc &= test_sentence ("The coffee tastes as it did last year.",
 			"_obj(do, year)\n"+
 			"_subj(do, it)\n"+
-			"_as(taste, it)\n"+
+			"as(taste, it)\n"+
 			"_amod(year, last)\n"+
 			"_nn(taste, coffee)\n"+
-			"_than(coffee, it)\n");
+			"than(coffee, it)\n");
 
 		rc &= test_sentence ("Mike runs as fast as he did last year.",
 			"_subj(do, he)\n"+
 			"_subj(run, Mike)\n"+
-			"_as(fast, he)\n"+
+			"as(fast, he)\n"+
 			"_advmod(run, fast)\n"+
 			"_amod(year, last)\n"+
-			"_than(Mike, he)\n");
+			"than(Mike, he)\n");
 
 		rc &= test_sentence ("The kick was as soft as the first.",
 			"_predadj(kick, soft)\n"+
-			"_as(soft, first)\n"+
-			"_than(kick, first)\n");
+			"as(soft, first)\n"+
+			"than(kick, first)\n");
 
 		rc &= test_sentence ("He is as smart as I ever expected him to be.",
 			"_predadj(he, smart)\n"+
 			"_subj(expect, I)\n"+
 			"_obj(expect, him)\n"+
-			"_as(smart, he)\n"+
-			"_advmod(expect, ever)\n"+
-			"_than(he, I)\n");
+			"as(smart, he)\n"+
+			"_advmod(expect, ever)\n");
 			
 		report(rc, "Equatives");
 		return rc;
