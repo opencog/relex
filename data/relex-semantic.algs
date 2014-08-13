@@ -2587,11 +2587,13 @@ RELATION_THAN_4_1
 ;YS connects nouns to the possessive suffix "'s". "'s" then acts as a determiner
 ;"possessor" tag is created by rule "POSSR_TO_APOSTROPHE"
 ;e.g. Amen's hair is as long as Ben's.
+;case <F_L str> = to --> e.g. Jack’s hair color is similar to Ben's
+;case <F_L str> = of --> e.g. Jack’s hair color is similar to that of Ben’s.
 #TemplateActionAlg
 COMPARATIVE_3
 <LAB> = \J
 <F_R possessor> != %
-<F_L str> = as|of
+<F_L str> = as|of|to
 =
 <F_L comp_temp> += <F_R possessor>
 
