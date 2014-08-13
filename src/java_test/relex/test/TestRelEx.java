@@ -931,6 +931,13 @@ public class TestRelEx
 			"to(similar, that)\n"+
 			"than(Jack, Ben)\n");
 
+		rc &= test_sentence ("Jack’s hair color is similar to Ben's",
+			"_poss(color, Jack)\n"+
+			"_nn(color, hair)\n"+
+			"_predadj(color, similar)\n"+
+			"to(similar, Ben)\n"+
+			"than(Jack, Ben)\n");
+				
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
 			"_predadj(Jack, intelligent)\n"+
 			"as(intelligent, Ben)\n"+
@@ -972,7 +979,6 @@ public class TestRelEx
 			"_as(fast, he)\n"+
 			"_advmod(run, fast)\n"+
 			"_amod(year, last)\n"+
-			"_nn(color, hair)\n"+
 			"_than(Mike, he)\n");
 
 		rc &= test_sentence ("The kick was as soft as the first.",
