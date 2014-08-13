@@ -2630,9 +2630,12 @@ RELATION_THAN_6_3
 =
 <F_L ref links than> += <F_R comp_temp_1>
 <F_R comp_temp_1> = %
+;MVz is used in comparatives with "As" 
+;e.g. The snail is running  exactly as fast as the cheetah.
+;MVp e.g.  Jack’s hair color is similar to Ben's
 #TemplateActionAlg
 RELATION_THAN_7
-<LAB> = \MV\.* 
+<LAB> = \MVt\.*|\MVp\.*|\MVz\.*
 <F_R comp_temp> != %
 <F_L SET> != T
 =
