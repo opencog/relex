@@ -966,6 +966,7 @@ SUBJ_TO_LINKS
 SUBJ_TO_LINKS_2
 <LAB> = \Ss
 <F_R linkL0 LAB> = \AFd
+<F_L ref links _predadj> = %
 <F_R HEAD-FLAG> = %
 <F_R POS> = verb
 <F_L POS> = noun
