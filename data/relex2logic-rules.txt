@@ -121,6 +121,12 @@
 [THAT2] {110} <THAT-EXCL-1, THAT-EXCL-2> _that($A, $B) & pos($A, $A_POS) & pos($B, $B_POS) => (that-rule $A (get-instance-name $A word_index sentence_index) $A_POS $B (get-instance-name $B word_index sentence_index) $B_POS)
 
 
+# ============================================
+# time rules for dealing with temporal expressions
+# ============================================
+[BEFORE] {100} <> before($x, $y) & pos($y, $y_pos) => (before-rule (get-instance-name $x word_index sentence_index) (get-instance-name $y word_index sentence_index) $y_pos)
+[AFTER] {100} <> after($x, $y)  & pos($y, $y_pos) => (after-rule (get-instance-name $x word_index sentence_index) (get-instance-name $y word_index sentence_index) $y_pos)
+[TIME] {100} <> _time($period, $hour) & at($verb, $period) => (time-rule $hour $period (get-instance-name $verb word_index sentence_index))
 
 
 # ============================================
