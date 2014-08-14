@@ -959,6 +959,7 @@ public class TestRelEx
 		//one entity one feature, through time
 		rc &= test_sentence ("The coffee tastes the same as it did last year.",
 			"_subj(taste, coffee)\n"+
+			"_obj(taste, same)\n"+
 			"_obj(do, year)\n"+
 			"_subj(do, it)\n"+
 			"as(taste, do)\n"+
