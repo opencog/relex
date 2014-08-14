@@ -480,7 +480,7 @@ public class LogicProcessor
 		 */
 		private void generateAllComb(HashSet<String> nameSet, List<ChildParentPair> foundPairs, List<List<ChildParentPair>> allComb, int currLevel, Stack<ChildParentPair> currComb)
 		{
-			// base case, all criterium names checked or
+			// base case, all criterium names checked or the number of criteria we want to match is reached
 			if (currLevel == 0 || nameSet.size() == 0)
 			{
 				// do nothing if we have not create any combination
