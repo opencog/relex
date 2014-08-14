@@ -475,6 +475,7 @@ public class LogicProcessor
 		 * @param nameSet      The set of unique criteriums name matched
 		 * @param foundPairs   All criteriums that can be matched
 		 * @param allComb      Returns all possible combination where the criterium names will be unique
+		 * @param currLevel    Current level, needed to make it possible to generate combinations that doesn't involve all matched criterium
 		 * @param currComb     Store the current combination for recursion
 		 */
 		private void generateAllComb(HashSet<String> nameSet, List<ChildParentPair> foundPairs, List<List<ChildParentPair>> allComb, int currLevel, Stack<ChildParentPair> currComb)
@@ -732,8 +733,6 @@ public class LogicProcessor
 	 */
 	public String applyRulesToParse(FeatureNode rootNode)
 	{
-		System.out.println(rootNode);
-
 		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByPriority();
 
 		RuleChecker rc = new RuleChecker();
