@@ -442,8 +442,15 @@ public class LogicProcessor
 				}
 			}
 
-			// since some criteriums with same name might get matched, need to find all combinations
-			generateAllComb(nameSet, foundPairs, foundPairsList,  new Stack<ChildParentPair>());
+			// since some criteriums with same name might get matched, need to find all combinations of
+			// different sizes
+			for (int i = 0; i < nameSet.size(); i++)
+			{
+				List<List<ChildParentPair>> tempPairsList = new ArrayList<List<ChildParentPair>>();
+
+				generateAllComb(nameSet, foundPairs, tempPairsList, i + 1, new Stack<ChildParentPair>());
+				foundPairsList.addAll(tempPairsList);
+			}
 
 			//  get the corresponding criterium
 			for (Iterator<List<ChildParentPair>> iter1 = foundPairsList.iterator(); iter1.hasNext(); )
@@ -470,11 +477,15 @@ public class LogicProcessor
 		 * @param allComb      Returns all possible combination where the criterium names will be unique
 		 * @param currComb     Store the current combination for recursion
 		 */
-		private void generateAllComb(HashSet<String> nameSet, List<ChildParentPair> foundPairs, List<List<ChildParentPair>> allComb, Stack<ChildParentPair> currComb)
+		private void generateAllComb(HashSet<String> nameSet, List<ChildParentPair> foundPairs, List<List<ChildParentPair>> allComb, int currLevel, Stack<ChildParentPair> currComb)
 		{
-			// base case, all criterium names checked
-			if (nameSet.size() == 0)
+			// base case, all criterium names checked or
+			if (currLevel == 0 || nameSet.size() == 0)
 			{
+				// do nothing if we have not create any combination
+				if (currComb.empty())
+					return;
+
 				List<ChildParentPair> newComb = new ArrayList<ChildParentPair>();
 				newComb.addAll(currComb);
 
@@ -482,26 +493,31 @@ public class LogicProcessor
 				return;
 			}
 
-			// get the first key and find all Pair with that name
-			String name = nameSet.iterator().next();
-			List<ChildParentPair> namePairs = new ArrayList<ChildParentPair>();
-
-			for (ChildParentPair pair : foundPairs)
-			{
-				if (pair.criterium.getCriteriumLabel().equals(name))
-					namePairs.add(pair);
-			}
-
-			// create a nameMap without the current name
+			// create a new nameMap, so not to interfere with loop
 			HashSet<String> newSet = new HashSet<String>();
 			newSet.addAll(nameSet);
-			newSet.remove(name);
 
-			for (ChildParentPair pair : namePairs)
+			for (String name : nameSet)
 			{
-				currComb.push(pair);
-				generateAllComb(newSet, foundPairs, allComb, currComb);
-				currComb.pop();
+				// get the first key and find all Pair with that name
+				//String name = nameSet.iterator().next();
+				List<ChildParentPair> namePairs = new ArrayList<ChildParentPair>();
+
+				for (ChildParentPair pair : foundPairs)
+				{
+					if (pair.criterium.getCriteriumLabel().equals(name))
+						namePairs.add(pair);
+				}
+
+				// remove this name from future consideration
+				newSet.remove(name);
+
+				for (ChildParentPair pair : namePairs)
+				{
+					currComb.push(pair);
+					generateAllComb(newSet, foundPairs, allComb, currLevel - 1, currComb);
+					currComb.pop();
+				}
 			}
 		}
 
@@ -716,6 +732,8 @@ public class LogicProcessor
 	 */
 	public String applyRulesToParse(FeatureNode rootNode)
 	{
+		System.out.println(rootNode);
+
 		List<Rule> ruleSet = _relex2LogicRuleSet.getRulesByPriority();
 
 		RuleChecker rc = new RuleChecker();
