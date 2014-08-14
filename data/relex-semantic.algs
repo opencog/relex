@@ -1348,10 +1348,11 @@ PREP_LINKING
 
 ;e.g. The snail is running  exactly as fast as the cheetah.
 ;this forms "as(run, cheetah)" relationship
+;"as.z" can form unconstrained phrases using "O*c+" just like "than" behaves.
 #PrepositionLinkAlg
 PREP_LINKING
 <LAB> = \MVz
-<F_R linkR0 LAB> = \Os\.*
+<F_R linkR0 LAB> = \O\.\c\.*
 <F_L> = $modified
 <F_R str> = $prep
 <F_R> = $prep_source
