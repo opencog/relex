@@ -48,7 +48,7 @@
 
 # maybe rule documented on http://wiki.opencog.org/w/RelEx2Logic_Rules#Maybe_Rule
 # Example: "Maybe she eats lunch.", "Perhaps she is nice."
-[MAYBE] {3} <ADVMOD> _advmod($W, $r_maybe) => (maybe-rule $W (get-instance-name $W word_index sentence_index))
+[MAYBE] {3} <ADVMOD> _advmod($W, (maybe|possibly|perhaps|probably)) => (maybe-rule $W (get-instance-name $W word_index sentence_index))
 
 
 # ============================================
