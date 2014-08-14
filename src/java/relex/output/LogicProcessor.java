@@ -501,7 +501,6 @@ public class LogicProcessor
 			for (String name : nameSet)
 			{
 				// get the first key and find all Pair with that name
-				//String name = nameSet.iterator().next();
 				List<ChildParentPair> namePairs = new ArrayList<ChildParentPair>();
 
 				for (ChildParentPair pair : foundPairs)
