@@ -1358,6 +1358,25 @@ PREP_LINKING
 <F_R> = $prep_source
 <F_R linkR0 F_R ref> = $prep_obj
 =
+#TemplateActionAlg
+PREP_OBJ
+<LAB> = \MVa
+=
+<F_L prep-temp> += <F_R>
+
+;e.g. Mike runs as fast as he did last year.
+;this forms "as(fast, he)" relationship
+;CX is used in comparative constructions like "as I do"
+#PrepositionLinkAlg
+PREP_LINKING
+<LAB> = \MVz\.*
+<F_R linkR0 LAB> = \CX
+<F_L prep-temp> != %
+<F_L prep-temp> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R linkR0 F_R subj> = $prep_obj
+=
 
 ;
 ; The preposition modifies the preceeding phrase
@@ -2019,10 +2038,13 @@ ADV3_1
 
 ;e.g. The snail is running  exactly as fast as the cheetah.
 ;_advmod(fast, exactly)
+;case <F_R linkL0 F_L head-word> = %  e.g. Mike runs as fast as he did last year.
+;for above sentence we need to avoid it forming both _advmod(run, fast) AND _advmod(fast, run),
 #TemplateActionAlg
 ADV3_2
 <LAB> = \EEy
 <F_R linkL0 LAB> = \MVa
+<F_R linkL0 F_L head-word> = %
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_R linkL0 F_L ref>
@@ -2544,10 +2566,14 @@ RELATION_THAN_1
 <F_L comp_temp2> = %
 <F_L comp_temp2> = <F_R ref>
 ;
+;e.g. It's much colder today than it was yesterday. --> than(today, yesterday)
+;case <F_L linkR2 LAB> = \MVpn is to avoid forming wrong relationships
+;e.g. Mike runs as fast as he did last year. would form than(year, year) without above condition.
 #TemplateActionAlg
 RELATION_THAN_2
 <LAB> = \MVpn
 <F_L comp_temp2> != %
+<F_L linkR2 LAB> = \MVpn
 =
 <F_R ref links than> += <F_L comp_temp2>
 <F_L comp_temp2> = %
