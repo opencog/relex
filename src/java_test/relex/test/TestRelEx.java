@@ -963,22 +963,21 @@ public class TestRelEx
 			"_obj(do, year)\n"+
 			"_subj(do, it)\n"+
 			"as(taste, do)\n"+
-			"_amod(year, last)\n"+
-			"than(coffee, it)\n");
+			"_amod(year, last)\n");
 
 		rc &= test_sentence ("The coffee tastes as it did last year.",
-			"_nn(taste, coffee)\n"+
+			"_subj(taste, coffee)\n"+
 			"_obj(do, year)\n"+
 			"_subj(do, it)\n"+
-			"as(taste, it)\n"+
-			"_amod(year, last)\n"+
-			"than(coffee, it)\n");
+			"as(taste, do)\n"+
+			"_amod(year, last)\n");
 
 		rc &= test_sentence ("Mike runs as fast as he did last year.",
 			"_subj(do, he)\n"+
 			"_subj(run, Mike)\n"+
 			"as(fast, he)\n"+
 			"_advmod(run, fast)\n"+
+			"_advmod(do, year)\n"+
 			"_amod(year, last)\n"+
 			"than(Mike, he)\n");
 
