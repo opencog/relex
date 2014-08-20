@@ -190,15 +190,15 @@ public class TestRelEx
 	{
 		boolean rc = true;
 		rc &= test_sentence("I had breakfast at 8 am.",
-							"_obj(have, breakfast)\n"+
-							"at(have, am)\n" +
-							"_subj(have, I)\n" +
-							"_time(am, 8)\n");
+				    "_obj(have, breakfast)\n"+
+				    "at(have, am)\n" +
+				    "_subj(have, I)\n" +
+				    "_time(am, 8)\n");
 		rc &= test_sentence("I had supper before 6 pm.",
-							"_obj(have, supper)\n" +
-							"before(have, pm)\n" +
-							"_subj(have, I)\n" +
-							"_time(pm, 6)\n");
+				    "_obj(have, supper)\n" +
+				    "before(have, pm)\n" +
+				    "_subj(have, I)\n" +
+				    "_time(pm, 6)\n");
 
 		report(rc, "Time");
 		return rc;
