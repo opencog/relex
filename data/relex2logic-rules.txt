@@ -46,6 +46,10 @@
 # for definite words
 [DEFINITE] {8} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
 
+# maybe rule documented on http://wiki.opencog.org/w/RelEx2Logic_Rules#Maybe_Rule
+# Example: "Maybe she eats lunch.", "Perhaps she is nice."
+[MAYBE] {3} <ADVMOD> _advmod($W, (maybe|possibly|perhaps|probably)) => (maybe-rule $W (get-instance-name $W word_index sentence_index))
+
 
 # ============================================
 # misc rules
@@ -132,8 +136,6 @@
 # ============================================
 # Unneeded, not working stuff, not completed, etc
 # ============================================
-[MAYBE] {9} <> _advmod($v1, $r_maybe) => (maybe-rule $v1 (get-instance-name $v1 word_index sentence_index) $r_maybe)
-
 # [WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
 
 

@@ -94,14 +94,12 @@ public class LogicProcessor
 		private static class RuleResult
 		{
 			public Boolean passed;
-			public Boolean maybeCheck;
 			public HashMap<String, String> valuesMap;
 			public HashMap<String, String> uuidsMap;
 
 			public RuleResult()
 			{
 				passed = false;
-				maybeCheck = false;
 				valuesMap = new HashMap<String, String>();
 				uuidsMap = new HashMap<String, String>();
 			}
@@ -211,29 +209,26 @@ public class LogicProcessor
 
 						if (tempRule.getAllCriteriaSatisfied())
 						{
-							if (tempRule.getName().compareTo("MAYBE") != 0 || ruleResult.maybeCheck)
+							Boolean applied = false;
+
+							// dumb way to check this rule against all others and make sure the exact same one was not created
+							for (Rule otherRule : allAppliedRules)
 							{
-								Boolean applied = false;
-
-								// dumb way to check this rule against all others and make sure the exact same one was not created
-								for (Rule otherRule : allAppliedRules)
+								if (tempRule.getSchemeOutput().equals(otherRule.getSchemeOutput()))
 								{
-									if (tempRule.getSchemeOutput().equals(otherRule.getSchemeOutput()))
-									{
-										applied = true;
-										break;
-									}
+									applied = true;
+									break;
 								}
+							}
 
-								if (!applied)
-								{
-									// apply the rule
-									String schemeOutput = tempRule.getSchemeOutput();
-									schemeBuilder.append(schemeOutput);
-									schemeBuilder.append("\n");
+							if (!applied)
+							{
+								// apply the rule
+								String schemeOutput = tempRule.getSchemeOutput();
+								schemeBuilder.append(schemeOutput);
+								schemeBuilder.append("\n");
 
-									allAppliedRules.add(tempRule);
-								}
+								allAppliedRules.add(tempRule);
 							}
 
 							appliedRules.add(tempRule);
@@ -649,23 +644,6 @@ public class LogicProcessor
 
 				FeatureNode thisNode = thisPair.child;
 				FeatureNode thisParent = thisPair.parent;
-
-				// special treatment for maybe-rule where different words can be matched
-				if (!ruleResult.maybeCheck && thisRule.getName().compareTo("MAYBE") == 0)
-				{
-					ArrayList<String> sVar = new ArrayList<String>();
-					ScopeVariables s = new ScopeVariables ();
-					sVar = s.loadVarScope();
-					int i = 0;
-
-					while (i < sVar.size() && !ruleResult.maybeCheck)
-					{
-						if (!thisNode.isValued() && thisNode.get("name").getValue().compareTo(sVar.get(i)) !=  0)
-						    i++;
-						else
-							ruleResult.maybeCheck = true;
-					}
-				}
 
 				// if a variable already has a value, check it against the value at the node, else assign it
 				if (ruleResult.valuesMap.get(thisCriterium.getFirstVariableName()) != null)
