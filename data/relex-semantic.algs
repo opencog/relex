@@ -2383,14 +2383,22 @@ NUMBER-1c
 ;"It lasted from 2 pm to 6 pm." -- _time(pm, 2) and _time(pm, 6).
 ;"It lasted from 2 to 6 pm." -- _time(pm, 2) and _time(pm, 6).
 ;
+;Commented out the section below because it was broken
+;TODO : review starting from Number-1 rule. Add test.
+;#TemplateActionAlg
+;TIME
+;<F_R ref name> = AM|PM|am|pm|a.m.|p.m.
+;=
+;<F_R ref links _time> = <F_R ref links _quantity>
+;<F_R ref links _quantity> = %
 ;
 #TemplateActionAlg
-TIME
+TIME-NEW
+<LAB> = \ND
 <F_R ref name> = AM|PM|am|pm|a.m.|p.m.
 =
-<F_R ref links _time> = <F_R ref links _quantity>
-<F_R ref links _quantity> = %
-;
+<F_R ref links _time> += <F_L ref>
+
 #TemplateActionAlg
 NUMBER-2
 <LAB> = \NM\.*
