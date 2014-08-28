@@ -1278,23 +1278,24 @@ LEMMA_NOUN_NUMBER
 =
 <num> = plural
 ;
+; SJrs: right side of a singular conjunction
 #TemplateActionAlg
 SINGULAR_DET
-<LAB>=\Ds\.*
+<LAB>=\Ds\.*|SJrs
 <F_R num> = %
 =
 <F_R num> = singular
 ;
 #TemplateActionAlg
 PLURAL_DET
-<LAB>=\Dmc\.*
+<LAB>=\Dmc\.*|SJrp
 <F_R num> = %
 =
 <F_R num> = plural
 ;
 #TemplateActionAlg
 UNCOUNTABLE_DET
-<LAB>=\Dmu\.*
+<LAB>=\Dmu\.*|SJru
 <F_R num> = %
 =
 <F_R num> = uncountable
