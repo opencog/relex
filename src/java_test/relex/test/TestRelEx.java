@@ -949,6 +949,13 @@ public class TestRelEx
 			"to(similar, that)\n"+
 			"than(Jack, Ben)\n");
 
+		rc &= test_sentence ("Jack’s hair color is similar to Ben's",
+			"_poss(color, Jack)\n"+
+			"_nn(color, hair)\n"+
+			"_predadj(color, similar)\n"+
+			"to(similar, Ben)\n"+
+			"than(Jack, Ben)\n");
+				
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
 			"_predadj(Jack, intelligent)\n"+
 			"as(intelligent, Ben)\n"+
@@ -966,6 +973,44 @@ public class TestRelEx
 			"as(run, cheetah)\n"+
 			"_advmod(fast, exactly)\n"+
 			"than(snail, cheetah)\n");
+		
+		//one entity one feature, through time
+		rc &= test_sentence ("The coffee tastes the same as it did last year.",
+			"_subj(taste, coffee)\n"+
+			"_obj(taste, same)\n"+
+			"_obj(do, year)\n"+
+			"_subj(do, it)\n"+
+			"as(taste, do)\n"+
+			"_amod(year, last)\n");
+
+		rc &= test_sentence ("The coffee tastes as it did last year.",
+			"_subj(taste, coffee)\n"+
+			"_obj(do, year)\n"+
+			"_subj(do, it)\n"+
+			"as(taste, do)\n"+
+			"_amod(year, last)\n");
+
+		rc &= test_sentence ("Mike runs as fast as he did last year.",
+			"_subj(do, he)\n"+
+			"_subj(run, Mike)\n"+
+			"as(fast, he)\n"+
+			"_advmod(run, fast)\n"+
+			"_advmod(do, year)\n"+
+			"_amod(year, last)\n"+
+			"than(Mike, he)\n");
+
+		rc &= test_sentence ("The kick was as soft as the first.",
+			"_predadj(kick, soft)\n"+
+			"as(soft, first)\n"+
+			"than(kick, first)\n");
+
+		rc &= test_sentence ("He is as smart as I ever expected him to be.",
+			"_predadj(he, smart)\n"+
+			"_subj(expect, I)\n"+
+			"_obj(expect, him)\n"+
+			"as(smart, expect)\n"+
+			"_advmod(expect, ever)\n"+
+			"_to-do(smart, be)\n");
 			
 		report(rc, "Equatives");
 		return rc;

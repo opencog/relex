@@ -966,6 +966,7 @@ SUBJ_TO_LINKS
 SUBJ_TO_LINKS_2
 <LAB> = \Ss
 <F_R linkL0 LAB> = \AFd
+<F_L ref links _predadj> = %
 <F_R HEAD-FLAG> = %
 <F_R POS> = verb
 <F_L POS> = noun
@@ -1347,14 +1348,34 @@ PREP_LINKING
 
 ;e.g. The snail is running  exactly as fast as the cheetah.
 ;this forms "as(run, cheetah)" relationship
+;"as.z" can form unconstrained phrases using "O*c+" just like "than" behaves.
 #PrepositionLinkAlg
 PREP_LINKING
 <LAB> = \MVz
-<F_R linkR0 LAB> = \Os\.*
+<F_R linkR0 LAB> = \O\.\c\.*
 <F_L> = $modified
 <F_R str> = $prep
 <F_R> = $prep_source
 <F_R linkR0 F_R ref> = $prep_obj
+=
+#TemplateActionAlg
+PREP_OBJ
+<LAB> = \MVa
+=
+<F_L prep-temp> += <F_R>
+
+;e.g. Mike runs as fast as he did last year.
+;this forms "as(fast, he)" relationship
+;CX is used in comparative constructions like "as I do"
+#PrepositionLinkAlg
+PREP_LINKING
+<LAB> = \MVz\.*
+<F_R linkR0 LAB> = \CX
+<F_L prep-temp> != %
+<F_L prep-temp> = $modified
+<F_R str> = $prep
+<F_R> = $prep_source
+<F_R linkR0 F_R subj> = $prep_obj
 =
 
 ;
@@ -2017,10 +2038,13 @@ ADV3_1
 
 ;e.g. The snail is running  exactly as fast as the cheetah.
 ;_advmod(fast, exactly)
+;case <F_R linkL0 F_L head-word> = %  e.g. Mike runs as fast as he did last year.
+;for above sentence we need to avoid it forming both _advmod(run, fast) AND _advmod(fast, run),
 #TemplateActionAlg
 ADV3_2
 <LAB> = \EEy
 <F_R linkL0 LAB> = \MVa
+<F_R linkL0 F_L head-word> = %
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_R linkL0 F_L ref>
@@ -2550,10 +2574,14 @@ RELATION_THAN_1
 <F_L comp_temp2> = %
 <F_L comp_temp2> = <F_R ref>
 ;
+;e.g. It's much colder today than it was yesterday. --> than(today, yesterday)
+;case <F_L linkR2 LAB> = \MVpn is to avoid forming wrong relationships
+;e.g. Mike runs as fast as he did last year. would form than(year, year) without above condition.
 #TemplateActionAlg
 RELATION_THAN_2
 <LAB> = \MVpn
 <F_L comp_temp2> != %
+<F_L linkR2 LAB> = \MVpn
 =
 <F_R ref links than> += <F_L comp_temp2>
 <F_L comp_temp2> = %
@@ -2595,11 +2623,13 @@ RELATION_THAN_4_1
 ;YS connects nouns to the possessive suffix "'s". "'s" then acts as a determiner
 ;"possessor" tag is created by rule "POSSR_TO_APOSTROPHE"
 ;e.g. Amen's hair is as long as Ben's.
+;case <F_L str> = to --> e.g. Jack’s hair color is similar to Ben's
+;case <F_L str> = of --> e.g. Jack’s hair color is similar to that of Ben’s.
 #TemplateActionAlg
 COMPARATIVE_3
 <LAB> = \J
 <F_R possessor> != %
-<F_L str> = as|of
+<F_L str> = as|of|to
 =
 <F_L comp_temp> += <F_R possessor>
 
@@ -2636,9 +2666,12 @@ RELATION_THAN_6_3
 =
 <F_L ref links than> += <F_R comp_temp_1>
 <F_R comp_temp_1> = %
+;MVz is used in comparatives with "As" 
+;e.g. The snail is running  exactly as fast as the cheetah.
+;MVp e.g.  Jack’s hair color is similar to Ben's
 #TemplateActionAlg
 RELATION_THAN_7
-<LAB> = \MV\.* 
+<LAB> = \MVt\.*|\MVp\.*|\MVz\.*
 <F_R comp_temp> != %
 <F_L SET> != T
 =
