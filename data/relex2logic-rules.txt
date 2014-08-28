@@ -20,6 +20,8 @@
 
 [TOBE] {2} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
+# "call me!"
+[IMPERATIVE] {1} <> _obj($verb, $obj) & tense($verb, imperative) => (imperative-rule $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 # ============================================
 # adjective, adverb rules
