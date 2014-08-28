@@ -106,14 +106,15 @@
 
 
 # ============================================
-# and rules
+# conjunction rules
 # ============================================
 # Example: "I did my homework, and I went to school."
-[AND1] {1} <AND2> conj_and($var1, $var2) & pos($var1, verb) & pos($var2, verb) => (and-rule1 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
-
 # Example: "John and Madison eat the cake."
-[AND2] {2} <AND1> conj_and($var1, $var2) => (and-rule2 $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index))
+[AND] {1} <> conj_and($var1, $var2) & pos($var1, $pos) & pos($var2, $pos) => (and-rule $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index) $pos)
 
+[BUT] {1} <> conj_but($var1, $var2) & pos($var1, $pos) & pos($var2, $pos) => (but-rule $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index) $pos)
+
+[OR] {1} <> conj_or($var1, $var2) & pos($var1, $pos) & pos($var2, $pos) => (or-rule $var1 (get-instance-name $var1 word_index sentence_index) $var2 (get-instance-name $var2 word_index sentence_index) $pos)
 
 # ============================================
 # that rules for object clause, content clause, complement clause, etc, but not adjective clause
