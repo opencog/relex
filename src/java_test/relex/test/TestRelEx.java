@@ -1001,8 +1001,7 @@ public class TestRelEx
 
 		rc &= test_sentence ("The kick was as soft as the first.",
 			"_predadj(kick, soft)\n"+
-			"as(soft, first)\n"+
-			"than(kick, first)\n");
+			"as(kick, first)\n");
 
 		rc &= test_sentence ("He is as smart as I ever expected him to be.",
 			"_predadj(he, smart)\n"+
