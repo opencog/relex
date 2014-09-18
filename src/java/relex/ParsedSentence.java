@@ -362,27 +362,27 @@ public class ParsedSentence
 	/* ---------------------------------------------------------------- */
 	/* Return unpacked meta information about parse, and ranking too */
 
-	public int getDisjunctCost()
+	public double getDisjunctCost()
 	{
 		return getMeta("disjunct_cost");
 	}
 
-	public int getLinkCost()
+	public double getLinkCost()
 	{
 		return getMeta("link_cost");
 	}
 
-	public int getNumSkippedWords()
+	public double getNumSkippedWords()
 	{
 		return getMeta("num_skipped_words");
 	}
 
-	private int getMeta(String str)
+	private double getMeta(String str)
 	{
 		FeatureNode fn = getMetaData().get(str);
 		if (fn == null) return -1;
 		String val = fn.getValue();
-		return Integer.parseInt(val);
+		return Double.parseDouble(val);
 	}
 
 	/**
