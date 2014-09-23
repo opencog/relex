@@ -11,7 +11,7 @@
 # that they wound't get called redundantly with the question rules that have the same argument set.
 # =====================================================================================================
 # Examples: "Socrates is man", "Cats are animals", "Trees are plants"
-[BE] {4} <SVO, SV> _subj(be, $subj) & _obj(be, $verb) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
+[BE] {4} <SVO, SV> _subj(be, $subj) & _obj(be, $obj) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 [SVIO] {4} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
