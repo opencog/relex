@@ -222,9 +222,9 @@ public class LocalLGParser extends LGParser
 			FeatureNode meta = new FeatureNode();
 			meta.set("num_skipped_words", new FeatureNode(Integer.toString(
 					LinkGrammar.getNumSkippedWords())));
-			meta.set("disjunct_cost", new FeatureNode(Integer.toString(
+			meta.set("disjunct_cost", new FeatureNode(Double.toString(
 					LinkGrammar.getLinkageDisjunctCost())));
-			meta.set("link_cost", new FeatureNode(Integer.toString(
+			meta.set("link_cost", new FeatureNode(Double.toString(
 					LinkGrammar.getLinkageLinkCost())));
 			meta.set("num_violations", new FeatureNode(Integer.toString(
 					LinkGrammar.getLinkageNumViolations())));
