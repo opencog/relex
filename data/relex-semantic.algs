@@ -825,7 +825,7 @@ WHEN
 ; link followed by a verb
 ; This case is dealt with in WHERE_HACK_FOR_QP
 WHERE1
-<LAB> = Q
+<LAB> = Q|Rw
 <F_L str> = Where|where
 ;<F_L head-question-word> != %
 =
@@ -3277,7 +3277,7 @@ COPULA_QUESTION1
 ; For cases such "Where did hugo plan to go?" we force the location link upon go
 #TemplateActionAlg
 WHERE_HACK_FOR_QP
-<LAB> = Q
+<LAB> = Q|Rw
 <F_L str> = Where|where
 <F_L ref QUERY-TYPE> = where
 <F_L head-question-word ref links _%atLocation> != %
