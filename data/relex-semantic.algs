@@ -853,7 +853,7 @@ WHERE2
 ;
 #TemplateActionAlg
 HOW
-<LAB> = Q
+<LAB> = Q|AF|AFh
 <F_L str> = How|how
 =
 <F_L ref name> = %
