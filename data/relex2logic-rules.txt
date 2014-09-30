@@ -122,7 +122,8 @@
 #=========================
 # How predicative
 #=========================
-[howpredadj-Q] {1} <SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+[howpredadj1-Q] {1} <SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+[howpredadj2-Q] {1} <SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & _subj(_\$qVar, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
 #===================
 # How of quantity
 #===================
