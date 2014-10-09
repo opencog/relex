@@ -252,6 +252,18 @@ PASS_OBJ
 =
 <F_R OBJ-LINK-TAG> = Pv
 ;
+#TemplateActionAlg
+WHATQ_OBJ
+; Bug-fix (10-9-2014 AN): BW GETS CHANCE TO IDENTIFY DIRECT OBJECT
+; Without this, questions where 'what' is the direct object and there is an indirect object
+; get their roles reversed, so that 'what' gets classified as IO and the IO as the direct object.
+; this works in conjunction with a conjunction added to REL_INDIR_OBJ below around line 397 to
+; prevent iobj from being assigned twice.
+<LAB> = BW
+=
+<F_R OBJ-LINK-TAG> = BW
+<F_R obj> += <F_L ref>
+;
 ; O GETS SECOND CHANCE TO IDENTIFY DIRECT OBJECT
 ; If there no object, then O-link defines object
 ; Must check for own tag value to be AND-SAFE
@@ -381,6 +393,10 @@ REL_INDIR_OBJ
 <LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
+; The line below is a late-added bug-fix that works in conjunction with WHATQ_OBJ
+; around line 255 to ensure correct assignment of obj and iobj in questions. Without
+; condition iobj is assigned to both objects in addition to the obj being assigned correctly.
+<F_R OBJ-LINK-TAG> != BW
 =
 <F_R iobj> += <F_L ref>
 ;
