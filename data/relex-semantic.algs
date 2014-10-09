@@ -386,10 +386,16 @@ REL_OBJ
 ; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
 ; than relationship but not to link direct and indirect objects
 ;<LAB> != \Bcd e.g. He runs more quickly than John does.
+;
+; bugfix added 10-9-2014 (AN): last condition prevents output of questioned
+; indirect object as obj(to, qVar) which is inconsistent with the to(verb, obj)
+; dependency used for declarative versions of to-indirect-objects.
+;
 <LAB> = \B\.*|\BW\.*
 <LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
+<F_R Q_TO_IOBJ_FLAG> != T
 =
 <F_R OBJ-LINK-TAG> = B
 <F_R obj> += <F_L ref>
