@@ -214,6 +214,19 @@ OBJ-LINK-TAG-INIT2
 =
 <F_L OBJ-LINK-TAG> = UNSET
 ;
+; bugfix (10-9-2014 AN):
+; Sets a flag for "to" introducing a questioned obj, so the flag can be used later 
+; (around line 2000) to prevent this "to" from being interpreted as an advmod. You
+; don't want to prevent other "to"'s in this position from being advmod's, only
+; ones following a B-link
+;
+#TemplateActionAlg
+SET-Q-TO-IOBJ-FLAG
+<LAB> = \B\.*
+<F_R str> = to
+=
+<F_R Q_TO_IOBJ_FLAG> = T
+;
 ; Sentences with two O links will have O*n pointing at direct object.
 ;
 #TemplateActionAlg
@@ -257,7 +270,7 @@ WHATQ_OBJ
 ; Bug-fix (10-9-2014 AN): BW GETS CHANCE TO IDENTIFY DIRECT OBJECT
 ; Without this, questions where 'what' is the direct object and there is an indirect object
 ; get their roles reversed, so that 'what' gets classified as IO and the IO as the direct object.
-; this works in conjunction with a conjunction added to REL_INDIR_OBJ below around line 397 to
+; this works in conjunction with a condition added to REL_INDIR_OBJ below around line 397 to
 ; prevent iobj from being assigned twice.
 <LAB> = BW
 =
@@ -1994,12 +2007,19 @@ ADV1_2
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
 ; We need explicit right-word-not-prep check to handle the usual; MVp
 ; cases.
+;
+; Bug-fix (10-9-2014 AN): last condition below added to prevent a "to" that
+; introduces an indirect object from being interpreted as an advmod. Created
+; TO_IOBJ_FLAG relex-taggin file so as not to have to disallow all "to"'s from
+; advmod here, such as "to the nth degree."
+;
 #TemplateActionAlg
 ADV1_ONLY_IF_NOT_PREP
 <LAB> = \MVp\.*
 <F_R str> != not
 <F_L head-word> != %
 <F_R PREP-OBJ> = %
+<F_R Q_TO_IOBJ_FLAG> != T
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
