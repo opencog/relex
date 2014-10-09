@@ -438,8 +438,8 @@ SUBJECT_LINKING
 ;Pg connects verbs that take present participles with present participles.
 ;e.g. The snail is running
 ;So \Pg can be removed here? 
-;<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
-<LAB> = \Pp\.*|\PP\.*|\I\.*
+<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
+;<LAB> = \Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 =
