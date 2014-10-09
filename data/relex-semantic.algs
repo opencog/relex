@@ -437,7 +437,14 @@ SUBJECT_LINKING
 ;  "Jim wants to eat a cat"
 ;Pg connects verbs that take present participles with present participles.
 ;e.g. The snail is running
-;So \Pg can be removed here? 
+;
+;(On October 9 2014) I un-commented out the version of the line below with the \Pg\ and
+;commented out the version of the line without \Pg\ because relex was outputting progressives
+;as predadj's and it was effing up r2l, but I'm leaving this note about it because someone
+;had left the following cryptic comment to explain why they commented out \Pg\ to begin with:
+;
+;"So \Pg can be removed here? "
+;
 <LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
 ;<LAB> = \Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
