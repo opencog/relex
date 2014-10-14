@@ -117,7 +117,7 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
-- didion.jwnl
+- *didion.jwnl* (not required if you use Maven, only required for Ant)
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at 
@@ -137,7 +137,7 @@ The following packages are required pre-requisites for building RelEx.
 	the following command: `chmod 644 jwnl.jar`, as otherwise, you'll
 	get strange "java cannot unzip jar" error messages.
 
-- Apache commons logging
+- *Apache Commons Logging* (not required for Maven, only required for Ant)
 	The JWNL package requires that the Apache commons logging
 	jar file be installed. In Debian/Ubuntu, this is supplied by
 	the `libcommons-logging-java` package. In RedHat/CentOS systems,
@@ -150,7 +150,7 @@ The following packages are optional. If they are found, then
 additional parts of RelEx will be built, enabling additional 
 function.
 
-- OpenNLP
+- OpenNLP (if you use Maven, this is already managed)
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
 	to find sentence boundaries in free text. If OpenNLP is not found, 
 	then the less accurate `java.text.BreakIterator` class is used.
@@ -189,7 +189,7 @@ function.
 	***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
 	work with version 2.0 !!
 
-- `xercesImpl.jar`
+- `xercesImpl.jar` (if you use Maven, this is already managed)
 	Older versions of the OpenNLP package require that the Xerces2
 	XML parser package be installed. In Debian/Ubunutu, this is supplied
 	by the `libxerces2-java` package.
@@ -197,6 +197,18 @@ function.
 
 Building
 --------
+
+### With Maven
+
+After the above are installed, RelEx can be built.
+Using [Maven](http://maven.apache.org/), the project model is in `pom.xml`.
+
+To build the project, including cross-platform scripts: `mvn -DskipTests package`
+
+To run tests: `mvn test`
+
+### With Ant
+
 After the above are installed, the relex java code can be built.
 The build system uses `ant`, and the ant build specifications
 are in `build.xml`. When running `ant` for the first time it will download the
@@ -314,6 +326,16 @@ Ad-hoc script to scrub Wikipedia xml dumps, outputting only valid
 English-language sentences.  This  script removes wiki markup, URL's
 tables, images, & etc.  It currently seems to be pretty darned
 bullet-proof, although it might handle multi-line refs incorrectly.
+
+### `relexd`, `relexd-relex`, `relexd-link`, `relexd-logic`
+
+If you built RelEx with Maven, these scripts can be used.
+They accept additional arguments to be passed to `relex.Server`.
+
+1. `target/relex/bin/relexd`, which runs `java relex.Server ...`
+2. `target/relex/bin/relexd-relex`, which runs `java relex.Server --relex --anaphora ...`
+3. `target/relex/bin/relexd-link`, which runs `relex.Server --link --relex --anaphora --verbose ...`
+4. `target/relex/bin/relexd-logic`, which runs `java relex.Server --logic ...`
 
 
 Using RelEx in custom code

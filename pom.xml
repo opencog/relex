@@ -130,6 +130,89 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- mvn -DskipTests package appassembler:assemble assembly:single -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extraJvmArguments>
+						-Djava.library.path=/usr/lib:/usr/lib/jni:/usr/local/lib:/usr/local/lib/jni
+						-Drelex.algpath=data/relex-semantic.algs
+						-Dwordnet.configfile=data/wordnet/file_properties.xml
+					</extraJvmArguments>
+					<programs>
+						<program>
+							<id>relexd</id>
+							<mainClass>relex.Server</mainClass>
+							<jvmSettings>
+								<maxMemorySize>1024m</maxMemorySize>
+							</jvmSettings>
+						</program>
+						<program>
+							<!-- This will return parsed text on the input socket. -->
+							<id>relexd-relex</id>
+							<mainClass>relex.Server</mainClass>
+							<jvmSettings>
+								<maxMemorySize>1024m</maxMemorySize>
+							</jvmSettings>
+							<commandLineArguments>
+								<commandLineArgument>--relex</commandLineArgument>
+								<commandLineArgument>--anaphora</commandLineArgument>
+							</commandLineArguments>
+						</program>
+						<program>
+							<!-- Return Link Grammar, Relex and anaphora output. -->
+							<id>relexd-link</id>
+							<mainClass>relex.Server</mainClass>
+							<jvmSettings>
+								<maxMemorySize>1024m</maxMemorySize>
+							</jvmSettings>
+							<commandLineArguments>
+								<commandLineArgument>--relex</commandLineArgument>
+								<commandLineArgument>--anaphora</commandLineArgument>
+							</commandLineArguments>
+						</program>
+						<program>
+							<!-- Return with RelEx2Logic Link Grammar, and Relex output on default port 4444. -->
+							<id>relexd-logic</id>
+							<mainClass>relex.Server</mainClass>
+							<jvmSettings>
+								<maxMemorySize>1024m</maxMemorySize>
+							</jvmSettings>
+							<commandLineArguments>
+								<commandLineArgument>--logic</commandLineArgument>
+							</commandLineArguments>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+    				<configuration>
+					<descriptor>src/assembly/dir.xml</descriptor>
+					<finalName>relex</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
