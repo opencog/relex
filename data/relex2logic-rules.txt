@@ -5,7 +5,7 @@
 #
 
 # =====================================================================================================
-# SV and related rules
+# SENTENCE PREDICATE ARGUMENT STRUCTURE TEMPLATES 
 #
 # NB: lowered the priority of all the rules in this set by 1 on 9-22-2014 in order to ensure
 # that they wound't get called redundantly with the question rules that have the same argument set.
@@ -13,7 +13,7 @@
 # Examples: "Socrates is man", "Cats are animals", "Trees are plants"
 [BE] {4} <SVO, SV> _subj(be, $subj) & _obj(be, $obj) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
-[SVIO] {4} <SVO, SV> _iobj($A,$B) & _obj($A,$C) & _subj($A,$D) => (SVIO-rule $D (get-instance-name $D word_index sentence_index) $A (get-instance-name $A word_index sentence_index) $C (get-instance-name $C word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
+[SVIO] {4} <SVO, SV> _iobj($verb, $iobj) & _obj($verb, $obj) & _subj($verb, $subj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
 
 [SVO] {5} <SV, SVIO, BE> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
@@ -23,30 +23,22 @@
 
 [TOBE] {6} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
-# "call me!"
-[IMPERATIVE] {1} <> _obj($verb, $obj) & tense($verb, imperative) => (imperative-rule $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+[PREP] {5} <> _psubj($verb, $subj) & _pobj($verb, $obj) => (prep-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
+# ======================================================================================================
+# Speech acts
+# =====================================================================================================
+[IMPERATIVE] {1} <> tense($verb, imperative) => (imperative-rule sentence_index)
+[INTERROGATIVE] {1} <> interrogative-FLAG(_\$qVar, T) => (interrogative-rule sentence_index)
+[TRUTHQUERY] {1} <> TRUTH-QUERY-FLAG($verb, T) => (truth-query-rule sentence_index)
 #================================================================================================
 # Question rules
 #================================================================================================
 # Yes / No (closed) question rules
-# Note that the rules below do not distinguish between questions using inversion and
-# questions using only intonation or "?" because these rules do not refer to word order.
-#================================================================================================
 #===========================================================================================================================
-# Y/N questions With main-verb "to-be" -- a separate class because, unlike for other verbs, relex flags the complement
-# rather than the verb, except in the case of phrasal 'be+prep' or 'be' with no object, which are therefore subsumed 
-# under the rules for other verbs.
-#===========================================================================================================================
-#
 [obj-YNQ] {1} <BE, SVO, SV, SV-ynQ, SVO-ynQ> TRUTH-QUERY-FLAG(be, T) & _subj(be, $subj) & _obj(be, $verb) => (obj-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-#
 [predadj-YNQ] {1} <SV, SVP> TRUTH-QUERY-FLAG($verb, T) & _predadj($subj, $verb) => (predadj-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-#
 [prepobj-YNQ] {1} <SV> TRUTH-QUERY-FLAG($verb, T) & _psubj($verb, $subj) & _pobj($verb, $obj) => (prepobj-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
-#==================================================================================================================
-# Y/N questions with verbs other than to-be
-#==================================================================================================================
 [SVIO-ynQ] {1} <SVO-ynQ, SV-ynQ, SVIO, SVO> TRUTH-QUERY-FLAG($verb|$obj, T) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => (SVIO-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
 [SVO-ynQ] {2} <SV-ynQ, SVO, SV> TRUTH-QUERY-FLAG($verb, T) & _subj($verb, $subj) & _obj($verb, $obj) => (SVO-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 [SV-ynQ] {3} <SV> TRUTH-QUERY-FLAG($verb, T) & _subj($verb, $subj) => (SV-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
