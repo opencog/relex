@@ -4,7 +4,7 @@
 # [NAME] {PRIORITY} <EXCLUSION> RelEx criteria1 & criteria2 & ... => Scheme function
 #
 # =====================================================================================================
-# SENTENCE PREDICATE-ARGUMENT TEMPLATES 
+# SENTENCE PREDICATE-ARGUMENT TEMPLATES (whose sceme-rules also handle who / what questions)
 # =====================================================================================================
 
 [BE] {3} <SVO, SV> _subj(be, $subj) & _obj(be, $obj) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
@@ -25,8 +25,7 @@
 
 [PREP] {5} <> _psubj($verb, $subj) & _pobj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
-# I can't figure out why this rule exists -- how do you get the to-be() output? (10-14-14 AN)
-[TOBE] {6} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
+[TOBE] {6} <> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
 # ======================================================================================================
 # Speech acts (awaiting revision and implementation)
@@ -42,39 +41,27 @@
 #===========================================================================================================================
 [COPULA-YNQ] {1} <PREDICATE-YNQ, BE, SV, SVO, SVIO1, SVIO2, SVIO3> TRUTH-QUERY-FLAG(be, T) & _subj(be, $subj) & _obj(be, $obj) => (cop-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 [PREDICATE-YNQ] {2} <> TRUTH-QUERY-FLAG($verb, T) => (pred-ynQ-rule $verb (get-instance-name $verb word_index sentence_index))
-
 #=================
 # Where questions
 #=================
-[whereSVIO-Q] {1} <SVIO, SVO, SV, whereSVO-Q, whereSV-Q> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => (where-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-[whereSVO-Q] {2} <SVO, SV, whereSV-Q> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (where-SVOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
-[whereSV-Q] {3} <SV> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) & _subj($verb, $subj) => (where-SVQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-[wherecop-Q] {2} <SV, whereSV-Q> QUERY-TYPE(_\$qVar, where) & _%atLocation(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (wherecop-Q-rule $s (get-instance-name $s word_index sentence_index))
+[where-Q] {3} <> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) => (where-rule $verb (get-instance-name $verb word_index sentence_index))
+[wherecop-Q] {2} <> QUERY-TYPE(_\$qVar, where) & _%atLocation(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (wherecop-Q-rule $s (get-instance-name $s word_index sentence_index))
 #================
 # When questions
 #================
-[whenSVIO-Q] {1} <whenSV-Q, whenSVO-Q, SVIO, SVO, SV> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => (when-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-[whenSVO-Q] {2} <whenSV-Q, whenSVO-Q, SVO, SV> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (when-SVOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
-[whenSV-Q] {3} <whenSVO-Q, SV> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) & _subj($verb, $subj) => (when-SVQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-[whencop-Q] {2} <whenSV-Q, whenSVO-Q, SV> QUERY-TYPE(_\$qVar, when) & _%atTime(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (whencop-Q-rule $s (get-instance-name $s word_index sentence_index))
+[when-Q] {3} <> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) => (when-rule $verb (get-instance-name $verb word_index sentence_index))
+[whencop-Q] {2} <> QUERY-TYPE(_\$qVar, when) & _%atTime(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (whencop-Q-rule $s (get-instance-name $s word_index sentence_index))
 #===============
 # Why questions
 #===============
-[whySVIO-Q] {1} <whySVO-Q, whySV-Q, SVIO, SVO, SV> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => (why-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-[whySVO-Q] {2} <whySV-Q, SVO, SV> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (why-SVOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get -instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
-[whySV-Q] {3} <SV> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _subj($verb, $subj) => (why-SVQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-[whypredadj-Q] {3} <SVP> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _predadj($subj, $verb) => (whypredadj-Q-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get -instance-name $verb word_index sentence_index))
+[why-Q] {3} <> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) => (why-rule $verb (get-instance-name $verb word_index sentence_index))
+[whypredadj-Q] {3} <> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _predadj($subj, $verb) => (whypredadj-Q-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get -instance-name $verb word_index sentence_index))
 #===========================
 # How of manner
 #==========================
-[howSVIO-Q] {1} <howSV-Q, howSVO-Q, SVIO, SVO, SV, SVIO-ynQ> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => (how-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-[howSVO-Q] {2} <SVO, SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (how-SVOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
-[howSV-Q] {3} <SV, SV-ynQ> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) & _subj($verb, $subj) => (how-SVQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
-#=========================
-# How predicative
-#=========================
-[howpredadj1-Q] {1} <SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
-[howpredadj2-Q] {1} <SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & _subj(_\$qVar, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+[how-Q] {3} <> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) => (how-rule $verb (get-instance-name $verb word_index sentence_index))
+[howpredadj1-Q] {1} <> QUERY-TYPE(_\$qVar, how) & how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+[howpredadj2-Q] {1} <> QUERY-TYPE(_\$qVar, how) & _subj(_\$qVar, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
 #===================
 # How of quantity
 #===================
@@ -204,14 +191,8 @@
 [AFTER] {100} <> after($subj, $verb) & pos($verb, $verb_pos) => (before-after-rule (get-instance-name $subj word_index sentence_index) (get-instance-name $verb word_index sentence_index) $verb_pos "after")
 [TIME] {100} <> _time($period, $hour) & at($verb, $period) => (time-rule $hour $period (get-instance-name $verb word_index sentence_index))
 
-
-# ============================================
-# Unneeded, not working stuff, not completed, etc
-# ============================================
-# [WHICHRULE] {10} <> which($N,$V) => (which-rule $N (get-instance-name $N word_index sentence_index) $V (get-instance-name $V word_index sentence_index))
-
 # ===================================================
-# Old redundant but functional questional rules
+# Old redundant but functional question rules
 # ===================================================
 #[prepobj-YNQ] {1} <SV> TRUTH-QUERY-FLAG($verb, T) & _psubj($verb, $subj) & _pobj($verb, $obj) => (prepobj-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) 
 #$verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
@@ -272,5 +253,29 @@
 #[whatiobj-Q] {1} <SVIO, whatsubj-SV-Q, whatsubj-SVO-Q> interrogative-FLAG(_\$qVar, T) & QUERY-TYPE(_\$qVar, what) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, _\
 #$qVar) => (whowhatiobj-Q-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name 
 #$obj word_index sentence_index))
+# WHERE
+#[whereSVIO-Q] {1} <SVIO, SVO, SV, whereSVO-Q, whereSV-Q> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, #
+#$iobj) => (where-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj 
+#word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
+#[whereSVO-Q] {2} <SVO, SV, whereSV-Q> QUERY-TYPE(_\$qVar, where) & _%atLocation($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (where-SVOQ-rule $subj (get-
+#instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+# WHEN
+#[whenSVIO-Q] {1} <whenSV-Q, whenSVO-Q, SVIO, SVO, SV> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) 
+#=> (when-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj 
+#word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
+#[whenSVO-Q] {2} <whenSV-Q, whenSVO-Q, SVO, SV> QUERY-TYPE(_\$qVar, when) & _%atTime($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (when-SVOQ-rule $subj (get-
+#instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+# WHY
+#[whySVIO-Q] {1} <whySVO-Q, whySV-Q, SVIO, SVO, SV> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) => 
+#(why-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index 
+#sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
+#[whySVO-Q] {2} <whySV-Q, SVO, SV> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (why-SVOQ-rule $subj (get-instance-name 
+#$subj word_index sentence_index) $verb (get -instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+# HOW
+#[howSVIO-Q] {1} <howSV-Q, howSVO-Q, SVIO, SVO, SV, SVIO-ynQ> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) & _iobj($verb, $iobj) 
+#=> (how-SVIOQ-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj 
+#word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
+#[howSVO-Q] {2} <SVO, SV, howSV-Q> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) & _subj($verb, $subj) & _obj($verb, $obj) => (how-SVOQ-rule $subj (get-instance-name $subj 
+#word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 
