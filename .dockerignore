@@ -1,0 +1,8 @@
+bin/
+link-grammar-*
+jwnl14*
+*.log
+*.zip
+.git
+tags/*
+*~
