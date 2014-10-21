@@ -76,9 +76,9 @@
 #=============================================
 # CHOICE-TYPE QUESTIONS
 #=============================================
-[whichobjQ] {1} <SVO, SV> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($o, T) & _obj($v, $o) & _subj($v, $s) => (whichobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index))
-[whichsubjQ] {1} <SV, SVO> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($s, T) & _subj($v, $s) & _obj($v, $o) => (whichsubjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index))
-[whichpredadjQ] {1} <SVP, SV> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($s, T) & _predadj($s, $pred) => (whichpredadjQ-rule $s (get-instance-name $s word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+[whichobjQ] {1} <SVO, SV> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($o, T) & _obj($v, $o) & _subj($v, $s) & _quantity($o, _\$qVar) => (whichobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index))
+[whichsubjQ] {1} <SV, SVO> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($s, T) & _subj($v, $s) & _obj($v, $o) & _quantity($s, _\$qVar) => (whichsubjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index))
+[whichpredadjQ] {1} <SVP, SV> QUERY-TYPE(_\$qVar, which) & QUERY-FLAG($s, T) & _predadj($s, $pred) & _quantity($s, _\$qVar) => (whichpredadjQ-rule $s (get-instance-name $s word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
 #=============================================
 # END OF QUESTION RULES!
 #=============================================
@@ -130,6 +130,7 @@
 # Example: "She wants to help John."
 [TODO1] {1} <TODO2> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S) => (to-do-rule-1 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S (get-instance-name $S word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
 
+# Example: "She wants you to help John."
 [TODO2] {1} <TODO1> _to-do($V1, $V2) & _obj($V2, $O) & _subj($V1, $S1) & _subj($V2, $S2) => (to-do-rule-2 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $S1 (get-instance-name $S1 word_index sentence_index) $S2 (get-instance-name $S2 word_index sentence_index) $O (get-instance-name $O word_index sentence_index))
 
 # Example: "She wants to sing."
