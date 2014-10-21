@@ -214,6 +214,19 @@ OBJ-LINK-TAG-INIT2
 =
 <F_L OBJ-LINK-TAG> = UNSET
 ;
+; bugfix (10-9-2014 AN):
+; Sets a flag for "to" introducing a questioned obj, so the flag can be used later 
+; (around line 2000) to prevent this "to" from being interpreted as an advmod. You
+; don't want to prevent other "to"'s in this position from being advmod's, only
+; ones following a B-link
+;
+#TemplateActionAlg
+SET-Q-TO-IOBJ-FLAG
+<LAB> = \B\.*
+<F_R str> = to
+=
+<F_R Q_TO_IOBJ_FLAG> = T
+;
 ; Sentences with two O links will have O*n pointing at direct object.
 ;
 #TemplateActionAlg
@@ -251,6 +264,18 @@ PASS_OBJ
 <LAB> = \Pv\.*
 =
 <F_R OBJ-LINK-TAG> = Pv
+;
+#TemplateActionAlg
+WHATQ_OBJ
+; Bug-fix (10-9-2014 AN): BW GETS CHANCE TO IDENTIFY DIRECT OBJECT
+; Without this, questions where 'what' is the direct object and there is an indirect object
+; get their roles reversed, so that 'what' gets classified as IO and the IO as the direct object.
+; this works in conjunction with a condition added to REL_INDIR_OBJ below around line 397 to
+; prevent iobj from being assigned twice.
+<LAB> = BW
+=
+<F_R OBJ-LINK-TAG> = BW
+<F_R obj> += <F_L ref>
 ;
 ; O GETS SECOND CHANCE TO IDENTIFY DIRECT OBJECT
 ; If there no object, then O-link defines object
@@ -361,10 +386,16 @@ REL_OBJ
 ; Case <LAB> != \Bcd ---> "Bc" special subscript only occurs with "MVto" to form 
 ; than relationship but not to link direct and indirect objects
 ;<LAB> != \Bcd e.g. He runs more quickly than John does.
+;
+; bugfix added 10-9-2014 (AN): last condition prevents output of questioned
+; indirect object as obj(to, qVar) which is inconsistent with the to(verb, obj)
+; dependency used for declarative versions of to-indirect-objects.
+;
 <LAB> = \B\.*|\BW\.*
 <LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> = B|UNSET
+<F_R Q_TO_IOBJ_FLAG> != T
 =
 <F_R OBJ-LINK-TAG> = B
 <F_R obj> += <F_L ref>
@@ -381,6 +412,10 @@ REL_INDIR_OBJ
 <LAB> != Bcd
 <F_R RS-FLAG> != T
 <F_R OBJ-LINK-TAG> != B|UNSET
+; The line below is a late-added bug-fix that works in conjunction with WHATQ_OBJ
+; around line 255 to ensure correct assignment of obj and iobj in questions. Without
+; condition iobj is assigned to both objects in addition to the obj being assigned correctly.
+<F_R OBJ-LINK-TAG> != BW
 =
 <F_R iobj> += <F_L ref>
 ;
@@ -437,9 +472,16 @@ SUBJECT_LINKING
 ;  "Jim wants to eat a cat"
 ;Pg connects verbs that take present participles with present participles.
 ;e.g. The snail is running
-;So \Pg can be removed here? 
-;<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
-<LAB> = \Pp\.*|\PP\.*|\I\.*
+;
+;(On October 9 2014) I un-commented out the version of the line below with the \Pg\ and
+;commented out the version of the line without \Pg\ because relex was outputting progressives
+;as predadj's and it was effing up r2l, but I'm leaving this note about it because someone
+;had left the following cryptic comment to explain why they commented out \Pg\ to begin with:
+;
+;"So \Pg can be removed here? "
+;
+<LAB> = \Pg\.*|\Pp\.*|\PP\.*|\I\.*
+;<LAB> = \Pp\.*|\PP\.*|\I\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
 =
@@ -853,7 +895,7 @@ WHERE2
 ;
 #TemplateActionAlg
 HOW
-<LAB> = Q
+<LAB> = Q|AF|AFh
 <F_L str> = How|how
 =
 <F_L ref name> = %
@@ -1971,12 +2013,19 @@ ADV1_2
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
 ; We need explicit right-word-not-prep check to handle the usual; MVp
 ; cases.
+;
+; Bug-fix (10-9-2014 AN): last condition below added to prevent a "to" that
+; introduces an indirect object from being interpreted as an advmod. Created
+; TO_IOBJ_FLAG relex-taggin file so as not to have to disallow all "to"'s from
+; advmod here, such as "to the nth degree."
+;
 #TemplateActionAlg
 ADV1_ONLY_IF_NOT_PREP
 <LAB> = \MVp\.*
 <F_R str> != not
 <F_L head-word> != %
 <F_R PREP-OBJ> = %
+<F_R Q_TO_IOBJ_FLAG> != T
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
