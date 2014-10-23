@@ -31,6 +31,22 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; Step 0: Add a subject to a subjectless imperative sentence first so that it
+; can get tagged and eventually end up showing up in a dependency relation although
+; it's not there on the surface.  
+;
+; The action section below is inelegant however, I found that trying to add a <ref> didn't work whereas this does.
+; (NB: there are probably other implicit consituents in other sentence types we should add in this step . . .)
+
+#TemplateActionAlg
+ADDIMPSUBJ
+<LAB> = \Wi\.*
+=
+<F_L str> = you
+<F_R subj> = you
+
+;////////////////////////////////////////////////////////////////////////////
+;
 ; Step one: coarse/crude POS tagging, based on word subscripts.
 ;
 ; adjectives
