@@ -1320,6 +1320,7 @@ PREP_X
 <F_R obj> = <F_R xobj>
 <F_R xobj> = %
 ;
+
 #PrepositionLinkAlg
 PREP_CLAUSE_LINKING
 ; The preposition modifies the preceeding word with a clause
@@ -1333,7 +1334,7 @@ PREP_CLAUSE_LINKING
 ;
 ; <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
 <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*
-<F_R head-word> !=%
+<F_R head-word> != %
 <F_L> = $modified
 <F_R str> = $prep
 <F_R> = $prep_source
@@ -1356,12 +1357,27 @@ PREP_LINKING
 <F_R prep-parts _prepobj> = <F_R obj>
 <F_L prep-parts _prepsubj> = <F_R ref>
 
+; The alg below is designed just for dangling prepositions at the
+; end of ungrammatical questions: "Who did you give it to?" but it
+; doesn't work yet . . .
+;#PrepositionLinkAlg
+;DANGLING_PREP_LINK1
+;<LAB> = \B\.*
+;<F_R str> = to
+;<F_L str> = who|Who|whom|Whom|what|What
+;=
+;<F_R prep-parts prepobj> = $qVar
+
 #TemplateActionAlg
 POSSR_TO_APOSTROPHE
 <LAB> = \YS\.* |\YP\.*
 =
 <F_R possessor> += <F_L ref>
-
+;
+; -----------------------------------------------------------
+; Why are there all these incomplete algorithms here? 10-22-2014 AN
+;------------------------------------------------------------
+;
 ;\Mp --> e.g. Jack’s hair color is similar to that of Ben’s.
 ;\MVp --> e.g. Amen's hair is as long as Ben's.
 #PrepositionLinkAlg
@@ -1419,7 +1435,6 @@ PREP_LINKING
 <F_R> = $prep_source
 <F_R linkR0 F_R subj> = $prep_obj
 =
-
 ;
 ; The preposition modifies the preceeding phrase
 ;
@@ -1463,6 +1478,7 @@ PREP_RELATIVE_BACKGROUND
 ;    "On Tuesday, we left."
 ; Wont apply to "Often, we left" because 'often' has no obj
 ;
+
 #PrepositionLinkAlg
 PRECEEDING_PREP_LINK
 <LAB> = \CO\.*|\Qd\.*
@@ -1707,7 +1723,6 @@ Adjective-clause-whose-4
 <F_L str> = whose
 =
 <F_L linkL0 F_L ref links whose> += <F_R ref>
-
 
 ; ---------------------------------------------------------------
 ; that/which constructions.
@@ -2351,6 +2366,7 @@ NUMBER-1
 <LAB> = \D\.*|\NW\.*
 <LAB> != \D..y
 <LAB> != \D..w
+<LAB> != \D..wc
 <LAB> != \Dmcn
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
