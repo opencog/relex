@@ -804,6 +804,22 @@ TENSE_FUTURE
 <F_R tense val> = future
 <F_L tense PLACE-HOLDER> = T
 ;
+; set flag for 'going to' future tense
+#TemplateActionAlg
+SET_GOINGTO_FUTURE_FLAG
+<LAB> = \TOf
+<F_L str> = going
+=
+<F_R GOINGTOFUTURE_FLAG> = T
+;
+#TemplateActionAlg
+TENSE_GOING-TO_FUTURE
+<LAB> = \I\.*
+<F_L GOINGTOFUTURE_FLAG> = T
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = future
+;
 #TemplateActionAlg
 TENSE_INFINITIVE
 <LAB>=\I\.*
