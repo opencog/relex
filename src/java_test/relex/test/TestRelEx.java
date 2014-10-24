@@ -1236,6 +1236,2305 @@ public class TestRelEx
 		report(rc, "Extrapostion");
 		return rc;
 	}
+	
+	
+	
+	
+	
+	
+	//Added by Matthew
+	public boolean test_inquisitives()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("What is Socrates?",
+							 "_obj(be, Socrates)\n" +
+							 "_subj(be, _$qVar)\n" +
+
+							 "pos(?, punctuation)\n" +
+							 "COPULA-QUESTION-FLAG(Socrates, T)\n" +
+							 "definite-FLAG(Socrates, T)\n" +
+							 "pos(Socrates, noun)\n" +
+							 "noun_number(Socrates, singular)\n" +
+							 "QUERY-TYPE(_$qVar, what)\n" +
+							 "pronoun-FLAG(_$qVar, T)\n" +
+							 "interrogative-FLAG(_$qVar, T)\n" +
+							 "pos(_$qVar, noun)\n" +
+							 "noun_number(_$qVar, uncountable)\n" +
+							 "tense(be, present)\n" +
+							 "subscript-TAG(be, .v)\n" +
+							 "pos(be, verb)\n");
+
+		rc &= test_sentence ("Who is the teacher?",
+							 "_obj(be, teacher)\n" +
+		                     "_subj(be, _$qVar)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "COPULA-QUESTION-FLAG(teacher, T)\n" +
+		                     "definite-FLAG(teacher, T)\n" +
+		                     "subscript-TAG(teacher, .n)\n" +
+		                     "pos(teacher, noun)\n" +
+		                     "noun_number(teacher, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "tense(be, present)\n" +
+		                     "HYP(be, T)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("Who is a man?",
+		                     "_obj(be, man)\n" +
+		                     "_subj(be, _$qVar)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "COPULA-QUESTION-FLAG(man, T)\n" +
+		                     "subscript-TAG(man, .n)\n" +
+		                     "pos(man, noun)\n" +
+		                     "noun_number(man, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "tense(be, present)\n" +
+		                     "HYP(be, T)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(a, det)\n");
+
+		rc &= test_sentence ("Who told you that bullshit?", 
+		                     "_iobj(tell, you)\n" +
+		                     "_obj(tell, bullshit)\n" +
+		                     "_subj(tell, _$qVar)\n" +
+		                     "_det(bullshit, that)\n" +
+
+		                     "tense(tell, past)\n" +
+		                     "HYP(tell, T)\n" +
+		                     "subscript-TAG(tell, .v-d)\n" +
+		                     "pos(tell, verb)\n" +
+		                     "subscript-TAG(that, .j-d)\n" +
+		                     "pos(that, det)\n" +
+		                     "definite-FLAG(bullshit, T)\n" +
+		                     "subscript-TAG(bullshit, .n-u)\n" +
+		                     "pos(bullshit, noun)\n" +
+		                     "noun_number(bullshit, uncountable)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("Who told that story to the police?", 
+		                     "to(tell, police)\n" +
+		                     "_obj(tell, story)\n" +
+		                     "_subj(tell, _$qVar)\n" +
+		                     "_det(story, that)\n" +
+
+		                     "tense(tell, past)\n" +
+		                     "HYP(tell, T)\n" +
+		                     "subscript-TAG(tell, .v-d)\n" +
+		                     "pos(tell, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(police, T)\n" +
+		                     "subscript-TAG(police, .p)\n" +
+		                     "pos(police, noun)\n" +
+		                     "noun_number(police, plural)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(story, T)\n" +
+		                     "subscript-TAG(story, .n)\n" +
+		                     "pos(story, noun)\n" +
+		                     "noun_number(story, singular)\n" +
+		                     "subscript-TAG(that, .j-d)\n" +
+		                     "pos(that, det)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("What gives you that idea?", 
+		                     "_iobj(give, you)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n" +
+
+		                     "tense(give, present)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(that, .j-d)\n" +
+		                     "pos(that, det)\n" +
+		                     "definite-FLAG(idea, T)\n" +
+		                     "subscript-TAG(idea, .n)\n" +
+		                     "pos(idea, noun)\n" +
+		                     "noun_number(idea, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+		rc &= test_sentence ("What gave that idea to the police?",
+		                     "to(give, police)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n" +
+
+		                     "tense(give, past)\n" +
+		                     "subscript-TAG(give, .v-d)\n" +
+		                     "pos(give, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(police, T)\n" +
+		                     "subscript-TAG(police, .p)\n" +
+		                     "pos(police, noun)\n" +
+		                     "noun_number(police, plural)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(idea, T)\n" +
+		                     "subscript-TAG(idea, .n)\n" +
+		                     "pos(idea, noun)\n" +
+		                     "noun_number(idea, singular)\n" +
+		                     "subscript-TAG(that, .j-d)\n" +
+		                     "pos(that, det)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+		rc &= test_sentence ("What did you tell the fuzz?", 
+		                     "_iobj(tell, fuzz)\n" +
+		                     "_obj(tell, _$qVar)\n" +
+		                     "_subj(tell, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(tell, past_infinitive)\n" +
+		                     "HYP(tell, T)\n" +
+		                     "subscript-TAG(tell, .v)\n" +
+		                     "pos(tell, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(fuzz, T)\n" +
+		                     "subscript-TAG(fuzz, .n-u)\n" +
+		                     "pos(fuzz, noun)\n" +
+		                     "noun_number(fuzz, uncountable)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("What did you give to Mary?", 
+		                     "to(give, Mary)\n" +
+		                     "_obj(give, _$qVar)\n" +
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "gender(Mary, person)\n" +
+		                     "definite-FLAG(Mary, T)\n" +
+		                     "person-FLAG(Mary, T)\n" +
+		                     "subscript-TAG(Mary, .b)\n" +
+		                     "pos(Mary, noun)\n" +
+		                     "noun_number(Mary, singular)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("Who did you give the slavers?", 
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos([the], WORD)\n" +
+		                     "pos([slavers], WORD)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("Who did you sell to the slavers?",
+		                     "to(sell, to)\n" +
+		                     "_subj(sell, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(sell, past_infinitive)\n" +
+		                     "HYP(sell, T)\n" +
+		                     "subscript-TAG(sell, .v)\n" +
+		                     "pos(sell, verb)\n" +
+		                     "pos([the], WORD)\n" +
+		                     "pos([slavers], WORD)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(to, present)\n" +
+		                     "HYP(to, T)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("To whom did you sell the children?", 
+		                     "to(sell, _$qVar)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(sell, past_infinitive)\n" +
+		                     "HYP(sell, T)\n" +
+		                     "subscript-TAG(sell, .v)\n" +
+		                     "pos(sell, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(child, T)\n" +
+		                     "subscript-TAG(child, .p)\n" +
+		                     "pos(child, noun)\n" +
+		                     "noun_number(child, plural)\n" +
+		                     "pos(the, det)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("To what do we owe the pleasure?", 
+		                     "_quantity(do, what)\n" +
+		                     "_iobj(owe, do)\n" +
+		                     "_obj(owe, pleasure)\n" +
+		                     "_subj(owe, we)\n" +
+
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pos(what, adj)\n" +
+		                     "subscript-TAG(do, .n)\n" +
+		                     "pos(do, noun)\n" +
+		                     "noun_number(do, singular)\n" +
+		                     "pronoun-FLAG(we, T)\n" +
+		                     "gender(we, person)\n" +
+		                     "definite-FLAG(we, T)\n" +
+		                     "pos(we, noun)\n" +
+		                     "noun_number(we, plural)\n" +
+		                     "tense(owe, present)\n" +
+		                     "subscript-TAG(owe, .v)\n" +
+		                     "pos(owe, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(pleasure, T)\n" +
+		                     "subscript-TAG(pleasure, .s)\n" +
+		                     "pos(pleasure, noun)\n" +
+		                     "noun_number(pleasure, singular)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("Who did you sell the children to?",
+		                     "to(sell, to)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(sell, past_infinitive)\n" +
+		                     "HYP(sell, T)\n" +
+		                     "subscript-TAG(sell, .v)\n" +
+		                     "pos(sell, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(to, present)\n" +
+		                     "HYP(to, T)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, verb)\n" +
+		                     "definite-FLAG(child, T)\n" +
+		                     "subscript-TAG(child, .p)\n" +
+		                     "pos(child, noun)\n" +
+		                     "noun_number(child, plural)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos(the, det)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("What bothers you?",
+		                     "_obj(bother, you)\n" +
+		                     "_subj(bother, _$qVar)\n" +
+
+		                     "tense(bother, present)\n" +
+		                     "subscript-TAG(bother, .v)\n" +
+		                     "pos(bother, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n"); 
+
+		rc &= test_sentence ("Who programmed you?",
+		                     "_obj(program, you)\n" +
+		                     "_subj(program, _$qVar)\n" +
+
+		                     "tense(program, past)\n" +
+		                     "HYP(program, T)\n" +
+		                     "subscript-TAG(program, .v-d)\n" +
+		                     "pos(program, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("What is on the table?",
+		                     "_pobj(on, table)\n" +
+		                     "_psubj(on, _$qVar)\n" +
+
+		                     "SPECIAL-PREP-FLAG(on, T)\n" +
+		                     "tense(on, present)\n" +
+		                     "pos(on, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(table, T)\n" +
+		                     "subscript-TAG(table, .n)\n" +
+		                     "pos(table, noun)\n" +
+		                     "noun_number(table, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("What did you say?", 
+		                     "_obj(say, _$qVar)\n" +
+		                     "_subj(say, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(say, past_infinitive)\n" +
+		                     "HYP(say, T)\n" +
+		                     "subscript-TAG(say, .v)\n" +
+		                     "pos(say, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("Who do you love?",
+		                     "_obj(love, _$qVar)\n" +
+		                     "_subj(love, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(love, present_infinitive)\n" +
+		                     "HYP(love, T)\n" +
+		                     "subscript-TAG(love, .v)\n" +
+		                     "pos(love, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("What is for dinner?",
+		                     "_pobj(for, dinner)\n" +
+		                     "_psubj(for, _$qVar)\n" +
+
+		                     "SPECIAL-PREP-FLAG(for, T)\n" +
+		                     "tense(for, present)\n" +
+		                     "subscript-TAG(for, .p)\n" +
+		                     "pos(for, conjunction)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(dinner, .n-u)\n" +
+		                     "pos(dinner, noun)\n" +
+		                     "noun_number(dinner, uncountable)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+		rc &= test_sentence ("Who's on first?",
+		                     "_pobj(on, first)\n" +
+		                     "_psubj(on, _$qVar)\n" +
+
+		                     "SPECIAL-PREP-FLAG(on, T)\n" +
+		                     "tense(on, present)\n" +
+		                     "HYP(on, T)\n" +
+		                     "pos(on, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(first, .a)\n" +
+		                     "pos(first, adj)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+
+//Subject query:			
+
+		rc &= test_sentence ("Who farted?",
+		                     "_subj(fart, _$qVar)\n" +
+
+		                     "tense(fart, past)\n" +
+		                     "HYP(fart, T)\n" +
+		                     "subscript-TAG(fart, .v-d)\n" +
+		                     "pos(fart, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("What is happening?", 
+		                     "_subj(happen, _$qVar)\n" +
+
+		                     "tense(happen, present_progressive)\n" +
+		                     "subscript-TAG(happen, .v)\n" +
+		                     "pos(happen, verb)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("Who is correct?", 
+		                     "_predadj(_$qVar, correct)\n" +
+
+		                     "tense(correct, present)\n" +
+		                     "HYP(correct, T)\n" +
+		                     "subscript-TAG(correct, .a)\n" +
+		                     "pos(correct, adj)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("What is right?",
+		                     "_predadj(_$qVar, right)\n" +
+
+		                     "tense(right, present)\n" +
+		                     "subscript-TAG(right, .a)\n" +
+		                     "pos(right, adj)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+//Verb query:				
+
+		rc &= test_sentence ("What are you doing?",
+		                     "_subj(_$qVar, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-FLAG(_$qVar, T)\n" +
+		                     "tense(_$qVar, present_progressive)\n" +
+		                     "subscript-TAG(_$qVar, .v)\n" +
+		                     "pos(_$qVar, verb)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+//--------------------------------------------------------------------------------------------------------------------
+// Yes / no question rules
+//--------------------------------------------------------------------------------------------------------------------
+
+//Copula example: 
+
+		rc &= test_sentence ("Are you the one?",
+		                     "_obj(be, one)\n" +
+		                     "_subj(be, you)\n" +
+
+		                     "pos(the, det)\n" +
+		                     "pronoun-FLAG(one, T)\n" +
+		                     "indefinite-FLAG(one, T)\n" +
+		                     "definite-FLAG(one, T)\n" +
+		                     "pos(one, noun)\n" +
+		                     "noun_number(one, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(be, T)\n" +
+		                     "tense(be, present)\n" +
+		                     "HYP(be, T)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n");
+
+//Predicate Adjective example: 			
+
+		rc &= test_sentence ("Are you mad?", 
+		                     "_predadj(you, mad)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(mad, T)\n" +
+		                     "tense(mad, present)\n" +
+		                     "HYP(mad, T)\n" +
+		                     "subscript-TAG(mad, .a)\n" +
+		                     "pos(mad, adj)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+//Predicate prepositional phrase example: 	
+
+		rc &= test_sentence ("Is the book under the table?",
+		                     "_pobj(under, table)\n" +
+		                     "_psubj(under, book)\n" +
+
+		                     "definite-FLAG(book, T)\n" +
+		                     "subscript-TAG(book, .n)\n" +
+		                     "pos(book, noun)\n" +
+		                     "noun_number(book, singular)\n" +
+		                     "SPECIAL-PREP-FLAG(under, T)\n" +
+		                     "TRUTH-QUERY-FLAG(under, T)\n" +
+		                     "tense(under, present)\n" +
+		                     "HYP(under, T)\n" +
+		                     "pos(under, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(table, T)\n" +
+		                     "subscript-TAG(table, .n)\n" +
+		                     "pos(table, noun)\n" +
+		                     "noun_number(table, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(the, det)\n" +
+		                     "pos(the, det)\n");
+
+// to-be example:				
+
+		rc &= test_sentence ("Does he seem mad?",
+		                     "_to-be(seem, mad)\n" +
+		                     "_subj(seem, he)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "HYP(mad, T)\n" +
+		                     "subscript-TAG(mad, .a)\n" +
+		                     "pos(mad, adj)\n" +
+		                     "pronoun-FLAG(he, T)\n" +
+		                     "gender(he, masculine)\n" +
+		                     "definite-FLAG(he, T)\n" +
+		                     "pos(he, noun)\n" +
+		                     "noun_number(he, singular)\n" +
+		                     "TRUTH-QUERY-FLAG(seem, T)\n" +
+		                     "tense(seem, present_infinitive)\n" +
+		                     "HYP(seem, T)\n" +
+		                     "subscript-TAG(seem, .v)\n" +
+		                     "pos(seem, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n");
+
+//to-do examples:				
+
+		rc &= test_sentence ("Does she want to help us?",	
+		                     "_obj(help, us)\n" +
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(us, T)\n" +
+		                     "gender(us, person)\n" +
+		                     "definite-FLAG(us, T)\n" +
+		                     "pos(us, noun)\n" +
+		                     "noun_number(us, plural)\n" +
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "TRUTH-QUERY-FLAG(want, T)\n" +
+		                     "tense(want, present_infinitive)\n" +
+		                     "HYP(want, T)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");		
+
+		rc &= test_sentence ("Does she want you to help us?",
+		                     "_obj(help, us)\n" +
+		                     "_subj(help, you)\n" +
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(us, T)\n" +
+		                     "gender(us, person)\n" +
+		                     "definite-FLAG(us, T)\n" +
+		                     "pos(us, noun)\n" +
+		                     "noun_number(us, plural)\n" +
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(want, T)\n" +
+		                     "tense(want, present_infinitive)\n" +
+		                     "HYP(want, T)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n");
+
+		rc &= test_sentence ("Was she good enough to help?",
+		                     "_predadj(she, good)\n" +
+		                     "_to-do(good, help)\n" +
+
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "TRUTH-QUERY-FLAG(good, T)\n" +
+		                     "tense(good, past)\n" +
+		                     "HYP(good, T)\n" +
+		                     "subscript-TAG(good, .a)\n" +
+		                     "pos(good, adj)\n" +
+		                     "subscript-TAG(be, .v-d)\n" +
+		                     "pos(be, verb)\n" +
+		                     "subscript-TAG(enough, .r)\n" +
+		                     "pos(enough, WORD)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("Must she be able to sing?",
+		                     "_to-do(able, sing)\n" +
+		                     "_predadj(she, able)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "TRUTH-QUERY-FLAG(able, T)\n" +
+		                     "tense(able, present_future)\n" +
+		                     "HYP(able, T)\n" +
+		                     "subscript-TAG(able, .a)\n" +
+		                     "pos(able, adj)\n" +
+		                     "subscript-TAG(must, .v)\n" +
+		                     "pos(must, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("Does she want to sing?",
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n" +
+
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "TRUTH-QUERY-FLAG(want, T)\n" +
+		                     "tense(want, present_infinitive)\n" +
+		                     "HYP(want, T)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("Have you slept?",
+		                     "_subj(sleep, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(sleep, T)\n" +
+		                     "tense(sleep, present_perfect)\n" +
+		                     "HYP(sleep, T)\n" +
+		                     "subscript-TAG(sleep, .v-d)\n" +
+		                     "pos(sleep, verb)\n" +
+		                     "subscript-TAG(have, .v)\n" +
+		                     "pos(have, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("Will you sleep?",
+		                     "_subj(sleep, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(sleep, T)\n" +
+		                     "tense(sleep, future)\n" +
+		                     "HYP(sleep, T)\n" +
+		                     "subscript-TAG(sleep, .v)\n" +
+		                     "pos(sleep, verb)\n" +
+		                     "subscript-TAG(will, .v)\n" +
+		                     "pos(will, verb)\n" +
+		                     "pos(?, punctuation)\n");
+		
+		rc &= test_sentence ("Did you sleep?",
+		                     "_subj(sleep, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(sleep, T)\n" +
+		                     "tense(sleep, past_infinitive)\n" +
+		                     "HYP(sleep, T)\n" +
+		                     "subscript-TAG(sleep, .v)\n" +
+		                     "pos(sleep, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("Did you eat the leftover baba-ganoush?",
+		                     "_obj(eat, leftover)\n" +
+		                     "_to-be(eat, baba-ganoush)\n" +
+		                     "_subj(eat, you)\n" +
+
+		                     "subscript-TAG(leftover, .a)\n" +
+		                     "pos(leftover, adj)\n" +
+		                     "noun_number(leftover, plural)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "HYP(baba-ganoush, T)\n" +
+		                     "subscript-TAG(baba-ganoush, .a)\n" +
+		                     "pos(baba-ganoush, adj)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(eat, T)\n" +
+		                     "tense(eat, past_infinitive)\n" +
+		                     "HYP(eat, T)\n" +
+		                     "pos(eat, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("Did you give her the money?",
+		                     "_iobj(give, her)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(money, T)\n" +
+		                     "subscript-TAG(money, .n-u)\n" +
+		                     "pos(money, noun)\n" +
+		                     "noun_number(money, uncountable)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(her, T)\n" +
+		                     "gender(her, feminine)\n" +
+		                     "possessive-FLAG(her, T)\n" +
+		                     "definite-FLAG(her, T)\n" +
+		                     "pos(her, noun)\n" +
+		                     "noun_number(her, singular)\n" +
+		                     "TRUTH-QUERY-FLAG(give, T)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n");
+
+
+		rc &= test_sentence ("Did you give the money to her?",
+		                     "to(give, her)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "TRUTH-QUERY-FLAG(give, T)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(her, T)\n" +
+		                     "gender(her, feminine)\n" +
+		                     "possessive-FLAG(her, T)\n" +
+		                     "definite-FLAG(her, T)\n" +
+		                     "pos(her, noun)\n" +
+		                     "noun_number(her, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "definite-FLAG(money, T)\n" +
+		                     "subscript-TAG(money, .n-u)\n" +
+		                     "pos(money, noun)\n" +
+		                     "noun_number(money, uncountable)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("The book is under the table?",
+		                     "_pobj(under, table)\n" +
+		                     "_psubj(under, book)\n" +
+
+		                     "SPECIAL-PREP-FLAG(under, T)\n" +
+		                     "TRUTH-QUERY-FLAG(under, T)\n" +
+		                     "tense(under, present)\n" +
+		                     "HYP(under, T)\n" +
+		                     "pos(under, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(table, T)\n" +
+		                     "subscript-TAG(table, .n)\n" +
+		                     "pos(table, noun)\n" +
+		                     "noun_number(table, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "definite-FLAG(book, T)\n" +
+		                     "subscript-TAG(book, .n)\n" +
+		                     "pos(book, noun)\n" +
+		                     "noun_number(book, singular)\n" +
+		                     "pos(the, det)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("Maybe she eats lunch.",
+		                     "_obj(eat, lunch)\n" +
+		                     "_advmod(eat, maybe)\n" +
+		                     "_subj(eat, she)\n" +
+
+		                     "tense(eat, present)\n" +
+		                     "subscript-TAG(eat, .v)\n" +
+		                     "pos(eat, verb)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "subscript-TAG(lunch, .n-u)\n" +
+		                     "pos(lunch, noun)\n" +
+		                     "noun_number(lunch, uncountable)\n" +
+		                     "subscript-TAG(maybe, .e)\n" +
+		                     "pos(maybe, adv)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n");
+
+
+		rc &= test_sentence ("Perhaps she is nice.",
+		                     "_advmod(nice, perhaps)\n" +
+		                     "_predadj(she, nice)\n" +
+
+		                     "tense(nice, present)\n" +
+		                     "subscript-TAG(nice, .a)\n" +
+		                     "pos(nice, adj)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(perhaps, adv)\n" +
+		                     "pos(., punctuation)\n");
+
+
+		rc &= test_sentence ("She wants to help John.",
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+		                     "_obj(help, John)\n" +
+
+		                     "tense(want, present)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "gender(John, masculine)\n" +
+		                     "definite-FLAG(John, T)\n" +
+		                     "person-FLAG(John, T)\n" +
+		                     "subscript-TAG(John, .m)\n" +
+		                     "pos(John, noun)\n" +
+		                     "noun_number(John, singular)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("She wants you to help us.",
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+		                     "_obj(help, us)\n" +
+		                     "_subj(help, you)\n" +
+
+		                     "tense(want, present)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "pronoun-FLAG(us, T)\n" +
+		                     "gender(us, person)\n" +
+		                     "definite-FLAG(us, T)\n" +
+		                     "pos(us, noun)\n" +
+		                     "noun_number(us, plural)\n" +
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n");
+
+
+		rc &= test_sentence ("She is nice to help with the project.", 
+		                     "with(help, project)\n" +
+		                     "_to-do(nice, help)\n" +
+		                     "_predadj(she, nice)\n" +
+
+		                     "tense(help, infinitive)\n" +
+		                     "HYP(help, T)\n" +
+		                     "subscript-TAG(help, .v)\n" +
+		                     "pos(help, verb)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "definite-FLAG(project, T)\n" +
+		                     "subscript-TAG(project, .n)\n" +
+		                     "pos(project, noun)\n" +
+		                     "noun_number(project, singular)\n" +
+		                     "pos(with, prep)\n" +
+		                     "pos(the, det)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "tense(nice, present)\n" +
+		                     "subscript-TAG(nice, .a)\n" +
+		                     "pos(nice, adj)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("She must be able to sing.",
+		                     "_to-do(able, sing)\n" +
+		                     "_predadj(she, able)\n" +
+
+		                     "pos(., punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "tense(able, present_future)\n" +
+		                     "subscript-TAG(able, .a)\n" +
+		                     "pos(able, adj)\n" +
+		                     "subscript-TAG(must, .v)\n" +
+		                     "pos(must, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("She must need to sing?", 
+		                     "_to-do(need, sing)\n" +
+		                     "_subj(need, she)\n" +
+
+		                     "TRUTH-QUERY-FLAG(need, T)\n" +
+		                     "tense(need, present_future)\n" +
+		                     "HYP(need, T)\n" +
+		                     "subscript-TAG(need, .v)\n" +
+		                     "pos(need, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "subscript-TAG(must, .v)\n" +
+		                     "pos(must, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("She must want to sing?", 
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n" +
+
+		                     "TRUTH-QUERY-FLAG(want, T)\n" +
+		                     "tense(want, present_future)\n" +
+		                     "HYP(want, T)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "subscript-TAG(must, .v)\n" +
+		                     "pos(must, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("She wants to sing.",
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n" +
+
+		                     "tense(want, present)\n" +
+		                     "subscript-TAG(want, .v)\n" +
+		                     "pos(want, verb)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "tense(sing, infinitive)\n" +
+		                     "HYP(sing, T)\n" +
+		                     "subscript-TAG(sing, .v)\n" +
+		                     "pos(sing, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+		rc &= test_sentence ("Where do you live?",
+		                     "_%atLocation(live, _$qVar)\n" +
+		                     "_subj(live, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(live, present_infinitive)\n" +
+		                     "HYP(live, T)\n" +
+		                     "subscript-TAG(live, .v)\n" +
+		                     "pos(live, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, where)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("Where did you eat dinner?",
+		                     "_%atLocation(eat, _$qVar)\n" +
+		                     "_obj(eat, dinner)\n" +
+		                     "_subj(eat, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(eat, past_infinitive)\n" +
+		                     "HYP(eat, T)\n" +
+		                     "pos(eat, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, where)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(dinner, .n-u)\n" +
+		                     "pos(dinner, noun)\n" +
+		                     "noun_number(dinner, uncountable)\n");
+
+
+		rc &= test_sentence ("Where is the party?",
+		                     "_%atLocation(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, party)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(party, T)\n" +
+		                     "subscript-TAG(party, .n)\n" +
+		                     "pos(party, noun)\n" +
+		                     "noun_number(party, singular)\n" +
+		                     "tense(_%copula, present)\n" +
+		                     "subscript-TAG(_%copula, .v)\n" +
+		                     "pos(_%copula, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, where)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("Where will she be happy?", 
+		                     "_%atLocation(happy, _$qVar)\n" +
+		                     "_predadj(she, happy)\n" +
+
+		                     "tense(happy, future)\n" +
+		                     "subscript-TAG(happy, .a)\n" +
+		                     "pos(happy, adj)\n" +
+		                     "QUERY-TYPE(_$qVar, where)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "subscript-TAG(will, .v)\n" +
+		                     "pos(will, verb)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("When did jazz die?",
+		                     "_%atTime(die, _$qVar)\n" +
+		                     "_subj(die, jazz)\n" +
+
+		                     "subscript-TAG(jazz, .n-u)\n" +
+		                     "pos(jazz, noun)\n" +
+		                     "noun_number(jazz, uncountable)\n" +
+		                     "tense(die, past_infinitive)\n" +
+		                     "HYP(die, T)\n" +
+		                     "subscript-TAG(die, .v)\n" +
+		                     "pos(die, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, when)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("When did you bake the cake?",
+		                     "_%atTime(bake, _$qVar)\n" +
+		                     "_obj(bake, cake)\n" +
+		                     "_subj(bake, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(bake, past_infinitive)\n" +
+		                     "HYP(bake, T)\n" +
+		                     "subscript-TAG(bake, .v)\n" +
+		                     "pos(bake, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, when)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(cake, T)\n" +
+		                     "subscript-TAG(cake, .s)\n" +
+		                     "pos(cake, noun)\n" +
+		                     "noun_number(cake, singular)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("When did you give him the money?", 
+		                     "_iobj(give, him)\n" +
+		                     "_%atTime(give, _$qVar)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(money, T)\n" +
+		                     "subscript-TAG(money, .n-u)\n" +
+		                     "pos(money, noun)\n" +
+		                     "noun_number(money, uncountable)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(him, T)\n" +
+		                     "gender(him, masculine)\n" +
+		                     "definite-FLAG(him, T)\n" +
+		                     "pos(him, noun)\n" +
+		                     "noun_number(him, singular)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, when)\n" +
+		                     "pos(_$qVar, adv)\n");
+
+
+		rc &= test_sentence ("When is the party?",
+		                     "_%atTime(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, party)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(party, T)\n" +
+		                     "subscript-TAG(party, .n)\n" +
+		                     "pos(party, noun)\n" +
+		                     "noun_number(party, singular)\n" +
+		                     "tense(_%copula, present)\n" +
+		                     "subscript-TAG(_%copula, .v)\n" +
+		                     "pos(_%copula, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, when)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(the, det)\n");
+
+
+//----------------------------------------------------------------------------------------------------------
+// Why questions
+//----------------------------------------------------------------------------------------------------------
+
+		rc &= test_sentence ("Why do you live?",
+		                     "_%because(live, _$qVar)\n" +
+		                     "_subj(live, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(live, present_infinitive)\n" +
+		                     "HYP(live, T)\n" +
+		                     "subscript-TAG(live, .v)\n" +
+		                     "pos(live, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, why)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("Why do you like terrible music?",
+		                     "_%because(like, _$qVar)\n" +
+		                     "_obj(like, music)\n" +
+		                     "_subj(like, you)\n" +
+		                     "_amod(music, terrible)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(like, present_infinitive)\n" +
+		                     "HYP(like, T)\n" +
+		                     "subscript-TAG(like, .v)\n" +
+		                     "pos(like, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, why)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(music, .n-u)\n" +
+		                     "pos(music, noun)\n" +
+		                     "noun_number(music, uncountable)\n" +
+		                     "subscript-TAG(terrible, .a)\n" +
+		                     "pos(terrible, adj)\n");
+
+
+		rc &= test_sentence ("Why are you such a fool?", 
+		                     "_obj(be, fool)\n" +
+		                     "_subj(be, you)\n" +
+
+		                     "pos(such, WORD)\n" +
+		                     "idiom-FLAG(such_a, T)\n" +
+		                     "pos(such_a, det)\n" +
+		                     "subscript-TAG(fool, .n)\n" +
+		                     "pos(fool, noun)\n" +
+		                     "noun_number(fool, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(be, present)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "tense(why, imperative)\n" +
+		                     "pos(why, verb)\n");
+
+
+//----------------------------------------------------------------------------------------------------------
+// How adverbial (manner)\n" + questions
+//----------------------------------------------------------------------------------------------------------
+ 
+		rc &= test_sentence ("How did you sleep?",
+		                     "how(sleep, _$qVar)\n" +
+		                     "_subj(sleep, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(sleep, past_infinitive)\n" +
+		                     "HYP(sleep, T)\n" +
+		                     "subscript-TAG(sleep, .v)\n" +
+		                     "pos(sleep, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, how)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+//---------------------------------------------------------------------------------------------
+// Predicative How
+//---------------------------------------------------------------------------------------------
+ 
+		rc &= test_sentence ("How was the party?", 
+		                     "_subj(_$qVar, party)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(party, T)\n" +
+		                     "subscript-TAG(party, .n)\n" +
+		                     "pos(party, noun)\n" +
+		                     "noun_number(party, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, how)\n" +
+		                     "tense(_$qVar, past)\n" +
+		                     "pos(_$qVar, adj)\n" +
+		                     "subscript-TAG(be, .v-d)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("How is your food?",
+		                     "_poss(food, you)\n" +
+		                     "how(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, food)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(food, T)\n" +
+		                     "subscript-TAG(food, .s)\n" +
+		                     "pos(food, noun)\n" +
+		                     "noun_number(food, singular)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "possessive-FLAG(you, T)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(_%copula, present)\n" +
+		                     "subscript-TAG(_%copula, .v)\n" +
+		                     "pos(_%copula, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, how)\n" +
+		                     "pos(_$qVar, adv)\n");
+
+
+//----------------------------------------------------------------------------------------------------------------	
+// How of quantity and degree questions
+//----------------------------------------------------------------------------------------------------------------
+
+		rc &= test_sentence ("How much money does it cost?",
+		                     "_obj(cost, money)\n" +
+		                     "_subj(cost, it)\n" +
+		                     "_quantity(money, _$qVar)\n" +
+
+		                     "pos(how, adv)\n" +
+		                     "QUERY-TYPE(_$qVar, how_much)\n" +
+		                     "pos(_$qVar, adj)\n" +
+		                     "pronoun-FLAG(it, T)\n" +
+		                     "gender(it, neuter)\n" +
+		                     "definite-FLAG(it, T)\n" +
+		                     "pos(it, noun)\n" +
+		                     "tense(cost, present_infinitive)\n" +
+		                     "HYP(cost, T)\n" +
+		                     "subscript-TAG(cost, .v-d)\n" +
+		                     "pos(cost, verb)\n" +
+		                     "subscript-TAG(money, .n-u)\n" +
+		                     "pos(money, noun)\n" +
+		                     "noun_number(money, uncountable)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("How many books have you read?",
+		                     "_obj(read, book)\n" +
+		                     "_subj(read, you)\n" +
+		                     "_quantity(book, _$qVar)\n" +
+
+		                     "pos(how, adv)\n" +
+		                     "QUERY-TYPE(_$qVar, how_much)\n" +
+		                     "pos(_$qVar, adj)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(read, present_perfect)\n" +
+		                     "subscript-TAG(read, .v-d)\n" +
+		                     "pos(read, verb)\n" +
+		                     "subscript-TAG(book, .n)\n" +
+		                     "pos(book, noun)\n" +
+		                     "noun_number(book, plural)\n" +
+		                     "subscript-TAG(have, .v)\n" +
+		                     "pos(have, verb)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("How fast does it go?",
+		                     "_advmod(fast, _$qVar)\n" +
+		                     "_subj(go, it)\n" +
+
+		                     "QUERY-TYPE(_$qVar, how_much)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "subscript-TAG(fast, .e)\n" +
+		                     "pos(fast, adv)\n" +
+		                     "pronoun-FLAG(it, T)\n" +
+		                     "gender(it, neuter)\n" +
+		                     "definite-FLAG(it, T)\n" +
+		                     "pos(it, noun)\n" +
+		                     "tense(go, present_infinitive)\n" +
+		                     "HYP(go, T)\n" +
+		                     "subscript-TAG(go, .v)\n" +
+		                     "pos(go, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n");
+
+
+//-----------------------------------------------------------------------------------------------
+// CHOICE-TYPE QUESTIONS -- these rules, which are working before now are not getting called . . . .
+//-----------------------------------------------------------------------------------------------
+
+rc &= test_sentence ("Which girl do you like?",
+		                     "_obj(like, girl)\n" +
+		                     "_subj(like, you)\n" +
+		                     "_quantity(girl, _$qVar)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(like, present_infinitive)\n" +
+		                     "HYP(like, T)\n" +
+		                     "subscript-TAG(like, .v)\n" +
+		                     "pos(like, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-FLAG(girl, T)\n" +
+		                     "subscript-TAG(girl, .n)\n" +
+		                     "pos(girl, noun)\n" +
+		                     "noun_number(girl, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, which)\n" +
+		                     "pos(_$qVar, adj)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("Which girl likes you?",
+		                     "_obj(like, you)\n" +
+		                     "_subj(like, girl)\n" +
+		                     "_quantity(girl, _$qVar)\n" +
+
+		                     "tense(like, present)\n" +
+		                     "subscript-TAG(like, .v)\n" +
+		                     "pos(like, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-FLAG(girl, T)\n" +
+		                     "subscript-TAG(girl, .n)\n" +
+		                     "pos(girl, noun)\n" +
+		                     "noun_number(girl, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, which)\n" +
+		                     "pos(_$qVar, adj)\n");
+
+
+		rc &= test_sentence ("Which girl is crazy?",
+		                     "_quantity(girl, _$qVar)\n" +
+		                     "_predadj(girl, crazy)\n" +
+
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "tense(crazy, present)\n" +
+		                     "subscript-TAG(crazy, .a)\n" +
+		                     "pos(crazy, adj)\n" +
+		                     "QUERY-FLAG(girl, T)\n" +
+		                     "subscript-TAG(girl, .n)\n" +
+		                     "pos(girl, noun)\n" +
+		                     "noun_number(girl, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, which)\n" +
+		                     "pos(_$qVar, adj)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+
+ //-----------------------------------------------------------------------
+ //all rules
+ //-----------------------------------------------------------------------
+
+ //-----------------------------------------------------------------------
+ //passive verb rules
+ //-----------------------------------------------------------------------
+	rc &= test_sentence ("The books were written by Charles Dickens.",
+		                     "_obj(write, book)\n" +
+		                     "by(write, Charles_Dickens)\n" +
+
+		                     "tense(write, past_passive)\n" +
+		                     "subscript-TAG(write, .v)\n" +
+		                     "pos(write, verb)\n" +
+		                     "subscript-TAG(be, .v-d)\n" +
+		                     "pos(be, verb)\n" +
+		                     "definite-FLAG(book, T)\n" +
+		                     "subscript-TAG(book, .n)\n" +
+		                     "pos(book, noun)\n" +
+		                     "noun_number(book, plural)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "gender(Charles, person)\n" +
+		                     "definite-FLAG(Charles, T)\n" +
+		                     "subscript-TAG(Charles, .b)\n" +
+		                     "pos(Charles, noun)\n" +
+		                     "noun_number(Charles, singular)\n" +
+		                     "entity-FLAG(Charles_Dickens, T)\n" +
+		                     "definite-FLAG(Charles_Dickens, T)\n" +
+		                     "pos(Charles_Dickens, noun)\n" +
+		                     "noun_number(Charles_Dickens, singular)\n" +
+		                     "pos(by, prep)\n" +
+		                     "pos(the, det)\n");
+
+
+		rc &= test_sentence ("The books are published.",
+		                     "_obj(publish, book)\n" +
+
+		                     "tense(publish, present_passive)\n" +
+		                     "subscript-TAG(publish, .v-d)\n" +
+		                     "pos(publish, verb)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "definite-FLAG(book, T)\n" +
+		                     "subscript-TAG(book, .n)\n" +
+		                     "pos(book, noun)\n" +
+		                     "noun_number(book, plural)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "pos(the, det)\n");
+
+
+ //-----------------------------------------------------------------------
+  //conjunction rules
+//-----------------------------------------------------------------------
+rc &= test_sentence ("I did my homework, and I went to school.",
+		                     "_obj(do, homework)\n" +
+		                     "_subj(do, I)\n" +
+		                     "to(go, school)\n" +
+		                     "_subj(go, I)\n" +
+		                     "_poss(homework, me)\n" +
+
+		                     "tense(do, past)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "tense(go, past)\n" +
+		                     "subscript-TAG(go, .v-d)\n" +
+		                     "pos(go, verb)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "subscript-TAG(school, .n-u)\n" +
+		                     "pos(school, noun)\n" +
+		                     "noun_number(school, uncountable)\n" +
+		                     "pronoun-FLAG(I, T)\n" +
+		                     "gender(I, person)\n" +
+		                     "definite-FLAG(I, T)\n" +
+		                     "subscript-TAG(I, .p)\n" +
+		                     "pos(I, noun)\n" +
+		                     "noun_number(I, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n" +
+		                     "pos(,, conjunction)\n" +
+		                     "subscript-TAG(and, .ij)\n" +
+		                     "pos(and, conjunction)\n" +
+		                     "definite-FLAG(homework, T)\n" +
+		                     "subscript-TAG(homework, .n-u)\n" +
+		                     "pos(homework, noun)\n" +
+		                     "noun_number(homework, uncountable)\n" +
+		                     "pronoun-FLAG(me, T)\n" +
+		                     "gender(me, person)\n" +
+		                     "possessive-FLAG(me, T)\n" +
+		                     "definite-FLAG(me, T)\n" +
+		                     "subscript-TAG(me, .p)\n" +
+		                     "pos(me, noun)\n" +
+		                     "noun_number(me, singular)\n" +
+		                     "pronoun-FLAG(I, T)\n" +
+		                     "gender(I, person)\n" +
+		                     "definite-FLAG(I, T)\n" +
+		                     "subscript-TAG(I, .p)\n" +
+		                     "pos(I, noun)\n" +
+		                     "noun_number(I, singular)\n");
+
+		rc &= test_sentence ("John and Madison eat the cake.",
+		                     "_obj(eat, cake)\n" +
+		                     "_subj(eat, John)\n" +
+		                     "_subj(eat, Madison)\n" +
+		                     "conj_and(John, Madison)\n" +
+
+		                     "gender(Madison, feminine)\n" +
+		                     "definite-FLAG(Madison, T)\n" +
+		                     "person-FLAG(Madison, T)\n" +
+		                     "subscript-TAG(Madison, .f)\n" +
+		                     "pos(Madison, noun)\n" +
+		                     "noun_number(Madison, singular)\n" +
+		                     "tense(eat, present)\n" +
+		                     "pos(eat, verb)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "definite-FLAG(cake, T)\n" +
+		                     "subscript-TAG(cake, .s)\n" +
+		                     "pos(cake, noun)\n" +
+		                     "noun_number(cake, singular)\n" +
+		                     "subscript-TAG(and, .j-n)\n" +
+		                     "pos(and, conjunction)\n" +
+		                     "noun_number(and, plural)\n" +
+		                     "gender(John, masculine)\n" +
+		                     "definite-FLAG(John, T)\n" +
+		                     "person-FLAG(John, T)\n" +
+		                     "subscript-TAG(John, .m)\n" +
+		                     "pos(John, noun)\n" +
+		                     "noun_number(John, singular)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("Joan is poor  but  happy.", 
+		                     "_predadj(Joan, poor)\n" +
+		                     "_predadj(Joan, happy)\n" +
+
+		                     "subscript-TAG(poor, .a)\n" +
+		                     "pos(poor, adj)\n" +
+		                     "subscript-TAG(happy, .a)\n" +
+		                     "pos(happy, adj)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "tense(but, present)\n" +
+		                     "subscript-TAG(but, .j-a)\n" +
+		                     "pos(but, conjunction)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "gender(Joan, person)\n" +
+		                     "definite-FLAG(Joan, T)\n" +
+		                     "person-FLAG(Joan, T)\n" +
+		                     "subscript-TAG(Joan, .b)\n" +
+		                     "pos(Joan, noun)\n" +
+		                     "noun_number(Joan, singular)\n");
+
+ //-----------------------------------------------------------------------
+ //that rule for creating that marker
+ //-----------------------------------------------------------------------
+	rc &= test_sentence ("I think that dogs can fly.",
+		                     "that(think, fly)\n" +
+		                     "_subj(think, I)\n" +
+		                     "_subj(fly, dog)\n" +
+
+		                     "tense(think, present)\n" +
+		                     "subscript-TAG(think, .v)\n" +
+		                     "pos(think, verb)\n" +
+		                     "subscript-TAG(can, .v)\n" +
+		                     "pos(can, verb)\n" +
+		                     "subscript-TAG(dog, .n)\n" +
+		                     "pos(dog, noun)\n" +
+		                     "noun_number(dog, plural)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "tense(fly, present_future)\n" +
+		                     "HYP(fly, T)\n" +
+		                     "subscript-TAG(fly, .v)\n" +
+		                     "pos(fly, verb)\n" +
+		                     "pronoun-FLAG(I, T)\n" +
+		                     "gender(I, person)\n" +
+		                     "definite-FLAG(I, T)\n" +
+		                     "subscript-TAG(I, .p)\n" +
+		                     "pos(I, noun)\n" +
+		                     "noun_number(I, singular)\n" +
+		                     "subscript-TAG(that, .j-c)\n" +
+		                     "pos(that, conjunction)\n");
+
+
+		rc &= test_sentence ("He is glad that she won.",
+		                     "that(glad, win)\n" +
+		                     "_subj(win, she)\n" +
+		                     "_predadj(he, glad)\n" +
+
+		                     "tense(glad, present)\n" +
+		                     "subscript-TAG(glad, .a)\n" +
+		                     "pos(glad, adj)\n" +
+		                     "pronoun-FLAG(she, T)\n" +
+		                     "gender(she, feminine)\n" +
+		                     "definite-FLAG(she, T)\n" +
+		                     "pos(she, noun)\n" +
+		                     "noun_number(she, singular)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "tense(win, past)\n" +
+		                     "HYP(win, T)\n" +
+		                     "subscript-TAG(win, .v-d)\n" +
+		                     "pos(win, verb)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pronoun-FLAG(he, T)\n" +
+		                     "gender(he, masculine)\n" +
+		                     "definite-FLAG(he, T)\n" +
+		                     "pos(he, noun)\n" +
+		                     "noun_number(he, singular)\n" +
+		                     "subscript-TAG(that, .j-c)\n" +
+		                     "pos(that, conjunction)\n");
+
+		rc &= test_sentence ("He ran so quickly that he flew.",
+		                     "_advmod(quickly, so)\n" +
+		                     "_subj(fly, he)\n" +
+		                     "that(run, fly)\n" +
+		                     "_advmod(run, quickly)\n" +
+		                     "_subj(run, he)\n" +
+
+		                     "pos(quickly, adv)\n" +
+		                     "pos(so, conjunction)\n" +
+		                     "tense(fly, past)\n" +
+		                     "HYP(fly, T)\n" +
+		                     "subscript-TAG(fly, .v-d)\n" +
+		                     "pos(fly, verb)\n" +
+		                     "pronoun-FLAG(he, T)\n" +
+		                     "gender(he, masculine)\n" +
+		                     "definite-FLAG(he, T)\n" +
+		                     "pos(he, noun)\n" +
+		                     "noun_number(he, singular)\n" +
+		                     "pos(., punctuation)\n" +
+		                     "subscript-TAG(that, .j-c)\n" +
+		                     "pos(that, conjunction)\n" +
+		                     "tense(run, past)\n" +
+		                     "subscript-TAG(run, .v-d)\n" +
+		                     "pos(run, verb)\n" +
+		                     "pronoun-FLAG(he, T)\n" +
+		                     "gender(he, masculine)\n" +
+		                     "definite-FLAG(he, T)\n" +
+		                     "pos(he, noun)\n" +
+		                     "noun_number(he, singular)\n");
+
+
+ //-----------------------------------------------------------------------
+ //time rules to create time relations
+ //-----------------------------------------------------------------------
+	rc &= test_sentence ("I had dinner at 6 pm",
+		                     "_obj(have, dinner)\n" +
+		                     "at(have, pm)\n" +
+		                     "_subj(have, I)\n" +
+		                     "_time(pm, 6)\n" +
+
+		                     "tense(have, past)\n" +
+		                     "subscript-TAG(have, .v-d)\n" +
+		                     "pos(have, verb)\n" +
+		                     "pos(at, prep)\n" +
+		                     "numeric-FLAG(6, T)\n" +
+		                     "pos(6, det)\n" +
+		                     "subscript-TAG(pm, .ti)\n" +
+		                     "pos(pm, noun)\n" +
+		                     "subscript-TAG(dinner, .n-u)\n" +
+		                     "pos(dinner, noun)\n" +
+		                     "noun_number(dinner, uncountable)\n" +
+		                     "pronoun-FLAG(I, T)\n" +
+		                     "gender(I, person)\n" +
+		                     "definite-FLAG(I, T)\n" +
+		                     "subscript-TAG(I, .p)\n" +
+		                     "pos(I, noun)\n" +
+		                     "noun_number(I, singular)\n");
+
+		rc &= test_sentence ("I went to sleep at 1 am",
+		                     "to(go, sleep)\n" +
+		                     "_subj(go, I)\n" +
+		                     "_time(am, 1)\n" +
+		                     "at(sleep, am)\n" +
+
+		                     "tense(go, past)\n" +
+		                     "subscript-TAG(go, .v-d)\n" +
+		                     "pos(go, verb)\n" +
+		                     "pos(at, prep)\n" +
+		                     "numeric-FLAG(1, T)\n" +
+		                     "pos(1, det)\n" +
+		                     "subscript-TAG(am, .ti)\n" +
+		                     "pos(am, noun)\n" +
+		                     "tense(sleep, infinitive)\n" +
+		                     "HYP(sleep, T)\n" +
+		                     "subscript-TAG(sleep, .v)\n" +
+		                     "pos(sleep, verb)\n" +
+		                     "pronoun-FLAG(I, T)\n" +
+		                     "gender(I, person)\n" +
+		                     "definite-FLAG(I, T)\n" +
+		                     "subscript-TAG(I, .p)\n" +
+		                     "pos(I, noun)\n" +
+		                     "noun_number(I, singular)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// Functional Question rules replaced by conditional statements and templates in October 2014
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------
+// who/what subject questions (who and what may be treated identically as far as I can tell)\n" +.
+//------------------------------------------------------------------------------------------
+		rc &= test_sentence ("Who farted?",
+		                     "_subj(fart, _$qVar)\n" +
+
+		                     "tense(fart, past)\n" +
+		                     "HYP(fart, T)\n" +
+		                     "subscript-TAG(fart, .v-d)\n" +
+		                     "pos(fart, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("What happened?",
+		                     "_subj(happen, _$qVar)\n" +
+
+		                     "tense(happen, past)\n" +
+		                     "subscript-TAG(happen, .v-d)\n" +
+		                     "pos(happen, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, plural)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("What killed him?",
+		                     "_obj(kill, him)\n" +
+		                     "_subj(kill, _$qVar)\n" +
+
+		                     "tense(kill, past)\n" +
+		                     "subscript-TAG(kill, .v-d)\n" +
+		                     "pos(kill, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(him, T)\n" +
+		                     "gender(him, masculine)\n" +
+		                     "definite-FLAG(him, T)\n" +
+		                     "pos(him, noun)\n" +
+		                     "noun_number(him, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, plural)\n");
+
+		rc &= test_sentence ("Who ate the pizza?",
+		                     "_obj(eat, pizza)\n" +
+		                     "_subj(eat, _$qVar)\n" +
+
+		                     "tense(eat, past)\n" +
+		                     "HYP(eat, T)\n" +
+		                     "subscript-TAG(eat, .v-d)\n" +
+		                     "pos(eat, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(pizza, T)\n" +
+		                     "subscript-TAG(pizza, .s)\n" +
+		                     "pos(pizza, noun)\n" +
+		                     "noun_number(pizza, singular)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("What gave you that idea?",
+		                     "_iobj(give, you)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n" +
+
+		                     "tense(give, past)\n" +
+		                     "subscript-TAG(give, .v-d)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(that, .j-d)\n" +
+		                     "pos(that, det)\n" +
+		                     "definite-FLAG(idea, T)\n" +
+		                     "subscript-TAG(idea, .n)\n" +
+		                     "pos(idea, noun)\n" +
+		                     "noun_number(idea, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, plural)\n");
+
+		rc &= test_sentence ("Who told you that?",
+		                     "_iobj(tell, you)\n" +
+		                     "_obj(tell, that)\n" +
+		                     "_subj(tell, _$qVar)\n" +
+
+		                     "tense(tell, past)\n" +
+		                     "HYP(tell, T)\n" +
+		                     "subscript-TAG(tell, .v-d)\n" +
+		                     "pos(tell, verb)\n" +
+		                     "pronoun-FLAG(that, T)\n" +
+		                     "relative-FLAG(that, T)\n" +
+		                     "demonstrative-FLAG(that, T)\n" +
+		                     "subscript-TAG(that, .j-p)\n" +
+		                     "pos(that, noun)\n" +
+		                     "noun_number(that, uncountable)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+		rc &= test_sentence ("What is for dinner?",
+		                     "_pobj(for, dinner)\n" +
+		                     "_psubj(for, _$qVar)\n" +
+
+		                     "SPECIAL-PREP-FLAG(for, T)\n" +
+		                     "tense(for, present)\n" +
+		                     "subscript-TAG(for, .p)\n" +
+		                     "pos(for, conjunction)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(dinner, .n-u)\n" +
+		                     "pos(dinner, noun)\n" +
+		                     "noun_number(dinner, uncountable)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+		rc &= test_sentence ("Who's on first?",
+		                     "_pobj(on, first)\n" +
+		                     "_psubj(on, _$qVar)\n" +
+
+		                     "SPECIAL-PREP-FLAG(on, T)\n" +
+		                     "tense(on, present)\n" +
+		                     "HYP(on, T)\n" +
+		                     "pos(on, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "subscript-TAG(first, .a)\n" +
+		                     "pos(first, adj)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "noun_number(_$qVar, uncountable)\n");
+
+		rc &= test_sentence ("Who are you?",
+		                     "_subj(_%copula, you)\n" +
+
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(_%copula, present)\n" +
+		                     "subscript-TAG(_%copula, .v)\n" +
+		                     "pos(_%copula, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n");
+
+
+//----------------------------------------------------------------------------------------
+// who/what object and who/what indirect object questions
+//----------------------------------------------------------------------------------------
+		rc &= test_sentence ("Who do you love?",
+		                     "_obj(love, _$qVar)\n" +
+		                     "_subj(love, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(love, present_infinitive)\n" +
+		                     "HYP(love, T)\n" +
+		                     "subscript-TAG(love, .v)\n" +
+		                     "pos(love, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+
+		rc &= test_sentence ("What do you think?",
+		                     "_obj(think, _$qVar)\n" +
+		                     "_subj(think, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(think, present_infinitive)\n" +
+		                     "HYP(think, T)\n" +
+		                     "subscript-TAG(think, .v)\n" +
+		                     "pos(think, verb)\n" +
+		                     "subscript-TAG(do, .v)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, what)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n");
+
+		rc &= test_sentence ("To whom did you sell the children?",
+		                     "to(sell, _$qVar)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(sell, past_infinitive)\n" +
+		                     "HYP(sell, T)\n" +
+		                     "subscript-TAG(sell, .v)\n" +
+		                     "pos(sell, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, who)\n" +
+		                     "pronoun-FLAG(_$qVar, T)\n" +
+		                     "relative-FLAG(_$qVar, T)\n" +
+		                     "interrogative-FLAG(_$qVar, T)\n" +
+		                     "pos(_$qVar, noun)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(child, T)\n" +
+		                     "subscript-TAG(child, .p)\n" +
+		                     "pos(child, noun)\n" +
+		                     "noun_number(child, plural)\n" +
+		                     "pos(the, det)\n" +
+		                     "subscript-TAG(to, .r)\n" +
+		                     "pos(to, prep)\n");
+
+		rc &= test_sentence ("Why did you give him the money?",
+		                     "_iobj(give, him)\n" +
+		                     "_%because(give, _$qVar)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(money, T)\n" +
+		                     "subscript-TAG(money, .n-u)\n" +
+		                     "pos(money, noun)\n" +
+		                     "noun_number(money, uncountable)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(him, T)\n" +
+		                     "gender(him, masculine)\n" +
+		                     "definite-FLAG(him, T)\n" +
+		                     "pos(him, noun)\n" +
+		                     "noun_number(him, singular)\n" +
+		                     "tense(give, past_infinitive)\n" +
+		                     "HYP(give, T)\n" +
+		                     "subscript-TAG(give, .v)\n" +
+		                     "pos(give, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, why)\n" +
+		                     "pos(_$qVar, adv)\n");
+
+		rc &= test_sentence ("Why are you so stupid?",
+		                     "_advmod(stupid, so)\n" +
+		                     "_predadj(you, stupid)\n" +
+
+		                     "tense(stupid, present)\n" +
+		                     "subscript-TAG(stupid, .a)\n" +
+		                     "pos(stupid, adj)\n" +
+		                     "pos(so, conjunction)\n" +
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "subscript-TAG(be, .v)\n" +
+		                     "pos(be, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "tense(why, imperative)\n" +
+		                     "pos(why, verb)\n");
+
+		rc &= test_sentence ("How did you like the movie?",
+		                     "_obj(like, movie)\n" +
+		                     "how(like, _$qVar)\n" +
+		                     "_subj(like, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "tense(like, past_infinitive)\n" +
+		                     "HYP(like, T)\n" +
+		                     "subscript-TAG(like, .v)\n" +
+		                     "pos(like, verb)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "definite-FLAG(movie, T)\n" +
+		                     "subscript-TAG(movie, .n)\n" +
+		                     "pos(movie, noun)\n" +
+		                     "noun_number(movie, singular)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, how)\n" +
+		                     "pos(_$qVar, adv)\n" +
+		                     "pos(the, det)\n");
+
+		rc &= test_sentence ("How did you send him the message?",
+		                     "_iobj(send, him)\n" +
+		                     "_obj(send, message)\n" +
+		                     "how(send, _$qVar)\n" +
+		                     "_subj(send, you)\n" +
+
+		                     "pronoun-FLAG(you, T)\n" +
+		                     "gender(you, person)\n" +
+		                     "pos(you, noun)\n" +
+		                     "pos(the, det)\n" +
+		                     "definite-FLAG(message, T)\n" +
+		                     "subscript-TAG(message, .n)\n" +
+		                     "pos(message, noun)\n" +
+		                     "noun_number(message, singular)\n" +
+		                     "pos(?, punctuation)\n" +
+		                     "pronoun-FLAG(him, T)\n" +
+		                     "gender(him, masculine)\n" +
+		                     "definite-FLAG(him, T)\n" +
+		                     "pos(him, noun)\n" +
+		                     "noun_number(him, singular)\n" +
+		                     "tense(send, past_infinitive)\n" +
+		                     "HYP(send, T)\n" +
+		                     "subscript-TAG(send, .v)\n" +
+		                     "pos(send, verb)\n" +
+		                     "subscript-TAG(do, .v-d)\n" +
+		                     "pos(do, verb)\n" +
+		                     "QUERY-TYPE(_$qVar, how)\n" +
+		                     "pos(_$qVar, adv)\n");
+
+		report(rc, "Inquisitives");
+		return rc;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -1257,6 +3556,7 @@ public class TestRelEx
 		rc &= ts.test_equatives();
 		rc &= ts.test_extraposition();
 		rc &= ts.test_conjunctions();
+		rc &= ts.test_inquisitives();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
