@@ -31,6 +31,23 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
+; Step 0: Add a subject to a subjectless imperative sentence first so that it
+; can get tagged and eventually end up showing up in a dependency relation although
+; it's not there on the surface.  
+;
+; The action section below is inelegant however, I found that just <ref> didn't work whereas this does.
+; (NB: there are probably other implicit consituents in other sentence types we should add in this step . . .)
+
+#TemplateActionAlg
+ADDIMPSUBJ
+<LAB> = \Wi\.*
+=
+<F_L str> = you
+<F_L ref> = you
+<F_R subj> = you
+
+;////////////////////////////////////////////////////////////////////////////
+;
 ; Step one: coarse/crude POS tagging, based on word subscripts.
 ;
 ; adjectives
@@ -392,7 +409,7 @@ PREP_CLAUSE_OBJ
 ;
 ; D == determiner
 ; DP == possesive determiner
-; DT == time-related dterminer (e.g. next, every)
+; DT == time-related determiner (e.g. next, every)
 #TemplateActionAlg
 POS_ADJ
 <LAB> = \A\.*|\AF\.*|\DP\.*|\DT\.*|\D\.*
@@ -788,6 +805,22 @@ TENSE_FUTURE
 <F_R tense val> = future
 <F_L tense PLACE-HOLDER> = T
 ;
+; set flag for 'going to' future tense
+#TemplateActionAlg
+SET_GOINGTO_FUTURE_FLAG
+<LAB> = \TOf
+<F_L str> = going
+=
+<F_R GOINGTOFUTURE_FLAG> = T
+;
+#TemplateActionAlg
+TENSE_GOING-TO_FUTURE
+<LAB> = \I\.*
+<F_L GOINGTOFUTURE_FLAG> = T
+=
+<TENSE-LINK-FLAG> = T
+<F_R tense val> = future
+;
 #TemplateActionAlg
 TENSE_INFINITIVE
 <LAB>=\I\.*
@@ -1176,6 +1209,65 @@ QUESTION1
 <F_R ref nameSource> = %
 <F_R ref nameSource> = <F_R>
 ;
+; Algs for identifying prepositional-Q-words
+;
+#TemplateActionAlg
+COMBINE_PREP_QWORD
+; First stage in idenitfying prepositional Q-word:
+; Tag Q-word with preceding preposition
+<LAB> = JQ
+=
+<F_R prephead> = <F_L ref name>
+;
+#TemplateActionAlg
+PREPQUESTION1
+<LAB> = \D\.*
+<F_L prephead> = at|in|to|from|around
+<F_L ref name> = what|which|where
+<F_R ref name> = place|location
+=
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = where
+;
+#TemplateActionAlg
+PREPQUESTION2
+<LAB> = \D\.*
+<F_L prephead> = at|by|on|around
+<F_L ref name> = what|which|when
+<F_R ref name> = time|date|day|moment|instant
+=
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = when
+;
+#TemplateActionAlg
+PREPQUESTION3
+<LAB> = \D\.*
+<F_L prephead> = in|by|through
+<F_L ref name> = what
+<F_R ref name> = way|manner|means|method
+=
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = how
+;
+#TemplateActionAlg
+PREPQUESTION4
+<LAB> = \D\.*
+<F_L prephead> = to|in
+<F_L ref name> = what
+<F_R ref name> = degree|extent|amount
+=
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = how_much
+;
+#TemplateActionAlg
+PREPQUESTION5
+<LAB> = \D\.*
+<F_L prephead> = for|to
+<F_L ref name> = what
+<F_R ref name> = reason|purpose|end|point
+=
+<F_L ref name> = _$qVar
+<F_L ref QUERY-TYPE> = why
 ;
 ;//////////////////////////////////////////////////////////////////////
 ;
