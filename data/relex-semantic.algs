@@ -497,6 +497,13 @@ INV-SUBJECT_LINKING
 <F_L str> != than
 =
 <F_L subj> = <F_R subj>
+#TemplateActionAlg
+IMP-SUBJECT-ASSIGNMENT
+; assigning the imperative subject
+<LAB> = \Wi\.*
+<F_R subj> = %
+=
+<F_R subj> = <F_L ref>
 ;
 ;  "Mr. Smith is late."  (as opposed to "The late Mr. Smith")
 ; But Pa must connect to copula, so reject "The rose smelled sweet"
