@@ -31,20 +31,17 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; Step 0: Add a subject to a subjectless imperative sentence first so that it
-; can get tagged and eventually end up showing up in a dependency relation although
-; it's not there on the surface.  
+; Prepare a subject for a subjectless imperative sentence (to be linked in the sem-algs)
+;	-- NB: we should probably use this strategy to add other imvisible
+;	constitutents to other setence-types. e.g. How much (money) does it cost?
 ;
-; The action section below is inelegant however, I found that just <ref> didn't work whereas this does.
-; (NB: there are probably other implicit consituents in other sentence types we should add in this step . . .)
 
 #TemplateActionAlg
 ADDIMPSUBJ
 <LAB> = \Wi\.*
 =
 <F_L str> = you
-<F_L ref> = you
-<F_R subj> = you
+<F_R subj> = %
 
 ;////////////////////////////////////////////////////////////////////////////
 ;
@@ -273,8 +270,9 @@ POS_VERB_INVERTED
 #TemplateActionAlg
 POS_NOUN
 <F_L POS> = WORD
-<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|Mp|MF
+<LAB> = \S\.*|\SX\.*|\SF\.*|\AN\.*|\GN\.*|\YS\.* |\YP\.*|\Wi\.*|Mp|MF
 =
+<F_L POS> = noun
 ;
 ; BI: "That is what the man said" -- tag "what" as noun; it'll get tagged 
 ; with a pronoun flag later.
