@@ -800,7 +800,7 @@ FILLER_FIX
 ;
 #TemplateActionAlg
 QUESTION2
-<LAB> = \D\.\.w\.*
+<LAB> = \D\.\.w\.*|JQ
 =
 <F_R ref QUERY-FLAG> = T
 <F_L wall sentence_type> = QUERY
@@ -861,6 +861,16 @@ WHEN
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = when
 <F_L head-question-word ref links _%atTime> = <F_L ref>
+;
+; This alg failed to do anything, but I'm still working on it . . .
+;
+;
+;#TemplateActionAlg
+;ATORBYWHATTIME 
+;<LAB> = \D\.*
+;<F_L ref QUERY-TYPE> = when
+;=
+;<F_L head-question-word ref links _%atTime> = <F_L ref>
 ;
 #TemplateActionAlg
 ; This algoritm was modified to exclude cases where there isn't a todo 
@@ -972,11 +982,10 @@ DO_QUESTION1
 <F_R ref QUERY-FLAG> = T
 ;
 ;
-;  SPECIAL RULE FOR COPULA-Questions: "Who/What is the cat?"
-;    Prevents "who" from acting as the subject.
-;    Instead, "cat" will act as the subject and a query variable
-;
-;
+;SPECIAL RULE FOR COPULA-Questions: "Who/What is the cat?"
+;	"Prevents "who" from acting as the subject.
+;	Instead, "cat" will act as the subject and the object as query variable"
+;	(DIDN'T WORK THEREFORE COMMENTED-OUT FOR NOW)
 ;
 ;#TemplateActionAlg
 ;COPULA_QUESTION1
@@ -985,10 +994,11 @@ DO_QUESTION1
 ;<subj QUERY-FLAG> = T
 ;<obj> != %
 ;=
-;<subj> = %
 ;<subj> = <obj>
-;<subj QUERY-FLAG> = T
-;<obj> = %
+;<obj name> = _$qVar
+;<obj ref name> = _$qVar
+;<obj QUERY-FLAG> = T
+;<subj QUERY-FLAG> = %
 ;
 ; /////////////////////////////////////////////////////////////////////
 ;
@@ -2365,13 +2375,13 @@ QUANTIFIERS_1
 NUMBER-1
 <LAB> = \D\.*|\NW\.*
 <LAB> != \D..y
-<LAB> != \D..w
-<LAB> != \D..wc
+<LAB> != \D..w.
 <LAB> != \Dmcn
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
 <F_L POSSESSIVE-FLAG> != T
 <F_L QUANTITY-EXCEPTION-FLAG> != T
+<F_L QUERY-FLAG> != T
 =
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
@@ -3339,6 +3349,7 @@ COPULA_QUESTION1
 <head> = %
 <head> = $O
 <head COPULA-QUESTION-FLAG> = T
+
 ; For cases such "Where did hugo plan to go?" we force the location link upon go
 #TemplateActionAlg
 WHERE_HACK_FOR_QP
