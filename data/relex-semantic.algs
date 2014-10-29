@@ -808,6 +808,16 @@ FILLER_FIX
 #TemplateActionAlg
 QUESTION2
 <LAB> = \D\.\.w\.*|JQ
+<F_L POS> != prep
+=
+<F_R ref QUERY-FLAG> = T
+<F_L wall sentence_type> = QUERY
+;
+#TemplateActionAlg
+QUESTION3
+<LAB> = \D\.*
+<F_L str> = which|what
+<F_R POS> = noun
 =
 <F_R ref QUERY-FLAG> = T
 <F_L wall sentence_type> = QUERY
@@ -1383,7 +1393,7 @@ PREP_LINKING
 ;<F_R str> = to
 ;<F_L str> = who|Who|whom|Whom|what|What
 ;=
-;<F_R prep-parts prepobj> = $qVar
+;<F_R prep-parts prepobj> = _$qVar
 
 #TemplateActionAlg
 POSSR_TO_APOSTROPHE
@@ -2382,7 +2392,6 @@ QUANTIFIERS_1
 NUMBER-1
 <LAB> = \D\.*|\NW\.*
 <LAB> != \D..y
-<LAB> != \D..w.
 <LAB> != \Dmcn
 <F_L DETERMINER_FLAG> != T
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
@@ -2588,6 +2597,14 @@ ind_deter
 <F_L POSSESSIVE-FLAG> != T
 =
 <F_R ref links _det>= <F_L ref>
+
+#TemplateActionAlg
+QUESTION_DETERMINER
+<LAB> = \D\.*
+<F_R POS> = noun
+<F_L str> = which|Which|what|What
+=
+<F_R ref links _det> = <F_L ref>
 
 ;/////////////////////////////////////////////////////////////////////////////
 ; 

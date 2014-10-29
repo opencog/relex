@@ -294,6 +294,7 @@ POS_NOUN_INVERTED
 ; -- Demonstrative Adjective "this book" "those rocks"
 ; -- Numeric determiner: "two dogs" "the first hour"
 ; -- Quantifier "some things", "few authors"
+; -- interrogative "which"
 ;
 ; See also: list of posessives, gernder, reflexive and anaphora below.
 ;
@@ -309,13 +310,13 @@ POS_NOUN_INVERTED
 #TemplateActionAlg
 DETERMINER_POS
 <LAB> = \D\.*|\DD\.*|\NS\.*
-<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that
+<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that|which|Which|what|What
 =
 <DETERMINER_LINK_FLAG> = T
 <F_L DETERMINER_FLAG> = T
 <F_L POS> = det
 ;
-; Tag determiners that are inverested subjects: e.g.
+; Tag determiners that are inverted subjects: e.g.
 ; "Are those the the one we want?"
 ;
 #TemplateActionAlg
@@ -341,7 +342,7 @@ DETERMINER_POS2
 ; DETERMINER_FLAG
 ; <LAB> = \D\.*|\DD\.*|\NS\.*
 ; =
-; <F_L ref determiner-FLAG> = T
+; <F_L ref DETERMINER_FLAG> = T
 ;
 ; ---------------------------------------------------------
 ;
@@ -1187,7 +1188,7 @@ QUESTION1
 ;
 #TemplateActionAlg
 QUESTION1
-<LAB> = \W[sq]\.*|\Jw\.*
+<LAB> = \W[sq]\.*|\Jw\.*|\JQ\.*
 <F_R str> = what|What
 =
 <F_R ref QUERY-TYPE> = what
@@ -1198,7 +1199,7 @@ QUESTION1
 ;
 #TemplateActionAlg
 QUESTION1
-<LAB> = \W[sq]\.*|\Jw\.*
+<LAB> = \W[sq]\.*|\Jw\.*|\JQ\.*
 <F_R str> = which|Which
 =
 <F_R ref QUERY-TYPE> = which
@@ -1575,6 +1576,7 @@ TAG_PRONOUNS_INTERROG
 TAG_PRONOUNS_RELATIVE
 <str> = who|whoever|whom|whomever|whose|which|that|whatever|whenever|whichever
 <POS> = noun|WORD
+<ref interrogative-FLAG> != T
 =
 <ref pronoun-FLAG> = T
 <ref relative-FLAG> = T

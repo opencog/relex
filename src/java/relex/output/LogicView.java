@@ -73,9 +73,13 @@ public class LogicView
 
 		String schemeOutput = ruleProcessor.applyRulesToParse(root);
 		String parseNode = "(ParseNode \"" + parse.getIDString() + "\")";
+		String interpretationNode = "(InterpretationNode \"" + parse.getIDString() + "_interpretation_$X" + "\")";
 
 		// replace sentence_index to reference this parse
 		schemeOutput = schemeOutput.replaceAll("sentence_index", parseNode);
+
+		// replace intepretation_index to reference this interpretation
+		schemeOutput = schemeOutput.replaceAll("interpretation_index", interpretationNode);
 
 		// append the scheme function for post-processing markers
 		schemeOutput = schemeOutput.concat("(r2l-marker-processing)\n");
