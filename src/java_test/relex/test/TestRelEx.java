@@ -1301,10 +1301,9 @@ public class TestRelEx
 		                     "_subj(sell, you)\n");
 
 		rc &= test_sentence ("To what do we owe the pleasure?", 
-		                     "_quantity(do, what)\n" +
-		                     "_iobj(owe, do)\n" +
+		                     "to(owe, _$qVar)\n" +
 		                     "_obj(owe, pleasure)\n" +
-		                     "_subj(owe, we)\n");
+							 "_subj(owe, we)\n");
 
 		rc &= test_sentence ("Who did you sell the children to?",
 		                     "to(sell, to)\n" +
@@ -1362,8 +1361,8 @@ public class TestRelEx
 		                     "_predadj(you, mad)\n");
 	
 		rc &= test_sentence ("Is the book under the table?",
-		                     "_pobj(under, table)\n" +
-		                     "_psubj(under, book)\n");
+		                     "under(book, table)\n" +
+							 "_subj(be, book)\n");
 	
 		rc &= test_sentence ("Does he seem mad?",
 		                     "_to-be(seem, mad)\n" +
@@ -1498,14 +1497,12 @@ public class TestRelEx
 		                     "_subj(_%copula, party)\n");
 
 		rc &= test_sentence ("Why do you live?",
-		                     "_%because(live, _$qVar)\n" +
 		                     "_subj(live, you)\n");
 
 		rc &= test_sentence ("Why do you like terrible music?",
-		                     "_%because(like, _$qVar)\n" +
 		                     "_obj(like, music)\n" +
 		                     "_subj(like, you)\n" +
-		                     "_amod(music, terrible)\n");
+							 "_amod(music, terrible)\n");
 
 		rc &= test_sentence ("Why are you such a fool?", 
 		                     "_obj(be, fool)\n" +
@@ -1516,7 +1513,8 @@ public class TestRelEx
 		                     "_subj(sleep, you)\n");
 
 		rc &= test_sentence ("How was the party?", 
-		                     "_subj(_$qVar, party)\n");
+		                     "how(_%copula, _$qVar)\n" +
+							 "_subj(_%copula, party)\n");
 
 		rc &= test_sentence ("How is your food?",
 		                     "_poss(food, you)\n" +
@@ -1655,9 +1653,8 @@ public class TestRelEx
 
 		rc &= test_sentence ("Why did you give him the money?",
 		                     "_iobj(give, him)\n" +
-		                     "_%because(give, _$qVar)\n" +
-		                     "_obj(give, money)\n" +
-		                     "_subj(give, you)\n");
+							 "_obj(give, money)\n" +
+							 "_subj(give, you)\n");
 
 		rc &= test_sentence ("Why are you so stupid?",
 		                     "_advmod(stupid, so)\n" +
