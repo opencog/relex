@@ -21,6 +21,7 @@ import relex.feature.FeatureNode;
 import relex.logic.Loader;
 import relex.logic.RuleSet;
 import relex.ParsedSentence;
+import java.util.regex.Matcher;
 
 /**
  * @author      Alex van der Peet <alex.van.der.peet@gmail.com>
@@ -79,7 +80,7 @@ public class LogicView
 		schemeOutput = schemeOutput.replaceAll("sentence_index", parseNode);
 
 		// replace intepretation_index to reference this interpretation
-		schemeOutput = schemeOutput.replaceAll("interpretation_index", interpretationNode);
+		schemeOutput = schemeOutput.replaceAll("interpretation_index", Matcher.quoteReplacement(interpretationNode));
 
 		// append the scheme function for post-processing markers
 		schemeOutput = schemeOutput.concat("(r2l-marker-processing)\n");

@@ -30,10 +30,10 @@
 # ======================================================================================================
 # Speech acts (awaiting revision and implementation)
 # =====================================================================================================
-[IMPERATIVE] {1} <DECLARATIVE> tense($verb, imperative) => (imperative-rule sentence_index)
-#[INTERROGATIVE] {1} <DECLARATIVE> interrogative-FLAG(_\$qVar, T) => (interrogative-rule interpretation_index)
-#[TRUTHQUERY] {1} <DECLARATIVE> TRUTH-QUERY-FLAG($verb, T) => (truth-query-rule interpretation_index)
-#[DECLARATIVE] {2} <IMPERATIVE, INTERROGATIVE, TRUTHQUERY> => (declarative-rule interpretation_index)
+[IMPERATIVE] {1} <DECLARATIVE> tense($verb, imperative) => (imperative-rule interpretation_index)
+[INTERROGATIVE] {1} <DECLARATIVE> interrogative-FLAG(_\$qVar, T) => (interrogative-rule interpretation_index)
+[TRUTHQUERY] {1} <DECLARATIVE> TRUTH-QUERY-FLAG($verb, T) => (truth-query-rule interpretation_index)
+[DECLARATIVE] {2} <IMPERATIVE, INTERROGATIVE, TRUTHQUERY> pos($x, $y) => (declarative-rule interpretation_index)
 #================================================================================================
 # Question rules
 #================================================================================================
@@ -56,7 +56,7 @@
 # Why questions
 #===============
 [why-Q] {3} <whycop-Q> QUERY-TYPE(_\$qVar, why) & _%because($verb, _\$qVar) => (why-rule $verb (get-instance-name $verb word_index sentence_index))
-[whycop-Q] {3} <why-Q> QUERY-TYPE(_\$qVar, why) & _%because(_\%copula, _\$qVar) & _subj(_\%copula, subj) => (whycop-Q-rule $subj (get-instance-name $subj word_index sentence_index))
+[whycop-Q] {2} <why-Q> QUERY-TYPE(_\$qVar, why) & _%because(_\%copula, _\$qVar) & _subj(_\%copula, $subj) => (whycop-Q-rule $subj (get-instance-name $subj word_index sentence_index))
 #===========================
 # How of manner
 #==========================
@@ -91,6 +91,9 @@
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
+
+#[PREPADVMOD] {4} <> $prep($verb, _\$qVar) & _det($noun, _\$qVar) => (prepadvmod-rule $verb (get-instance-name $verb word_index sentence_index) $noun (get-instance-name
+#$noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
 # ============================================
 # unary rules
