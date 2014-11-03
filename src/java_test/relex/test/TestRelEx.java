@@ -675,7 +675,7 @@ public class TestRelEx
 				    "degree(tall, comparative)\n");
 
 		rc &= test_sentence ("Venus is brighter than Mars.",
-		          "than(Venus, Mars)\n"+
+		            "than(Venus, Mars)\n"+
 				    "_predadj(Venus, bright)\n"+
 				    "_comparative(bright, Venus)\n"+
 				    "degree(bright, comparative)\n");
@@ -1236,8 +1236,444 @@ public class TestRelEx
 		report(rc, "Extrapostion");
 		return rc;
 	}
+	
+	//Added by Matthew
+	public boolean test_inquisitives()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("What is Socrates?",
+							 "_obj(be, Socrates)\n" +
+							 "_subj(be, _$qVar)\n");
+
+		rc &= test_sentence ("Who is the teacher?",
+							 "_obj(be, teacher)\n" +
+		                     "_subj(be, _$qVar)\n");
 
 
+		rc &= test_sentence ("Who is a man?",
+		                     "_obj(be, man)\n" +
+		                     "_subj(be, _$qVar)\n");
+
+		rc &= test_sentence ("Who told you that bullshit?", 
+		                     "_iobj(tell, you)\n" +
+		                     "_obj(tell, bullshit)\n" +
+		                     "_subj(tell, _$qVar)\n" +
+		                     "_det(bullshit, that)\n");
+
+		rc &= test_sentence ("Who told that story to the police?", 
+		                     "to(tell, police)\n" +
+		                     "_obj(tell, story)\n" +
+		                     "_subj(tell, _$qVar)\n" +
+		                     "_det(story, that)\n");
+
+		rc &= test_sentence ("What gives you that idea?", 
+		                     "_iobj(give, you)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n");
+
+		rc &= test_sentence ("What gave that idea to the police?",
+		                     "to(give, police)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n");
+
+		rc &= test_sentence ("What did you tell the fuzz?", 
+		                     "_iobj(tell, fuzz)\n" +
+		                     "_obj(tell, _$qVar)\n" +
+		                     "_subj(tell, you)\n");
+
+		rc &= test_sentence ("What did you give to Mary?", 
+		                     "to(give, Mary)\n" +
+		                     "_obj(give, _$qVar)\n" +
+		                     "_subj(give, you)\n");
+
+		rc &= test_sentence ("Who did you give the slavers?", 
+		                     "_subj(give, you)\n");
+
+		rc &= test_sentence ("Who did you sell to the slavers?",
+		                     "to(sell, to)\n" +
+		                     "_subj(sell, you)\n");
+
+		rc &= test_sentence ("To whom did you sell the children?", 
+		                     "to(sell, _$qVar)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n");
+
+		rc &= test_sentence ("To what do we owe the pleasure?", 
+		                     "to(owe, _$qVar)\n" +
+		                     "_obj(owe, pleasure)\n" +
+							 "_subj(owe, we)\n");
+
+		rc &= test_sentence ("Who did you sell the children to?",
+		                     "to(sell, to)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n");
+
+		rc &= test_sentence ("What bothers you?",
+		                     "_obj(bother, you)\n" +
+		                     "_subj(bother, _$qVar)\n"); 
+
+		rc &= test_sentence ("Who programmed you?",
+		                     "_obj(program, you)\n" +
+		                     "_subj(program, _$qVar)\n");
+
+		rc &= test_sentence ("What is on the table?",
+		                     "_pobj(on, table)\n" +
+		                     "_psubj(on, _$qVar)\n");
+
+		rc &= test_sentence ("What did you say?", 
+		                     "_obj(say, _$qVar)\n" +
+		                     "_subj(say, you)\n");
+
+		rc &= test_sentence ("Who do you love?",
+		                     "_obj(love, _$qVar)\n" +
+		                     "_subj(love, you)\n");
+
+		rc &= test_sentence ("What is for dinner?",
+		                     "_pobj(for, dinner)\n" +
+		                     "_psubj(for, _$qVar)\n");
+
+		rc &= test_sentence ("Who's on first?",
+		                     "_pobj(on, first)\n" +
+		                     "_psubj(on, _$qVar)\n");
+		
+		rc &= test_sentence ("Who farted?",
+		                     "_subj(fart, _$qVar)\n");
+
+		rc &= test_sentence ("What is happening?", 
+		                     "_subj(happen, _$qVar)\n");
+
+		rc &= test_sentence ("Who is correct?", 
+		                     "_predadj(_$qVar, correct)\n");
+
+		rc &= test_sentence ("What is right?",
+		                     "_predadj(_$qVar, right)\n");
+				
+		rc &= test_sentence ("What are you doing?",
+		                     "_subj(_$qVar, you)\n");
+
+		rc &= test_sentence ("Are you the one?",
+		                     "_obj(be, one)\n" +
+		                     "_subj(be, you)\n");
+		
+		rc &= test_sentence ("Are you mad?", 
+		                     "_predadj(you, mad)\n");
+	
+		rc &= test_sentence ("Is the book under the table?",
+		                     "under(book, table)\n" +
+							 "_subj(be, book)\n");
+	
+		rc &= test_sentence ("Does he seem mad?",
+		                     "_to-be(seem, mad)\n" +
+		                     "_subj(seem, he)\n");
+
+		rc &= test_sentence ("Does she want to help us?",	
+		                     "_obj(help, us)\n" +
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n");		
+
+		rc &= test_sentence ("Does she want you to help us?",
+		                     "_obj(help, us)\n" +
+		                     "_subj(help, you)\n" +
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n");
+
+		rc &= test_sentence ("Was she good enough to help?",
+		                     "_predadj(she, good)\n" +
+		                     "_to-do(good, help)\n");
+
+		rc &= test_sentence ("Must she be able to sing?",
+		                     "_to-do(able, sing)\n" +
+		                     "_predadj(she, able)\n");
+
+		rc &= test_sentence ("Does she want to sing?",
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n");
+
+		rc &= test_sentence ("Have you slept?",
+		                     "_subj(sleep, you)\n");
+
+		rc &= test_sentence ("Will you sleep?",
+		                     "_subj(sleep, you)\n");
+		
+		rc &= test_sentence ("Did you sleep?",
+		                     "_subj(sleep, you)\n");
+
+		rc &= test_sentence ("Did you eat the leftover baba-ganoush?",
+		                     "_obj(eat, leftover)\n" +
+		                     "_to-be(eat, baba-ganoush)\n" +
+		                     "_subj(eat, you)\n");
+
+		rc &= test_sentence ("Did you give her the money?",
+		                     "_iobj(give, her)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n");
+
+		rc &= test_sentence ("Did you give the money to her?",
+		                     "to(give, her)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n");
+
+		rc &= test_sentence ("The book is under the table?",
+		                     "_pobj(under, table)\n" +
+		                     "_psubj(under, book)\n");
+
+		rc &= test_sentence ("Maybe she eats lunch.",
+		                     "_obj(eat, lunch)\n" +
+		                     "_advmod(eat, maybe)\n" +
+		                     "_subj(eat, she)\n");
+
+		rc &= test_sentence ("Perhaps she is nice.",
+		                     "_advmod(nice, perhaps)\n" +
+		                     "_predadj(she, nice)\n");
+
+		rc &= test_sentence ("She wants to help John.",
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+		                     "_obj(help, John)\n");
+
+		rc &= test_sentence ("She wants you to help us.",
+		                     "_to-do(want, help)\n" +
+		                     "_subj(want, she)\n" +
+		                     "_obj(help, us)\n" +
+		                     "_subj(help, you)\n");
+
+		rc &= test_sentence ("She is nice to help with the project.", 
+		                     "with(help, project)\n" +
+		                     "_to-do(nice, help)\n" +
+		                     "_predadj(she, nice)\n");
+
+		rc &= test_sentence ("She must be able to sing.",
+		                     "_to-do(able, sing)\n" +
+		                     "_predadj(she, able)\n");
+
+		rc &= test_sentence ("She must need to sing?", 
+		                     "_to-do(need, sing)\n" +
+		                     "_subj(need, she)\n");
+
+		rc &= test_sentence ("She must want to sing?", 
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n");
+
+		rc &= test_sentence ("She wants to sing.",
+		                     "_to-do(want, sing)\n" +
+		                     "_subj(want, she)\n");
+
+		rc &= test_sentence ("Where do you live?",
+		                     "_%atLocation(live, _$qVar)\n" +
+		                     "_subj(live, you)\n");
+
+		rc &= test_sentence ("Where did you eat dinner?",
+		                     "_%atLocation(eat, _$qVar)\n" +
+		                     "_obj(eat, dinner)\n" +
+		                     "_subj(eat, you)\n");
+
+		rc &= test_sentence ("Where is the party?",
+		                     "_%atLocation(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, party)\n");
+
+		rc &= test_sentence ("Where will she be happy?", 
+		                     "_%atLocation(happy, _$qVar)\n" +
+		                     "_predadj(she, happy)\n");
+
+		rc &= test_sentence ("When did jazz die?",
+		                     "_%atTime(die, _$qVar)\n" +
+		                     "_subj(die, jazz)\n");
+
+		rc &= test_sentence ("When did you bake the cake?",
+		                     "_%atTime(bake, _$qVar)\n" +
+		                     "_obj(bake, cake)\n" +
+		                     "_subj(bake, you)\n");
+
+		rc &= test_sentence ("When did you give him the money?", 
+		                     "_iobj(give, him)\n" +
+		                     "_%atTime(give, _$qVar)\n" +
+		                     "_obj(give, money)\n" +
+		                     "_subj(give, you)\n");
+
+		rc &= test_sentence ("When is the party?",
+		                     "_%atTime(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, party)\n");
+
+		rc &= test_sentence ("Why do you live?",
+		                     "_subj(live, you)\n");
+
+		rc &= test_sentence ("Why do you like terrible music?",
+		                     "_obj(like, music)\n" +
+		                     "_subj(like, you)\n" +
+							 "_amod(music, terrible)\n");
+
+		rc &= test_sentence ("Why are you such a fool?", 
+		                     "_obj(be, fool)\n" +
+		                     "_subj(be, you)\n");
+
+		rc &= test_sentence ("How did you sleep?",
+		                     "how(sleep, _$qVar)\n" +
+		                     "_subj(sleep, you)\n");
+
+		rc &= test_sentence ("How was the party?", 
+		                     "how(_%copula, _$qVar)\n" +
+							 "_subj(_%copula, party)\n");
+
+		rc &= test_sentence ("How is your food?",
+		                     "_poss(food, you)\n" +
+		                     "how(_%copula, _$qVar)\n" +
+		                     "_subj(_%copula, food)\n");
+
+		rc &= test_sentence ("How much money does it cost?",
+		                     "_obj(cost, money)\n" +
+		                     "_subj(cost, it)\n" +
+		                     "_quantity(money, _$qVar)\n");
+
+		rc &= test_sentence ("How many books have you read?",
+		                     "_obj(read, book)\n" +
+		                     "_subj(read, you)\n" +
+		                     "_quantity(book, _$qVar)\n");
+
+		rc &= test_sentence ("How fast does it go?",
+		                     "_advmod(fast, _$qVar)\n" +
+		                     "_subj(go, it)\n");
+
+		rc &= test_sentence ("Which girl do you like?",
+		                     "_obj(like, girl)\n" +
+		                     "_subj(like, you)\n" +
+		                     "_quantity(girl, _$qVar)\n");
+
+		rc &= test_sentence ("Which girl likes you?",
+		                     "_obj(like, you)\n" +
+		                     "_subj(like, girl)\n" +
+		                     "_quantity(girl, _$qVar)\n");
+
+		rc &= test_sentence ("Which girl is crazy?",
+		                     "_quantity(girl, _$qVar)\n" +
+		                     "_predadj(girl, crazy)\n");
+
+		rc &= test_sentence ("The books were written by Charles Dickens.",
+		                     "_obj(write, book)\n" +
+		                     "by(write, Charles_Dickens)\n");
+
+		rc &= test_sentence ("The books are published.",
+		                     "_obj(publish, book)\n");
+
+		rc &= test_sentence ("I did my homework, and I went to school.",
+		                     "_obj(do, homework)\n" +
+		                     "_subj(do, I)\n" +
+		                     "to(go, school)\n" +
+		                     "_subj(go, I)\n" +
+		                     "_poss(homework, me)\n");
+
+		rc &= test_sentence ("John and Madison eat the cake.",
+		                     "_obj(eat, cake)\n" +
+		                     "_subj(eat, John)\n" +
+		                     "_subj(eat, Madison)\n" +
+		                     "conj_and(John, Madison)\n");
+
+		rc &= test_sentence ("Joan is poor  but  happy.", 
+		                     "_predadj(Joan, poor)\n" +
+		                     "_predadj(Joan, happy)\n");
+
+		rc &= test_sentence ("I think that dogs can fly.",
+		                     "that(think, fly)\n" +
+		                     "_subj(think, I)\n" +
+		                     "_subj(fly, dog)\n");
+
+		rc &= test_sentence ("He is glad that she won.",
+		                     "that(glad, win)\n" +
+		                     "_subj(win, she)\n" +
+		                     "_predadj(he, glad)\n");
+
+		rc &= test_sentence ("He ran so quickly that he flew.",
+		                     "_advmod(quickly, so)\n" +
+		                     "_subj(fly, he)\n" +
+		                     "that(run, fly)\n" +
+		                     "_advmod(run, quickly)\n" +
+		                     "_subj(run, he)\n");
+
+		rc &= test_sentence ("I had dinner at 6 pm",
+		                     "_obj(have, dinner)\n" +
+		                     "at(have, pm)\n" +
+		                     "_subj(have, I)\n" +
+		                     "_time(pm, 6)\n");
+
+		rc &= test_sentence ("I went to sleep at 1 am",
+		                     "to(go, sleep)\n" +
+		                     "_subj(go, I)\n" +
+		                     "_time(am, 1)\n" +
+		                     "at(sleep, am)\n");
+
+		rc &= test_sentence ("Who farted?",
+		                     "_subj(fart, _$qVar)\n");
+
+		rc &= test_sentence ("What happened?",
+		                     "_subj(happen, _$qVar)\n");
+
+		rc &= test_sentence ("What killed him?",
+		                     "_obj(kill, him)\n" +
+		                     "_subj(kill, _$qVar)\n");
+
+		rc &= test_sentence ("Who ate the pizza?",
+		                     "_obj(eat, pizza)\n" +
+		                     "_subj(eat, _$qVar)\n");
+
+		rc &= test_sentence ("What gave you that idea?",
+		                     "_iobj(give, you)\n" +
+		                     "_obj(give, idea)\n" +
+		                     "_subj(give, _$qVar)\n" +
+		                     "_det(idea, that)\n");
+
+		rc &= test_sentence ("Who told you that?",
+		                     "_iobj(tell, you)\n" +
+		                     "_obj(tell, that)\n" +
+		                     "_subj(tell, _$qVar)\n");
+
+		rc &= test_sentence ("What is for dinner?",
+		                     "_pobj(for, dinner)\n" +
+		                     "_psubj(for, _$qVar)\n");
+
+		rc &= test_sentence ("Who's on first?",
+		                     "_pobj(on, first)\n" +
+		                     "_psubj(on, _$qVar)\n");
+
+		rc &= test_sentence ("Who are you?",
+		                     "_subj(_%copula, you)\n");
+
+		rc &= test_sentence ("Who do you love?",
+		                     "_obj(love, _$qVar)\n" +
+		                     "_subj(love, you)\n");
+
+		rc &= test_sentence ("What do you think?",
+		                     "_obj(think, _$qVar)\n" +
+		                     "_subj(think, you)\n");
+
+		rc &= test_sentence ("To whom did you sell the children?",
+		                     "to(sell, _$qVar)\n" +
+		                     "_obj(sell, child)\n" +
+		                     "_subj(sell, you)\n");
+
+		rc &= test_sentence ("Why did you give him the money?",
+		                     "_iobj(give, him)\n" +
+							 "_obj(give, money)\n" +
+							 "_subj(give, you)\n");
+
+		rc &= test_sentence ("Why are you so stupid?",
+		                     "_advmod(stupid, so)\n" +
+		                     "_predadj(you, stupid)\n");
+
+		rc &= test_sentence ("How did you like the movie?",
+		                     "_obj(like, movie)\n" +
+		                     "how(like, _$qVar)\n" +
+		                     "_subj(like, you)\n");
+
+		rc &= test_sentence ("How did you send him the message?",
+		                     "_iobj(send, him)\n" +
+		                     "_obj(send, message)\n" +
+		                     "how(send, _$qVar)\n" +
+		                     "_subj(send, you)\n");
+
+		report(rc, "Inquisitives");
+		return rc;
+	}
 
 	public static void main(String[] args)
 	{
@@ -1257,6 +1693,7 @@ public class TestRelEx
 		rc &= ts.test_equatives();
 		rc &= ts.test_extraposition();
 		rc &= ts.test_conjunctions();
+		rc &= ts.test_inquisitives();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
