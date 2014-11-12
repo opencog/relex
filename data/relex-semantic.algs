@@ -33,7 +33,6 @@
 #TemplateActionAlg
 CONJ_AND_LEFT_SIDE
 <LAB> = \AJl\.*|\MJl\.*|\QJl\.*|\RJl\.*|\SJl\.*|\VJl\.*
-<F_L str> != and|or|but|,
 =
 <F_R conj> += <F_L>
 ;
@@ -2151,16 +2150,6 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
-;Pizza, which most people love, is not very healthy.
-;making "not" adverb of "is"
-#TemplateActionAlg
-ADV5
-<LAB> = \EBm
-<F_R str> = not
-<F_L str> = be|is
-<F_L advmod> = %
-=
-<F_L advmod> += <F_R ref>
 ;
 ; Fix up conjunctions; link not to the conjunction,
 ; but to each conjoined modifier.
@@ -3112,9 +3101,23 @@ NO_MORE_OR_LESS
 NEGATIVE1
 <LAB> = \N\.*|\EB\.*
 <F_R str> = not
+<F_L tense first_verb head-word conj> = %
 =
 <F_L tense first_verb head-word ref NEGATIVE-FLAG> += T
 <F_L tense first_verb head-word negation> += <F_R>
+;
+;negative in the case of conjunction
+;example- "Summer school is not easy but difficult."
+;NEGATIVE-FLAG(easy, T)
+#TemplateActionAlg
+NEGATIVE_CONJ
+<LAB> = \N\.*|\EB\.*
+<F_R str> = not
+<F_L tense first_verb head-word conj> != %
+=
+<F_L tense first_verb head-word ref NEGATIVE-FLAG> = %
+<F_L tense first_verb head-word conj member0 ref NEGATIVE-FLAG> += T
+<F_L tense first_verb head-word conj member0 negation> += <F_R>
 ;
 #TemplateActionAlg
 NEGATIVE_CONTR1
@@ -3248,13 +3251,37 @@ CONJ_AND_MERGE
 ; result is conj_or(Jack, Jill)
 ;
 #TemplateActionAlg
+CONJ_EITHER_OR_MERGE
+<LAB> = \XJo
+<F_R conj member0> != %
+<F_R conj member1> != %
+=
+<F_R either> = T
+<F_R conj member0 ref links conj_either_or> = <F_R conj member1 ref>
+#TemplateActionAlg
 CONJ_OR_MERGE
+<either> != T
 <conj member0> != %
 <conj member1> != %
 <str> = or
 =
 <conj member0 ref links conj_or> = <conj member1 ref>
-
+#TemplateActionAlg
+CONJ_NEITHER_NOR_MERGE
+<LAB> = \XJn
+<F_R conj member0> != %
+<F_R conj member1> != %
+=
+<F_R conj member0 ref links conj_neither_nor> = <F_R conj member1 ref>
+;
+#TemplateActionAlg
+CONJ_NOR_MERGE
+<conj member0> != %
+<conj member1> != %
+<str> = but
+=
+<conj member0 ref links conj_but> = <conj member1 ref>
+;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; HYPOTHETICAL
