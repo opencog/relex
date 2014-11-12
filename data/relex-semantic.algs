@@ -722,14 +722,14 @@ HEAD_TO_SUBJ_AND_OBJ2
 #TemplateActionAlg
 HEAD-QUESTION-WORD
 ;  Who does John think the man I love wants?
-<LAB> = \Rw\.*|Q
+<LAB> = \Rw\.*|Q|Qd
 =
 <F_L head-question-word> += <F_R head-word>
 ;
 #TemplateActionAlg
 HEAD-QUESTION-WHICH
 ;  Which cat/one does he think John wants?
-<LAB> = \D\.\.w\.*
+<LAB> = \D\.*
 <F_R head-question-word> != %
 =
 <F_L head-question-word> += <F_R head-question-word>
@@ -737,7 +737,7 @@ HEAD-QUESTION-WHICH
 #TemplateActionAlg
 HEAD-QUESTION-WHICH
 ;  Which cat/one does he think John wants?
-<LAB> = \D\.\.w\.*
+<LAB> = \D\.*
 <F_R head-question-word> = %
 =
 <F_L head-question-word> += <F_R head-word>
@@ -862,7 +862,7 @@ DECLARATIVE_QUESTION2
 ;
 #TemplateActionAlg
 QUESTIONS-COPULA
-<LAB> = Q
+<LAB> = Q|Qd
 <F_L head-question-word str> = be
 <F_L head-question-word obj> = %
 =
@@ -871,7 +871,7 @@ QUESTIONS-COPULA
 ;
 #TemplateActionAlg
 WHEN
-<LAB> = Q
+<LAB> = Q|Qd
 <F_L str> = When|when
 =
 <F_L ref name> = %
@@ -879,11 +879,10 @@ WHEN
 <F_L ref QUERY-TYPE> = when
 <F_L head-question-word ref links _%atTime> = <F_L ref>
 ;
-; This alg failed to do anything, but I'm still working on it . . .
-;
+; Rule below not working, not sure why yet . . . 
 ;
 ;#TemplateActionAlg
-;ATORBYWHATTIME 
+;PREPWHEN
 ;<LAB> = \D\.*
 ;<F_L ref QUERY-TYPE> = when
 ;=
@@ -922,7 +921,7 @@ WHERE2
 ;
 #TemplateActionAlg
 HOW
-<LAB> = Q|AF|AFh
+<LAB> = Q|Qd|AF|AFh
 <F_L str> = How|how
 =
 <F_L ref name> = %
@@ -933,7 +932,7 @@ HOW
 ;
 #TemplateActionAlg
 WHY
-<LAB> = Q
+<LAB> = Q|Qd
 <F_L str> = Why|why
 <F_L head-question-word> != %
 =
