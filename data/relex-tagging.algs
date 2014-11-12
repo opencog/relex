@@ -31,17 +31,6 @@
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; Prepare a subject for a subjectless imperative sentence (to be linked in the sem-algs)
-;	-- NB: we should probably use this strategy to add other imvisible
-;	constitutents to other setence-types. e.g. How much (money) does it cost?
-;
-
-#TemplateActionAlg
-ADDIMPSUBJ
-<LAB> = \Wi\.*
-=
-<F_L str> = you
-<F_R subj> = %
 
 ;////////////////////////////////////////////////////////////////////////////
 ;
@@ -294,6 +283,7 @@ POS_NOUN_INVERTED
 ; -- Demonstrative Adjective "this book" "those rocks"
 ; -- Numeric determiner: "two dogs" "the first hour"
 ; -- Quantifier "some things", "few authors"
+; -- interrogative "which"
 ;
 ; See also: list of posessives, gernder, reflexive and anaphora below.
 ;
@@ -309,13 +299,13 @@ POS_NOUN_INVERTED
 #TemplateActionAlg
 DETERMINER_POS
 <LAB> = \D\.*|\DD\.*|\NS\.*
-<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that
+<F_L str> = a|A|an|An|the|The|This|this|These|these|Those|those|That|that|which|Which|what|What
 =
 <DETERMINER_LINK_FLAG> = T
 <F_L DETERMINER_FLAG> = T
 <F_L POS> = det
 ;
-; Tag determiners that are inverested subjects: e.g.
+; Tag determiners that are inverted subjects: e.g.
 ; "Are those the the one we want?"
 ;
 #TemplateActionAlg
@@ -341,7 +331,7 @@ DETERMINER_POS2
 ; DETERMINER_FLAG
 ; <LAB> = \D\.*|\DD\.*|\NS\.*
 ; =
-; <F_L ref determiner-FLAG> = T
+; <F_L ref DETERMINER_FLAG> = T
 ;
 ; ---------------------------------------------------------
 ;
@@ -379,7 +369,7 @@ POS_PREP_INVERTED
 ;
 #TemplateActionAlg
 PREP_OBJ_FLAG1
-<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*
+<LAB> = \J\.*|\ON\.*|\IN\.*|\JG\.*|\JQ\.*
 =
 <PREP-OBJ-LINK-FLAG> = T
 ;
@@ -883,6 +873,18 @@ TENSE_IMPERATIVE
 <F_R tense val> = imperative
 <F_R POS> = verb
 ;
+; Prepare a subject for a subjectless imperative sentence (to be linked in the sem-algs)
+;	-- NB: we should probably use this strategy to add other imvisible
+;	constitutents to other setence-types. e.g. How much (money) does it cost?
+;
+#TemplateActionAlg
+ADDIMPSUBJ
+<LAB> = \Wi\.*
+<F_R tense val> = imperative
+=
+<F_L str> = you
+<F_R subj> = %
+;
 ; post-tense morphology cleanup: If the orig verb string is "saw" 
 ; and the tense is "past", then we are seeing with eyes, not 
 ; sawing with a saw.
@@ -1187,7 +1189,7 @@ QUESTION1
 ;
 #TemplateActionAlg
 QUESTION1
-<LAB> = \W[sq]\.*|\Jw\.*
+<LAB> = \W[sq]\.*|\Jw\.*|\JQ\.*
 <F_R str> = what|What
 =
 <F_R ref QUERY-TYPE> = what
@@ -1198,7 +1200,7 @@ QUESTION1
 ;
 #TemplateActionAlg
 QUESTION1
-<LAB> = \W[sq]\.*|\Jw\.*
+<LAB> = \W[sq]\.*|\Jw\.*|\JQ\.*
 <F_R str> = which|Which
 =
 <F_R ref QUERY-TYPE> = which
@@ -1215,14 +1217,14 @@ COMBINE_PREP_QWORD
 ; Tag Q-word with preceding preposition
 <LAB> = JQ
 =
-<F_R prephead> = <F_L ref name>
+<F_R prephead> = <F_L str>
 ;
 #TemplateActionAlg
 PREPQUESTION1
 <LAB> = \D\.*
 <F_L prephead> = at|in|to|from|around
-<F_L ref name> = what|which|where
-<F_R ref name> = place|location
+<F_L str> = what|which|where
+<F_R str> = place|location|area|region
 =
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = where
@@ -1231,8 +1233,8 @@ PREPQUESTION1
 PREPQUESTION2
 <LAB> = \D\.*
 <F_L prephead> = at|by|on|around
-<F_L ref name> = what|which|when
-<F_R ref name> = time|date|day|moment|instant
+<F_L str> = what|which|when
+<F_R str> = time|date|day|moment|instant
 =
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = when
@@ -1241,8 +1243,8 @@ PREPQUESTION2
 PREPQUESTION3
 <LAB> = \D\.*
 <F_L prephead> = in|by|through
-<F_L ref name> = what
-<F_R ref name> = way|manner|means|method
+<F_L str> = what|which
+<F_R str> = way|manner|means|method
 =
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
@@ -1251,8 +1253,8 @@ PREPQUESTION3
 PREPQUESTION4
 <LAB> = \D\.*
 <F_L prephead> = to|in
-<F_L ref name> = what
-<F_R ref name> = degree|extent|amount
+<F_L str> = what
+<F_R str> = degree|extent|amount
 =
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how_much
@@ -1261,8 +1263,8 @@ PREPQUESTION4
 PREPQUESTION5
 <LAB> = \D\.*
 <F_L prephead> = for|to
-<F_L ref name> = what
-<F_R ref name> = reason|purpose|end|point
+<F_L str> = what|which
+<F_R str> = reason|purpose|end|point
 =
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = why
@@ -1575,6 +1577,7 @@ TAG_PRONOUNS_INTERROG
 TAG_PRONOUNS_RELATIVE
 <str> = who|whoever|whom|whomever|whose|which|that|whatever|whenever|whichever
 <POS> = noun|WORD
+<ref interrogative-FLAG> != T
 =
 <ref pronoun-FLAG> = T
 <ref relative-FLAG> = T
