@@ -79,11 +79,11 @@
 [whichobjQ] {1} <SVO, SV> QUERY-FLAG($o, T) & _obj($v, $o) & _subj($v, $s) & _det($o, _\$qVar) => (whichobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index))
 [whichsubjQ] {1} <SV, SVO> QUERY-FLAG($s, T) & _subj($v, $s) & _obj($v, $o) & _det($s, _\$qVar) => (whichsubjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index))
 [whichpredadjQ] {1} <SVP, SV> QUERY-FLAG($s, T) & _predadj($s, $pred) & _det($s, _\$qVar) => (whichpredadjQ-rule $s (get-instance-name $s word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
-[whichiobjQ] {1} <SVO, SV, SVIO3> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
+[whichiobjQ] {1} <SVO, SV, SVIO3> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
 #==================================
 #determiner-question-word-questions
 #==================================
-[QDET] {1} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & _subj($verb, $subj) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
+[QDET] {1} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & QUERY-FLAG ($noun, T) & _subj($verb, $subj) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
 [QDETPREDADJ] {1} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & _predadj($subj, $verb) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
 #=============================================
 # END OF QUESTION RULES!
