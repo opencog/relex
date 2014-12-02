@@ -272,7 +272,7 @@ WHATQ_OBJ
 ; get their roles reversed, so that 'what' gets classified as IO and the IO as the direct object.
 ; this works in conjunction with a condition added to REL_INDIR_OBJ below around line 397 to
 ; prevent iobj from being assigned twice.
-<LAB> = BW
+<LAB> = BW|Bsw
 =
 <F_R OBJ-LINK-TAG> = BW
 <F_R obj> += <F_L ref>
