@@ -68,11 +68,11 @@
 #===================
 # How of quantity
 #===================
-[howquantQ] {1} <SVO> QUERY-TYPE(_\$qVar, how_much) & _quantity($subj, _\$qVar) => (howquantQ-rule $subj (get-instance-name $subj word_index sentence_index))
+[howquantQ] {1} <SVO> QUERY-TYPE(_\$qVar, how_much) & _quantity($x, _\$qVar) => (howquantQ-rule $x (get-instance-name $x word_index sentence_index))
 #===================
 # How of degree 
 #===================
-[howdegQ] {1} <SV> QUERY-TYPE(_\$qVar, how_much) & _advmod($subj, _\$qVar) => (howdegQ-rule $subj (get-instance-name $subj word_index sentence_index))
+[howdegQ] {1} <SV> QUERY-TYPE(_\$qVar, how_much) & _howdeg($pred, _\$qVar) => (howdegQ-rule $pred (get-instance-name $pred word_index sentence_index))
 #=============================================
 # CHOICE-TYPE QUESTIONS
 #=============================================

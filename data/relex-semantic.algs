@@ -271,7 +271,7 @@ WHATQ_OBJ
 ; get their roles reversed, so that 'what' gets classified as IO and the IO as the direct object.
 ; this works in conjunction with a condition added to REL_INDIR_OBJ below around line 397 to
 ; prevent iobj from being assigned twice.
-<LAB> = BW
+<LAB> = BW|Bsw
 =
 <F_R OBJ-LINK-TAG> = BW
 <F_R obj> += <F_L ref>
@@ -726,6 +726,13 @@ HEAD-QUESTION-WORD
 <F_L head-question-word> += <F_R head-word>
 ;
 #TemplateActionAlg
+HEAD-QUESTION-HOW
+; How quickly does John run?
+<LAB> = \Qe
+=
+<F_L head-word> += <F_R head-word>
+;
+#TemplateActionAlg
 HEAD-QUESTION-WHICH
 ;  Which cat/one does he think John wants?
 <LAB> = \D\.*
@@ -980,6 +987,16 @@ HOW_BIG
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how_much
 <F_R head-word ref HYP> = T
+;
+; Special rules for assigning the adjective or adverb modified by how
+; to its relation with the noun or verb it modifies . . .
+;
+#TemplateActionAlg
+HOW_ADV
+<LAB> = \EEh
+<F_L str> = how
+=
+<F_R head-word ref links _advmod> += <F_R ref>
 ;
 ; SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want
 ; to do?" Prevents "do" from having an object.  Instead, turns the head
@@ -2106,6 +2123,7 @@ ADV3
 <LAB> = \EE\.* | EA
 <LAB> != \EEy | \EAy
 <F_L str> != more
+<F_L str> != how|How
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
@@ -2129,6 +2147,7 @@ ADV3_1
 ;_advmod(fast, exactly)
 ;case <F_R linkL0 F_L head-word> = %  e.g. Mike runs as fast as he did last year.
 ;for above sentence we need to avoid it forming both _advmod(run, fast) AND _advmod(fast, run),
+
 #TemplateActionAlg
 ADV3_2
 <LAB> = \EEy
@@ -2137,6 +2156,17 @@ ADV3_2
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_R linkL0 F_L ref>
+
+; The below is added to handle the how in 'how-of-degree questions' as in 'how quickly does he run'
+; which were previously being picked up by the rules above and pre-empting the r2l advmod rule; 
+; they have their own 2l rule.
+
+#TemplateActionAlg
+ADV3_3_HowDegQ
+<LAB> = \EEh
+=
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _howdeg> += <F_L ref>
 
 ;
 #TemplateActionAlg
