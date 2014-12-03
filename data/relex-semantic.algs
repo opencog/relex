@@ -2167,7 +2167,7 @@ ADV3_3_HowDegQ
 <LAB> = \EEh
 =
 <F_R BACKGROUND-FLAG> = T
-<F_R ref links _howdeg> += <F_L ref>
+<F_R ref links _%howdeg> += <F_L ref>
 
 ;
 #TemplateActionAlg
