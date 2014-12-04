@@ -2098,7 +2098,7 @@ ADV1_ONLY_IF_NOT_PREP
 #TemplateActionAlg
 ADV2
 <LAB> = \E\.*|\EA\.*
-<LAB> != \Eq\.*|\EA[my]\.*
+<LAB> != \Eq\.*|\EA[my]\.*|\EAh
 <F_R head-word ref> != %
 =
 <F_R head-word BACKGROUND-FLAG> = T
@@ -2111,7 +2111,7 @@ ADV2
 #TemplateActionAlg
 ADV2_HEADLESS
 <LAB> = \E\.*|\EA\.*
-<LAB> != \Eq\.*|\EA[my]\.*
+<LAB> != \Eq\.*|\EA[my]\.*|\EAh
 <F_R head-word ref> = %
 =
 <F_R BACKGROUND-FLAG> = T
@@ -2127,9 +2127,8 @@ ADV2_HEADLESS
 #TemplateActionAlg
 ADV3
 <LAB> = \EE\.* | EA
-<LAB> != \EEy | \EAy
+<LAB> != \EEy | \EAy|\EEh |\EAh
 <F_L str> != more
-<F_L str> != how|How
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
@@ -2143,7 +2142,7 @@ ADV3
 #TemplateActionAlg
 ADV3_1
 <LAB> = \EE\.*
-<LAB> != \EEy
+<LAB> != \EEy|\EEh
 <F_R linkL0 LAB> = \MVa
 =
 <F_R BACKGROUND-FLAG> = T
@@ -2169,7 +2168,7 @@ ADV3_2
 
 #TemplateActionAlg
 ADV3_3_HowDegQ
-<LAB> = \EEh
+<LAB> = \EEh|\EAh
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _%howdeg> += <F_L ref>
