@@ -887,12 +887,12 @@ WHEN
 ;
 ; Rule below not working, not sure why yet . . . 
 ;
-;#TemplateActionAlg
-;PREPWHEN
-;<LAB> = \D\.*
-;<F_L ref QUERY-TYPE> = when
-;=
-;<F_L head-question-word ref links _%atTime> = <F_L ref>
+#TemplateActionAlg
+PREPWHEN
+<LAB> = \D\.*
+<F_L ref QUERY-TYPE> = when
+=
+<F_L head-question-word ref links _%atTime> = <F_L ref>
 ;
 #TemplateActionAlg
 ; This algoritm was modified to exclude cases where there isn't a todo 
@@ -997,6 +997,12 @@ HOW_ADV
 <F_L str> = how
 =
 <F_R head-word ref links _advmod> += <F_R ref>
+#TemplateActionAlg
+HOW_ADJ
+<LAB> = \EAh
+<F_L str> = how
+=
+<F_R ref links _predadj> += <F_R head-word subj>
 ;
 ; SPECIAL RULE FOR DO-Questions: "What did Ben do?" "What did Ben want
 ; to do?" Prevents "do" from having an object.  Instead, turns the head
