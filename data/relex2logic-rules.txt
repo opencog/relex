@@ -72,7 +72,7 @@
 #===================
 # How of degree 
 #===================
-[howdegQ] {1} <SV> QUERY-TYPE(_\$qVar, how_much) & _howdeg($pred, _\$qVar) => (howdegQ-rule $pred (get-instance-name $pred word_index sentence_index))
+[howdegQ] {1} <SV> QUERY-TYPE(_\$qVar, how_much) & _%howdeg($pred, _\$qVar) => (howdegQ-rule $pred (get-instance-name $pred word_index sentence_index))
 #=============================================
 # CHOICE-TYPE QUESTIONS
 #=============================================
