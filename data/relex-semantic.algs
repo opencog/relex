@@ -1345,13 +1345,7 @@ TOBE_TO_LINKS
 ;
 ;  PREPOSITIONS
 ;
-;
-#TemplateActionAlg
-PREP_CLAUSE_LINKING_WHERE
-<LAB> = \WR\.*
-<F_L ref QUERY-TYPE> = %
-=
-<F_L head-word> += <F_R>
+;/////////////////////////////////////////////////////////////////////////////
 ;
 ; The rule below replaces the predeterminer with its object.
 ; Have to whack the existing object to do this.
@@ -1368,102 +1362,51 @@ PREP_X
 <F_R obj> = <F_R xobj>
 <F_R xobj> = %
 ;
-
-#PrepositionLinkAlg
-PREP_CLAUSE_LINKING
-; The preposition modifies the preceeding word with a clause
-; Fails if any of the template variables are not filled
-;
-;   "I see the building where Jim lives."
-;   "I feel like Jim feels."
-;
-; Don't include Pp in this list -- it generates garbage for:
-;   "The ball is under the couch" -- gets under(be,under)
-;
-; <LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
-<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*
-<F_R head-word> != %
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R head-word ref> = $prep_obj
+#TemplateActionAlg
+PREP_PHRASE
+<LAB> = \J\.*
 =
-
-; The preposition modifies the preceeding word with a noun
-; Fails if any of the template variables are not filled
-
-#PrepositionLinkAlg
-PREP_LINKING
-;<LAB> = \Mp\.*|\MVp\.*|\MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
-<LAB> = \MX.x\.*|\OF\.*|\MG\.*|\LI\.*|\Pp\.*
-<F_R head-word> = %
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R obj> = $prep_obj
+<F_L obj> = <F_R head-word>
+<F_L ref links _prep> += <F_L obj>
+;
+#TemplateActionAlg
+DANGLING_PREP_LINK1
+<LAB> = \B\.*
+<F_L str> = who|Who|whom|Whom|what|What
 =
-<F_R prep-parts _prepobj> = <F_R obj>
-<F_L prep-parts _prepsubj> = <F_R ref>
-
-; The alg below is designed just for dangling prepositions at the
-; end of ungrammatical questions: "Who did you give it to?" but it
-; doesn't work yet . . .
-;#PrepositionLinkAlg
-;DANGLING_PREP_LINK1
-;<LAB> = \B\.*
-;<F_R str> = to
-;<F_L str> = who|Who|whom|Whom|what|What
-;=
-;<F_R prep-parts prepobj> = _$qVar
-
+<F_R obj> = <F_L head-word>
+<F_R ref links _prep> += <F_L obj>
+;
+#TemplateActionAlg
+PREP_ADJECTIVAL
+<LAB> = \Mp\.*|\Mj\.*|\MX\.*j|\MG\.*
+=
+<F_L ref links _prepadj> = <F_R ref>
+;
+#TemplateActionAlg
+PREP_ADJECTIVAL
+<LAB> = \MVp\.*|\OF\.*|\LI\.*|\Pp\.*
+=
+<F_L ref links _prepadv> = <F_R ref>
+;
+;
+; NB!!! I suspect that virtually all of the preposition rules either already
+; are or will be completely useless when I'm done writing new ones above this
+; note but I'm not deleting any until I finish. (AN DEc 2014)
+;
+#TemplateActionAlg
+PREP_CLAUSE_LINKING_WHERE
+<LAB> = \WR\.*
+<F_L ref QUERY-TYPE> = %
+=
+<F_L head-word> += <F_R>
+;
 #TemplateActionAlg
 POSSR_TO_APOSTROPHE
 <LAB> = \YS\.* |\YP\.*
 =
 <F_R possessor> += <F_L ref>
-;
-; -----------------------------------------------------------
-; Why are there all these incomplete algorithms here? 10-22-2014 AN
-;------------------------------------------------------------
-;
-;\Mp --> e.g. Jack’s hair color is similar to that of Ben’s.
-;\MVp --> e.g. Amen's hair is as long as Ben's.
-#PrepositionLinkAlg
-PREP_LINKING
-<LAB> = \Mp\.*|\MVp\.*
-<F_R linkR0 LAB> = \J\.*
-<F_R linkR0 F_R possessor> != %
-<F_R head-word> = %
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R linkR0 F_R possessor> = $prep_obj
-=
 
-#PrepositionLinkAlg
-PREP_LINKING
-<LAB> = \Mp\.*|\MVp\.*
-<F_R linkR0 LAB> = \J\.*
-<F_R linkR0 F_R possessor> = %
-<F_R head-word> = %
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R obj> = $prep_obj
-=
-
-;e.g. The snail is running  exactly as fast as the cheetah.
-;this forms "as(run, cheetah)" relationship
-;"as.z" can form unconstrained phrases using "O*c+" just like "than" behaves.
-#PrepositionLinkAlg
-PREP_LINKING
-<LAB> = \MVz
-<F_R linkR0 LAB> = \O\.\c\.*
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R linkR0 F_R ref> = $prep_obj
-=
 #TemplateActionAlg
 PREP_OBJ
 <LAB> = \MVa
@@ -1494,6 +1437,7 @@ PREP_LINKING
 <F_R> = $prep_source
 <F_R to-do> = $prep_obj
 =
+
 #PrepositionLinkAlg
 ; The preposition modifies the following phrase
 ;   "Jim, on whom we sat, cried."
@@ -1574,20 +1518,7 @@ PRECEEDING_PREP_CLAUSE_OBJECT
 ; This is used for "John is in the room" to change subj to psubj
 ; "The garage is next to the house".
 ; "The book is on the table."
-;
-#TemplateActionAlg
-SPECIAL_PREP_RULE
-<LAB> = \Pp\.*
-<F_L str> = be
-<F_R ref links _subj> != %
-<F_R ref links _obj> != %
-=
-<F_R ref SPECIAL-PREP-FLAG> = T
-<F_R ref links _psubj> = <F_R ref links _subj> 
-<F_R ref links _pobj> = <F_R ref links _obj>
-<F_R ref links _subj> = %
-<F_R ref links _obj> = %
-;
+
 #TemplateActionAlg
 CONJ_PREP_RULE
 <F_L ref links _pobj> != %
@@ -1650,6 +1581,7 @@ SPECIAL_PREP_RULE_WHEN_WHEN
 ;
 ; DT == time-related determiner e.g. next, every
 ;
+;////////////////////////////////////////////////////////////////////////////
 #TemplateActionAlg
 ADJ1
 <LAB> = \A\.*|\DT\.*|TQ
