@@ -74,16 +74,16 @@
 #===================
 [howdegQ] {1} <SV> QUERY-TYPE(_\$qVar, how_much) & _%howdeg($pred, _\$qVar) => (howdegQ-rule $pred (get-instance-name $pred word_index sentence_index))
 #=============================================
-# CHOICE-TYPE QUESTIONS
+# DETERMINER-WHICH QUESTIONS
 #=============================================
 [whichobjQ] {1} <SVO, SV, QDET, QDETPREDADJ> QUERY-FLAG($o, T) & _obj($v, $o) & _subj($v, $s) & _det($o, _\$qVar) => (whichobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index))
 [whichsubjQ] {1} <SV, SVO, QDET, QDETPREDADJ> QUERY-FLAG($s, T) & _subj($v, $s) & _obj($v, $o) & _det($s, _\$qVar) => (whichsubjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index))
 [whichpredadjQ] {1} <SVP, SV, QDET, QDETPREDADJ> QUERY-FLAG($s, T) & _predadj($s, $pred) & _det($s, _\$qVar) => (whichpredadjQ-rule $s (get-instance-name $s word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
-[whichiobjQ] {1} <SVO, SV, SVIO3, QDET, QDETPREDADJ> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
+[whichiobjQ] {1} <SVO, SV, SVIO3> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
 #==================================
-#determiner-question-word-questions
+# DETERMINER PREPOSITIONAL-PHRASE-QUESTION-WORDS (e.g. "in which way?"
 #==================================
-[QDET] {2} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & QUERY-FLAG($noun, T) & $prep($verb, $noun) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
+[QDET] {2} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & _subj($verb, $subj) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
 [QDETPREDADJ] {2} <> _det($noun, _\$qVar) & QUERY-TYPE(_\$qVar, $qtype) & _predadj($subj, $verb) => (q-det-rule $noun (get-instance-name $noun word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $qtype)
 #=============================================
 # END OF QUESTION RULES!
@@ -95,6 +95,12 @@
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
+
+[ADVERBIALPP] {4} <> _prep($prep, $noun) & _prepadv($verb, $prep) => (advmod-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
+
+[ADJECTIVALPP] {4} <> _prep($prep, $noun) & _prepadj($noun, $prep) => (amod-rule $noun (get-instance-name $noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
+
+[PP] {4} <> _prep($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
 # ============================================
 # unary rules
