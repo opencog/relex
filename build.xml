@@ -11,8 +11,8 @@
  
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.5"/> <!-- this 1.5 is java, not relex -->
-    <property name="source" value="1.5"/> <!-- this 1.5 is java, not relex -->
+    <property name="target" value="1.6"/> <!-- this 1.6 is java, not relex -->
+    <property name="source" value="1.6"/> <!-- this 1.6 is java, not relex -->
 
     <path id="relex.classpath">
         <pathelement location="bin"/>
