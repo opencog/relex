@@ -1485,7 +1485,7 @@ INVERSE_RELATIVE_PREP
 <F_L POS> = prep
 <F_R POS> = verb
 =
-<F_R ref links _advmod> = <F_L ref>
+<F_R ref links _prepadv> = <F_L ref>
 <INVERSE-REL-PREP FLAG> = T
 ;
 ; Delete the _prepadj relation for "The man on whom we sat."
