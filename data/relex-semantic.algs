@@ -1367,7 +1367,7 @@ PREP_PHRASE
 <LAB> = \J\.*
 =
 <F_L obj> = <F_R head-word>
-<F_L ref links _prep> += <F_L obj>
+<F_L ref links _pobj> += <F_L obj>
 ;
 #TemplateActionAlg
 DANGLING_PREP_LINK1
@@ -1375,7 +1375,7 @@ DANGLING_PREP_LINK1
 <F_L str> = who|Who|whom|Whom|what|What
 =
 <F_R obj> = <F_L head-word>
-<F_R ref links _prep> += <F_L obj>
+<F_R ref links _pobj> += <F_L obj>
 ;
 #TemplateActionAlg
 PREP_ADJECTIVAL
@@ -1384,15 +1384,18 @@ PREP_ADJECTIVAL
 <F_L ref links _prepadj> = <F_R ref>
 ;
 #TemplateActionAlg
-PREP_ADJECTIVAL
+PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*|\Pp\.*
 =
 <F_L ref links _prepadv> = <F_R ref>
 ;
-;
 ; NB!!! I suspect that virtually all of the preposition rules either already
 ; are or will be completely useless when I'm done writing new ones above this
 ; note but I'm not deleting any until I finish. (AN DEc 2014)
+;
+
+;
+; This is a misplaced question rule: "Where did John put it?"
 ;
 #TemplateActionAlg
 PREP_CLAUSE_LINKING_WHERE
@@ -1400,6 +1403,9 @@ PREP_CLAUSE_LINKING_WHERE
 <F_L ref QUERY-TYPE> = %
 =
 <F_L head-word> += <F_R>
+
+;
+; This is the misplaced 's posession rule: "This is John's wife."
 ;
 #TemplateActionAlg
 POSSR_TO_APOSTROPHE
@@ -1407,15 +1413,11 @@ POSSR_TO_APOSTROPHE
 =
 <F_R possessor> += <F_L ref>
 
-#TemplateActionAlg
-PREP_OBJ
-<LAB> = \MVa
-=
-<F_L prep-temp> += <F_R>
-
+;
 ;e.g. Mike runs as fast as he did last year.
 ;this forms "as(fast, he)" relationship
 ;CX is used in comparative constructions like "as I do"
+;
 #PrepositionLinkAlg
 PREP_LINKING
 <LAB> = \MVz\.*
@@ -1427,16 +1429,13 @@ PREP_LINKING
 <F_R linkR0 F_R subj> = $prep_obj
 =
 ;
-; The preposition modifies the preceeding phrase
+; Apparently MVi is reserved for (in order) to
 ;
-#PrepositionLinkAlg
-PREP_LINKING
+#TemplateActionAlg
+IN_ORDER_TO
 <LAB> = \MVi\.*
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R to-do> = $prep_obj
 =
+<F_L ref links _goal> += <F_R head-word ref>
 
 #PrepositionLinkAlg
 ; The preposition modifies the following phrase
@@ -1957,6 +1956,7 @@ COMPARATIVE_Dmum
 ; Jim runs quickly.
 ; MVr: "She handled it quickly and gracefully."
 ; MVb: "He sang louder and stronger."
+
 #TemplateActionAlg
 ADV1
 <LAB> = \MVa\.*|\MVb\.*|\MVr\.*|\EB\.*
@@ -1967,6 +1967,7 @@ ADV1
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+
 ;
 ; -------------------------------------------------------------
 ; Adverb usage in comparaitves
