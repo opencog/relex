@@ -1382,6 +1382,7 @@ PREP_ADJECTIVAL
 <LAB> = \Mp\.*|\Mj\.*|\MX\.*j|\MG\.*
 =
 <F_L ref links _prepadj> += <F_R ref>
+
 ;
 ; The exception in the rule below is for cases where an adverb intervenes
 ; between a verb and the prep-adv as in "He ran largely in the morning."
@@ -1473,17 +1474,28 @@ APPOSITIVE_ADVERBIAL
 =
 <F_L ref links _advmod> += <F_R ref>
 
-#PrepositionLinkAlg
+;
 ; The preposition modifies the following phrase
-;   "Jim, on whom we sat, cried."
-;   "The man on whom we sat cried."
-PREP_RELATIVE_LINK
-<LAB> = \Mj\.*|\MX.j\.*
-<F_R head-word> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R obj> = $prep_obj
+; "Jim, on whom we sat, cried."
+; "The man on whom we sat cried."
+;
+#TemplateActionAlg
+INVERSE_RELATIVE_PREP
+<LAB> = \CV\.*
+<F_L POS> = prep
+<F_R POS> = verb
 =
+<F_R ref links _advmod> = <F_L ref>
+<INVERSE-REL-PREP FLAG> = T
+;
+; Delete the _prepadj relation for "The man on whom we sat."
+;
+#TemplateActionAlg
+DELETE_REL_PREPADJ
+<LAB> = \Mj\.*|\MX.j\.*
+=
+<F_L ref links _prepadj> = %
+
 ;
 #TemplateActionAlg
 ; Relative prepositions should have their modified phrases 
