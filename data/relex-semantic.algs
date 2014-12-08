@@ -1375,7 +1375,7 @@ DANGLING_PREP_LINK1
 <F_L str> = who|Who|whom|Whom|what|What
 =
 <F_R obj> = <F_L head-word>
-<F_R ref links _pobj> += <F_L obj>
+<F_R ref links _pobj> += <F_L ref>
 ;
 #TemplateActionAlg
 PREP_ADJECTIVAL
