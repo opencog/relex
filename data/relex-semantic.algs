@@ -1370,7 +1370,7 @@ PREP_PHRASE
 <F_L ref links _pobj> += <F_L obj>
 ;
 #TemplateActionAlg
-DANGLING_PREP_LINK1
+DANGLING_PREP
 <LAB> = \B\.*
 <F_L str> = who|Who|whom|Whom|what|What
 =
@@ -1381,13 +1381,30 @@ DANGLING_PREP_LINK1
 PREP_ADJECTIVAL
 <LAB> = \Mp\.*|\Mj\.*|\MX\.*j|\MG\.*
 =
-<F_L ref links _prepadj> = <F_R ref>
+<F_L ref links _prepadj> += <F_R ref>
+;
+; The exception in the rule below is for cases where an adverb intervenes
+; between a verb and the prep-adv as in "He ran largely in the morning."
 ;
 #TemplateActionAlg
 PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*|\Pp\.*
+<F_L POS> != adv
 =
-<F_L ref links _prepadv> = <F_R ref>
+<F_L ref links _prepadv> += <F_R ref>
+
+;
+; This is supposes to create the advmod of a prep by any adverbial
+; but it doesn't do anything for some reason . . .
+;
+#TemplateActionAlg
+ADVMOD_OF_ADVERBIAL
+<LAB> = \MVp\.*|\MVa\.*|\MVs\.*
+<F_L> POS> = adv
+=
+<F_R ref links _advmod> += <F_L ref>
+<F_L modified> += <F_R ref>
+
 ;
 ; NB!!! I suspect that virtually all of the preposition rules either already
 ; are or will be completely useless when I'm done writing new ones above this
@@ -1436,6 +1453,25 @@ IN_ORDER_TO
 <LAB> = \MVi\.*
 =
 <F_L ref links _goal> += <F_R head-word ref>
+
+;
+; For cases such as "He did it largely in his spare time" 
+; to make prepadv(do, in) -- not working yet.
+;
+#TemplateActionAlg
+ADVERB_OBSTRUCTED_PREPADV
+<LAB> = \MVl\.*
+=
+<F_L ref links _prepadv> += <F_R modified>
+
+;
+; John left, carrying a dog.
+;
+#TemplateActionAlg
+APPOSITIVE_ADVERBIAL
+<LAB> = \MVx\.*|\MVg\.*
+=
+<F_L ref links _advmod> += <F_R ref>
 
 #PrepositionLinkAlg
 ; The preposition modifies the following phrase
