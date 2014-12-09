@@ -1549,7 +1549,7 @@ OPENING_ADVERBIAL
 ;
 #TemplateActionAlg
 COMP_PHRASE
-<LAB> = \C\.*
+<LAB> = \C\.*|\Mg\.*
 <F_L POS> != verb|adj
 =
 <F_L ref links _comp> += <F_R head-word ref> 
@@ -1564,7 +1564,7 @@ OMITTED_THAT_COMP
 #TemplateActionAlg
 COMP_MOD
 <LAB> = \MVs
-<F_R str> != because|since|considering|when
+<F_R str> != because|when|while
 =
 <F_L ref links _compmod> += <F_R ref>
 
@@ -1586,7 +1586,7 @@ REP_COMP
 ;
 #TemplateActionAlg
 WHEN_COMP
-<LAB> = \WN\.*|\MVs
+<LAB> = \WN\.*|\MVs\.*
 <F_R str> = when|while
 =
 <F_L ref linke _%atTime> += <F_R ref>
@@ -1594,7 +1594,7 @@ WHEN_COMP
 #TemplateActionAlg
 BECAUSE_COMP
 <LAB> = \MVs
-<F_R str> = because|since
+<F_R str> = because
 =
 <F_L ref links _%because> += <F_R ref>
 
