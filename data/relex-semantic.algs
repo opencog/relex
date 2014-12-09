@@ -1364,10 +1364,11 @@ PREP_X
 ;
 #TemplateActionAlg
 PREP_PHRASE
-<LAB> = \J\.*
+<LAB> = \J\.*|\ON\.*
 =
 <F_L obj> = <F_R head-word>
 <F_L ref links _pobj> += <F_L obj>
+
 ;
 #TemplateActionAlg
 DANGLING_PREP
@@ -1386,6 +1387,8 @@ PREP_ADJECTIVAL
 ;
 ; The exception in the rule below is for cases where an adverb intervenes
 ; between a verb and the prep-adv as in "He ran largely in the morning."
+; Note; I'm not sure there's any reason prepositional adverbials need their
+; own dependency as opposed to just being classified as adverbials . . .
 ;
 #TemplateActionAlg
 PREP_ADVERBIAL
@@ -1475,7 +1478,7 @@ APPOSITIVE_ADVERBIAL
 <F_L ref links _advmod> += <F_R ref>
 
 ;
-; The preposition modifies the following phrase
+; prepositional relative pronoun:
 ; "Jim, on whom we sat, cried."
 ; "The man on whom we sat cried."
 ;
@@ -1506,6 +1509,7 @@ PREP_RELATIVE_BACKGROUND
 <F_L background ref> += <F_R head-word ref>
 <F_L background wall> = <F_L wall>
 <F_L background BACKGROUND-FLAG> = T
+
 ;
 ; You are happy because you are here.
 ; Because you are here, you are happy.
@@ -1518,15 +1522,24 @@ PREP_RELATIVE_BACKGROUND
 ; Wont apply to "Often, we left" because 'often' has no obj
 ;
 
-#PrepositionLinkAlg
-PRECEEDING_PREP_LINK
-<LAB> = \CO\.*|\Qd\.*
-<F_L PREP-OBJ> = T
-<F_R head-word> = $modified
-<F_L str> = $prep
-<F_L> = $prep_source
-<F_L obj> = $prep_obj
+;
+; I can't figure out why this rule had a \Qd\ in the <LAB> condition,
+; so I deleted it . . .(AN Dec 2014)
+;
+#TemplateActionAlg
+OPENING_PREP_ADVERBIAL
+<LAB> = \CO\.*
+<F_L POS> = prep
 =
+<F_R head-word ref links _prepadv> = <F_L ref>
+
+#TemplateActionAlg
+OPENING_ADVERBIAL
+<LAB> = \CO\.*
+<F_L POS> != prep
+=
+<F_R head-word ref links _advmod> = <F_L ref>
+
 #PrepositionLinkAlg
 PREP_CLAUSE_OBJECT
 ; The preposition modifies the preceeding phrase
