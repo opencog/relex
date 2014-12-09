@@ -32,10 +32,10 @@ ADD http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2
 RUN (unzip jwnl14-rc2.zip; cd jwnl14-rc2; cp jwnl.jar /usr/share/java/; chmod 777 /usr/share/java/jwnl.jar)
 
 # Link Parser
-ADD http://www.abisource.com/downloads/link-grammar/5.0.8/link-grammar-5.0.8.tar.gz /home/Downloads/link-grammar-5.0.8.tar.gz
-RUN (tar zxvf link-grammar-5.0.8.tar.gz; cd link-grammar-5.0.8/; ./configure; make; sudo make install; ldconfig)
+ADD http://www.abisource.com/downloads/link-grammar/5.1.3/link-grammar-5.1.3.tar.gz /home/Downloads/link-grammar-5.1.3.tar.gz
+RUN (tar zxvf link-grammar-5.1.3.tar.gz; cd link-grammar-5.1.3/; ./configure; make; sudo make install; ldconfig)
 
-# OpenNPL
+# OpenNLP
 ADD http://www.motorlogy.com/apache/opennlp/opennlp-1.5.3/apache-opennlp-1.5.3-bin.zip /home/Downloads/apache-opennlp-1.5.3-bin.zip
 RUN unzip apache-opennlp-1.5.3-bin.zip
 RUN (cd apache-opennlp-1.5.3; cp lib/*.jar /usr/local/share/java/; cp lib/*.jar /usr/share/java/; cp lib/opennlp-tools-1.5.3.jar /usr/local/share/java/opennlp-tools-1.5.0.jar)
