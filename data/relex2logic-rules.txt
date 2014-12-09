@@ -102,6 +102,16 @@
 
 [PP] {4} <> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
+[COMPLEMENT_PHRASES] {4} <> _comp($comp, $pred) => (complement_rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
+[COMPlEMENT_RELATION] {4} <> _compmod($pred, $comp) => (compmod_rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
+[COMPlEMENT_BECAUSE] {4} <> _%because($pred, $comp) => (because_rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
+[COMPlEMENT_ATTIME] {4} <> _%atTime($pred, $comp) => (attime_rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
+[COMPlEMENT_REP] {4} <> _rep($pred, $comp) => (rep_rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
 # ============================================
 # unary rules
 # ============================================
@@ -176,7 +186,6 @@
 
 [PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A, (.*)passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
-
 # ============================================
 # conjunction rules
 # ============================================
@@ -198,7 +207,6 @@
 # general that-rule works for any pos
 [THAT1] {110} <THAT-EXCL-1, THAT-EXCL-2> that($A, $B) => (that-rule $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 [THAT2] {110} <THAT-EXCL-1, THAT-EXCL-2> _that($A, $B) => (that-rule $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
-
 
 # ============================================
 # time rules for dealing with temporal expressions
