@@ -166,9 +166,14 @@
 # ============================================
 # passive verb rules
 # ============================================
-[PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A, (.*)passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
+# SVIO equivalent for passive sentence
+[PASSIVE3] {1} <PASSIVE(.*)> _obj($verb,$obj) & by($verb,$subj) & to($verb,$iobj) & tense($verb, (.*)passive) => (passive-rule3 $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
-[PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A, (.*)passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
+# SVO equivalent
+[PASSIVE1] {2} <PASSIVE(.*)> _obj($A,$B) & by($A,$C) & tense($A, (.*)passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
+
+# SV equivalent
+[PASSIVE2] {3} <PASSIVE(.*)> _obj($A,$B) & tense($A, (.*)passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
 
 
 # ============================================
