@@ -96,11 +96,11 @@
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
-[ADVERBIALPP] {4} <> _prep($prep, $noun) & _prepadv($verb, $prep) => (advmod-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
+[ADVERBIALPP] {4} <> _pobj($prep, $noun) & _prepadv($verb, $prep) => (advmod-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
-[ADJECTIVALPP] {4} <> _prep($prep, $noun) & _prepadj($noun, $prep) => (amod-rule $noun (get-instance-name $noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
+[ADJECTIVALPP] {4} <> _pobj($prep, $noun) & _prepadj($noun, $prep) => (amod-rule $noun (get-instance-name $noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
-[PP] {4} <> _prep($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
+[PP] {4} <> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
 # ============================================
 # unary rules
