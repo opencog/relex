@@ -9,6 +9,7 @@
 ; Copyright (c) 2009,2014 Linas Vepstas
 ; Copyright (c) 2014 Rodas Solomon
 ; Copyright (c) 2014 Kasun Perera
+; Copyright (c) 2014 Aaron Nitzkin
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -95,7 +96,7 @@ FIND_PREDET_FOR_PREPS
 ; no conjunctions
 #TemplateActionAlg
 STANDARD_SUBJ
-<LAB> = \S\.*|\SX\.*|\Mg\.*|\MX\.*
+<LAB> = \S\.*|\SX\.*|\MX\.*
 <LAB> != \MX.[rj]\.*
 <LAB> != MX|MXs|MXp
 =
@@ -1364,7 +1365,7 @@ PREP_X
 ;
 #TemplateActionAlg
 PREP_PHRASE
-<LAB> = \J\.*|\ON\.*
+<LAB> = \J\.*|\ON\.*|\MG\.*|\Mgp
 =
 <F_L obj> = <F_R head-word>
 <F_L ref links _pobj> += <F_L obj>
@@ -1509,6 +1510,7 @@ PREP_RELATIVE_BACKGROUND
 <F_L background ref> += <F_R head-word ref>
 <F_L background wall> = <F_L wall>
 <F_L background BACKGROUND-FLAG> = T
+;
 
 ;
 ; You are happy because you are here.
@@ -1516,10 +1518,6 @@ PREP_RELATIVE_BACKGROUND
 ; I know that you are happy because you are here."
 ; You laugh because you are here.
 ; I know that you laugh because you are here.
-; ------
-; The preposition modifies the following phrase
-;    "On Tuesday, we left."
-; Wont apply to "Often, we left" because 'often' has no obj
 ;
 
 ;
@@ -1531,37 +1529,92 @@ OPENING_PREP_ADVERBIAL
 <LAB> = \CO\.*
 <F_L POS> = prep
 =
-<F_R head-word ref links _prepadv> = <F_L ref>
+<F_R head-word ref links _prepadv> += <F_L ref>
 
 #TemplateActionAlg
 OPENING_ADVERBIAL
 <LAB> = \CO\.*
 <F_L POS> != prep
 =
-<F_R head-word ref links _advmod> = <F_L ref>
+<F_R head-word ref links _advmod> += <F_L ref>
 
-#PrepositionLinkAlg
-PREP_CLAUSE_OBJECT
-; The preposition modifies the preceeding phrase
-<LAB> = MVs|\TH\.*|\WN\.*
-<F_L head-word> != %
-<F_L head-word> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R head-word ref> = $prep_obj
-=
 ;
-#PrepositionLinkAlg
-PREP_CLAUSE_OBJECT2
-; The preposition modifies the preceeding phrase
-<LAB> = MVs|\TH\.*|\WN\.*
-<F_L head-word> = %
-<F_L> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R head-word ref> = $prep_obj
-=
+; The following series of algs create some complement phrases
+; and hook them up to the things they modify, picking out some
+; which already have more speciic relations, -- because, when,
+; and introducing rep() for 'representation' as in 'I think that . . .'
+; these really aren't all related stuff, but they were all previously
+; conflated in one rule in this section, so they get revised here . . .
+; (AN Dec 2014)
 ;
+#TemplateActionAlg
+COMP_PHRASE
+<LAB> = \C\.*
+<F_L POS> != verb|adj
+=
+<F_L ref links _comp> += <F_R head-word ref> 
+
+#TemplateActionAlg
+OMITTED_THAT_COMP
+<LAB> = \Ce\.*
+<F_L POS> = verb|adj
+=
+<F_L ref links _rep> += <F_R head-word ref>
+
+#TemplateActionAlg
+COMP_MOD
+<LAB> = \MVs
+<F_R str> != because|since|considering|when
+=
+<F_L ref links _compmod> += <F_R ref>
+
+;
+; _rep is the relation of representing something,
+; mentally or verbally; it requires a unique relation
+; because it affects the inferences that can be made
+; about the content within its scope.
+; 
+#TemplateActionAlg
+REP_COMP
+<LAB> = \TH\.*|
+=
+<F_L ref links _rep> += <F_R ref>
+
+;
+; So far, can't find a sentence that uses this link --
+; maybe the dictionary documentation is outdated . . .
+;
+#TemplateActionAlg
+WHEN_COMP
+<LAB> = \WN\.*|\MVs
+<F_R str> = when|while
+=
+<F_L ref linke _%atTime> += <F_R ref>
+
+#TemplateActionAlg
+BECAUSE_COMP
+<LAB> = \MVs
+<F_R str> = because|since
+=
+<F_L ref links _%because> += <F_R ref>
+
+;
+; I can't see how this rule handled anything not handled by the
+; rules above that I just wrote, but I'm not sure, so I'm not
+; deleting it yet . . .
+;
+;#PrepositionLinkAlg
+;PREP_CLAUSE_OBJECT2
+; The preposition modifies the preceeding phrase
+;<LAB> = MVs|\TH\.*|\WN\.*
+;<F_L head-word> = %
+;<F_L> = $modified
+;<F_R str> = $prep
+;<F_R> = $prep_source
+;<F_R head-word ref> = $prep_obj
+;=
+;
+
 #PrepositionLinkAlg
 PRECEEDING_PREP_CLAUSE_OBJECT
 ; The preposition modifies the following phrase
