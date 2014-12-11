@@ -1651,16 +1651,16 @@ public class TestRelEx
 		return rc;
 	}
 
-	public boolean test_adverbials_and_adjectivals()
+	public boolean test_adverbials_adjectivals()
 	{
 		boolean rc = true;
 		rc &= test_sentence ("He ran like the wind.",
-					"_prepadv(run, like)\n" +
+					"_advmod(run, like)\n" +
 					"_subj(run, he)\n" +
 					"_pobj(like, wind)\n");
 
 		rc &= test_sentence ("He was boring to an insufferable degree.",
-					"_prepadv(boring, to)\n" +
+					"_advmod(boring, to)\n" +
 					"_amod(degree, insufferable)\n" +
 					"_pobj(to, degree)\n" +
 					"_predadj(he, boring)\n");
@@ -1671,7 +1671,7 @@ public class TestRelEx
 					"_obj(impress, himself)\n");
 
 		rc &= test_sentence ("On Tuesday, he slept late.",
-				"_prepadv(sleep, on)\n" +
+				"_advmod(sleep, on)\n" +
 				"_advmod(sleep, late)\n" +
 				"_subj(sleep, he)\n" +
 				"_pobj(on, Tuesday)\n");
@@ -1680,6 +1680,29 @@ public class TestRelEx
 				"_obj(confuse, him)\n" +
 				"_advmod(confuse, often)\n" +
 				"_subj(confuse, people)\n");
+
+		rc &= test_sentence ("The man in window is a spy.",
+				"_obj(be, spy)\n" +
+				"_subj(be, man)\n" +
+				"_pobj(in, window)\n" +
+				"_prepadj(man, in)\n");
+
+		rc &= test_sentence ("He wrote largely in his spare time.",
+				"_advmod(write, in)\n" +
+				"_subj(write, he)\n" +
+				"_amod(time, spare)\n" +
+				"_poss(time, him)\n" +
+				"_pobj(in, time)\n" +
+				"_advmod(in, largely)\n");
+
+		rc &= test_sentence ("The man running away from us is a thief.",
+				"_obj(be, thief)\n" +
+				"_subj(be, man)\n" +
+				"_pobj(from, us)\n" +
+				"_advmod(run_away, from)\n" +
+				"_amod(man, run_away)\n");
+
+
 
 		report(rc, "Adverbials and Adjectivals");
 		return rc;
