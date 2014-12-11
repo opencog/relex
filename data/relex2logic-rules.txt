@@ -15,7 +15,7 @@
 
 [SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _obj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
-[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & to($verb, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
+[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, $prep) & _pobj($prep, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
 [SVO] {3} <SV, SVIO1, SVIO2, SVIO3, BE, whichobjQ, whichsubjQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
