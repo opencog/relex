@@ -1173,17 +1173,7 @@ THAT1
 =
 <F_L that> += <F_R head-word ref>
 ;
-;
-#TemplateActionAlg
-THAT_TO_LINKS
-; 'that' is handled in preposition section. (PREP_CLAUSE_OBJECT)
-<str> != %
-<str> != that
-<that> != %
-=
-<ref links _that> = <that>
-;
-;
+
 #TemplateActionAlg
 RELATIVE_CLAUSE_TO_BACKGROUND
 <LAB> = \R\.*
@@ -1385,6 +1375,13 @@ PREP_ADJECTIVAL
 =
 <F_L ref links _prepadj> += <F_R ref>
 
+#TemplateActionAlg
+PARTICIPIAL_ADJECTIVAL
+<LAB> = \Mg\.*
+<F_L POS> != conjunction
+=
+<F_L ref links _amod> += <F_R ref>
+
 ;
 ; The exception in the rule below is for cases where an adverb intervenes
 ; between a verb and the prep-adv as in "He ran largely in the morning."
@@ -1396,7 +1393,7 @@ PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*|\Pp\.*
 <F_L POS> != adv
 =
-<F_L ref links _prepadv> += <F_R ref>
+<F_L ref links _advmod> += <F_R ref>
 
 ;
 ; This is supposes to create the advmod of a prep by any adverbial
@@ -1461,13 +1458,23 @@ IN_ORDER_TO
 
 ;
 ; For cases such as "He did it largely in his spare time" 
-; to make prepadv(do, in) -- not working yet.
+; to make advmod(do, in) -- not working yet.
 ;
+
+#TemplateActionAlg
+ADVMOD_OF_PREP
+<LAB> = \MVp\.*
+<F_L POS> = adv
+<F_R POS> = prep
+=
+<F_R ref links _advmod> += <F_L ref>
+<F_L modified> = <F_R ref>
+
 #TemplateActionAlg
 ADVERB_OBSTRUCTED_PREPADV
 <LAB> = \MVl\.*
 =
-<F_L ref links _prepadv> += <F_R modified>
+<F_L ref links _advmod> += <F_R modified>
 
 ;
 ; John left, carrying a dog.
@@ -1489,7 +1496,7 @@ INVERSE_RELATIVE_PREP
 <F_L POS> = prep
 <F_R POS> = verb
 =
-<F_R ref links _prepadv> = <F_L ref>
+<F_R ref links _advmod> = <F_L ref>
 <INVERSE-REL-PREP FLAG> = T
 ;
 ; Delete the _prepadj relation for "The man on whom we sat."
@@ -1527,14 +1534,6 @@ PREP_RELATIVE_BACKGROUND
 #TemplateActionAlg
 OPENING_PREP_ADVERBIAL
 <LAB> = \CO\.*
-<F_L POS> = prep
-=
-<F_R head-word ref links _prepadv> += <F_L ref>
-
-#TemplateActionAlg
-OPENING_ADVERBIAL
-<LAB> = \CO\.*
-<F_L POS> != prep
 =
 <F_R head-word ref links _advmod> += <F_L ref>
 
@@ -1550,7 +1549,7 @@ OPENING_ADVERBIAL
 #TemplateActionAlg
 COMP_PHRASE
 <LAB> = \C\.*|\Mg\.*
-<F_L POS> != verb|adj
+<F_L POS> != verb|adj|noun
 =
 <F_L ref links _comp> += <F_R head-word ref> 
 
@@ -1710,14 +1709,15 @@ ADJ1
 ;
 ; MVp usually modifies verbs, i.e. so its indicates an adverb.
 ; should probably check the POS on the left word to confirm.
+;
 #TemplateActionAlg
 ADJ2_1
-; <LAB> = \Mp\.*|\MVp\.*|\Ma\.*
-<LAB> = \Mp\.*
+<LAB> = \Mp\.*|\Ma\.*
 <F_R PREP-OBJ> = %
 =
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
+
 ;differentiate forming "_amod()" relationships when connected with "Ma" links
 ;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
 ;in the fist sentence it does have a _amod() relationship but it doesn't in 2nd sentence.
@@ -3386,10 +3386,10 @@ HYP-TO-BE
 <_to-be HYP> = T
 ;
 #TemplateActionAlg
-HYP-THAT
-<_that> != %
+HYP-REP
+<_rep> != %
 =
-<_that HYP> = T
+<_rep HYP> = T
 ;
 #TemplateActionAlg
 HYP-THAT2
