@@ -706,7 +706,14 @@ HEAD_TO_FIRST_VERB
 <HEAD-FLAG> = T
 =
 <tense first_verb head-word> += <this>
-;
+
+#TemplateActionAlg
+INFINITIVE_HEAD_VERB
+<LAB> = \I\.*
+<F_L head-word> = %
+=
+<F_L head-word> = <F_R ref>
+
 #TemplateActionAlg
 HEAD_TO_SUBJ_AND_OBJ1
 <LAB> = \S\.*|\SX\.*|\B.w\.*|\SF\.*
@@ -718,7 +725,7 @@ HEAD_TO_SUBJ_AND_OBJ2
 <LAB> = \S\.*|\SX\.*
 =
 <F_L head-word> += <F_R head-word>
-;
+
 #TemplateActionAlg
 HEAD-QUESTION-WORD
 ;  Who does John think the man I love wants?
@@ -859,6 +866,7 @@ DECLARATIVE_QUESTION1
 DECLARATIVE_QUESTION2
 ; not AND-SAFE!
 ; regular expression [\\?] matches just the question mark
+
 <LAB> = \Wd\.*
 <F_L punc> = \[\\?]
 <F_L head-word> != %
@@ -866,7 +874,19 @@ DECLARATIVE_QUESTION2
 <F_R head-word ref TRUTH-QUERY-FLAG> = T
 <F_R head-word ref HYP> = T
 <F_L wall sentence_type> = QUERY
+
 ;
+; Needed to complete dependency of some preposed prep-phrases on verb
+; ('to whom did you sell the children?")
+;
+
+#TemplateActionAlg
+CONNECT_PREPOSED_PREP_QWORD_TO_VERB
+<LAB> = Qd
+<F_L POS> = prep
+=
+<F_R head-word ref links _advmod> += <F_L ref>
+
 #TemplateActionAlg
 QUESTIONS-COPULA
 <LAB> = Q|Qd
@@ -884,7 +904,7 @@ WHEN
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = when
-<F_L head-question-word ref links _%atTime> = <F_L ref>
+<F_L head-question-word ref links _%atTime> += <F_L ref>
 ;
 ; Rule below not working, not sure why yet . . . 
 ;
@@ -893,7 +913,7 @@ PREPWHEN
 <LAB> = \D\.*
 <F_L ref QUERY-TYPE> = when
 =
-<F_L head-question-word ref links _%atTime> = <F_L ref>
+<F_L head-question-word ref links _%atTime> += <F_L ref>
 ;
 #TemplateActionAlg
 ; This algoritm was modified to exclude cases where there isn't a todo 
@@ -1164,15 +1184,6 @@ HEAD-WORD_GROUP6
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ;
-#TemplateActionAlg
-THAT1
-<LAB> = \C[ei]\.*
-<LAB> != \Cet\.*
-; Ce is direct complement of verb (Cet means 'that' is present)
-; 'that' is handled in preposition section. (PREP_CLAUSE_OBJECT)
-=
-<F_L that> += <F_R head-word ref>
-;
 
 #TemplateActionAlg
 RELATIVE_CLAUSE_TO_BACKGROUND
@@ -1356,6 +1367,7 @@ PREP_X
 #TemplateActionAlg
 PREP_PHRASE
 <LAB> = \J\.*|\ON\.*|\MG\.*|\Mgp
+<F_L POS> = prep
 =
 <F_L obj> = <F_R head-word>
 <F_L ref links _pobj> += <F_L obj>
@@ -1383,6 +1395,38 @@ PARTICIPIAL_ADJECTIVAL
 <F_L ref links _amod> += <F_R ref>
 
 ;
+; Theorder of rules here may seem odd, but it's absolutely necessary because
+; one has to set certain flags to prevent MVp adverbs from getting classified in certain ways. . . 
+; (AN DEC 2014)
+;
+
+#TemplateActionAlg
+EQUATIVE_COMPARATIVE_FIRST_DEGREE
+<LAB> = \EEy\.*
+=
+<F_R COMPARED_MOD_FLAG> = T
+<F_R BACKGROUND-FLAG> = T
+<F_R ref links _compdeg> += <F_L ref>
+
+#TemplateActionAlg
+COMPARATIVE_CONTEXT
+<LAB> = \MVa\.*
+<F_R COMPARED_MOD_FLAG> = T
+<F_L linkR2> != %
+=
+<F_R ref links _compcontadv1> += <F_L linkR1 F_R ref>
+<F_L ref links _compadvmod> += <F_R ref>
+<F_L linkR1 F_R COMPCONT_FLAG> = T
+
+#TemplateActionAlg
+COMPARATIVE_SECOND_CONTEXT
+<LAB> = \CX\.*
+<F_L linkL0 F_L linkR1 F_R COMPCONT_FLAG> = T
+=
+<F_L linkL0 F_L linkR2 F_R ref links _compcontadv2> += <F_R linkR0 F_R ref>
+<F_L COMPCONT_FLAG> = T
+
+;
 ; The exception in the rule below is for cases where an adverb intervenes
 ; between a verb and the prep-adv as in "He ran largely in the morning."
 ; Note; I'm not sure there's any reason prepositional adverbials need their
@@ -1392,8 +1436,16 @@ PARTICIPIAL_ADJECTIVAL
 PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*|\Pp\.*
 <F_L POS> != adv
+<F_R COMPCONT_FLAG> !=T
+<F_L COMPCONT_FLAG> !=T
 =
 <F_L ref links _advmod> += <F_R ref>
+
+#TemplateActionAlg
+IMPLICIT_COMPARED_MOD
+<LAB> = \CX\.*
+=
+<F_R ref links _advmod> += <F_L linkL0 F_L ref links _advmod>
 
 ;
 ; This is supposes to create the advmod of a prep by any adverbial
@@ -1406,12 +1458,6 @@ ADVMOD_OF_ADVERBIAL
 =
 <F_R ref links _advmod> += <F_L ref>
 <F_L modified> += <F_R ref>
-
-;
-; NB!!! I suspect that virtually all of the preposition rules either already
-; are or will be completely useless when I'm done writing new ones above this
-; note but I'm not deleting any until I finish. (AN DEc 2014)
-;
 
 ;
 ; This is a misplaced question rule: "Where did John put it?"
@@ -1433,21 +1479,6 @@ POSSR_TO_APOSTROPHE
 <F_R possessor> += <F_L ref>
 
 ;
-;e.g. Mike runs as fast as he did last year.
-;this forms "as(fast, he)" relationship
-;CX is used in comparative constructions like "as I do"
-;
-#PrepositionLinkAlg
-PREP_LINKING
-<LAB> = \MVz\.*
-<F_R linkR0 LAB> = \CX
-<F_L prep-temp> != %
-<F_L prep-temp> = $modified
-<F_R str> = $prep
-<F_R> = $prep_source
-<F_R linkR0 F_R subj> = $prep_obj
-=
-;
 ; Apparently MVi is reserved for (in order) to
 ;
 #TemplateActionAlg
@@ -1468,7 +1499,7 @@ ADVMOD_OF_PREP
 <F_R POS> = prep
 =
 <F_R ref links _advmod> += <F_L ref>
-<F_L modified> = <F_R ref>
+<F_L modified> += <F_R ref>
 
 #TemplateActionAlg
 ADVERB_OBSTRUCTED_PREPADV
@@ -1498,6 +1529,7 @@ INVERSE_RELATIVE_PREP
 =
 <F_R ref links _advmod> = <F_L ref>
 <INVERSE-REL-PREP FLAG> = T
+
 ;
 ; Delete the _prepadj relation for "The man on whom we sat."
 ;
@@ -1662,6 +1694,7 @@ ADJ1
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _amod> += <F_L ref>
+
 ;
 ; Treat preps without objects as adjectives -- copula (Pp) is treated
 ; separately.
@@ -1691,6 +1724,7 @@ ADJ2_2
 =
 <F_L BACKGROUND-FLAG> = T
 <F_L ref links _amod> += <F_R ref>
+
 ;this rules applies for adjective-focused comparatives
 ;e.g. My sister is much more intelligent than me.
 ; ECa is used in connection (much,more) and more is acting as a adjectival adverb for "intelligent".
@@ -1902,6 +1936,7 @@ CONJ_AMOD
 <F_R ref links _amod> = %
 <F_R ref links _amod> += <F_L conj member0 ref>
 <F_R ref links _amod> += <F_L conj member1 ref>
+
 #TemplateActionAlg
 CONJ_PREDADJ
 <F_L subj links _predadj> != %
@@ -1926,84 +1961,44 @@ CONJ_PREDADJ
 ;the word "more" is serving as an adverb to "quickly".( adverbial comparative)
 ;In this case, the connector between "more" and "quickly" is specially
 ;subscripted with "EEm" (the special subscript "m") to handle such "more/less" cases.
-#TemplateActionAlg
-COMPARATIVE_MVa-EE
-<LAB> = \MVa
-<F_R linkL1 LAB> = \EEm
-=
-<F_R ref degree> = comparative
 ;
 ;e.g - He is more/less intelligent than John.
 ;"more" is serving as an adjectival adverb
 ;In this case, the connector between "more/less" and "intelligent" is specially
 ;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
-#TemplateActionAlg
-COMPARATIVE_Pa-EAm
-<LAB> = \Pa\.*
-<F_R linkL1 LAB> = \EAm
-=
-<F_R ref degree> = comparative
 ;
 ;e.g - I find maths lessons more/less enjoyable than science lessons.
 ;"more" is serving as an adjectival adverb
 ;In this case, the connector between "more/less" and "enjoyable" is specially
 ;subscripted with "EAm" (the special subscript "m") to handle such "more/less" cases.
+
 #TemplateActionAlg
-COMPARATIVE_Ma-EAm
-<LAB> = \Ma
-<F_R linkL1 LAB> = \EAm
+COMPARATIVE_ONE
+<LAB> = \EEm\.*|\EAm\.*
 =
-<F_R ref degree> = comparative
+<F_R ref links _compdeg> += <F_L ref>
 
 ;e.g. He is more/less intelligent than attractive.
 ;the connector between "more/less" and "is" is specially
 ;subscripted with "EBmm" (the special subscript "mm") and "is" and "intelligent" connected with "Paf" link
 #TemplateActionAlg
-COMPARATIVE_Pa-EBmm
-<LAB> = \Pa\.*
-<F_L linkR1 LAB> = \EBmm
+COMPARATIVE_TWO
+<LAB> = \Pa\.*|\MVt
+<F_L linkR1 LAB> = \EBmm|\Omm|\Om\MVm
 =
-<F_R ref degree> = comparative
+<F_R ref links _compdeg> = <F_L linkR1 F_R ref>
 
 ;He did it more/less quickly than carefully.
-#TemplateActionAlg
-COMPARATIVE_MVa-MVm
-<LAB> = \MVa
-<F_L linkR2 LAB> = \MVm
-=
-<F_R ref degree> = comparative
-;
 ;e.g - He runs more/less quickly than John does.
-;In this case, the connector between "more/less" and "quickly" is specially
-;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
-;Note- The "He runs less quickly than John does" sentence is ungrammatical. 
-;But sentence is commonly used by non-native English speakers.
-;So below rule is adding support for common, ungrammatical sentences.
-#TemplateActionAlg
-COMPARATIVE_MVa-Om
-<LAB> = \MVa
-<F_L linkR2 LAB> = \Omm | \Om
-=
-<F_R ref degree> = comparative
-;
 ;e.g - He runs more/less than John.
-;In this case, the connector between "more/less" and "quickly" is specially
-;subscripted with "Om" (the special subscript "m") to handle such "more/less" cases.
-#TemplateActionAlg
-COMPARATIVE_MVt-Om
-<LAB> = \MVt
-<F_L linkR1 LAB> = \Omm | \Om
-=
-<F_L linkR1 F_R ref degree> = comparative
 ;e.g - He runs less miles than John does.
-;In this case, the connector between "less" and "runs" is specially
-;subscripted with "Om" (the special subscript "m") to handle such "less" cases.
 #TemplateActionAlg
-COMPARATIVE_MVp-Om
-<LAB> = \MVp
-<F_L linkR2 LAB> = \Omm | \Om
+COMPARATIVE_THREE
+<LAB> = \MVa\.*|\MVp\.*
+<F_L linkR2 LAB> = \MVm|\Omm | \Om
 =
-<F_L linkR2 F_R ref degree> = comparative
+<F_R ref links _compdeg> = <F_L linkR2 F_R ref>
+
 ;
 ;Here "more" is serving as a noun-phrase, the number of the noun in the "more" phrase is
 ;indicated by the D link ( it should be either noun-phrase  or as determiner of
@@ -2011,11 +2006,11 @@ COMPARATIVE_MVp-Om
 ;singular, whereas if it is "Dmcm", the noun is plural.
 ;Here it forms the degree relationship of the noun-phrase
 #TemplateActionAlg
-COMPARATIVE_Dmum
-<LAB> = \Dmcm | \Dmum
-<F_L str> = more|much|less|fewer
+QUANTITY
+<LAB> = \Dm\.*
 =
-<F_L ref degree> = comparative
+<F_R ref links _quantity> = <F_L ref>
+
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -2040,57 +2035,37 @@ ADV1
 <F_R str> != not|more|less
 <F_L head-word> != %
 <F_R degree> = %
+<F_R COMPCONT_FLAG> != T
+<F_L COMPCONT_FLAG> != T
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
 
 ;
-; -------------------------------------------------------------
-; Adverb usage in comparaitves
-;
-;e.g. He runs less quickly than John does.
-;Above ADV1 rule only makes _advmod(run, quickly) but we want to make infer that he
-;runs (quickly,less)
-;Following rule make the  binary relationship _advmod(quickly, less)
-;Note- The above example sentence is ungrammatical. 
-;But sentence is commonly used by non-native English speakers.
-;So below rule is adding support for common, ungrammatical sentences. 
-#TemplateActionAlg
-ADV1_1
-<LAB> = \MVa
-<F_R str> != not|more|less
-<F_L head-word> != %
-<F_R degree> = %
-<F_L linkR2 F_R str> = more|less 
-=
-<F_R ref links _advmod> += < F_L linkR2 F_R ref>
-;
-;
 ;e.g. He runs faster than John.
 ;Above ADV1 rule won't make _advmod(run, fast) relationship due to "faster" is 
 ;POS tagged with ".a-c" and relex-tagging.algs make it's degree as comparative.
 ;Following rule make the  binary relationship _advmod(run, fast)
+
 #TemplateActionAlg
 ADV1_2
-<LAB> = \MVb
+<LAB> = \MVb\.*
 <F_R str> != not|more|less|often
-<F_L head-word> != %
 <F_R degree> != %
-<F_L head-word BACKGROUND-FLAG> != T 
 =
 <F_L head-word BACKGROUND-FLAG> = T
-<F_L head-word ref links _advmod> += <F_R ref>
+<F_R ref links _compdeg> += more
+
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
 ; XXX should check if left-word is a verb?; if its not then its an amod .. !?
 ; We need explicit right-word-not-prep check to handle the usual; MVp
 ; cases.
 ;
-; Bug-fix (10-9-2014 AN): last condition below added to prevent a "to" that
-; introduces an indirect object from being interpreted as an advmod. Created
-; TO_IOBJ_FLAG relex-taggin file so as not to have to disallow all "to"'s from
-; advmod here, such as "to the nth degree."
+; Created TO_IOBJ_FLAG relex-taggin file so as not to have to disallow all "to"'s from
+; advmod here, such as "to the nth degree." (AN)
 ;
+
 #TemplateActionAlg
 ADV1_ONLY_IF_NOT_PREP
 <LAB> = \MVp\.*
@@ -2098,9 +2073,12 @@ ADV1_ONLY_IF_NOT_PREP
 <F_L head-word> != %
 <F_R PREP-OBJ> = %
 <F_R Q_TO_IOBJ_FLAG> != T
+<F_R COMPCONT_FLAG> != T
+<F_L COMPCONT_FLAG> != T
 =
 <F_L head-word BACKGROUND-FLAG> = T
 <F_L head-word ref links _advmod> += <F_R ref>
+
 ;
 ; Jim quickly runs.
 ; Jim is very tired.
@@ -2112,6 +2090,7 @@ ADV2
 =
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
+
 ;
 ; The head-word can be blank in unusual or quirky parses, for example:
 ; "There are also bogus plans" where "bogus" is the head, instead of "are".
@@ -2141,6 +2120,7 @@ ADV3
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
+
 ;EE connects adverbs to other adverbs. Some adverbs can
 ;modify other adverbs ("very", "quite"); these carry EE+connectors.
 ;e.g. I run more often than Ben.
@@ -2156,20 +2136,6 @@ ADV3_1
 =
 <F_R BACKGROUND-FLAG> = T
 <F_R ref links _advmod> += <F_L ref>
-
-;e.g. The snail is running  exactly as fast as the cheetah.
-;_advmod(fast, exactly)
-;case <F_R linkL0 F_L head-word> = %  e.g. Mike runs as fast as he did last year.
-;for above sentence we need to avoid it forming both _advmod(run, fast) AND _advmod(fast, run),
-
-#TemplateActionAlg
-ADV3_2
-<LAB> = \EEy
-<F_R linkL0 LAB> = \MVa
-<F_R linkL0 F_L head-word> = %
-=
-<F_R BACKGROUND-FLAG> = T
-<F_R ref links _advmod> += <F_R linkL0 F_L ref>
 
 ; The below is added to handle the how in 'how-of-degree questions' as in 'how quickly does he run'
 ; which were previously being picked up by the rules above and pre-empting the r2l advmod rule; 
@@ -2193,6 +2159,7 @@ ADV4
 <F_L POS> = adv
 <F_R head-word BACKGROUND-FLAG> = T
 <F_R head-word ref links _advmod> += <F_L ref>
+
 ;
 ; Fix up conjunctions; link not to the conjunction,
 ; but to each conjoined modifier.
@@ -2207,33 +2174,26 @@ CONJ_ADVMOD
 <F_L ref links _advmod> = %
 <F_L ref links _advmod> += <F_R conj member0 ref>
 <F_L ref links _advmod> += <F_R conj member1 ref>
-;
-;EC connects adverbs and comparative adjectives:
-;EA connects adverbs to adjectives.
-#TemplateActionAlg
-COMP_ADVMOD_1_1
-<LAB> = \EBmm|\MVm|\EAm
-<F_R str> = less | more
-=
-<F_L advmod> += <F_R ref>
-;EC connects adverbs and comparative adjectives
-;ECn is used for noun-focused comparative
+
+;EC connects adjectives and adverbs with comparative adverbs
 ;e.g. It is much bigger
 #TemplateActionAlg
 COMP_ADVMOD_1_2
-<LAB> = \ECn
+<LAB> = \EC\.*
 =
-<F_R advmod> += <F_L ref>
+<F_R ref links _compdeg> += <F_L ref>
+
 #TemplateActionAlg
 ;Pizza, which most people love, is not very healthy.
 ;to handle binary relationship _advmod(very,not)
 COMP_ADVMOD_2_1
-<LAB> = \Paf
+<LAB> = \Paf\.*
 <F_L advmod> != %
 <F_R linkL1 F_L> != %
 =
 <F_R linkL1 F_L ref links _advmod> += <F_L advmod> 
 <F_L advmod> = %
+
 #TemplateActionAlg
 COMP_ADVMOD_2_2
 <LAB> = \Pa\.*
@@ -2241,12 +2201,14 @@ COMP_ADVMOD_2_2
 =
 <F_R ref links _advmod> += <F_L advmod>
 <F_L advmod> = %
+
 #TemplateActionAlg
 COMP_ADVMOD_3
 <LAB> = \EAm
 <F_L str> = less|more
 =
 <F_R advmod> += <F_L ref>
+
 ;case "<F_L str> != much" was introduced to form relationships such as _advmod(more, much)
 ;e.g. My sister is much more intelligent than me. 
 ;would form a _advmod(more, much) relationship without above condition 
@@ -2257,6 +2219,7 @@ COMP_ADVMOD_4
 <F_L str> != much
 =
 <F_R ref links _advmod> += <F_L ref>
+
 #TemplateActionAlg
 COMP_ADVMOD_5_1
 <LAB> = \Op
@@ -2264,11 +2227,13 @@ COMP_ADVMOD_5_1
 =
 <F_L ref links _advmod> += <F_R advmod>
 <F_R advmod> = %
+
 #TemplateActionAlg
 ADVMOD_TO_LINKS
 <advmod> != %
 =
 <ref links _advmod> = <advmod>
+
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Parataxis
@@ -2303,8 +2268,8 @@ QUESTION_HEAD_HYP
 ;
 ; NOUN MODIFICATION
 ;
-;
-;
+;//////////////////////////////////////////////////////////////////////////
+
 #TemplateActionAlg
 NOUN-MOD
 <LAB> = \AN\.*
@@ -2368,8 +2333,8 @@ POSSR_TO_DET
 ;
 ; QUANTITY DETERMINERS
 ;
-;
-;
+;////////////////////////////////////////////////////////////////////////////
+
 #TemplateActionAlg
 QUERY_INDEFINATE_DETERMINER1
 ;identfies indefinate determiners for the purpose of queries.  For instance: 
@@ -2381,7 +2346,7 @@ QUERY_INDEFINATE_DETERMINER1
 <F_L str> = a|A|an|An|some|Some|any|Any
 =
 <F_L QUERY_INDEFINATE_DETERMINER_FLAG> = T
-;
+
 #TemplateActionAlg
 QUERY_INDEFINATE_DETERMINER2
 ; Identfies indefinate determiners for the purpose of queries.  For instance: 
@@ -2403,6 +2368,7 @@ QUANTITY_EXCEPTION
 <F_L str> = more|More|less|Less|'s|fewer|Fewer|'|’s|’
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
+
 ;e.g. "I have more chairs than Ben." Here "more" is used to indicate the quantity of chairs
 ;to form the relationship _quantity(chair, more)  \Dmcm and \Op connectors are used. 
 ;Os- and Op- connectors mark nouns as being singular or plural. 
@@ -2417,6 +2383,7 @@ QUANTIFIERS_1
 <F_L linkL0 LAB> != \ND
 =
 <F_R ref links _quantity> = <F_L ref>
+
 ;
 ; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
 ;
@@ -2433,12 +2400,14 @@ NUMBER-1
 =
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
+
 ;
 ;#TemplateActionAlg
 ;NUMBER-2
 ;<LAB> = \AL\.*
 ;=
 ;<F_R temp_q> += <F_L ref>
+
 ;#TemplateActionAlg
 ;NUMBER-3
 ;<LAB> = \D\.*
@@ -2450,6 +2419,7 @@ NUMBER-1
 ;the "m" subscript is for "multiple", the "c" subscript is for "count"
 ;so "n" here indicates "numeric". 
 ;This connector has essentially the same meaning as the ND numeric determiner.
+
 #TemplateActionAlg
 NUMBER-NUMERIC-QUANTIFIERS
 <LAB> = \Dmcn 
@@ -2460,6 +2430,7 @@ NUMBER-NUMERIC-QUANTIFIERS
 =
 <F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
+
 ;
 ;Different uses of the NI connectors are handled separately. 
 ;
@@ -2478,10 +2449,10 @@ NUMBER-1a
 <F_R linkR0 F_R ref links _quantity> = <F_L ref>
 <F_L IS-NUMBER-FLAG> = T
 <F_R NOT_NUMBER_FLAG> = T
+
 ;
 ;The three algorithmhs below (NUMERICAL_RANGES_L, NUMERICAL_RANGES_R, NUMBER-NUMERICAL_RANGES)
 ;handle the sentence "It is from 6 to 7 m in length." -- _quantity(m, 6), _quantity(m, 7)
-;
 ;
 #TemplateActionAlg
 NUMERICAL_RANGES_L
@@ -2489,6 +2460,7 @@ NUMERICAL_RANGES_L
 <F_L NOT_NUMBER_FLAG> = %
 =
 <F_R numerical_ranges> += <F_L>
+
 ;
 #TemplateActionAlg
 NUMERICAL_RANGES_R
@@ -2496,6 +2468,7 @@ NUMERICAL_RANGES_R
 <F_R NOT_NUMBER_FLAG> = %
 =
 <F_L numerical_ranges> += <F_R>
+
 ;
 #TemplateActionAlg
 NUMBER-NUMERICAL_RANGES
@@ -2509,6 +2482,7 @@ NUMBER-NUMERICAL_RANGES
 <F_R ref links _quantity> += <F_L numerical_ranges member1 ref>
 <F_L numerical_ranges member0 IS-NUMBER-FLAG> = T
 <F_L numerical_ranges member1 IS-NUMBER-FLAG> = T
+
 ;
 ;Handles all other cases of NI connectors
 ;
@@ -2647,7 +2621,9 @@ QUESTION_DETERMINER
 ; Cornwallis was expecting more troops to arrive on British ships.
 ; The undergrads are gloomier than usual.
 ; She eats more pasta.
-; -----
+; 
+;//////////////////////////////////////////////////////////////////////////////
+
 ;
 ; Marks the comparative subject with a reference to the relation word
 ;    Dave eats more/as_many cats than/as... (D**m/D**y)
@@ -2726,6 +2702,7 @@ RELATION_THAN_3
 <F_L set> = T
 <F_L comp_temp> += <F_R temp>
 <F_R temp> = %
+
 #TemplateActionAlg
 RELATION_THAN_4
 <LAB> = \O\.*|\C\.*|\S\.*|\U\.*|\Bc
@@ -2736,6 +2713,7 @@ RELATION_THAN_4
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R ref>
 <F_R comp_temp> = %
+
 ;e.g. He earns more than I expected
 ;For this, "than" is given an Zc+ connector. 
 ;Z is also used in subordinate "as"-phrases like "He left, as I expected".
@@ -2789,7 +2767,6 @@ RELATION_THAN_6_2
 =
 <F_L comp_temp> += <F_R ref>
 
-
 #TemplateActionAlg
 RELATION_THAN_6_3
 <LAB> = \MVt
@@ -2797,6 +2774,7 @@ RELATION_THAN_6_3
 =
 <F_L ref links than> += <F_R comp_temp_1>
 <F_R comp_temp_1> = %
+
 ;MVz is used in comparatives with "As" 
 ;e.g. The snail is running  exactly as fast as the cheetah.
 ;MVp e.g.  Jack’s hair color is similar to Ben's
@@ -2809,6 +2787,7 @@ RELATION_THAN_7
 <F_L comp_temp> = %
 <F_L comp_temp> += <F_R comp_temp>
 <F_R comp_temp> = %
+
 #TemplateActionAlg
 RELATION_THAN_8
 ;<LAB> = \Pa\.*|\I\.*
@@ -2817,6 +2796,7 @@ RELATION_THAN_8
 =
 <F_L comp_temp> += <F_R comp_temp>
 <F_R comp_temp> = %
+
 #TemplateActionAlg
 RELATION_THAN_9_1
 <LAB> = \Paf
@@ -2824,6 +2804,7 @@ RELATION_THAN_9_1
 =
 <F_L comp_var> += <F_R comp_temp>
 <F_R comp_temp> = %
+
 ;differentiate forming "than()" relationships when connected with "Ma" links
 ;e.g. I find maths lessons more enjoyable than science lessons. vs I find maths more difficult than science.
 ;
@@ -2835,6 +2816,7 @@ RELATION_THAN_9_2
 =
 <F_L comp_var> += <F_R comp_temp>
 <F_R comp_temp> = %
+
 #TemplateActionAlg
 RELATION_THAN_10
 <LAB> = \Opn
@@ -2843,6 +2825,7 @@ RELATION_THAN_10
 <F_R SET> = T
 <F_L comp_var> += <F_R comp_var>
 <F_R comp_var> = %
+
 #TemplateActionAlg
 RELATION_THAN_11
 <LAB> = \MVp
@@ -2853,6 +2836,7 @@ RELATION_THAN_11
 <F_R comp_var> += <F_L comp_temp>
 <F_L comp_temp> = %
 ;
+
 #TemplateActionAlg
 RELATION_THAN_12
 <LAB> =\Ma
@@ -2871,7 +2855,7 @@ RELATION_THAN_13
 <F_R ref links than> += <F_L comp_var>
 <F_L comp_var> = %
 
-; XXX FIXME WTF? .. why is the below looking at teh gender !!??
+; XXX FIXME WTF? .. why is the below looking at gender !!??
 #TemplateActionAlg
 RELATION_THAN_14
 <LAB> = \MV\.*|\Usc\.*|\Os\.*
@@ -2881,6 +2865,7 @@ RELATION_THAN_14
 =
 <F_L comp_temp1> += <F_R ref>
 ;
+
 #TemplateActionAlg
 RELATION_THAN_15
 <LAB> = \MVt\.*
@@ -2889,6 +2874,7 @@ RELATION_THAN_15
 <F_L comp_temp1> += <F_R comp_temp1>
 <F_R comp_temp1> = %
 ;
+
 #TemplateActionAlg
 RELATION_THAN_16
 <LAB> =\Ou\.*
@@ -2902,6 +2888,7 @@ RELATION_THAN_16
 ;e.g. I have fewer chairs than Ben. So this this sentence we want to form the than()
 ;relationship using rule "RELATION_THAN_17_2". The rule "RELATION_THAN_17_1" would form 
 ;than(chair, Ben) which is wrong, where correct form should be than(I, Ben) 
+
 #TemplateActionAlg
 RELATION_THAN_17_1
 <LAB> = \Op
@@ -2937,6 +2924,7 @@ RELATION_THAN_17_3
 <F_R comp_temp> = %
 <F_R comp_temp1> = %
 ;
+
 #TemplateActionAlg
 RELATION_THAN_18
 <LAB> = \MVa
@@ -2944,6 +2932,7 @@ RELATION_THAN_18
 =
 <F_R ref links than> += <F_L comp_temp1>
 <F_L comp_temp1> = %
+
 ;
 ;Rule for Dependency Relation "than1".comp_temp1 is used for temporary storage purpose.
 #TemplateActionAlg
@@ -2953,6 +2942,7 @@ RELATION_THAN1_1
 <F_L str> = than
 =
 <F_L comp_temp1> += <F_R ref>
+
 #TemplateActionAlg
 RELATION_THAN1_2
 <LAB> = \C\.* 
@@ -2961,6 +2951,7 @@ RELATION_THAN1_2
 =
 <F_L comp_temp1> += <F_R temp1>
 <F_R temp1> = %
+
 #TemplateActionAlg
 RELATION_THAN1_3
 <LAB> = \MVt\.*
@@ -2968,6 +2959,7 @@ RELATION_THAN1_3
 =
 <F_L ref links than1> += <F_R comp_temp1>
 <F_R comp_temp1> = %
+
 ;
 ;END OF THAN AND THAN1
 ;
@@ -3001,6 +2993,7 @@ COMPARATIVE_OBJECT_FINAL
 <comparative-relation-word> = $prep_source
 <comparative-cvar> = $prep_obj
 =
+
 ;
 ; Send (copy) prep-links to links
 ;
@@ -3009,6 +3002,7 @@ PREP_TO_LINKS
 <ref prep-links> != %
 =
 <ref links> <= <ref prep-links>
+
 ;
 ; Extracting comparative relations from Non-equal-gradable sentences such as 
 ; "He is more/less intelligent than John"
@@ -3023,12 +3017,14 @@ MORE_OR_LESS1a
 <F_L str> = more|less|many|much|little|fewer
 =
 <F_R relWord-temp> += <F_L str>
+
 #TemplateActionAlg
 MORE_OR_LESS1b
 <LAB> = \MVm|\Om\.*|EBmm
 <F_R str> = more|less
 =
 <F_L relWord-temp> += <F_R str>
+
 #TemplateActionAlg
 ;e.g. I find maths lessons more enjoyable than science lessons.
 ;relAdj-temp creates the temp adjective for F_R of Opn connector
@@ -3036,6 +3032,7 @@ MORE_OR_LESS1c
 <LAB> = \Opn
 =
 <F_R relAdj-temp> += <F_L linkR1 F_R ref>
+
 ;SX is used to connect the first person pronoun "I" to the verbs "was" and "am".
 #TemplateActionAlg
 TO_BE_TEMP
@@ -3066,6 +3063,7 @@ MORE_OR_LESS7a_2
 <F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
 <F_R relWord-temp> = %
+
 #TemplateActionAlg
 MORE_OR_LESS7b
 <LAB> = \MVa|\Ou\.*|\Op
@@ -3074,6 +3072,7 @@ MORE_OR_LESS7b
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
+
 #TemplateActionAlg
 MORE_OR_LESS7c
 <LAB> = \Opn|\MVa|\Oun
@@ -3084,6 +3083,7 @@ MORE_OR_LESS7c
 <F_R ref links _comparative> += <F_L ref>
 <F_L relWord-temp> = %
 <F_L relWord-temp> = is_set
+
 #TemplateActionAlg
 MORE_OR_LESS7d
 <LAB> = \Om\.*
@@ -3091,6 +3091,7 @@ MORE_OR_LESS7d
 <F_R str> = more|many|much|less|little
 =
 <F_R ref links _comparative> += <F_L ref>
+
 ;e.g. I find maths lessons more enjoyable than science lessons.
 ;creating "_comparative(enjoyable, maths)" relationship
 #TemplateActionAlg
@@ -3103,6 +3104,7 @@ MORE_OR_LESS7e
 <F_R ref links _comparative> += <F_L relAdj-temp>
 <F_R relWord-temp> = %
 <F_L relAdj-temp> = %
+
 ;e.g. I find science more difficult than mathematics. _comparative(difficult, science)
 #TemplateActionAlg
 MORE_OR_LESS7f
@@ -3112,6 +3114,7 @@ MORE_OR_LESS7f
 =
 <F_R ref links _comparative> += <F_L ref>
 <F_R relWord-temp> = %
+
 ;Creating more() binary relationships when there is no "more" terms in the sentence
 ;A few other words can also perform the function of "more",marking a phrase as the left half of a comparative.
 ;Theseinclude adjectives such as "bigger" and adverbs such as "better" and "further".
@@ -3126,6 +3129,7 @@ MORE_OR_LESS7f1
 =
 <F_R ref links _comparative> += <F_L is-temp>
 <F_L is-temp> = %
+
 #TemplateActionAlg
 NO_MORE_OR_LESS
 <LAB> = \MVb
@@ -3534,10 +3538,6 @@ CLEAN_UP_BAD_REFS2
 ;<ref BAD> = T
 ;=
 ;<ref> = %
-;
-;
-;
-;
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;/////////////////////////////// END OF FILE /////////////////////////////////
