@@ -77,7 +77,7 @@ public class RelationExtractor
 	public static final int DEFAULT_MAX_PARSES = 4;
 	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
 	public static final int DEFAULT_MAX_PARSE_SECONDS = 30;
-	public static final double DEFAULT_MAX_PARSE_COST = 1000;
+	public static final int DEFAULT_MAX_PARSE_COST = 1000;
 
 	private boolean _is_inited;
 	private boolean _use_sock;
@@ -239,7 +239,7 @@ public class RelationExtractor
 		parser.setMaxLinkages(maxLinkages);
 	}
 
-	public void setMaxCost(double maxCost)
+	public void setMaxCost(int maxCost)
 	{
 		if (!_is_inited) init();
 		parser.getConfig().setMaxCost(maxCost);
