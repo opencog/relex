@@ -61,8 +61,12 @@ while (<>)
 		my $req_rev = $3;
 
 		if ($major < $req_major) { exit 1;}
-		if ($minor < $req_minor) { exit 1;}
-		if ($rev < $req_rev) { exit 1;}
+		elsif ($major == $req_major){
+			if($minor < $req_minor) { exit 1;}
+			elsif($minor == $req_minor){
+				if ($rev < $req_rev) { exit 1;}
+			}
+		}
 
 		/relex-(\d)\.(\d+)\.(\d+)/;
 		$major = $1;
@@ -75,8 +79,12 @@ while (<>)
 		$req_rev = $3;
 
 		if ($major < $req_major) { exit 1;}
-		if ($minor < $req_minor) { exit 1;}
-		if ($rev < $req_rev) { exit 1;}
+		elsif ($major == $req_major){
+			if($minor < $req_minor) { exit 1;}
+			elsif($minor == $req_minor){
+				if ($rev < $req_rev) { exit 1;}
+			}
+		}
 	}
 	if (/<sentence /) { $in_sentence = 1;  next; }
 	if (/<features>/) { $in_features = 1; next; }
