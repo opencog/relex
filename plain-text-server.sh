@@ -27,8 +27,6 @@ RELEX_OPTS="\
 CLASSPATH="-classpath \
 bin:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
-/usr/local/share/java/opennlp-tools-1.4.3.jar:\
-/usr/local/share/java/opennlp-tools-1.3.0.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
@@ -39,7 +37,6 @@ bin:\
 /usr/share/java/gnu-getopt.jar:\
 /usr/share/java/linkgrammar.jar:\
 /usr/local/share/java/linkgrammar.jar:\
-/usr/share/java/xercesImpl.jar:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333 --lang ru
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333

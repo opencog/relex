@@ -189,11 +189,6 @@ function.
 	***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
 	work with version 2.0 !!
 
-- `xercesImpl.jar` (if you use Maven, this is already managed)
-	Older versions of the OpenNLP package require that the Xerces2
-	XML parser package be installed. In Debian/Ubunutu, this is supplied
-	by the `libxerces2-java` package.
-
 
 Building
 --------

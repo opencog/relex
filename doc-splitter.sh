@@ -7,8 +7,6 @@
 CLASSPATH="-classpath \
 bin:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
-/usr/local/share/java/opennlp-tools-1.4.3.jar:\
-/usr/local/share/java/opennlp-tools-1.3.0.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\

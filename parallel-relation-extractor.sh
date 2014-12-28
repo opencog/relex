@@ -15,13 +15,11 @@ CLASSPATH="-classpath \
 bin:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
-/usr/local/share/java/opennlp-tools-1.4.3.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/trove.jar:\
 /usr/share/java/commons-logging.jar:\
 /usr/share/java/gnu-getopt.jar:\
-/usr/share/java/xercesImpl.jar:\
 "
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.concurrent.ParallelRelationExtractor $1
 
