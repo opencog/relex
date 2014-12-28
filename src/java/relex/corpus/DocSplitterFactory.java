@@ -38,25 +38,6 @@ public class DocSplitterFactory
 		}
 		catch(Throwable t) {}
 
-		// Try again, this time looking for opennlp-tools-1.4.x or 1.3.x
-		if (null == clazz0)
-		{
-			try
-			{
-				// If the above isn't found, try again ...
-				// This is what opennlp-1.4.3 and 1.3.0 use.
-				Class.forName("opennlp.tools.lang.english.SentenceDetector");
-
-				// clazz0 = DocSplitterOpenNLPImpl.class;
-				Class<?> c = Class.forName("relex.corpus.DocSplitterOpenNLP14Impl");
-
-				// It seems to be impossible to perform this cast and not get
-				// a type-safety warning,
-				clazz0 = (Class<DocSplitter>) c;
-			}
-			catch(Throwable t2) {}
-		}
-
 		if (null == clazz0)
 		{
 			clazz0 = DocSplitterFallbackImpl.class;

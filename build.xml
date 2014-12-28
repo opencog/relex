@@ -30,13 +30,9 @@
         <!-- Packages required by optional OpenNLP -->
         <pathelement location="${PREFIX}/opennlp-tools-1.5.3.jar"/>
         <pathelement location="${PREFIX}/opennlp-tools-1.5.0.jar"/>
-        <pathelement location="${PREFIX}/opennlp-tools-1.4.3.jar"/>
         <pathelement location="${PREFIX}/maxent-3.0.3.jar"/>
         <pathelement location="${PREFIX}/maxent-2.5.2.jar"/>
         <pathelement location="${PREFIX}/trove.jar"/>
-
-        <!-- OpenNLP-1.4 and older require xerces -->
-        <pathelement location="${PREFIX}/xercesImpl.jar"/>
 
         <!-- Mandatory packages -->
         <pathelement location="${ALTPREFIX}/linkgrammar.jar"/>
@@ -51,13 +47,9 @@
         <!-- Packages required by optional OpenNLP -->
         <pathelement location="${ALTPREFIX}/opennlp-tools-1.5.3.jar"/>
         <pathelement location="${ALTPREFIX}/opennlp-tools-1.5.0.jar"/>
-        <pathelement location="${ALTPREFIX}/opennlp-tools-1.4.3.jar"/>
         <pathelement location="${ALTPREFIX}/maxent-3.0.3.jar"/>
         <pathelement location="${ALTPREFIX}/maxent-2.5.2.jar"/>
         <pathelement location="${ALTPREFIX}/trove.jar"/>
-
-        <!-- OpenNLP-1.4 and older require xerces -->
-        <pathelement location="${ALTPREFIX}/xercesImpl.jar"/>
     </path>
     <!-- Steps to take on initialization -->
     <target name="init">
@@ -72,19 +64,7 @@
     <!-- conditional compilation, check for OpenNLP-1.5 -->
     <available classname="opennlp.tools.sentdetect.SentenceModel" classpathref="relex.classpath" property="OpenNLP15.present"/>
     <target name="look-for-opennlp-1.5" unless="OpenNLP15.present">
-       <echo message="Could not find OpenNLP-1.5 classes; looking for OpenNLP-1.4."/>
-    </target>
-
-    <!-- conditional compilation, check for OpenNLP-1.4 or earlier -->
-    <!-- If 1.5 is found, then make sure that 1.4 is not used!
-         The API's are incompatible, so the build WILL fail.
-         Ouch, that hurts! -->
-    <target name="look-for-opennlp-1.4" unless="OpenNLP15.present" depends="look-for-opennlp-1.5">
-       <available classname="opennlp.tools.sentdetect.SentenceDetector" classpathref="relex.classpath" property="OpenNLP14.present"/>
-       <echo message="Looking for (optional) OpenNLP-1.4..."/>
-    </target>
-
-    <target name="look-for-opennlp" depends="look-for-opennlp-1.4">
+       <echo message="Could not find OpenNLP-1.5 classes."/>
     </target>
 
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
@@ -109,7 +89,6 @@
             <src path="src/java"/>
             <exclude name="**/OWLView.java" unless="OWL.present" />
             <exclude name="**/DocSplitterOpenNLP15Impl.java" unless="OpenNLP15.present" />
-            <exclude name="**/DocSplitterOpenNLP14Impl.java" unless="OpenNLP14.present" />
             <classpath refid="relex.classpath"/>
             <!-- <compilerarg value="-Wno-deadCode"/> -->
             <!-- <compilerarg value="-Wno-unused"/> -->
