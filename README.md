@@ -85,7 +85,7 @@ The following packages are required pre-requisites for building RelEx.
 	
 	> http://www.abisource.com/projects/link-grammar/#download
 
-	Link-grammar version 5.0.0 or later is needed to obtain a variety
+	Link-grammar version 5.2.1 or later is needed to obtain a variety
 	of required fixes.
 
 	The Link Grammar Parser is the underlying engine, providing
@@ -117,7 +117,7 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
-- *didion.jwnl* (not required if you use Maven, only required for Ant)
+- *didion.jwnl*
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at 
@@ -137,7 +137,7 @@ The following packages are required pre-requisites for building RelEx.
 	the following command: `chmod 644 jwnl.jar`, as otherwise, you'll
 	get strange "java cannot unzip jar" error messages.
 
-- *Apache Commons Logging* (not required for Maven, only required for Ant)
+- *Apache Commons Logging*
 	The JWNL package requires that the Apache commons logging
 	jar file be installed. In Debian/Ubuntu, this is supplied by
 	the `libcommons-logging-java` package. In RedHat/CentOS systems,
@@ -150,10 +150,12 @@ The following packages are optional. If they are found, then
 additional parts of RelEx will be built, enabling additional 
 function.
 
-- OpenNLP (if you use Maven, this is already managed)
+- OpenNLP
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
 	to find sentence boundaries in free text. If OpenNLP is not found, 
 	then the less accurate `java.text.BreakIterator` class is used.
+
+   If you use Maven, this dependency is already managed.
 
 	The OpenNLP home page is at 
 	
@@ -206,8 +208,7 @@ To run tests: `mvn test`
 
 After the above are installed, the relex java code can be built.
 The build system uses `ant`, and the ant build specifications
-are in `build.xml`. When running `ant` for the first time it will download the
-[Aether antlib](https://www.eclipse.org/aether/). Afterwards, simply saying `ant` at the command line
+are in `build.xml`.  Simply saying `ant` at the command line
 should be enough to build. Saying `ant run` will run a basic
 demo of the system. The `ant test` command will run several tests
 verifying both regular parsing, and the Stanford-parser compatibility
@@ -414,27 +415,10 @@ TODO
 This graph visualization class is not currently used. It should be
 wired up and turned on.
 
-
-### TODO - OpenNLP
-
-A new version of OpenNLP is available. It is not backwards-compatible
-with the OLD API. Need to port relex to the new API.
-
-
 ### TODO - Comparatives
 
 RelEx is pretty broken when it comes to handling comparative sentences.
 This needs fixing.
-
-### TODO - Java Install
-
-The Java install dependencies would be much easier to deal with if
-there was a centralized repository from which one could easily obtain
-the needed jar files. That is, something analogous to apt-get or CPAN.
-The closest such thing for Java is `maven`; however, none of the jar
-files required by relex have been checked into maven. Thus, a to-do:
-get all of the jar files submitted to maven.
-
 
 ### TODO - Wordnet Install
 
@@ -459,6 +443,5 @@ my dear, you must indeed go and see Mr. Bingley when he comes into the neighbour
 
 todo
 
- - write paper on question normalization including %atLocation
  - write paper on wsd by pos-lookup
  - write paper on relex overview

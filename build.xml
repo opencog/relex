@@ -64,7 +64,7 @@
     <!-- conditional compilation, check for OpenNLP-1.5 -->
     <available classname="opennlp.tools.sentdetect.SentenceModel" classpathref="relex.classpath" property="OpenNLP15.present"/>
     <target name="look-for-opennlp" unless="OpenNLP15.present">
-       <echo message="Could not find OpenNLP-1.5 classes."/>
+       <echo message="Could not find (optional) OpenNLP-1.5 classes."/>
     </target>
 
     <!-- Create a java source file containing the version number by replacing @REVISION@ -->
