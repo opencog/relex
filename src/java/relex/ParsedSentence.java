@@ -12,7 +12,7 @@
  * limitations under the License.
  *
  * Copyright (c) 2008 Novamente LLC
- * Copyright (c) 2008, 2009 Linas Vepstas <linasvepstas@gmail.com>
+ * Copyright (c) 2008, 2009, 2014 Linas Vepstas <linasvepstas@gmail.com>
  */
 
 package relex;
@@ -408,9 +408,30 @@ public class ParsedSentence
 		// basic idea is that we want to penalize skipped words
 		// strongly, but disjunct costs not as much. Low link
 		// costs are the tiebreaker.
-		double weight = 0.4 * getNumSkippedWords();
+		//
+		// The weights: Having num-skipped-words >0 is terrible, unless
+		// these are commas or bad punctuation.  So we punish this strongly.
+		// A disjunct cost of 5 should about balance out one skipped
+		// word or so. Disjunct costs above 3 or 4 are bad news, at
+		// least for short sentences (bad scores are more common for long
+		// sentences).  Thus, weights of 1.0 and 0.2 seem about right.
+		//
+		// The current link-grammar commonly uses small differences in
+		// the disjunct cost, such as 0.1 and even 0.05, to break ties.
+		// Such a disjunct cost should overwhelm the link cost of 2 or
+		// 3 or 4, and so link-costs are given a very low weight. The
+		// problem is that the new link-grammar now uses long-distance
+		// links much more freely, e.g. WV. And of course, the Xp links
+		// are always very high link cost. We almost shouldn't count
+		// these ...  Anyway, this suggests that 0.2*0.05 ~ 3*0.003 is a
+		// reasonable choice. Or maybe even 0.004 or 0.005 for the link
+		// cost weight...
+		//
+		// This is all a manula balancing act, until automatic weighting
+		// is implemented in link-grammar.
+		double weight = 1.0 * getNumSkippedWords();
 		weight += 0.2 * getDisjunctCost();
-		weight += 0.02 * getLinkCost();
+		weight += 0.003 * getLinkCost();
 
 		weight = Math.exp(-weight);
 
