@@ -81,6 +81,7 @@
 
     <target name="build-project" depends="init, build-version, look-for-owl, look-for-opennlp">
         <echo message="${ant.project.name}: ${ant.file}"/>
+        <mkdir dir="bin" />
         <javac destdir="bin"
             includeantruntime="false"
             debug="true" debuglevel="${debuglevel}"
