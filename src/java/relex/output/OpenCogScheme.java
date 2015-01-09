@@ -159,6 +159,9 @@ public class OpenCogScheme
 						"   (WordInstanceNode \"" + guid_word + "\")\n" +
 						"   (NumberNode " + word + ")\n" +
 						")\n";
+                                // insert the LG dictionary entry for this number into the AtomSpace
+                                // XXX doing scheme function call instead of "printing"... ugly
+                                str += "(lg-get-dict-entry (NumberNode " + word + "))\n";
 			}
 			else
 			{
@@ -166,6 +169,8 @@ public class OpenCogScheme
 					"   (WordInstanceNode \"" + guid_word + "\")\n" +
 					"   (WordNode \"" + word + "\")\n" +
 					")\n";
+                                // insert the LG dictionary entry for this word into the AtomSpace
+                                str += "(lg-get-dict-entry (WordNode \"" + word + "\"))\n";
 			}
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
