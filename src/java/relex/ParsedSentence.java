@@ -31,7 +31,6 @@ import relex.feature.LinkableView;
 import relex.feature.RelationCallback;
 import relex.feature.RelationForeach;
 import relex.stats.SimpleTruthValue;
-import relex.tree.PhraseTree;
 
 /**
  * A ParsedSentence object stores all of the syntactic and semantic
@@ -72,9 +71,9 @@ public class ParsedSentence
 	// String containing the ascii-art tree output by the link grammar parser.
 	private String linkString;
 
-	// A string containing the Penn tree-bank style markup,
+	// A string containing the HPSG-style (Penn tree-bank) markup,
 	// aka "phrase structure" markup, for example
-	// (S (NP I) (VP am (NP a big robot)) .)
+	// (S (NP We) (VP are (NP show-room dummies)) .)
 	private String phraseString;
 
 	private String errorString;
@@ -348,14 +347,6 @@ public class ParsedSentence
 	public FeatureNode getLeft()
 	{
 		return leafConstituents.get(0);
-	}
-
-	/**
-	 * @return the phrase tree associated with this parse
-	 */
-	public PhraseTree getPhraseTree()
-	{
-		return new PhraseTree(getLeft());
 	}
 
 	/* ---------------------------------------------------------------- */

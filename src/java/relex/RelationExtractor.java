@@ -27,12 +27,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import relex.algs.SentenceAlgorithmApplier;
-import relex.chunk.ChunkRanker;
-import relex.chunk.LexChunk;
-import relex.chunk.LexicalChunker;
-import relex.chunk.PatternChunker;
-import relex.chunk.PhraseChunker;
-import relex.chunk.RelationChunker;
 import relex.concurrent.RelexContext;
 // import relex.corpus.QuotesParensSentenceDetector;
 import relex.corpus.DocSplitter;
@@ -53,8 +47,6 @@ import relex.parser.LocalLGParser;
 import relex.parser.RemoteLGParser;
 import relex.stats.TruthValue;
 import relex.stats.SimpleTruthValue;
-import relex.tree.PhraseMarkup;
-import relex.tree.PhraseTree;
 
 /**
  * The RelationExtractor class provides the central processing
@@ -91,7 +83,6 @@ public class RelationExtractor
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 
 	/** HPSG-style (Penn tree-bank) phrase structure markup. */
-	private PhraseMarkup phraseMarkup;
 	public boolean do_tree_markup;
 
 	/** Document - holder of sentences */
@@ -166,9 +157,6 @@ public class RelationExtractor
 		setMaxParses(DEFAULT_MAX_PARSES);
 		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
 		setMaxCost(DEFAULT_MAX_PARSE_COST);
-
-		// Hobbs-algo stuff.
-		phraseMarkup = new PhraseMarkup();
 
 		doco = new Document();
 
@@ -271,16 +259,6 @@ public class RelationExtractor
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
 
-				// Also do a HPSG-style (Penn tree-bank) phrase structure markup.
-				if (do_tree_markup)
-				{
-					phraseMarkup.markup(parse);
-
-					// Repair the entity-mangled tree-bank string.
-					PhraseTree pt = new PhraseTree(parse.getLeft());
-					parse.setPhraseString(pt.toString());
-				}
-
 			}
 
 			// Assign a simple parse-ranking score, based on LinkGrammar data.
@@ -344,37 +322,6 @@ public class RelationExtractor
 			+ avg + " millisecs, cnt=" + cnt + ")");
 	}
 
-	/* --------------------------------------------------------- */
-
-	private static void prt_chunks(ArrayList<LexChunk> chunks)
-	{
-		for (LexChunk ch : chunks)
-		{
-			System.out.println(ch.toString());
-		}
-		System.out.println("\n======\n");
-	}
-
-	// Punish chunks whose length is other than 3.
-	private static void discriminate(ChunkRanker ranker)
-	{
-		ArrayList<LexChunk> chunks = ranker.getChunks();
-		for (LexChunk ch : chunks)
-		{
-			int sz = ch.size();
-			double weight = sz-3;
-			if (weight < 0) weight = - weight;
-			weight = 1.0 - 0.2 * weight;
-
-			// twiddle the confidence of the chunk
-			TruthValue tv = ch.getTruthValue();
-			SimpleTruthValue stv = (SimpleTruthValue) tv;
-			double confidence = stv.getConfidence();
-			confidence *= weight;
-			stv.setConfidence(confidence);
-		}
-	}
-
 	/* ---------------------------------------------------------- */
 	/**
 	 * Main entry point
@@ -392,9 +339,6 @@ public class RelationExtractor
 			" [-n max number of parses to display]" +
 			" [-o (show opencog scheme output)]" +
 			" [--or (show opencog rule-based scheme output)]" +
-			" [--pa (show phrase-based lexical chunks)]" +
-			" [--pb (show pattern-based lexical chunks)]" +
-			" [--pc (show relational lexical chunks)]" +
 			" [--penn (generate Penn treebank-style POS tags)]" +
 			" [--prolog (show prolog output)]" +
 			" [-q (do NOT show relations)]" +
@@ -414,9 +358,6 @@ public class RelationExtractor
 		flags.add("-m");
 		flags.add("-o");
 		flags.add("--or");
-		flags.add("--pa");
-		flags.add("--pb");
-		flags.add("--pc");
 		flags.add("--penn");
 		flags.add("--prolog");
 		flags.add("-q");
@@ -485,10 +426,7 @@ public class RelationExtractor
 		re.setMaxParseSeconds(maxParseSeconds);
 		System.out.println("; Version: " + re.getVersion());
 
-		if ((commandMap.get("-t") != null) ||
-		    (commandMap.get("--pa") != null) ||
-		    (commandMap.get("--pb") != null) ||
-		    (commandMap.get("--pc") != null))
+		if (commandMap.get("-t") != null) 
 		{
 			re.do_tree_markup = true;
 		}
@@ -583,13 +521,8 @@ public class RelationExtractor
 				int np = sntc.getParses().size();
 				if (np > maxParses) np = maxParses;
 
-				// chunk ranking stuff
-				ChunkRanker ranker = new ChunkRanker();
 				double parse_weight = 1.0 / ((double) np);
 				double votes = 1.0e-20;
-				if (commandMap.get("--pa") != null) votes += 1.0;
-				if (commandMap.get("--pb") != null) votes += 2.0;
-				if (commandMap.get("--pc") != null) votes += 1.0;
 				votes = 1.0 / votes;
 				votes *= parse_weight;
 
@@ -677,31 +610,6 @@ public class RelationExtractor
 						System.out.println("\n======\n");
 					}
 
-					if (commandMap.get("--pa") != null)
-					{
-						System.out.println("Phrase tree-based lexical chunks:");
-						LexicalChunker chunker = new PhraseChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
-					}
-					if (commandMap.get("--pb") != null)
-					{
-						System.out.println("Pattern-matching lexical chunks:");
-						LexicalChunker chunker = new PatternChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), 2.0*votes);
-					}
-					if (commandMap.get("--pc") != null)
-					{
-						System.out.println("Relation-based lexical chunks:");
-						LexicalChunker chunker = new RelationChunker();
-						chunker.findChunks(parse);
-						prt_chunks(chunker.getChunks());
-						ranker.add(chunker.getChunks(), parse.getTruthValue(), votes);
-					}
-
 					if (commandMap.get("--prolog") != null)
 					{
 						PrologList pl = new PrologList();
@@ -729,13 +637,6 @@ public class RelationExtractor
 					if (html != null) html.println("</tr></table></div>");
 
 					if (++numParses >= maxParses) break;
-				}
-
-				if (0 < ranker.getChunks().size())
-				{
-					discriminate(ranker);
-					System.out.println("\nLexical Chunks:\n" +
-					             ranker.toString());
 				}
 
 				// Print out the stats every now and then.

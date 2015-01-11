@@ -34,7 +34,6 @@ import relex.corpus.DocSplitterFactory;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.parser.RemoteLGParser;
-import relex.tree.PhraseMarkup;
 
 public class ParallelRelationExtractor {
 
@@ -59,16 +58,12 @@ public class ParallelRelationExtractor {
 	/** Semantic (RelEx) processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 
-	/** Penn tree-bank style phrase structure markup. */
-	private PhraseMarkup phraseMarkup;
-
 	public ParallelRelationExtractor()
 	{
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
 //		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-		phraseMarkup = new PhraseMarkup();
 	}
 
 	/**
@@ -114,8 +109,7 @@ public class ParallelRelationExtractor {
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable =
 			new RelexTask(count++, sentence,
-					sentenceAlgorithmApplier,
-					phraseMarkup, context, pool);
+					sentenceAlgorithmApplier, context, pool);
 		Future<RelexTaskResult> submit = exec.submit(callable);
         results.add(submit);
 	}

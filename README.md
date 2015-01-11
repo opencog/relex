@@ -1,7 +1,7 @@
 
                  RelEx Semantic Relation Extractor
                  =================================
-                    Version 1.6.0  XXX 2014
+                    Version 1.6.0  XXX 2015
 
 
 RelEx is a dependency parser for the English language.  It extracts
@@ -445,3 +445,47 @@ todo
 
  - write paper on wsd by pos-lookup
  - write paper on relex overview
+
+Notes
+-----
+
+Lexical Chunking
+----------------
+
+Key ideas:
+ * Lexis is the basis of language.
+ * Language consists of grammaticalized lexis, not lexicalized grammar.
+
+See: Olga Moudraia, "Lexical Approach to Second Language Teaching"
+http://www.cal.org/resources/digest/0102lexical.html
+
+Alternate names: "gambits", "lexical phrases", "lexical units",
+"lexicalized stems", "speech formulae".
+
+Definition of Lexical Chunks
+----------------------------
+Lexis may be single words, and also the word combinations that are a
+basis of one's mental lexicon.  That is, language consists of meaningful
+chunks that, when combined, produce continuous coherent text; only a
+minority of spoken sentences are entirely novel creations.
+
+Types of lexical chunks:
+    * Words (e.g., book, pen)
+    * Phrasal verbs (e.g. switch off, talk to ... about ...)
+    * Polywords (e.g., by the way, upside down)
+    * Collocations, or word partnerships (e.g., community service,
+      absolutely convinced)
+    * Idioms (e.g. break a leg, back in the day)
+    * Institutionalized utterances (e.g., I'll get it; We'll see;
+      That'll do; If I were you . . .; Would you like a cup of coffee?)
+    * Sentence frames and heads (e.g., That is not as . . . as you
+    * think;
+      The fact/suggestion/problem/danger was . . .) and even text frames
+      (e.g., In this paper we explore . . .; Firstly . . .; Secondly . .
+.;
+      Finally . . .)
+
+(Taken from Lewis, M. (1997b). "Pedagogical implications of the lexical
+approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary
+acquisition: A rationale for pedagogy" (pp.  255-270). Cambridge:
+Cambridge University Press.)
