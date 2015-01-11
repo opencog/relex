@@ -22,7 +22,6 @@ import java.util.HashSet;
 import relex.Document;
 import relex.ParsedSentence;
 import relex.Sentence;
-import relex.anaphora.history.SentenceHistory;
 import relex.feature.FeatureNode;
 
 /**
@@ -45,10 +44,8 @@ public class OpenCogScheme
 
 	private OpenCogSchemeLink link_scheme;
 	private OpenCogSchemeRel rel_scheme;
-	private OpenCogSchemeAnaphora anaphora_scheme;
 	private boolean do_show_linkage = false;
 	private boolean do_show_relex = false;
-	private boolean do_show_anaphora = false;
 	private int seqno = 1;
 	private HashSet<String> previous_words;
 	private HashSet<String> previous_sents;
@@ -59,7 +56,6 @@ public class OpenCogScheme
 	{
 		rel_scheme = new OpenCogSchemeRel();
 		link_scheme = new OpenCogSchemeLink();
-		anaphora_scheme = new OpenCogSchemeAnaphora();
 		orig_sentence = "";
 		previous_words = new HashSet<String>();
 		previous_sents = new HashSet<String>();
@@ -70,9 +66,6 @@ public class OpenCogScheme
 
 	public void setShowRelex(boolean t) { do_show_relex = t; }
 	public boolean getShowRelex() { return do_show_relex; }
-
-	public void setShowAnaphora(boolean flag) { do_show_anaphora = flag; }
-	public boolean getShowAnaphora() { return do_show_anaphora; }
 
 	/**
 	 * Set the parse that is to be printed. After setting this, call
@@ -88,9 +81,6 @@ public class OpenCogScheme
 
 		link_scheme.setParse(_parse);
 		rel_scheme.setParse(_parse);
-
-		anaphora_scheme.clear();
-		anaphora_scheme.setSentence(_parse);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -107,15 +97,10 @@ public class OpenCogScheme
 
 		if (do_show_linkage) ret += linkSchemeToString();
 		if (do_show_relex) ret += relSchemeToString();
-		if (do_show_anaphora) ret += anaphoraSchemeToString();
 
 		// Don't repeat the orig sentence, until we get a new sentence.
 		orig_sentence = "";
 		return ret;
-	}
-
-	public String anaphoraSchemeToString() {
-		return anaphora_scheme.toString();
 	}
 
 	public String relSchemeToString() {
@@ -239,15 +224,6 @@ public class OpenCogScheme
 		}
 
 		return str;
-	}
-
-	/**
-	 * Sets the history for the AnaphoraResolutionScheme
-	 * @param history the history to be used for anaphora resolution
-	 */
-	public void setAnaphoraHistory(SentenceHistory history)
-	{
-		anaphora_scheme.setHistory(history);
 	}
 
 	public int getSeqNo()

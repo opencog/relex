@@ -60,7 +60,6 @@ public class Server
 		boolean relex_on = false;
 		boolean logic_on = false;
 		boolean link_on = false;
-		boolean anaphora_on = false;
 		boolean free_text = false;
 		boolean verbose = false;
 		String lang = "en";
@@ -76,13 +75,11 @@ public class Server
 			" --relex    \t Output RelEx relations (default)\n" +
 			" --logic    \t Output of Relex2Logic scheme function calls and Relex relations" +
 			" --link     \t Output Link Grammar Linkages\n" +
-			" --anaphora \t Output anaphore references\n" +
 			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
 
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-h");
-		flags.add("--anaphora");
 		flags.add("--help");
 		flags.add("--link");
 		flags.add("--relex");
@@ -134,7 +131,6 @@ public class Server
 			System.err.println(usageString);
 			System.exit(0);
 		}
-		if (commandMap.get("--anaphora") != null) anaphora_on = true;
 		if (commandMap.get("--link") != null) link_on = true;
 		if (commandMap.get("--relex") != null) relex_on = true;
 		if (commandMap.get("--free-text") != null) free_text = true;
@@ -167,11 +163,6 @@ public class Server
 		{
 			// By default just export RelEx output.
 			relex_on = true;
-		}
-		if (anaphora_on)
-		{
-			System.err.println("Info: Anaphora output on.");
-			opencog.setShowAnaphora(anaphora_on);
 		}
 		if (link_on)
 		{

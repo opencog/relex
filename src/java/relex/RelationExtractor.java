@@ -27,8 +27,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import relex.algs.SentenceAlgorithmApplier;
-import relex.anaphora.Antecedents;
-import relex.anaphora.Hobbs;
 import relex.chunk.ChunkRanker;
 import relex.chunk.LexChunk;
 import relex.chunk.LexicalChunker;
@@ -67,8 +65,7 @@ import relex.tree.PhraseTree;
  *
  * The primary interface is the processSentence() method,
  * which accepts one sentence at a time, parses it, and extracts
- * relationships from it. This method is stateful: it also
- * performs anaphora resolution.
+ * relationships from it.
  */
 public class RelationExtractor
 {
@@ -96,12 +93,6 @@ public class RelationExtractor
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 	public boolean do_tree_markup;
-
-	/** Anaphora resolution */
-	// XXX these should probably be moved to class Document!
-	public Antecedents antecedents;
-	private Hobbs hobbs;
-	public boolean do_anaphora_resolution;
 
 	/** Document - holder of sentences */
 	Document doco;
@@ -131,7 +122,6 @@ public class RelationExtractor
 		_lang = "en";
 		_dict_path = null;
 
-		do_anaphora_resolution = false;
 		do_tree_markup = false;
 
 		do_apply_algs = true;
@@ -259,21 +249,6 @@ public class RelationExtractor
 
 	/* ---------------------------------------------------------- */
 
-	/**
-	 * Clear out the cache of old sentences.
-	 *
-	 * The Anaphora resolver keeps a list of sentences previously seen,
-	 * so that anaphora resolution can be done. When starting the parse
-	 * of a new text, this cache needs to be cleaned out. This is the
-	 * way to do so.
-	 */
-	public void clear()
-	{
-		if (!_is_inited) init();
-		antecedents.clear();
-		hobbs = new Hobbs(antecedents);
-	}
-
 	public Sentence processSentence(String sentence)
 	{
 		if (!_is_inited) init();
@@ -312,13 +287,6 @@ public class RelationExtractor
 
 			// Assign a simple parse-ranking score, based on LinkGrammar data.
 			sntc.simpleParseRank();
-
-			// Perform anaphora resolution
-			if (do_anaphora_resolution)
-			{
-				hobbs.addParse(sntc);
-				hobbs.resolve(sntc);
-			}
 		}
 		catch (Exception e)
 		{
@@ -416,7 +384,6 @@ public class RelationExtractor
 	public static void main(String[] args)
 	{
 		String callString = "RelationExtractor" +
-			" [-a (perform anaphora resolution)]" +
 			" [--expand-preps (show expanded prepositions)]" +
 			" [-h (show this help)]" +
 			" [-i (show output for generation)]" +
@@ -519,15 +486,6 @@ public class RelationExtractor
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 		System.out.println("; Version: " + re.getVersion());
-
-		// Don't run anaphora if -o is set, this will be done in a
-		// distinct stage that wipes out the first run.
-		if ((commandMap.get("-a") != null) &&
-		    (commandMap.get("-o") == null))
-		{
-			re.do_anaphora_resolution = true;
-			re.do_tree_markup = true;
-		}
 
 		if ((commandMap.get("-t") != null) ||
 		    (commandMap.get("--pa") != null) ||
@@ -784,13 +742,6 @@ public class RelationExtractor
 					discriminate(ranker);
 					System.out.println("\nLexical Chunks:\n" +
 					             ranker.toString());
-				}
-
-				if (re.do_anaphora_resolution &&
-				    (commandMap.get("-o") == null))
-				{
-					System.out.println("\nAntecedent candidates:\n"
-					                   + re.antecedents.toString());
 				}
 
 				// Print out the stats every now and then.

@@ -5,7 +5,7 @@
 # This provides a basic demo of the RelEx abilities.
 #
 # Flags:
-# RelationExtractor [-a (perform anaphora resolution)] 
+# RelationExtractor
 # [-h (show this help)] 
 # [-l (show parse links)]
 # [-m (show parse metadata)] 
