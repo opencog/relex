@@ -16,9 +16,6 @@ algs:
 	result of finding a pattern-match is that the resulting rule is
 	applied, which casues the graph to be modified in some way.
 
-anaphora:
-	Anaphora resolution algorithm. Implements the Hobbs algorithm.
-
 chunk:
 	Code to generate lexical chunks, aka lexicalized stems or units
 	or phrases. Mostly focused on phrasal verbs.

@@ -69,8 +69,6 @@ public class ParallelRelationExtractor {
 //		linkParser = new LinkParser();
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
 		phraseMarkup = new PhraseMarkup();
-		antecedents = new Antecedents();
-		hobbs = new Hobbs(antecedents);
 	}
 
 	/**

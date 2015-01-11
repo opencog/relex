@@ -257,8 +257,7 @@ public class ParsedSentence
 
 	/**
 	 * assign_id -- Add UUID tags to all word nodes in the parse.
-	 * These UUID tags are used by opencog, and by other parts
-	 * (e.g. the anaphora resolution code) to uniquely identify
+	 * These UUID tags are used by opencog to uniquely identify
 	 * individual word instances across multiple parses of
 	 * multiple sentences of multiple documents or conversations.
 	 */

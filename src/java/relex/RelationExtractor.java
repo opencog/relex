@@ -169,8 +169,6 @@ public class RelationExtractor
 
 		// Hobbs-algo stuff.
 		phraseMarkup = new PhraseMarkup();
-		antecedents = new Antecedents();
-		hobbs = new Hobbs(antecedents);
 
 		doco = new Document();
 
@@ -529,10 +527,6 @@ public class RelationExtractor
 			if (commandMap.get("-q") != null)
 			{
 				opencog.setShowRelex(false);
-			}
-			if (commandMap.get("-a") != null)
-			{
-				opencog.setShowAnaphora(true);
 			}
 		}
 		

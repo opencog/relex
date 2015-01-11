@@ -151,7 +151,6 @@ public class PlainTextServer
 		OpenCogScheme oc = new OpenCogScheme();
 		oc.setShowLinkage(true);
 		oc.setShowRelex(true);
-		oc.setShowAnaphora(true);
 
 		try
 		{

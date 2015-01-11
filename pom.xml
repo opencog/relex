@@ -166,19 +166,6 @@
 							</jvmSettings>
 							<commandLineArguments>
 								<commandLineArgument>--relex</commandLineArgument>
-								<commandLineArgument>--anaphora</commandLineArgument>
-							</commandLineArguments>
-						</program>
-						<program>
-							<!-- Return Link Grammar, Relex and anaphora output. -->
-							<id>relexd-link</id>
-							<mainClass>relex.Server</mainClass>
-							<jvmSettings>
-								<maxMemorySize>1024m</maxMemorySize>
-							</jvmSettings>
-							<commandLineArguments>
-								<commandLineArgument>--relex</commandLineArgument>
-								<commandLineArgument>--anaphora</commandLineArgument>
 							</commandLineArguments>
 						</program>
 						<program>
