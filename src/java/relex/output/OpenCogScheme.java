@@ -144,29 +144,10 @@ public class OpenCogScheme
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 
-			// XXX FIXME -- this is a bit of a crazy hack that attempts
-			// to handle numbers, but does it wrong.  Why is this wrong?
-			// 1) because Europeans use a comma for a decimal, and a period
-			//    for a thousands separator
-			// 2) Because americans use a comma for a thousands separator,
-			// 3) This fails to handle number words, like "one two three"
-			// 4) This fails to handle time, dates, etc.
-			// In my opinion, the below whould be removed, and higher
-			// mathematics should be handled in Opencog, and not here...
-			if (word.matches("[-+]?[0-9]*?\\.?[0-9]+"))
-			{
-				str += "(ReferenceLink (stv 1.0 1.0)\n" +
-						"   (WordInstanceNode \"" + guid_word + "\")\n" +
-						"   (NumberNode " + word + ")\n" +
-						")\n";
-			}
-			else
-			{
-				str += "(ReferenceLink (stv 1.0 1.0)\n" +
+			str += "(ReferenceLink (stv 1.0 1.0)\n" +
 					"   (WordInstanceNode \"" + guid_word + "\")\n" +
 					"   (WordNode \"" + word + "\")\n" +
 					")\n";
-			}
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
 					"   (WordInstanceNode \"" + guid_word + "\")\n" +
