@@ -22,8 +22,6 @@ import java.util.concurrent.Callable;
 import relex.ParsedSentence;
 import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
-import relex.tree.PhraseMarkup;
-import relex.tree.PhraseTree;
 
 /**
  * Processes a sentence using the given LinkParserClient. When processing is
@@ -76,15 +74,6 @@ public class RelexTask implements Callable<RelexTaskResult>
 				try {
 					// The actual relation extraction is done here.
 					sentenceAlgorithmApplier.applyAlgs(parse, context);
-
-					// Also do a Penn tree-bank style phrase structure markup.
-					if (phraseMarkup != null)
-					{
-						phraseMarkup.markup(parse);
-						// Repair the entity-mangled tree-bank string.
-						PhraseTree pt = new PhraseTree(parse.getLeft());
-						parse.setPhraseString(pt.toString());
-					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
