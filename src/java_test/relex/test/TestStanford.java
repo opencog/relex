@@ -19,9 +19,6 @@ package relex.test;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import relex.ParsedSentence;
 import relex.RelationExtractor;
 import relex.Sentence;
@@ -35,7 +32,6 @@ public class TestStanford
 	private static ArrayList<String> sentfail= new ArrayList<String>();
 	private static ArrayList<String> sentfailpostag= new ArrayList<String>();
 
-	@BeforeClass
 	public static void setUpClass() {
 		re = new RelationExtractor();
 	}
@@ -147,7 +143,6 @@ public class TestStanford
 		ts.runTests();
 	}
 	
-	@Test
 	public void runTests() {
 		TestStanford ts = this;
 		boolean rc = true;
