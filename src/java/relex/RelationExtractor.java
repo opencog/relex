@@ -90,7 +90,7 @@ public class RelationExtractor
 	/** Dependency processing */
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
 
-	/** Penn tree-bank style phrase structure markup. */
+	/** HPSG-style (Penn tree-bank) phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 	public boolean do_tree_markup;
 
@@ -271,7 +271,7 @@ public class RelationExtractor
 				if (do_stanford) sentenceAlgorithmApplier.extractStanford(parse, context);
 				if (do_penn_tagging) sentenceAlgorithmApplier.pennTag(parse, context);
 
-				// Also do a Penn tree-bank style phrase structure markup.
+				// Also do a HPSG-style (Penn tree-bank) phrase structure markup.
 				if (do_tree_markup)
 				{
 					phraseMarkup.markup(parse);
