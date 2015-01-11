@@ -20,8 +20,8 @@ import java.io.Serializable;
 
 import relex.Sentence;
 
-public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable {
-
+public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializable
+{
 	private static final long serialVersionUID = -3231030217056826602L;
 
 	public Integer index;
@@ -36,15 +36,18 @@ public class RelexTaskResult implements Comparable<RelexTaskResult>, Serializabl
 		this.result = sntc;
 	}
 
-	public int compareTo(RelexTaskResult that) {
+	public int compareTo(RelexTaskResult that)
+	{
 		return this.index.compareTo(that.index);
 	}
 
-	public String toString(){
+	public String toString()
+	{
 		return index+": "+sentence+"\n"+result+"\n";
 	}
 
-	public int hashCode() {
+	public int hashCode()
+	{
 		return sentence == null ? 0 : sentence.hashCode();
 	}
 

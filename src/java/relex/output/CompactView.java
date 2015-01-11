@@ -142,7 +142,7 @@ public class CompactView
 			str += "/>\n";
 		}
 
-		// Show the Penn tree-bank style constituent tree.
+		// Show the HPSG-style (Penn tree-bank) constituent tree.
 		if (do_show_constituents)
 		{
 			str += "      <constituents>" + parse.getPhraseString() +

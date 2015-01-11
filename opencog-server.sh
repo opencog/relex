@@ -43,10 +43,10 @@ bin:\
 "
 
 # This will return parsed text on the input socket.
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex --anaphora
+java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex
 
-# Return Link Grammar, Relex and anaphora output.
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --anaphora --verbose
+# Return Link Grammar and Relex output.
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --verbose
 
 # Return with RelEx2Logic Link Grammar, and Relex output on default port 4444.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic

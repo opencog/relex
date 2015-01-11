@@ -211,7 +211,6 @@
                 <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/opennlp/models-1.5/en-sent.bin" />
                 <include name="data/wordnet/file_properties.xml"/>
-                <include name="src/java/relex/anaphora/test-corpus.txt"/>
                 <include name="**/README"/>
                 <include name="**/*.java"/>
                 <include name="**/*.java.in"/>

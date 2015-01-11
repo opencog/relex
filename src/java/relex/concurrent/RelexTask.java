@@ -22,8 +22,6 @@ import java.util.concurrent.Callable;
 import relex.ParsedSentence;
 import relex.Sentence;
 import relex.algs.SentenceAlgorithmApplier;
-import relex.tree.PhraseMarkup;
-import relex.tree.PhraseTree;
 
 /**
  * Processes a sentence using the given LinkParserClient. When processing is
@@ -40,7 +38,6 @@ public class RelexTask implements Callable<RelexTaskResult>
 
 	// Reusable, shared processors
 	private SentenceAlgorithmApplier sentenceAlgorithmApplier;
-	private PhraseMarkup phraseMarkup;
 
 	// Used in mutual exclusion, must be returned to the pool
 	private RelexContext context;
@@ -48,18 +45,18 @@ public class RelexTask implements Callable<RelexTaskResult>
 
 	public RelexTask(int index, String sentence,
 			SentenceAlgorithmApplier sentenceAlgorithmApplier,
-			PhraseMarkup phraseMarkup,
 			RelexContext context, BlockingQueue<RelexContext> pool){
 		this.index = index;
 		this.sentenceAlgorithmApplier = sentenceAlgorithmApplier;
-		this.phraseMarkup = phraseMarkup;
 		this.context = context;
 		this.pool = pool;
 		this.sentence = sentence;
 	}
 
-	public RelexTaskResult call() {
-		try {
+	public RelexTaskResult call()
+	{
+		try
+		{
 			if (DEBUG > 0) System.err.println("[" + index + "] Start processing "+ sentence);
 			Sentence sntc = null;
 			try {
@@ -72,19 +69,11 @@ public class RelexTask implements Callable<RelexTaskResult>
 			if (DEBUG > 0) System.err.println("[" + index + "] End parsing");
 
 			int i = 0;
-			for (ParsedSentence parse : sntc.getParses()) {
+			for (ParsedSentence parse : sntc.getParses())
+			{
 				try {
 					// The actual relation extraction is done here.
 					sentenceAlgorithmApplier.applyAlgs(parse, context);
-
-					// Also do a Penn tree-bank style phrase structure markup.
-					if (phraseMarkup != null)
-					{
-						phraseMarkup.markup(parse);
-						// Repair the entity-mangled tree-bank string.
-						PhraseTree pt = new PhraseTree(parse.getLeft());
-						parse.setPhraseString(pt.toString());
-					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -93,7 +82,9 @@ public class RelexTask implements Callable<RelexTaskResult>
 							(i++) + "/"+ sntc.getParses().size());
 			}
 			return new RelexTaskResult(index, sentence, sntc);
-		} finally {
+		}
+		finally
+		{
 			if (DEBUG > 0)
 				System.err.println("[" + index + "] End processing");
 			try {

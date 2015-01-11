@@ -43,7 +43,6 @@ public class ParseStats
 
 	private Histogram relations;
 	private int relcnt;
-	private Histogram tree_depth;
 
 	public ParseStats()
 	{
@@ -59,7 +58,6 @@ public class ParseStats
 		third_parse_confidence = new Histogram(20, 0.0, 1.0);
 		fourth_parse_confidence = new Histogram(20, 0.0, 1.0);
 		relations = new Histogram(1, 21);
-		tree_depth = new Histogram(1, 21);
 	}
 
 	public void bin(Sentence sntc)
@@ -95,8 +93,6 @@ public class ParseStats
 		RelCount rcnt = new RelCount();
 		fs.foreach(rcnt);
 		relations.bin(relcnt);
-
-		tree_depth.bin(fs.getPhraseTree().getDepth());
 	}
 
 	private class RelCount implements RelationCallback
@@ -134,10 +130,6 @@ public class ParseStats
 		       " median: " + relations.getMedian() +
 		       " mean: " +  relations.getMean() +
 		       " stddev: " + relations.getStdDev();
-		str += "\nTree depth per parse, mode: " + tree_depth.getMode() +
-		       " median: " + tree_depth.getMedian() +
-		       " mean: " +  tree_depth.getMean() +
-		       " stddev: " + tree_depth.getStdDev();
 		str += "\nConfidence of first parse: " + first_parse_confidence.getMean() +
 		       " (out of " + first_parse_confidence.getCount() + " parses)";
 		str += "\nFirst parse hi/lo: " + first_parse_confidence.getAllTimeHigh() +
