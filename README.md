@@ -427,12 +427,6 @@ In particular, dictionary location appears to be totally random. Try
 to find some work-around for this.
 
 
-### TODO - polywords, lexical units, collocations, idioms. 
-
-Would be nice to identify: "By the way" as a polyword.
-"Break a leg" as an idiom.
-
-
 Bugs
 ----
 Sentence splitter:

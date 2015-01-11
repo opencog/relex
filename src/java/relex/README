@@ -16,10 +16,6 @@ algs:
 	result of finding a pattern-match is that the resulting rule is
 	applied, which casues the graph to be modified in some way.
 
-chunk:
-	Code to generate lexical chunks, aka lexicalized stems or units
-	or phrases. Mostly focused on phrasal verbs.
-
 concurrent:
 	Provide infrastructure for multi-threaded (parallel) execution.
 	Not normally used or needed; intended only for improving
@@ -32,25 +28,13 @@ corpus:
 	detection, so this directory contains code to wrap the OpenNLP
 	system.
 
-entity:
-	Mangle sentences to consolidate entities before passing a sentence
-	to the parser.  The idea was to ease the burden on the parser;
-	however, its not clear that there are any entity detectors that are
-	actually better than the parser. The entity detection is supplied by
-	systems outside of relex. The current implementation uses GATE.
-	Obsolete, code was removed in November 2013. Can be recovered from
-	RelEx version 1.4.2 or earlier.
-
 feature:
 	The core classes for representing the graph of linguistic
 	relationships and features.  The graph of linguistics relationships
 	is the central data structure around which RelEx operates.
 
-frame:
-	Code to provide semantic frame output, inspired by FrameNet markup.
-	The actual implementation is a set of pattern-matching rules which
-	are applied to the RelEx output. Obsolete, removed in Novemeber 2013.
-	Can be recovered from RelEx version 1.4.2 or earlier.
+logic:
+	The RelEx2Logic code, a temporary hack for OpenCog...
 
 morphy:
 	A simple, easy-to-use class for finding the base forms (lemmas)
@@ -70,8 +54,3 @@ parser:
 stats:
 	Some simple classes providing very basic statistical support,
 	including some TruthValue (a la OpenCog) classes.
-
-wsd:
-	Simple word-sense disambiguation code; compares word usage in pairs
-	of sentences. Crude experiment, deprecated.
-
