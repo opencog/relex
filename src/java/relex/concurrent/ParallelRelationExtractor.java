@@ -29,8 +29,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import relex.algs.SentenceAlgorithmApplier;
-import relex.anaphora.Antecedents;
-import relex.anaphora.Hobbs;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.morphy.Morphy;
@@ -54,13 +52,6 @@ public class ParallelRelationExtractor {
 
 	private boolean stop;
 
-	// Single-threaded processors
-	/** Antecedents used in anaphora resolution */
-	public Antecedents antecedents;
-
-	/** Anaphora resolution */
-	private Hobbs hobbs;
-
 	// Thread-safe processors
 	/** Syntactic processing */
 //	private LinkParser linkParser;
@@ -71,7 +62,8 @@ public class ParallelRelationExtractor {
 	/** Penn tree-bank style phrase structure markup. */
 	private PhraseMarkup phraseMarkup;
 
-	public ParallelRelationExtractor(){
+	public ParallelRelationExtractor()
+	{
 		initializePool();
 		results = new LinkedBlockingQueue<Future<RelexTaskResult>>();
 //		linkParser = new LinkParser();
@@ -82,37 +74,45 @@ public class ParallelRelationExtractor {
 	}
 
 	/**
-	 * Initialize the pool of LinkParserClients, creating CLIENT_POOL_SIZE instances,
-	 * which connects to ports FIRST_PORT, FIRST_PORT+1, ..., FIRST_PORT+(CLIENT_POOL_SIZE-1)
+	 * Initialize the pool of LinkParserClients, creating
+	 * CLIENT_POOL_SIZE instances, which connects to ports FIRST_PORT,
+	 * FIRST_PORT+1, ..., FIRST_PORT+(CLIENT_POOL_SIZE-1)
 	 */
-	private void initializePool() {
+	private void initializePool()
+	{
 		exec = Executors.newFixedThreadPool(CLIENT_POOL_SIZE); // thread pool
 		pool = new ArrayBlockingQueue<RelexContext>(CLIENT_POOL_SIZE);
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_MULTI_THREAD_IMPLEMENTATION);
 		morphy.initialize();
 
-		 for (int i = 0 ; i < CLIENT_POOL_SIZE; i++){
-//			 LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
-//			 lpc.setAllowSkippedWords(true);
-			 RemoteLGParser parser = new RemoteLGParser();
-			 parser.getLinkGrammarClient().setHostname(DEFAULT_HOST);
-			 parser.getLinkGrammarClient().setPort(FIRST_PORT+i);
-			 RelexContext context = new RelexContext(parser, morphy);
-			 try {
+		for (int i = 0 ; i < CLIENT_POOL_SIZE; i++)
+		{
+//			LinkParserClient lpc = new LinkParserSocketClient(DEFAULT_HOST, FIRST_PORT+i);
+//			lpc.setAllowSkippedWords(true);
+			RemoteLGParser parser = new RemoteLGParser();
+			parser.getLinkGrammarClient().setHostname(DEFAULT_HOST);
+			parser.getLinkGrammarClient().setPort(FIRST_PORT+i);
+			RelexContext context = new RelexContext(parser, morphy);
+			try
+			{
 				pool.put(context);
-			} catch (InterruptedException e) {
 			}
-		 }
+			catch (InterruptedException e)
+			{
+			}
+		}
 	}
 
 	/**
-	 * Submit a new sentence to be processed, blocking if no resources are available.
-	 * Results are obtained calling take(), and are returned in order of submission.
+	 * Submit a new sentence to be processed, blocking if no resources
+	 * are available. Results are obtained calling take(), and are
+	 * returned in order of submission.
 	 *
 	 * @param sentence The sentence to be processed.
 	 * @throws InterruptedException
 	 */
-	public void push(String sentence) throws InterruptedException{
+	public void push(String sentence) throws InterruptedException
+	{
 		RelexContext context = pool.take();
 		Callable<RelexTaskResult> callable =
 			new RelexTask(count++, sentence,
@@ -130,45 +130,30 @@ public class ParallelRelationExtractor {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	protected RelexTaskResult take() throws InterruptedException, ExecutionException {
+	protected RelexTaskResult take() throws InterruptedException, ExecutionException
+	{
 		Future<RelexTaskResult> first = results.take();
 		RelexTaskResult taskResult = first.get();
 
-		// Perform anaphora resolution
-		hobbs.addParse(taskResult.result);
-		hobbs.resolve(taskResult.result);
-
 		return taskResult;
-	}
-
-	/**
-	 * Clear out the cache of old sentences.
-	 *
-	 * The Anaphora resolver keeps a list of sentences previously seen,
-	 * so that anaphora resolution can be done. When starting the parse
-	 * of a new text, this cache needs to be cleaned out. This is the
-	 * way to do so.
-	 */
-	public void clear()
-	{
-		antecedents.clear();
-		hobbs = new Hobbs(antecedents);
 	}
 
 	/**
 	 * Stop accepting requests, and shutdown the thread pool after all
 	 * remaining requests are done.
 	 */
-	public void shutdown(){
+	public void shutdown()
+	{
 		stop = true;
 		exec.shutdown();
 	}
 
 	/**
-	 * @return true is no more sentences are accepted (i.e., shutdown() was called)
-	 * and there are no pending results
+	 * @return true is no more sentences are accepted (i.e., shutdown()
+	 * was called) and there are no pending results.
 	 */
-	protected boolean isRunning() {
+	protected boolean isRunning()
+	{
 		return !stop || !results.isEmpty();
 	}
 
@@ -181,58 +166,68 @@ public class ParallelRelationExtractor {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void main(final String[] args) throws IOException, InterruptedException {
+	public static void main(final String[] args)
+		throws IOException, InterruptedException
+	{
 		long t = System.currentTimeMillis();
 		final ParallelRelationExtractor pre = new ParallelRelationExtractor();
 		System.err.println("Initialization time: "+((System.currentTimeMillis() - t)/1000)+" s");
 
 		final long xt = System.currentTimeMillis();
 		// Producer - submits sentences from a file
-		new Thread(new Runnable(){
-			public void run() {
-		        DocSplitter ds = DocSplitterFactory.create();
-				try {
+		new Thread(new Runnable()
+		{
+			public void run()
+			{
+				DocSplitter ds = DocSplitterFactory.create();
+				try
+				{
 					// Read entire file
 					StringBuilder sb = new StringBuilder();
-			        BufferedReader in = new BufferedReader(new FileReader(args[0]));
-			        String line = in.readLine();
-			        while (line!=null){
-			        	sb.append(" "+line+" ");
-			        	line = in.readLine();
-			        }
-			        in.close();
+					BufferedReader in = new BufferedReader(new FileReader(args[0]));
+					String line = in.readLine();
+					while (line!=null){
+						sb.append(" "+line+" ");
+						line = in.readLine();
+					}
+					in.close();
 
-			        // Break text into sentences and submit
+					// Break text into sentences and submit
 					ds.addText(sb.toString());
 					sb = null;
 
 					String sentence = ds.getNextSentence();
-					while (sentence!=null){
+					while (sentence!=null)
+					{
 						pre.push(sentence);
 						sentence = ds.getNextSentence();
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
-				pre.clear(); // Clear anaphora resolution cache; do this when changing documents
-		        pre.shutdown(); // end all threads in the pool after finishing all requests
+				pre.shutdown(); // end all threads in the pool after finishing all requests
 		}}).start();
 
 		// Consumer - print the results, in the original order
-		new Thread(new Runnable(){
-			public void run() {
-				try {
-					while(pre.isRunning()){
-							System.err.println(pre.take());
+		new Thread(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					while (pre.isRunning())
+					{
+						System.err.println(pre.take());
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 				System.err.println("Elapsed time: "+((System.currentTimeMillis() - xt)/1000)+" s");
 			}
 		}).start();
-
 	}
 }
-
-
