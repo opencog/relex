@@ -25,15 +25,15 @@ RUN apt-get -y install libcommons-logging-java
 # Wordnet
 RUN apt-get -y install wordnet
 RUN apt-get -y install wordnet-dev
-RUN apt-get -y install wordnet-sense-index
+# RUN apt-get -y install wordnet-sense-index
 
 # JWNL
 ADD http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip /home/Downloads/jwnl14-rc2.zip
 RUN (unzip jwnl14-rc2.zip; cd jwnl14-rc2; cp jwnl.jar /usr/share/java/; chmod 777 /usr/share/java/jwnl.jar)
 
 # Link Parser
-ADD http://www.abisource.com/downloads/link-grammar/5.1.3/link-grammar-5.1.3.tar.gz /home/Downloads/link-grammar-5.1.3.tar.gz
-RUN (tar zxvf link-grammar-5.1.3.tar.gz; cd link-grammar-5.1.3/; ./configure; make; sudo make install; ldconfig)
+ADD http://www.abisource.com/downloads/link-grammar/5.2.3/link-grammar-5.2.3.tar.gz /home/Downloads/link-grammar-5.2.3.tar.gz
+RUN (tar zxvf link-grammar-5.2.3.tar.gz; cd link-grammar-5.2.3/; ./configure; make; sudo make install; ldconfig)
 
 # OpenNLP
 ADD http://www.motorlogy.com/apache/opennlp/opennlp-1.5.3/apache-opennlp-1.5.3-bin.zip /home/Downloads/apache-opennlp-1.5.3-bin.zip
