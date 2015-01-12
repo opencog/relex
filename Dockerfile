@@ -1,12 +1,22 @@
-# docker build -t $USER/relex-master .
+#
+# Docker file that builds RelEx and starts the RelEx server.
+#
+# To build:
+#    docker build -t $USER/relex-master .
+#
+# To start:
+#    docker run $USER/relex-master
+#
+# To demo:
+#    telnet localhost 4444
+#    > "This is a test sentence."
+#
 
 FROM ubuntu:14.04
 MAINTAINER dhart@opencog.org
 
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 WORKDIR /home/Downloads/
-
-RUN sudo locale-gen en_US.UTF-8
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
@@ -26,6 +36,13 @@ RUN apt-get -y install libcommons-logging-java
 RUN apt-get -y install wordnet
 RUN apt-get -y install wordnet-dev
 # RUN apt-get -y install wordnet-sense-index
+
+# There are UTF8 chars in the Java sources, and the RelEx build will
+# break if build in a C environment.
+RUN sudo locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # Link Parser
 ADD http://www.abisource.com/downloads/link-grammar/5.2.3/link-grammar-5.2.3.tar.gz /home/Downloads/link-grammar-5.2.3.tar.gz
@@ -48,3 +65,6 @@ RUN (unzip relex-master.zip; cd relex-master; ant)
 
 EXPOSE 9000
 EXPOSE 4444
+
+CD relex-master
+CMD opencog-server.sh
