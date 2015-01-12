@@ -5,13 +5,16 @@
 #    docker build -t $USER/relex-master .
 #
 # To start:
-#    docker run $USER/relex-master
+#    docker run -p 4444:4444 -t $USER/relex-master
 #
 # To demo:
 #    telnet localhost 4444
-#    > "This is a test sentence."
+#    This is a test sentence!
 #
-
+# That is, after connecting by telnet, type in any sentence, ending
+# with a period, and hit enter.  The response returned will be the
+# parse of the sentence, in opencog scheme format.
+#
 FROM ubuntu:14.04
 MAINTAINER dhart@opencog.org
 
@@ -21,7 +24,7 @@ WORKDIR /home/Downloads/
 RUN apt-get -y update
 RUN apt-get -y upgrade
 
-RUN apt-get -y install vim unzip screen telnet netcat-openbsd
+RUN apt-get -y install vim unzip screen telnet netcat-openbsd byobu
 # RUN apt-get -y install software-properties-common
 
 # GCC and basic build tools
@@ -62,9 +65,12 @@ ADD http://github.com/opencog/relex/archive/master.zip /home/Downloads/relex-mas
 RUN (unzip relex-master.zip; cd relex-master; ant)
 
 # Punch out ports
-
-EXPOSE 9000
+# 9000 is the link-grammar server port, but we don't use that right
+# now...
+# EXPOSE 9000
 EXPOSE 4444
 
-CD relex-master
-CMD opencog-server.sh
+# XXX May want to change the below to return R2L --logic output,
+# for normal opencog use...
+WORKDIR relex-master
+ENTRYPOINT bash -l -c ./opencog-server.sh
