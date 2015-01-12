@@ -53,8 +53,8 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Link Parser
-ADD http://www.abisource.com/downloads/link-grammar/5.2.3/link-grammar-5.2.3.tar.gz /home/Downloads/link-grammar-5.2.3.tar.gz
-RUN (tar zxvf link-grammar-5.2.3.tar.gz; cd link-grammar-5.2.3/; ./configure; make -j6; sudo make install; ldconfig)
+ADD http://www.abisource.com/downloads/link-grammar/5.2.4/link-grammar-5.2.4.tar.gz /home/Downloads/link-grammar-5.2.4.tar.gz
+RUN (tar zxvf link-grammar-5.2.4.tar.gz; cd link-grammar-5.2.4/; ./configure; make -j6; sudo make install; ldconfig)
 
 # JWNL
 ADD http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip /home/Downloads/jwnl14-rc2.zip
