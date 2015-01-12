@@ -76,6 +76,15 @@ with the 5 letters `text:` it returns a JSON-formatted response.
    text:This is a test sentence!
 ```
 
+A docker cheat-sheet:
+```
+docker ps
+docker ps -a
+docker rm
+docker images
+docker rmi
+```
+
 ### Installing on all other systems
  
 For other systems, follow the instructions below.
