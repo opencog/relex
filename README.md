@@ -45,17 +45,36 @@ An installation script for Ubuntu/Debian is provided in the [install-scripts]
 
 ### Install and run via Docker
 
-This distrubution includes a Dockerfile for easy use with Docker
-(http://www.docker.io).  To use this, simply say:
+The easiest way to build and run RelEx is with Docker. The Docker
+system allows sandboxed containers to be easily created and deployed;
+the typical use of a container is to run some server.  See the 
+http://www.docker.io website for more info and tutorials.
 
-   $ docker build -t test/relex .
-   $ docker run -i -t -p :3333 -w /home/Downloads/relex mine/relex /bin/sh plain-text-server.sh
-
+To use docker, simply say:
+```
+   $ docker build -t mine/relex .
+   $ docker run -i -t -p 3333:3333 -w /home/Downloads/relex-master mine/relex /bin/sh plain-text-server.sh
+```
 or
+```
+   $ docker run -i -t -p 4444:4444 -w /home/Downloads/relex-master mine/relex /bin/sh opencog-server.sh
+   $ docker run -i -t -p 9000:9000 -w /home/Downloads/relex-master mine/relex /bin/sh link-grammar-server.sh
+```
+For the first two, simple say:
+```
+   telnet localhost 3333
+   This is a test sentence!
+```
+The first server just returns a plain-text analysis of the input
+sentence, while the second returns an opencog-scheme version of the
+parse.
 
-   $ docker run -i -t -p :4444 -w /home/Downloads/relex mine/relex /bin/sh opencog-server.sh
-   $ docker run -i -t -p :9000 -w /home/Downloads/relex mine/relex /bin/sh link-grammar-server.sh
-
+The raw link-grammar server expects a JSON-formated input, begining
+with the 5 letters `text:` it returns a JSON-formatted response.
+```
+   telnet localhost 9000
+   text:This is a test sentence!
+```
 
 ### Installing on all other systems
  

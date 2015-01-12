@@ -5,7 +5,12 @@
 #    docker build -t $USER/relex-master .
 #
 # To start:
-#    docker run -p 4444:4444 -t $USER/relex-master
+#    docker run -i -t -p 3333:3333 -w /home/Downloads/relex-master $USER/relex /bin/sh plain-text-server.sh
+#
+# Or alternately, this:
+#    docker run -i -t -p 4444:4444 -w /home/Downloads/relex-master $USER/relex /bin/sh opencog-server.sh
+#
+#    docker run -i -t -p 9000:9000 -w /home/Downloads/relex-master $USER/relex /bin/sh link-grammar-server.sh
 #
 # To demo:
 #    telnet localhost 4444
@@ -65,12 +70,10 @@ ADD http://github.com/opencog/relex/archive/master.zip /home/Downloads/relex-mas
 RUN (unzip relex-master.zip; cd relex-master; ant)
 
 # Punch out ports
-# 9000 is the link-grammar server port, but we don't use that right
-# now...
-# EXPOSE 9000
+EXPOSE 3333
 EXPOSE 4444
+EXPOSE 9000
 
-# XXX May want to change the below to return R2L --logic output,
-# for normal opencog use...
 WORKDIR relex-master
-ENTRYPOINT bash -l -c ./opencog-server.sh
+# ENTRYPOINT bash -l -c ./opencog-server.sh
+CMD /bin/bash
