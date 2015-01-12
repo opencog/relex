@@ -9,11 +9,12 @@ WORKDIR /home/Downloads/
 RUN sudo locale-gen en_US.UTF-8
 
 RUN apt-get -y update
+RUN apt-get -y upgrade
 
 RUN apt-get -y install vim unzip screen telnet netcat-openbsd
 # RUN apt-get -y install software-properties-common
 
-# GCC etc.
+# GCC and basic build tools
 RUN apt-get -y install gcc g++ make
 
 # Java
