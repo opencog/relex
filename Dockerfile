@@ -24,7 +24,6 @@ FROM ubuntu:14.04
 MAINTAINER dhart@opencog.org
 
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-WORKDIR /home/Downloads/
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
@@ -52,9 +51,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN mkdir /usr/local/share/java
+
+WORKDIR /home/Downloads/
+
 # JWNL - Never changes, so do this first.
 ADD http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip /home/Downloads/jwnl14-rc2.zip
-RUN (unzip jwnl14-rc2.zip; cd jwnl14-rc2; cp jwnl.jar /usr/share/java/; chmod 777 /usr/share/java/jwnl.jar)
+RUN (unzip jwnl14-rc2.zip; cd jwnl14-rc2; cp jwnl.jar /usr/local/share/java/; chmod 777 /usr/local/share/java/jwnl.jar)
 
 # OpenNLP - Never changes, so do this first.
 ADD http://www.motorlogy.com/apache/opennlp/opennlp-1.5.3/apache-opennlp-1.5.3-bin.zip /home/Downloads/apache-opennlp-1.5.3-bin.zip
