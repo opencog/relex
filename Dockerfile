@@ -29,7 +29,7 @@ RUN apt-get -y update
 RUN apt-get -y upgrade
 
 RUN apt-get -y install vim unzip screen telnet netcat-openbsd byobu
-# RUN apt-get -y install software-properties-common
+RUN apt-get -y install wget
 
 # GCC and basic build tools
 RUN apt-get -y install gcc g++ make
@@ -65,8 +65,14 @@ RUN unzip apache-opennlp-1.5.3-bin.zip
 RUN (cd apache-opennlp-1.5.3; cp lib/*.jar /usr/local/share/java/; cp lib/*.jar /usr/share/java/; cp lib/opennlp-tools-1.5.3.jar /usr/local/share/java/opennlp-tools-1.5.0.jar)
 
 # Link Parser -- changes often
-ADD http://www.abisource.com/downloads/link-grammar/5.2.4/link-grammar-5.2.4.tar.gz /home/Downloads/link-grammar-5.2.4.tar.gz
-RUN (tar zxvf link-grammar-5.2.4.tar.gz; cd link-grammar-5.2.4/; ./configure; make -j6; sudo make install; ldconfig)
+# Download the current released version of link-grammar.
+# The wget gets the latest version w/ wildcard
+RUN wget -r --no-parent -nH --cut-dirs=2 http://www.abisource.com/downloads/link-grammar/current/
+
+# Unpack the sources, too.
+RUN tar -zxf current/link-grammar-5*.tar.gz
+
+RUN (cd link-grammar-5.*/; ./configure; make -j6; sudo make install; ldconfig)
 
 # Relex -- changes often
 ADD http://github.com/opencog/relex/archive/master.zip /home/Downloads/relex-master.zip
