@@ -78,19 +78,21 @@ public class TestRelEx
 		ArrayList<String> brgot = split(rs);
 		ArrayList<String> urgot = split(urs);
 
-		// add number of binary relations from parser-output,
+		// Add number of binary relations from parser-output,
 		// to total number of relationships gotten
-		int sizeOfGotRelations= brgot.size();
-		// check expected binary and unary relations
-		// the below for-loop checks whether all expected binary relations are
+		int sizeOfGotRelations = brgot.size();
+
+		// Check expected binary and unary relations.
+		// The below for-loop checks whether all expected binary relations are
 		// contained in the parser-binary-relation-output arrayList "brgot".
-		// if any unary relations are expected in the output it checks the
-		// parser-unary-relation-output arrayList "urgot" for unary relationships
+		// If any unary relations are expected in the output, it checks the
+		// parser-unary-relation-output arrayList "urgot" for unary
+		// relationships.
 		for (int i=0; i< exp.size(); i++)
 		{
-			if(!brgot.contains(exp.get(i)))
+			if (!brgot.contains(exp.get(i)))
 			{
-				if(!urgot.contains(exp.get(i)))
+				if (!urgot.contains(exp.get(i)))
 				{
 					System.err.println("Error: content miscompare:\n" +
 						    "\tExpected = " + exp + "\n" +
@@ -137,12 +139,14 @@ public class TestRelEx
 	public void report(boolean rc, String subsys)
 	{
 		if (rc) {
-			System.err.println(subsys + ": Tested " + pass +
+			System.err.println(subsys + ": Tested " + subpass +
 			                   " sentences, test passed OK");
 		} else {
-			System.err.println(subsys + ": Test failed\n\t" +
-			                   fail + " sentences failed\n\t" +
-			                   pass + " sentences passed");
+			int total = subpass + subfail;
+			System.err.println(subsys + ": Test failed; out of " +
+			                   total + " sentneces tested,\n\t" +
+			                   subfail + " sentences failed\n\t" +
+			                   subpass + " sentences passed");
 		}
 		subpass = 0;
 		subfail = 0;
@@ -1857,9 +1861,12 @@ public class TestRelEx
 		rc &= ts.test_interrogatives();
 
 		if (rc) {
-			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
+			System.err.println("Tested a total of " + ts.pass +
+			                   " sentences, test passed OK");
 		} else {
-			System.err.println("Test failed\n\t" +
+			int total = ts.fail + ts.pass;
+			System.err.println("Test failed; out of a total of " +
+			                   total + " test sentences,\n\t" +
 			                   ts.fail + " sentences failed\n\t" +
 			                   ts.pass + " sentences passed");
 		}
