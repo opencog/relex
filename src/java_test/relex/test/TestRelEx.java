@@ -1147,130 +1147,130 @@ public class TestRelEx
 	{
 		boolean rc = true;
 		rc &= test_sentence ("The woman who lives next door is a registered nurse.",
-		                        "_obj(be, nurse)\n" +
-		                        "_subj(be, woman)\n" +
-		                        "_amod(nurse, registered)\n" +
-		                        "_advmod(live, next_door)\n" +
-		                        "_subj(live, woman)\n" +
-					"_rel(who, live)\n" +
-					"_relmod(woman, who)\n");
+		                     "_obj(be, nurse)\n" +
+		                     "_subj(be, woman)\n" +
+		                     "_amod(nurse, registered)\n" +
+		                     "_advmod(live, next_door)\n" +
+		                     "_subj(live, woman)\n" +
+		                     "_rel(who, live)\n" +
+		                     "_relmod(woman, who)\n");
 
 		rc &= test_sentence ("A player who is injured has to leave the field.",
-		                        "_to-do(have, leave)\n" +
-		                        "_subj(have, player)\n" +
-		                        "_obj(leave, field)\n" +
-					"_rel(who, injured)\n" +
-		                        "_predadj(player, injured)\n" +
-					"_relmod(player, who)\n");
+		                     "_to-do(have, leave)\n" +
+		                     "_subj(have, player)\n" +
+		                     "_obj(leave, field)\n" +
+		                     "_rel(who, injured)\n" +
+		                     "_predadj(player, injured)\n" +
+		                     "_relmod(player, who)\n");
 
 		rc &= test_sentence ("Pizza, which most people love, is not very healthy.",
-		                        "_advmod(very, not)\n" +
-		                        "_advmod(healthy, very)\n" +
-		                        "_obj(love, Pizza)\n" +
-		                        "_quantity(people, most)\n" +
-		                        "which(Pizza, love)\n" +
-		                        "_subj(love, people)\n" +
-		                        "_predadj(Pizza, healthy)\n" );
+		                     "_advmod(very, not)\n" +
+		                     "_advmod(healthy, very)\n" +
+		                     "_obj(love, Pizza)\n" +
+		                     "_quantity(people, most)\n" +
+		                     "which(Pizza, love)\n" +
+		                     "_subj(love, people)\n" +
+		                     "_predadj(Pizza, healthy)\n" );
 
 		rc &= test_sentence ("The restaurant which belongs to my aunt is very famous.",
-		                        "_advmod(famous, very)\n" +
-		                        "_advmod(belong, to)\n" +
-		                        "_subj(belong, restaurant)\n" +
-		                        "_poss(aunt, me)\n" +
-					"_pobj(to, aunt)\n" +
-					"_rel(which, belong)\n" +
-		                        "_predadj(restaurant, famous)\n" +
-					"_relmod(restaurant, which)\n");
+		                     "_advmod(famous, very)\n" +
+		                     "_advmod(belong, to)\n" +
+		                     "_subj(belong, restaurant)\n" +
+		                     "_poss(aunt, me)\n" +
+		                     "_pobj(to, aunt)\n" +
+		                     "_rel(which, belong)\n" +
+		                     "_predadj(restaurant, famous)\n" +
+		                     "_relmod(restaurant, which)\n");
 
 		rc &= test_sentence ("The books which I read in the library were written by Charles Dickens.",
-		                        "_obj(write, book)\n" +
-					"_advmod(write, by)\n" +
-		                        "_obj(read, book)\n" +
-					"_advmod(read, in)\n" +
-		                        "_subj(read, I)\n" +
-					"_pobj(in, library)\n" +
-					"_rel(which, read)\n" +
-					"_relmod(book, which)\n" +
-					"_pobj(by, Charles_Dickens)\n");
+		                     "_obj(write, book)\n" +
+		                     "_advmod(write, by)\n" +
+		                     "_obj(read, book)\n" +
+		                     "_advmod(read, in)\n" +
+		                     "_subj(read, I)\n" +
+		                     "_pobj(in, library)\n" +
+		                     "_rel(which, read)\n" +
+		                     "_relmod(book, which)\n" +
+		                     "_pobj(by, Charles_Dickens)\n");
 
 		rc &= test_sentence("This is the book whose author I met in a library.",
-		                       "_obj(be, book)\n" +
-		                       "_subj(be, this)\n" +
-		                       "_obj(meet, author)\n" +
-					"_advmod(meet, in)\n" +
-		                       "_subj(meet, I)\n" +
-		                       "_pobj(in, library)\n" +
-					"_pobj(whose, author)\n" +
-		                       "_det(book, whose)\n");
+		                    "_obj(be, book)\n" +
+		                    "_subj(be, this)\n" +
+		                    "_obj(meet, author)\n" +
+		                    "_advmod(meet, in)\n" +
+		                    "_subj(meet, I)\n" +
+		                    "_pobj(in, library)\n" +
+		                    "_pobj(whose, author)\n" +
+		                    "_det(book, whose)\n");
 
 		rc &= test_sentence("The book that Jack lent me is very boring.",
-		                       "_advmod(boring, very)\n" +
-		                       "_obj(lend, book)\n" +
-		                       "_iobj(lend, me)\n" +
-		                       "_subj(lend, Jack)\n" +
-		                       "_relmod(book, that)\n" +
-					"_rel(that, lend)\n" +
-		                       "_predadj(book, boring)\n");
+		                    "_advmod(boring, very)\n" +
+		                    "_obj(lend, book)\n" +
+		                    "_iobj(lend, me)\n" +
+		                    "_subj(lend, Jack)\n" +
+		                    "_relmod(book, that)\n" +
+		                    "_rel(that, lend)\n" +
+		                    "_predadj(book, boring)\n");
 
 		rc &= test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
-		                       "_obj(eat, curry)\n" +
-		                       "_subj(eat, they)\n" +
-		                       "_obj(recommend, curry)\n" +
-					"_advmod(recommend, by)\n" +
-		                       "_pobj(by, owner)\n" +
-		                       "_poss(owner, restaurant)\n" +
-		                       "_rel(which, recommend)\n" +
-		                       "_amod(curry, special)\n" +
-					"_relmod(curry, which)\n");
+		                    "_obj(eat, curry)\n" +
+		                    "_subj(eat, they)\n" +
+		                    "_obj(recommend, curry)\n" +
+		                    "_advmod(recommend, by)\n" +
+		                    "_pobj(by, owner)\n" +
+		                    "_poss(owner, restaurant)\n" +
+		                    "_rel(which, recommend)\n" +
+		                    "_amod(curry, special)\n" +
+		                    "_relmod(curry, which)\n");
 
 		rc &= test_sentence("The dog who Jack said chased me was black.",
-		                       "_obj(chase, me)\n" +
-		                       "_subj(chase, dog)\n" +
-					"_rep(say, chase)\n" +
-					"_rel(who, chase)\n" +
-		                       "_subj(say, Jack)\n" +
-		                       "_predadj(dog, black)\n" +
-		                       "_relmod(dog, who)\n");
+		                    "_obj(chase, me)\n" +
+		                    "_subj(chase, dog)\n" +
+		                    "_rep(say, chase)\n" +
+		                    "_rel(who, chase)\n" +
+		                    "_subj(say, Jack)\n" +
+		                    "_predadj(dog, black)\n" +
+		                    "_relmod(dog, who)\n");
 
 		rc &= test_sentence("Jack, who hosted the party, is my cousin.",
-		                       "_obj(be, cousin)\n" +
-		                       "_subj(be, Jack)\n" +
-		                       "_poss(cousin, me)\n" +
-		                       "_obj(host, party)\n" +
-		                       "_subj(host, Jack)\n" +
-		                       "who(Jack, host)\n");
+		                    "_obj(be, cousin)\n" +
+		                    "_subj(be, Jack)\n" +
+		                    "_poss(cousin, me)\n" +
+		                    "_obj(host, party)\n" +
+		                    "_subj(host, Jack)\n" +
+		                    "who(Jack, host)\n");
 
 		rc &= test_sentence("Jack, whose name is in that book, is the student near the window.",
-		                       "near(be, window)\n" +
-		                       "_obj(be, student)\n" +
-		                       "_subj(be, Jack)\n" +
-		                       "_pobj(in, book)\n" +
-		                       "_psubj(in, name)\n" +
-		                       "_det(book, that)\n" +
-		                       "whose(Jack, name)\n");
+		                    "near(be, window)\n" +
+		                    "_obj(be, student)\n" +
+		                    "_subj(be, Jack)\n" +
+		                    "_pobj(in, book)\n" +
+		                    "_psubj(in, name)\n" +
+		                    "_det(book, that)\n" +
+		                    "whose(Jack, name)\n");
 
 		rc &= test_sentence("Jack stopped the police car that was driving fast.",
-		                       "_obj(stop, car)\n" +
-		                       "_subj(stop, Jack)\n" +
-		                       "_advmod(drive, fast)\n" +
-					"_subj(drive, car)\n" +
-		                       "_relmod(car, that)\n" +
-					"_rel(that, drive)\n" +
-		                       "_nn(car, police)\n");
+		                    "_obj(stop, car)\n" +
+		                    "_subj(stop, Jack)\n" +
+		                    "_advmod(drive, fast)\n" +
+		                    "_subj(drive, car)\n" +
+		                    "_relmod(car, that)\n" +
+		                    "_rel(that, drive)\n" +
+		                    "_nn(car, police)\n");
 
 		rc &= test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
-		                       "_obj(stop, car)\n" +
-		                       "_pobj(by, sign)\n" +
-		                       "_advmod(before, just)\n" +
-					"_advmod(stand, on)\n" +
-		                       "_pobj(on, street)\n" +
-		                       "_advmod(stop, by)\n" +
-					"_subj(stand, sign)\n" +
-		                       "_relmod(sign, that)\n" +
-					"_rel(that, stand)\n" +
-		                       "_nn(sign, traffic)\n" +
-					"_advmod(stop, just)\n" +
-		                       "_pobj(before, crossroads)\n");
+		                    "_obj(stop, car)\n" +
+		                    "_pobj(by, sign)\n" +
+		                    "_advmod(before, just)\n" +
+		                    "_advmod(stand, on)\n" +
+		                    "_pobj(on, street)\n" +
+		                    "_advmod(stop, by)\n" +
+		                    "_subj(stand, sign)\n" +
+		                    "_relmod(sign, that)\n" +
+		                    "_rel(that, stand)\n" +
+		                    "_nn(sign, traffic)\n" +
+		                    "_advmod(stop, just)\n" +
+		                    "_pobj(before, crossroads)\n");
 
 		report(rc, "Extrapostion");
 		return rc;
