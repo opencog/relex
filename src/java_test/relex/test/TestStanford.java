@@ -35,7 +35,7 @@ public class TestStanford
 	public static void setUpClass() {
 		re = new RelationExtractor();
 	}
-	
+
 	public TestStanford()
 	{
 		re.do_stanford = true;
@@ -142,7 +142,7 @@ public class TestStanford
 		TestStanford ts = new TestStanford();
 		ts.runTests();
 	}
-	
+
 	public void runTests()
 	{
 		TestStanford ts = this;
@@ -491,7 +491,7 @@ rcmod(man-4, love-8)
 			"det(truffles-2-NNS, the-1-DT)\n" +
 			"nsubjpass(eaten-4-VBN, truffles-2-NNS)\n" +
 			"auxpass(eaten-4-VBN, were-3-VBD)");
-			
+
 
 		// Full disclosure:  Stanford currently generates
 		// dep(time-4-NN, young-8-JJ) which just means it doesn't know
@@ -558,7 +558,9 @@ rcmod(man-4, love-8)
 		}
 		else
 		{
-			System.err.println("Stanford compatibility: Test failed\n\t" +
+			int total = ts.pass + ts.fail;
+			System.err.println("Stanford compatibility: Test failed; out of " +
+				total + " sentences total,\n\t" + 
 				ts.fail + " sentences failed\n\t" +
 				ts.pass + " sentences passed");
 		}
