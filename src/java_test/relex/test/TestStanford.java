@@ -57,8 +57,8 @@ public class TestStanford
 
 	/**
 	 * First argument is the sentence.
-	 * Second argument is a list of the relations that the 
-	 * Stanford parser generates. 
+	 * Second argument is a list of the relations that the
+	 * Stanford parser generates.
 	 * Return true if relex generates that same dependencies
 	 * as the second argument.
 	 */
@@ -143,7 +143,8 @@ public class TestStanford
 		ts.runTests();
 	}
 	
-	public void runTests() {
+	public void runTests()
+	{
 		TestStanford ts = this;
 		boolean rc = true;
 
@@ -154,7 +155,7 @@ public class TestStanford
 		// pass.
 		rc &= ts.test_sentence ("Who invented sliced bread?",
 			"nsubj(invented-2, who-1)\n" +
-			"amod(bread-4, sliced-3)\n" + 
+			"amod(bread-4, sliced-3)\n" +
 			"dobj(invented-2, bread-4)");
 
 		rc &= ts.test_sentence ("Jim runs quickly.",
@@ -174,7 +175,7 @@ public class TestStanford
 			"nsubj(is-2, place-4)\n" +
 			"nsubj(go-7, we-5)\n" +
 			"aux(go-7, can-6)");
-			// wtf ?? dep is not documented .. not sure what to do here ... 
+			// wtf ?? dep is not documented .. not sure what to do here ...
 			// "dep(is-2, go-7)");
 
 		rc &= ts.test_sentence ("The linebacker gave the quarterback a push.",
@@ -410,7 +411,7 @@ public class TestStanford
 /****************
  *
  * relex is failing to generate teh following:
- * Almost got it w/the B** rules but not quite ... 
+ * Almost got it w/the B** rules but not quite ...
 
 rel(love-8, wife-6)
 rcmod(man-4, love-8)
@@ -446,19 +447,17 @@ rcmod(man-4, love-8)
 			"complm(like-5, that-3)\n" +
 			"nsubj(like-5, you-4)\n" +
 			"ccomp(says-2, like-5)\n" +
-			"nsubj(swim-7, to-6)\n" +   // NFW that this can be right.
+			"nsubj(swim-7, to-6)\n" +   // NFW that this can't be right.
 			"ccomp(like-5, swim-7)");
-***********/
+**************/
 
 
-/****************
 		rc &= ts.test_sentence ("The garage is next to the house.",
 			"det(garage-2, the-1)\n" +
 			"nsubj(next-4, garage-2)\n" +
 			"cop(next-4, is-3)\n" +
 			"det(house-7, the-6)\n" +
 			"prep_to(next-4, house-7)");
-***********/
 
 		// =========================================================
 		// PENN PART_OF_SPEECH TAGGING
@@ -496,7 +495,7 @@ rcmod(man-4, love-8)
 
 		// Full disclosure:  Stanford currently generates
 		// dep(time-4-NN, young-8-JJ) which just means it doesn't know
-		// the right answer (which is advcl, right?).  
+		// the right answer (which is advcl, right?).
 		// It also generates advmod(young-8-JJ, when-5-WRB) in addition
 		// to rel(young-8-JJ, when-5-WRB) which is not quite right
 		// either.
@@ -555,37 +554,41 @@ rcmod(man-4, love-8)
 
 		if (rc)
 		{
-			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
+			System.err.println("Stanford compatibility: Tested " + ts.pass + " sentences, test passed OK");
 		}
 		else
 		{
-			System.err.println("Test failed\n\t" + 
+			System.err.println("Stanford compatibility: Test failed\n\t" +
 				ts.fail + " sentences failed\n\t" +
 				ts.pass + " sentences passed");
 		}
 
-		System.err.println("********************************************************");
-		System.err.println("Failed test sentences on Stanford with POS tagging FALSE");
-		System.err.println("********************************************************");
 
-		if(sentfail.isEmpty())
-			System.err.println("All test sentences passed");
+		if (!sentfail.isEmpty())
+		{
+			System.err.println("********************************************************");
+			System.err.println("Stanford compat: Failed sentences with POS tagging FALSE");
+			System.err.println("********************************************************");
 
-		for(String temp : sentfail){
-			System.err.println(temp);
+			for (String temp : sentfail)
+			{
+				System.err.println(temp);
+			}
+			System.err.println("********************************************************\n");
 		}
-		System.err.println("********************************************************\n");
 
-		System.err.println("********************************************************");
-		System.err.println("Failed test sentences on Stanford with POS tagging TRUE");
-		System.err.println("********************************************************");
 
-		if(sentfailpostag.isEmpty())
-			System.err.println("All test sentences passed");
+		if (!sentfailpostag.isEmpty())
+		{
+			System.err.println("********************************************************");
+			System.err.println("Stanford compat: Failed sentences with POS tagging TRUE");
+			System.err.println("********************************************************");
 
-		for(String temp : sentfailpostag){
-			System.err.println(temp);
+			for (String temp : sentfailpostag)
+			{
+				System.err.println(temp);
+			}
+			System.err.println("********************************************************\n");
 		}
-		System.err.println("********************************************************\n");
 	}
 }
