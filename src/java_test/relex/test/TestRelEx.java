@@ -159,24 +159,26 @@ public class TestRelEx
 		                     "_obj(eat, cookie)\n" +
 		                     "_det(cookie, that)\n");
 		rc &= test_sentence ("All my writings are bad.",
-		                     "_predet(writings, all)\n" +
+		                     "_quantity(writings, all)\n" +
 		                     "_poss(writings, me)\n" +
 		                     "_predadj(writings, bad)\n");
 		rc &= test_sentence ("All his designs are bad.",
-		                     "_predet(design, all)\n" +
+		                     "_quantity(design, all)\n" +
 		                     "_poss(design, him)\n" +
 		                     "_predadj(design, bad)\n");
 		rc &= test_sentence ("All the boys knew it.",
 		                     "_subj(know, boy)\n" +
 		                     "_obj(know, it)\n" +
-		                     "_predet(boy, all)\n");
+		                     "_quantity(boy, all)\n");
 
 		rc &= test_sentence ("Joan thanked Susan for all the help she had given.",
-		                     "for(thank, help)\n" +
+					"_advmod(thank, for)\n" +
+					"_pobj(for, help)\n" +
 		                     "_subj(thank, Joan)\n" +
 		                     "_obj(thank, Susan)\n" +
-		                     "_predet(help, all)\n" +
+		                     "_quantity(help, all)\n" +
 		                     "_subj(give, she)\n" +
+					"_relmod(help, she)\n" +
 		                     "_obj(give, help)\n");
 
 		report(rc, "Determiners");
@@ -187,13 +189,15 @@ public class TestRelEx
 	{
 		boolean rc = true;
 		rc &= test_sentence("I had breakfast at 8 am.",
+					"_advmod(have, at)\n" +
+				    "_pobj(at, am)\n" +
 				    "_obj(have, breakfast)\n"+
-				    "at(have, am)\n" +
 				    "_subj(have, I)\n" +
 				    "_time(am, 8)\n");
 		rc &= test_sentence("I had supper before 6 pm.",
+				    "_advmod(have, before)\n" +
+				    "_pobj(before, pm)\n" +
 				    "_obj(have, supper)\n" +
-				    "before(have, pm)\n" +
 				    "_subj(have, I)\n" +
 				    "_time(pm, 6)\n");
 
@@ -205,187 +209,190 @@ public class TestRelEx
 	{
 		boolean rc = true;
 		rc &= test_sentence ("Some people like pigs less than dogs.",
-		                     "_advmod(like, less)\n" +
+		                     "_compdeg(like, less)\n" +
 		                     "_obj(like, pig)\n" +
-		                     "_quantity(people, some)\n" +
 		                     "_subj(like, people)\n" +
-		                     "than(pig, dog)\n");
+		                     "than(pig, dog)\n" +
+					"_comparative(like, pig)\n" +
+					"comp_arg(like, dog)\n" +
+		                     "_quantity(people, some)\n");
 
 		rc &= test_sentence ("Some people like pigs more than dogs.",
-		                     "_advmod(like, more)\n" +
+		                     "_compdeg(like, more)\n" +
 		                     "_obj(like, pig)\n" +
-		                     "_quantity(people, some)\n" +
 		                     "_subj(like, people)\n" +
-		                     "than(pig, dog)\n");
+		                     "than(pig, dog)\n" +
+					"_comparative(like, pig)\n" +
+					"comp_arg(like, dog)\n" +
+		                     "_quantity(people, some)\n");
 		//Non-equal Gradable : Two entities one feature "more/less"
 
 		rc &= test_sentence ("He is more intelligent than John.",
-				    "than(he, John)\n" +
+				    "_compdeg(intelligent, more)\n"+
 				    "_comparative(intelligent, he)\n" +
-				    "degree(intelligent, comparative)\n"+
-				    "_advmod(intelligent, more)\n"+
+					"comp_arg(intelligent, John)\n" +
+				    "than(he, John)\n" +
 				    "_predadj(he, intelligent)\n");
 
 		rc &= test_sentence ("He is less intelligent than John.",
-				    "than(he, John)\n" +
+				    "_compdeg(intelligent, less)\n"+
 				    "_comparative(intelligent, he)\n" +
-				    "degree(intelligent, comparative)\n"+
-				    "_advmod(intelligent, less)\n"+
+				    "than(he, John)\n" +
+					"comp_arg(intelligent, John)\n" +
 				    "_predadj(he, intelligent)\n");
 
 		rc &= test_sentence ("He runs more quickly than John.",
 				    "_advmod(run, quickly)\n"+
-				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
-				    "than(he, John)\n" +
-				    "_comparative(quickly, run)\n" +
-				    "degree(quickly, comparative)\n");
+				    "_compdeg(quickly, more)\n"+
+				    "_comparative(run, quickly)\n" +
+					"comp_arg(run, John)\n" +
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less quickly than John.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
-				    "_advmod(quickly, less)\n"+
-				    "than(he, John)\n" +
-				    "_comparative(quickly, run)\n" +
-				    "degree(quickly, comparative)\n");
+				    "_compdeg(quickly, less)\n"+
+				    "_comparative(run, quickly)\n" +
+					"comp_arg(run, John)\n" +
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more quickly than John does.",
 				    "_advmod(run, quickly)\n" +
-				    "_advmod(quickly, more)\n"+
 				    "_subj(run, he)\n" +
+				    "_advmod(do, quickly)\n" +
 				    "_subj(do, John)\n"+
-				    "than(he, John)\n" +
-				    "_comparative(quickly, run)\n" +
-				    "degree(quickly, comparative)\n");
+				    "_compdeg(quickly, more)\n"+
+				    "_comparative(run, quickly)\n" +
+				    "than(he, John)\n");
 
-		// This sentence is ungrammatical but commonly used by
-		// non-native English speakers
 		rc &= test_sentence ("He runs less quickly than John does.",
 				    "_advmod(run, quickly)\n" +
 				    "_subj(run, he)\n" +
+					"_advmod(do, quickly)\n" +
 				    "_subj(do, John)\n"+
-				    "_advmod(quickly, less)\n"+
+				    "_compdeg(quickly, less)\n"+
 				    "than(he, John)\n" +
-				    "_comparative(quickly, run)\n" +
-				    "degree(quickly, comparative)\n");
+				    "_comparative(run, quickly)\n");
 
 		rc &= test_sentence ("He runs slower than John does.",
-				    "_advmod(run, slow)\n" +
+				    "_advmod(run, slower)\n" +
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n"+
 				    "than(he, John)\n" +
-				    "_comparative(slow, run)\n" +
-				    "degree(slow, comparative)\n");
+				    "_comparative(run, slower)\n" +
+				    "_compdeg(slow, more)\n");
 
 		rc &= test_sentence ("He runs more than John.",
-				    "_obj(run, more)\n" +
+					"_compdeg(run, more)\n" +
 				    "_subj(run, he)\n" +
-				    "than(he, John)\n"+
-				    "_comparative(more, run)\n"+
-				    "degree(more, comparative)\n");
+				    "than(he, John)\n" +
+					"_comparative(run, less)\n" +
+					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less than John.",
-				    "_obj(run, less)\n" +
+					"_compdeg(run, less)\n" +
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n"+
-				    "_comparative(less, run)\n"+
-				    "degree(less, comparative)\n");
+					"_comparative(run, less)\n" +
+					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs faster than John.",
 				    "than(he, John)\n" +
-				    "_comparative(fast, run)\n" +
+				    "_comparative(run, faster)\n" +
 				    "_subj(run, he)\n"+
-				    "_advmod(run, fast)\n"+
-				    "degree(fast, comparative)\n");
+				    "_advmod(run, faster)\n" +
+					"comp_arg(run, John)\n" +
+				    "_compdeg(faster, more)\n");
 
 		rc &= test_sentence ("He runs more slowly than John.",
 				    "than(he, John)\n" +
 				    "_subj(run, he)\n" +
-				    "_advmod(slowly, more)\n"+
-				    "_comparative(slowly, run)\n"+
+				    "_compdeg(slowly, more)\n"+
+				    "_comparative(run, slowly)\n"+
 				    "_advmod(run, slowly)\n"+
-				    "degree(slowly, comparative)\n");
+					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less slowly than John.",
 				    "than(he, John)\n" +
 				    "_subj(run, he)\n" +
-				    "_comparative(slowly, run)\n"+
-				    "_advmod(run, slowly)\n"+
-				    "_advmod(slowly, less)\n"+
-				    "degree(slowly, comparative)\n");
+				    "_comparative(run, slowly)\n"+
+				    "_advmod(run, slowly)\n" +
+				    "_compdeg(slowly, less)\n" +
+					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs more miles than John does.",
-				    "than(he, John)\n" +
+				    "_obj(run, mile)\n" +
 				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n"+
-				    "_obj(run, mile)\n"+
-				    "_comparative(mile, run)\n"+
-				    "_quantity(mile, more)\n"+
-				    "degree(more, comparative)\n");
+				    "_subj(do, John)\n" +
+				    "_quantity(mile, more)\n" +
+					"_compamt(mile, more)\n" +
+				    "_comparative(run, mile)\n" +
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs fewer miles than John does.",
-				    "than(he, John)\n" +
-				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n"+
-				    "_obj(run, mile)\n"+
-				    "_comparative(mile, run)\n"+
-				    "_quantity(mile, fewer)\n"+
-				    "degree(fewer, comparative)\n");
-
-		rc &= test_sentence ("He runs many more miles than John does.",
-				    "than(he, John)\n" +
-				    "_comparative(mile, run)\n"+
 				    "_obj(run, mile)\n"+
 				    "_subj(run, he)\n" +
 				    "_subj(do, John)\n" +
-				    "_quantity(mile, many)\n"+
-				    "degree(more, comparative)\n");
+				    "_quantity(mile, fewer)\n" +
+					"_compamt(mile, fewer)\n" +
+				    "_comparative(run, mile)\n" +
+				    "than(he, John)\n");
+
+		rc &= test_sentence ("He runs many more miles than John does.",
+				    "than(he, John)\n" +
+				    "_comparative(run, mile)\n" +
+				    "_obj(run, mile)\n" +
+				    "_subj(run, he)\n" +
+				    "_subj(do, John)\n" +
+				    "_quantity(more, many)\n" +
+				    "_compamt(mile, more)\n");
 
 
 		rc &= test_sentence ("He runs ten more miles than John.",
-				    "_obj(run, mile)\n"+
+				    "_obj(run, mile)\n" +
 				    "_subj(run, he)\n" +
 				    "than(he, John)\n" +
-				    "_comparative(mile, run)\n"+
-				    "_quantity(mile, ten)\n" +
-				    "numeric-FLAG(ten, T)\n" +
-				    "degree(more, comparative)\n");
+					"comp_arg(run, John)\n" +
+				    "_comparative(run, mile)\n"+
+				    "_quantity(more, ten)\n" +
+				    "_compamt(mile, more)\n");
 
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
-				    "_obj(run, mile)\n"+
-				    "_subj(run, he)\n"+
-				    "_comparative(mile, run)\n"+
-				    "_subj(do, John)\n"+
-				    "than(he, John)\n"+
-				    "_quantity_mod(ten, almost)\n"+
-				    "_quantity(mile, ten)\n"+
-				    "numeric-FLAG(ten, T)\n" +
-				    "degree(more, comparative)\n");
+				    "_obj(run, mile)\n" +
+				    "_subj(run, he)\n" +
+				    "_subj(do, John)\n" +
+				    "_quantity(more, ten)\n" +
+				    "_comparative(run, mile)\n" +
+				    "_quantity_mod(ten, almost)\n" +
+					"_compamt(mile, more)\n" +
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more often than John.",
-				    "_subj(run, he)\n"+
-				    "_advmod(often, more)\n"+
-				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(he, John)\n"+
-				    "degree(often, comparative)\n");
+				    "_subj(run, he)\n" +
+					"comp_arg(run, John)\n" +
+				    "_compdeg(often, more)\n" +
+				    "_advmod(run, often)\n" +
+				    "_comparative(run, often)\n" +
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
-				    "_advmod(often, less)\n"+
+					"comp_arg(run, John)\n" +
+				    "_compdeg(often, less)\n"+
 				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(he, John)\n"+
-				    "degree(often, comparative)\n");
+				    "_advmod(run, here)\n"+
+				    "_comparative(run, often)\n"+
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs here more often than John.",
 				    "_advmod(run, here)\n"+
-				    "_advmod(often, more)\n"+
+				    "_compdeg(often, more)\n"+
 				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(he, John)\n"+
-				    "degree(often, comparative)\n");
+					"comp_arg(run, John)\n" +
+				    "_comparative(run, often)\n"+
+				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs here less often than John.",
 				    "_advmod(run, here)\n"+
@@ -399,8 +406,9 @@ public class TestRelEx
 		rc &= test_sentence ("He is faster than John.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
-				    "_comparative(fast, he)\n"+
-				    "degree(fast, comparative)\n");
+					"comp_arg(fast, John)\n" +
+				    "_comparative(he, fast)\n"+
+				    "_compdeg(fast, more)\n");
 
 		rc &= test_sentence ("He is faster than John is.",
 				    "than(he, John)\n"+
@@ -593,22 +601,20 @@ public class TestRelEx
 				    "degree(often, comparative)\n");
 
 		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
+				    "_compdeg(difficult, more)\n"+
 				    "_comparative(difficult, grammar)\n"+
+				    "_amod(grammar, Russian)\n"+
 				    "than(grammar, grammar)\n"+
-				    "_amod(grammar, Russian)\n"+ //When link-grammar uses A, relex should use _amod it will use A instead of AN; will be  updated in next linkgrammer version
 				    "_predadj(grammar, difficult)\n"+
-				    "_amod(grammar, English)\n"+
-				    "_advmod(difficult, more)\n"+
-				    "degree(difficult, comparative)\n");
+				    "_amod(grammar, English)\n");
 
 		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
+				    "_compdeg(difficult, less)\n"+
 				    "_comparative(difficult, grammar)\n"+
-				    "than(grammar, grammar)\n"+
 				    "_amod(grammar, Russian)\n"+
+				    "than(grammar, grammar)\n"+
 				    "_predadj(grammar, difficult)\n"+
-				    "_amod(grammar, English)\n"+
-				    "_advmod(difficult, less)\n"+
-				    "degree(difficult, comparative)\n");
+				    "_amod(grammar, English)\n");
 
 		rc &= test_sentence ("My sister is much more intelligent than me.",
 				    "_amod(much, intelligent)\n"+
@@ -990,23 +996,26 @@ public class TestRelEx
 		rc &= test_sentence ("Mike runs as fast as he did last year.",
 			"_subj(do, he)\n"+
 			"_subj(run, Mike)\n"+
-			"as(fast, he)\n"+
+			"_compdeg(fast, as)\n"+
+			"_comp(as, do)\n" +
 			"_advmod(run, fast)\n"+
 			"_advmod(do, year)\n"+
+			"_advmod(do, fast)\n" +
 			"_amod(year, last)\n"+
 			"than(Mike, he)\n");
 
 		rc &= test_sentence ("The kick was as soft as the first.",
 			"_predadj(kick, soft)\n"+
-			"as(kick, first)\n");
+			"_advmod(soft, as)\n");
 
 		rc &= test_sentence ("He is as smart as I ever expected him to be.",
 			"_predadj(he, smart)\n"+
 			"_subj(expect, I)\n"+
-			"_obj(expect, him)\n"+
-			"as(smart, expect)\n"+
+			"_to-do(expect, be)\n"+
+			"_comp(as, expect)\n"+
 			"_advmod(expect, ever)\n"+
-			"_to-do(smart, be)\n");
+			"_subj(be, him)\n" +
+			"_compdeg(smart, as)\n");
 			
 		report(rc, "Equatives");
 		return rc;
@@ -1052,17 +1061,21 @@ public class TestRelEx
 		rc &= test_sentence ("We ate dinner at home and went to the movies.",
 		                     "_obj(eat, dinner)\n" +
 		                     "conj_and(eat, go)\n" +
-		                     "at(eat, home)\n" +
+					"_advmod(eat, at)\n" +
+		                     "_pobj(at, home)\n" +
 		                     "_subj(eat, we)\n" +
-		                     "to(go, movie)\n" +
+					"_advmod(go, to)\n" +
+		                     "_pobj(to, movie)\n" +
 		                     "_subj(go, we)\n");
 		// verb with more modifiers
 		rc &= test_sentence ("We ate a late dinner at home and went out to the movies afterwards.",
 		                     "_obj(eat, dinner)\n" +
 		                     "conj_and(eat, go_out)\n" +
-		                     "at(eat, home)\n" +
+					"_advmod(eat, at)\n" +
+					"_advmod(go_out, to)\n" +
+		                     "_pobj(at, home)\n" +
 		                     "_subj(eat, we)\n" +
-		                     "to(go_out, movie)\n" +
+		                     "_pobj(to, movie)\n" +
 		                     "_advmod(go_out, afterwards)\n" +
 		                     "_subj(go_out, we)\n" +
 		                     "_amod(dinner, late)\n");
@@ -1086,8 +1099,7 @@ public class TestRelEx
 		                     "_advmod(quickly, very)\n");
 		// conjoined adverbs with out modifiers
 		rc &= test_sentence ("She handled it quickly and gracefully.",
-		                     "_obj(handle, quickly)\n" +
-		                     "_obj(handle, gracefully)\n" +
+		                     "_obj(handle, it)\n" +
 		                     "_advmod(handle, quickly)\n" +
 		                     "_advmod(handle, gracefully)\n" +
 		                     "_subj(handle, she)\n" +
@@ -1105,20 +1117,22 @@ public class TestRelEx
 		rc &= test_sentence ("The collision was between the little car and the big truck.",
 		                     "_pobj(between, car)\n" +
 		                     "_pobj(between, truck)\n" +
+					"_pobj(between, and)\n" +
 		                     "_psubj(between, collision)\n" +
 		                     "_amod(truck, big)\n" +
 		                     "_amod(car, little)\n" +
+					"conj_prep(between, and)\n" +
 		                     "conj_and(car, truck)\n");
 		// Names Modifiers and conjunction
 		rc &= test_sentence ("Big Tom and Angry Sue went to the movies.",
-		                     "to(go, movie)\n" +
+		                     "_pobj(to, movie)\n" +
+					"_advmod(go, to)\n" +
 		                     "_subj(go, Big_Tom)\n" +
 		                     "_subj(go, Angry_Sue)\n" +
 		                     "conj_and(Big_Tom, Angry_Sue)\n");
                 //Correlative conjunction
                 rc &= test_sentence ("I could use neither the lorry nor the van.",
-                            "_to-do(could, use)\n"+
-                            "_quantity(lorry, neither)\n"+
+                            "_modal(could, use)\n"+
                             "conj_neither_nor(lorry, van)\n"+
                             "_obj(use, lorry)\n"+
                             "_obj(use, van)\n"+
@@ -1137,14 +1151,16 @@ public class TestRelEx
 		                        "_amod(nurse, registered)\n" +
 		                        "_advmod(live, next_door)\n" +
 		                        "_subj(live, woman)\n" +
-		                        "who(woman, live)\n");
+					"_rel(who, live)\n" +
+					"_relmod(woman, who)\n");
 
 		rc &= test_sentence ("A player who is injured has to leave the field.",
 		                        "_to-do(have, leave)\n" +
 		                        "_subj(have, player)\n" +
 		                        "_obj(leave, field)\n" +
+					"_rel(who, injured)\n" +
 		                        "_predadj(player, injured)\n" +
-		                        "who(player, injured)\n" );
+					"_relmod(player, who)\n");
 
 		rc &= test_sentence ("Pizza, which most people love, is not very healthy.",
 		                        "_advmod(very, not)\n" +
@@ -1157,51 +1173,63 @@ public class TestRelEx
 
 		rc &= test_sentence ("The restaurant which belongs to my aunt is very famous.",
 		                        "_advmod(famous, very)\n" +
-		                        "to(belong, aunt)\n" +
+		                        "_advmod(belong, to)\n" +
 		                        "_subj(belong, restaurant)\n" +
 		                        "_poss(aunt, me)\n" +
-		                        "which(restaurant, belong)\n" +
-		                        "_predadj(restaurant, famous)\n");
+					"_pobj(to, aunt)\n" +
+					"_rel(which, belong)\n" +
+		                        "_predadj(restaurant, famous)\n" +
+					"_relmod(restaurant, which)\n");
 
 		rc &= test_sentence ("The books which I read in the library were written by Charles Dickens.",
 		                        "_obj(write, book)\n" +
-		                        "by(write, Charles_Dickens)\n" +
+					"_advmod(write, by)\n" +
 		                        "_obj(read, book)\n" +
-		                        "in(read, library)\n" +
+					"_advmod(read, in)\n" +
 		                        "_subj(read, I)\n" +
-		                        "which(book, read)\n");
+					"_pobj(in, library)\n" +
+					"_rel(which, read)\n" +
+					"_relmod(book, which)\n" +
+					"_pobj(by, Charles_Dickens)\n");
 
 		rc &= test_sentence("This is the book whose author I met in a library.",
 		                       "_obj(be, book)\n" +
 		                       "_subj(be, this)\n" +
 		                       "_obj(meet, author)\n" +
-		                       "in(meet, library)\n" +
+					"_advmod(meet, in)\n" +
 		                       "_subj(meet, I)\n" +
-		                       "whose(book, author)\n");
+		                       "_pobj(in, library)\n" +
+					"_pobj(whose, author)\n" +
+		                       "_det(book, whose)\n");
 
 		rc &= test_sentence("The book that Jack lent me is very boring.",
 		                       "_advmod(boring, very)\n" +
-		                       "_iobj(lend, book)\n" +
-		                       "_obj(lend, me)\n" +
+		                       "_obj(lend, book)\n" +
+		                       "_iobj(lend, me)\n" +
 		                       "_subj(lend, Jack)\n" +
-		                       "that(book, lend)\n" +
+		                       "_relmod(book, that)\n" +
+					"_rel(that, lend)\n" +
 		                       "_predadj(book, boring)\n");
 
 		rc &= test_sentence("They ate a special curry which was recommended by the restaurant’s owner.",
 		                       "_obj(eat, curry)\n" +
 		                       "_subj(eat, they)\n" +
 		                       "_obj(recommend, curry)\n" +
-		                       "by(recommend, owner)\n" +
+					"_advmod(recommend, by)\n" +
+		                       "_pobj(by, owner)\n" +
 		                       "_poss(owner, restaurant)\n" +
-		                       "which(curry, recommend)\n" +
-		                       "_amod(curry, special)\n");
+		                       "_rel(which, recommend)\n" +
+		                       "_amod(curry, special)\n" +
+					"_relmod(curry, which)\n");
 
 		rc &= test_sentence("The dog who Jack said chased me was black.",
 		                       "_obj(chase, me)\n" +
 		                       "_subj(chase, dog)\n" +
+					"_rep(say, chase)\n" +
+					"_rel(who, chase)\n" +
 		                       "_subj(say, Jack)\n" +
 		                       "_predadj(dog, black)\n" +
-		                       "who(dog, chase)\n");
+		                       "_relmod(dog, who)\n");
 
 		rc &= test_sentence("Jack, who hosted the party, is my cousin.",
 		                       "_obj(be, cousin)\n" +
@@ -1224,34 +1252,38 @@ public class TestRelEx
 		                       "_obj(stop, car)\n" +
 		                       "_subj(stop, Jack)\n" +
 		                       "_advmod(drive, fast)\n" +
-		                       "_predadj(car, drive)\n" +
-		                       "that(car, drive)\n" +
+					"_subj(drive, car)\n" +
+		                       "_relmod(car, that)\n" +
+					"_rel(that, drive)\n" +
 		                       "_nn(car, police)\n");
 
 		rc &= test_sentence("Just before the crossroads, the car was stopped by a traffic sign that stood on the street.",
 		                       "_obj(stop, car)\n" +
-		                       "by(stop, sign)\n" +
-		                       "_advmod(stop, just)\n" +
-		                       "on(stand, street)\n" +
-		                       "_subj(stand, sign)\n" +
-		                       "that(sign, stand)\n" +
+		                       "_pobj(by, sign)\n" +
+		                       "_advmod(before, just)\n" +
+					"_advmod(stand, on)\n" +
+		                       "_pobj(on, street)\n" +
+		                       "_advmod(stop, by)\n" +
+					"_subj(stand, sign)\n" +
+		                       "_relmod(sign, that)\n" +
+					"_rel(that, stand)\n" +
 		                       "_nn(sign, traffic)\n" +
-		                       "before(just, crossroads)\n");
+					"_advmod(stop, just)\n" +
+		                       "_pobj(before, crossroads)\n");
 
 		report(rc, "Extrapostion");
 		return rc;
 	}
 	
-	//Added by Matthew
-	public boolean test_inquisitives()
+	public boolean test_interrogatives()
 	{
 		boolean rc = true;
 		rc &= test_sentence ("What is Socrates?",
-							 "_obj(be, Socrates)\n" +
-							 "_subj(be, _$qVar)\n");
+					 "_obj(be, Socrates)\n" +
+					 "_subj(be, _$qVar)\n");
 
 		rc &= test_sentence ("Who is the teacher?",
-							 "_obj(be, teacher)\n" +
+					 "_obj(be, teacher)\n" +
 		                     "_subj(be, _$qVar)\n");
 
 
@@ -1266,7 +1298,8 @@ public class TestRelEx
 		                     "_det(bullshit, that)\n");
 
 		rc &= test_sentence ("Who told that story to the police?", 
-		                     "to(tell, police)\n" +
+					"_advmod(tell, to)\n" +
+					"_pobj(to, police)\n" +
 		                     "_obj(tell, story)\n" +
 		                     "_subj(tell, _$qVar)\n" +
 		                     "_det(story, that)\n");
@@ -1277,41 +1310,38 @@ public class TestRelEx
 		                     "_subj(give, _$qVar)\n" +
 		                     "_det(idea, that)\n");
 
-		rc &= test_sentence ("What gave that idea to the police?",
-		                     "to(give, police)\n" +
-		                     "_obj(give, idea)\n" +
-		                     "_subj(give, _$qVar)\n" +
-		                     "_det(idea, that)\n");
-
 		rc &= test_sentence ("What did you tell the fuzz?", 
 		                     "_iobj(tell, fuzz)\n" +
 		                     "_obj(tell, _$qVar)\n" +
 		                     "_subj(tell, you)\n");
 
-		rc &= test_sentence ("What did you give to Mary?", 
-		                     "to(give, Mary)\n" +
+		rc &= test_sentence ("What did you give to Mary?",
+					"_advmod(give, to)\n" +
+					"_pobj(to, Mary)\n" +
 		                     "_obj(give, _$qVar)\n" +
 		                     "_subj(give, you)\n");
 
-		rc &= test_sentence ("Who did you give the slavers?", 
-		                     "_subj(give, you)\n");
-
-		rc &= test_sentence ("Who did you sell to the slavers?",
-		                     "to(sell, to)\n" +
-		                     "_subj(sell, you)\n");
+		rc &= test_sentence ("Whom did you feed to the lions?", 
+					"_advmod(feed, to)\n" +
+					    "_obj(feed, _$qVar)\n" +
+					    "_subj(feed, you)\n" +
+					    "_pobj(to, lion)\n");
 
 		rc &= test_sentence ("To whom did you sell the children?", 
-		                     "to(sell, _$qVar)\n" +
+		                     "_pobj(to, _$qVar)\n" +
 		                     "_obj(sell, child)\n" +
+					"_advmod(sell, to)\n" +
 		                     "_subj(sell, you)\n");
 
 		rc &= test_sentence ("To what do we owe the pleasure?", 
-		                     "to(owe, _$qVar)\n" +
+		                     "_pobj(to, _$qVar)\n" +
 		                     "_obj(owe, pleasure)\n" +
-							 "_subj(owe, we)\n");
+					"_advmod(owe, to)\n" +
+					"_subj(owe, we)\n");
 
 		rc &= test_sentence ("Who did you sell the children to?",
-		                     "to(sell, to)\n" +
+					"_advmod(sell, to)\n" +
+					"_pobj(to, _$qVar)\n" +
 		                     "_obj(sell, child)\n" +
 		                     "_subj(sell, you)\n");
 
@@ -1341,7 +1371,8 @@ public class TestRelEx
 
 		rc &= test_sentence ("Who's on first?",
 		                     "_pobj(on, first)\n" +
-		                     "_psubj(on, _$qVar)\n");
+		                     "_psubj(on, _$qVar)\n" +
+					"_advmod(be, on)\n");
 		
 		rc &= test_sentence ("Who farted?",
 		                     "_subj(fart, _$qVar)\n");
@@ -1366,17 +1397,18 @@ public class TestRelEx
 		                     "_predadj(you, mad)\n");
 	
 		rc &= test_sentence ("Is the book under the table?",
-		                     "under(book, table)\n" +
-							 "_subj(be, book)\n");
-	
+				   "_pobj(under, table)\n" +
+				    "_prepadj(book, under)\n" +
+				    "_subj(_%copula, book)\n");
+
 		rc &= test_sentence ("Does he seem mad?",
 		                     "_to-be(seem, mad)\n" +
 		                     "_subj(seem, he)\n");
 
-		rc &= test_sentence ("Does she want to help us?",	
+		rc &= test_sentence ("Does she want to help us?",
 		                     "_obj(help, us)\n" +
 		                     "_to-do(want, help)\n" +
-		                     "_subj(want, she)\n");		
+		                     "_subj(want, she)\n");
 
 		rc &= test_sentence ("Does she want you to help us?",
 		                     "_obj(help, us)\n" +
@@ -1390,6 +1422,7 @@ public class TestRelEx
 
 		rc &= test_sentence ("Must she be able to sing?",
 		                     "_to-do(able, sing)\n" +
+					"_modal(must, able)\n" +
 		                     "_predadj(she, able)\n");
 
 		rc &= test_sentence ("Does she want to sing?",
@@ -1400,14 +1433,14 @@ public class TestRelEx
 		                     "_subj(sleep, you)\n");
 
 		rc &= test_sentence ("Will you sleep?",
-		                     "_subj(sleep, you)\n");
+		                     "_subj(sleep, you)\n" +
+					"_modal(will, sleep)\n");
 		
 		rc &= test_sentence ("Did you sleep?",
 		                     "_subj(sleep, you)\n");
 
-		rc &= test_sentence ("Did you eat the leftover baba-ganoush?",
-		                     "_obj(eat, leftover)\n" +
-		                     "_to-be(eat, baba-ganoush)\n" +
+		rc &= test_sentence ("Did you eat the pizza?",
+					"_obj(eat, pizza)\n" +
 		                     "_subj(eat, you)\n");
 
 		rc &= test_sentence ("Did you give her the money?",
@@ -1416,13 +1449,10 @@ public class TestRelEx
 		                     "_subj(give, you)\n");
 
 		rc &= test_sentence ("Did you give the money to her?",
-		                     "to(give, her)\n" +
+					"_advmod(give, to)\n" +
+					"_pobj(to, her)\n" +
 		                     "_obj(give, money)\n" +
 		                     "_subj(give, you)\n");
-
-		rc &= test_sentence ("The book is under the table?",
-		                     "_pobj(under, table)\n" +
-		                     "_psubj(under, book)\n");
 
 		rc &= test_sentence ("Maybe she eats lunch.",
 		                     "_obj(eat, lunch)\n" +
@@ -1445,20 +1475,24 @@ public class TestRelEx
 		                     "_subj(help, you)\n");
 
 		rc &= test_sentence ("She is nice to help with the project.", 
-		                     "with(help, project)\n" +
+		                     "_pobj(with, project)\n" +
+					"_advmod(help, with)\n" +
 		                     "_to-do(nice, help)\n" +
 		                     "_predadj(she, nice)\n");
 
 		rc &= test_sentence ("She must be able to sing.",
 		                     "_to-do(able, sing)\n" +
+					"_modal(must, able)\n" +
 		                     "_predadj(she, able)\n");
 
 		rc &= test_sentence ("She must need to sing?", 
 		                     "_to-do(need, sing)\n" +
+					"_modal(must, need)\n" +
 		                     "_subj(need, she)\n");
 
 		rc &= test_sentence ("She must want to sing?", 
 		                     "_to-do(want, sing)\n" +
+					"_modal(must, want)\n" +
 		                     "_subj(want, she)\n");
 
 		rc &= test_sentence ("She wants to sing.",
@@ -1480,6 +1514,7 @@ public class TestRelEx
 
 		rc &= test_sentence ("Where will she be happy?", 
 		                     "_%atLocation(happy, _$qVar)\n" +
+					"_modal(will, happy)\n" +
 		                     "_predadj(she, happy)\n");
 
 		rc &= test_sentence ("When did jazz die?",
@@ -1502,14 +1537,17 @@ public class TestRelEx
 		                     "_subj(_%copula, party)\n");
 
 		rc &= test_sentence ("Why do you live?",
+				   "_%because(live, _$qVar)\n" +
 		                     "_subj(live, you)\n");
 
 		rc &= test_sentence ("Why do you like terrible music?",
+					"_%because(like, _$qVar)/n" +
 		                     "_obj(like, music)\n" +
 		                     "_subj(like, you)\n" +
-							 "_amod(music, terrible)\n");
+					"_amod(music, terrible)\n");
 
-		rc &= test_sentence ("Why are you such a fool?", 
+		rc &= test_sentence ("Why are you such a fool?",
+					"_%because(be, _$qVar)\n" +
 		                     "_obj(be, fool)\n" +
 		                     "_subj(be, you)\n");
 
@@ -1519,7 +1557,7 @@ public class TestRelEx
 
 		rc &= test_sentence ("How was the party?", 
 		                     "how(_%copula, _$qVar)\n" +
-							 "_subj(_%copula, party)\n");
+					"_subj(_%copula, party)\n");
 
 		rc &= test_sentence ("How is your food?",
 		                     "_poss(food, you)\n" +
@@ -1537,26 +1575,34 @@ public class TestRelEx
 		                     "_quantity(book, _$qVar)\n");
 
 		rc &= test_sentence ("How fast does it go?",
-		                     "_advmod(fast, _$qVar)\n" +
+					"_subj(go, it)\n" +
+					"_advmod(go, fast)\n" +
+					"_%howdeg(fast, _$qVar)\n" +
 		                     "_subj(go, it)\n");
 
+		rc &= test_sentence ("How stupid are you?",
+					"_%howdeg(stupid, _$qVar)\n" +
+					"_predadj(stupid, you)\n" +
+					"_subj(stupid, you)\n");
+
 		rc &= test_sentence ("Which girl do you like?",
+					"_det(girl, _$qVar)\n" +
 		                     "_obj(like, girl)\n" +
-		                     "_subj(like, you)\n" +
-		                     "_quantity(girl, _$qVar)\n");
+		                     "_subj(like, you)\n");
 
 		rc &= test_sentence ("Which girl likes you?",
 		                     "_obj(like, you)\n" +
 		                     "_subj(like, girl)\n" +
-		                     "_quantity(girl, _$qVar)\n");
+		                     "_det(girl, _$qVar)\n");
 
 		rc &= test_sentence ("Which girl is crazy?",
-		                     "_quantity(girl, _$qVar)\n" +
+		                     "_det(girl, _$qVar)\n" +
 		                     "_predadj(girl, crazy)\n");
 
 		rc &= test_sentence ("The books were written by Charles Dickens.",
 		                     "_obj(write, book)\n" +
-		                     "by(write, Charles_Dickens)\n");
+					"_advmod(write, by)\n" +
+					"_pobj(by, Charles_Dickens)\n");
 
 		rc &= test_sentence ("The books are published.",
 		                     "_obj(publish, book)\n");
@@ -1564,7 +1610,8 @@ public class TestRelEx
 		rc &= test_sentence ("I did my homework, and I went to school.",
 		                     "_obj(do, homework)\n" +
 		                     "_subj(do, I)\n" +
-		                     "to(go, school)\n" +
+		                     "_pobj(to, school)\n" +
+					"_advmod(go, to)\n" +
 		                     "_subj(go, I)\n" +
 		                     "_poss(homework, me)\n");
 
@@ -1574,71 +1621,31 @@ public class TestRelEx
 		                     "_subj(eat, Madison)\n" +
 		                     "conj_and(John, Madison)\n");
 
-		rc &= test_sentence ("Joan is poor  but  happy.", 
+		rc &= test_sentence ("Joan is poor but happy.",
+					"conj_but(poor, happy)\n" +
 		                     "_predadj(Joan, poor)\n" +
 		                     "_predadj(Joan, happy)\n");
 
 		rc &= test_sentence ("I think that dogs can fly.",
-		                     "that(think, fly)\n" +
+				    "_rep(think, that)\n" +
+				    "_comp(that, fly)\n" +
 		                     "_subj(think, I)\n" +
+					"_modal(can, fly)\n" +
 		                     "_subj(fly, dog)\n");
 
 		rc &= test_sentence ("He is glad that she won.",
-		                     "that(glad, win)\n" +
+		                     "_rep(glad, that)\n" +
+					"_comp(that, win)\n" +
 		                     "_subj(win, she)\n" +
 		                     "_predadj(he, glad)\n");
 
 		rc &= test_sentence ("He ran so quickly that he flew.",
-		                     "_advmod(quickly, so)\n" +
+				    "_comp(that, fly)\n" +
+		                     "_advmod(quickly, so_that)\n" +
 		                     "_subj(fly, he)\n" +
-		                     "that(run, fly)\n" +
+		                     "_compmod(so_that, that)\n" +
 		                     "_advmod(run, quickly)\n" +
 		                     "_subj(run, he)\n");
-
-		rc &= test_sentence ("I had dinner at 6 pm",
-		                     "_obj(have, dinner)\n" +
-		                     "at(have, pm)\n" +
-		                     "_subj(have, I)\n" +
-		                     "_time(pm, 6)\n");
-
-		rc &= test_sentence ("I went to sleep at 1 am",
-		                     "to(go, sleep)\n" +
-		                     "_subj(go, I)\n" +
-		                     "_time(am, 1)\n" +
-		                     "at(sleep, am)\n");
-
-		rc &= test_sentence ("Who farted?",
-		                     "_subj(fart, _$qVar)\n");
-
-		rc &= test_sentence ("What happened?",
-		                     "_subj(happen, _$qVar)\n");
-
-		rc &= test_sentence ("What killed him?",
-		                     "_obj(kill, him)\n" +
-		                     "_subj(kill, _$qVar)\n");
-
-		rc &= test_sentence ("Who ate the pizza?",
-		                     "_obj(eat, pizza)\n" +
-		                     "_subj(eat, _$qVar)\n");
-
-		rc &= test_sentence ("What gave you that idea?",
-		                     "_iobj(give, you)\n" +
-		                     "_obj(give, idea)\n" +
-		                     "_subj(give, _$qVar)\n" +
-		                     "_det(idea, that)\n");
-
-		rc &= test_sentence ("Who told you that?",
-		                     "_iobj(tell, you)\n" +
-		                     "_obj(tell, that)\n" +
-		                     "_subj(tell, _$qVar)\n");
-
-		rc &= test_sentence ("What is for dinner?",
-		                     "_pobj(for, dinner)\n" +
-		                     "_psubj(for, _$qVar)\n");
-
-		rc &= test_sentence ("Who's on first?",
-		                     "_pobj(on, first)\n" +
-		                     "_psubj(on, _$qVar)\n");
 
 		rc &= test_sentence ("Who are you?",
 		                     "_subj(_%copula, you)\n");
@@ -1652,16 +1659,18 @@ public class TestRelEx
 		                     "_subj(think, you)\n");
 
 		rc &= test_sentence ("To whom did you sell the children?",
-		                     "to(sell, _$qVar)\n" +
+		                     "_advmod(sell, to)\n" +
 		                     "_obj(sell, child)\n" +
-		                     "_subj(sell, you)\n");
+		                     "_subj(sell, you)\n" +
+					"_pobj(to, _$qVar)\n");
 
 		rc &= test_sentence ("Why did you give him the money?",
 		                     "_iobj(give, him)\n" +
-							 "_obj(give, money)\n" +
-							 "_subj(give, you)\n");
+					 "_obj(give, money)\n" +
+					 "_subj(give, you)\n");
 
 		rc &= test_sentence ("Why are you so stupid?",
+					"_%because(stupid, _$qVar)\n" +
 		                     "_advmod(stupid, so)\n" +
 		                     "_predadj(you, stupid)\n");
 
@@ -1676,9 +1685,155 @@ public class TestRelEx
 		                     "how(send, _$qVar)\n" +
 		                     "_subj(send, you)\n");
 
-		report(rc, "Inquisitives");
+		report(rc, "Interrogatives");
 		return rc;
 	}
+
+	public boolean test_adverbials_adjectivals()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("He ran like the wind.",
+					"_advmod(run, like)\n" +
+					"_subj(run, he)\n" +
+					"_pobj(like, wind)\n");
+
+		rc &= test_sentence ("He was boring to an insufferable degree.",
+					"_advmod(boring, to)\n" +
+					"_amod(degree, insufferable)\n" +
+					"_pobj(to, degree)\n" +
+					"_predadj(he, boring)\n");
+
+		rc &= test_sentence ("He spoke in order to impress himself.",
+					"_goal(speak, impress)\n" +
+					"_subj(speak, he)\n" +
+					"_obj(impress, himself)\n");
+
+		rc &= test_sentence ("On Tuesday, he slept late.",
+				"_advmod(sleep, on)\n" +
+				"_advmod(sleep, late)\n" +
+				"_subj(sleep, he)\n" +
+				"_pobj(on, Tuesday)\n");
+
+		rc &= test_sentence ("Often, people confused him.",
+				"_obj(confuse, him)\n" +
+				"_advmod(confuse, often)\n" +
+				"_subj(confuse, people)\n");
+
+		rc &= test_sentence ("The man in window is a spy.",
+				"_obj(be, spy)\n" +
+				"_subj(be, man)\n" +
+				"_pobj(in, window)\n" +
+				"_prepadj(man, in)\n");
+
+		rc &= test_sentence ("He wrote largely in his spare time.",
+				"_advmod(write, in)\n" +
+				"_subj(write, he)\n" +
+				"_amod(time, spare)\n" +
+				"_poss(time, him)\n" +
+				"_pobj(in, time)\n" +
+				"_advmod(in, largely)\n");
+
+		rc &= test_sentence ("The man running away from us is a thief.",
+				"_obj(be, thief)\n" +
+				"_subj(be, man)\n" +
+				"_pobj(from, us)\n" +
+				"_advmod(run_away, from)\n" +
+				"_amod(man, run_away)\n");
+
+		rc &= test_sentence ("Among the employees was a deranged killer.",
+				"_pobj(among, employee)\n" +
+				"_amod(killer, deranged)\n" +
+				"_predadj(killer, among)\n" +
+				"_subj(be, killer)\n");
+
+
+		report(rc, "Adverbials and Adjectivals");
+		return rc;
+	}
+
+	public boolean test_complementation()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("The dog chasing the bird is happy.",
+					"_obj(chase, bird)\n" +
+					"_predadj(dog, happy)\n" +
+					"_comp(dog, chase)\n");
+
+		rc &= test_sentence ("My sister always opens her mouth while eating.",
+					"_obj(open, mouth)\n" +
+					"_advmod(open, always)\n" +
+					"_compmod(open, while)\n" +
+					"_subj(open, My_sister)\n" +
+					"_comp(while, eat)\n" +
+					"_poss(mouth, her)\n");
+
+		rc &= test_sentence ("Aaron always reads while he rides the train.",
+					"_advmod(read, always)\n" +
+					"_compmod(read, while)\n" +
+					"_subj(read, Aaron)\n" +
+					"_obj(ride, train)\n" +
+					"_subj(ride, he)\n" +
+					"_comp(while, ride)\n");
+
+		rc &= test_sentence ("I sing because I'm happy.",
+					"_%because(sing, because)\n" +
+					"_subj(sing, I)\n" +
+					"_predadj(I, happy)\n" +
+					"_comp(because, happy)\n");
+
+		rc &= test_sentence ("I know that you love me.",
+					"_rep(know, that)\n" +
+					"_subj(know, I)\n" +
+					"_obj(love, me)\n" +
+					"_subj(love, you)\n" +
+					"_comp(that, love)\n");
+
+		rc &= test_sentence ("I know you hate me.",
+					"_rep(know, hate)\n" +
+					"_subj(know, I)\n" +
+					"_obj(hate, me)\n" +
+					"_subj(hate, you)\n");
+
+		rc &= test_sentence ("I am certain that you are insane.",
+					"_rep(certain, that)\n" +
+					"_predadj(you, insane)\n" +
+					"_comp(that, insane)\n" +
+					"_predadj(I, certain)\n");
+
+		rc &= test_sentence ("The idea that he would invent AGI obsessed him.",
+					"_obj(obsess, him)\n" +
+					"_subj(obsess, idea)\n" +
+					"_to-do(would, invent)\n" +
+					"_comp(that, would)\n" +
+					"_obj(invent, AGI)\n" +
+					"_subj(invent, he)\n" +
+					"_rep(idea, that)\n");
+
+		report(rc, "Complementation");
+		return rc;
+	}
+
+
+	public boolean test_special_preposition_stuff()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("Who did you give the book to?",
+				"_advmod(give, to)\n" +
+				"_obj(give, book)\n" +
+				"_subj(give, you)\n" +
+				"_pobj(to, _$qVar)\n");
+
+		rc &= test_sentence ("The people on whom you rely are sick.",
+				"_advmod(rely, on)\n" +
+				"_subj(rely, you)\n" +
+				"_pobj(on, people)\n" +
+				"_comp(on, rely)\n" +
+				"_predadj(people, sick)\n");
+
+		report(rc, "Special preposition stuff");
+		return rc;
+	}
+
 
 	public static void main(String[] args)
 	{
@@ -1698,7 +1853,7 @@ public class TestRelEx
 		rc &= ts.test_equatives();
 		rc &= ts.test_extraposition();
 		rc &= ts.test_conjunctions();
-		rc &= ts.test_inquisitives();
+		rc &= ts.test_interrogatives();
 
 		if (rc) {
 			System.err.println("Tested " + ts.pass + " sentences, test passed OK");
