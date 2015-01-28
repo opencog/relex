@@ -144,7 +144,7 @@ public class TestRelEx
 		} else {
 			int total = subpass + subfail;
 			System.err.println(subsys + ": Test failed; out of " +
-			                   total + " sentneces tested,\n\t" +
+			                   total + " sentences tested,\n\t" +
 			                   subfail + " sentences failed\n\t" +
 			                   subpass + " sentences passed");
 		}
