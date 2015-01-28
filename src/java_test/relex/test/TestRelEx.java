@@ -232,7 +232,7 @@ public class TestRelEx
 		rc &= test_sentence ("He is more intelligent than John.",
 		                     "_compdeg(intelligent, more)\n"+
 		                     "_comparative(intelligent, he)\n" +
-		          "comp_arg(intelligent, John)\n" +
+		                     "comp_arg(intelligent, John)\n" +
 		                     "than(he, John)\n" +
 		                     "_predadj(he, intelligent)\n");
 
@@ -240,7 +240,7 @@ public class TestRelEx
 		                     "_compdeg(intelligent, less)\n"+
 		                     "_comparative(intelligent, he)\n" +
 		                     "than(he, John)\n" +
-					 "comp_arg(intelligent, John)\n" +
+		                     "comp_arg(intelligent, John)\n" +
 		                     "_predadj(he, intelligent)\n");
 
 		rc &= test_sentence ("He runs more quickly than John.",
@@ -248,7 +248,7 @@ public class TestRelEx
 		                     "_subj(run, he)\n" +
 		                     "_compdeg(quickly, more)\n"+
 		                     "_comparative(run, quickly)\n" +
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less quickly than John.",
@@ -256,7 +256,7 @@ public class TestRelEx
 		                     "_subj(run, he)\n" +
 		                     "_compdeg(quickly, less)\n"+
 		                     "_comparative(run, quickly)\n" +
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more quickly than John does.",
@@ -271,7 +271,7 @@ public class TestRelEx
 		rc &= test_sentence ("He runs less quickly than John does.",
 		                     "_advmod(run, quickly)\n" +
 		                     "_subj(run, he)\n" +
-					 "_advmod(do, quickly)\n" +
+		                     "_advmod(do, quickly)\n" +
 		                     "_subj(do, John)\n"+
 		                     "_compdeg(quickly, less)\n"+
 		                     "than(he, John)\n" +
@@ -286,25 +286,25 @@ public class TestRelEx
 		                     "_compdeg(slow, more)\n");
 
 		rc &= test_sentence ("He runs more than John.",
-					 "_compdeg(run, more)\n" +
+		                     "_compdeg(run, more)\n" +
 		                     "_subj(run, he)\n" +
 		                     "than(he, John)\n" +
-					 "_comparative(run, less)\n" +
-					 "comp_arg(run, John)\n");
+		                     "_comparative(run, less)\n" +
+		                     "comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less than John.",
-					 "_compdeg(run, less)\n" +
+		                     "_compdeg(run, less)\n" +
 		                     "_subj(run, he)\n" +
 		                     "than(he, John)\n"+
-					 "_comparative(run, less)\n" +
-					 "comp_arg(run, John)\n");
+		                     "_comparative(run, less)\n" +
+		                     "comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs faster than John.",
 		                     "than(he, John)\n" +
 		                     "_comparative(run, faster)\n" +
 		                     "_subj(run, he)\n"+
 		                     "_advmod(run, faster)\n" +
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "_compdeg(faster, more)\n");
 
 		rc &= test_sentence ("He runs more slowly than John.",
@@ -313,7 +313,7 @@ public class TestRelEx
 		                     "_compdeg(slowly, more)\n"+
 		                     "_comparative(run, slowly)\n"+
 		                     "_advmod(run, slowly)\n"+
-					 "comp_arg(run, John)\n");
+		                     "comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less slowly than John.",
 		                     "than(he, John)\n" +
@@ -321,14 +321,14 @@ public class TestRelEx
 		                     "_comparative(run, slowly)\n"+
 		                     "_advmod(run, slowly)\n" +
 		                     "_compdeg(slowly, less)\n" +
-					 "comp_arg(run, John)\n");
+		                     "comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs more miles than John does.",
 		                     "_obj(run, mile)\n" +
 		                     "_subj(run, he)\n" +
 		                     "_subj(do, John)\n" +
 		                     "_quantity(mile, more)\n" +
-					 "_compamt(mile, more)\n" +
+		                     "_compamt(mile, more)\n" +
 		                     "_comparative(run, mile)\n" +
 		                     "than(he, John)\n");
 
@@ -337,7 +337,7 @@ public class TestRelEx
 		                     "_subj(run, he)\n" +
 		                     "_subj(do, John)\n" +
 		                     "_quantity(mile, fewer)\n" +
-					 "_compamt(mile, fewer)\n" +
+		                     "_compamt(mile, fewer)\n" +
 		                     "_comparative(run, mile)\n" +
 		                     "than(he, John)\n");
 
@@ -355,7 +355,7 @@ public class TestRelEx
 		                     "_obj(run, mile)\n" +
 		                     "_subj(run, he)\n" +
 		                     "than(he, John)\n" +
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "_comparative(run, mile)\n"+
 		                     "_quantity(more, ten)\n" +
 		                     "_compamt(mile, more)\n");
@@ -367,12 +367,12 @@ public class TestRelEx
 		                     "_quantity(more, ten)\n" +
 		                     "_comparative(run, mile)\n" +
 		                     "_quantity_mod(ten, almost)\n" +
-					 "_compamt(mile, more)\n" +
+		                     "_compamt(mile, more)\n" +
 		                     "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more often than John.",
 		                     "_subj(run, he)\n" +
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "_compdeg(often, more)\n" +
 		                     "_advmod(run, often)\n" +
 		                     "_comparative(run, often)\n" +
@@ -380,7 +380,7 @@ public class TestRelEx
 
 		rc &= test_sentence ("He runs less often than John.",
 		                     "_subj(run, he)\n"+
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "_compdeg(often, less)\n"+
 		                     "_advmod(run, often)\n"+
 		                     "_advmod(run, here)\n"+
@@ -392,7 +392,7 @@ public class TestRelEx
 		                     "_compdeg(often, more)\n"+
 		                     "_advmod(run, often)\n"+
 		                     "_subj(run, he)\n"+
-					 "comp_arg(run, John)\n" +
+		                     "comp_arg(run, John)\n" +
 		                     "_comparative(run, often)\n"+
 		                     "than(he, John)\n");
 
@@ -408,7 +408,7 @@ public class TestRelEx
 		rc &= test_sentence ("He is faster than John.",
 		                     "than(he, John)\n"+
 		                     "_predadj(he, fast)\n"+
-					 "comp_arg(fast, John)\n" +
+		                     "comp_arg(fast, John)\n" +
 		                     "_comparative(he, fast)\n"+
 		                     "_compdeg(fast, more)\n");
 
