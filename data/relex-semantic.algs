@@ -9,9 +9,13 @@
 ; Copyright (c) 2009,2014 Linas Vepstas
 ; Copyright (c) 2014 Rodas Solomon
 ; Copyright (c) 2014 Kasun Perera
-; Copyright (c) 2014 Aaron Nitzkin
+; Copyright (c) 2014, 2015 Aaron Nitzkin
 ;
 ;/////////////////////////////////////////////////////////////////////////////
+;
+; NB: this issue list is quite outdated; I think I've resolved some of these
+; and identified many more -- will update after current revision-fest.
+; (AN Jan 2015)
 ;
 ;  Known issues:
 ;  1.   Passive is not handled correctly.  "This is the cup that John gave me."
@@ -312,7 +316,7 @@ DIR_OBJ1
 <LAB> != \O\.i\.*
 <LAB> != Omm | Om
 <F_L linkL0 LAB> != \B\.*
-;<F_R linkL1 LAB> != Dmum
+<F_R linkL1 LAB> != \DT\.*
 <F_L OBJ-LINK-TAG> = O|UNSET
 <F_L linkR0 LAB> != \IV|\TO\.*
 =
@@ -607,7 +611,7 @@ PREDICATIVE_comparatives
 <F_R ref links _predadj> += <F_L temp_pred>
 <F_L subj> = %
 <F_L temp_pred> = %
-;
+
 ;
 #TemplateActionAlg
 CLEAR_SUNJ_comparatives
@@ -1415,12 +1419,43 @@ TOBE_TO_LINKS
 ; We want to get for(thank, help) not for(thank, all)
 ;
 
+
 #TemplateActionAlg
 COMPLEX_PREPOSTION_CONSTRUCTION
+; "between . . . and"
 <LAB> = \Ju
 <F_R POS> = conjunction
 =
 <F_L ref links conj_prep> += <F_R ref>
+
+#TemplateActionAlg
+MODIFIED_COMPARATIVE_PREPOSITION_CONSTRUCTION
+; "He runs more quickly than John."
+<LAB> = \MVa
+<F_L linkR0 LAB> = \MVt\.*|\MVp|\MVz
+<F_R linkL1 F_L str> = more|less|fewer|same|similar|as
+=
+<F_R linkL1 F_L ref links _compprep> += <F_L linkR0 F_R ref>
+
+#TemplateActionAlg
+MODIFIED_COMPARATIVE_PREPOSITION_CONSTRUCTION_TWO
+; "He runs more quickly than John."
+<LAB> = \MVa
+<F_L linkR0 LAB> = \MVt\.*|\MVp|\MVz
+<F_R linkR2 F_L str> = more|less|fewer|same|similar|as
+=
+<F_R linkR2 F_L ref links _compprep> += <F_L linkR0 F_R ref>
+
+#TemplateActionAlg
+COMPARATIVE_PREPOSITION_CONSTRUCTION
+; "He runs more than John."
+<LAB> = \MVm|\MVy|\MVb|\Om|\MVa
+<F_L linkR0 LAB> = \MVt\.*|\MVp|\MVz
+<F_R linkL1 F_L ref links _compprep> = %
+<F_L linkR2 F_L ref links _compprep> = %
+=
+<F_R ref links _compprep> += <F_L linkR0 F_R ref>
+
 
 #TemplateActionAlg
 SO_THAT_STRUCTURE
@@ -1490,10 +1525,14 @@ DANGLING_PREP
 <F_R POS> = prep
 =
 <F_R ref links _pobj> += <F_L ref>
+
+
+; This alg seems designed to generate a different relation than what
 ;
 #TemplateActionAlg
 PREP_ADJECTIVAL
 <LAB> = \Mp\.*|\Mj\.*|\MX\.*j|\MG\.*
+<F_L str> != same|different
 =
 <F_L ref links _prepadj> += <F_R ref>
 
@@ -1538,24 +1577,50 @@ COMPARATIVE_SECOND_CONTEXT
 
 #TemplateActionAlg
 ADVMOD_N
-<LAB> = \MVp\.*|\MVa\.*|\MVs\.
+<LAB> = \MVp\.*|\MVa\.*|\MVs\.*|\MVy\.*
 <F_L POS> = verb
 =
 <F_L ref links _advmod> += <F_R ref>
 <F_R modified> += <F_L ref>
 
+; the following two algorithms have an exception for "as" only 
+; because it can be more specifically handled by the _compdeg()
+; relation.
+
 #TemplateActionAlg
 ADVMOD_OF_ADERBIAL
 <LAB> = \MVp\.*
+<F_R str> != as
 <F_L POS> != verb
 =
 <F_R ref links _advmod> += <F_L ref>
 <F_L modified> += <F_R ref>
 
+; The following two algorithms will need to be changed if LG is ever
+; corrected.  It is for "The snail runs exactly as fast as the Cheetah."
+; All current parses are wrong. in that there is no link between "exactly"
+; and "as" and there is no link between "run" and "fast" 
+; so the algs below are a bit round-about. (AN Jan 2015)
+
+#TemplateActionAlg
+ADVMOD_OF_AS
+<LAB> = \EEy
+<F_R linkL0 LAB> = \MVa
+=
+<F_L ref links _advmod> += <F_R linkL0 F_L ref>
+
+#TemplateActionAlg
+ADVERBIAL_DISCONNECTED_FROM_VERB_BY_ADV
+<LAB> = \MVl
+<F_R linkR0 LAB> = \MVa
+=
+<F_L ref links _advmod> += <F_R linkR0 F_R ref>
+
 #TemplateActionAlg
 PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*
 <F_L POS> != adv
+<F_R str> != as
 <F_L modified> = %
 <F_R COMPCONT_FLAG> !=T
 <F_L COMPCONT_FLAG> !=T
@@ -1567,7 +1632,38 @@ IMPLICIT_COMPARED_MOD
 <LAB> = \CX\.*
 =
 <F_R ref links _advmod> += <F_L linkL0 F_L ref links _advmod>
+<F_L ref links _comp> += <F_R ref>
 
+; The algorithm below should eventually be rendered obsolete by
+; revisions of link-grammar.  It's here now for sentences like --
+; "The coffee tastes the same as it did last year" where "last year"
+; currently gets a \O link which could be ruled out by the "as".
+; (AN Jan 2015)
+
+#TemplateActionAlg
+IMPLICIT_COMPARATIVE_CONTEXT
+<LAB> = \CV
+<F_L str> = as
+<F_R linkR0 LAB> = \O\.*
+=
+<F_R ref links _advmod> += <F_R linkR0 F_R ref>
+
+#TemplateActionAlg
+IMPLICIT_COMPARED_PREDADJ
+<LAB> = \O\.*\.c
+<F_L str> = as|than
+<F_L linkL0 LAB> = \MV\.*
+<F_L linkL0 F_L ref> = be
+=
+<F_R ref links _predadj> += <F_L linkL0 F_L ref>
+<F_L ref links _pobj> += <F_R ref>
+
+#TemplateActionAlg
+OBJECT_OF_COMPARISON
+<LAB> = \O\.*\.c|\U\.*\.c|\CX
+<F_L str> = as|than
+=
+<F_L ref links _compobj> += <F_R ref>
 
 ;
 ; This is a misplaced question rule: "Where did John put it?"
@@ -1718,7 +1814,7 @@ RELATIVE_CLAUSE_PHRASE
 <LAB> = \C\.*|\Mg\.*
 <LAB> !=\Ce\.*
 <F_L POS> != verb|adj|noun
-<F_L str> != as
+<F_L str> != as|than
 =
 <F_L ref links _rel> += <F_R head-word ref> 
 
@@ -1759,11 +1855,11 @@ RELATIVE_CLAUSE_PLUS_REP
 
 #TemplateActionAlg
 OTHER_COMP_CLAUSE
-<LAB> = \CV
+<LAB> = \CV|\AFd
 ; only call it a 'complement' if it's not already assigned as a relative clause
 ; or a 'rep' (sentential complement to a mental, verbal, or logical predicate)
 <F_L ref links _rel> = %
-<F_R ref links _rep> = %
+<F_L ref links _rep> = %
 =
 <F_L ref links _comp> += <F_R ref>
 
@@ -2101,8 +2197,22 @@ COMPARATIVE_ARGUMENT_ID
 <F_L comp_arg> = <F_R ref>
 
 #TemplateActionAlg
+COMPARATIVE_ARGUMENT_ID_TWO
+<LAB> = \J\.*
+<F_L str> = as|than
+=
+<F_L comp_arg> = <F_R ref>
+
+#TemplateActionAlg
 COMPARATIVE_ARGUMENT_LINK
 <LAB> = \MVt\.*
+=
+<F_L ref links comp_arg> += <F_R comp_arg>
+
+#TemplateActionAlg
+COMPARATIVE_ARGUMENT_TWO
+<LAB> = \MVp\.*
+<F_R str> = as|than
 =
 <F_L ref links comp_arg> += <F_R comp_arg>
 
@@ -2171,6 +2281,43 @@ COMPARATIVE_Dmum
 =
 <F_L ref degree> = comparative
 
+; This alg is supposed to make a predadj relation for
+; "X is the same as . . ." but it requires a flag for
+; its context that will be really difficult to derive;
+; the real problem is that LG is a mess for comparatives.
+;
+;#TemplateActionAlg
+;PREDADJ_COMPARATIVE
+;<LAB> = \O\.**
+;<F_L ref> = be
+;=
+;<F_R ref links _predadj> += <F_L subj>
+;<F_L subj> = %
+
+; The following alg is for sentences such as . . . 
+; "The book's color is the same as that of the pen."
+; It is necessary to make 'color' the logical object of 'as'
+; and sets a 'compared quality' flag to make it possible
+; to make color the subj of 'of'.  All this is necessary
+; because LG is all wrong here.  There's no link between
+; that+of but there is between same+of.  It's a mess.
+;#TemplateActionAlg
+;PREDADJ_COMP_SECOND
+;<LAB> = \Mp
+;<F_L ref links _predadj> !=%
+;<F_L str> = same|different|similar
+;<F_R str> = as|from|than|to
+;=
+;<F_R ref links _pobj> += <F_L ref links _predadj>
+;<F_L COMP-QUAL-FLAG> = T
+
+;#TemplateActionAlg
+;IMPLICIT_COMP_QUALITY
+;<LAB> = \Mp
+;<F_L COMP-QUAL-FLAG> = T
+;<F_R str> = of
+;=
+;<F_R ref links _pobj> += <F_L ref links _predadj>
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
@@ -2286,7 +2433,7 @@ ADV2
 #TemplateActionAlg
 ADV2_HEADLESS
 <LAB> = \E\.*|\EA\.*
-<LAB> != \Eq\.*|\EA[my]\.*|\EAh
+<LAB> != \Eq\.*|\EA[my]\.*|\EAh|\EAy
 <F_L str> != more|less|fewer
 <F_R head-word ref> = %
 =
