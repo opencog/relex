@@ -134,12 +134,7 @@ public class Server
 		if (commandMap.get("--link") != null) link_on = true;
 		if (commandMap.get("--relex") != null) relex_on = true;
 		if (commandMap.get("--free-text") != null) free_text = true;
-		if (commandMap.get("--logic") != null)
-		{
-			logic_on = true;
-			relex_on = true;
-			link_on = true;
-		 }
+		if (commandMap.get("--logic") != null) logic_on = true;
 
 		if (commandMap.get("--verbose") != null)
 		{
@@ -159,7 +154,7 @@ public class Server
 		DocSplitter ds = DocSplitterFactory.create();
 		LogicView logicView = new LogicView();
 
-		if (!relex_on && !link_on)
+		if (!relex_on && !link_on && !logic_on)
 		{
 			// By default just export RelEx output.
 			relex_on = true;
@@ -179,7 +174,7 @@ public class Server
 			System.err.println("Info: RelEx output on.");
 			opencog.setShowRelex(relex_on);
 		}
-		else
+		if (!relex_on && !logic_on)
 		{
 			re.do_apply_algs = false;
 		}
