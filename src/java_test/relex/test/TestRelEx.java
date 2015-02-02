@@ -212,219 +212,219 @@ public class TestRelEx
 	{
 		boolean rc = true;
 		rc &= test_sentence ("Some people like pigs less than dogs.",
-		                     "_compdeg(like, less)\n" +
-		                     "_obj(like, pig)\n" +
-		                     "_subj(like, people)\n" +
-					"_compobj(than, dog)\n" +
-					"_compprep(less, than)\n" +
-		                     "than(pig, dog)\n" +
-					"_comparative(like, pig)\n" +
-					"comp_arg(like, dog)\n" +
+		                     "_compdeg(like, less)\n"+
+		                     "_obj(like, pig)\n"+
+		                     "_subj(like, people)\n"+
+					"_compobj(than, dog)\n"+
+					"_compprep(less, than)\n"+
+		                     "than(pig, dog)\n"+
+					"_comparative(like, pig)\n"+
+					"comp_arg(like, dog)\n"+
 		                     "_quantity(people, some)\n");
 
 		rc &= test_sentence ("Some people like pigs more than dogs.",
-		                     "_compdeg(like, more)\n" +
-		                     "_obj(like, pig)\n" +
-		                     "_subj(like, people)\n" +
-		                     "than(pig, dog)\n" +
-					"_comparative(like, pig)\n" +
-					"comp_arg(like, dog)\n" +
-					"_compprep(more, than)\n" +
-					"_compobj(than, dog)\n" +
+		                     "_compdeg(like, more)\n"+
+		                     "_obj(like, pig)\n"+
+		                     "_subj(like, people)\n"+
+		                     "than(pig, dog)\n"+
+					"_comparative(like, pig)\n"+
+					"comp_arg(like, dog)\n"+
+					"_compprep(more, than)\n"+
+					"_compobj(than, dog)\n"+
 		                     "_quantity(people, some)\n");
 		//Non-equal Gradable : Two entities one feature "more/less"
 
 		rc &= test_sentence ("He is more intelligent than John.",
 				    "_compdeg(intelligent, more)\n"+
-				    "_comparative(intelligent, he)\n" +
-					"comp_arg(intelligent, John)\n" +
-					"_compobj(than, John)\n" +
-				    "than(he, John)\n" +
+				    "_comparative(intelligent, he)\n"+
+					"comp_arg(intelligent, John)\n"+
+					"_compobj(than, John)\n"+
+				    "than(he, John)\n"+
 				    "_predadj(he, intelligent)\n");
 
 		rc &= test_sentence ("He is less intelligent than John.",
 				    "_compdeg(intelligent, less)\n"+
-				    "_comparative(intelligent, he)\n" +
-				    "than(he, John)\n" +
-					"comp_arg(intelligent, John)\n" +
-					"_compobj(than, John)\n" +
+				    "_comparative(intelligent, he)\n"+
+				    "than(he, John)\n"+
+					"comp_arg(intelligent, John)\n"+
+					"_compobj(than, John)\n"+
 				    "_predadj(he, intelligent)\n");
 
 		rc &= test_sentence ("He runs more quickly than John.",
 				    "_advmod(run, quickly)\n"+
-				    "_subj(run, he)\n" +
+				    "_subj(run, he)\n"+
 				    "_compdeg(quickly, more)\n"+
-				    "_comparative(run, quickly)\n" +
-					"comp_arg(run, John)\n" +
-					"_compobj(than, John)\n" +
-					"_compprep(more, than)\n" +
+				    "_comparative(run, quickly)\n"+
+					"comp_arg(run, John)\n"+
+					"_compobj(than, John)\n"+
+					"_compprep(more, than)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less quickly than John.",
-				    "_advmod(run, quickly)\n" +
-				    "_subj(run, he)\n" +
+				    "_advmod(run, quickly)\n"+
+				    "_subj(run, he)\n"+
 				    "_compdeg(quickly, less)\n"+
-				    "_comparative(run, quickly)\n" +
-					"comp_arg(run, John)\n" +
-					"_compobj(than, John)\n" +
-					"_compprep(less, than)\n" +
+				    "_comparative(run, quickly)\n"+
+					"comp_arg(run, John)\n"+
+					"_compobj(than, John)\n"+
+					"_compprep(less, than)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more quickly than John does.",
-				    "_advmod(run, quickly)\n" +
-				    "_subj(run, he)\n" +
-				    "_advmod(do, quickly)\n" +
+				    "_advmod(run, quickly)\n"+
+				    "_subj(run, he)\n"+
+				    "_advmod(do, quickly)\n"+
 				    "_subj(do, John)\n"+
 				    "_compdeg(quickly, more)\n"+
-					"_compprep(more, than)\n" +
-				    "_comparative(run, quickly)\n" +
-					"_compobj(than, do)\n" +
-					"_comp(than, do)\n" +
+					"_compprep(more, than)\n"+
+				    "_comparative(run, quickly)\n"+
+					"_compobj(than, do)\n"+
+					"_comp(than, do)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less quickly than John does.",
-				    "_advmod(run, quickly)\n" +
-				    "_subj(run, he)\n" +
-					"_advmod(do, quickly)\n" +
+				    "_advmod(run, quickly)\n"+
+				    "_subj(run, he)\n"+
+					"_advmod(do, quickly)\n"+
 				    "_subj(do, John)\n"+
 				    "_compdeg(quickly, less)\n"+
-					"_compprep(less, than)\n" +
-					"_compobj(than, do)\n" +
-				    "than(he, John)\n" +
-					"_comp(than, do)\n" +
+					"_compprep(less, than)\n"+
+					"_compobj(than, do)\n"+
+				    "than(he, John)\n"+
+					"_comp(than, do)\n"+
 				    "_comparative(run, quickly)\n");
 
 		rc &= test_sentence ("He runs slower than John does.",
-				    "_advmod(run, slow)\n" +
-				    "_subj(run, he)\n" +
+				    "_advmod(run, slow)\n"+
+				    "_subj(run, he)\n"+
 				    "_subj(do, John)\n"+
-					"_comp(than, do)\n" +
-					"_compobj(than, John)\n" +
-				    "than(he, John)\n" +
-				    "_comparative(run, slow)\n" +
+					"_comp(than, do)\n"+
+					"_compobj(than, John)\n"+
+				    "than(he, John)\n"+
+				    "_comparative(run, slow)\n"+
 				    "_compdeg(slow, more)\n");
 
 		rc &= test_sentence ("He runs more than John.",
-					"_compdeg(run, more)\n" +
-				    "_subj(run, he)\n" +
-				    "than(he, John)\n" +
-					"_compobj(than, John)\n" +
-					"_compprep(more, than)\n" +
+					"_compdeg(run, more)\n"+
+				    "_subj(run, he)\n"+
+				    "than(he, John)\n"+
+					"_compobj(than, John)\n"+
+					"_compprep(more, than)\n"+
 					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less than John.",
-					"_compdeg(run, less)\n" +
-				    "_subj(run, he)\n" +
+					"_compdeg(run, less)\n"+
+				    "_subj(run, he)\n"+
 				    "than(he, John)\n"+
-					"_compobj(than, John)\n" +
-					"_compprep(less, than)\n" +
-					"_comparative(run, less)\n" +
+					"_compobj(than, John)\n"+
+					"_compprep(less, than)\n"+
+					"_comparative(run, less)\n"+
 					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs faster than John.",
-				    "than(he, John)\n" +
-				    "_comparative(run, fast)\n" +
+				    "than(he, John)\n"+
+				    "_comparative(run, fast)\n"+
 				    "_subj(run, he)\n"+
-				    "_advmod(run, fast)\n" +
-				"comp_arg(run, John)\n" +
-				"_compobj(than, John)\n" +
-				"_compprep(faster, than)\n" +
+				    "_advmod(run, fast)\n"+
+				"comp_arg(run, John)\n"+
+				"_compobj(than, John)\n"+
+				"_compprep(faster, than)\n"+
 				    "_compdeg(fast, more)\n");
 
 		rc &= test_sentence ("He runs more slowly than John.",
-				    "than(he, John)\n" +
-				    "_subj(run, he)\n" +
+				    "than(he, John)\n"+
+				    "_subj(run, he)\n"+
 				    "_compdeg(slowly, more)\n"+
 				    "_comparative(run, slowly)\n"+
 				    "_advmod(run, slowly)\n"+
-					"_compobj(than, John)\n" +
-					"_compprep(more, than)\n" +
+					"_compobj(than, John)\n"+
+					"_compprep(more, than)\n"+
 					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs less slowly than John.",
-				    "than(he, John)\n" +
-				    "_subj(run, he)\n" +
+				    "than(he, John)\n"+
+				    "_subj(run, he)\n"+
 				    "_comparative(run, slowly)\n"+
-				    "_advmod(run, slowly)\n" +
-				    "_compdeg(slowly, less)\n" +
-					"_compobj(than, John)\n" +
-					"_compprep(less, than)\n" +
+				    "_advmod(run, slowly)\n"+
+				    "_compdeg(slowly, less)\n"+
+					"_compobj(than, John)\n"+
+					"_compprep(less, than)\n"+
 					"comp_arg(run, John)\n");
 
 		rc &= test_sentence ("He runs more miles than John does.",
-				    "_obj(run, mile)\n" +
-				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +
-				    "_quantity(mile, more)\n" +
-				"_compamt(mile, more)\n" +
-				    "_comparative(run, mile)\n" +
-				"_comp(than, do)\n" +
-				"_compobj(than, do)\n" +
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n"+
+				    "_subj(do, John)\n"+
+				    "_quantity(mile, more)\n"+
+				"_compamt(mile, more)\n"+
+				    "_comparative(run, mile)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs fewer miles than John does.",
 				    "_obj(run, mile)\n"+
-				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +
-				    "_quantity(mile, fewer)\n" +
-					"_compamt(mile, fewer)\n" +
-				    "_comparative(run, mile)\n" +
-				"_comp(than, do)\n" +
-				"_compobj(than, do)\n" +
+				    "_subj(run, he)\n"+
+				    "_subj(do, John)\n"+
+				    "_quantity(mile, fewer)\n"+
+					"_compamt(mile, fewer)\n"+
+				    "_comparative(run, mile)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs many more miles than John does.",
-				    "than(he, John)\n" +
-				    "_comparative(run, mile)\n" +
-				    "_obj(run, mile)\n" +
-				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +
-				    "_quantity(more, many)\n" +
-				"_comp(than, do)\n" +
-				"_compobj(than, do)\n" +
+				    "than(he, John)\n"+
+				    "_comparative(run, mile)\n"+
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n"+
+				    "_subj(do, John)\n"+
+				    "_quantity(more, many)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
 				    "_compamt(mile, more)\n");
 
 
 		rc &= test_sentence ("He runs ten more miles than John.",
-				    "_obj(run, mile)\n" +
-				    "_subj(run, he)\n" +
-				    "than(he, John)\n" +
-					"comp_arg(run, John)\n" +
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n"+
+				    "than(he, John)\n"+
+					"comp_arg(run, John)\n"+
 				    "_comparative(run, mile)\n"+
-				    "_quantity(more, ten)\n" +
-				"_compobj(than, John)\n" +
+				    "_quantity(more, ten)\n"+
+				"_compobj(than, John)\n"+
 				    "_compamt(mile, more)\n");
 
 		rc &= test_sentence ("He runs almost ten more miles than John does.",
-				    "_obj(run, mile)\n" +
-				    "_subj(run, he)\n" +
-				    "_subj(do, John)\n" +
-				    "_quantity(more, ten)\n" +
-				    "_comparative(run, mile)\n" +
-				    "_quantity_mod(ten, almost)\n" +
-					"_compamt(mile, more)\n" +
-				"_comp(than, do)\n" +
-				"_compobj(than, do)\n" +
+				    "_obj(run, mile)\n"+
+				    "_subj(run, he)\n"+
+				    "_subj(do, John)\n"+
+				    "_quantity(more, ten)\n"+
+				    "_comparative(run, mile)\n"+
+				    "_quantity_mod(ten, almost)\n"+
+					"_compamt(mile, more)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs more often than John.",
-				    "_subj(run, he)\n" +
-					"comp_arg(run, John)\n" +
-				    "_compdeg(often, more)\n" +
-				    "_advmod(run, often)\n" +
-				    "_comparative(run, often)\n" +
-				"_compobj(than, John)\n" +
-				"_compprep(more, than)\n" +
+				    "_subj(run, he)\n"+
+					"comp_arg(run, John)\n"+
+				    "_compdeg(often, more)\n"+
+				    "_advmod(run, often)\n"+
+				    "_comparative(run, often)\n"+
+				"_compobj(than, John)\n"+
+				"_compprep(more, than)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs less often than John.",
 				    "_subj(run, he)\n"+
-					"comp_arg(run, John)\n" +
+					"comp_arg(run, John)\n"+
 				    "_compdeg(often, less)\n"+
 				    "_advmod(run, often)\n"+
 				    "_advmod(run, here)\n"+
-				"_compobj(than, John)\n" +
-				"_compprep(more, than)\n" +
+				"_compobj(than, John)\n"+
+				"_compprep(more, than)\n"+
 				    "_comparative(run, often)\n"+
 				    "than(he, John)\n");
 
@@ -433,10 +433,10 @@ public class TestRelEx
 				    "_compdeg(often, more)\n"+
 				    "_advmod(run, often)\n"+
 				    "_subj(run, he)\n"+
-				"comp_arg(run, John)\n" +
+				"comp_arg(run, John)\n"+
 				    "_comparative(run, often)\n"+
-				"_compobj(than, John)\n" +
-				"_compprep(more, than)\n" +
+				"_compobj(than, John)\n"+
+				"_compprep(more, than)\n"+
 				    "than(he, John)\n");
 
 		rc &= test_sentence ("He runs here less often than John.",
@@ -446,17 +446,17 @@ public class TestRelEx
 				    "_subj(run, he)\n"+
 				    "_comparative(run, often)\n"+
 				    "than(he, John)\n"+
-				"comp_arg(run, John)\n" +
-				"_compobj(than, John)\n" +
-				"_compprep(less, than)\n" +
+				"comp_arg(run, John)\n"+
+				"_compobj(than, John)\n"+
+				"_compprep(less, than)\n"+
 				    "_compdeg(often, less)\n");
 
 		rc &= test_sentence ("He is faster than John.",
 				    "than(he, John)\n"+
 				    "_predadj(he, fast)\n"+
-				"comp_arg(fast, John)\n" +
+				"comp_arg(fast, John)\n"+
 				    "_comparative(fast, he)\n"+
-				"_compobj(than, John)\n" +
+				"_compobj(than, John)\n"+
 				    "_compdeg(fast, more)\n");
 
 		rc &= test_sentence ("He is faster than John is.",
@@ -471,22 +471,22 @@ public class TestRelEx
 				    "_predadj(speed, fast)\n"+
 				    "_poss(speed, he)\n"+
 				    "_comparative(fast, speed)\n"+
-				"_compobj(than, John's)\n" +
+				"_compobj(than, John's)\n"+
 				    "_compdeg(fast, more)\n");
 
 		rc &= test_sentence ("I run more than Ben.",
 				    "_subj(run, I)\n"+
-				"_comp_arg(run, Ben)\n" +
-				"_compobj(than, Ben)\n" +
-				"_compprep(more, than)\n" +
+				"_comp_arg(run, Ben)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compprep(more, than)\n"+
 				    "than(I, Ben)\n"+
 				    "_compdeg(run, more)\n");
 
 		rc &= test_sentence ("I run less than Ben.",
 				    "_subj(run, I)\n"+
-				"_comp_arg(run, Ben)\n" +
-				"_compobj(than, Ben)\n" +
-				"_compprep(less, than)\n" +
+				"_comp_arg(run, Ben)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compprep(less, than)\n"+
 				    "than(I, Ben)\n"+
 				    "_compdeg(run, less)\n");
 
@@ -496,8 +496,8 @@ public class TestRelEx
 				    "_quantity(mile, more)\n"+
 				    "_comparative(run, mile)\n"+
 				    "than(I, Ben)\n"+
-				"_comparg(run, Ben)\n" +
-				"_compobj(than, Ben)\n" +
+				"_comparg(run, Ben)\n"+
+				"_compobj(than, Ben)\n"+
 				    "_compamt(mile, more)\n");
 
 		rc &= test_sentence ("I run fewer miles than Ben.",
@@ -506,79 +506,97 @@ public class TestRelEx
 				    "_quantity(mile, fewer)\n"+
 				    "_comparative(run, mile)\n"+
 				    "than(I, Ben)\n"+
-				"_comparg(run, Ben)\n" +
-				"_compobj(than, Ben)\n" +
+				"_comparg(run, Ben)\n"+
+				"_compobj(than, Ben)\n"+
 				    "_compamt(mile, fewer)\n");
 
 		rc &= test_sentence ("I run 10 more miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_quantity(mile, 10)\n"+
-				    "_comparative(mile, run)\n"+
-				    "than(I, Ben)\n"+
-				    "numeric-FLAG(10, T)\n" +
-				    "degree(more, comparative)\n");
+				"comp_arg(run, Ben)\n"+
+				"_quantity(more, 10)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compamt(mile, more)\n"+
+				    "_comparative(run, mile)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run 10 fewer miles than Ben.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, mile)\n"+
-				    "_quantity(mile, 10)\n"+
-				    "_comparative(mile, run)\n"+
-				    "than(I, Ben)\n"+
-				    "numeric-FLAG(10, T)\n" +
-				    "degree(fewer, comparative)\n");
+				"comp_arg(run, Ben)\n"+
+				"_quantity(fewer, 10)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compamt(mile, fewer)\n"+
+				    "_comparative(run, mile)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run more often than Ben.",
 				    "_subj(run, I)\n"+
 				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(often, more)\n");
+				    "_comparative(run, often)\n"+
+				"comp_arg(run, Ben)\n"+
+				"_subj(run, I)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compdeg(often, more)\n"+
+				"_compprep(more, than)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run less often than Ben.",
 				    "_subj(run, I)\n"+
 				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(often, less)\n");
+				    "_comparative(run, often)\n"+
+				"comp_arg(run, Ben)\n"+
+				"_subj(run, I)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compdeg(often, less)\n"+
+				"_compprep(less, than)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run more often than Ben does.",
 				    "_subj(run, I)\n"+
 				    "_subj(do, Ben)\n"+
 				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(often, more)\n");
+				    "_comparative(run, often)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
+				"_advmod(do, often)\n"+
+				"_compdeg(often, more)\n"+
+				"_compprep(more, than)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run less often than Ben does.",
 				    "_subj(run, I)\n"+
 				    "_subj(do, Ben)\n"+
 				    "_advmod(run, often)\n"+
-				    "_comparative(often, run)\n"+
-				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(often, less)\n");
+				    "_comparative(run, often)\n"+
+				"_comp(than, do)\n"+
+				"_compobj(than, do)\n"+
+				"_advmod(do, often)\n"+
+				"_compdeg(often, less)\n"+
+				"_compprep(less, than)\n"+
+				    "than(I, Ben)\n");
 
 		rc &= test_sentence ("I run more often than Ben climbs.",
 				    "_subj(run, I)\n"+
 				    "_subj(climb, Ben)\n"+
-				    "_comparative(often, run)\n"+
+				    "_comparative(run, often)\n"+
 				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(run, often)\n"+
-				    "_advmod(often, more)\n");
+				"than1(run, climb)\n"+
+				"_comp(than, climb)\n"+
+				"_compdeg(often, more)\n"+
+				"_compprep(more, than)\n"+
+				    "_advmod(run, often)\n");
 
 		rc &= test_sentence ("I run less often than Ben climbs.",
 				    "_subj(run, I)\n"+
 				    "_subj(climb, Ben)\n"+
-				    "_comparative(often, run)\n"+
+				    "_comparative(run, often)\n"+
 				    "than(I, Ben)\n"+
-				    "degree(often, comparative)\n"+
-				    "_advmod(run, often)\n"+
-				    "_advmod(often, less)\n");
+				"than1(run, climb)\n"+
+				"_comp(than, climb)\n"+
+				"_compdeg(often, less)\n"+
+				"_compprep(less, than)\n"+
+				    "_advmod(run, often)\n");
 
 		rc &= test_sentence ("I run more races than Ben wins contests.",
 				    "_subj(run, I)\n"+
@@ -586,75 +604,84 @@ public class TestRelEx
 				    "_subj(win, Ben)\n"+
 				    "_obj(win, contest)\n"+
 				    "_quantity(race, more)\n"+
-				    "_comparative(race, run)\n"+
+				    "_comparative(run, race)\n"+
+				"_comp(than, Ben)\n"+
 				    "than(I, Ben)\n"+
-				    "degree(more, comparative)\n");
+				    "_compamt(race, more)\n");
 
 		rc &= test_sentence ("I run fewer races than Ben wins contests.",
 				    "_subj(run, I)\n"+
 				    "_obj(run, race)\n"+
 				    "_subj(win, Ben)\n"+
 				    "_obj(win, contest)\n"+
-				    "_quantity(race, fewer)\n"+
-				    "_comparative(race, run)\n"+
+					"_comp(than, Ben)\n"+
+				    "_comparative(run, race)\n"+
 				    "than(I, Ben)\n"+
-				    "degree(fewer, comparative)\n");
+				    "_compamt(race, fewer)\n");
 
 		rc &= test_sentence ("I have more chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
 				    "than(I, Ben)\n"+
-				    "_comparative(chair, have)\n"+
-				    "_quantity(chair, more)\n"+
-				    "degree(more, comparative)\n");
+				    "_comparative(have, chair)\n"+
+				"comp_arg(have, Ben)\n"+
+				"_compobj(than, Ben)\n"+
+				"_compamt(chair, more)\n");
 
 		rc &= test_sentence ("I have fewer chairs than Ben.",
 				    "_obj(have, chair)\n"+
 				    "_subj(have, I)\n"+
 				    "than(I, Ben)\n"+
-				    "_comparative(chair, have)\n"+
-				    "_quantity(chair, fewer)\n"+
-				    "degree(fewer, comparative)\n");
+				    "_comparative(have, chair)\n"+
+				    "_compamt(chair, fewer)\n"+
+				    "_compobj(than, Ben)\n");
 
 		rc &= test_sentence ("He earns much more money than I do.",
 				    "_obj(earn, money)\n"+
 				    "_subj(do, I)\n"+
 				    "_subj(earn, he)\n"+
 				    "than(he, I)\n"+
-				    "_comparative(money, earn)\n"+
-				    "_quantity(money, more)\n"+
-				    "_advmod(more, much)\n"+
-				    "degree(more, comparative)\n");
+				    "_comparative(earn, money)\n"+
+				    "_compamt(money, more)\n"+
+				    "_compdeg(more, much)\n"+
+				    "_compobj(than, do)\n"+
+				    "_comp(than, do)\n");
 
 		rc &= test_sentence ("He earns much less money than I do.",
 				    "_obj(earn, money)\n"+
 				    "_subj(do, I)\n"+
 				    "_subj(earn, he)\n"+
 				    "than(he, I)\n"+
-				    "_comparative(money, earn)\n"+
-				    "_quantity(money, less)\n"+
-				    "_advmod(less, much)\n"+
+				    "_comparative(earn, money)\n"+
+				    "_compamt(money, less)\n"+
+				    "_compdeg(less, much)\n"+
+				    "_comp(than, do)\n"+
+				    "_compobj(than, do)\n"+
 				    "degree(less, comparative)\n");
 
 		rc &= test_sentence ("She comes here more often than her husband.",
 				    "_advmod(come, here)\n"+
-				    "_advmod(often, more)\n"+
+				    "_compdeg(often, more)\n"+
 				    "_advmod(come, often)\n"+
+				    "_compprep(more, than)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
-				    "_comparative(often, come)\n"+
-				    "than(she, husband)\n"+
-				    "degree(often, comparative)\n");
+				    "_comparative(come, often)\n"+
+				    "comp_arg(come, husband)\n"+
+				    "_compobj(than, husband)\n"+
+				    "than(she, husband)\n");
 
 		rc &= test_sentence ("She comes here less often than her husband.",
 				    "_advmod(come, here)\n"+
-				    "_advmod(often, less)\n"+
+				    "_compdeg(often, less)\n"+
 				    "_advmod(come, often)\n"+
+				    "_compprep(less, than)\n"+
 				    "_subj(come, she)\n"+
 				    "_poss(husband, her)\n"+
-				    "_comparative(often, come)\n"+
-				    "than(she, husband)\n"+
-				    "degree(often, comparative)\n");
+				    "_comparative(come, often)\n"+
+				    "comp_arg(come, husband)\n"+
+				    "_compobj(than, husband)\n"+
+				    "than(she, husband)\n");
 
 		rc &= test_sentence ("Russian grammar is more difficult than English grammar.",
 				    "_compdeg(difficult, more)\n"+
@@ -662,6 +689,7 @@ public class TestRelEx
 				    "_amod(grammar, Russian)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_predadj(grammar, difficult)\n"+
+				    "_compobj(than, grammar)\n"+
 				    "_amod(grammar, English)\n");
 
 		rc &= test_sentence ("Russian grammar is less difficult than English grammar.",
@@ -670,25 +698,28 @@ public class TestRelEx
 				    "_amod(grammar, Russian)\n"+
 				    "than(grammar, grammar)\n"+
 				    "_predadj(grammar, difficult)\n"+
+				    "_compobj(than, grammar)\n"+
 				    "_amod(grammar, English)\n");
 
 		rc &= test_sentence ("My sister is much more intelligent than me.",
-				    "_amod(much, intelligent)\n"+
+				    "_compdeg(more, much)\n"+
 				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
-				    "_advmod(intelligent, more)\n"+
-				    "degree(intelligent, comparative)\n");
+				    "comp_arg(intelligent, me)\n"+
+				    "_compobj(than, me)\n"+
+				    "_compdeg(intelligent, more)\n");
 
 		rc &= test_sentence ("My sister is much less intelligent than me.",
-				    "_amod(much, intelligent)\n"+
+				    "_compdeg(less, much)\n"+
 				    "_predadj(sister, intelligent)\n"+
 				    "_poss(sister, me)\n"+
 				    "than(sister, me)\n"+
 				    "_comparative(intelligent, sister)\n"+
-				    "_advmod(intelligent, less)\n"+
-				    "degree(intelligent, comparative)\n");
+				    "comp_arg(intelligent, me)\n"+
+				    "_compobj(than, me)\n"+
+				    "_compdeg(intelligent, less)\n");
 
 		rc &= test_sentence ("I find maths lessons more enjoyable than science lessons.",
 				    "_iobj(find, maths)\n"+
