@@ -18,7 +18,7 @@ package relex.feature;
 
 /**
  * The FeatureForeach class provides a backwards-compatible interface to
- * RelationForeach class.  Its use is deprecated.
+ * RelationForeach class.
  */
 
 public class FeatureForeach extends RelationForeach
@@ -36,6 +36,20 @@ public class FeatureForeach extends RelationForeach
 	{
 		// skip the LEFT-WALL
 		root = root.get("NEXT");
+		while (root != null)
+		{
+			Boolean rc = cb.FNCallback(root);
+			if (rc) return rc;
+			root = root.get("NEXT");
+		}
+		return false;
+	}
+	
+	/**
+	 * Same as foreachWord but does not skip the LEFT-WALL.
+	 */
+	public static Boolean foreachAll(FeatureNode root, FeatureNodeCallback cb)
+	{
 		while (root != null)
 		{
 			Boolean rc = cb.FNCallback(root);
