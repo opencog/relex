@@ -46,7 +46,7 @@ bin:\
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --logic
 
 # This will return parsed text on the input socket.
-java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --relex
 
 # Return Link Grammar and Relex output.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --verbose
