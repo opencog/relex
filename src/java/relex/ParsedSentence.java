@@ -37,8 +37,8 @@ import relex.stats.SimpleTruthValue;
  * gradually built up by RelationExtractor.
  *
  * ParsedSentence contains:
- * 1. A FeatureNode with metaData about the parse (i.e., the number
- *    of conjunctions)
+ * 1. A FeatureNode with metaData about the parse (e.g. the total costs
+ *    returned by LG.)
  * 2. An ArrayList of FeatureNodes (leafConstituents) representing each
  *    word in the sentence. -- the parse data can be found by checking
  *    the links in these words.
