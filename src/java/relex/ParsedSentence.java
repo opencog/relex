@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.UUID;
 
 import relex.feature.Atom;
-import relex.feature.FeatureForeach;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkableView;
@@ -206,52 +205,6 @@ public class ParsedSentence
 	public void addWord(FeatureNode w)
 	{
 		leafConstituents.add(w);
-	}
-
-	/**
-	 * Return feature node for the indicated word. Return null
-	 * if the word cannot be found in the sentence.  The input
-	 * word may be either the word as it appears in the sentence,
-	 * or its morphological root.
-	 *
-	 * If there are multiple occurances of a word in a sentence,
-	 * this will return only the left-most such occurance.
-	 */
-	public FeatureNode findWord(String word)
-	{
-		class word_cb implements FeatureNodeCallback
-		{
-			String match_word;
-			FeatureNode found;
-			word_cb(String mw)
-			{
-				match_word = mw;
-				found = null;
-			}
-
-			Boolean test(FeatureNode fn, FeatureNode fstr)
-			{
-				if (null == fstr) return false;
-				String w = fstr.getValue();
-				if (match_word.equals(w))
-				{
-					found = fn;
-					return true;
-				}
-				return false;
-			}
-			public Boolean FNCallback(FeatureNode fn)
-			{
-				Boolean rc = test(fn, fn.get("orig_str"));
-				if (rc) return rc;
-				rc = test(fn, fn.get("str"));
-				if (rc) return rc;
-				return false;
-			}
-		}
-		word_cb cb = new word_cb(word);
-		FeatureForeach.foreachWord(getLeft(), cb);
-		return cb.found;
 	}
 
 	/**
