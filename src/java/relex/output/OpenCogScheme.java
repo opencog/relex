@@ -130,14 +130,14 @@ public class OpenCogScheme
 				word = "###LEFT-WALL###";
 
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
-					"   (WordInstanceNode \"" + guid_word + "\")\n" +
-					"   (WordNode \"" + word + "\")\n" +
-					")\n";
+			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
+			       "   (WordNode \"" + word + "\")\n" +
+			       ")\n";
 
 			str += "(WordInstanceLink (stv 1.0 1.0)\n" +
-					"   (WordInstanceNode \"" + guid_word + "\")\n" +
-					"   (ParseNode \"" + _parse.getIDString() + "\")\n" +
-					")\n";
+			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
+			       "   (ParseNode \"" + _parse.getIDString() + "\")\n" +
+			       ")\n";
 
 			// If we've never printed the sequence number for this word
 			// before, do so now.  Opencog uses this to determine the
@@ -145,9 +145,9 @@ public class OpenCogScheme
 			if (!previous_words.contains(guid_word))
 			{
 				str += "(WordSequenceLink (stv 1.0 1.0)\n" +
-						"     (WordInstanceNode \"" + guid_word + "\")\n" +
-						"     (NumberNode \"" + getSeqNo() + "\")\n" +
-						")\n";
+				       "     (WordInstanceNode \"" + guid_word + "\")\n" +
+				       "     (NumberNode \"" + getSeqNo() + "\")\n" +
+				       ")\n";
 				previous_words.add(guid_word);
 			}
 
@@ -173,10 +173,10 @@ public class OpenCogScheme
 		String sent_id = _parse.getSentence().getID();
 
 		String str = "(ParseLink (stv 1 1)\n" +
-				   "   (ParseNode \"" + _parse.getIDString() +
-			           "\"(stv 1.0 " + scf + "))\n" +
-				   "   (SentenceNode \"" + sent_id + "\")\n" +
-				   ")\n";
+		             "   (ParseNode \"" + _parse.getIDString() +
+			          "\"(stv 1.0 " + scf + "))\n" +
+		             "   (SentenceNode \"" + sent_id + "\")\n" +
+		             ")\n";
 
 		// If we haven't seen this sentence before, then issue a
 		// sequence number for this sentence. This is used by opencog
@@ -184,9 +184,9 @@ public class OpenCogScheme
 		if (!previous_sents.contains(sent_id))
 		{
 			str += "(SentenceSequenceLink (stv 1 1)\n" +
-			      "	(SentenceNode \"" + sent_id + "\")\n" +
-			      "	(NumberNode \"" + getSeqNo() + "\")\n" +
-			      ")\n";
+			       "	(SentenceNode \"" + sent_id + "\")\n" +
+			       "	(NumberNode \"" + getSeqNo() + "\")\n" +
+			       ")\n";
 			previous_sents.add(sent_id);
 		}
 		return str;
@@ -206,9 +206,9 @@ public class OpenCogScheme
 		{
 			String sent_id = sentence_list.get(i).getID();
 			str += "(SentenceLink (stv 1 1)\n" +
-				   "   (SentenceNode \"" + sent_id + "\")\n" +
-				   "   (DocumentNode \"" + doco_id + "\")\n" +
-				   ")\n";
+			       "   (SentenceNode \"" + sent_id + "\")\n" +
+			       "   (DocumentNode \"" + doco_id + "\")\n" +
+			       ")\n";
 
 			// If we haven't seen this sentence before, then issue a
 			// sequence number for this sentence. This is used by opencog
@@ -216,9 +216,9 @@ public class OpenCogScheme
 			if (!previous_sents.contains(sent_id))
 			{
 				str += "(SentenceSequenceLink (stv 1 1)\n" +
-				      "	(SentenceNode \"" + sent_id + "\")\n" +
-				      "	(NumberNode \"" + getSeqNo() + "\")\n" +
-				      ")\n";
+				       "	(SentenceNode \"" + sent_id + "\")\n" +
+				       "	(NumberNode \"" + getSeqNo() + "\")\n" +
+				       ")\n";
 				previous_sents.add(sent_id);
 			}
 		}
