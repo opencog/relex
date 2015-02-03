@@ -554,18 +554,6 @@ public class FeatureNode extends Atom
 	}
 
 	/**
-	 * Export feature structures as Prolog lists.
-	 * XXX deprecated -- caller should use the PrologList class directly
-	 * @deprecated
-	 */
-	@Deprecated
-	public String toPrologList(FeatureNameFilter filter, boolean indent)
-	{
-		PrologList pl = new PrologList();
-		return pl.toPrologList(this, filter, indent);
-	}
-
-	/**
 	 * pathTarget() -- find the feature node at the end of the path
 	 * @return feature or null if not in path
 	 *
