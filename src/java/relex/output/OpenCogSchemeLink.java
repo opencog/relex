@@ -21,7 +21,6 @@ import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkForeach;
-import relex.feature.FeatureForeach;
 
 /**
  * The OpenCogSchemeLink object outputs a ParsedSentence in the
@@ -63,18 +62,6 @@ class OpenCogSchemeLink
 		return cb.str;
 	}
 	
-	/**
-	 * Print the link-grammar disjuncts
-	 * DISJUNCT
-	 */
-	private String printDisjuncts()
-	{
-		FeatureCB cb = new FeatureCB();
-		cb.str = "";
-		FeatureForeach.foreachAll(parse.getLeft(), cb);
-		return cb.str;
-	}
-
 	private class LinkCB implements FeatureNodeCallback
 	{
 		String str;
@@ -99,7 +86,24 @@ class OpenCogSchemeLink
 		}
 	};
         
-	private class FeatureCB implements FeatureNodeCallback
+	/**
+	 * Print the link-grammar disjuncts
+	 * DISJUNCT
+	 */
+	private String printDisjuncts()
+	{
+		DisjunctCB cb = new DisjunctCB();
+		cb.str = "";
+		FeatureNode fn = parse.getLeft();
+		while (fn != null)
+		{
+			cb.FNCallback(fn);
+			fn = fn.get("NEXT");
+		}
+		return cb.str;
+	}
+
+	private class DisjunctCB implements FeatureNodeCallback
 	{
 		String str;
 
