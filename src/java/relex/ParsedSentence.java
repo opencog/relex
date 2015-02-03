@@ -242,33 +242,6 @@ public class ParsedSentence
 		return "";
 	}
 
-	/**
-	 * Returns a list of the words in the sentence, marked up according to
-	 * which "part of speech" they are.  Thus, for example:
-	 * "The big red baloon floated away." becomes
-	 * LEFT-WALL The.det big.adj red.adj balloon.noun float.verb away.prep .
-	 *
-	 * @deprecated -- please make use of the output systems in the
-	 * output directory, or create one, if you really need it!
-	 */
-	@Deprecated
-	public String printPartsOfSpeech()
-	{
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < leafConstituents.size(); i++) {
-			sb.append(getWord(i));
-			LinkableView w = new LinkableView(getWordAsNode(i));
-			String pos = w.getPOS();
-			if (pos != null && !pos.equals("WORD"))
-				sb.append("." + pos);
-			if (i < leafConstituents.size() - 1)
-				sb.append(" ");
-			// else
-			// sb.append(".");
-		}
-		return sb.toString();
-	}
-
 	public String toString()
 	{
 		return original;
