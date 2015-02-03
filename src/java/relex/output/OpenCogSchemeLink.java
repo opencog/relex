@@ -21,6 +21,7 @@ import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
 import relex.feature.LinkForeach;
+import relex.feature.FeatureForeach;
 
 /**
  * The OpenCogSchemeLink object outputs a ParsedSentence in the
@@ -61,6 +62,18 @@ class OpenCogSchemeLink
 		LinkForeach.foreach(parse.getLeft(), cb);
 		return cb.str;
 	}
+	
+	/**
+	 * Print the link-grammar disjuncts
+	 * DISJUNCT
+	 */
+	private String printDisjuncts()
+	{
+		FeatureCB cb = new FeatureCB();
+		cb.str = "";
+		FeatureForeach.foreachAll(parse.getLeft(), cb);
+		return cb.str;
+	}
 
 	private class LinkCB implements FeatureNodeCallback
 	{
@@ -85,6 +98,62 @@ class OpenCogSchemeLink
 			return false;
 		}
 	};
+        
+	private class FeatureCB implements FeatureNodeCallback
+	{
+		String str;
+
+		public Boolean FNCallback(FeatureNode srcNode)
+		{
+			FeatureNode attr = srcNode.get("DISJUNCT");
+			if (!attr.isValued())
+				return false;
+			
+			String value = attr.getValue();
+			
+			// split the value into different connectors
+			String[] connectors = value.split(" ");
+
+			str += "(LgWordCset \n";
+			str += "    (WordInstanceNode \"" + srcNode.get("uuid").getValue() + "\")\n";
+			str += "    (LgAnd \n";
+			
+			// connectors should already be sorted with - before +
+			for (String conn : connectors)
+			{
+				String name;
+				String direction;
+				Boolean multi;
+				
+				if (conn.charAt(0) == '@')
+				{
+					name = conn.substring(1, conn.length() - 1);
+					direction = conn.substring(conn.length() - 1);
+					multi = true;
+				}
+				else
+				{
+					name = conn.substring(0, conn.length() - 1);
+					direction = conn.substring(conn.length() - 1);
+					multi = false;
+				}
+				
+				str += "        (LgConnector \n";
+				str += "            (LgConnectorNode \"" + name + "\")\n";
+				str += "            (LgConnDirNode \"" + direction + "\")\n";
+				
+				if (multi)
+					str += "            (LgConnMultiNode \"@\")\n";
+				
+				str += "        )\n";
+			}
+			
+			str += "    )\n";
+			str += ")\n";
+			
+			return false;
+		}
+	};
 
 	/* ----------------------------------------------------------- */
 
@@ -92,6 +161,7 @@ class OpenCogSchemeLink
 	{
 		String ret = "";
 		ret += printLinks();
+		ret += printDisjuncts();
 		return ret;
 	}
 
