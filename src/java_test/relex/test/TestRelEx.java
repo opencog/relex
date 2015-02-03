@@ -1150,6 +1150,13 @@ public class TestRelEx
 		                     "_advmod(run, quietly)\n" +
 		                     "_subj(run, she)\n" +
 		                     "conj_and(quickly, quietly)\n");
+		// conjoined verbs same object
+		rc &= test_sentence ("He steals and eats the orange.",
+		                     "_obj(steal, orange)\n" +
+		                     "_obj(eat, orange)\n" +
+		                     "_subj(steal, he)\n" +
+		                     "_subj(eat, he)\n" +
+		                     "conj_and(steal, eat)\n");
 		// adjectival modifiers on conjoined subject
 		rc &= test_sentence ("The big truck and the little car collided.",
 		                     "_amod(car, little)\n" +
