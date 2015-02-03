@@ -322,6 +322,17 @@ DIR_OBJ1
 =
 <F_L OBJ-LINK-TAG> = O
 <F_L obj> += <F_R ref>
+
+; I run more races than Ben wins contests.
+#TemplateActionAlg
+SECOND_DIR_OBJ_IN_COMPARISON
+<LAB> = \Op
+<F_L linkL0 LAB> = \Bc\.*
+<F_L OBJ-LINK-TAG> = O|UNSET
+=
+<F_L OBJ-LINK-TAG> = O
+<F_L obj> += <F_R ref>
+
 ;
 ; Fix up all/some/many determiners.  e.g
 ; "We told all the students about the meeting"
@@ -2731,20 +2742,22 @@ QUANTITY_EXCEPTION
 =
 <F_L QUANTITY-EXCEPTION-FLAG> = T
 
+; I commented out the alg below because "more" is not a quantity, it's a comparative -- these get compdeg (comparative degree or comparative amount).
+;
 ;e.g. "I have more chairs than Ben." Here "more" is used to indicate the quantity of chairs
 ;to form the relationship _quantity(chair, more)  \Dmcm and \Op connectors are used. 
 ;Os- and Op- connectors mark nouns as being singular or plural. 
 ;Ou|Oc marks nouns countable and uncountable
-#TemplateActionAlg
-QUANTIFIERS_1
-<LAB> = \Dmcm |\Dmum
-<F_L DETERMINER_FLAG> != T
-<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
-<F_L POSSESSIVE-FLAG> != T
-<F_R linkL0 LAB> = \Op|\Os|\Ou|\Oc
-<F_L linkL0 LAB> != \ND
-=
-<F_R ref links _quantity> = <F_L ref>
+;#TemplateActionAlg
+;QUANTIFIERS_1
+;<LAB> = \Dmcm |\Dmum
+;<F_L DETERMINER_FLAG> != T
+;<F_L QUERY_INDEFINATE_DETERMINER_FLAG> != T
+;<F_L POSSESSIVE-FLAG> != T
+;<F_R linkL0 LAB> = \Op|\Os|\Ou|\Oc
+;<F_L linkL0 LAB> != \ND
+;=
+;<F_R ref links _quantity> = <F_L ref>
 
 ;
 ; Currently, the IS-NUMBER-FLAG is used only by the Penn tagging algs.
