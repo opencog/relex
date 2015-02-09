@@ -72,15 +72,28 @@ class OpenCogSchemeLink
 				"   (LinkGrammarRelationshipNode \"" +
 				fn.get("LAB").getValue() + "\")\n" +
 				"   (ListLink\n" +
-				"      (WordInstanceNode \"";
+				"      (LgWordConn\n" +
+				"         (WordInstanceNode \"";
 
 			FeatureNode fl = fn.get("F_L");
+			FeatureNode labl = fn.get("lab_L");
 			str += fl.get("uuid").getValue() + "\")\n" +
-				"      (WordInstanceNode \"";
-
+				"         (LgConnector\n" +
+				"            (LgConnectorNode \"" + labl.getValue() + "\")\n" +
+				"            (LgConnDirNode \"+\")\n" +
+				"         )\n" +
+				"      )\n" +
+				"      (LgWordConn\n" +
+				"         (WordInstanceNode \"";
 
 			FeatureNode fr = fn.get("F_R");
+			FeatureNode labr = fn.get("lab_R");
 			str += fr.get("uuid").getValue() + "\")\n" +
+				"         (LgConnector\n" +
+				"            (LgConnectorNode \"" + labr.getValue() + "\")\n" +
+				"            (LgConnDirNode \"-\")\n" +
+				"         )\n" +
+				"      )\n" +
 				"   )\n)\n";
 			return false;
 		}
