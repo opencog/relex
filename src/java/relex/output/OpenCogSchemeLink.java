@@ -125,23 +125,27 @@ class OpenCogSchemeLink
 			FeatureNode attr = srcNode.get("DISJUNCT");
 			if (!attr.isValued())
 				return false;
-			
+
 			String value = attr.getValue();
-			
+
+			// handle bad sentences where a word can have no connections
+			if (value.length() == 0)
+				return false;
+
 			// split the value into different connectors
 			String[] connectors = value.split(" ");
 
 			str += "(LgWordCset \n";
 			str += "    (WordInstanceNode \"" + srcNode.get("uuid").getValue() + "\")\n";
 			str += "    (LgAnd \n";
-			
+
 			// connectors should already be sorted with - before +
 			for (String conn : connectors)
 			{
 				String name;
 				String direction;
 				Boolean multi;
-				
+
 				if (conn.charAt(0) == '@')
 				{
 					name = conn.substring(1, conn.length() - 1);
@@ -154,20 +158,20 @@ class OpenCogSchemeLink
 					direction = conn.substring(conn.length() - 1);
 					multi = false;
 				}
-				
+
 				str += "        (LgConnector \n";
 				str += "            (LgConnectorNode \"" + name + "\")\n";
 				str += "            (LgConnDirNode \"" + direction + "\")\n";
-				
+
 				if (multi)
 					str += "            (LgConnMultiNode \"@\")\n";
-				
+
 				str += "        )\n";
 			}
-			
+
 			str += "    )\n";
 			str += ")\n";
-			
+
 			return false;
 		}
 	};
