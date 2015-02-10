@@ -1025,37 +1025,38 @@ public class TestRelEx
 			"as(long, Ben)\n"+
 			"than(Amen, Ben)\n");
 
-		rc &= test_sentence ("Amen’s hair is same as Ben’s.",
+		rc &= test_sentence ("Amen’s hair is the same as Ben’s.",
 			"_poss(hair, Amen)\n"+
 			"_predadj(hair, same)\n"+
 			"as(same, Ben)\n"+
 			"than(Amen, Ben)\n");
 
-		rc &= test_sentence ("Jack’s hair color is similar to that of Ben’s.",
+		rc &= test_sentence ("Jack’s hair color is similar to that of Ben.",
 			"_poss(color, Jack)\n"+
 			"_nn(color, hair)\n"+
 			"_predadj(color, similar)\n"+
-			"of(that, Ben)\n"+
-			"to(similar, that)\n"+
-			"than(Jack, Ben)\n");
+			"_compprep(similar, to)\n"+
+			"_pobj(to, that)\n"+
+			"_prepadj(that, of)\n"+
+			"_pobj(of, Ben)\n";
 
 		rc &= test_sentence ("Jack’s hair color is similar to Ben's",
 			"_poss(color, Jack)\n"+
 			"_nn(color, hair)\n"+
 			"_predadj(color, similar)\n"+
-			"to(similar, Ben)\n"+
+			"_advmod(similar, to)\n"+
 			"than(Jack, Ben)\n");
 				
 		rc &= test_sentence ("Jack is as intelligent as Ben.",
 			"_predadj(Jack, intelligent)\n"+
 			"_compdeg(intelligent, as)\n"+
-			"_pobj(as, Ben)\n" +
-			"_predadj(Ben, intelligent)\n" +
+			"_compobj(as, Ben)\n" +
 			"than(Jack, Ben)\n");
 
 		rc &= test_sentence ("The book’s color is same as that of the pen.",
 			"_poss(color, book)\n"+
-			"_predadj(color, same)\n"+
+			"_obj(be same)\n"+
+			"_subj(be, color)\n"+
 			"_compdeg(same, as)\n" +
 			"_pobj(as, color)\n"+
 			"_amod(color, of)\n"+
@@ -1066,7 +1067,7 @@ public class TestRelEx
 			"_comp_arg(run, cheetah)\n" +
 			"_advmod(run, fast)\n" +
 			"_compdeg(fast, as)\n" +
-			"_pobj(as, cheetah)\n"+
+			"_compobj(as, cheetah)\n"+
 			"_advmod(as, exactly)\n"+
 			"than(snail, cheetah)\n");
 		
@@ -1093,6 +1094,7 @@ public class TestRelEx
 			"_subj(run, Mike)\n"+
 			"_compdeg(fast, as)\n"+
 			"_comp(as, do)\n" +
+			"_compobj(as, do)\n"+
 			"_advmod(run, fast)\n"+
 			"_advmod(do, year)\n"+
 			"_advmod(do, fast)\n" +
@@ -1103,6 +1105,7 @@ public class TestRelEx
 		rc &= test_sentence ("The kick was as soft as the first.",
 			"_predadj(kick, soft)\n"+
 			"_pobj(as, first)\n" +
+			"comp_arg(soft, first)\n"+
 			"_compdeg(soft, as)\n");
 
 		rc &= test_sentence ("He is as smart as I ever expected him to be.",
@@ -1337,7 +1340,8 @@ public class TestRelEx
 		                       "who(Jack, host)\n");
 
 		rc &= test_sentence("Jack, whose name is in that book, is the student near the window.",
-		                       "near(be, window)\n" +
+		                       "_advmod(be, near)\n" +
+					"_pobj(near, window)\n"+
 		                       "_obj(be, student)\n" +
 		                       "_subj(be, Jack)\n" +
 		                       "_pobj(in, book)\n" +
