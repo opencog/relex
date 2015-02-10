@@ -57,6 +57,7 @@ class OpenCogSchemeLink
 	private String printLinks()
 	{
 		LinkCB cb = new LinkCB();
+		cb.parseID = parse.getIDString();
 		cb.str = "";
 		LinkForeach.foreach(parse.getLeft(), cb);
 		return cb.str;
@@ -64,37 +65,50 @@ class OpenCogSchemeLink
 	
 	private class LinkCB implements FeatureNodeCallback
 	{
+		String parseID;
 		String str;
 		public Boolean FNCallback(FeatureNode fn)
 		{
+			String lab = fn.get("LAB").getValue();
+			String lab_inst = fn.get("LAB").getValue() + "@" + parseID;
+			String fl_inst = fn.get("F_L").get("uuid").getValue();
+			String fr_inst = fn.get("F_R").get("uuid").getValue();
+			
 			str +=
 				"(EvaluationLink (stv 1.0 1.0)\n" +
-				"   (LinkGrammarRelationshipNode \"" +
-				fn.get("LAB").getValue() + "\")\n" +
+				"   (LinkGrammarRelationshipNode \"" + lab + "\")\n" +
 				"   (ListLink\n" +
-				"      (LgWordConn\n" +
-				"         (WordInstanceNode \"";
-
-			FeatureNode fl = fn.get("F_L");
-			FeatureNode labl = fn.get("lab_L");
-			str += fl.get("uuid").getValue() + "\")\n" +
-				"         (LgConnector\n" +
-				"            (LgConnectorNode \"" + labl.getValue() + "\")\n" +
-				"            (LgConnDirNode \"+\")\n" +
-				"         )\n" +
-				"      )\n" +
-				"      (LgWordConn\n" +
-				"         (WordInstanceNode \"";
-
-			FeatureNode fr = fn.get("F_R");
-			FeatureNode labr = fn.get("lab_R");
-			str += fr.get("uuid").getValue() + "\")\n" +
-				"         (LgConnector\n" +
-				"            (LgConnectorNode \"" + labr.getValue() + "\")\n" +
-				"            (LgConnDirNode \"-\")\n" +
-				"         )\n" +
-				"      )\n" +
+				"      (WordInstanceNode \"" + fl_inst + "\")\n" +
+				"      (WordInstanceNode \"" + fr_inst + "\")\n" +
 				"   )\n)\n";
+
+			str +=
+				"(EvaluationLink (stv 1.0 1.0)\n" +
+				"   (LgLinkInstanceNode \"" + lab_inst + "\")\n" +
+				"   (ListLink\n" +
+				"      (WordInstanceNode \"" + fl_inst + "\")\n" +
+				"      (WordInstanceNode \"" + fr_inst + "\")\n" +
+				"   )\n)\n";
+
+			FeatureNode labl = fn.get("lab_L");
+			FeatureNode labr = fn.get("lab_R");
+			str +=
+				"(LgLinkInstanceLink \n" +
+				"   (LgLinkInstanceNode \"" + lab_inst + "\")\n" +
+				"   (LgConnector\n" +
+				"      (LgConnectorNode \"" + labl.getValue() + "\")\n" +
+				"      (LgConnDirNode \"+\")\n" +
+				"   )\n" +
+				"   (LgConnector\n" +
+				"      (LgConnectorNode \"" + labr.getValue() + "\")\n" +
+				"      (LgConnDirNode \"-\")\n" +
+				"   )\n)\n";
+
+			str +=
+				"(ReferenceLink\n" +
+				"   (LgLinkInstanceNode \"" + lab_inst + "\")\n" +
+				"   (LinkGrammarRelationshipNode \"" + lab + "\")\n" +
+				")\n";
 			return false;
 		}
 	};
