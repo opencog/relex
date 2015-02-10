@@ -17,6 +17,8 @@
 
 package relex.output;
 
+import java.util.UUID;
+
 import relex.ParsedSentence;
 import relex.feature.FeatureNode;
 import relex.feature.FeatureNodeCallback;
@@ -57,7 +59,6 @@ class OpenCogSchemeLink
 	private String printLinks()
 	{
 		LinkCB cb = new LinkCB();
-		cb.parseID = parse.getIDString();
 		cb.str = "";
 		LinkForeach.foreach(parse.getLeft(), cb);
 		return cb.str;
@@ -65,12 +66,11 @@ class OpenCogSchemeLink
 	
 	private class LinkCB implements FeatureNodeCallback
 	{
-		String parseID;
 		String str;
 		public Boolean FNCallback(FeatureNode fn)
 		{
 			String lab = fn.get("LAB").getValue();
-			String lab_inst = fn.get("LAB").getValue() + "@" + parseID;
+			String lab_inst = fn.get("LAB").getValue() + "@" + UUID.randomUUID();
 			String fl_inst = fn.get("F_L").get("uuid").getValue();
 			String fr_inst = fn.get("F_R").get("uuid").getValue();
 			
