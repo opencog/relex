@@ -1038,7 +1038,7 @@ public class TestRelEx
 			"_compprep(similar, to)\n"+
 			"_pobj(to, that)\n"+
 			"_prepadj(that, of)\n"+
-			"_pobj(of, Ben)\n";
+			"_pobj(of, Ben)\n");
 
 		rc &= test_sentence ("Jack’s hair color is similar to Ben's",
 			"_poss(color, Jack)\n"+
