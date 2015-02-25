@@ -5,12 +5,12 @@
 #    docker build -t relex/relex .
 #
 # To start:
-#    docker run -it -p 3333:3333 relex/relex /bin/sh plain-text-server.sh
+#    docker run -p 3333:3333 relex/relex /bin/sh plain-text-server.sh
 #
 # Or alternately, this:
-#    docker run -it -p 4444:4444 relex/relex /bin/sh opencog-server.sh
+#    docker run -p 4444:4444 relex/relex /bin/sh opencog-server.sh
 #
-#    docker run -it -p 9000:9000 relex/relex /bin/sh link-grammar-server.sh
+#    docker run -p 9000:9000 relex/relex /bin/sh link-grammar-server.sh
 #
 # To demo:
 #    telnet localhost 4444
