@@ -16,6 +16,7 @@ wikipedia. These files contain almost no parsable text.
 wiki-clean-fr.sh As above for frwiki (French)
 wiki-clean-lt.sh As above for ltwiki (Lithuantian)
 wiki-clean-pl.sh As above for plwiki (Polish)
+wiki-clean-tl.sh As above for tlwiki (Tagalog)
 
 The wiki-alpha.sh shell script will move wikipedia articles to 
 alphabetical directories.  This can simplify and speed up article
