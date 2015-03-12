@@ -1,5 +1,7 @@
-John and Mary walk.
+We walked to his car.
+We walked to her car.
 END.
+John and Mary walk.
 The cook and waitress sigh and roll their eyes.
 The cooks and waitresses roll their eyes.
 It looked like a nice chair.
