@@ -52,13 +52,13 @@ public class MorphyAlg extends SentenceAlgorithm
 		// Do not look up morphology of skipped-words.
 		if (original.charAt(0) == '[') return;
 
+		// Work-around for bug in WordNet.  WordNet incorrectly
+		// converts "his" to "him". We really don't want that.
+		if (original.equals("his")) return;
+
 		String pos = LinkableView.getPOS(node);
 		if (pos == null)
 			throw new RuntimeException("All nodes with 'str' should have 'POS'");
-
-		// Word-around for bug in WordNet.  The below incorrectly
-		// converts "his" to "him". We really don't want that.
-		if (original.equals("his")) return;
 
 		Morphed m = context.getMorphy().morph(original);
 		FeatureNode f = null;
