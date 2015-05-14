@@ -567,10 +567,10 @@ IMP-SUBJECT-ASSIGNMENT
 ;e.g. The snail is running
 #TemplateActionAlg
 PREDICATIVE_ADJECTIVE_LINKING
-<LAB> = \Pa\.* |\Pg\.*
+<LAB> = \Pa\.* |\Pg\.*|\Pp\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
-<F_L str> = be|is
+<F_L str> = be|is|am|are|were|was
 =
 <F_L subj links _predadj> += <F_R ref>
 ;
@@ -1499,35 +1499,6 @@ PREP_OBJECT
 <F_L str> != all
 =
 <F_L ref links _pobj> += <F_R head-word>
-
-#TemplateActionAlg
-PREP_SUBJECT_FLAG
-<LAB> = \Pp
-=
-<F_L PREP-SUBJ-FLAG> = T
-
-#TemplateActionAlg
-PREP_SUBJECT_STORE
-<LAB> = \S\.*
-<LAB> != \S\.*\.*\.t
-<F_R PREP-SUBJ-FLAG> = T
-=
-<F_R psubj> = <F_L ref>
-
-#TemplateActionAlg
-INV_PREP_SUBJECT_STORE
-<LAB> = \SI\.*
-<F_L PREP-SUBJ-FLAG> = T
-=
-<F_L psubj> = <F_R ref>
-
-#TemplateActionAlg
-PREP_SUBJ_ASSIGN
-<LAB> = \Pp
-=
-<F_R ref links _psubj> += <F_L psubj>
-<F_L psubj> = %
-<F_L PREP-SUBJ-FLAG> = %
 
 ;This is a pretty strange way to regard these structures by my ken,
 ;but probably the easiest thing to work within the current 'grammar'
