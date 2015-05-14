@@ -1003,7 +1003,7 @@ WHERE2q
 =
 <F_R ref name> = %
 <F_R ref name> = _$qVar
-<F_L ref QUERY-TYPE> = where
+<F_R ref QUERY-TYPE> = where
 ;
 #TemplateActionAlg
 WHERE2
@@ -1021,7 +1021,7 @@ HOW
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
-<F_L head-question-word ref links how> = <F_L ref>
+<F_L head-question-word ref links _%how> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
@@ -1513,6 +1513,13 @@ PREP_SUBJECT_STORE
 <F_R PREP-SUBJ-FLAG> = T
 =
 <F_R psubj> = <F_L ref>
+
+#TemplateActionAlg
+INV_PREP_SUBJECT_STORE
+<LAB> = \SI\.*
+<F_L PREP-SUBJ-FLAG> = T
+=
+<F_L psubj> = <F_R ref>
 
 #TemplateActionAlg
 PREP_SUBJ_ASSIGN
