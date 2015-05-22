@@ -106,6 +106,9 @@ while (<>)
 	}
 	if ($have_ptable) { next; }
 
+	# kill stuff like this: 172||9||23||2||30||1||225||12
+	s/(\d+\|\|)+\d+//g;
+
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Do this before processing multi-line templates
 	s/\{\{.+?\}\}//g;
@@ -173,10 +176,10 @@ while (<>)
 	# also [[Wikipedia:special/blah|The Stand-In Text]]
 	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
 
-	# Kill ordinary links -- [[Stuf more stuff]]
+	# Kill ordinary links -- [[Stuff more stuff]]
 	s/\[\[([:,\.\/\-\w '\(\)]+?)\]\]/$1/g;
 
-	# kill weblinks  i.e. [http:blah.com/whjaterver A Cool Site]
+	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
 	# ignore misc html markup
