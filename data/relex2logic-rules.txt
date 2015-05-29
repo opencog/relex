@@ -17,7 +17,7 @@
 [SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
 ################## This rule also has not been ported to atomese; I'm not sure it's still needed; I think between the previous rule and the new advmod rule, it's covered (but I'm not sure) . . . 
-[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, $prep) & _pobj($prep, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
+[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, to) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
 [SVO] {3} <SV, SVIO1, SVIO2, SVIO3, BE, whichobjQ, whichsubjQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
@@ -121,16 +121,16 @@
 
 [COMPlEMENT_REP] {4} <> _rep($pred, $comp) => (rep-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
 
-# ------------------------------------ all rules abopve this line ported except for the last few question rules as noted above ------------------------------------------------------------------
-
 # ============================================
 # unary rules
 # ============================================
 
+### I'm not porting this rule because I would need to see the atomspace relex output for an entity-FLAG and nobody knows how to get one
 [ENTITYFLAG] {2} <> entity-FLAG($x, T) => (entity-rule $x (get-instance-name $x word_index sentence_index))
 
 [GENDER] {2} <> person-FLAG($x, T) & gender($x, $gender) => (gender-rule $x (get-instance-name $x word_index sentence_index) $gender)
 
+### haven't ported this one yet because it's unclear how do do it in atomese, except by mentioning each tense . . .
 [TENSEPOS] {5} <> tense($x, $Tense) & pos($x, verb) => (tense-rule $x (get-instance-name $x word_index sentence_index) $Tense)
 
 [DET] {6} <> _det($noun, $det) & definite-FLAG($noun, T) => (det-rule $noun (get-instance-name $noun word_index sentence_index) $det (get-instance-name $det word_index sentence_index))
@@ -141,6 +141,8 @@
 # for definite words
 [DEFINITE] {8} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
 
+### Also haven't ported this rule yet, partially because i don't know how to do that with using a very long choicelink and partially because the rule seems
+### weird to begin with; it needs to be part of an entire modal system, that needs to be thought out . . .
 # maybe rule documented on http://wiki.opencog.org/w/RelEx2Logic_Rules#Maybe_Rule
 # Example: "Maybe she eats lunch.", "Perhaps she is nice."
 [MAYBE] {3} <ADVMOD> _advmod($x, (maybe|possibly|perhaps|probably)) => (maybe-rule $x (get-instance-name $x word_index sentence_index))
@@ -149,14 +151,17 @@
 # ============================================
 # misc rules
 # ============================================
+
+# I changed this to a 'quantity-rule' when I ported it because there is no _num_quantity relation anymore as far as I can tell
 [NUM] {1} <> _num_quantity($iobj, $Num) => (number-rule $iobj (get-instance-name $iobj word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
 
+### I have no idea why this preposition was singled out for its own rule, but I'm not porting it that way; it's silly.
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
 
+### right, here's another silly one.  It would classify all nominal nouns with the n1 inheriting n2, which is far from correct . . . 
 [PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 
 [POSS] {8} <> _poss($N, $iobj) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-
 
 # ============================================
 # "to do" rules
@@ -176,7 +181,6 @@
 # Example: "She is nice to help with the project."
 [TODO3] {2} <TODO4> _to-do($V1, $V2) & _predadj($V3, $V1) => (to-do-rule-3 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $V3 (get-instance-name $V3 word_index sentence_index))
 
-
 # ============================================
 # all rules
 #
@@ -186,13 +190,20 @@
 # "All Canadians write."
 # "All right-handed Canadians write."
 # ============================================
+########### I also have not ported these two rules because the first one is already handled by the general quantity-rule and the second one has no scheme helper yet, and seems like
+########### it should be handled by a general "predeterminer" rule anyway.
+
 [ALLRULE1] {1} <> _quantity($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
 [ALLRULE2] {1} <> _predet($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
+################## all rules above this line, except where otherwise noted, have been ported
+################## except for the last few question rules and todo rules, as those need to be handled differently or about 50 rules are required.
+
 # ============================================
 # passive verb rules
 # ============================================
+
 [PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A, (.*)passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
 
 [PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A, (.*)passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
