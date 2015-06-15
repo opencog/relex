@@ -69,8 +69,8 @@ echo "start X"
 time find ../wiki-stripped -name 'X*' -exec mv {} X \;
 time find ../wiki-stripped -name 'Y*' -exec mv {} Y \;
 time find ../wiki-stripped -name 'Z*' -exec mv {} Z \;
-time find ./wiki-stripped -name '[०,१,२,३,४,५,६,७,८,९]*' -exec mv {} num \;
-time find ./wiki-stripped -name '[૦,૧,૨,૩,૪,૫,૬,૭,૮,૯]*' -exec mv {} num \;
+time find ../wiki-stripped -name '[०,१,२,३,४,५,६,७,८,९]*' -exec mv {} num \;
+time find ../wiki-stripped -name '[૦,૧,૨,૩,૪,૫,૬,૭,૮,૯]*' -exec mv {} num \;
 time find ../wiki-stripped -name '[0-9]*' -exec mv {} num \;
 time find ../wiki-stripped -name '*' -type f -exec mv {} misc \;
 
