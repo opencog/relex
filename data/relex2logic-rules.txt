@@ -111,6 +111,9 @@
 
 [PP] {4} <> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
+# this rule not ported yet because I just added it . . . 
+[RELATIVE_CLAUSE] {4} <> _rel($comp, $pred) => (complement-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
 [COMPLEMENT_PHRASES] {4} <> _comp($comp, $pred) => (complement-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
 
 [COMPlEMENT_RELATION] {4} <> _compmod($pred, $comp) => (compmod-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))

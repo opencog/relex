@@ -2371,11 +2371,20 @@ ADV1_2
 =
 <F_L ref links _advmod> += <F_R ref>
 
+; These rules are doing nothing. Don't know why.
 #TemplateActionAlg
-COMPARATIVE_ER_TO_MORE
-<subscript> = \.a-c
+COMPARATIVE_ER_TO_MORE1
+<LAB> = \Pa.*
+<F_R ref degree> = comparative
 =
-<ref links _compdeg> += more
+<F_R ref links _compdeg> += more
+
+#TemplateActionAlg
+COMPARATIVE_ER_TO_MORE2
+<LAB> = \Am.*
+<F_L ref degree> = comparative
+=
+<F_L ref links _compdeg> += more
 
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."
