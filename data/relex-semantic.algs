@@ -567,10 +567,10 @@ IMP-SUBJECT-ASSIGNMENT
 ;e.g. The snail is running
 #TemplateActionAlg
 PREDICATIVE_ADJECTIVE_LINKING
-<LAB> = \Pa\.* |\Pg\.*
+<LAB> = \Pa\.* |\Pg\.*|\Pp\.*
 <F_L obj> = %
 <F_L FILLER-OBJ-FLAG> != T
-<F_L str> = be|is
+<F_L str> = be|is|am|are|were|was
 =
 <F_L subj links _predadj> += <F_R ref>
 ;
@@ -1003,7 +1003,7 @@ WHERE2q
 =
 <F_R ref name> = %
 <F_R ref name> = _$qVar
-<F_L ref QUERY-TYPE> = where
+<F_R ref QUERY-TYPE> = where
 ;
 #TemplateActionAlg
 WHERE2
@@ -1021,7 +1021,7 @@ HOW
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
-<F_L head-question-word ref links how> = <F_L ref>
+<F_L head-question-word ref links _%how> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
@@ -1499,28 +1499,6 @@ PREP_OBJECT
 <F_L str> != all
 =
 <F_L ref links _pobj> += <F_R head-word>
-
-#TemplateActionAlg
-PREP_SUBJECT_FLAG
-<LAB> = \Pp
-=
-<F_L PREP-SUBJ-FLAG> = T
-
-#TemplateActionAlg
-PREP_SUBJECT_STORE
-<LAB> = \S\.*
-<LAB> != \S\.*\.*\.t
-<F_R PREP-SUBJ-FLAG> = T
-=
-<F_R psubj> = <F_L ref>
-
-#TemplateActionAlg
-PREP_SUBJ_ASSIGN
-<LAB> = \Pp
-=
-<F_R ref links _psubj> += <F_L psubj>
-<F_L psubj> = %
-<F_L PREP-SUBJ-FLAG> = %
 
 ;This is a pretty strange way to regard these structures by my ken,
 ;but probably the easiest thing to work within the current 'grammar'
@@ -2393,11 +2371,20 @@ ADV1_2
 =
 <F_L ref links _advmod> += <F_R ref>
 
+; These rules are doing nothing. Don't know why.
 #TemplateActionAlg
-COMPARATIVE_ER_TO_MORE
-<subscript> = \.a-c
+COMPARATIVE_ER_TO_MORE1
+<LAB> = \Pa.*
+<F_R ref degree> = comparative
 =
-<ref links _compdeg> += more
+<F_R ref links _compdeg> += more
+
+#TemplateActionAlg
+COMPARATIVE_ER_TO_MORE2
+<LAB> = \Am.*
+<F_L ref degree> = comparative
+=
+<F_L ref links _compdeg> += more
 
 ;
 ; MVp : "find elsewhere" e.g.  "... than you can find elsewhere."

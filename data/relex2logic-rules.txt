@@ -9,13 +9,15 @@
 
 [BE] {3} <SVO, SV> _subj(be, $subj) & _obj(be, $obj) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
+################## This rule has not been ported to atomese; I haven't been able to get any _%copula output from relex; I think it's gone away.
 [COPULA] {2} <> _subj(_\%copula, $subj) & _obj(_\%copula, $obj) => (be-inheritance-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 [SVIO1] {2} <SVO, SV> _iobj($verb, $iobj) & _obj($verb, $obj) & _subj($verb, $subj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
 
-[SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _obj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
+[SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
-[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, $prep) & _pobj($prep, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
+################## This rule also has not been ported to atomese; I'm not sure it's still needed; I think between the previous rule and the new advmod rule, it's covered (but I'm not sure) . . . 
+[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, to) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
 [SVO] {3} <SV, SVIO1, SVIO2, SVIO3, BE, whichobjQ, whichsubjQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
@@ -23,12 +25,12 @@
 
 [SP] {4} <ALLRULE3, whichpredadjQ> _predadj($subj, $predadj) => (SV-rule $subj (get-instance-name $subj word_index sentence_index) $predadj (get-instance-name $predadj word_index sentence_index))
 
-[PREP] {5} <> _psubj($verb, $subj) & _pobj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+[PREP] {5} <> _psubj($prep, $subj) & _pobj($prep, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 [TOBE] {3} <SV> _to-be($verb, $adj) & _subj($verb, $subj) => (to-be-rule $verb (get-instance-name $verb word_index sentence_index) $adj (get-instance-name $adj word_index sentence_index) $subj (get-instance-name $subj word_index sentence_index))
 
 # ======================================================================================================
-# Speech acts (awaiting revision and implementation)
+# Speech acts (awaiting revision and implementation) -- ########### these rules have not been ported to atomese yet
 # =====================================================================================================
 [IMPERATIVE] {1} <DECLARATIVE> tense($verb, imperative) => (imperative-rule interpretation_index)
 [INTERROGATIVE] {1} <DECLARATIVE, TRUTHQUERY> QUERY-TYPE(_\$qVar, $query) => (interrogative-rule interpretation_index)
@@ -59,12 +61,13 @@
 #===========================
 # How of manner
 #==========================
-[how-Q] {3} <PREDICATE-YNQ> QUERY-TYPE(_\$qVar, how) & how($verb, _\$qVar) => (how-rule $verb (get-instance-name $verb word_index sentence_index))
+[how-Q] {3} <PREDICATE-YNQ> QUERY-TYPE(_\$qVar, how) & _%how($verb, _\$qVar) => (how-rule $verb (get-instance-name $verb word_index sentence_index))
 #============================
 # Predicative How
 #============================
-[howpredadj1-Q] {1} <how-q> QUERY-TYPE(_\$qVar, how) & how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
-[howpredadj2-Q] {1} <how-q> QUERY-TYPE(_\$qVar, how) & _subj(_\$qVar, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+[howpredadj1-Q] {1} <how-Q> QUERY-TYPE(_\$qVar, how) & _%how(_\%copula, _\$qVar) & _subj(_\%copula, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
+# the rule below has not been ported to atomese; it did not seem needed (?)
+[howpredadj2-Q] {1} <how-Q> QUERY-TYPE(_\$qVar, how) & _subj(_\$qVar, $s) => (howpredadj-Q-rule $s (get-instance-name $s word_index sentence_index))
 #===================
 # How of quantity
 #===================
@@ -79,6 +82,10 @@
 [whichobjQ] {1} <SVO, SV, QDET, QDETPREDADJ> QUERY-FLAG($o, T) & _obj($v, $o) & _subj($v, $s) & _det($o, _\$qVar) => (whichobjQ-rule $o (get-instance-name $o word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $s (get-instance-name $s word_index sentence_index))
 [whichsubjQ] {1} <SV, SVO, QDET, QDETPREDADJ> QUERY-FLAG($s, T) & _subj($v, $s) & _obj($v, $o) & _det($s, _\$qVar) => (whichsubjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index))
 [whichpredadjQ] {1} <SVP, SV, QDET, QDETPREDADJ> QUERY-FLAG($s, T) & _predadj($s, $pred) & _det($s, _\$qVar) => (whichpredadjQ-rule $s (get-instance-name $s word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
+
+# -----------------all of the rules above this line have been ported to atomese, unless otherwise specified in comments --------------------------------------------
+# waiting on a decision about whether to re-factor some things, so I don't have to write a zillion rules to cover all question determiner sentences
+
 [whichiobjQ] {1} <SVO, SV, SVIO3> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
 #==================================
 # DETERMINER PREPOSITIONAL-PHRASE-QUESTION-WORDS (e.g. "in which way?"
@@ -92,15 +99,20 @@
 # ============================================
 # adjective, adverb rules
 # ============================================
+
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
 [ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
+# this rule was not ported becaus it was completely redundant.  Relex now treatS all adverbials as _advmod.
 [ADVERBIALPP] {4} <> _pobj($prep, $noun) & _advmod($verb, $prep) => (advmod-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
 [ADJECTIVALPP] {4} <> _pobj($prep, $noun) & _prepadj($noun, $prep) => (amod-rule $noun (get-instance-name $noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
 [PP] {4} <> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
+
+# this rule not ported yet because I just added it . . . 
+[RELATIVE_CLAUSE] {4} <> _rel($comp, $pred) => (complement-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
 
 [COMPLEMENT_PHRASES] {4} <> _comp($comp, $pred) => (complement-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
 
@@ -115,10 +127,13 @@
 # ============================================
 # unary rules
 # ============================================
+
+### I'm not porting this rule because I would need to see the atomspace relex output for an entity-FLAG and nobody knows how to get one
 [ENTITYFLAG] {2} <> entity-FLAG($x, T) => (entity-rule $x (get-instance-name $x word_index sentence_index))
 
 [GENDER] {2} <> person-FLAG($x, T) & gender($x, $gender) => (gender-rule $x (get-instance-name $x word_index sentence_index) $gender)
 
+### haven't ported this one yet because it's unclear how do do it in atomese, except by mentioning each tense . . .
 [TENSEPOS] {5} <> tense($x, $Tense) & pos($x, verb) => (tense-rule $x (get-instance-name $x word_index sentence_index) $Tense)
 
 [DET] {6} <> _det($noun, $det) & definite-FLAG($noun, T) => (det-rule $noun (get-instance-name $noun word_index sentence_index) (choose-var-name) $det)
@@ -129,6 +144,8 @@
 # for definite words
 [DEFINITE] {8} <> definite-FLAG($A, T) => (definite-rule $A (get-instance-name $A word_index sentence_index))
 
+### Also haven't ported this rule yet, partially because i don't know how to do that with using a very long choicelink and partially because the rule seems
+### weird to begin with; it needs to be part of an entire modal system, that needs to be thought out . . .
 # maybe rule documented on http://wiki.opencog.org/w/RelEx2Logic_Rules#Maybe_Rule
 # Example: "Maybe she eats lunch.", "Perhaps she is nice."
 [MAYBE] {3} <ADVMOD> _advmod($x, (maybe|possibly|perhaps|probably)) => (maybe-rule $x (get-instance-name $x word_index sentence_index))
@@ -137,14 +154,17 @@
 # ============================================
 # misc rules
 # ============================================
+
+# I changed this to a 'quantity-rule' when I ported it because there is no _num_quantity relation anymore as far as I can tell
 [NUM] {1} <> _num_quantity($iobj, $Num) => (number-rule $iobj (get-instance-name $iobj word_index sentence_index) $Num (get-instance-name $Num word_index sentence_index))
 
+### I have no idea why this preposition was singled out for its own rule, but I'm not porting it that way; it's silly.
 [ABOUT] {2} <> about($V, $N) => (about-rule $V (get-instance-name $V word_index sentence_index) $N (get-instance-name $N word_index sentence_index))
 
+### right, here's another silly one.  It would classify all nominal nouns with the n1 inheriting n2, which is far from correct . . . 
 [PRENOMINAL] {1} <> _nn($N1, $N2) => (nn-rule $N1 (get-instance-name $N1 word_index sentence_index) $N2 (get-instance-name $N2 word_index sentence_index))
 
 [POSS] {8} <> _poss($N, $iobj) => (possessive-rule $N (get-instance-name $N word_index sentence_index) $iobj (get-instance-name $iobj word_index sentence_index))
-
 
 # ============================================
 # "to do" rules
@@ -164,7 +184,6 @@
 # Example: "She is nice to help with the project."
 [TODO3] {2} <TODO4> _to-do($V1, $V2) & _predadj($V3, $V1) => (to-do-rule-3 $V1 (get-instance-name $V1 word_index sentence_index) $V2 (get-instance-name $V2 word_index sentence_index) $V3 (get-instance-name $V3 word_index sentence_index))
 
-
 # ============================================
 # all rules
 #
@@ -174,13 +193,20 @@
 # "All Canadians write."
 # "All right-handed Canadians write."
 # ============================================
+########### I also have not ported these two rules because the first one is already handled by the general quantity-rule and the second one has no scheme helper yet, and seems like
+########### it should be handled by a general "predeterminer" rule anyway.
+
 [ALLRULE1] {1} <> _quantity($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
 [ALLRULE2] {1} <> _predet($noun, all) => (all-rule (get-instance-name $noun word_index sentence_index))
 
+################## all rules above this line, except where otherwise noted, have been ported
+################## except for the last few question rules and todo rules, as those need to be handled differently or about 50 rules are required.
+
 # ============================================
 # passive verb rules
 # ============================================
+
 [PASSIVE1] {1} <PASSIVE2> _obj($A,$B) & by($A,$C) & tense($A, (.*)passive) => (passive-rule1 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index) $C (get-instance-name $C word_index sentence_index))
 
 [PASSIVE2] {1} <PASSIVE1> _obj($A,$B) & tense($A, (.*)passive) => (passive-rule2 $A (get-instance-name $A word_index sentence_index) $B (get-instance-name $B word_index sentence_index))
