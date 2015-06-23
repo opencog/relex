@@ -137,7 +137,8 @@ class OpenCogSchemeLink
 		public Boolean FNCallback(FeatureNode srcNode)
 		{
 			FeatureNode attr = srcNode.get("DISJUNCT");
-			if (!attr.isValued())
+
+			if (attr == null || !attr.isValued())
 				return false;
 
 			String value = attr.getValue();
