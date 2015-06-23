@@ -138,9 +138,7 @@ class OpenCogSchemeLink
 		{
 			FeatureNode attr = srcNode.get("DISJUNCT");
 
-			if (attr == null)
-				return false;
-			if (!attr.isValued())
+			if (attr == null || !attr.isValued())
 				return false;
 
 			String value = attr.getValue();
