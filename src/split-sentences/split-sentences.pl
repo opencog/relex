@@ -70,7 +70,7 @@ while(<STDIN>) {
 	if (/^<.+>$/ || /^\s*$/) {
 		#time to process this block, we've hit a blank or <p>
 		&do_it_for($text,$_);
-		print "<P>\n" if (/^\s*$/ && $text); ##if we have text followed by <P>
+		# print "<P>\n" if (/^\s*$/ && $text); ##if we have text followed by <P>
 		$text = "";
 	}
 	else {
