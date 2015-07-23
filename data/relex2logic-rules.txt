@@ -102,14 +102,13 @@
 
 [AMOD] {3} <> _amod($N, $A) => (amod-rule $N (get-instance-name $N word_index sentence_index) $A (get-instance-name $A word_index sentence_index))
 
-[ADVMOD] {4} <> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
+[ADVMOD] {4} <ADVERBIALPP> _advmod($V, $ADV) => (advmod-rule $V (get-instance-name $V word_index sentence_index) $ADV (get-instance-name $ADV word_index sentence_index))
 
-# this rule was not ported becaus it was completely redundant.  Relex now treatS all adverbials as _advmod.
-[ADVERBIALPP] {4} <> _pobj($prep, $noun) & _advmod($verb, $prep) => (advmod-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
+[ADVERBIALPP] {3} <ADVMOD, PP> _pobj($prep, $noun) & _advmod($verb, $prep) => (adverbialpp-rule $verb (get-instance-name $verb word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
 [ADJECTIVALPP] {4} <> _pobj($prep, $noun) & _prepadj($noun, $prep) => (amod-rule $noun (get-instance-name $noun word_index sentence_index) $prep (get-instance-name $prep word_index sentence_index))
 
-[PP] {4} <> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
+[PP] {4} <ADVERBIALPP> _pobj($prep, $noun) => (pp-rule $prep (get-instance-name $prep word_index sentence_index) $noun (get-instance-name $noun word_index sentence_index))
 
 # this rule not ported yet because I just added it . . . 
 [RELATIVE_CLAUSE] {4} <> _rel($comp, $pred) => (complement-rule $comp (get-instance-name $comp word_index sentence_index) $pred (get-instance-name $pred word_index sentence_index))
