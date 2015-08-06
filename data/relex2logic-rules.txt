@@ -32,7 +32,8 @@
 # ======================================================================================================
 # Speech acts (awaiting revision and implementation) -- ########### these rules have not been ported to atomese yet
 # =====================================================================================================
-[IMPERATIVE] {1} <DECLARATIVE> tense($verb, imperative) => (imperative-rule interpretation_index)
+[EXCLAMATORY] {1} <IMPERATIVE> pos(\!, punctuation) => (exclamatory-rule interpretation_index)
+[IMPERATIVE] {2} <DECLARATIVE, EXCLAMATORY> tense($verb, imperative) => (imperative-rule interpretation_index)
 [INTERROGATIVE] {1} <DECLARATIVE, TRUTHQUERY> QUERY-TYPE(_\$qVar, $query) => (interrogative-rule interpretation_index)
 [TRUTHQUERY] {2} <DECLARATIVE, TRUTHQUERY> TRUTH-QUERY-FLAG($verb, T) => (truth-query-rule interpretation_index)
 [DECLARATIVE] {3} <IMPERATIVE, INTERROGATIVE, TRUTHQUERY> pos(\., punctuation) => (declarative-rule interpretation_index)
