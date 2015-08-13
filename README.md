@@ -223,15 +223,6 @@ function.
 Building
 --------
 
-### With Maven
-
-After the above are installed, RelEx can be built.
-Using [Maven](http://maven.apache.org/), the project model is in `pom.xml`.
-
-To build the project, including cross-platform scripts: `mvn -DskipTests package`
-
-To run tests: `mvn test`
-
 ### With Ant
 
 After the above are installed, the relex java code can be built.
@@ -240,7 +231,14 @@ are in `build.xml`.  Simply saying `ant` at the command line
 should be enough to build. Saying `ant run` will run a basic
 demo of the system. The `ant test` command will run several tests
 verifying both regular parsing, and the Stanford-parser compatibility
-mode.
+mode.  The `ant install` command will install the ssytem.
+
+### With Maven
+
+Build and install is currently not supported with
+[Maven](http://maven.apache.org/).  You might get lucky -- if you
+know how to use maven, then please edit the project model `pom.xml`,
+fix it so that it works, and send us the patches!
 
 
 Using RelEx
