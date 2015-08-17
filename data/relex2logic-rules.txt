@@ -16,9 +16,6 @@
 
 [SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
-################## This rule also has not been ported to atomese; I'm not sure it's still needed; I think between the previous rule and the new advmod rule, it's covered (but I'm not sure) . . . 
-[SVIO3] {2} <SVO, SV> _subj($verb, $subj) & _obj($verb, $obj) & _advmod($verb, to) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
-
 [SVO] {3} <SV, SVIO1, SVIO2, SVIO3, BE, whichobjQ, whichsubjSVOQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
 [SV] {4} <SVO, SVIO1, SVIO2, SVIO3, BE, COPULA-YNQ, TOBE> _subj($verb, $subj) => (SV-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
