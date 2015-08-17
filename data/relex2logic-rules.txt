@@ -16,9 +16,9 @@
 
 [SVIO2] {2} <SV, SVO> _subj($verb, $subj) & _obj($verb, $obj) & _pobj(to, $iobj) => (SVIO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index ) $iobj (get-instance-name $iobj word_index sentence_index))
 
-[SVO] {3} <SV, SVIO1, SVIO2, SVIO3, BE, whichobjQ, whichsubjSVOQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+[SVO] {3} <SV, SVIO1, SVIO2,  BE, whichobjQ, whichsubjSVOQ> _subj($verb, $subj) & _obj($verb, $obj) => (SVO-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 
-[SV] {4} <SVO, SVIO1, SVIO2, SVIO3, BE, COPULA-YNQ, TOBE> _subj($verb, $subj) => (SV-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
+[SV] {4} <SVO, SVIO1, SVIO2,  BE, COPULA-YNQ, TOBE> _subj($verb, $subj) => (SV-rule $subj (get-instance-name $subj word_index sentence_index) $verb (get-instance-name $verb word_index sentence_index))
 
 [SP] {4} <ALLRULE3, whichpredadjQ> _predadj($subj, $predadj) => (SV-rule $subj (get-instance-name $subj word_index sentence_index) $predadj (get-instance-name $predadj word_index sentence_index))
 
@@ -39,7 +39,7 @@
 #================================================================================================
 # Yes / No (closed) question rules
 #===========================================================================================================================
-[COPULA-YNQ] {1} <PREDICATE-YNQ, BE, SV, SVO, SVIO1, SVIO2, SVIO3> TRUTH-QUERY-FLAG(be, T) & _subj(be, $subj) & _obj(be, $obj) => (cop-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
+[COPULA-YNQ] {1} <PREDICATE-YNQ, BE, SV, SVO, SVIO1, SVIO2> TRUTH-QUERY-FLAG(be, T) & _subj(be, $subj) & _obj(be, $obj) => (cop-ynQ-rule $subj (get-instance-name $subj word_index sentence_index) $obj (get-instance-name $obj word_index sentence_index))
 [PREDICATE-YNQ] {2} <COPULA-YNQ> TRUTH-QUERY-FLAG($verb, T) => (pred-ynQ-rule $verb (get-instance-name $verb word_index sentence_index))
 #=================
 # Where questions
@@ -84,7 +84,7 @@
 # -----------------all of the rules above this line have been ported to atomese, unless otherwise specified in comments --------------------------------------------
 # waiting on a decision about whether to re-factor some things, so I don't have to write a zillion rules to cover all question determiner sentences
 
-[whichiobjQ] {1} <SVO, SV, SVIO3> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
+[whichiobjQ] {1} <SVO, SV> QUERY-FLAG($io, T) & _obj($v, $o) & _subj($v, $s) & to($v, $io) & _det($io, _\$qVar) => (whichiobjQ-rule $s (get-instance-name $s word_index sentence_index) $v (get-instance-name $v word_index sentence_index) $o (get-instance-name $o word_index sentence_index) $io (get-instance-name $io word_index sentence_index))
 #==================================
 # DETERMINER PREPOSITIONAL-PHRASE-QUESTION-WORDS (e.g. "in which way?"
 #==================================
