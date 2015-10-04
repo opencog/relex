@@ -540,7 +540,7 @@ public class RelationExtractor
 						System.out.println("Link graph:\n");
 						LinkGraphGenerator.generateGraphImage(LinkGraphGenerator.generateGraph("Link Graph", parse, null, false));
 						System.out.println("\n======\n");
-                    }
+					}
                     
 					if (commandMap.get("-o") == null)
 					{
