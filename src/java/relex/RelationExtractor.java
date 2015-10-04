@@ -332,7 +332,7 @@ public class RelationExtractor
 	{
 		String callString = "RelationExtractor" +
 			" [--expand-preps (show expanded prepositions)]" +
-            " [-g (generate link graph - requires graphviz)]" +
+			" [-g (generate link graph - requires graphviz)]" +
 			" [-h (show this help)]" +
 			" [-i (show output for generation)]" +
 			" [-l (show Link Grammar parse diagram)]" +
@@ -355,7 +355,7 @@ public class RelationExtractor
 		HashSet<String> flags = new HashSet<String>();
 		flags.add("-a");
 		flags.add("--expand-preps");
-        flags.add("-g");
+		flags.add("-g");
 		flags.add("-h");
 		flags.add("-i");
 		flags.add("-l");
@@ -534,12 +534,12 @@ public class RelationExtractor
 				int numParses = 0;
 				for (ParsedSentence parse: sntc.getParses())
 				{
-                    if (commandMap.get("-g") != null)
-                    {
-                        System.out.println("\n====\n");
-                        System.out.println("Link graph:\n");
-                        LinkGraphGenerator.generateGraphImage(LinkGraphGenerator.generateGraph("Link Graph", parse, null, false));
-                        System.out.println("\n======\n");
+					if (commandMap.get("-g") != null)
+					{
+						System.out.println("\n====\n");
+						System.out.println("Link graph:\n");
+						LinkGraphGenerator.generateGraphImage(LinkGraphGenerator.generateGraph("Link Graph", parse, null, false));
+						System.out.println("\n======\n");
                     }
                     
 					if (commandMap.get("-o") == null)
