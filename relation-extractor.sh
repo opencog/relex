@@ -6,6 +6,7 @@
 #
 # Flags:
 # RelationExtractor
+# [-g (generate link graph - requires graphviz)] 
 # [-h (show this help)] 
 # [-l (show parse links)]
 # [-m (show parse metadata)] 
@@ -63,6 +64,10 @@ bin:\
 
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -r -a -s "Alice ate the mushroom."
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -a --stanford --penn -s "Alice ate the mushroom."
+
+# Generate a graph of the links produced by link-grammar
+# Requires graphviz (http://www.graphviz.org/)
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -g -s "Alice ate the mushroom."
 
 # Alternately, the sentence can be specified on the command line:
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t \

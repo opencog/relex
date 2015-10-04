@@ -436,11 +436,6 @@ The unix command `wc` counts 2609 words in 148 sentences, for
 TODO
 ----
 
-### TODO - LinkGraphGenerator
-
-This graph visualization class is not currently used. It should be
-wired up and turned on.
-
 ### TODO - Comparatives
 
 RelEx is pretty broken when it comes to handling comparative sentences.
