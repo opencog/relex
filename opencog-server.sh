@@ -42,7 +42,7 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 "
 
-# Return with RelEx2Logic, Link Grammar, and Relex output on default port 4444.
+# Return with Link Grammar and Relex output on default port 4444.
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex
 
 # This will return parsed text on the input socket.
