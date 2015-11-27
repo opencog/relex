@@ -5,11 +5,11 @@
 
 The Stanford parser provides a defacto standard definition of dependency
 relations used in parsing.  Relex has a compatibility mode which
-attempts to generate the same output as the Stanford parser.  This is 
+attempts to generate the same output as the Stanford parser.  This is
 an interesting thing to do, for two reasons:
 
    1) It provides a way of double-checking parse results,
-   2) RelEx is more than three times faster than the "factored" 
+   2) RelEx is more than three times faster than the "factored"
       version of the Stanford parser, although it is slower than the
       PCFG version.
 
@@ -26,18 +26,18 @@ can be run by issueing the command "ant test", which will compile and
 run src/java_test/relex/test/TestStanford.java.
 
 The current RelEx implementation, and the notes below, are all relative
-to the version of the Stanford parser that is available at the time of 
+to the version of the Stanford parser that is available at the time of
 this writing.  RelEx is attempting to be functionally compatible, while
 using the documentation as a guide.  There are a number of areas where
 the actual operation of the Stanford parser does not match the
 documentation for it -- it either fails to generate the markup as
 claimed, or it generates undocumented dependencies.  Thus, creating
-"compatibility" is somewhat of an inexact science. The status of 
+"compatibility" is somewhat of an inexact science. The status of
 various test sentences are reviewed below.
 
 Note that compatibility is strongly influenced by the parse ranking
-algorithm. The Link-Grammar parser often generates several candidate 
-parses for a sentence, and then ranks them according to liklihood.  
+algorithm. The Link-Grammar parser often generates several candidate
+parses for a sentence, and then ranks them according to liklihood.
 It can be configured to use one of several different ranking algorithms.
 Thus, the "top-most" parse, used by the test case, is subject to change
 depending on the ranking algorithm. That is, precision (but not recall)
@@ -51,7 +51,7 @@ different. The compatibility is in the dependencies generated.
 
 Missing at this time is compatible part-of-speech tagging. At this
 time, RelEx generates much simpler part-of-speech tags, and there has
-been no effort made to ensure their accuracy. 
+been no effort made to ensure their accuracy.
 
 RelEx cannot be trained to learn other languages. RelEx is
 hand-crafted, and handles English only. (We have vague plans to do
@@ -63,12 +63,12 @@ Issues:
 The stanford parser has several different operational modes, wherein
 it generates different relations, dependeing on the mode. A fair number
 of the relations, including csubjpass, infmod, pcomp, possessive, punct,
-purpcl, tmod and xcomp, are not generated in the default mode.  At this 
+purpcl, tmod and xcomp, are not generated in the default mode.  At this
 time RelEx is attempting to be compatible only with the default mode.
 
 At this time, link-grammar handles conjunctions in a novel way.
 These are not percolated up to RelEx in a proper manner, and are
-thus are mostly not handled. 
+thus are mostly not handled.
 
 Some other rough spots/issues are marked with XXX below.
 
@@ -96,10 +96,10 @@ http://bulba.sdsu.edu/jeanette/thesis/PennTags.html
 Test sentences
 --------------
 A list of test sentences, and status. Many/most of these sentences are
-taken from the examples provided in the Stanford documentation. 
+taken from the examples provided in the Stanford documentation.
 Additional test sentences can be found in "TestStanford.java".
 
-The parsing of these sentences are tested automatically by running 
+The parsing of these sentences are tested automatically by running
 "ant test", which runs the test case "TestStanford.java".
 
 Who invented sliced bread?
@@ -115,7 +115,7 @@ Jim runs quickly.
        advmod(runs-2, quickly-3)
     RelEx status: OK
 
-The bird, a robin, sang sweetly. 
+The bird, a robin, sang sweetly.
     Stanford output:
        det(bird-2, The-1)
        nsubj(sang-7, bird-2)
@@ -124,7 +124,7 @@ The bird, a robin, sang sweetly.
        advmod(sang-7, sweetly-8)
     RelEx status: OK
 
-There is a place we can go. 
+There is a place we can go.
     Stanford output:
        expl(is-2, There-1)
        det(place-4, a-3)
@@ -133,7 +133,7 @@ There is a place we can go.
        aux(go-7, can-6)
        dep(is-2, go-7)
     RelEx status:
-       Not testing this sentence, since stanford outputs a 
+       Not testing this sentence, since stanford outputs a
        "dep" which is not documented in thier manual.
        Other than that, the parse works.
 
@@ -196,7 +196,7 @@ The man has been killed by the police.
        det(police-8, the-7)
        agent(killed-5, police-8)
     Relex status: OK.
-    Hmm ... but the above seems broken -- it leaves out "by" from the 
+    Hmm ... but the above seems broken -- it leaves out "by" from the
     parse, using "agent" instead. Very strange! But that's what we'll
     do too.
 
@@ -421,12 +421,12 @@ All the boys are here.
     RelEx status:
        Predet is generated, as described in stanford docs. However,
        the copular structure is different. More generally, link
-       grammar treats predeterminers differently (AL link) and 
+       grammar treats predeterminers differently (AL link) and
        this needs some additional resolution. Also, it is not clear
        to me why Stanford doesn't treat this as being copular, i.e.
           nsubj(here-5, boys-3)
           cop(here-5, are-4)
-       the way that it treats other copulas (e.g. "The garage is 
+       the way that it treats other copulas (e.g. "The garage is
        next to the house." gets nsubj(next-4, garage-2) cop(next-4,
        is-3).
 
@@ -434,21 +434,21 @@ I saw a cat in a hat.
 I saw a cat with a telescope.
     Stanford output:
        Stanford is not outputting what the documentation says it
-       should -- it was supposed to illustrate prep. Instead, 
-       Stanford is producing a collapsed prep. Worse, these 
+       should -- it was supposed to illustrate prep. Instead,
+       Stanford is producing a collapsed prep. Worse, these
        sentences are ambiguous -- is the cat holding a telescope,
-       or am I looking through one?  The top-ranked parses for 
+       or am I looking through one?  The top-ranked parses for
        RelEx indicate that the seeing is doine through the telescope
        (and that the seeing is done while wearing a hat). By contrast,
-       Stanford currently presumes that the cat has a hat, and a 
-       telescope -- these parses are generated by RelEx, but are 
+       Stanford currently presumes that the cat has a hat, and a
+       telescope -- these parses are generated by RelEx, but are
        ranked lower.
     RelEx status: OK
 
 He is responsible for meals.
     Stanford output:
        Stanford is not outputting what the documentation says it
-       should -- it was supposed to illustrate prep. Instead, 
+       should -- it was supposed to illustrate prep. Instead,
        stanford is producing a collapsed prep.
     RelEx status: OK
        i.e. RelEx is producing the same thing as Stanford at this time.
@@ -490,7 +490,7 @@ I saw the book which you bought.
        is generating rel, exactly the same as below. No surprise,
        since syntactically, these sentences are identical.
     RelEx status: OK
-       (I.e. relex is generatng exactly the same thing as the 
+       (I.e. relex is generatng exactly the same thing as the
        stanford parser currently is.)
 
 I saw the man who you love.
@@ -516,7 +516,7 @@ I saw the man whose wife you love.
        rcmod(man-4, love-8)
     RelEx status: Incomplete
       Not yet generating the rel and the rcmod. under construction.
-      shouldn't be hard ... 
+      shouldn't be hard ...
 
 Last night, I swam in the pool.
     Stanford output:
@@ -557,7 +557,3 @@ The garage is next to the house.
        cop(next-4, is-3)
        det(house-7, the-6)
        prep_to(next-4, house-7)
-
-
-
-       

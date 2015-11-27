@@ -17,7 +17,7 @@ post-processing, another format suitable for input to OpenCog, and an
 W3C OWL format. There are also a small assortment of perl scripts for
 cleaning up web and wiki pages, &c.
 
-The main RelEx website is at 
+The main RelEx website is at
 
     http://opencog.org/wiki/RelEx
 
@@ -47,7 +47,7 @@ An installation script for Ubuntu/Debian is provided in the [install-scripts]
 
 The easiest way to build and run RelEx is with Docker. The Docker
 system allows sandboxed containers to be easily created and deployed;
-the typical use of a container is to run some server.  See the 
+the typical use of a container is to run some server.  See the
 http://www.docker.io website for more info and tutorials.
 
 To use docker, simply say:
@@ -86,9 +86,9 @@ docker rmi
 ```
 
 ### Installing on all other systems
- 
+
 For other systems, follow the instructions below.
-To build and use RelEx, the following packages are required to be 
+To build and use RelEx, the following packages are required to be
 installed:
 
  - libgetopt-java (GNU getopt)
@@ -105,7 +105,7 @@ The following packages are required pre-requisites for building RelEx.
 
 - Link Grammar Parser
 	Compile and install the Link Grammar Parser. This parser is
-	described at 
+	described at
 	
 	http://abisource.com/projects/link-grammar/
 	
@@ -120,11 +120,11 @@ The following packages are required pre-requisites for building RelEx.
 	the core sentence parsing ability.
 
 	If the parser is not installed in the default location,
-	be sure to modify `-Djava.library.path` appropriately in 
+	be sure to modify `-Djava.library.path` appropriately in
 	`relation-extractor.sh` and other shell scripts.
 
 - GNU getopt
-	This is a standard command-line option parsing library. 
+	This is a standard command-line option parsing library.
 	For Ubuntu, install the `libgetopt-java` package.
 
 - Wordnet
@@ -148,7 +148,7 @@ The following packages are required pre-requisites for building RelEx.
 - *didion.jwnl*
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
-	Its home page is at 
+	Its home page is at
 	
 	> http://sourceforge.net/projects/jwordnet
 	
@@ -175,27 +175,27 @@ The following packages are required pre-requisites for building RelEx.
 Optional packages
 -----------------
 The following packages are optional. If they are found, then
-additional parts of RelEx will be built, enabling additional 
+additional parts of RelEx will be built, enabling additional
 function.
 
 - OpenNLP
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
-	to find sentence boundaries in free text. If OpenNLP is not found, 
+	to find sentence boundaries in free text. If OpenNLP is not found,
 	then the less accurate `java.text.BreakIterator` class is used.
 
    If you use Maven, this dependency is already managed.
 
-	The OpenNLP home page is at 
+	The OpenNLP home page is at
 	
 	     http://opennlp.sourceforge.net/
 
-	Download and install OpenNLP tools, and verify that the 
+	Download and install OpenNLP tools, and verify that the
 	installed files are correctly identified in both `build.xml`
 	and in `relation-extractor.sh`.
 
 	OpenNLP also requires the installation of maxent from
 	
-	   http://maxent.sourceforge.net/  
+	   http://maxent.sourceforge.net/
 
 	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.0.jar`.
 	
@@ -248,7 +248,7 @@ These are in a "batch processing" mode, and a "custom Java development"
 mode.
 
 In the "batch processing mode", RelEx is run once over a large text,
-and its output is saved to a file.  This output can then be 
+and its output is saved to a file.  This output can then be
 post-processed at a later time, to extract desired info. The goal here
 is to avoid the heavy CPU overhead of re-parsing a large text over and
 over.  Example post-processing scripts are included (described below).
@@ -264,10 +264,10 @@ it does not include all required output. For example, if the same word
 appears in a sentence twice, the demo output will not distinguish between
 these two words.
 
-This release of RelEx includes an experimental Stanford-parser 
-compatibility mode.  In this mode, RelEx will generate the same 
+This release of RelEx includes an experimental Stanford-parser
+compatibility mode.  In this mode, RelEx will generate the same
 dependency relations as the Stanford parser. This mode is technically
-interesting for comparing output; RelEx is more than three time faster 
+interesting for comparing output; RelEx is more than three time faster
 than the lexicalized (factored) Stanford parser, although it is slower
 than the PCFG parser. This is described in greater detail in the file
 `README-Stanford`.
@@ -297,7 +297,7 @@ Running this will display:
 
  - The link parser output.
  - The detected persons, organizations and locations.
- - The dependency relations found. 
+ - The dependency relations found.
  - Anaphora resolutions.
  - Parse ranking info.
  - (Optionally) Stanford and Penn Treebank output.
@@ -364,10 +364,10 @@ Using RelEx in custom code
 --------------------------
 The primary output of RelEx is the set of semantic relationships of a
 sentence. To obtain the list of these relationships, make a copy of
-`src/java/relex/output/SimpleView.java`, and customize it to provide 
+`src/java/relex/output/SimpleView.java`, and customize it to provide
 the relationships that you wish, in the format that you wish.
 
-The class `src/java/relex/RelationExtractor.java` should be considered 
+The class `src/java/relex/RelationExtractor.java` should be considered
 to be a large example program illustrating all of the various features
 of RelEx.  For custom applications, this class should be copied and
 modified as desired to fit the application.
@@ -376,19 +376,19 @@ modified as desired to fit the application.
 Speed test results
 ------------------
 Performance comparison of RelEx-1.2.0 vs. Stanford-1.6.1, run 11 Oct 2009.
-Test corpus: first 150 sentences (including preface boilerplate) from 
+Test corpus: first 150 sentences (including preface boilerplate) from
 Project Gutenberg "Pride and Prejudice".  Due to differences in sentence
-detection, Stanford and RelEx disagree on the sentence count. Due to 
-differences in counting punctuation, the splitting of possessives and 
+detection, Stanford and RelEx disagree on the sentence count. Due to
+differences in counting punctuation, the splitting of possessives and
 contractions, the two disagree on the word count as well.
 
 Since these tests were run, the performance of link-grammar has been
 improved by a factor of 2x-3x. This update should have a significant
 effect on relex speeds.
 
-The unix command `wc` counts 2609 words in 148 sentences, for 
+The unix command `wc` counts 2609 words in 148 sentences, for
 2609/148 = 17.6 words/sent.
- 
+
 ### Stanford, w/ englishFactored.ser.gz , w/unix `time` command:
 
       real	10m4.882s
@@ -438,7 +438,7 @@ TODO
 
 ### TODO - Comparatives
 
-RelEx is pretty broken when it comes to handling comparative sentences.
+RelEx is buggy when it comes to handling comparative sentences.
 This needs fixing.
 
 ### TODO - Wordnet Install
@@ -485,20 +485,19 @@ chunks that, when combined, produce continuous coherent text; only a
 minority of spoken sentences are entirely novel creations.
 
 Types of lexical chunks:
-    * Words (e.g., book, pen)
-    * Phrasal verbs (e.g. switch off, talk to ... about ...)
-    * Polywords (e.g., by the way, upside down)
-    * Collocations, or word partnerships (e.g., community service,
-      absolutely convinced)
-    * Idioms (e.g. break a leg, back in the day)
-    * Institutionalized utterances (e.g., I'll get it; We'll see;
-      That'll do; If I were you . . .; Would you like a cup of coffee?)
-    * Sentence frames and heads (e.g., That is not as . . . as you
-    * think;
-      The fact/suggestion/problem/danger was . . .) and even text frames
-      (e.g., In this paper we explore . . .; Firstly . . .; Secondly . .
-.;
-      Finally . . .)
+ * Words (e.g., book, pen)
+ * Phrasal verbs (e.g. switch off, talk to ... about ...)
+ * Polywords (e.g., by the way, upside down)
+ * Collocations, or word partnerships (e.g., community service,
+   absolutely convinced)
+ * Idioms (e.g. break a leg, back in the day)
+ * Institutionalized utterances (e.g., I'll get it; We'll see;
+   That'll do; If I were you . . .; Would you like a cup of coffee?)
+ * Sentence frames and heads (e.g., That is not as . . . as you
+ * think;
+   The fact/suggestion/problem/danger was . . .) and even text frames
+   (e.g., In this paper we explore . . .; Firstly . . .; Secondly . . .;
+   Finally . . .)
 
 (Taken from Lewis, M. (1997b). "Pedagogical implications of the lexical
 approach." In J. Coady & T.  Huckin (Eds.), "Second language vocabulary
