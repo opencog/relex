@@ -493,9 +493,8 @@ Types of lexical chunks:
  * Idioms (e.g. break a leg, back in the day)
  * Institutionalized utterances (e.g., I'll get it; We'll see;
    That'll do; If I were you . . .; Would you like a cup of coffee?)
- * Sentence frames and heads (e.g., That is not as . . . as you
- * think;
-   The fact/suggestion/problem/danger was . . .) and even text frames
+ * Sentence frames and heads (e.g., That is not as . . . as you think;
+ * The fact/suggestion/problem/danger was . . .) and even text frames
    (e.g., In this paper we explore . . .; Firstly . . .; Secondly . . .;
    Finally . . .)
 
