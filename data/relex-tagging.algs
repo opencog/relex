@@ -1570,11 +1570,20 @@ TAG_PRONOUNS_DEMON
 ; (personal) pronouns and interrogative pro-adverb's here?
 #TemplateActionAlg
 TAG_PRONOUNS_INTERROG
-<str> = who|whom|whose|which|what|where|how|why|when|whence|whither|whether|whereby|wherefore|wherein
+<str> = who|whom|whose|which|what
 <POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref interrogative-FLAG> = T
+;
+; tag the interrogative adverbs ...
+#TemplateActionAlg
+TAG_PROADVERBS_INTERROG
+<str> = what|where|how|why|when|whence|whither|whether|whereby|wherefore|wherein
+<POS> = adv|WORD
+=
+<ref interrogative-FLAG> = T
+<POS> = adv
 ;
 ; !??? XXX the rule above clobbers most of below...
 #TemplateActionAlg
