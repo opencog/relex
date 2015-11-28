@@ -38,7 +38,6 @@ import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.NLGInputView;
 import relex.output.LinkGraphGenerator;
-import relex.output.LogicView;
 import relex.output.OpenCogScheme;
 import relex.output.PrologList;
 import relex.output.RawView;
@@ -472,13 +471,6 @@ public class RelationExtractor
 			}
 		}
 		
-		boolean do_logic_output = false;
-		LogicView logicView =new LogicView();
-		if(commandMap.get("--or") != null){
-			do_logic_output = true;
-			logicView.loadRules();
-		}
-
 		int sentence_count = 0;
 		boolean more_input = true;
 		while (more_input)
@@ -612,14 +604,6 @@ public class RelationExtractor
 
 						if (html != null)
 							html.printf("<td valign='top'><pre>%s</pre></td>\n", escape(SimpleView.printRelations(parse)));
-					}
-
-					if (do_logic_output)
-					{
-						System.out.println("\n======\n");
-						System.out.println("Relex2Logic output:");
-						System.out.println(logicView.printRelationsNew(parse));
-						System.out.println("\n======\n");
 					}
 
 					if (commandMap.get("--prolog") != null)

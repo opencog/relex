@@ -49,13 +49,6 @@ OWLView.java:
 PrologList.java:
 	Generate Prolog output.
 
-LogicView.java:
-LogicProcessor.java:
-ScopeVariables.java:
-	Generates RelEx2Logic version of OpenCog Scheme.  Much of the work
-	are done by the helpers LogicProcessor and ScopeVariables.
-	See: http://wiki.opencog.org/w/Running_Relex2Logic_with_OpenCog
-
 NLGInputView.java:
 	Modification based on SimpleView using numbered indices.
 

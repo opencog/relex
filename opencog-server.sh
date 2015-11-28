@@ -52,10 +52,10 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex --verbose
 
 # Like the above, but listens on a non-default port
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4242
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --port 4242
 
 # Like the above, but sents the output to a different host, instead of
 # replying on the same socket.
-# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --logic --port 4242 --host somewhere.com:17001
+# java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --port 4242 --host somewhere.com:17001
 
 

@@ -20,7 +20,7 @@ package relex;
  */
 public class Version
 {
-	private static final String VERSION = "1.6.0";
+	private static final String VERSION = "1.6.2";
 
 	static public String getVersion()
 	{

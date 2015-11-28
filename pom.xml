@@ -179,17 +179,6 @@
 								<commandLineArgument>--relex --link</commandLineArgument>
 							</commandLineArguments>
 						</program>
-						<program>
-							<!-- Return with RelEx2Logic Link Grammar, and Relex output on default port 4444. -->
-							<id>relexd-logic</id>
-							<mainClass>relex.Server</mainClass>
-							<jvmSettings>
-								<maxMemorySize>1024m</maxMemorySize>
-							</jvmSettings>
-							<commandLineArguments>
-								<commandLineArgument>--logic</commandLineArgument>
-							</commandLineArguments>
-						</program>
 					</programs>
 				</configuration>
 			</plugin>
@@ -218,7 +207,6 @@
 				<filtering>false</filtering>
 				<directory>${basedir}/data</directory>
 				<includes>
-					<include>relex2logic-rules.txt</include>
 					<include>relex-penn-tagging-algs.txt</include>
 					<include>relex-semantic-algs.txt</include>
 					<include>relex-stanford-algs.txt</include>
