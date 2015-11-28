@@ -497,6 +497,7 @@ POS_CONJUNCTION_INVERTED2
 ;
 ; Closed-list "fanboys" coordinating conjunctions
 ; This over-rides any previous tags.
+; XXX but why were the previous tags wrong ???
 #TemplateActionAlg
 POS_CONJUNCTION_CLOSED
 <str> = for|and|nor|but|or|yet|so|than|either|neither
@@ -560,7 +561,7 @@ POS_PUNCTUATION3
 ;--------------------------------------------------------
 ; Misc pos tagging
 ;
-; "except" We're in agreement, except for John.
+; "except" -- We're in agreement, except for John.
 ; which might also be identified as a conjunction
 #TemplateActionAlg
 POS_EXCEPT
@@ -608,13 +609,16 @@ POS_DATE
 =
 <F_R POS> = det
 ;
-; Subordinating conjunctions that the above rules missed
-; some phrases that are not tagged ...
-; in_case in_case_that in_order_that while only_if now_that even_though even_if whether_or_not
-; not_only
+; Subordinating conjunctions that the above rules missed.
+; "when" cannot be part of this list; it can be an interrogative adverb.
+;
+; Some phrases that are not tagged ...
+; in_case in_case_that in_order_that while only_if now_that even_though
+; even_if whether_or_not not_only
+;
 #TemplateActionAlg
 POS_CONJUNCTION_SUB
-<str> = after|because|although|if|before|since|though|unless|when|while|as|whereas|since|until
+<str> = after|although|as|because|before|if|since|though|unless|until|while|whereas
 <POS> = WORD
 =
 <POS> = conjunction
