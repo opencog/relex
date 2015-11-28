@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="relex" xmlns:artifact="antlib:org.eclipse.aether.ant">
-    <property name="VERSION" value="1.6"/>    <!-- this is relex version 1.6.0 -->
-    <property name="REVISION" value="1.6.0"/> <!-- this is relex version 1.6.0 -->
+    <property name="VERSION" value="1.6"/>    <!-- this is relex version 1.6.2 -->
+    <property name="REVISION" value="1.6.2"/> <!-- this is relex version 1.6.2 -->
 
     <!-- <property name="PREFIX" value="${basedir}/lib"/> -->
     <property name="PREFIX" value="/usr/share/java"/>
