@@ -14,12 +14,12 @@
 ;  Empty or blank node is shown by "%"
 ;
 ;  Regular expression is introduced by "\"
-;  In regular expressions, "\." is converted to "[a-z\*]" 
+;  In regular expressions, "\." is converted to "[a-z\*]"
 ;     (meaning any lower case or the * character)
 ;     (also meaning that there is no way to represent a "." in a regular expression)
 ;
 ;/////////////////////////////////////////////////////////////////////////////
-; 
+;
 ;  Part-of-speech Tagging:
 ;  categories for Morphy are "noun" "verb" "adj" "adv"
 ;
@@ -100,7 +100,7 @@ SUBSCR_POS_G
 <POS> = noun
 
 ; j-anything: conjunction. The following currently appear in LG:
-; .j-a, .j-b .j-c .j-g .j-n .j-o .j-p .j-r .j-ru .j-v 
+; .j-a, .j-b .j-c .j-g .j-n .j-o .j-p .j-r .j-ru .j-v
 #TemplateActionAlg
 SUBSCR_POS_CONJ
 <subscript> = .j-.
@@ -178,7 +178,7 @@ SUBSCR_POS_S
 <POS> = noun
 
 ; t -- title or role
-; XXX fixme -- to the left or right of title/role is a persons name -- 
+; XXX fixme -- to the left or right of title/role is a persons name --
 #TemplateActionAlg
 SUBSCR_POS_T
 <subscript> = .t
@@ -238,7 +238,7 @@ SUBSCR_POS_Y
 <POS> = abbr
 
 ;/////////////////////////////////////////////////////////////////////////////
-; 
+;
 ; Step 2: Refined POS tagging based on linkage used.
 ;
 #TemplateActionAlg
@@ -263,7 +263,7 @@ POS_NOUN
 =
 <F_L POS> = noun
 ;
-; BI: "That is what the man said" -- tag "what" as noun; it'll get tagged 
+; BI: "That is what the man said" -- tag "what" as noun; it'll get tagged
 ; with a pronoun flag later.
 ;
 #TemplateActionAlg
@@ -276,7 +276,7 @@ POS_NOUN_INVERTED
 ;
 ; Closed-list determiners.
 ; These can be classified as:
-; -- Article 
+; -- Article
 ;    ++ definite article "the"
 ;    ++ indefinite article "a", "an"
 ; -- Possessive Adjective "my book" "their friends"
@@ -288,12 +288,12 @@ POS_NOUN_INVERTED
 ; See also: list of posessives, gernder, reflexive and anaphora below.
 ;
 ; One could argue that the following should be handled:
-;    another some any 
+;    another some any
 ;    my our thier her his its
-;    no each every certain 
+;    no each every certain
 ; Currently, most of the above get marked as "adjective", and that is
-; arguably more correct. To make up for this, we could add a 
-; "determiner-FLAG" to the output, for example, as shown below 
+; arguably more correct. To make up for this, we could add a
+; "determiner-FLAG" to the output, for example, as shown below
 ; (in the section that is commented out).
 ;
 #TemplateActionAlg
@@ -351,7 +351,7 @@ POS_PREP_1
 =
 <F_L POS> = prep
 ;When \MVp and .p occur together this rules applies
-;It looked like a nice chair. 
+;It looked like a nice chair.
 ;The word "like" is pos tagged with .p and also connected with \MVp link
 #TemplateActionAlg
 POS_PREP_2
@@ -409,7 +409,7 @@ POS_ADJ
 <F_L POS> = adj
 ;
 ; Treat Pp like an adjective if it takes no object ("I am here.")
-; Treat Mp like it identifies adjective to left if "prep" takes 
+; Treat Mp like it identifies adjective to left if "prep" takes
 ; no object (in_line: "The man in line is happy.")
 ; Treat Ma like an adjective, e.g. "appropriate", in
 ; "It was done in a manner appropriate for the occasion."
@@ -439,7 +439,7 @@ POS_ADJ_NUMBER
 ;
 ; --------------------------------------------------------------
 ;
-; Adverbs: 
+; Adverbs:
 ; "He plays better" uses MVb link.
 ; "He hears more" uses the MVm link.
 ; Question words (WH-words) are typically adverbs
@@ -471,9 +471,9 @@ POS_WHO_NOUN
 ;
 ;--------------------------------------------------------
 ; Identify a conjuction:
-;   The word "after" in "He spoke after he ate." (subordinating 
+;   The word "after" in "He spoke after he ate." (subordinating
 ;        conjunction, C link)
-;   The word "yet" in "He crossed his heart, yet he lied."  
+;   The word "yet" in "He crossed his heart, yet he lied."
 ;        (coordinating conjunction, W link)
 ;   The word "than" in "He earns more than I expected."
 ;        (Z link)
@@ -487,7 +487,7 @@ POS_CONJUNCTION_INVERTED
 ; Override prep
 ;   The second "as" in "He earns as much as I expected."
 ;        (Z link), override prep identification from MV.
-; 
+;
 #TemplateActionAlg
 POS_CONJUNCTION_INVERTED2
 <LAB> = \Z\.*
@@ -504,7 +504,7 @@ POS_CONJUNCTION_CLOSED
 <POS> = conjunction
 ;
 ;--------------------------------------------------------
-; Identify a particle: 
+; Identify a particle:
 ;   The word "that" in "I heard that you fell."
 #TemplateActionAlg
 POS_TH_PARTICLE
@@ -513,9 +513,9 @@ POS_TH_PARTICLE
 =
 <F_R POS> = particle
 ;
-; Identify a particle: 
+; Identify a particle:
 ;   The word "to" in "I like to read."
-; Well, but most people call this a prep ... 
+; Well, but most people call this a prep ...
 #TemplateActionAlg
 POS_I_PARTICLE
 <LAB> = I
@@ -619,7 +619,7 @@ POS_CONJUNCTION_SUB
 =
 <POS> = conjunction
 ;
-; well, lets tag some of the words in conjunction phrases... 
+; well, lets tag some of the words in conjunction phrases...
 #TemplateActionAlg
 POS_CONJUNCTION_SUB_PHRASE
 <str> = not|only
@@ -684,8 +684,8 @@ POS_IT
 ;
 ;/////////////////////////////////////////////////////////////////////////////
 ;
-; MORPHOLOGY 
-; Apply word lemmas before working on tense, so that tense can 
+; MORPHOLOGY
+; Apply word lemmas before working on tense, so that tense can
 ; make use of the root forms.
 ;
 #MorphyAlg
@@ -762,7 +762,7 @@ TENSE_DO
 ;
 #TemplateActionAlg
 TENSE_COPULA
-; Pp is not used if it takes a complement, so that copula is still explicit 
+; Pp is not used if it takes a complement, so that copula is still explicit
 ; in "John is in the park."
 ; But "John is here." treats "here" like a predicative adjective
 <LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
@@ -781,7 +781,7 @@ TENSE_COPULA_INV
 <F_L tense prev> = <F_R tense>
 ;
 ; The place holder prevents "will" from having empty tense.
-; Without that, the next verb might be affected by TENSE-LIST-CONNECT1, 
+; Without that, the next verb might be affected by TENSE-LIST-CONNECT1,
 ; which would incorrectly set the following verb's prev feature to itself.
 #TemplateActionAlg
 TENSE_FUTURE
@@ -825,7 +825,7 @@ TENSE_PROGRESSIVE
 ;
 #TemplateActionAlg
 TENSE_PASSIVE_PARTICIPLE
-; This prevents tense from being set to present; the correct tense 
+; This prevents tense from being set to present; the correct tense
 ; should be "past" in most(?) all(?) cases.
 <LAB>=\Mv\.*
 <F_L str> != be
@@ -873,9 +873,10 @@ TENSE_IMPERATIVE
 <F_R tense val> = imperative
 <F_R POS> = verb
 ;
-; Prepare a subject for a subjectless imperative sentence (to be linked in the sem-algs)
-;	-- NB: we should probably use this strategy to add other imvisible
-;	constitutents to other setence-types. e.g. How much (money) does it cost?
+; Prepare a subject for a subjectless imperative sentence (to be linked
+; in the sem-algs)
+; -- NB: we should probably use this strategy to add other invisible
+;    constitutents to other setence-types. e.g. How much (money) does it cost?
 ;
 #TemplateActionAlg
 ADDIMPSUBJ
@@ -885,8 +886,8 @@ ADDIMPSUBJ
 <F_L str> = you
 <F_R subj> = %
 ;
-; post-tense morphology cleanup: If the orig verb string is "saw" 
-; and the tense is "past", then we are seeing with eyes, not 
+; post-tense morphology cleanup: If the orig verb string is "saw"
+; and the tense is "past", then we are seeing with eyes, not
 ; sawing with a saw.
 #TemplateActionAlg
 SEE_SAW
@@ -921,8 +922,8 @@ PROPER_NAME_AND_ENTITIES_AND_IDIOMS
 <F_R> = $right
 =
 ;
-; Fix up entities and idioms -- 
-; Necessary because the WordSequenceCombineAlg changes replaces <str> 
+; Fix up entities and idioms --
+; Necessary because the WordSequenceCombineAlg changes replaces <str>
 ; with a new node
 ;
 #TemplateActionAlg
@@ -943,7 +944,7 @@ MERGED_EMPTY_STRING_ELIMINATION
 ;
 ; ---------------
 ; The LOCATION-FLAG, etc. are set by the entity detection code.
-; the following rules copy them to the ref, where they will 
+; the following rules copy them to the ref, where they will
 ; appear in the relex output.
 ;
 ; Make sure that str is not null, as the G-link merging above will
@@ -1030,7 +1031,7 @@ PROPER_NAME_POS_CORRECTION
 <F_R POS> = %
 <F_R POS> = noun
 ;
-; G link are entities identified by link-grammar, that the 
+; G link are entities identified by link-grammar, that the
 ; entity detector may have missed. Tag these as entities, of some
 ; unspecified type.
 ;
@@ -1112,7 +1113,7 @@ DISTANCE_EXP
 ; -------------------------------------------
 ; Combine particles and other things.
 ; For example, "Please go away" creates the polyword "go_away".
-; Note that part of speech is still identified as "verb", which 
+; Note that part of speech is still identified as "verb", which
 ; in this case should be taken to mean "phrasal verb".
 ;
 #TwoWordCombineToLeftAlg
@@ -1275,9 +1276,9 @@ PREPQUESTION5
 ;
 ; The rules below mainly serve to drop the relative-reference pronouns
 ; from the output, since thier referents are immediately resolved. So,
-; for example, "The dog, who barked,...", its clear that "who" refers 
+; for example, "The dog, who barked,...", its clear that "who" refers
 ; to "dog"; this is explicit in the parse, and so "who" plays no role
-; in the relex output. 
+; in the relex output.
 ;
 #TemplateActionAlg
 SET_RS_FLAG
@@ -1345,7 +1346,7 @@ PREP_RELATIVE_REF3
 ; Determiners (D links) get priority to identify noun number.
 ; Then S and O links can identify as singular or plural.  However,
 ; if an S or O link identifies the noun as singular, but it has no
-; determiner, then it is "uncountable"  
+; determiner, then it is "uncountable"
 ;
 ; Test sentences
 ; Kim eats butter and those deer at Tuesdays.
