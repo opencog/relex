@@ -26,19 +26,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import org.linkgrammar.JSONUtils;
-import relex.output.LogicView;
-import relex.output.OpenCogScheme;
 import relex.output.SimpleView;
 import relex.output.StanfordView;
 import relex.Version;
 
 
 /**
- * The PlainTextServer class provides a very simple socket-based parse server.
- * It will listen for plain-text input sentences on port 3333, and will
- * generate plain-text parse output.
+ * The PlainTextServer class provides a very simple socket-based parse
+ * server.  It will listen for plain-text input sentences on port 3333,
+ * and will generate plain-text parse output.
  *
- * It is intended that this server be used for on-line web demos, and nothing more.
+ * It is intended that this server be used for on-line web demos, and
+ * nothing more.
  *
  * This class understans a quasi-JSON format. The followig parameters
  * are recognized:
@@ -51,12 +50,10 @@ import relex.Version;
  * <li><b>showPhrase</b> Return the Phrase Structure tree</li>
  * <li><b>showRelex</b> Return the RelEx dependency relations</li>
  * <li><b>showStanford</b> Return the Stanford Dependency relations</li>
- * <li><b>showOpenCog</b> Return link-grammar and relex output in OpenCog scheme format.</li>
- * <li><b>showLogic</b>  Return relations in OpenCog Logic format</li>
  * </ul>
  *
  * Example usage:
- * echo "maxLinkages:1,showLink:true,showLogic:true,text:this is a test" | netcat localhost 3333
+ * echo "maxLinkages:1,showLink:true,text:this is a test" | netcat localhost 3333
  */
 
 public class PlainTextServer
@@ -146,12 +143,6 @@ public class PlainTextServer
 		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 
-		LogicView lv = new LogicView();
-		lv.loadRules();
-		OpenCogScheme oc = new OpenCogScheme();
-		oc.setShowLinkage(true);
-		oc.setShowRelex(true);
-
 		try
 		{
 			listen_sock = new ServerSocket(s.listen_port);
@@ -190,8 +181,6 @@ public class PlainTextServer
 				boolean show_phrase = false;
 				boolean show_relex = false;
 				boolean show_stanford = false;
-				boolean show_opencog = false;
-				boolean show_logic = false;
 				try {
 					Map<String, String> msg = msgreader.readMsg(in);
 					line = msg.get("text");
@@ -200,8 +189,6 @@ public class PlainTextServer
 					show_phrase = JSONUtils.getBool("showPhrase", msg, show_phrase);
 					show_relex = JSONUtils.getBool("showRelex", msg, show_relex);
 					show_stanford = JSONUtils.getBool("showStanford", msg, show_stanford);
-					show_opencog = JSONUtils.getBool("showOpenCog", msg, show_opencog);
-					show_logic = JSONUtils.getBool("showLogic", msg, show_logic);
 				} catch (RuntimeException e) {
 					line = msgreader.getRawText();
 					line = line.trim();
@@ -209,14 +196,13 @@ public class PlainTextServer
 				System.err.println("Info: recv input: \"" + line + "\"");
 
 				if (!show_link && !show_phrase && !show_relex &&
-				    !show_stanford && !show_opencog && !show_logic)
+				    !show_stanford)
 				{
 					// Turn everything on by default
 					show_link = true;
 					show_phrase = true;
 					show_relex = true;
 					show_stanford = true;
-					show_logic = true;
 				}
 
 				r.do_stanford = show_stanford;
@@ -270,22 +256,6 @@ public class PlainTextServer
 					{
 						out.println("Stanford-style dependency relations:\n");
 						String fin = StanfordView.printRelations(parse, true, "    ");
-						out.println(fin);
-					}
-					if (show_opencog)
-					{
-						out.println("OpenCog Scheme:\n");
-						oc.setParse(parse);
-						out.println(oc.toString());
-						out.println("(ListLink (stv 1 1)");
-						out.println("   (AnchorNode \"# New Parsed Sentence\")");
-						out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-						out.println(")\n");
-					}
-					if (show_logic)
-					{
-						out.println("Logic relations:\n");
-						String fin = lv.printRelationsNew(parse);
 						out.println(fin);
 					}
 					if (verbose)

@@ -29,7 +29,6 @@ import java.util.Map;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.output.SimpleView;
-import relex.output.LogicView;
 import relex.output.OpenCogScheme;
 import relex.Version;
 
@@ -58,7 +57,6 @@ public class Server
 		int listen_port = 4444;
 		int max_parses = 1;
 		boolean relex_on = false;
-		boolean logic_on = false;
 		boolean link_on = false;
 		boolean free_text = false;
 		boolean verbose = false;
@@ -73,7 +71,6 @@ public class Server
 			" --lang lang\t Set langauge (default: en)\n" +
 			" -n number  \t Max number of parses to return (default: 1)\n" +
 			" --relex    \t Output RelEx relations (default)\n" +
-			" --logic    \t Output of Relex2Logic scheme function calls and Relex relations" +
 			" --link     \t Output Link Grammar Linkages\n" +
 			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
 			" --verbose  \t Print parse output to server stdout.\n";
@@ -85,7 +82,6 @@ public class Server
 		flags.add("--relex");
 		flags.add("--free-text");
 		flags.add("--verbose");
-		flags.add("--logic");
 		HashSet<String> opts = new HashSet<String>();
 		opts.add("-n");
 		opts.add("-p");
@@ -134,7 +130,6 @@ public class Server
 		if (commandMap.get("--link") != null) link_on = true;
 		if (commandMap.get("--relex") != null) relex_on = true;
 		if (commandMap.get("--free-text") != null) free_text = true;
-		if (commandMap.get("--logic") != null) logic_on = true;
 
 		if (commandMap.get("--verbose") != null)
 		{
@@ -152,9 +147,8 @@ public class Server
 		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
 		OpenCogScheme opencog = new OpenCogScheme();
 		DocSplitter ds = DocSplitterFactory.create();
-		LogicView logicView = new LogicView();
 
-		if (!relex_on && !link_on && !logic_on)
+		if (!relex_on && !link_on)
 		{
 			// By default just export RelEx output.
 			relex_on = true;
@@ -164,17 +158,12 @@ public class Server
 			System.err.println("Info: Link grammar output on.");
 			opencog.setShowLinkage(link_on);
 		}
-		if (logic_on)
-		{
-			System.err.println("Info: Relex2Logic ouptut on");
-			logicView.loadRules();
-		}
 		if (relex_on)
 		{
 			System.err.println("Info: RelEx output on.");
 			opencog.setShowRelex(relex_on);
 		}
-		if (!relex_on && !logic_on)
+		if (!relex_on)
 		{
 			re.do_apply_algs = false;
 		}
@@ -353,16 +342,8 @@ public class Server
 						out.flush();
 						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
 
-						if (logic_on)
-						{
-							out.println("; ##### START OF R2L #####");
-							out.println(logicView.printRelationsNew(parse));
-							out.flush();
-							System.err.println("Info: called relex2logic functions");
-						}
-
 						// This is for simplifying pre-processing of scheme string
-						// before evaluating it in opencog, for Relex2Logic.
+						// before evaluating it in opencog.
 						out.println("; ##### END OF A PARSE #####");
 						out.flush();
 					}
