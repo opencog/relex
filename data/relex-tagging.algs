@@ -1564,15 +1564,19 @@ TAG_PRONOUNS_DEMON
 <ref pronoun-FLAG> = T
 <ref demonstrative-FLAG> = T
 ;
+; This lists all the WH-words. interrogative-FLAG is used by OpenCog
+; Relex2Logic code to infer that a question is being asked.
+; Should we distinguish between interrogative determiners, interrogative
+; (personal) pronouns and interrogative pro-adverb's here?
 #TemplateActionAlg
 TAG_PRONOUNS_INTERROG
-<str> = who|whom|whose|which|what
+<str> = who|whom|whose|which|what|where|how|why|when|whence|whither|whether|whereby|wherefore|wherein
 <POS> = noun|WORD
 =
 <ref pronoun-FLAG> = T
 <ref interrogative-FLAG> = T
 ;
-;
+; !??? XXX the rule above clobbers most of below...
 #TemplateActionAlg
 TAG_PRONOUNS_RELATIVE
 <str> = who|whoever|whom|whomever|whose|which|that|whatever|whenever|whichever
