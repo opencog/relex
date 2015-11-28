@@ -1,4 +1,7 @@
-New in version 1.6.0 (XXX 2015)
+New in version 1.6.2 (XXX 2015)
+ * Remove Relex2Logic code; its now in opencog.
+
+New in version 1.6.0 (2015)
  * Update install-ubuntu-dependencies.sh for latest link-grammar
  * Dockerfile from Danny Brian.
  * Use maven to resolve dependencies, from Hendy Irawan.
