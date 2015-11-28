@@ -349,7 +349,7 @@ English-language sentences.  This  script removes wiki markup, URL's
 tables, images, & etc.  It currently seems to be pretty darned
 bullet-proof, although it might handle multi-line refs incorrectly.
 
-### `relexd`, `relexd-relex`, `relexd-link`, `relexd-logic`
+### `relexd`, `relexd-relex`, `relexd-link`
 
 If you built RelEx with Maven, these scripts can be used.
 They accept additional arguments to be passed to `relex.Server`.
@@ -357,7 +357,6 @@ They accept additional arguments to be passed to `relex.Server`.
 1. `target/relex/bin/relexd`, which runs `java relex.Server ...`
 2. `target/relex/bin/relexd-relex`, which runs `java relex.Server --relex ...`
 3. `target/relex/bin/relexd-link`, which runs `relex.Server --link --relex --verbose ...`
-4. `target/relex/bin/relexd-logic`, which runs `java relex.Server --logic ...`
 
 
 Using RelEx in custom code

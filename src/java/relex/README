@@ -33,9 +33,6 @@ feature:
 	relationships and features.  The graph of linguistics relationships
 	is the central data structure around which RelEx operates.
 
-logic:
-	The RelEx2Logic code, a temporary hack for OpenCog...
-
 morphy:
 	A simple, easy-to-use class for finding the base forms (lemmas)
 	of a word. The current system uses WordNet to determine the lemmas,
