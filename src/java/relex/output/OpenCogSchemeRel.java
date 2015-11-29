@@ -22,10 +22,10 @@ import relex.feature.RelationCallback;
 
 /**
  * The OpenCogSchemeRel object outputs a ParsedSentence in the
- * OpenCog-style Scheme format. The actual format used, and its rationale,
- * is described in greater detail in the opencog wiki, at
+ * OpenCog-style Scheme format. The actual format used, and its
+ * rationale, is described in greater detail in the opencog wiki, at
  * http://wiki.opencog.org/w/RelEx_OpenCog_format
- * see also the opencog source code directory opencog/nlp/wsd/README.
+ * See also the opencog source code directory opencog/nlp/wsd/README.
  *
  * As the same sentence can have multiple parses, this class only
  * displays a single, particular parse.
@@ -188,7 +188,7 @@ class OpenCogSchemeRel
 				refs += "(LemmaLink (stv 1.0 1.0)\n";
 				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
 
-				if(lemma.matches("[-+]?[0-9]*?\\.?[0-9]+"))
+				if (lemma.matches("[-+]?[0-9]*?\\.?[0-9]+"))
 				{
 					refs += "   (NumberNode \"" + lemma + "\")\n";
 				}
@@ -217,4 +217,3 @@ class OpenCogSchemeRel
 	}
 
 } // end RelScheme
-
