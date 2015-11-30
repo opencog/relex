@@ -350,9 +350,15 @@ POS_PREP_1
 <F_L POS> = WORD
 =
 <F_L POS> = prep
-;When \MVp and .p occur together this rules applies
-;It looked like a nice chair.
-;The word "like" is pos tagged with .p and also connected with \MVp link
+;
+; When \MVp and .p occur together this rules applies
+; Example: "It looked like a nice chair."
+; The word "like" is pos tagged with .p and also connected with \MVp link
+; in this case, "like" is prep.
+; XXX FIXME ... its bad form do depend on the subscripts. Are there
+; any cases where the right side of an MVp is NOT a prep?  If so, these
+; should be distinguished in LG, with a new link type, instead of using
+; a subscript... Note: most .p subscripts mean "plural noun" not "prep".
 #TemplateActionAlg
 POS_PREP_2
 <LAB> = \MVp
@@ -1003,12 +1009,6 @@ ENTITY-EMOTICON
 <str> != %
 =
 <ref emoticon-FLAG> = T
-;
-#TemplateActionAlg
-INFLECTION_TAG
-<subscript> != %
-=
-<ref subscript-TAG> = <subscript>
 ;
 #TemplateActionAlg
 LABEL_IDIOMS
