@@ -84,19 +84,31 @@ class OpenCogSchemeRel
 				value = attrName.toLowerCase();
 
 			// Special treatment for part-of-speech.
-			String link_start = "(InheritanceLink (stv 1.0 1.0)\n";
-			String link_end   = ")\n";
 			if (attrName.equals("pos"))
 			{
-				link_start = "(PartOfSpeechLink (stv 1.0 1.0)\n";
-				link_end   = ")\n";
+				outstr += "(PartOfSpeechLink (stv 1.0 1.0)\n";
+				outstr += "   (WordInstanceNode \"" + guid + "\")\n";
+				outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
+				outstr += ")\n";
+			}
+
+			// Special treatment for tense
+			else if (attrName.equals("tense"))
+			{
+				outstr += "(TenseLink (stv 1.0 1.0)\n";
+				outstr += "   (WordInstanceNode \"" + guid + "\")\n";
+				outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
+				outstr += ")\n";
 			}
 
 			// All of the other cases.
-			outstr += link_start;
-			outstr += "   (WordInstanceNode \"" + guid + "\")\n";
-			outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
-			outstr += link_end;
+			else
+			{
+				outstr += "(InheritanceLink (stv 1.0 1.0)\n";
+				outstr += "   (WordInstanceNode \"" + guid + "\")\n";
+				outstr += "   (DefinedLinguisticConceptNode \"" + value + "\")\n";
+				outstr += ")\n";
+			}
 
 			return false;
 		}
