@@ -1,3 +1,13 @@
+She looks good.
+She looks left.
+She looks right.
+She looks up.
+She looks down.
+She looks high.
+She looks drunk.
+END.
+Look up.
+Look down.
 We walked to his car.
 We walked to her car.
 END.

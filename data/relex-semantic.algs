@@ -1367,6 +1367,15 @@ TODO_TO_LINK_FOR_NOUNS
 ;<ref links _to-do> = <to-do>
 ;
 ;
+; The rule below is frustratingly wrong/incorrect half the time.
+; What should happen:
+; "She looks good"  _to-be(look, good)
+; "She looks left"  _to-do(look, left)
+; What currently happens:
+; "She looks good"  _to-be(look, good)
+; "She looks left"  _advmod(look, left)
+; "She looks right" _to-be(look, right)
+
 #TemplateActionAlg
 TOBE1
 <LAB> = \Pa\.*
