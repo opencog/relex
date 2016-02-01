@@ -320,6 +320,9 @@ $have_text = 1;
 	s/^:://;
 	s/^://;
 
+	# Ignore plain }} lines
+	s/^\}+$//;
+
 	if ($page_not_open) {
 		$page_not_open = 0;
 		open PAGE, ">" . $page_out_directory . "/" . $page_title;
