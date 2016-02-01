@@ -329,6 +329,9 @@ $have_text = 1;
 	# Ignore plain }} lines
 	s/^\}+$//;
 
+	# Trim
+	s/^\s+|\s+$//;
+
 	if ($page_not_open) {
 		$page_not_open = 0;
 		open PAGE, ">" . $page_out_directory . "/" . $page_title;
