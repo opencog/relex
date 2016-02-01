@@ -302,11 +302,16 @@ $have_text = 1;
 	s/&bull;/•/g;
 	s/&nbsp;/ /g;
 
-	# Make sure bulleted lists have a period at the end of them.
+	# Make sure bulleted lists have a period at the end of them,
+	# but don't add the period if it is empty.
 	# But do try to avoid double-periods.
-	if (/^\*/ && !/\.$/) { $_ = $_ . "."; }
-	if (/^#/ && !/\.$/) { $_ = $_ . "."; }
-	if (/^:/ && !/\.$/) { $_ = $_ . "."; }
+	if (/^\*.+/ || /^#.+/ || /^:.+/) {
+		# Ignore }} append at the end, if any
+		# e.g. * Sommerdahl}}
+		s/\}+$//g;
+
+		if (!/\.$/) { $_ = $_ . "."; }
+	}
 
 	# kill bullets
 	s/^\*\*\*//;
