@@ -44,9 +44,6 @@ $page_not_open = 1;
 
 while (<>)
 {
-# XXX
-print "Before:\n$_\n";
-
 	if (/<title>(.+?)<\/title>/) {
 		$page_title = $1;
 		close PAGE;
@@ -147,9 +144,6 @@ print "Before:\n$_\n";
 	# kill multi-line math markup
 	if (/&lt;math&gt;/) { $have_text = 0; }
 	if (/&lt;\/math&gt;/) { $have_text = 1; next; }
-
-# XXX
-$have_text = 1;
 
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
@@ -340,7 +334,4 @@ $have_text = 1;
 		binmode PAGE, ':encoding(UTF-8)';
 	}
 	print PAGE "$_\n";
-
-# XXX
-print "\nAfter:\n$_\n\n";
 }
