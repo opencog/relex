@@ -44,6 +44,9 @@ $page_not_open = 1;
 
 while (<>)
 {
+# XXX
+print "Before:\n$_\n";
+
 	if (/<title>(.+?)<\/title>/) {
 		$page_title = $1;
 		close PAGE;
@@ -110,8 +113,9 @@ while (<>)
 	s/(\d+\|\|)+\d+//g;
 
 	# Ignore single-line templates e.g. {{template gorp}}
+	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
 	# Do this before processing multi-line templates
-	s/\{\{.+?\}\}//g;
+	s/\{\{.+?\}\}+//g;
 
 	# kill infoxes and other multi-line templates. These may have
 	# embedded templates.
@@ -141,6 +145,9 @@ while (<>)
 	# kill multi-line math markup
 	if (/&lt;math&gt;/) { $have_text = 0; }
 	if (/&lt;\/math&gt;/) { $have_text = 1; next; }
+
+# XXX
+$have_text = 1;
 
 	# ignore everything that isn't in a text section.
 	if (0 == $have_text) { next; }
@@ -319,4 +326,7 @@ while (<>)
 		binmode PAGE, ':encoding(UTF-8)';
 	}
 	print PAGE "$_\n";
+
+# XXX
+print "\nAfter:\n$_\n\n";
 }
