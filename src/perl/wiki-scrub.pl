@@ -111,7 +111,8 @@ print "Before:\n$_\n";
 
 	# kill stuff like this: 172||9||23||2||30||1||225||12
 	# or this: 118||2||||||||||||||118||2
-	s/\d+(\d*\|\|)+\d+//g;
+	# or this: !Total||105||37
+	s/(\d+|\!Total\|\|)(\d*\|\|)+\d+//g;
 
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
