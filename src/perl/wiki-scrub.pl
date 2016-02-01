@@ -305,7 +305,7 @@ $have_text = 1;
 	# Make sure bulleted lists have a period at the end of them,
 	# but don't add the period if it is empty.
 	# But do try to avoid double-periods.
-	if (/^\*.+/ || /^#.+/ || /^:.+/) {
+	if (/^\*.+/ || /^#.+/ || /^:.+/ || /^-.+/) {
 		# Ignore }} append at the end, if any
 		# e.g. * Sommerdahl}}
 		s/\}+$//g;
@@ -324,6 +324,7 @@ $have_text = 1;
 	s/^::://;
 	s/^:://;
 	s/^://;
+	s/^-+//;
 
 	# Ignore plain }} lines
 	s/^\}+$//;
