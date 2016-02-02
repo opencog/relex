@@ -30,7 +30,7 @@ while (@ARGV) {
 }
 
 if ($HELP) {
-	print "Usage ./split-sentences.perl (-l [en|de|...]) < textfile > splitfile\n";
+	print "Usage ./split-sentences.pl (-l [en|de|...]) < textfile > splitfile\n";
 	exit;
 }
 if (!$QUIET) {
