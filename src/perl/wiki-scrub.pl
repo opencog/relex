@@ -107,11 +107,14 @@ while (<>)
 	if ($have_ptable) { next; }
 
 	# kill stuff like this: 172||9||23||2||30||1||225||12
-	s/(\d+\|\|)+\d+//g;
+	# or this: 118||2||||||||||||||118||2
+	# or this: !Total||105||37
+	s/(\d+|\!Total\|\|)(\d*\|\|)+\d+//g;
 
 	# Ignore single-line templates e.g. {{template gorp}}
+	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
 	# Do this before processing multi-line templates
-	s/\{\{.+?\}\}//g;
+	s/\{\{.+?\}\}+//g;
 
 	# kill infoxes and other multi-line templates. These may have
 	# embedded templates.
@@ -295,11 +298,16 @@ while (<>)
 	s/&bull;/•/g;
 	s/&nbsp;/ /g;
 
-	# Make sure bulleted lists have a period at the end of them.
+	# Make sure bulleted lists have a period at the end of them,
+	# but don't add the period if it is empty.
 	# But do try to avoid double-periods.
-	if (/^\*/ && !/\.$/) { $_ = $_ . "."; }
-	if (/^#/ && !/\.$/) { $_ = $_ . "."; }
-	if (/^:/ && !/\.$/) { $_ = $_ . "."; }
+	if (/^\*.+/ || /^#.+/ || /^:.+/ || /^-.+/) {
+		# Ignore }} append at the end, if any
+		# e.g. * Sommerdahl}}
+		s/\}+$//g;
+
+		if (!/\.$/) { $_ = $_ . "."; }
+	}
 
 	# kill bullets
 	s/^\*\*\*//;
@@ -312,6 +320,13 @@ while (<>)
 	s/^::://;
 	s/^:://;
 	s/^://;
+	s/^-+//;
+
+	# Ignore plain }} lines
+	s/^\}+$//;
+
+	# Trim
+	s/^\s+|\s+$//;
 
 	if ($page_not_open) {
 		$page_not_open = 0;
