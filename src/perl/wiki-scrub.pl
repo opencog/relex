@@ -193,6 +193,9 @@ while (<>)
 	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
+	# kill weblinks with no text i.e. [http:blah.com/whatever]
+	s/\[http(.+?)\]//g;
+
 	# ignore misc html markup
 	s/&lt;references\s*\/&gt;//g;
 	s/&lt;i&gt;//g;
