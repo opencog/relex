@@ -41,6 +41,7 @@ $have_cmnt = 0;
 $notfirst = 0;
 $page_title = "";
 $page_not_open = 1;
+$start_processing = 0;
 
 while (<>)
 {
@@ -49,7 +50,9 @@ while (<>)
 		close PAGE;
 		$page_not_open = 1;
 	}
-	if (/<text xml:space/) { $have_text = 1; }
+	if (/<text xml:space/) { $have_text = 1; $start_processing = 1; }
+
+	if (!$start_processing) { next; }
 
 	# End of a wiki page.
 	# If there are any badly-formed tables, etc. then reset the state
@@ -61,6 +64,7 @@ while (<>)
 		$have_ptable = 0;
 		$have_cmnt = 0;
 		$notfirst = 0;
+		$start_processing = 0;
 	}
 
 	chop;
