@@ -309,10 +309,10 @@ while (<>)
 	s/&bull;/•/g;
 	s/&nbsp;/ /g;
 
-	# Make sure bulleted lists have a period at the end of them,
-	# but don't add the period if it is empty.
+	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
-	if (/^\*.+/ || /^#.+/ || /^:.+/ || /^-.+/) {
+	# Also don't add the period if it is empty.
+	if (/^\*\S+/ || /^#\S+/ || /^:\S+/ || /^-\S+/ || /^–\S+/) {
 		# Ignore }} append at the end, if any
 		# e.g. * Sommerdahl}}
 		s/\}+$//g;
