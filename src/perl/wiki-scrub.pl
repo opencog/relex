@@ -185,7 +185,7 @@ while (<>)
 	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
 
 	# Kill ordinary links -- [[Stuff more stuff]]
-	s/\[\[([:,\.\/\-\w '\(\)]+?)\]\]/$1/g;
+	s/\[\[([:,\.\/\-\+\w '\(\)]+?)\]\]/$1/g;
 
 	# Continue with the above, sometimes the ]] is not on the same line...
 	s/^\]\]$//g;
