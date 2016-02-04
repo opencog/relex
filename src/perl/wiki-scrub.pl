@@ -187,6 +187,9 @@ while (<>)
 	# Kill ordinary links -- [[Stuff more stuff]]
 	s/\[\[([:,\.\/\-\w '\(\)]+?)\]\]/$1/g;
 
+	# Continue with the above, sometimes the ]] is not on the same line...
+	s/^\]\]$//g;
+
 	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
 
