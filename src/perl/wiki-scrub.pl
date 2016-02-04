@@ -177,6 +177,9 @@ while (<>)
 	# Kill image tags of the form [[Image:Chemin.png|thumb|300px|blah]]
 	s/\[\[Image:.+?\]\]//g;
 
+	# Kill File tags of the form [[File:blah.jpg|thumb|right|350px| blah]]
+	s/\[\[File:.+?\]\]//g;
+
 	# kill wikilinks of the form [[the real link#ugh|The Stand-In Text]]
 	# also [[Wikipedia:special/blah|The Stand-In Text]]
 	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
