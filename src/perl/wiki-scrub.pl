@@ -41,6 +41,7 @@ $have_cmnt = 0;
 $notfirst = 0;
 $page_title = "";
 $page_not_open = 1;
+$start_processing = 0;
 
 while (<>)
 {
@@ -49,7 +50,9 @@ while (<>)
 		close PAGE;
 		$page_not_open = 1;
 	}
-	if (/<text xml:space/) { $have_text = 1; }
+	if (/<text xml:space/) { $have_text = 1; $start_processing = 1; }
+
+	if (!$start_processing) { next; }
 
 	# End of a wiki page.
 	# If there are any badly-formed tables, etc. then reset the state
@@ -61,6 +64,7 @@ while (<>)
 		$have_ptable = 0;
 		$have_cmnt = 0;
 		$notfirst = 0;
+		$start_processing = 0;
 	}
 
 	chop;
@@ -109,7 +113,9 @@ while (<>)
 	# kill stuff like this: 172||9||23||2||30||1||225||12
 	# or this: 118||2||||||||||||||118||2
 	# or this: !Total||105||37
-	s/(\d+|\!Total\|\|)(\d*\|\|)+\d+//g;
+	# Sometimes it doesn't start or end with a number, and also there could be
+	# markup in between like: ||11||3||colspan=&quot;2&quot;|-||11||3
+	s/(.*\|\|)+\d*$//;
 
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
@@ -175,15 +181,21 @@ while (<>)
 	# Kill image tags of the form [[Image:Chemin.png|thumb|300px|blah]]
 	s/\[\[Image:.+?\]\]//g;
 
+	# Kill File tags of the form [[File:blah.jpg|thumb|right|350px| blah]]
+	s/\[\[File:.+?\]\]//g;
+
 	# kill wikilinks of the form [[the real link#ugh|The Stand-In Text]]
 	# also [[Wikipedia:special/blah|The Stand-In Text]]
 	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
 
 	# Kill ordinary links -- [[Stuff more stuff]]
-	s/\[\[([:,\.\/\-\w '\(\)]+?)\]\]/$1/g;
+	s/\[\[([:,\.\/\-\+\w '\(\)]+?)\]\]/$1/g;
 
 	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
+
+	# kill weblinks with no text i.e. [http:blah.com/whatever]
+	s/\[http(.+?)\]//g;
 
 	# ignore misc html markup
 	s/&lt;references\s*\/&gt;//g;
@@ -298,13 +310,13 @@ while (<>)
 	s/&bull;/•/g;
 	s/&nbsp;/ /g;
 
-	# Make sure bulleted lists have a period at the end of them,
-	# but don't add the period if it is empty.
+	# Make sure bulleted lists have a period at the end of them.
 	# But do try to avoid double-periods.
-	if (/^\*.+/ || /^#.+/ || /^:.+/ || /^-.+/) {
+	# Also don't add the period if it is empty.
+	if (/^\*\S+/ || /^#\S+/ || /^:\S+/ || /^-\S+/ || /^–\S+/) {
 		# Ignore }} append at the end, if any
 		# e.g. * Sommerdahl}}
-		s/\}+$//g;
+		s/\}+$//;
 
 		if (!/\.$/) { $_ = $_ . "."; }
 	}
@@ -323,7 +335,10 @@ while (<>)
 	s/^-+//;
 
 	# Ignore plain }} lines
-	s/^\}+$//;
+	s/^\s*\}+$//;
+
+	# Ignore plain ]] lines
+	s/^\s*\]+$//;
 
 	# Trim
 	s/^\s+|\s+$//;
@@ -333,5 +348,5 @@ while (<>)
 		open PAGE, ">" . $page_out_directory . "/" . $page_title;
 		binmode PAGE, ':encoding(UTF-8)';
 	}
-	print PAGE "$_\n";
+	if (length $_) { print PAGE "$_\n"; }
 }
