@@ -115,7 +115,7 @@ while (<>)
 	# or this: !Total||105||37
 	# Sometimes it doesn't start or end with a number, and also there could be
 	# markup in between like: ||11||3||colspan=&quot;2&quot;|-||11||3
-	s/(.*\|\|)+\d*$//g;
+	s/(.*\|\|)+\d*$//;
 
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
@@ -190,9 +190,6 @@ while (<>)
 
 	# Kill ordinary links -- [[Stuff more stuff]]
 	s/\[\[([:,\.\/\-\+\w '\(\)]+?)\]\]/$1/g;
-
-	# Continue with the above, sometimes the ]] is not on the same line...
-	s/^\]\]$//g;
 
 	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
@@ -319,7 +316,7 @@ while (<>)
 	if (/^\*\S+/ || /^#\S+/ || /^:\S+/ || /^-\S+/ || /^–\S+/) {
 		# Ignore }} append at the end, if any
 		# e.g. * Sommerdahl}}
-		s/\}+$//g;
+		s/\}+$//;
 
 		if (!/\.$/) { $_ = $_ . "."; }
 	}
@@ -338,7 +335,10 @@ while (<>)
 	s/^-+//;
 
 	# Ignore plain }} lines
-	s/^\}+$//;
+	s/^\s*\}+$//;
+
+	# Ignore plain ]] lines
+	s/^\s*\]+$//;
 
 	# Trim
 	s/^\s+|\s+$//;
@@ -348,8 +348,5 @@ while (<>)
 		open PAGE, ">" . $page_out_directory . "/" . $page_title;
 		binmode PAGE, ':encoding(UTF-8)';
 	}
-	print PAGE "$_\n";
-
-# XXX
-print "$_\n";
+	if (length $_) { print PAGE "$_\n"; }
 }
