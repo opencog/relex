@@ -109,7 +109,9 @@ while (<>)
 	# kill stuff like this: 172||9||23||2||30||1||225||12
 	# or this: 118||2||||||||||||||118||2
 	# or this: !Total||105||37
-	s/(\d+|\!Total\|\|)(\d*\|\|)+\d+//g;
+	# Sometimes it doesn't start or end with a number, and also there could be
+	# markup in between like: ||11||3||colspan=&quot;2&quot;|-||11||3
+	s/(.*\|\|)+\d*$//g;
 
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
@@ -334,4 +336,7 @@ while (<>)
 		binmode PAGE, ':encoding(UTF-8)';
 	}
 	print PAGE "$_\n";
+
+# XXX
+print "$_\n";
 }
