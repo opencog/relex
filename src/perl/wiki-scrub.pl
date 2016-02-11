@@ -97,11 +97,6 @@ while (<>)
 	}
 	if ($have_table) { next; }
 
-	# Above should catch everything in a table, but sometimes doesn't.
-	# Maybe because other crap is nested, and $have_text was turned back on??
-	# If there is a vert bar in column 1, its part of a table.
-#	if (/^\|/) { next; }
-
 	if (/&lt;table/) { $have_text = 0; $have_ptable++; }
 	if (/&lt;\/table/) {
 		$have_ptable --;
