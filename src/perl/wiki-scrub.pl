@@ -87,9 +87,9 @@ while (<>)
 	if (/&lt;gallery .+?&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
 
-	# kill tables. These start with {| and end with |}
+	# kill tables. These start with {| or |- and end with |}
 	# tables may be nested.
-	if (/^:*\{\|/) { $have_text = 0; $have_table++; }
+	if (/^:*(\{\||\|\-)/) { $have_text = 0; $have_table++; }
 	if ($have_table && /^\|\}\s*/) {
 		$have_table --;
 		if (0 == $have_table) { $have_text = 1; }
