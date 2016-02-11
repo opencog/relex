@@ -126,22 +126,27 @@ while (<>)
 	# embedded templates.
 	# Don't be greedy -- some of these, like {{cite}}, have valid text
 	# both before and after.
-	if ($have_infobox && /\}\}/) { 
-		$have_infobox--; 
+	my @cb = /\}\}/g;
+	if ($have_infobox && @cb) {
+		$have_infobox -= scalar @cb;
 		if (0 == $have_infobox) {
 			s/.*\}\}//;
 		}
 	}
-	if (/\{\{/) {
+	my @ob = /\{\{/g;
+	if (@ob) {
 		if ($have_infobox) {
-			$have_infobox++;
+			$have_infobox += scalar @ob;
 		} else {
-			$have_infobox = 1;
+			$have_infobox += scalar @ob;
 			$notfirst = 0;
 			s/\{\{.+$//;
 		}
 	}
-	if ($have_infobox) { if ($notfirst) {next;} $notfirst = 1; }
+	if ($have_infobox) {
+		if ($notfirst) { next; }
+		$notfirst = 1;
+	}
 
 	# remove single-line math markup. Don't be greedy(?)!
 	# Do this before multi-line math markup.
