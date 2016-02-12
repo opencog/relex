@@ -1,5 +1,5 @@
-New in version 1.6.2 (XXX 2015)
- * Remove Relex2Logic code; its now in opencog.
+New in version 1.6.2 (XXX 2016)
+ * Remove Relex2Logic code; its now in OpenCog.
 
 New in version 1.6.0 (2015)
  * Update install-ubuntu-dependencies.sh for latest link-grammar

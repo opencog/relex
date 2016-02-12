@@ -1034,6 +1034,36 @@ WHY
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = why
 <F_L head-question-word ref links _%because> = <F_L ref>
+;
+;
+#TemplateActionAlg
+PREPOSED_PREDICATE_WHERE
+<LAB> = \PF\.*
+<F_L str> = where
+=
+<F_R subj links _%atLocation> += <F_L ref>
+
+#TemplateActionAlg
+PREPOSED_PREDICATE_WHEN
+<LAB> = \PF\.*
+<F_L str> = when
+=
+<F_R subj links _%atTime> += <F_L ref>
+
+#TemplateActionAlg
+PREPOSED_PREDICATE_HOW
+<LAB> = \PF\.*
+<F_L str> = how
+=
+<F_R subj links _%how> += <F_L ref>
+
+#TemplateActionAlg
+PREPOSED_PREDICATE_ADJECTIVAL
+<LAB> = \PF\.*
+<F_L str> != where|when|how
+=
+<F_R subj links _predadj> = <F_L ref>
+
 ; 
 ; How-much/how-many questions: "How much does the book weigh?"
 ; Replace the object _obj(weigh, how_much) with _obj(weight, $qVar)
@@ -1895,40 +1925,6 @@ BECAUSE_COMP
 ;<F_R head-word ref> = $prep_obj
 ;=
 ;
-
-;
-; These rules have nothing to do with prepositons, 
-; but I found their previous versions in this section
-; so I revised them here (AN Dec 2014).
-;
-
-#TemplateActionAlg
-PREPOSED_PREDICATE_WHERE
-<LAB> = \PF\.*
-<F_L str> = where
-=
-<F_R subj links _%atLocation> += <F_L ref>
-
-#TemplateActionAlg
-PREPOSED_PREDICATE_WHEN
-<LAB> = \PF\.*
-<F_L str> = when
-=
-<F_R subj links _%atTime> += <F_L ref>
-
-#TemplateActionAlg
-PREPOSED_PREDICATE_HOW
-<LAB> = \PF\.*
-<F_L str> = how
-=
-<F_R subj links _%how> += <F_L ref>
-
-#TemplateActionAlg
-PREPOSED_PREDICATE_ADJECTIVAL
-<LAB> = \PF\.*
-<F_L str> != where|when|how
-=
-<F_R subj links _predadj> = <F_L ref>
 
 ;
 ;/////////////////////////////////////////////////////////////////////////////
