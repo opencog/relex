@@ -87,20 +87,15 @@ while (<>)
 	if (/&lt;gallery .+?&gt;/) { $have_text = 0; }
 	if (/&lt;\/gallery&gt;/) { $have_text = 1; next; }
 
-	# kill tables. These start with {| and end with |}
+	# kill tables. These start with {| or |- and end with |}
 	# tables may be nested.
-	if (/^:*\{\|/) { $have_text = 0; $have_table++; }
+	if (/^:*(\{\||\|\-)/) { $have_text = 0; $have_table++; }
 	if ($have_table && /^\|\}\s*/) {
 		$have_table --;
 		if (0 == $have_table) { $have_text = 1; }
 		next;
 	}
 	if ($have_table) { next; }
-
-	# Above should catch everything in a table, but sometimes doesn't.
-	# Maybe because other crap is nested, and $have_text was turned back on??
-	# If there is a vert bar in column 1, its part of a table.
-	if (/^\|/) { next; }
 
 	if (/&lt;table/) { $have_text = 0; $have_ptable++; }
 	if (/&lt;\/table/) {
@@ -120,28 +115,33 @@ while (<>)
 	# Ignore single-line templates e.g. {{template gorp}}
 	# Also nested ones e.g. {{math|{{aao|300|120|+}}}}
 	# Do this before processing multi-line templates
-	s/\{\{.+?\}\}+//g;
+	while(/\{\{[^{]+?\}\}/) { s/\{\{[^{]+?\}\}// };
 
 	# kill infoxes and other multi-line templates. These may have
 	# embedded templates.
 	# Don't be greedy -- some of these, like {{cite}}, have valid text
 	# both before and after.
-	if ($have_infobox && /\}\}/) { 
-		$have_infobox--; 
+	my @cb = /\}\}/g;
+	if ($have_infobox && @cb) {
+		$have_infobox -= scalar @cb;
 		if (0 == $have_infobox) {
 			s/.*\}\}//;
 		}
 	}
-	if (/\{\{/) {
+	my @ob = /\{\{/g;
+	if (@ob) {
 		if ($have_infobox) {
-			$have_infobox++;
+			$have_infobox += scalar @ob;
 		} else {
-			$have_infobox = 1;
+			$have_infobox += scalar @ob;
 			$notfirst = 0;
 			s/\{\{.+$//;
 		}
 	}
-	if ($have_infobox) { if ($notfirst) {next;} $notfirst = 1; }
+	if ($have_infobox) {
+		if ($notfirst) { next; }
+		$notfirst = 1;
+	}
 
 	# remove single-line math markup. Don't be greedy(?)!
 	# Do this before multi-line math markup.
