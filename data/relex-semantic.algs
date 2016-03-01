@@ -549,7 +549,7 @@ INV-SUBJECT_LINKING
 <F_L subj> = <F_R subj>
 #TemplateActionAlg
 IMP-SUBJECT-ASSIGNMENT
-; assigning the imperative subject
+; Assigning the imperative subject
 <LAB> = \Wi\.*
 <F_R subj> = %
 =
@@ -560,8 +560,8 @@ IMP-SUBJECT-ASSIGNMENT
 ; Use += because there may be several of these in a sentence.
 ; It *might* be better to just add this as
 ; <F_L subj nameSource predadj> += <F_R ref>
-; and then later promot this to _predadj if we decide that things are
-; peachy (the same say that subj becomes _subj). But for now, we put
+; and then later promote this to _predadj if we decide that things are
+; peachy (the same way that subj becomes _subj). But for now, we put
 ; it straight in.
 ;Pg connects verbs that take present participles with present participles.
 ;e.g. The snail is running

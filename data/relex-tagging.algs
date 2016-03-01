@@ -883,10 +883,14 @@ TENSE_IMPERATIVE
 <F_R tense val> = imperative
 <F_R POS> = verb
 ;
-; Prepare a subject for a subjectless imperative sentence (to be linked
+; Create a subject for a subjectless imperative sentence (to be linked
 ; in the sem-algs)
 ; -- NB: we should probably use this strategy to add other invisible
-;    constitutents to other setence-types. e.g. How much (money) does it cost?
+;    constitutents to other setence-types. e.g.
+;    "How much (money) does it cost?"
+;
+; XXX this is broken when a name is called out: e.g.  "Eva, look sad"
+; and the comma becomes "you", instead of "Eva".
 ;
 #TemplateActionAlg
 ADDIMPSUBJ
