@@ -42,8 +42,6 @@ public class SemanticView extends View
 
 	private static final String SPECIFIC_FEATURE = "specific";
 
-	public static int varCount = 0;
-
 	public SemanticView(FeatureNode ths) {
 		super(ths);
 	}

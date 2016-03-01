@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class FeatureTemplate
 {
-	private static String NULL_STRING = "%";
+	private static final String NULL_STRING = "%";
 
 	private ArrayList<FeaturePathAndTarget> pathsAndTargs;
 
