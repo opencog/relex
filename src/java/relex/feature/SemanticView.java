@@ -26,21 +26,21 @@ import java.util.List;
  */
 public class SemanticView extends View
 {
-	private static String MEMBER_PREFIX = "member";
+	private static final String MEMBER_PREFIX = "member";
 
-	private static String NAME_FEATURE = "name";
+	private static final String NAME_FEATURE = "name";
 
-	private static String NEGATION_FEATURE = "NEGATIVE-FLAG";
+	private static final String NEGATION_FEATURE = "NEGATIVE-FLAG";
 
-	private static String HYP_FEATURE = "HYP";
+	private static final String HYP_FEATURE = "HYP";
 
-	private static String STRENGTH_FEATURE = "strength";
+	private static final String STRENGTH_FEATURE = "strength";
 
-	private static String CONFIDENCE_FEATURE = "confidence";
+	private static final String CONFIDENCE_FEATURE = "confidence";
 
-	private static String IMPORTANCE_FEATURE = "importance";
+	private static final String IMPORTANCE_FEATURE = "importance";
 
-	private static String SPECIFIC_FEATURE = "specific";
+	private static final String SPECIFIC_FEATURE = "specific";
 
 	public static int varCount = 0;
 

@@ -26,38 +26,38 @@ import java.util.ArrayList;
  */
 public class LinkableView extends View // implements TreeNode , LinkNode
 {
-	private static String NUM_LEFT_LINKS_FEATURE_NAME = "num_left_links";
+	private static final String NUM_LEFT_LINKS_FEATURE_NAME = "num_left_links";
 
-	private static String NUM_RIGHT_LINKS_FEATURE_NAME = "num_right_links";
+	private static final String NUM_RIGHT_LINKS_FEATURE_NAME = "num_right_links";
 
-	private static String LEFT_LINK_PREFIX = "linkL";
+	private static final String LEFT_LINK_PREFIX = "linkL";
 
-	private static String RIGHT_LINK_PREFIX = "linkR";
+	private static final String RIGHT_LINK_PREFIX = "linkR";
 
-	private static String POS_FEATURE_NAME = "POS";
-	private static String SUBSCRIPT_NAME = "subscript";
+	private static final String POS_FEATURE_NAME = "POS";
+	private static final String SUBSCRIPT_NAME = "subscript";
 
-	private static String WORD_STRING_FEATURE_NAME = "str";
+	private static final String WORD_STRING_FEATURE_NAME = "str";
 
-	private static String ORIG_WORD_STRING_FEATURE_NAME = "orig_str";
+	private static final String ORIG_WORD_STRING_FEATURE_NAME = "orig_str";
 
-	private static String POS_WORD = "WORD";
+	private static final String POS_WORD = "WORD";
 
-	private static String TENSE_FEATURE_NAME = "tense";
+	private static final String TENSE_FEATURE_NAME = "tense";
 
-	private static String NEXT_NAME = "NEXT";
+	private static final String NEXT_NAME = "NEXT";
 
-	private static String PREV_NAME = "PREV";
+	private static final String PREV_NAME = "PREV";
 
-	private static String START_NAME = "start_char";
+	private static final String START_NAME = "start_char";
 
-	private static String END_NAME = "end_char";
+	private static final String END_NAME = "end_char";
 
-	private static String COLLOCATION_START = "collocation_start";
+	private static final String COLLOCATION_START = "collocation_start";
 
-	private static String COLLOCATION_END = "collocation_end";
+	private static final String COLLOCATION_END = "collocation_end";
 
-	private static String INDEX_NAME = "index_in_sentence";
+	private static final String INDEX_NAME = "index_in_sentence";
 
 	private static FeatureNameFilter filter;
 

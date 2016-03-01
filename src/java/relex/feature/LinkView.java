@@ -21,13 +21,13 @@ package relex.feature;
 import java.util.HashSet;
 import java.util.ArrayList;
 
-public class LinkView extends View {
-
-    private static String LEFT_FEATURE_NAME = "F_L";			// the node to the left
-    private static String RIGHT_FEATURE_NAME = "F_R"; 		// the node to the right
-    private static String LEFT_LABEL_FEATURE_NAME = "lab_L"; 	// the left label of the link
-    private static String RIGHT_LABEL_FEATURE_NAME = "lab_R"; // the right label of the link
-    private static String LABEL_FEATURE_NAME = "LAB"; 		// the combined label of the link
+public class LinkView extends View
+{
+    private static final String LEFT_FEATURE_NAME = "F_L";			// the node to the left
+    private static final String RIGHT_FEATURE_NAME = "F_R"; 		// the node to the right
+    private static final String LEFT_LABEL_FEATURE_NAME = "lab_L"; 	// the left label of the link
+    private static final String RIGHT_LABEL_FEATURE_NAME = "lab_R"; // the right label of the link
+    private static final String LABEL_FEATURE_NAME = "LAB"; 		// the combined label of the link
 
     private static FeatureNameFilter filter;
 

@@ -45,7 +45,7 @@ public class FeatureNode extends Atom
 	private static final long serialVersionUID = -1498736655984934453L;
 
 	// Width of output of toString(), before it is truncated with "..."
-	private static int PRINT_LIMIT = 300;
+	private static final int PRINT_LIMIT = 300;
 
 	private static FeatureNameFilter DEFAULT_FEATURE_NAME_FILTER = new FeatureNameFilter();
 
