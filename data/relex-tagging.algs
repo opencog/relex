@@ -704,6 +704,14 @@ MORPHY_FIX_WILL
 ; Done after morphology so that algorithms can match to word root forms
 ;
 ;
+;
+#TemplateActionAlg
+TENSE_IMPERATIVE
+<LAB> = \Wi\.*
+=
+<F_R tense val> = imperative
+<F_R POS> = verb
+;
 ; PP links identify past participles, in perfect aspect
 ; Pv links identify past participles, in passive voice
 #TemplateActionAlg
@@ -730,14 +738,18 @@ TENSE_DO
 <F_R tense val> = none
 <F_R tense prev> = <F_L tense>
 ;
+; Stick a tense label on the copula (kind of wird, but OK)
+; Pp is not used if it takes a complement, so that copula is still
+; explicit in "John is in the park."
+; But "John is here." treats "here" like a predicative adjective
+; Imperatives are avoided: "Be happy!"
+;
 #TemplateActionAlg
 TENSE_COPULA
-; Pp is not used if it takes a complement, so that copula is still explicit
-; in "John is in the park."
-; But "John is here." treats "here" like a predicative adjective
 <LAB> = \Pa\.*|\Pv\.*|\Pg\.*|\Pp\.*
 <F_L PREP-OBJ> = %
 <F_L str> = be
+<F_L tense val> != imperative
 =
 <TENSE-LINK-FLAG> = T
 <F_R tense prev> = <F_L tense>
@@ -837,14 +849,6 @@ TENSE_PRESENT
 =
 <tense val> = present
 ;
-; Can overrule TENSE_PRESENT
-;
-#TemplateActionAlg
-TENSE_IMPERATIVE
-<LAB> = \Wi\.*
-=
-<F_R tense val> = imperative
-<F_R POS> = verb
 ;
 ; Create a subject for a subjectless imperative sentence (to be linked
 ; in the sem-algs)
