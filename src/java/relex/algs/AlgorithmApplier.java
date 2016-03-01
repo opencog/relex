@@ -34,19 +34,19 @@ import relex.concurrent.RelexContext;
 public class AlgorithmApplier
 {
 	/** a debug variable */
-	private static int verbosity = 0;
+	private static final int verbosity = 0;
 
 	/** The list of algorithms to be applied */
 	private ArrayList<SentenceAlgorithm> algs;
 
 	/** The name of the algorithms package */
-	private static String ALGS_PACKAGE = "relex.algs";
+	private static final String ALGS_PACKAGE = "relex.algs";
 
 	/** The character in an algfile which preceeds a classname */
-	private static char CLASS_CHAR = '#';
+	private static final char CLASS_CHAR = '#';
 
 	/** The character in an algfile which preceeds a comment. */
-	private static char COMMENT_CHAR = ';';
+	private static final char COMMENT_CHAR = ';';
 
 	public AlgorithmApplier(String prop, String filename)
 	{

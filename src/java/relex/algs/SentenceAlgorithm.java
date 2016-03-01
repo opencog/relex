@@ -29,11 +29,11 @@ import relex.feature.FeatureNode;
 public abstract class SentenceAlgorithm
 {
 	private static final boolean DEBUG = false;
-	private static String SIGNATURE_FEATURE_NAME = "SIG";
+	private static final String SIGNATURE_FEATURE_NAME = "SIG";
 
-	public static boolean VERBOSE = false;
+	public static final boolean VERBOSE = false;
 
-	public static boolean INTERACTIVE = false;
+	public static final boolean INTERACTIVE = false;
 
 	/**
 	 * Iterates over the entire feature structure in the ParsedSentence,

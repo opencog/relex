@@ -30,15 +30,15 @@ import relex.feature.LinkableView;
 
 public class WordSequenceCombineAlg extends TemplateMatchingAlg
 {
-	static String nameLabelRegex = "G[a-z\\*]*"; // a-z or '*'
+	static final String nameLabelRegex = "G[a-z\\*]*"; // a-z or '*'
 
-	static String entityOrIdiomLabelRegex = "ID[A-Z]*[a-z\\*]*";
+	static final String entityOrIdiomLabelRegex = "ID[A-Z]*[a-z\\*]*";
 
-	static String allLabelRegex = "(" + nameLabelRegex + ")|(" + entityOrIdiomLabelRegex + ")";
+	static final String allLabelRegex = "(" + nameLabelRegex + ")|(" + entityOrIdiomLabelRegex + ")";
 
-	static int directionLeft = -1;
+	static final int directionLeft = -1;
 
-	static int directionRight = 1;
+	static final int directionRight = 1;
 
 	/*
 	 * Finds the next node
