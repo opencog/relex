@@ -819,6 +819,7 @@ TENSE_PROGRESSIVE2
 =
 <F_R tense val> = progressive
 ;
+; Blank the tense, for immediate use below. (why? what does this fix??)
 #TemplateActionAlg
 BLANK_TENSE
 <LAB>=\Pv\.*|\Pp\.*
@@ -827,7 +828,8 @@ BLANK_TENSE
 ;
 #TemplateActionAlg
 TENSE_PRESENT
-; For verbs that are not identified with future or passive, set tense to present.
+; For verbs that are not identified with future or passive, set tense
+; to simple present.
 <POS> = verb
 <str> != will|Will|won't|Won't|shall|Shall|shan't|Shan't|'ll
 <BLANK-TENSE-FLAG> = %
@@ -835,9 +837,10 @@ TENSE_PRESENT
 =
 <tense val> = present
 ;
+; Can overrule TENSE_PRESENT
+;
 #TemplateActionAlg
 TENSE_IMPERATIVE
-; Can overrule TENSE_PRESENT
 <LAB> = \Wi\.*
 =
 <F_R tense val> = imperative

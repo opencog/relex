@@ -729,25 +729,25 @@ HEAD_IDENTIFY
 =
 <HEAD-FLAG> = T
 ;
+; This applies only to the last (or only) verb in a tense sequence.
+; It conjoins all of the tense names in the sequence.
 #TenseConjoinAlg
 TENSE_CONJOIN
-;//This applies only to the last (or only) verb in a tense sequence
-;//It conjoins all of the tense names in the sequence
 <HEAD-FLAG> = T
 =
 ;
+; This applies only to the last (or only) verb in a tense sequence.
+; It puts the head links in place.
 #TemplateActionAlg
 HEAD_INIT
-;//This applies only to the last (or only) verb in a tense sequence
-;//puts the head links in place
 <HEAD-FLAG> = T
 =
 <ref tense> = <tense name>
 ;
-#TemplateActionAlg
-HEAD_TO_FIRST_VERB
 ; This applies only to the last (or only) verb in a tense sequence
 ; It sets the first verb to contain this as a 'head-word' feature
+#TemplateActionAlg
+HEAD_TO_FIRST_VERB
 <HEAD-FLAG> = T
 =
 <tense first_verb head-word> += <this>
@@ -758,7 +758,8 @@ INFINITIVE_HEAD_VERB
 <F_L head-word> = %
 =
 <F_L head-word> = <F_R ref>
-
+;
+;
 #TemplateActionAlg
 HEAD_TO_SUBJ_AND_OBJ1
 <LAB> = \S\.*|\SX\.*|\B.w\.*|\SF\.*
