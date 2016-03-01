@@ -115,7 +115,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		return;
 	}
 
-	private void doActionAppend(FeatureNode f, FeatureNode left, FeatureNode right, String rightValStr)
+	private void doActionAppend(FeatureNode f, FeatureNode left,
+		FeatureNode right, String rightValStr)
 	{
 		if ((left == null) || (left.isEmpty())) {
 			doActionEquals(f, left, right, rightValStr);
@@ -158,7 +159,8 @@ public class FeatureAction extends FeaturePathAndTarget
 		leftParent.set(leftFeature, null);
 	}
 
-	public void doAction(FeatureNode f, FeatureTemplate template, Map<String, FeatureNode> vars)
+	public void doAction(FeatureNode f, FeatureTemplate template,
+		Map<String, FeatureNode> vars)
 	{
 		FeatureNode left = f.pathTarget(getPath());
 		FeatureNode right = null;
@@ -191,7 +193,8 @@ public class FeatureAction extends FeaturePathAndTarget
 			throw new RuntimeException("Invalid action: " + act);
 	}
 
-	public void doAction(FeatureNode f) {
+	public void doAction(FeatureNode f)
+	{
 		doAction(f, blankTemplate, emptyVarSet);
 	}
 

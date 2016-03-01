@@ -23,7 +23,7 @@ import relex.feature.FeatureTemplate;
 public abstract class TemplateMatchingAlg extends SentenceAlgorithm {
 
 	// separates the template from the rest of the algorithm in its init string.
-	private static String TEMPLATE_DELINEATOR = "\n=\n";
+	private final static String TEMPLATE_DELINEATOR = "\n=\n";
 
 	private FeatureTemplate template;
 
@@ -65,17 +65,18 @@ public abstract class TemplateMatchingAlg extends SentenceAlgorithm {
 		// get template
 		int templateEnd = str.indexOf(TEMPLATE_DELINEATOR);
 		if (templateEnd < 0)
-			throw new RuntimeException("TemplateMAtchingAlg must have:" + TEMPLATE_DELINEATOR
+			throw new RuntimeException("TemplateMAtchingAlg must have:"
+			      + TEMPLATE_DELINEATOR
 					+ "separating the template from the actions.\n" + str);
 		setTemplate(new FeatureTemplate(str.substring(sigEnd + 1, templateEnd)));
 		return templateEnd + TEMPLATE_DELINEATOR.length();
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer sb = new StringBuffer();
 		sb.append(getSignature()).append("\n").append(getTemplate()).append(TEMPLATE_DELINEATOR);
 		return sb.toString();
 	}
 
 } // end TemplateMatchingAlg
-

@@ -25,8 +25,9 @@ import relex.concurrent.RelexContext;
 import relex.feature.FeatureAction;
 import relex.feature.FeatureNode;
 
-public class TemplateActionAlg extends TemplateMatchingAlg {
-
+public class TemplateActionAlg extends TemplateMatchingAlg
+{
+	private final static boolean dbg = false;
 	/**
 	 * An ArrayList of FeatureActions. When the template is matched to a
 	 * FeatureNode, each action is applied to the FeatureNode
@@ -41,6 +42,14 @@ public class TemplateActionAlg extends TemplateMatchingAlg {
 		{
 			FeatureAction act = i.next();
 			act.doAction(node, getTemplate(), vars);
+		}
+
+		// print out the rule that got applied.
+		if (dbg)
+		{
+			System.out.println(toString());
+			if (getSignature().equals("DUMP"))
+				System.out.println(node.toString());
 		}
 	}
 
