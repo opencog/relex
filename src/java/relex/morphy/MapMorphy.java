@@ -31,13 +31,13 @@ import net.didion.jwnl.dictionary.Dictionary;
 public class MapMorphy implements Morphy
 {
 	public static final boolean DEBUG = true;
-	public static String NOUN_F = "noun";
-	public static String VERB_F = "verb";
-	public static String ADJ_F = "adj";
-	public static String ADV_F = "adv";
-	public static String ROOT_F = "root";
-	public static String TYPE_F = "type";
-	public static String NEG_F = "neg";
+	public static final String NOUN_F = "noun";
+	public static final String VERB_F = "verb";
+	public static final String ADJ_F = "adj";
+	public static final String ADV_F = "adv";
+	public static final String ROOT_F = "root";
+	public static final String TYPE_F = "type";
+	public static final String NEG_F = "neg";
 
 	private static Map<String, String> irregularVerbContractions = new TreeMap<String, String>();
 	private static Map<String, String> possessiveAdjRoots = new TreeMap<String, String>();
@@ -86,7 +86,7 @@ public class MapMorphy implements Morphy
 				SuffixStemmer.makeSuffixStemmer("|er=|est=|er=e|est=e|"));
 	}
 
-	public static String DEFAULT_WORDNET_CONFIG_FILE = "data/wordnet/file_properties.xml";
+	public static final String DEFAULT_WORDNET_CONFIG_FILE = "data/wordnet/file_properties.xml";
 
 	final POS[] pos = new POS[] { POS.NOUN, POS.VERB, POS.ADVERB, POS.ADJECTIVE };
 
