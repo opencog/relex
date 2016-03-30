@@ -1018,7 +1018,7 @@ public class TestRelEx
 		return rc;
 	}
 
-		public boolean test_equatives()
+	public boolean test_equatives()
 	{
 		boolean rc = true;
 		//Equative:two entities one feature
@@ -1230,6 +1230,7 @@ public class TestRelEx
 		                     "_amod(car, little)\n" +
 		                     "conj_prep(between, and)\n" +
 		                     "conj_and(car, truck)\n");
+
 		// Names Modifiers and conjunction
 		rc &= test_sentence ("Big Tom and Angry Sue went to the movies.",
 		                     "_pobj(to, movie)\n" +
@@ -1237,13 +1238,14 @@ public class TestRelEx
 		                     "_subj(go, Big_Tom)\n" +
 		                     "_subj(go, Angry_Sue)\n" +
 		                     "conj_and(Big_Tom, Angry_Sue)\n");
-                //Correlative conjunction
-                rc &= test_sentence ("I could use neither the lorry nor the van.",
-                            "_modal(could, use)\n" +
-                            "conj_neither_nor(lorry, van)\n" +
-                            "_obj(use, lorry)\n" +
-                            "_obj(use, van)\n" +
-                            "_subj(use, I)\n");
+
+		//Correlative conjunction
+		rc &= test_sentence ("I could use neither the lorry nor the van.",
+		                     "_modal(could, use)\n" +
+		                     "conj_neither_nor(lorry, van)\n" +
+		                     "_obj(use, lorry)\n" +
+		                     "_obj(use, van)\n" +
+		                     "_subj(use, I)\n");
 
 		report(rc, "Conjunction");
 		return rc;
