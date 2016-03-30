@@ -89,6 +89,42 @@ FIND_PREDET_FOR_PREPS
 =
 <F_L ref xpredet> = <F_L linkR0 F_R ref>
 
+;/////////////////////////////////////////////////////////
+;
+;IMPLICIT COINSTITUENTS
+; a common problem for relex is that of an un-voiced sentence constituent,
+; such as the subject of an imperative or the objects of the psessives
+; in "Yours is similar to mine." I've already hacked a lot of these throughout
+; the alg before I realized what a big issue it was, so now I'm creating this
+; section to collect algs that deal with the problem in one way or another.
+; In general, it should be up to PLN anaphora resolution to fill in many of
+; these, but for one reason or another, it is often also necessary for relex
+; to deal with them in some way they gum things up. Specific notes below. . .
+; (AN Feb 2015)
+;
+;/////////////////////////////////////////////////////////
+
+; 'Jack's hair color is similar to Ben's.'
+; Here, I want to make Ben possess a qvar so that relex can encode that
+; Jack's color is similar to the qVar, not similar to Ben, or something
+; else nonsensical. Using the qVar seems more principled because in the 
+; the most general context, the object of Ben's could be something other
+; than his hair color.   "Some people's hair is similar to the color of
+; their eyes, but Jack's hair color is similar to Ben's (eyes)."
+
+; As usual, this alg doesn't seem to accomplish all it wants to -- I knew 
+; that second imlication wouldn't fly --, but I know it's assigning the
+; head-word because it prevents the head-word from being assigned to 'be'
+; as it was before. 
+
+#TemplateActionAlg
+IMPLICIT_POSESSEE
+<LAB> = \YS
+<F_R linkR0 LAB> = %
+=
+<F_R ref> = _$qVar
+<F_R ref links _poss> += <F_L ref>
+
 ;/////////////////////////////////////////////////////////////////////////////
 ;
 ; Identifying subjects
@@ -1511,6 +1547,14 @@ COMPARATIVE_PREPOSITION_CONSTRUCTION
 =
 <F_R ref links _compprep> += <F_L linkR0 F_R ref>
 
+#TemplateActionAlg
+COMPARATIVE_PREPOSITION_SIMILAR_TO
+; "This is similar to more_than."
+<LAB> = \MVp
+<F_L str> = similar
+<F_R str> = to
+=
+<F_L ref links _compprep> += <F_R ref>
 
 #TemplateActionAlg
 SO_THAT_STRUCTURE
@@ -1623,7 +1667,7 @@ ADVMOD_N
 #TemplateActionAlg
 ADVMOD_OF_ADERBIAL
 <LAB> = \MVp\.*
-<F_R str> != as
+<F_R str> != as|to
 <F_L POS> != verb
 =
 <F_R ref links _advmod> += <F_L ref>
@@ -1652,8 +1696,7 @@ ADVERBIAL_DISCONNECTED_FROM_VERB_BY_ADV
 #TemplateActionAlg
 PREP_ADVERBIAL
 <LAB> = \MVp\.*|\OF\.*|\LI\.*
-<F_L POS> != adv
-<F_R str> != as
+<F_R str> != as|to
 <F_L modified> = %
 <F_R COMPCONT_FLAG> !=T
 <F_L COMPCONT_FLAG> !=T
@@ -1678,6 +1721,7 @@ IMPLICIT_COMPARATIVE_CONTEXT
 <LAB> = \CV
 <F_L str> = as
 <F_R linkR0 LAB> = \O\.*
+<F_R ref links _obj> != <F_R linkR0 F_R ref>
 =
 <F_R ref links _advmod> += <F_R linkR0 F_R ref>
 
@@ -2244,7 +2288,8 @@ COMPARATIVE_ARGUMENT_ID_TWO
 
 #TemplateActionAlg
 COMPARATIVE_ARGUMENT_LINK
-<LAB> = \MVt\.*
+<LAB> = \MVt\.*|\MVz
+<F_L ref links comp_arg> = %
 =
 <F_L ref links comp_arg> += <F_R comp_arg>
 
@@ -2325,13 +2370,14 @@ COMPARATIVE_Dmum
 ; its context that will be really difficult to derive;
 ; the real problem is that LG is a mess for comparatives.
 ;
-;#TemplateActionAlg
-;PREDADJ_COMPARATIVE
-;<LAB> = \O\.**
-;<F_L ref> = be
-;=
-;<F_R ref links _predadj> += <F_L subj>
-;<F_L subj> = %
+#TemplateActionAlg
+PREDADJ_COMPARATIVE
+<LAB> = \O\.*
+<F_L ref> = be
+<F_R ref> = same|different
+=
+<F_R ref links _predadj> += <F_L ref links _subj>
+<F_L ref links _subj> = %
 
 ; The following alg is for sentences such as . . . 
 ; "The book's color is the same as that of the pen."
@@ -2340,15 +2386,15 @@ COMPARATIVE_Dmum
 ; to make color the subj of 'of'.  All this is necessary
 ; because LG is all wrong here.  There's no link between
 ; that+of but there is between same+of.  It's a mess.
-;#TemplateActionAlg
-;PREDADJ_COMP_SECOND
-;<LAB> = \Mp
-;<F_L ref links _predadj> !=%
-;<F_L str> = same|different|similar
-;<F_R str> = as|from|than|to
-;=
-;<F_R ref links _pobj> += <F_L ref links _predadj>
-;<F_L COMP-QUAL-FLAG> = T
+#TemplateActionAlg
+PREDADJ_COMP_SECOND
+<LAB> = \Mp
+<F_L ref links _predadj> !=%
+<F_L str> = same|different|similar
+<F_R str> = as|from|than|to
+=
+<F_R ref links _pobj> += <F_L ref links _predadj>
+<F_L COMP-QUAL-FLAG> = T
 
 ;#TemplateActionAlg
 ;IMPLICIT_COMP_QUALITY
