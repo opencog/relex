@@ -685,8 +685,8 @@ OBJECT_LINKING_TO
 ; TENSE SETTING AND 
 ; HEAD RELATION IDENTIFICATION
 ;
-; Idea: create a chain of verbs, the initial set of which might aux or 
-; auxpass verbs, and the final verb in the chain is the head-word.
+; Idea: create a chain of verbs, the initial set of which might be aux
+; or auxpass verbs, and the final verb in the chain is the head-word.
 ; e.g. "has been debated", where "has", "been" are aux, auxpass, and 
 ; "debated" is the head-word.
 ;
@@ -1719,8 +1719,20 @@ POSSR_TO_APOSTROPHE
 #TemplateActionAlg
 IN_ORDER_TO
 <LAB> = \MVi\.*
+<F_R head-word> != %
 =
 <F_L ref links _goal> += <F_R head-word ref>
+
+; The below handles parse 2 of
+;    "Tom asks Roy how they are going to get the gold"
+; Not sure why MVi is a "goal" (although it obviously is for
+; the senence above...)
+#TemplateActionAlg
+GOING_TO
+<LAB> = \MVi\.*
+<F_R to-do> != %
+=
+<F_L ref links _goal> += <F_R to-do>
 
 ;
 ; For cases such as "He did it largely in his spare time" 
