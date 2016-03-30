@@ -119,7 +119,12 @@ class OpenCogSchemeRel
 			FeatureNode srcName = srcNode.get("name");
 			if (srcName == null) return false;
 			FeatureNode tgtName = tgtNode.get("name");
-			if (tgtName == null) return false;
+			if (tgtName == null)
+			{
+				outstr += "; Error: No target! rel=" + relName +
+				          " and src=" + srcName + "\n";
+				return false;
+			}
 
 			// nameSource might be NULL if theres a bug in an algs file.
 			// Currently, "She likes more pasta." triggers this, due to
