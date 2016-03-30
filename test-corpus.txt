@@ -1,3 +1,5 @@
+Tom asks Roy how they are going to get the gold.
+END.
 She looks good.
 She looks left.
 She looks right.
