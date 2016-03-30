@@ -2289,7 +2289,7 @@ COMPARATIVE_ARGUMENT_ID_TWO
 #TemplateActionAlg
 COMPARATIVE_ARGUMENT_LINK
 <LAB> = \MVt\.*|\MVz
-<F_L ref links comp_arg> != %
+<F_L ref links comp_arg> = %
 =
 <F_L ref links comp_arg> += <F_R comp_arg>
 
