@@ -1014,9 +1014,12 @@ WHERE2
 <F_R ref links _%atLocation> = <F_L ref>
 ;
 ;
+; Qw: How can I do it?
+; IV: Tom asked me how to do it.
+;
 #TemplateActionAlg
 HOW
-<LAB> = Q|Qd|AF|AFh
+<LAB> = Q|Qw|AF|AFh|IV
 <F_L str> = How|how
 =
 <F_L ref name> = %
@@ -1831,10 +1834,9 @@ OPENING_PREP_ADVERBIAL
 ; conflated in one rule in this section, so they get revised here . . .
 ; (AN Dec 2014)
 ;
-; _rep is the relation of representing something,
-; mentally, verbally, or otherwise. It requires a unique relation
-; because it affects the inferences that can be made
-; about the content within its scope.
+; _rep is the relation of representing something, mentally, verbally,
+; or otherwise. It requires a unique relation because it affects the
+; inferences that can be made about the content within its scope.
 ; 
 #TemplateActionAlg
 Relative-cause
@@ -1853,7 +1855,7 @@ Relativizer
 #TemplateActionAlg
 RELATIVE_CLAUSE_PHRASE
 <LAB> = \C\.*|\Mg\.*
-<LAB> !=\Ce\.*
+<LAB> != \Ce\.*
 <F_L POS> != verb|adj|noun
 <F_L str> != as|than
 =
@@ -1861,9 +1863,19 @@ RELATIVE_CLAUSE_PHRASE
 
 #TemplateActionAlg
 THAT_REP_COMP
-<LAB> = \TH\.*|
+<LAB> = \TH\.*
 =
 <F_L ref links _rep> += <F_R ref>
+<F_R REP_FLAG> = T
+
+; Represetiontational question:
+;  "Tom asked me how to do it".
+;
+#TemplateActionAlg
+QUESTION_REP_COMP
+<LAB> = \QI\.*
+=
+<F_L ref links _repq> += <F_R ref>
 <F_R REP_FLAG> = T
 
 #TemplateActionAlg
@@ -1913,7 +1925,7 @@ WHEN_COMP
 <LAB> = \WN\.*|\MVs\.*
 <F_R str> = when|while
 =
-<F_L ref linke _%atTime> += <F_R ref>
+<F_L ref links _%atTime> += <F_R ref>
 
 #TemplateActionAlg
 BECAUSE_COMP
@@ -2504,9 +2516,10 @@ SO_THAT_ADV
 <F_R ref links _advmod> += <F_L ref>
 <F_L ref links _compmod> += <F_R linkL0 F_L linkR0 F_R ref>
 
-; The below is added to handle the how in 'how-of-degree questions' as in 'how quickly does he run'
-; which were previously being picked up by the rules above and pre-empting the r2l advmod rule; 
-; they have their own 2l rule.
+; The below is added to handle the how in 'how-of-degree questions' as
+; in 'how quickly does he run' which were previously being picked up by
+; the rules above and pre-empting the r2l advmod rule; they have their
+; own 2l rule.
 
 #TemplateActionAlg
 ADV3_3_HowDegQ
