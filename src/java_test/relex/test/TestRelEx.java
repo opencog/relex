@@ -1962,6 +1962,9 @@ public class TestRelEx
 		rc &= ts.test_extraposition();
 		rc &= ts.test_conjunctions();
 		rc &= ts.test_interrogatives();
+		rc &= ts.test_adverbials_adjectivals();
+		rc &= ts.test_complementation()
+		rc &= ts.test_special_preposition_stuff()
 
 		if (rc) {
 			System.err.println("Tested a total of " + ts.pass +
