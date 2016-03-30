@@ -1922,6 +1922,22 @@ public class TestRelEx
 	}
 
 
+	public boolean test_representational_questions()
+	{
+		boolean rc = true;
+		rc &= test_sentence ("Tom asks Roy how they are going to get the gold.",
+		                     "_repq(ask, _$qVar)\n" +
+		                     "_obj(ask, Roy)\n" +
+		                     "_subj(ask, Tom)\n" +
+		                     "_to-do(go, get)\n" +
+		                     "_%how(go, _$qVar)\n" +
+		                     "_subj(go, they)\n" +
+		                     "_obj(get, gold)\n");
+
+		report(rc, "Representational questions");
+		return rc;
+	}
+
 	public boolean test_special_preposition_stuff()
 	{
 		boolean rc = true;
@@ -1963,8 +1979,9 @@ public class TestRelEx
 		rc &= ts.test_conjunctions();
 		rc &= ts.test_interrogatives();
 		rc &= ts.test_adverbials_adjectivals();
-		rc &= ts.test_complementation()
-		rc &= ts.test_special_preposition_stuff()
+		rc &= ts.test_complementation();
+		rc &= ts.test_representational_questions();
+		rc &= ts.test_special_preposition_stuff();
 
 		if (rc) {
 			System.err.println("Tested a total of " + ts.pass +
