@@ -187,20 +187,16 @@ class OpenCogSchemeRel
 		int word_index = 1;
 		while (fn != null)
 		{
-			FeatureNode refNode = fn.get("ref");
-			if (refNode != null)
-			{
-				String lemma = getstr(fn.get("str"));
+			String lemma = getstr(fn.get("str"));
 
-				// Remember the word-to guid map; we'll need it for
-				// printing relations, and printing frames,
-				String guid_word = fn.get("uuid").getValue();
+			// Remember the word-to guid map; we'll need it for
+			// printing relations, and printing frames,
+			String guid_word = fn.get("uuid").getValue();
 
-				// The word instance, and its associated lemma form
-				refs += "(LemmaLink (stv 1.0 1.0)\n";
-				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
-				refs += "   (WordNode \"" + lemma + "\"))\n";
-			}
+			// The word instance, and its associated lemma form
+			refs += "(LemmaLink (stv 1.0 1.0)\n";
+			refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
+			refs += "   (WordNode \"" + lemma + "\"))\n";
 
 			fn = fn.get("NEXT");
 			word_index ++;
