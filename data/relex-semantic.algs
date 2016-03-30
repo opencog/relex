@@ -1923,14 +1923,16 @@ RELATIVE_CLAUSE_PLUS_REP
 =
 <F_L ref links _rel> += <F_R ref links _rep>
 
+;
+; Call it a 'complement' only if it's not already assigned as a
+; relative clause or a 'rep' (sentential complement to a mental, verbal,
+; or logical predicate) or its a complement to question of opinion/fact.
 #TemplateActionAlg
 OTHER_COMP_CLAUSE
 <LAB> = \CV|\AFd
-; only call it a 'complement' if it's not already assigned as a relative clause
-; or a 'rep' (sentential complement to a mental, verbal, or logical predicate)
 <F_L ref links _rel> = %
 <F_L ref links _rep> = %
-; <F_L ref links _%how> = %
+<F_L ref name> != _$qVar
 =
 <F_L ref links _comp> += <F_R ref>
 
