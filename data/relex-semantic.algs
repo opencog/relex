@@ -914,7 +914,7 @@ QUESTION-ID
 QUESTION3_DO
 ; TRUTH-QUERY is used when the query variable should not be expanded.
 ; For "Who died?" you want "who" and "die" to be query variables.
-; But for "Did John die?" only "die" is a query variable. (see FNtoAtomConverter)
+; But for "Did John die?" only "die" is a query variable.
 <LAB> = \Qd\.*
 <F_L str> = LEFT-WALL
 =
@@ -1354,7 +1354,7 @@ TODO1z
 MODAL_AUXILLIARIES
 <LAB> = \I\.*|\Pg\.*
 <LAB> != Pg*b
-<F_L str> = can|could|will|would|may|might|must|need|can't|couldn't|won't|wouldn't|mustn't|needn't
+<F_L str> = can|could|will|would|may|might|must|need|shall|should|can't|couldn't|won't|wouldn't|mustn't|needn't|shouldn't|shan't
 =
 <F_L ref links _modal> += <F_R head-word ref>
 ;
@@ -1757,10 +1757,11 @@ APPOSITIVE_ADVERBIAL
 =
 <F_L ref links _advmod> += <F_R ref>
 
-; (AN JAN 2015) This next one seems like an LG error; for "He ran so quickly that 
-; he flew." LG has 'that . . .' modifying 'ran' as an adverbial whereas I think that
-; it should be modifying 'quickly'; it tells you HOW quickly. And so X that Y, works the
-; same way if X is an adjective.  If LG gtets corrected, you can simplify the alg . . .
+; (AN JAN 2015) This next one seems like an LG error; for "He ran so
+; quickly that he flew."  LG has 'that . . .' modifying 'ran' as an
+; adverbial whereas I think that it should be modifying 'quickly';
+; it tells you HOW quickly. And so X that Y, works the same way if 
+; X is an adjective.  If LG gets corrected, you can simplify the alg . . .
 ; (This algorithm seems not to be running; I don't know why).
 
 #TemplateActionAlg
