@@ -1025,7 +1025,8 @@ HOW
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
-<F_L head-question-word ref links _%how> = <F_L ref>
+; <F_R head-question-word ref links _%how> = <F_L ref>
+<F_R head-word ref links _%how> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
@@ -1858,7 +1859,7 @@ RELATIVE_CLAUSE_PHRASE
 <LAB> = \C\.*|\Mg\.*
 <LAB> != \Ce\.*
 <F_L POS> != verb|adj|noun
-<F_L str> != as|than
+<F_L str> != as|than|how
 =
 <F_L ref links _rel> += <F_R head-word ref> 
 
@@ -1873,11 +1874,26 @@ THAT_REP_COMP
 ;  "Tom asked me how to do it".
 ;
 #TemplateActionAlg
-QUESTION_REP_COMP
+QUESTION_REP
 <LAB> = \QI\.*
 =
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref QUERY-TYPE> = how
 <F_L ref links _repq> += <F_R ref>
 <F_R REP_FLAG> = T
+
+; Representational question complement.
+; "Tom asks Roy how they are going to get the gold."
+; _%how(go, _$qVar)
+;
+#TemplateActionAlg
+QUESTION_REP_COMP
+<LAB> = \C\.*
+<LAB> != \Ce\.*
+<F_L str> = how
+=
+<F_R head-word ref links _%how> += <F_L ref>
 
 #TemplateActionAlg
 OMITTED_THAT_REP
@@ -1914,6 +1930,7 @@ OTHER_COMP_CLAUSE
 ; or a 'rep' (sentential complement to a mental, verbal, or logical predicate)
 <F_L ref links _rel> = %
 <F_L ref links _rep> = %
+; <F_L ref links _%how> = %
 =
 <F_L ref links _comp> += <F_R ref>
 

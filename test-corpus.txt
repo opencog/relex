@@ -1,5 +1,9 @@
 Tom asks Roy how they are going to get the gold.
 END.
+You should do it like this.
+How should I do it?
+Tom asked me how to do it.
+END.
 She looks good.
 She looks left.
 She looks right.
