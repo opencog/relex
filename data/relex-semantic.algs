@@ -685,8 +685,8 @@ OBJECT_LINKING_TO
 ; TENSE SETTING AND 
 ; HEAD RELATION IDENTIFICATION
 ;
-; Idea: create a chain of verbs, the initial set of which might aux or 
-; auxpass verbs, and the final verb in the chain is the head-word.
+; Idea: create a chain of verbs, the initial set of which might be aux
+; or auxpass verbs, and the final verb in the chain is the head-word.
 ; e.g. "has been debated", where "has", "been" are aux, auxpass, and 
 ; "debated" is the head-word.
 ;
@@ -914,7 +914,7 @@ QUESTION-ID
 QUESTION3_DO
 ; TRUTH-QUERY is used when the query variable should not be expanded.
 ; For "Who died?" you want "who" and "die" to be query variables.
-; But for "Did John die?" only "die" is a query variable. (see FNtoAtomConverter)
+; But for "Did John die?" only "die" is a query variable.
 <LAB> = \Qd\.*
 <F_L str> = LEFT-WALL
 =
@@ -1014,15 +1014,19 @@ WHERE2
 <F_R ref links _%atLocation> = <F_L ref>
 ;
 ;
+; Qw: How can I do it?
+; IV: Tom asked me how to do it.
+;
 #TemplateActionAlg
 HOW
-<LAB> = Q|Qd|AF|AFh
+<LAB> = Q|Qw|AF|AFh|IV
 <F_L str> = How|how
 =
 <F_L ref name> = %
 <F_L ref name> = _$qVar
 <F_L ref QUERY-TYPE> = how
-<F_L head-question-word ref links _%how> = <F_L ref>
+; <F_R head-question-word ref links _%how> = <F_L ref>
+<F_R head-word ref links _%how> = <F_L ref>
 ;
 ;
 #TemplateActionAlg
@@ -1351,7 +1355,7 @@ TODO1z
 MODAL_AUXILLIARIES
 <LAB> = \I\.*|\Pg\.*
 <LAB> != Pg*b
-<F_L str> = can|could|will|would|may|might|must|need|can't|couldn't|won't|wouldn't|mustn't|needn't
+<F_L str> = can|could|will|would|may|might|must|need|shall|should|can't|couldn't|won't|wouldn't|mustn't|needn't|shouldn't|shan't
 =
 <F_L ref links _modal> += <F_R head-word ref>
 ;
@@ -1719,8 +1723,20 @@ POSSR_TO_APOSTROPHE
 #TemplateActionAlg
 IN_ORDER_TO
 <LAB> = \MVi\.*
+<F_R head-word> != %
 =
 <F_L ref links _goal> += <F_R head-word ref>
+
+; The below handles parse 2 of
+;    "Tom asks Roy how they are going to get the gold"
+; Not sure why MVi is a "goal" (although it obviously is for
+; the senence above...)
+#TemplateActionAlg
+GOING_TO
+<LAB> = \MVi\.*
+<F_R to-do> != %
+=
+<F_L ref links _goal> += <F_R to-do>
 
 ;
 ; For cases such as "He did it largely in his spare time" 
@@ -1742,10 +1758,11 @@ APPOSITIVE_ADVERBIAL
 =
 <F_L ref links _advmod> += <F_R ref>
 
-; (AN JAN 2015) This next one seems like an LG error; for "He ran so quickly that 
-; he flew." LG has 'that . . .' modifying 'ran' as an adverbial whereas I think that
-; it should be modifying 'quickly'; it tells you HOW quickly. And so X that Y, works the
-; same way if X is an adjective.  If LG gtets corrected, you can simplify the alg . . .
+; (AN JAN 2015) This next one seems like an LG error; for "He ran so
+; quickly that he flew."  LG has 'that . . .' modifying 'ran' as an
+; adverbial whereas I think that it should be modifying 'quickly';
+; it tells you HOW quickly. And so X that Y, works the same way if 
+; X is an adjective.  If LG gets corrected, you can simplify the alg . . .
 ; (This algorithm seems not to be running; I don't know why).
 
 #TemplateActionAlg
@@ -1819,10 +1836,9 @@ OPENING_PREP_ADVERBIAL
 ; conflated in one rule in this section, so they get revised here . . .
 ; (AN Dec 2014)
 ;
-; _rep is the relation of representing something,
-; mentally, verbally, or otherwise. It requires a unique relation
-; because it affects the inferences that can be made
-; about the content within its scope.
+; _rep is the relation of representing something, mentally, verbally,
+; or otherwise. It requires a unique relation because it affects the
+; inferences that can be made about the content within its scope.
 ; 
 #TemplateActionAlg
 Relative-cause
@@ -1841,18 +1857,43 @@ Relativizer
 #TemplateActionAlg
 RELATIVE_CLAUSE_PHRASE
 <LAB> = \C\.*|\Mg\.*
-<LAB> !=\Ce\.*
+<LAB> != \Ce\.*
 <F_L POS> != verb|adj|noun
-<F_L str> != as|than
+<F_L str> != as|than|how
 =
 <F_L ref links _rel> += <F_R head-word ref> 
 
 #TemplateActionAlg
 THAT_REP_COMP
-<LAB> = \TH\.*|
+<LAB> = \TH\.*
 =
 <F_L ref links _rep> += <F_R ref>
 <F_R REP_FLAG> = T
+
+; Represetiontational question:
+;  "Tom asked me how to do it".
+;
+#TemplateActionAlg
+QUESTION_REP
+<LAB> = \QI\.*
+=
+<F_R ref name> = %
+<F_R ref name> = _$qVar
+<F_R ref QUERY-TYPE> = how
+<F_L ref links _repq> += <F_R ref>
+<F_R REP_FLAG> = T
+
+; Representational question complement.
+; "Tom asks Roy how they are going to get the gold."
+; _%how(go, _$qVar)
+;
+#TemplateActionAlg
+QUESTION_REP_COMP
+<LAB> = \C\.*
+<LAB> != \Ce\.*
+<F_L str> = how
+=
+<F_R head-word ref links _%how> += <F_L ref>
 
 #TemplateActionAlg
 OMITTED_THAT_REP
@@ -1882,13 +1923,16 @@ RELATIVE_CLAUSE_PLUS_REP
 =
 <F_L ref links _rel> += <F_R ref links _rep>
 
+;
+; Call it a 'complement' only if it's not already assigned as a
+; relative clause or a 'rep' (sentential complement to a mental, verbal,
+; or logical predicate) or its a complement to question of opinion/fact.
 #TemplateActionAlg
 OTHER_COMP_CLAUSE
 <LAB> = \CV|\AFd
-; only call it a 'complement' if it's not already assigned as a relative clause
-; or a 'rep' (sentential complement to a mental, verbal, or logical predicate)
 <F_L ref links _rel> = %
 <F_L ref links _rep> = %
+<F_L ref name> != _$qVar
 =
 <F_L ref links _comp> += <F_R ref>
 
@@ -1901,7 +1945,7 @@ WHEN_COMP
 <LAB> = \WN\.*|\MVs\.*
 <F_R str> = when|while
 =
-<F_L ref linke _%atTime> += <F_R ref>
+<F_L ref links _%atTime> += <F_R ref>
 
 #TemplateActionAlg
 BECAUSE_COMP
@@ -2492,9 +2536,10 @@ SO_THAT_ADV
 <F_R ref links _advmod> += <F_L ref>
 <F_L ref links _compmod> += <F_R linkL0 F_L linkR0 F_R ref>
 
-; The below is added to handle the how in 'how-of-degree questions' as in 'how quickly does he run'
-; which were previously being picked up by the rules above and pre-empting the r2l advmod rule; 
-; they have their own 2l rule.
+; The below is added to handle the how in 'how-of-degree questions' as
+; in 'how quickly does he run' which were previously being picked up by
+; the rules above and pre-empting the r2l advmod rule; they have their
+; own 2l rule.
 
 #TemplateActionAlg
 ADV3_3_HowDegQ
