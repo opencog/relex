@@ -27,6 +27,8 @@ RELEX_OPTS="\
 
 CLASSPATH="-classpath \
 bin:\
+/usr/local/share/java/opennlp-tools-1.5.3.jar:\
+/usr/local/share/java/maxent-3.0.3.jar:\
 ../../share/java/opennlp-tools-1.3.0.jar:\
 ../../share/java/maxent-2.4.0.jar:\
 ../../share/java/trove.jar:\
