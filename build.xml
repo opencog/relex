@@ -72,7 +72,8 @@
        <echo message="Building RelEx version ${REVISION}"/>
        <copy file="src/java/relex/Version.java.in"
              tofile="src/java/relex/Version.java"
-             overwrite="yes">
+             overwrite="yes"
+             force="yes">
            <filterset>
                <filter token="REVISION" value="${REVISION}"/>
            </filterset>
