@@ -172,15 +172,6 @@ class OpenCogSchemeRel
 	}
 
 	/* ----------------------------------------------------------- */
-	private String getstr(FeatureNode node)
-	{
-		if (null ==  node) {
-			return "";
-		} else {
-			return node.getValue();
-		}
-	}
-
 	/**
 	 * Print the word referents.
 	 */
@@ -192,17 +183,24 @@ class OpenCogSchemeRel
 		int word_index = 1;
 		while (fn != null)
 		{
-			String lemma = getstr(fn.get("str"));
+			// Some words don't have a lemma form.  This occurs when
+			// the algs have concatenated multiple words into one:
+			// for example: "I bank at Sun Trust Bank" -- the G links
+			// result in "Bank" having the lemma "Sun_Trust_Bank" while
+			// neither Sun nor Trust have a lemma form.
+			FeatureNode lemode = fn.get("str");
+			if (null != lemode)
+			{
+				String lemma = lemode.getValue();
+				// Remember the word-to guid map; we'll need it for
+				// printing relations, and printing frames,
+				String guid_word = fn.get("uuid").getValue();
 
-			// Remember the word-to guid map; we'll need it for
-			// printing relations, and printing frames,
-			String guid_word = fn.get("uuid").getValue();
-
-			// The word instance, and its associated lemma form
-			refs += "(LemmaLink (stv 1.0 1.0)\n";
-			refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
-			refs += "   (WordNode \"" + lemma + "\"))\n";
-
+				// The word instance, and its associated lemma form
+				refs += "(LemmaLink (stv 1.0 1.0)\n";
+				refs += "   (WordInstanceNode \"" + guid_word + "\")\n";
+				refs += "   (WordNode \"" + lemma + "\"))\n";
+			}
 			fn = fn.get("NEXT");
 			word_index ++;
 		}
