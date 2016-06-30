@@ -39,6 +39,8 @@ sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
 rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
 sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
 
+cd ..
+
 # RelEx
 if grep -q '^vagrant:' /etc/passwd; then
     cd /home/vagrant/relex
