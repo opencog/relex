@@ -21,10 +21,10 @@ sudo apt-get -y install openjdk-7-jdk
 sudo apt-get -y install ant libcommons-logging-java libgetopt-java
 
 # Link Grammar
-wget http://www.abisource.com/downloads/link-grammar/5.3.3/link-grammar-5.3.3.tar.gz
-tar -xvf link-grammar-5.3.3.tar.gz
-rm link-grammar-5.3.3.tar.gz
-cd link-grammar-5.3.3
+wget -r --no-parent -nH --cut-dirs=2 http://www.abisource.com/downloads/link-grammar/current/
+tar -xvf link-grammar-5.*.tar.gz
+rm link-grammar-5.*.tar.gz
+cd link-grammar-5.*
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64  ./configure 
 make -j6
 sudo make install
