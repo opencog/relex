@@ -142,6 +142,12 @@ public class LocalLGParser extends LGParser
 				String wordString = LinkGrammar.getLinkageWord(w);
 				if (verbosity >= 5) System.err.println(" Processing Word " + wordString);
 
+				// If link-grammar guesses a word, it will add [?] to the
+				// end of it. The regex guess will add [!] and the spell
+				// guesser will add [~]. Remove these.
+				wordString = wordString.replace("[?]","");
+				wordString = wordString.replace("[!]","");
+				wordString = wordString.replace("[~]","");
 				// If link-grammar cannot use a word, it will put square
 				// brackets around it. We really do not want these, they
 				// garble up processing for us.
