@@ -6,6 +6,9 @@
 
 CLASSPATH="-classpath \
 bin:\
+add .jar paths to match build.xml
+/usr/local/share/java/opennlp-tools-1.5.3.jar:\
+/usr/local/share/java/maxent-3.0.3.jar:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
