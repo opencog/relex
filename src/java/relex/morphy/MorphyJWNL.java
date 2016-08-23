@@ -131,10 +131,12 @@ public class MorphyJWNL implements Morphy
 	public Morphed morph(String word)
 	{
 		Morphed m = new Morphed(word);
+		// Run either the JWNL version, or the command-line version.
 		if (javaWordnetFound)
 			loadLocal(m);
 		else
-			load(m);
+			loadCMD(m);
+System.out.println("duuuuude its morph " + m.toString());
 		return m;
 	}
 
@@ -168,10 +170,19 @@ public class MorphyJWNL implements Morphy
 		return word;
 	}
 
-	protected String maybeChangeFirstLetter(String originalString, String modifiedString) {
-		if (Character.isUpperCase(originalString.charAt(0))) {
-			if (modifiedString.length() > 1) {
-				return Character.toUpperCase(modifiedString.charAt(0)) + modifiedString.substring(1);
+	protected String undoDamage(String originalString,
+	                            String modifiedString)
+	{
+		// If the original string was capitalized, then capitalize
+		// the stemmed form as well.  Basically, Link Grammar already
+		// handled capitalization correctly; do NOT let WordNet screw
+		// it up.
+		if (Character.isUpperCase(originalString.charAt(0)))
+		{
+			if (modifiedString.length() > 1)
+			{
+				return Character.toUpperCase(modifiedString.charAt(0))
+				       + modifiedString.substring(1);
 			}
 			return modifiedString.toUpperCase();
 		}
@@ -199,7 +210,7 @@ public class MorphyJWNL implements Morphy
 	 * Uses the "wn" shell command (e.g. /usr/bin/wn) to get the desired
 	 * form.
 	 */
-	private void load(Morphed m)
+	private void loadCMD(Morphed m)
 	{
 		String word = m.getOriginal();
 
@@ -359,20 +370,20 @@ public class MorphyJWNL implements Morphy
 			IndexWord adj = dict.lookupIndexWord(POS.ADJECTIVE, word);
 			IndexWord adv = dict.lookupIndexWord(POS.ADVERB, word);
 			if (noun != null) {
-				m.putRoot(NOUN_F, maybeChangeFirstLetter(m.getOriginal(), noun.getLemma()));
+				m.putRoot(NOUN_F, undoDamage(m.getOriginal(), noun.getLemma()));
 			}
 			if (verb != null) {
 				if (negativeVerb) {
-					m.putRootNegative(VERB_F, maybeChangeFirstLetter(m.getOriginal(), verb.getLemma()));
+					m.putRootNegative(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
 				} else {
-					m.putRoot(VERB_F, maybeChangeFirstLetter(m.getOriginal(), verb.getLemma()));
+					m.putRoot(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
 				}
 			}
 			if (adj != null) {
-				m.putRoot(ADJ_F, maybeChangeFirstLetter(m.getOriginal(), adj.getLemma()));
+				m.putRoot(ADJ_F, undoDamage(m.getOriginal(), adj.getLemma()));
 			}
 			if (adv != null) {
-				m.putRoot(ADV_F, maybeChangeFirstLetter(m.getOriginal(), adv.getLemma()));
+				m.putRoot(ADV_F, undoDamage(m.getOriginal(), adv.getLemma()));
 			}
 
 		} catch (JWNLException ex) {
