@@ -1,6 +1,6 @@
 
 # RelEx Semantic Relation Extractor
-### Version 1.6.2  XXX 2015
+### Version 1.6.3  circa 2016
 
 RelEx is a dependency parser for the English language.  It extracts
 dependency relations from Link Grammar, and adds some shallow semantic
