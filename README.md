@@ -1,7 +1,6 @@
 
-                 RelEx Semantic Relation Extractor
-                 =================================
-                    Version 1.6.0  XXX 2015
+=RelEx Semantic Relation Extractor
+===Version 1.6.2  XXX 2015
 
 
 RelEx is a dependency parser for the English language.  It extracts
@@ -19,18 +18,19 @@ cleaning up web and wiki pages, &c.
 
 The main RelEx website is at
 
-    http://opencog.org/wiki/RelEx
+	> http://opencog.org/wiki/RelEx
 
 It provides an overview of the project, as well as detailed documentation.
 
 The source code management system is at
 
-   http://github.com/opencog/relex
+   > http://github.com/opencog/relex
 
 Source tarballs may be downloaded from either of two locations:
 
-   https://launchpad.net/relex/+download
-   http://www.abisource.com/downloads/link-grammar/relex/
+   > https://launchpad.net/relex/+download
+
+   > http://www.abisource.com/downloads/link-grammar/relex/
 
 Build and install of the core package is discussed below.
 
@@ -95,7 +95,7 @@ installed:
  - Link Parser
  - WordNet 3.0
  - JWNL Java wordnet library
- - OpenNLP tools (optional)
+ - OpenNLP tools (optional, but recommended)
  - W3C OWL (optional)
 
 
@@ -103,11 +103,11 @@ Pre-requisite dependencies
 --------------------------
 The following packages are required pre-requisites for building RelEx.
 
-- Link Grammar Parser
+- ***Link Grammar Parser***.
 	Compile and install the Link Grammar Parser. This parser is
 	described at
 	
-	http://abisource.com/projects/link-grammar/
+	> http://abisource.com/projects/link-grammar/
 	
 	and sources	are available for download at
 	
@@ -123,11 +123,11 @@ The following packages are required pre-requisites for building RelEx.
 	be sure to modify `-Djava.library.path` appropriately in
 	`relation-extractor.sh` and other shell scripts.
 
-- GNU getopt
+- ***GNU getopt***.
 	This is a standard command-line option parsing library.
 	For Ubuntu, install the `libgetopt-java` package.
 
-- Wordnet
+- ***Wordnet***.
 	Wordnet is used by RelEx to provide basic English morphology
 	analysis, such as singular versions of (plural) nouns, base forms
 	(lemmas) of adjectives, adverbs and infinitive forms of verbs.
@@ -145,7 +145,7 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
-- *didion.jwnl*
+- ***didion.jwnl***.
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at
@@ -165,7 +165,7 @@ The following packages are required pre-requisites for building RelEx.
 	the following command: `chmod 644 jwnl.jar`, as otherwise, you'll
 	get strange "java cannot unzip jar" error messages.
 
-- *Apache Commons Logging*
+- ***Apache Commons Logging***.
 	The JWNL package requires that the Apache commons logging
 	jar file be installed. In Debian/Ubuntu, this is supplied by
 	the `libcommons-logging-java` package. In RedHat/CentOS systems,
@@ -178,16 +178,21 @@ The following packages are optional. If they are found, then
 additional parts of RelEx will be built, enabling additional
 function.
 
-- OpenNLP
+- ***OpenNLP***.
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
 	to find sentence boundaries in free text. If OpenNLP is not found,
-	then the less accurate `java.text.BreakIterator` class is used.
+	then the (far) less accurate `java.text.BreakIterator` class is used.
+	Although Oracle documentation states that "Sentence boundary analysis
+	allows selection with correct interpretation of periods within numbers
+	and abbreviations", this is patently false, as it incorrectly breaks
+	the sentence "Dr. Smith is late." into two sentences.  Thus, OpenNLP
+	is recommended.
 
    If you use Maven, this dependency is already managed.
 
 	The OpenNLP home page is at
 	
-	     http://opennlp.sourceforge.net/
+	> http://opennlp.sourceforge.net/
 
 	Download and install OpenNLP tools, and verify that the
 	installed files are correctly identified in both `build.xml`
@@ -195,7 +200,7 @@ function.
 
 	OpenNLP also requires the installation of maxent from
 	
-	   http://maxent.sourceforge.net/
+	> http://maxent.sourceforge.net/
 
 	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.0.jar`.
 	
@@ -204,13 +209,13 @@ function.
 	document into sentences. Replace this file if an alternate
 	sentence detector is desired.
 
-- Trove
+- ***Trove***.
 	Some users may require the GNU Trove to enable OpenNLP, although
 	this depends on the JDK installed.  GNU Trove is an implementation
 	of the java.util class hierarchy, which may or may not be included
 	in the installed JDK.  If needed, download trove from:
 
-	   http://trove4j.sourceforge.net/
+	> http://trove4j.sourceforge.net/
 
 	Since trove is optimized, using it may improve performance and/or
 	decrease memory usage, as compared to the standard Sun JDK
