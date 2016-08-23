@@ -29,6 +29,8 @@ RELEX_OPTS="\
 
 CLASSPATH="-classpath \
 bin:\
+/usr/local/share/java/opennlp-tools-1.5.3.jar:\
+/usr/local/share/java/maxent-3.0.3.jar:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
@@ -57,5 +59,3 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex
 # Like the above, but sents the output to a different host, instead of
 # replying on the same socket.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --port 4242 --host somewhere.com:17001
-
-

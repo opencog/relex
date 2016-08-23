@@ -6,21 +6,21 @@
 #
 # Flags:
 # RelationExtractor
-# [-g (generate link graph - requires graphviz)] 
-# [-h (show this help)] 
+# [-g (generate link graph - requires graphviz)]
+# [-h (show this help)]
 # [-l (show parse links)]
-# [-m (show parse metadata)] 
+# [-m (show parse metadata)]
 # [--maxParseSeconds N]
-# [-n max number of parses to display] 
-# [-o (show opencog scheme output)] 
+# [-n max number of parses to display]
+# [-o (show opencog scheme output)]
 # [--or (show opencog rule-based scheme output)]
-# [--prolog (show prolog output)] 
-# [-q (do NOT show relations)] 
-# [-r (show raw output)] 
-# [-s Sentence (in quotes)] 
+# [--prolog (show prolog output)]
+# [-q (do NOT show relations)]
+# [-r (show raw output)]
+# [-s Sentence (in quotes)]
 # [--stanford (generate stanford-compatible output)]
-# [-t (show parse tree)] 
-# [-v (verbose, full graph output)] 
+# [-t (show parse tree)]
+# [-v (verbose, full graph output)]
 
 
 export LANG=en_US.UTF-8
@@ -44,9 +44,11 @@ bin:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/jwnl-1.4rc2.jar:\
 /usr/local/share/java/jwnl-1.3.3.jar:\
+/usr/local/share/java/opennlp-tools-1.5.3.jar:\
 /usr/local/share/java/opennlp-tools-1.5.0.jar:\
 /usr/local/share/java/opennlp-tools-1.4.3.jar:\
 /usr/local/share/java/opennlp-tools-1.3.0.jar:\
+/usr/local/share/java/maxent-3.0.3.jar:\
 /usr/local/share/java/maxent-3.0.0.jar:\
 /usr/local/share/java/maxent-2.5.2.jar:\
 /usr/local/share/java/maxent-2.4.0.jar:\
@@ -77,7 +79,7 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l -t -a --sta
 # cat trivial-corpus.txt | \
 #	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -n 4 -l	-t -a
 
-# A collection of sentences can be read from a file and sent to the 
+# A collection of sentences can be read from a file and sent to the
 # opencog server (assumed to be at port 17001 on localhost).
 # cat trivial-corpus.txt | \
 #	java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.RelationExtractor -o | \

@@ -6,13 +6,13 @@
 # Start a link-grammar parse server on tcp/ip port.  The server returns
 # JSON-formated parse results.  Socket input should be a single sentence
 # to parse, preceeded by the identifier "text:".
-# 
+#
 #   'port'      The TCP port the service should listen to.
 #   -verbose    Generate verbose output.
 #   -threads    Number of concurrent threads/clients allowed (default 1).
 #   'language'  Language abbreviation (en, ru, de, lt or fr).
 #   'dictPath'  Full path to the Link-Grammar dictionaries.
-# 
+#
 # The below starts the server on port 9000. It the port is ommitted,
 # help text is printed.  This server can be contacted directly via
 # tcpip; for example:

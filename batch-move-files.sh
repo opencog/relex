@@ -3,7 +3,7 @@
 # batch-move-files.sh -- move parsed files from one directory to another.
 # Moves a fixed number of files per run.
 #
-# Copyright (c) 2011 Linas Vepstas 
+# Copyright (c) 2011 Linas Vepstas
 
 # IFS=$(echo -en "\n\b")
 
@@ -12,7 +12,7 @@ FILES=parsed/*/*
 mkdir enwiki-20101011
 cd enwiki-20101011
 mkdir parsed
-cd parsed 
+cd parsed
 mkdir A
 mkdir B
 mkdir C
@@ -55,9 +55,8 @@ do
 	let cnt=cnt+1
 
 	if [ $cnt -gt 40000 ];
-	then 
+	then
 		break
 	fi
 	# echo $cnt
 done
-
