@@ -16,6 +16,7 @@
 
 package relex.morphy;
 
+import java.lang.Math;
 import java.util.HashMap;
 import java.util.Iterator;
 // import java.util.List;
@@ -136,7 +137,6 @@ public class MorphyJWNL implements Morphy
 			loadLocal(m);
 		else
 			loadCMD(m);
-System.out.println("duuuuude its morph " + m.toString());
 		return m;
 	}
 
@@ -173,6 +173,23 @@ System.out.println("duuuuude its morph " + m.toString());
 	protected String undoDamage(String originalString,
 	                            String modifiedString)
 	{
+		// If the original string was hyphenated, then make sure the
+		// modified string is hyphenated as well. For example:
+		// "great-granddaughter". For some reason, WordNet removed the
+		// dash.  But we want the dash.
+		int len = Math.min(originalString.length(), modifiedString.length());
+		char[] chars = modifiedString.toCharArray();
+		for (int i=0; i<len; i++)
+		{
+			if (originalString.charAt(i) == '-' &&
+			    modifiedString.charAt(i) == ' ')
+			{
+				// modifiedString.charAt(i) = '-';
+				chars[i] = '-';
+			}
+		}
+		modifiedString = String.valueOf(chars);
+
 		// If the original string was capitalized, then capitalize
 		// the stemmed form as well.  Basically, Link Grammar already
 		// handled capitalization correctly; do NOT let WordNet screw
