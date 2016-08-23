@@ -1,7 +1,6 @@
 
-=RelEx Semantic Relation Extractor
-===Version 1.6.2  XXX 2015
-
+= RelEx Semantic Relation Extractor
+=== Version 1.6.2  XXX 2015
 
 RelEx is a dependency parser for the English language.  It extracts
 dependency relations from Link Grammar, and adds some shallow semantic
@@ -18,7 +17,7 @@ cleaning up web and wiki pages, &c.
 
 The main RelEx website is at
 
-	> http://opencog.org/wiki/RelEx
+   > http://opencog.org/wiki/RelEx
 
 It provides an overview of the project, as well as detailed documentation.
 
