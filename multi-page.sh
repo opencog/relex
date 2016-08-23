@@ -66,5 +66,3 @@ do
 		let jobsrunning=0
 	fi
 done
-
-

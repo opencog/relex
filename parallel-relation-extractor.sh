@@ -24,4 +24,3 @@ bin:\
 /usr/share/java/gnu-getopt.jar:\
 "
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.concurrent.ParallelRelationExtractor $1
-

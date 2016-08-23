@@ -41,5 +41,3 @@ bin:\
 "
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333 --lang ru
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.PlainTextServer --port 3333
-
-

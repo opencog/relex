@@ -59,5 +59,3 @@ java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex
 # Like the above, but sents the output to a different host, instead of
 # replying on the same socket.
 # java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --port 4242 --host somewhere.com:17001
-
-

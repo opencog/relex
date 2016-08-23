@@ -1,15 +1,15 @@
 #!/bin/bash
 #
-# batch-wiki.sh: Example batch processing script. 
+# batch-wiki.sh: Example batch processing script.
 # This script is tailored for processing wikipedia articles.
 # The artciles are assumed to have been stripped of html
 # markup already.
 #
 # This script outputs the so-called "compact format" which
 # captures the full range of Link Grammar and RelEx output in a format
-# that can be easily post-processed by other systems (typically by 
+# that can be easily post-processed by other systems (typically by
 # using regex's). The src/perl/cff-to-opencog.pl perl script provides
-# an example of post-processing: it converts this output format into 
+# an example of post-processing: it converts this output format into
 # OpenCog hypergraphs.
 #
 # The idea behind the batch processing is that it is costly to parse
@@ -65,4 +65,3 @@ do
 
 	mv "enwiki-20080524-alpha/$lettre/${f}" done/$lettre
 done
-
