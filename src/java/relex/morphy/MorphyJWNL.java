@@ -377,10 +377,18 @@ public class MorphyJWNL implements Morphy
 
 			IndexWord verb = dict.lookupIndexWord(POS.VERB, word);
 
-			// If we've stripped an n't from something tha isn't a verb,
+			// If we've stripped an n't from something that isn't a verb,
 			// then its ... a weird word that I certainly don't know.
 			if (negativeVerb && verb == null) {
 				return;
+			}
+
+			if (verb != null) {
+				if (negativeVerb) {
+					m.putRootNegative(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
+				} else {
+					m.putRoot(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
+				}
 			}
 
 			IndexWord noun = dict.lookupIndexWord(POS.NOUN, word);
@@ -388,13 +396,6 @@ public class MorphyJWNL implements Morphy
 			IndexWord adv = dict.lookupIndexWord(POS.ADVERB, word);
 			if (noun != null) {
 				m.putRoot(NOUN_F, undoDamage(m.getOriginal(), noun.getLemma()));
-			}
-			if (verb != null) {
-				if (negativeVerb) {
-					m.putRootNegative(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
-				} else {
-					m.putRoot(VERB_F, undoDamage(m.getOriginal(), verb.getLemma()));
-				}
 			}
 			if (adj != null) {
 				m.putRoot(ADJ_F, undoDamage(m.getOriginal(), adj.getLemma()));
