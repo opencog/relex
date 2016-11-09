@@ -340,7 +340,6 @@ public class RelationExtractor
 			" [--maxParseSeconds N]" +
 			" [-n max number of parses to display]" +
 			" [-o (show opencog scheme output)]" +
-			" [--or (show opencog rule-based scheme output)]" +
 			" [--penn (generate Penn treebank-style POS tags)]" +
 			" [--prolog (show prolog output)]" +
 			" [-q (do NOT show relations)]" +
@@ -360,7 +359,6 @@ public class RelationExtractor
 		flags.add("-l");
 		flags.add("-m");
 		flags.add("-o");
-		flags.add("--or");
 		flags.add("--penn");
 		flags.add("--prolog");
 		flags.add("-q");
