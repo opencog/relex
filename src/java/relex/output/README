@@ -27,6 +27,7 @@ CompactView.java:
 	least, when using perl regex's). This is currently the default
 	output format for generating large databases of pre-parsed text.
 	Strongly recommended for large projects. See goals below.
+	See also http://wiki.opencog.org/w/RelEx_compact_output
 
 LinkGraphGenerator.java:
 	Output GraphViz style markup, suitable for running through the
