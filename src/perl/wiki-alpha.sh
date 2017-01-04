@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Create subdirectories for alphabetized wikipedia articles,
 # Move articles from main dir into subdirs.

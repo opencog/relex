@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Delete unwanted article types from the French wikipedia article space.
 # We won't be parsing these; they (mostly) don't contain any valid
