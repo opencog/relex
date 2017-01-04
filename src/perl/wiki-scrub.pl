@@ -184,12 +184,15 @@ while (<>)
 	# Kill File tags of the form [[File:blah.jpg|thumb|right|350px| blah]]
 	s/\[\[File:.+?\]\]//g;
 
+	# Same as above, but different languages
+	s/\[\[Vaizdas:.+?\]\]//g;      # Lithuanian "Image"
+
 	# kill wikilinks of the form [[the real link#ugh|The Stand-In Text]]
 	# also [[Wikipedia:special/blah|The Stand-In Text]]
-	s/\[\[[#:,\.\/\-\w '\(\)]+?\|(.+?)\]\]/$1/g;
+	s/\[\[[#:,–„”‘!€\.\/\-\$\&\w '\(\)]+?\|(.+?)\]\]/$1/g;
 
 	# Kill ordinary links -- [[Stuff more stuff]]
-	s/\[\[([:,\.\/\-\+\w '\(\)]+?)\]\]/$1/g;
+	s/\[\[([:,–„”‘!€\.\/\-\+\$\&\w '\(\)]+?)\]\]/$1/g;
 
 	# kill weblinks  i.e. [http:blah.com/whatever A Cool Site]
 	s/\[\S+ (.+?)\]/$1/g;
