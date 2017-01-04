@@ -101,3 +101,34 @@ time find ../wiki-stripped -name '[०,१,२,३,४,५,६,७,८,९]*' -e
 time find ../wiki-stripped -name '[૦,૧,૨,૩,૪,૫,૬,૭,૮,૯]*' -exec mv {} num \;
 time find ../wiki-stripped -name '[0-9]*' -exec mv {} num \;
 time find ../wiki-stripped -name '*' -type f -exec mv {} misc \;
+
+# Print out article counts.
+echo "Article counts, by subdirectory"
+echo -n A ; find A | wc
+echo -n B ; find B | wc
+echo -n C ; find C | wc
+echo -n D ; find D | wc
+echo -n E ; find E | wc
+echo -n F ; find F | wc
+echo -n G ; find G | wc
+echo -n H ; find H | wc
+echo -n I ; find I | wc
+echo -n J ; find J | wc
+echo -n K ; find K | wc
+echo -n L ; find L | wc
+echo -n M ; find M | wc
+echo -n N ; find N | wc
+echo -n O ; find O | wc
+echo -n P ; find P | wc
+echo -n Q ; find Q | wc
+echo -n R ; find R | wc
+echo -n S ; find S | wc
+echo -n T ; find T | wc
+echo -n U ; find U | wc
+echo -n V ; find V | wc
+echo -n W ; find W | wc
+echo -n X ; find X | wc
+echo -n Y ; find Y | wc
+echo -n Z ; find Z | wc
+echo -n num ; find num | wc
+echo -n misc ; find misc | wc
