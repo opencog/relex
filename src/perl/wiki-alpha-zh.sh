@@ -14,7 +14,7 @@ mkdir 凍-十
 mkdir 千-商
 mkdir 問-大
 mkdir 天-小
-mkdir 少-廣
+mkdir 少-廬
 mkdir 廴-摜
 mkdir 摩-朱
 mkdir 朴-歡
@@ -41,7 +41,7 @@ time find ../wiki-stripped -name '[凍-十]*' -exec mv {} 	凍-十 \;
 time find ../wiki-stripped -name '[千-商]*' -exec mv {} 	千-商 \;
 time find ../wiki-stripped -name '[問-大]*' -exec mv {} 	問-大 \;
 time find ../wiki-stripped -name '[天-小]*' -exec mv {} 	天-小 \;
-time find ../wiki-stripped -name '[少-廣]*' -exec mv {} 	少-廣 \;
+time find ../wiki-stripped -name '[少-廬]*' -exec mv {} 	少-廬 \;
 time find ../wiki-stripped -name '[廴-摜]*' -exec mv {} 	廴-摜 \;
 time find ../wiki-stripped -name '[摩-朱]*' -exec mv {} 	摩-朱 \;
 time find ../wiki-stripped -name '[朴-歡]*' -exec mv {} 	朴-歡 \;
@@ -67,7 +67,7 @@ echo -n 凍-十 ; find 凍-十 | wc
 echo -n 千-商 ; find 千-商 | wc
 echo -n 問-大 ; find 問-大 | wc
 echo -n 天-小 ; find 天-小 | wc
-echo -n 少-廣 ; find 少-廣 | wc
+echo -n 少-廬 ; find 少-廬 | wc
 echo -n 廴-摜 ; find 廴-摜 | wc
 echo -n 摩-朱 ; find 摩-朱 | wc
 echo -n 朴-歡 ; find 朴-歡 | wc
