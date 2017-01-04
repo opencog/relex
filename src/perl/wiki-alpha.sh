@@ -1,7 +1,8 @@
 #! /bin/bash
 #
 # Create subdirectories for alphabetized wikipedia articles,
-# Move articles from main dir into subdirs.
+# Move articles from main directory into subdirs.
+# (This is the Latin alphabet version).
 #
 # Copyright (c) 2008, 2013 Linas Vepstas <linas@linas.org>
 
@@ -62,6 +63,8 @@ time find ../wiki-stripped -name 'Ģ*' -exec mv {} G \;
 time find ../wiki-stripped -name 'H*' -exec mv {} H \;
 echo "start I"
 time find ../wiki-stripped -name 'I*' -exec mv {} I \;
+time find ../wiki-stripped -name 'Í*' -exec mv {} I \;
+time find ../wiki-stripped -name 'İ*' -exec mv {} I \;
 time find ../wiki-stripped -name 'Į*' -exec mv {} I \;
 time find ../wiki-stripped -name 'J*' -exec mv {} J \;
 time find ../wiki-stripped -name 'K*' -exec mv {} K \;
@@ -74,13 +77,14 @@ time find ../wiki-stripped -name 'N*' -exec mv {} N \;
 time find ../wiki-stripped -name 'O*' -exec mv {} O \;
 time find ../wiki-stripped -name 'Ó*' -exec mv {} O \;
 time find ../wiki-stripped -name 'Ø*' -exec mv {} O \;
-time find ../wiki-stripped -name 'O*' -exec mv {} O \;
+time find ../wiki-stripped -name 'Ö*' -exec mv {} O \;
 time find ../wiki-stripped -name 'P*' -exec mv {} P \;
 time find ../wiki-stripped -name 'Q*' -exec mv {} Q \;
 echo "start R"
 time find ../wiki-stripped -name 'R*' -exec mv {} R \;
 time find ../wiki-stripped -name 'S*' -exec mv {} S \;
 time find ../wiki-stripped -name 'Š*' -exec mv {} S \;
+time find ../wiki-stripped -name 'Ş*' -exec mv {} S \;
 echo "start T"
 time find ../wiki-stripped -name 'T*' -exec mv {} T \;
 time find ../wiki-stripped -name 'U*' -exec mv {} U \;
@@ -91,6 +95,7 @@ echo "start X"
 time find ../wiki-stripped -name 'X*' -exec mv {} X \;
 time find ../wiki-stripped -name 'Y*' -exec mv {} Y \;
 time find ../wiki-stripped -name 'Z*' -exec mv {} Z \;
+time find ../wiki-stripped -name 'Ż*' -exec mv {} Z \;
 time find ../wiki-stripped -name 'Ž*' -exec mv {} Z \;
 time find ../wiki-stripped -name '[०,१,२,३,४,५,६,७,८,९]*' -exec mv {} num \;
 time find ../wiki-stripped -name '[૦,૧,૨,૩,૪,૫,૬,૭,૮,૯]*' -exec mv {} num \;
