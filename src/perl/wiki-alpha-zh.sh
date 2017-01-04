@@ -35,21 +35,25 @@ mkdir misc
 echo "start A-Z"
 time find ../wiki-stripped -name '[A-Z]*' -exec mv {} A-Z \;
 time find ../wiki-stripped -name '[0-9]*' -exec mv {} num \;
+echo "start 一"
 time find ../wiki-stripped -name '[一-亞]*' -exec mv {} 一-亞 \;
 time find ../wiki-stripped -name '[亠-凌]*' -exec mv {} 亠-凌 \;
 time find ../wiki-stripped -name '[凍-十]*' -exec mv {} 	凍-十 \;
 time find ../wiki-stripped -name '[千-商]*' -exec mv {} 	千-商 \;
 time find ../wiki-stripped -name '[問-大]*' -exec mv {} 	問-大 \;
+echo "start 二"
 time find ../wiki-stripped -name '[天-小]*' -exec mv {} 	天-小 \;
 time find ../wiki-stripped -name '[少-廬]*' -exec mv {} 	少-廬 \;
 time find ../wiki-stripped -name '[廴-摜]*' -exec mv {} 	廴-摜 \;
 time find ../wiki-stripped -name '[摩-朱]*' -exec mv {} 	摩-朱 \;
 time find ../wiki-stripped -name '[朴-歡]*' -exec mv {} 	朴-歡 \;
+echo "start 三"
 time find ../wiki-stripped -name '[止-灣]*' -exec mv {} 	止-灣 \;
 time find ../wiki-stripped -name '[火-瓊]*' -exec mv {} 	火-瓊 \;
 time find ../wiki-stripped -name '[瓜-籮]*' -exec mv {} 	瓜-籮 \;
 time find ../wiki-stripped -name '[米-羅]*' -exec mv {} 	米-羅 \;
 time find ../wiki-stripped -name '[羊-荷]*' -exec mv {} 	羊-荷 \;
+echo "start 四"
 time find ../wiki-stripped -name '[莆-觀]*' -exec mv {} 	莆-觀 \;
 time find ../wiki-stripped -name '[角-重]*' -exec mv {} 	角-重 \;
 time find ../wiki-stripped -name '[野-隴]*' -exec mv {} 	野-隴 \;
