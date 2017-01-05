@@ -131,6 +131,13 @@ sub preprocess {
 	# in general, so list them here.  U+3002 U+FF0E U+FF1F U+FF01
 	$text =~ s/([。．？！♪])/$1\n/g;
 
+	# Chinese does not use any sort of white-space between ideographs.
+	# Nominally, each single ideograph corresponds to one word. Add
+	# spaces here, so that later processing stages can tokenize readily.
+	# Note that this handles mixed latinate+CJK.
+	$text =~ s/(\p{InCJK})/ $1 /g;
+	$text =~ s/ +/ /g;
+
 	# Special punctuation cases are covered. Check all remaining periods.
 	my $word;
 	my $i;
