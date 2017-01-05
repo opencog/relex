@@ -17,6 +17,7 @@ binmode(STDERR, ":utf8");
 use warnings;
 use FindBin qw($RealBin);
 use strict;
+use utf8;
 
 my $mydir = "$RealBin/nonbreaking_prefixes";
 
@@ -123,6 +124,10 @@ sub preprocess {
 	# Add breaks for sentences that end with some sort of punctuation,
 	# and are followed by a sentence starter punctuation and upper case.
 	$text =~ s/([?!\.]) +([\'\"\(\[\¿\¡\p{IsPi}]+[\ ]*[\p{IsUpper}])/$1\n$2/g;
+
+	# Chinese uses unusual end-of-sentence markers. These are NOT
+	# followed by whitespace.  Nor is there any idea of capitalization.
+	$text =~ s/([。])/$1\n/g;
 
 	# Special punctuation cases are covered. Check all remaining periods.
 	my $word;
