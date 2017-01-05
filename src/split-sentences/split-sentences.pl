@@ -5,13 +5,16 @@
 # Derived from the moses-smt (Moses Statistical Machine Translation)
 # sentence splitter; modified slightly for our needs.
 #
-# moses-smt and this file are licensed under the Gnu LGPLv2.1.
+# moses-smt and this file are licensed under the GNU Lesser General
+# Public License version 2.1 or, at your option, any later version.
+#
 # Based on a preprocessor written by Philipp Koehn.
 
 binmode(STDIN, ":utf8");
 binmode(STDOUT, ":utf8");
 binmode(STDERR, ":utf8");
 
+use warnings;
 use FindBin qw($RealBin);
 use strict;
 
@@ -27,10 +30,13 @@ while (@ARGV) {
 	/^-l$/ && ($language = shift, next);
 	/^-q$/ && ($QUIET = 1, next);
 	/^-h$/ && ($HELP = 1, next);
+	/^-b$/ && ($|++, next); # no output buffering
 }
 
 if ($HELP) {
-	print "Usage ./split-sentences.pl (-l [en|de|...]) < textfile > splitfile\n";
+	print "Usage ./split-sentences.pl (-l [en|de|...]) [-q] [-b] < textfile > splitfile\n";
+	print "-q: quiet mode\n";
+	print "-b: no output buffering (for use in bidirectional pipes)\n";
 	exit;
 }
 if (!$QUIET) {
