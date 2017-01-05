@@ -51,8 +51,10 @@ Just
 # Day and month abbreviations
 # m. menesis d. diena  g. gimes
 m
+mėn
 d
 g
+gim
 # Pirmadienis Penktadienis
 Pr
 Pn
@@ -89,6 +91,8 @@ akt
 # aktorius
 al
 # alėja
+A.V
+# antspaudo vieta
 aps
 apskr
 # apskritis
@@ -380,12 +384,19 @@ biol
 # biologija
 bot
 # botanika
+brt
+# burtai, burtažodis.
+brus
+# baltarusių
 buh
 # buhalterija
 chem
 # chemija
-d
-# didysis
+col
+# collectivum
+con
+conj
+# conjunctivus, jungtukas
 dab
 # dab. dabartine
 dgs
@@ -417,6 +428,7 @@ fin
 fiz
 # fizika
 fiziol
+# fiziologija
 flk
 # folkloras
 fon
@@ -487,6 +499,8 @@ l
 # laikas
 lit
 # literatūrinis
+lingv
+# lingvistika
 log
 # logika
 lot
@@ -512,18 +526,24 @@ mit
 # mitologija
 mok
 # mokyklinis
+ms
+# mįslė
 muz
 # muzikinis
 n
 # naujasis
 neig
 # neigiamasis
+neol
+# neologizmas
 niek
 # niekinamai
 ofic
 # oficialus
 opt
 # optika
+orig
+# original
 p
 # pietūs
 pan
@@ -538,16 +558,25 @@ plg
 # palygink
 poet
 # poetizmas
+poez
+#  poezija
 poligr
 # poligrafija
 polit
 # politika
 ppr
 # paprastai
+pranc
 pr
-# prancūzų
+# prancūzų, prūsų
+priet
+# prietaras
+prek
+# prekyba
 prk
 # perkeltine
+prs
+# persona, asmuo
 psn
 # pasenęs žodis
 psich
@@ -567,7 +596,9 @@ rus
 sen
 # senasis
 sl
-# slengas
+# slengas, slavų
+sov
+# sovietinis
 spec
 # specialus
 sport
@@ -577,6 +608,8 @@ sudurt
 # sudurtinis
 sutr
 # sutrumpintas
+suv
+# suvalkiečių
 š
 # šiaurė
 šach
@@ -643,6 +676,8 @@ Em.
 # Gerbiamasis
 Gerb
 gerb
+#  malonus
+malon
 # profesorius
 Prof
 prof
