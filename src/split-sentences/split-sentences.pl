@@ -127,7 +127,9 @@ sub preprocess {
 
 	# Chinese uses unusual end-of-sentence markers. These are NOT
 	# followed by whitespace.  Nor is there any idea of capitalization.
-	$text =~ s/([。])/$1\n/g;
+	# There does not appear to be any unicode category for full-stops
+	# in general, so list them here.  U+3002 U+FF0E U+FF1F U+FF01
+	$text =~ s/([。．？！♪])/$1\n/g;
 
 	# Special punctuation cases are covered. Check all remaining periods.
 	my $word;
