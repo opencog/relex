@@ -78,7 +78,8 @@ Spal
 Lapkr
 Gruod
 
-# Business, governmental, geographical terms
+# Business, governmental, geographical terms; legal abbreviations,
+# every-day/common-use abbreviations (advertising, etc.)
 a
 # aikštė
 adv
@@ -121,10 +122,14 @@ b
 k
 b.k
 # banko kodas
+bažn
+# bažnyčia
 bkl
 # bakalauras
 bt
 # butas
+buh
+# buhalterija
 buv
 # buvęs, -usi
 dail
@@ -150,7 +155,7 @@ eil
 ekon
 # ekonomika
 el
-# elektroninis
+# elektroninis, elektra
 etc
 ež
 # ežeras
@@ -166,14 +171,10 @@ gv
 # gyvenvietė
 įl
 # įlanka
-Įn
-# įnagininkas
 insp
 # inspektorius
 pan
 # ir panašiai
-t.t
-# ir taip toliau
 k.a
 # kaip antai
 kand
@@ -240,7 +241,7 @@ Nr
 nr
 # numeris
 p
-# ponas
+# ponas, pone
 p.d
 a.d
 # pašto dėžutė, abonentinė dėžutė
@@ -316,6 +317,15 @@ stud
 # šių metų
 šnek
 # šnekamosios
+t.p
+t
+p
+# ir taip pat
+t.t
+# ir taip toliau
+t.y
+y
+# tai yra
 tir
 # tiražas
 tūkst
@@ -350,8 +360,14 @@ vv
 # vietovardis
 žml
 # žemėlapis
+žr
+# žiūrėk
+ž.ū
+ž
+ū
+# žemės ūkis
 
-# Technical terms, abbreviations used in guidebooks, advertisments, etc.
+# Abbreviations used in dictionaries, encyclopedias, guidebooks, etc.
 # Generally lower-case.
 air
 # airiškai
@@ -375,7 +391,6 @@ aut
 # automobilis
 av
 # aviacija
-bažn
 bdv
 # būdvardis
 bibl
@@ -388,8 +403,6 @@ brt
 # burtai, burtažodis.
 brus
 # baltarusių
-buh
-# buhalterija
 chem
 # chemija
 col
@@ -409,8 +422,7 @@ dktv
 džn
 # dažnai
 ekon
-el
-# elektra
+# ekonomika
 esam
 # esamasis laikas
 euf
@@ -450,6 +462,9 @@ her
 # heraldika
 hidr
 # hidrotechnika
+Įn
+įn
+# įnagininkas
 ind
 # Indų
 iron
@@ -634,15 +649,7 @@ tel
 teol
 # teologija
 v
-# tik vyriškosios, vakarai
-t.p
-t
-p
-# ir taip pat
-t.t
-# ir taip toliau
-t.y
-# tai yra
+# vyriškosios, vakarai
 vaik
 # vaikų
 vart
@@ -661,12 +668,6 @@ vulg
 # vulgariai
 zool
 # zoologija
-žr
-# žiūrėk
-ž.ū
-ž
-ū
-# žemės ūkis
 
 # List of titles. These are often followed by upper-case names, but do
 # not indicate sentence breaks
