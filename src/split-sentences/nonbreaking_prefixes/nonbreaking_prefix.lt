@@ -49,8 +49,7 @@ d
 g
 
 # Day and month abbreviations
-# Gerbiamasis Pirmadienis Penktadienis
-Gerb
+# Pirmadienis Penktadienis
 Pr
 Pn
 Pirm
@@ -75,7 +74,11 @@ Gruod
 
 # List of titles. These are often followed by upper-case names, but do
 # not indicate sentence breaks
-# XXX TODO .. Below are not correct, copied from latvian
+#
+# Gerbiamasis
+Gerb
+
+# XXX TODO .. Below are not quite correct, copied from latvian
 dr
 Dr
 med
@@ -93,46 +96,11 @@ Vietn
 
 # misc - odd period-ending items that NEVER indicate breaks (p.m. does NOT
 # fall into this category - it sometimes ends a sentence)
-# angl anglishkai
+# angl angliskai
 # dab dabartine
 angl
 dab
 
-# XXX TODO .. Below are not correct, copied from latvian
-a.l
-t.p
-pārb
-Pārb
-vec
-Vec
-inv
-Inv
-sk
-Sk
-spec
-Spec
-vienk
-Vienk
-virz
-Virz
-māksl
-Māksl
-mūz
-Mūz
-akad
-Akad
-soc
-Soc
-galv
-Galv
-vad
-Vad
-sertif
-Sertif
-folkl
-Folkl
-hum
-Hum
 
 #Numbers only. These should only induce breaks when followed by a numeric sequence
 # add NUMERIC_ONLY after the word for this function
