@@ -4,8 +4,8 @@
 
 This directory contains a sentence splitter, copied over from the
 moses-smt project (Moses Statistical Machine Translation).  This 
-splitter and its data files are covered according to the LGPL
-(Lesser GNU Public License)
+splitter and its data files are covered according to the LGPLv2.1
+(Lesser GNU Public License Version 2.1)
 
 The sentence splitter is here for only one purpose: to support
 the language-learning project, which, at this time, usese RelEx

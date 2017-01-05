@@ -5,7 +5,7 @@
 # Derived from the moses-smt (Moses Statistical Machine Translation)
 # sentence splitter; modified slightly for our needs.
 #
-# moses-smt and this file are licensed under the Gnu LGPL.
+# moses-smt and this file are licensed under the Gnu LGPLv2.1.
 # Based on a preprocessor written by Philipp Koehn.
 
 binmode(STDIN, ":utf8");
