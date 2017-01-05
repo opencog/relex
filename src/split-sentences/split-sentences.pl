@@ -2,11 +2,11 @@
 #
 # Multi-language sentence splitter.
 #
-# Derived from the moses-smt (Moses Statistica Machine Translation)
-# sentece splitter; modified slightly for our needs.
+# Derived from the moses-smt (Moses Statistical Machine Translation)
+# sentence splitter; modified slightly for our needs.
 #
-# moses-smt and this file is licensed under the LGPL.
-# Based on Preprocessor written by Philipp Koehn
+# moses-smt and this file are licensed under the Gnu LGPL.
+# Based on a preprocessor written by Philipp Koehn.
 
 binmode(STDIN, ":utf8");
 binmode(STDOUT, ":utf8");
@@ -63,9 +63,9 @@ if (-e "$prefixfile") {
 	close(PREFIX);
 }
 
-##loop text, add lines together until we get a blank line or a <p>
+## Loop over text, add lines together until we get a blank line or a <p>
 my $text = "";
-while(<STDIN>) {
+while (<STDIN>) {
 	chop;
 	if (/^<.+>$/ || /^\s*$/) {
 		#time to process this block, we've hit a blank or <p>
@@ -78,7 +78,7 @@ while(<STDIN>) {
 		$text .= $_. " ";
 	}
 }
-#do the leftover text
+# Do the leftover text.
 &do_it_for($text,"") if $text;
 
 
@@ -90,31 +90,32 @@ sub do_it_for {
 }
 
 sub preprocess {
-	#this is one paragraph
+	# This is one paragraph.
 	my($text) = @_;
 
-	# clean up spaces at head and tail of each line as well as any double-spacing
+	# Clean up spaces at head and tail of each line, as well as
+	# any double-spacing.
 	$text =~ s/ +/ /g;
 	$text =~ s/\n /\n/g;
 	$text =~ s/ \n/\n/g;
 	$text =~ s/^ //g;
 	$text =~ s/ $//g;
 
-	#####add sentence breaks as needed#####
+	##### Add sentence breaks as needed #####
 
-	#non-period end of sentence markers (?!) followed by sentence starters.
+	# Non-period end of sentence markers (?!) followed by sentence starters.
 	$text =~ s/([?!]) +([\'\"\(\[\¿\¡\p{IsPi}]*[\p{IsUpper}])/$1\n$2/g;
 
-	#multi-dots followed by sentence starters
+	# Multi-dots followed by sentence starters.
 	$text =~ s/(\.[\.]+) +([\'\"\(\[\¿\¡\p{IsPi}]*[\p{IsUpper}])/$1\n$2/g;
 
-	# add breaks for sentences that end with some sort of punctuation inside a quote or
-	# parenthetical and are followed by a possible sentence starter punctuation and upper
-	# case
+	# Add breaks for sentences that end with some sort of punctuation
+	# inside a quote or parenthetical and are followed by a possible
+	# sentence starter punctuation and upper case.
 	$text =~ s/([?!\.][\ ]*[\'\"\)\]\p{IsPf}]+) +([\'\"\(\[\¿\¡\p{IsPi}]*[\ ]*[\p{IsUpper}])/$1\n$2/g;
 
-	# add breaks for sentences that end with some sort of punctuation are followed by a
-	# sentence starter punctuation and upper case
+	# Add breaks for sentences that end with some sort of punctuation,
+	# and are followed by a sentence starter punctuation and upper case.
 	$text =~ s/([?!\.]) +([\'\"\(\[\¿\¡\p{IsPi}]+[\ ]*[\p{IsUpper}])/$1\n$2/g;
 
 	# special punctuation cases are covered. Check all remaining periods.
@@ -151,7 +152,7 @@ sub preprocess {
 	$text =~ s/^ //g;
 	$text =~ s/ $//g;
 
-	#add trailing break
+	# Add trailing break.
 	$text .= "\n" unless $text =~ /\n$/;
 
 	return $text;
