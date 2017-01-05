@@ -96,7 +96,7 @@ sub do_it_for {
 }
 
 sub preprocess {
-	# This is one paragraph.
+	# Argument is one paragraph.
 	my($text) = @_;
 
 	# Clean up spaces at head and tail of each line, as well as
