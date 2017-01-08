@@ -133,18 +133,19 @@ sub preprocess {
 
 	# A normal full-stop or other Western sentence enders followed
 	# by an ideograph is an and-of-sentence, always.
-	$text =~ s/([\.?!]) *(\p{CJKSymbols})/$1\n$2/g;
+	$text =~ s/([\.?!]) *(\p{CJK})/$1\n$2/g;
 
 	# Split close-paren-then-comma into two.
-	$text =~ s/(\p{Blk=Punctuation})(\p{Blk=Punctuation})/ $1 $2 /g;
+	$text =~ s/(\p{Punctuation}) *(\p{Punctuation})/ $1 $2 /g;
 
 	# Chinese does not use any sort of white-space between ideographs.
 	# Nominally, each single ideograph corresponds to one word. Add
 	# spaces here, so that later processing stages can tokenize readily.
 	# Note that this handles mixed latinate+CJK.
-	$text =~ s/(\p{Blk=Punctuation}) *(\p{CJKSymbols})/ $1 $2/g
-	$text =~ s/(\p{CJKSymbols}) *(\p{Blk=Punctuation})/$1 $2 /g;
-	$text =~ s/(\p{CJKSymbols})/ $1 /g;
+	# TODO: perhaps also CJKExtA CJKExtB etc ??? CJK_Radicals_Sup ?
+	$text =~ s/(\p{Punctuation}) *(\p{CJK})/ $1 $2/g
+	$text =~ s/(\p{CJK}) *(\p{Punctuation})/$1 $2 /g;
+	$text =~ s/([\p{CJK}\p{CJKSymbols}])/ $1 /g;
 	$text =~ s/ +/ /g;
 
 	# Special punctuation cases are covered. Check all remaining periods.
