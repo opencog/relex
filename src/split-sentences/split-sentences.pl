@@ -150,7 +150,7 @@ sub preprocess {
 		# spaces here, so that later processing stages can tokenize readily.
 		# Note that this handles mixed latinate+CJK.
 		# TODO: perhaps also CJKExtA CJKExtB etc ??? CJK_Radicals_Sup ?
-		$text =~ s/(\p{Punctuation}) *(\p{CJK})/ $1 $2/g
+		$text =~ s/(\p{Punctuation}) *(\p{CJK})/ $1 $2/g;
 		$text =~ s/(\p{CJK}) *(\p{Punctuation})/$1 $2 /g;
 		$text =~ s/([\p{CJK}\p{CJKSymbols}])/ $1 /g;
 		$text =~ s/ +/ /g;
