@@ -171,8 +171,6 @@ public class Server
 
 		// -----------------------------------------------------------------
 		// Socket setup
-		Server s = new Server();
-		s.listen_port = listen_port;
 		ServerSocket listen_sock = null;
 		Socket send_sock = null;
 		OutputStream outs = null;
@@ -180,14 +178,14 @@ public class Server
 
 		try
 		{
-			listen_sock = new ServerSocket(s.listen_port);
+			listen_sock = new ServerSocket(listen_port);
 		}
 		catch (IOException e)
 		{
-			System.err.println("Error: Listen failed on port " + s.listen_port);
+			System.err.println("Error: Listen failed on port " + listen_port);
 			System.exit(-1);
 		}
-		System.err.println("Info: Listening on port " + s.listen_port);
+		System.err.println("Info: Listening on port " + listen_port);
 
 		// Send output to an opencog server, instead of returning it on
 		// the input socket.
