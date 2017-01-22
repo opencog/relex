@@ -393,7 +393,7 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
-			if (2000 < loop_count) break;
+			if (500 < loop_count) break;
 		}
 	}
 
@@ -403,10 +403,15 @@ public class Server
 		srv.parse_args(args);
 		srv.socket_setup();
 
-		// Every two-thousand sentences, the server will auto-exit,
+		// Every five-hundred sentences, the server will auto-exit,
 		// and we will attempt a marathon garage collection.  I hope
 		// that maybe this will fix the performance issues that
 		// accumulate over time?  What's wrong with Java GC?
+		//
+		// CPU usage starts getting really heavy, and performance
+		// starts dropping after 500 sentences, and totally collapses
+		// after about 4 hours or run-time... WTF.
+		//
 		int restart_count = 0;
 		while (true)
 		{
