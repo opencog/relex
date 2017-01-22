@@ -188,7 +188,9 @@ public class Server
 	// -----------------------------------------------------------------
 	public void run_server()
 	{
+		int loop_count = 0;
 		System.err.println("Info: Version: " + Version.getVersion());
+
 		// -----------------------------------------------------------------
 		// After parsing the commmand arguments, set up the assorted classes.
 		RelationExtractor re = new RelationExtractor(false);
@@ -387,6 +389,8 @@ public class Server
 
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
+			loop_count++;
+			if (1000 < loop_count) break;
 		}
 	}
 
@@ -395,6 +399,15 @@ public class Server
 		Server srv = new Server();
 		srv.parse_args(args);
 		srv.socket_setup();
-		srv.run_server();
+		while (true)
+		{
+			srv.run_server();
+
+			// Java sucks rocks.
+			System.gc();
+			System.gc();
+			System.gc();
+			System.gc();
+		}
 	}
 }
