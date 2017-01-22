@@ -44,8 +44,8 @@ import relex.Version;
 
 public class Server
 {
+	// command-line arguments
 	private int listen_port = 4444;
-
 	private String host_name = null;
 	private int host_port = 0;
 	private int max_parses = 1;
@@ -54,6 +54,12 @@ public class Server
 	private boolean relex_on = false;
 	private boolean link_on = false;
 	private boolean free_text = false;
+
+	// sockets
+	private ServerSocket listen_sock = null;
+	private Socket send_sock = null;
+	private OutputStream outs = null;
+	private PrintWriter out = null;
 
 	public Server()
 	{
@@ -137,45 +143,10 @@ public class Server
 		}
 	}
 
-	public void run_server()
+	// -----------------------------------------------------------------
+	// Socket setup
+	public void socket_setup()
 	{
-		System.err.println("Info: Version: " + Version.getVersion());
-		// -----------------------------------------------------------------
-		// After parsing the commmand arguments, set up the assorted classes.
-		RelationExtractor re = new RelationExtractor(false);
-		re.setLanguage(lang);
-		re.setMaxParses(max_parses);
-		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
-		OpenCogScheme opencog = new OpenCogScheme();
-		DocSplitter ds = DocSplitterFactory.create();
-
-		if (!relex_on && !link_on)
-		{
-			// By default just export RelEx output.
-			relex_on = true;
-		}
-		if (link_on)
-		{
-			System.err.println("Info: Link grammar output on.");
-			opencog.setShowLinkage(link_on);
-		}
-		if (relex_on)
-		{
-			System.err.println("Info: RelEx output on.");
-			opencog.setShowRelex(relex_on);
-		}
-		if (!relex_on)
-		{
-			re.do_apply_algs = false;
-		}
-
-		// -----------------------------------------------------------------
-		// Socket setup
-		ServerSocket listen_sock = null;
-		Socket send_sock = null;
-		OutputStream outs = null;
-		PrintWriter out = null;
-
 		try
 		{
 			listen_sock = new ServerSocket(listen_port);
@@ -211,6 +182,40 @@ public class Server
 				System.exit(-1);
 			}
 			System.err.println("Info: Will send output to " + host_name + ":" + host_port);
+		}
+	}
+
+	// -----------------------------------------------------------------
+	public void run_server()
+	{
+		System.err.println("Info: Version: " + Version.getVersion());
+		// -----------------------------------------------------------------
+		// After parsing the commmand arguments, set up the assorted classes.
+		RelationExtractor re = new RelationExtractor(false);
+		re.setLanguage(lang);
+		re.setMaxParses(max_parses);
+		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
+		OpenCogScheme opencog = new OpenCogScheme();
+		DocSplitter ds = DocSplitterFactory.create();
+
+		if (!relex_on && !link_on)
+		{
+			// By default just export RelEx output.
+			relex_on = true;
+		}
+		if (link_on)
+		{
+			System.err.println("Info: Link grammar output on.");
+			opencog.setShowLinkage(link_on);
+		}
+		if (relex_on)
+		{
+			System.err.println("Info: RelEx output on.");
+			opencog.setShowRelex(relex_on);
+		}
+		if (!relex_on)
+		{
+			re.do_apply_algs = false;
 		}
 
 		// -----------------------------------------------------------------
@@ -389,6 +394,7 @@ public class Server
 	{
 		Server srv = new Server();
 		srv.parse_args(args);
+		srv.socket_setup();
 		srv.run_server();
 	}
 }
