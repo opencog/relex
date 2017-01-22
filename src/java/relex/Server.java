@@ -189,6 +189,9 @@ public class Server
 	public void run_server()
 	{
 		int loop_count = 0;
+		System.err.println("===============================================");
+		System.err.println("===============================================");
+		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
 		// -----------------------------------------------------------------
@@ -390,7 +393,7 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
-			if (1000 < loop_count) break;
+			if (2000 < loop_count) break;
 		}
 	}
 
@@ -399,6 +402,12 @@ public class Server
 		Server srv = new Server();
 		srv.parse_args(args);
 		srv.socket_setup();
+
+		// Every two-thousand sentences, the server will auto-exit,
+		// and we will attempt a marathon garage collection.  I hope
+		// that maybe this will fix the performance issues that
+		// accumulate over time?  What's wrong with Java GC?
+		int restart_count = 0;
 		while (true)
 		{
 			srv.run_server();
@@ -408,6 +417,11 @@ public class Server
 			System.gc();
 			System.gc();
 			System.gc();
+			System.gc();
+
+			restart_count++;
+			System.err.println("===============================================");
+			System.err.println("Restart count = " + restart_count);
 		}
 	}
 }
