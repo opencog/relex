@@ -44,24 +44,23 @@ import relex.Version;
 
 public class Server
 {
-	private int listen_port;
+	private int listen_port = 4444;
+
+	private String host_name = null;
+	private int host_port = 0;
+	private int max_parses = 1;
+	private String lang = "en";
+	private boolean verbose = false;
+	private boolean relex_on = false;
+	private boolean link_on = false;
+	private boolean free_text = false;
 
 	public Server()
 	{
-		listen_port = 4444;
 	}
 
-	public static void main(String[] args)
+	public void parse_args(String[] args)
 	{
-		int host_port = 0;
-		int listen_port = 4444;
-		int max_parses = 1;
-		boolean relex_on = false;
-		boolean link_on = false;
-		boolean free_text = false;
-		boolean verbose = false;
-		String lang = "en";
-		String host_name = null;
 		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
 			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
 			"Options:\n" +
@@ -136,9 +135,11 @@ public class Server
 			System.err.println("Info: Verbose server mode set.");
 			verbose = true;
 		}
+	}
 
+	public void run_server()
+	{
 		System.err.println("Info: Version: " + Version.getVersion());
-
 		// -----------------------------------------------------------------
 		// After parsing the commmand arguments, set up the assorted classes.
 		RelationExtractor re = new RelationExtractor(false);
@@ -384,5 +385,12 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 		}
+	}
+
+	public static void main(String[] args)
+	{
+		Server srv = new Server();
+		srv.parse_args(args);
+		srv.run_server();
 	}
 }
