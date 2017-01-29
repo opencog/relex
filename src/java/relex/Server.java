@@ -184,8 +184,18 @@ public class Server
 	// -----------------------------------------------------------------
 	private static class ConnHandler implements Runnable
 	{
+		public ArrayBlockingQueue<ServerSession> sessq = null;
+		public ServerSession sess = null;
+		Socket in_sock = null;
+		PrintWriter out = null;
 		public void run()
 		{
+			try {
+				sess.handle_session(in_sock, out);
+			} catch (IOException e) {
+				System.err.println("Error: Cannot handle: " + e.getMessage());
+			}
+			sessq.add(sess);
 		}
 	}
 
@@ -263,13 +273,15 @@ public class Server
 			else
 			{
 				try {
+					// Take will block.
 					sess = sessq.take();
-					try {
-						sess.handle_session(in_sock, out);
-					} catch (IOException e) {
-						System.err.println("Error: Cannot handle: " + e.getMessage());
-					}
-					sessq.add(sess);
+					ConnHandler cha = new ConnHandler();
+					cha.sess = sess;
+					cha.sessq = sessq;
+					cha.in_sock = in_sock;
+					cha.out = out;
+					Thread t = new Thread(cha);
+					t.start();
 				} catch (InterruptedException e) {
 					System.err.println("Error: Queue interrupted: " + e.getMessage());
 				}
