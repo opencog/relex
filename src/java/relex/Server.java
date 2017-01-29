@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.HashSet;
 import java.util.Map;
 import relex.ServerSession;
@@ -39,6 +40,7 @@ import relex.Version;
 public class Server
 {
 	// command-line arguments
+	private int NTHREADS = 8;
 	private int listen_port = 4444;
 	private String host_name = null;
 	private int host_port = 0;
@@ -188,9 +190,27 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		ServerSession sess = new ServerSession();
-		sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
-		sess.verbose = verbose;
+		ArrayBlockingQueue<ServerSession> sessq;
+		ServerSession sess = null;
+
+		// If the end-point is null, use threads.
+		if (send_sock != null)
+		{
+			sessq = new ArrayBlockingQueue<ServerSession>(NTHREADS);
+			for (int i=0; i<NTHREADS; i++)
+			{
+				sess = new ServerSession();
+				sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+				sess.verbose = verbose;
+				sessq.add(sess);
+			}
+		}
+		else
+		{
+			sess = new ServerSession();
+			sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+			sess.verbose = verbose;
+		}
 
 		// -----------------------------------------------------------------
 		// Main loop -- listen for connections, accept them, and process.
