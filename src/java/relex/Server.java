@@ -33,160 +33,55 @@ import relex.output.OpenCogScheme;
 import relex.Version;
 
 /**
- * The Server class provides a very simple socket-based parse server.
- * It will listen for plain-text input sentences on port 4444, and will
- * generate OpenCog output.
- *
- * It is intended that this server be used by OpenCog agents to process
- * text; the text is sent from opencog to this server, and the returned
- * parses are then further processed by OpenCog.
+ * handler for a single coekct session.
  */
-
-public class Server
+public class Session
 {
-	// command-line arguments
-	private int listen_port = 4444;
-	private String host_name = null;
-	private int host_port = 0;
-	private int max_parses = 1;
-	private String lang = "en";
-	private boolean verbose = false;
-	private boolean relex_on = false;
-	private boolean link_on = false;
-	private boolean free_text = false;
-
-	// sockets
-	private ServerSocket listen_sock = null;
 	private Socket send_sock = null;
 	private OutputStream outs = null;
 	private PrintWriter out = null;
 
-	public Server()
+	private RelationExtractor re = null;
+	private OpenCogScheme opencog = null;
+	private DocSplitter ds = null;
+
+	// Set up the parsers.
+	public void setup(boolean relex_on, boolean link_on)
 	{
-	}
+		// -----------------------------------------------------------------
+		// After parsing the commmand arguments, set up the assorted classes.
+		re = new RelationExtractor(false);
+		re.setLanguage(lang);
+		re.setMaxParses(max_parses);
+		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
+		opencog = new OpenCogScheme();
+		ds = DocSplitterFactory.create();
 
-	public void parse_args(String[] args)
-	{
-		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
-			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
-			"Options:\n" +
-			" -p number  \t Port number to listen on (default: 4444)\n" +
-			" --port num \t Port number to listen on (default: 4444)\n" +
-			" --host host:port\t Send output to indicated host:port (example: localhost:17001)\n" +
-			" --lang lang\t Set langauge (default: en)\n" +
-			" -n number  \t Max number of parses to return (default: 1)\n" +
-			" --relex    \t Output RelEx relations (default)\n" +
-			" --link     \t Output Link Grammar Linkages\n" +
-			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
-			" --verbose  \t Print parse output to server stdout.\n";
-
-		HashSet<String> flags = new HashSet<String>();
-		flags.add("-h");
-		flags.add("--help");
-		flags.add("--link");
-		flags.add("--relex");
-		flags.add("--free-text");
-		flags.add("--verbose");
-		HashSet<String> opts = new HashSet<String>();
-		opts.add("-n");
-		opts.add("-p");
-		opts.add("--host");
-		opts.add("--lang");
-		opts.add("--port");
-		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
-
-		try
+		if (!relex_on && !link_on)
 		{
-			String opt;
-
-			opt = commandMap.get("-n");
-			if (opt != null) max_parses = Integer.parseInt(opt);
-
-			opt = commandMap.get("-p");
-			if (opt != null) listen_port = Integer.parseInt(opt);
-
-			opt = commandMap.get("--host");
-			if (opt != null)
-			{
-				String[] hp = opt.split(":");
-				host_name = hp[0];
-				host_port = Integer.parseInt(hp[1]);
-			}
-
-			opt = commandMap.get("--lang");
-			if (opt != null) lang = opt;
-
-			opt = commandMap.get("--port");
-			if (opt != null) listen_port = Integer.parseInt(opt);
+			// By default just export RelEx output.
+			relex_on = true;
 		}
-		catch (Exception e)
+		if (link_on)
 		{
-			System.err.println("Unrecognized parameter.");
-			System.err.println(usageString);
-			System.exit(1);
+			System.err.println("Info: Link grammar output on.");
+			opencog.setShowLinkage(link_on);
 		}
-
-		if (commandMap.get("-h") != null ||
-		    commandMap.get("--help") != null)
+		if (relex_on)
 		{
-			System.err.println(usageString);
-			System.exit(0);
+			System.err.println("Info: RelEx output on.");
+			opencog.setShowRelex(relex_on);
 		}
-		if (commandMap.get("--link") != null) link_on = true;
-		if (commandMap.get("--relex") != null) relex_on = true;
-		if (commandMap.get("--free-text") != null) free_text = true;
-
-		if (commandMap.get("--verbose") != null)
+		if (!relex_on)
 		{
-			System.err.println("Info: Verbose server mode set.");
-			verbose = true;
+			re.do_apply_algs = false;
 		}
 	}
 
 	// -----------------------------------------------------------------
-	// Socket setup
-	public void socket_setup()
-	{
-		try
-		{
-			listen_sock = new ServerSocket(listen_port);
-		}
-		catch (IOException e)
-		{
-			System.err.println("Error: Listen failed on port " + listen_port);
-			System.exit(-1);
-		}
-		System.err.println("Info: Listening on port " + listen_port);
-
-		// Send output to an opencog server, instead of returning it on
-		// the input socket.
-		if (host_name != null)
-		{
-			try
-			{
-				send_sock = new Socket(host_name, host_port);
-				send_sock.setKeepAlive(true);
-				// send_sock.shutdownInput();
-				outs = send_sock.getOutputStream();
-				out = new PrintWriter(outs, true);
-
-				// Assume we're talking to an opencog server.
-				// Escape it into a scheme shell.
-				out.println("scm hush");
-				out.flush();
-			}
-			catch (Exception e)
-			{
-				System.err.println("Error: Unable to connect to " +
-				   host_name + ":" + host_port + " : " + e.getMessage());
-				System.exit(-1);
-			}
-			System.err.println("Info: Will send output to " + host_name + ":" + host_port);
-		}
-	}
-
-	// -----------------------------------------------------------------
-	public void one_session(Socket in_sock)
+	// Run a single socket session, acceptinng input, and returning
+	// responses.
+	public void handle_session(Socket in_sock)
 	{
 		System.err.println("Info: Socket accept");
 		InputStream ins = in_sock.getInputStream();
@@ -318,6 +213,157 @@ public class Server
 			System.err.println("Error: Socket close failed: " + e.getMessage());
 		}
 	}
+}
+
+/**
+ * The Server class provides a very simple socket-based parse server.
+ * It will listen for plain-text input sentences on port 4444, and will
+ * generate OpenCog output.
+ *
+ * It is intended that this server be used by OpenCog agents to process
+ * text; the text is sent from opencog to this server, and the returned
+ * parses are then further processed by OpenCog.
+ */
+
+public class Server
+{
+	// command-line arguments
+	private int listen_port = 4444;
+	private String host_name = null;
+	private int host_port = 0;
+	private int max_parses = 1;
+	private String lang = "en";
+	private boolean verbose = false;
+	private boolean relex_on = false;
+	private boolean link_on = false;
+	private boolean free_text = false;
+
+	// sockets
+	private ServerSocket listen_sock = null;
+
+	public Server()
+	{
+	}
+
+	public void parse_args(String[] args)
+	{
+		String usageString = "RelEx server (designed for OpenCog interaction).\n" +
+			"Given a sentence, it returns a parse in opencog-style scheme format.\n" +
+			"Options:\n" +
+			" -p number  \t Port number to listen on (default: 4444)\n" +
+			" --port num \t Port number to listen on (default: 4444)\n" +
+			" --host host:port\t Send output to indicated host:port (example: localhost:17001)\n" +
+			" --lang lang\t Set langauge (default: en)\n" +
+			" -n number  \t Max number of parses to return (default: 1)\n" +
+			" --relex    \t Output RelEx relations (default)\n" +
+			" --link     \t Output Link Grammar Linkages\n" +
+			" --free-text\t Don't assume one sentence per line; look for !?. to end sentence.\n" +
+			" --verbose  \t Print parse output to server stdout.\n";
+
+		HashSet<String> flags = new HashSet<String>();
+		flags.add("-h");
+		flags.add("--help");
+		flags.add("--link");
+		flags.add("--relex");
+		flags.add("--free-text");
+		flags.add("--verbose");
+		HashSet<String> opts = new HashSet<String>();
+		opts.add("-n");
+		opts.add("-p");
+		opts.add("--host");
+		opts.add("--lang");
+		opts.add("--port");
+		Map<String,String> commandMap = CommandLineArgParser.parse(args, opts, flags);
+
+		try
+		{
+			String opt;
+
+			opt = commandMap.get("-n");
+			if (opt != null) max_parses = Integer.parseInt(opt);
+
+			opt = commandMap.get("-p");
+			if (opt != null) listen_port = Integer.parseInt(opt);
+
+			opt = commandMap.get("--host");
+			if (opt != null)
+			{
+				String[] hp = opt.split(":");
+				host_name = hp[0];
+				host_port = Integer.parseInt(hp[1]);
+			}
+
+			opt = commandMap.get("--lang");
+			if (opt != null) lang = opt;
+
+			opt = commandMap.get("--port");
+			if (opt != null) listen_port = Integer.parseInt(opt);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Unrecognized parameter.");
+			System.err.println(usageString);
+			System.exit(1);
+		}
+
+		if (commandMap.get("-h") != null ||
+		    commandMap.get("--help") != null)
+		{
+			System.err.println(usageString);
+			System.exit(0);
+		}
+		if (commandMap.get("--link") != null) link_on = true;
+		if (commandMap.get("--relex") != null) relex_on = true;
+		if (commandMap.get("--free-text") != null) free_text = true;
+
+		if (commandMap.get("--verbose") != null)
+		{
+			System.err.println("Info: Verbose server mode set.");
+			verbose = true;
+		}
+	}
+
+	// -----------------------------------------------------------------
+	// Socket setup
+	public void socket_setup()
+	{
+		try
+		{
+			listen_sock = new ServerSocket(listen_port);
+		}
+		catch (IOException e)
+		{
+			System.err.println("Error: Listen failed on port " + listen_port);
+			System.exit(-1);
+		}
+		System.err.println("Info: Listening on port " + listen_port);
+
+		// Send output to an opencog server, instead of returning it on
+		// the input socket.
+		if (host_name != null)
+		{
+			try
+			{
+				send_sock = new Socket(host_name, host_port);
+				send_sock.setKeepAlive(true);
+				// send_sock.shutdownInput();
+				outs = send_sock.getOutputStream();
+				out = new PrintWriter(outs, true);
+
+				// Assume we're talking to an opencog server.
+				// Escape it into a scheme shell.
+				out.println("scm hush");
+				out.flush();
+			}
+			catch (Exception e)
+			{
+				System.err.println("Error: Unable to connect to " +
+				   host_name + ":" + host_port + " : " + e.getMessage());
+				System.exit(-1);
+			}
+			System.err.println("Info: Will send output to " + host_name + ":" + host_port);
+		}
+	}
 
 	// -----------------------------------------------------------------
 	public void run_server()
@@ -328,34 +374,7 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		// -----------------------------------------------------------------
-		// After parsing the commmand arguments, set up the assorted classes.
-		RelationExtractor re = new RelationExtractor(false);
-		re.setLanguage(lang);
-		re.setMaxParses(max_parses);
-		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
-		OpenCogScheme opencog = new OpenCogScheme();
-		DocSplitter ds = DocSplitterFactory.create();
-
-		if (!relex_on && !link_on)
-		{
-			// By default just export RelEx output.
-			relex_on = true;
-		}
-		if (link_on)
-		{
-			System.err.println("Info: Link grammar output on.");
-			opencog.setShowLinkage(link_on);
-		}
-		if (relex_on)
-		{
-			System.err.println("Info: RelEx output on.");
-			opencog.setShowRelex(relex_on);
-		}
-		if (!relex_on)
-		{
-			re.do_apply_algs = false;
-		}
+		Session sess = new Session (relex_on, link_on);
 
 		// -----------------------------------------------------------------
 		// Main loop -- listen for connections, accept them, and process.
@@ -393,7 +412,7 @@ public class Server
 				}
 			}
 
-			one_session(in_sock);
+			sess.handle_session(in_sock);
 
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
