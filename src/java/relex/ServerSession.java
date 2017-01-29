@@ -36,6 +36,7 @@ import relex.Version;
 public class ServerSession
 {
 	public boolean verbose = false;
+	public int id = 0;
 
 	private RelationExtractor re = null;
 	private OpenCogScheme opencog = null;
@@ -66,12 +67,12 @@ public class ServerSession
 		}
 		if (link_on)
 		{
-			System.err.println("Info: Link grammar output on.");
+			System.err.println("Info: hndlr=" + id + " Link grammar output on.");
 			opencog.setShowLinkage(link_on);
 		}
 		if (relex_on)
 		{
-			System.err.println("Info: RelEx output on.");
+			System.err.println("Info: hndlr=" + id + " RelEx output on.");
 			opencog.setShowRelex(relex_on);
 		}
 		if (!relex_on)
@@ -86,7 +87,7 @@ public class ServerSession
 	public void handle_session(Socket in_sock, PrintWriter out)
 		throws IOException
 	{
-		System.err.println("Info: Socket accept");
+		// System.err.println("Info: Socket accept");
 		InputStream ins = in_sock.getInputStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 
@@ -119,7 +120,7 @@ public class ServerSession
 					String line = new String(junk);
 					line += in.readLine();
 
-					System.err.println("Info: recv input: \"" + line + "\"");
+					System.err.println("Info: hndlr=" + id + " recv input: \"" + line + "\"");
 
 					// If the free-text flag is set, then use the document
 					// splitter to find sentence boundaries. Otherwise,
@@ -136,7 +137,7 @@ public class ServerSession
 				}
 				catch (Exception e)
 				{
-					System.err.println("Error: Read of input failed:" + e.getMessage());
+					System.err.println("Error: hndlr=" + id + " Read of input failed:" + e.getMessage());
 					break;
 				}
 			}
@@ -147,11 +148,11 @@ public class ServerSession
 
 			try
 			{
-				System.err.println("Info: sentence: \"" + sentence + "\"");
+				System.err.println("Info: hndlr=" + id + " sentence: \"" + sentence + "\"");
 				Sentence sntc = re.processSentence(sentence);
 				if (sntc.getParses().size() == 0)
 				{
-					System.err.println("Info: No parses!");
+					System.err.println("Info: hndlr=" + id + " No parses!");
 					out.println("; NO PARSES");
 
 					// Only one sentence per connection in the non-free-text mode.
@@ -175,7 +176,7 @@ public class ServerSession
 					opencog.setParse(parse);
 					out.println(opencog.toString());
 					out.flush();
-					System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
+					System.err.println("Info: hndlr=" + id + " sent parse " + (pn + 1) + " of " + np);
 
 					// This is for simplifying pre-processing of scheme string
 					// before evaluating it in opencog.
@@ -197,7 +198,7 @@ public class ServerSession
 			}
 			catch (Exception e)
 			{
-				System.err.println("Error: Failed to parse: " + e.getMessage());
+				System.err.println("Error: hndlr=" + id + " Failed to parse: " + e.getMessage());
 				e.printStackTrace();
 				break;
 			}
@@ -209,11 +210,11 @@ public class ServerSession
 		try
 		{
 			in_sock.close();
-			System.err.println("Info: Closed input socket");
+			System.err.println("Info: hndlr=" + id + " Closed input socket");
 		}
 		catch (IOException e)
 		{
-			System.err.println("Error: Socket close failed: " + e.getMessage());
+			System.err.println("Error: hndlr=" + id + " Socket close failed: " + e.getMessage());
 		}
 	}
 }

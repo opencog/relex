@@ -190,6 +190,7 @@ public class Server
 		PrintWriter out = null;
 		public void run()
 		{
+			System.err.println("Info: Enter thread with handler " + sess.id);
 			try {
 				sess.handle_session(in_sock, out);
 			} catch (IOException e) {
@@ -218,6 +219,7 @@ public class Server
 			for (int i=0; i<NTHREADS; i++)
 			{
 				sess = new ServerSession();
+				sess.id = i+1;
 				sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
 				sess.verbose = verbose;
 				sessq.add(sess);
