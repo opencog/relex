@@ -35,15 +35,7 @@ public class LocalLGParser extends LGParser
 	private static final double min_score = -0.001;
 	private static final double score_bump = 0.001;
 
-	private ThreadLocal<Boolean> initialized = new ThreadLocal<Boolean>()
-	{
-		protected Boolean initialValue()
-		{
-			return Boolean.FALSE;
-		}
-	};
-
-	public void init()
+	public LocalLGParser()
 	{
 		// Must set language or dictionary path BEFORE initializing!
 		if (_lang != null)
@@ -82,8 +74,6 @@ public class LocalLGParser extends LGParser
 
 	public Sentence parse(String sentence) throws ParseException
 	{
-		if (!initialized.get())
-			init();
 		Long starttime;
 		if (verbosity > 0) starttime = System.currentTimeMillis();
 
