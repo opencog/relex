@@ -28,9 +28,9 @@ import relex.ServerSession;
 import relex.Version;
 
 /**
- * The Server class provides a very simple socket-based parse server.
+ * The Server class provides a multi-threaded socket-based parse server.
  * It will listen for plain-text input sentences on port 4444, and will
- * generate OpenCog output.
+ * generate OpenCog Atomese output.
  *
  * It is intended that this server be used by OpenCog agents to process
  * text; the text is sent from opencog to this server, and the returned
