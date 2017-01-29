@@ -33,21 +33,25 @@ import relex.output.OpenCogScheme;
 import relex.Version;
 
 /**
- * handler for a single coekct session.
+ * handler for a single socket session.
  */
-public class Session
+private class Session
 {
-	private Socket send_sock = null;
-	private OutputStream outs = null;
-	private PrintWriter out = null;
+	public boolean verbose = false;
 
 	private RelationExtractor re = null;
 	private OpenCogScheme opencog = null;
 	private DocSplitter ds = null;
+	private boolean free_text = false;
+	private int max_parses;
 
 	// Set up the parsers.
-	public void setup(boolean relex_on, boolean link_on)
+	public void sess_setup(boolean relex_on, boolean link_on,
+	                       boolean ft, int mp, String lang)
 	{
+		free_text = ft;
+		max_parses = mp;
+
 		// -----------------------------------------------------------------
 		// After parsing the commmand arguments, set up the assorted classes.
 		re = new RelationExtractor(false);
@@ -81,7 +85,7 @@ public class Session
 	// -----------------------------------------------------------------
 	// Run a single socket session, acceptinng input, and returning
 	// responses.
-	public void handle_session(Socket in_sock)
+	public void handle_session(Socket in_sock, PrintWriter out)
 	{
 		System.err.println("Info: Socket accept");
 		InputStream ins = in_sock.getInputStream();
@@ -240,6 +244,9 @@ public class Server
 
 	// sockets
 	private ServerSocket listen_sock = null;
+	private Socket send_sock = null;
+	private OutputStream outs = null;
+	private PrintWriter out = null;
 
 	public Server()
 	{
@@ -374,7 +381,9 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		Session sess = new Session (relex_on, link_on);
+		Session sess = new Session();
+		sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+		sess.verbose = verbose;
 
 		// -----------------------------------------------------------------
 		// Main loop -- listen for connections, accept them, and process.
@@ -412,7 +421,7 @@ public class Server
 				}
 			}
 
-			sess.handle_session(in_sock);
+			sess.handle_session(in_sock, out);
 
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
