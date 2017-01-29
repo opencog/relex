@@ -84,6 +84,7 @@ public class ServerSession
 	// Run a single socket session, acceptinng input, and returning
 	// responses.
 	public void handle_session(Socket in_sock, PrintWriter out)
+		throws IOException
 	{
 		System.err.println("Info: Socket accept");
 		InputStream ins = in_sock.getInputStream();

@@ -228,7 +228,11 @@ public class Server
 				}
 			}
 
-			sess.handle_session(in_sock, out);
+			try {
+				sess.handle_session(in_sock, out);
+			} catch (IOException e) {
+				System.err.println("Error: Cannot connect: " + e.getMessage());
+			}
 
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
