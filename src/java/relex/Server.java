@@ -182,6 +182,14 @@ public class Server
 	}
 
 	// -----------------------------------------------------------------
+	private static class ConnHandler implements Runnable
+	{
+		public void run()
+		{
+		}
+	}
+
+	// -----------------------------------------------------------------
 	public void run_server()
 	{
 		int loop_count = 0;
@@ -190,11 +198,11 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		ArrayBlockingQueue<ServerSession> sessq;
+		ArrayBlockingQueue<ServerSession> sessq = null;
 		ServerSession sess = null;
 
 		// If the end-point is null, use threads.
-		if (send_sock != null)
+		if (send_sock == null)
 		{
 			sessq = new ArrayBlockingQueue<ServerSession>(NTHREADS);
 			for (int i=0; i<NTHREADS; i++)
@@ -246,14 +254,26 @@ public class Server
 				{
 					System.err.println("Error: Remote end has closed socket! " + e.getMessage());
 				}
+				try {
+					sess.handle_session(in_sock, out);
+				} catch (IOException e) {
+					System.err.println("Error: Cannot connect: " + e.getMessage());
+				}
 			}
-
-			try {
-				sess.handle_session(in_sock, out);
-			} catch (IOException e) {
-				System.err.println("Error: Cannot connect: " + e.getMessage());
+			else
+			{
+				try {
+					sess = sessq.take();
+					try {
+						sess.handle_session(in_sock, out);
+					} catch (IOException e) {
+						System.err.println("Error: Cannot handle: " + e.getMessage());
+					}
+					sessq.add(sess);
+				} catch (InterruptedException e) {
+					System.err.println("Error: Queue interrupted: " + e.getMessage());
+				}
 			}
-
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
