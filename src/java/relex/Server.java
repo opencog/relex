@@ -186,6 +186,140 @@ public class Server
 	}
 
 	// -----------------------------------------------------------------
+	public void one_session(Socket in_sock)
+	{
+		System.err.println("Info: Socket accept");
+		InputStream ins = in_sock.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(ins));
+
+		// Loop over multiple sentences that may be present in input.
+		while (true)
+		{
+			// Loop over multiple input lines, looking for one complete sentence.
+			String sentence = null;
+			while (null == sentence)
+			{
+				try {
+					// Break if EOF encountered.  This should have been easy
+					// to figure out, but its not. Java sux rox. What is wrong
+					// with these people? Are they all stupid, or what? Arghhhh.
+					int one_char = in.read();
+					// 0x4 is ASCII EOT aka ctrl-D via telnet.
+					if (-1 == one_char || 4 == one_char)
+					{
+						sentence = ds.getRemainder();
+						sentence = sentence.trim();
+						break;
+					}
+					if ('\r' == one_char)
+						continue;
+					if ('\n' == one_char)
+						continue;
+
+					// Another bright shining example of more java idiocy.
+					char junk[] = {(char)one_char};
+					String line = new String(junk);
+					line += in.readLine();
+
+					System.err.println("Info: recv input: \"" + line + "\"");
+
+					// If the free-text flag is set, then use the document
+					// splitter to find sentence boundaries. Otherwise,
+					// Assume one sentence per line.
+					if (free_text)
+					{
+						ds.addText(line + " ");
+						sentence = ds.getNextSentence();
+					}
+					else
+					{
+						sentence = line;
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("Error: Read of input failed:" + e.getMessage());
+					break;
+				}
+			}
+
+			// If the sentence is null; we've run out of input.
+			if (null == sentence || sentence.equals(""))
+				break;
+
+			try
+			{
+				System.err.println("Info: sentence: \"" + sentence + "\"");
+				Sentence sntc = re.processSentence(sentence);
+				if (sntc.getParses().size() == 0)
+				{
+					System.err.println("Info: No parses!");
+					out.println("; NO PARSES");
+
+					// Only one sentence per connection in the non-free-text mode.
+					if (!free_text) break;
+					continue;
+				}
+				int np = Math.min(max_parses, sntc.getParses().size());
+				int pn;
+				for (pn = 0; pn < np; pn++)
+				{
+					ParsedSentence parse = sntc.getParses().get(pn);
+
+					// Print the phrase string ... handy for debugging.
+					out.println("; " + parse.getPhraseString());
+
+					if (verbose)
+					{
+						String fin = SimpleView.printRelationsAlt(parse);
+						System.out.print(fin);
+					}
+					opencog.setParse(parse);
+					out.println(opencog.toString());
+					out.flush();
+					System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
+
+					// This is for simplifying pre-processing of scheme string
+					// before evaluating it in opencog.
+					out.println("; ##### END OF A PARSE #####");
+					out.flush();
+				}
+
+				// Add a special tag to tell the cog server that it's
+				// just recieved a brand new sentence. The OpenCog scheme
+				// code depends on this being visible, in order to find
+				// the new sentence.
+				out.println("(ListLink (stv 1 1)");
+				out.println("   (AnchorNode \"# New Parsed Sentence\")");
+				out.println("   (SentenceNode \"" + sntc.getID() + "\")");
+				out.println(")");
+
+				out.println("; END OF SENTENCE");
+				out.flush();
+			}
+			catch (Exception e)
+			{
+				System.err.println("Error: Failed to parse: " + e.getMessage());
+				e.printStackTrace();
+				break;
+			}
+
+			// Only one sentence per connection in the non-free-text mode.
+			if (!free_text) break;
+		}
+
+		try
+		{
+			in_sock.close();
+			System.err.println("Info: Closed input socket");
+		}
+		catch (IOException e)
+		{
+			System.err.println("Error: Socket close failed: " + e.getMessage());
+		}
+	}
+
+	// -----------------------------------------------------------------
 	public void run_server()
 	{
 		int loop_count = 0;
@@ -228,11 +362,9 @@ public class Server
 		while (true)
 		{
 			Socket in_sock = null;
-			InputStream ins = null;
 			try {
 				System.err.println("Info: Waiting for socket connection");
 				in_sock = listen_sock.accept();
-				ins = in_sock.getInputStream();
 
 				// If no end-point, return data on same socket.
 				if (send_sock == null)
@@ -244,9 +376,6 @@ public class Server
 				System.err.println("Error: Accept failed: " + e.getMessage());
 				continue;
 			}
-
-			System.err.println("Info: Socket accept");
-			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 
 			// Attempt to detect a dead socket. This could happen if the
 			// remote end died. This should be easy to do, but for some
@@ -264,131 +393,7 @@ public class Server
 				}
 			}
 
-			// Loop over multiple sentences that may be present in input.
-			while (true)
-			{
-				// Loop over multiple input lines, looking for one complete sentence.
-				String sentence = null;
-				while (null == sentence)
-				{
-					try {
-						// Break if EOF encountered.  This should have been easy
-						// to figure out, but its not. Java sux rox. What is wrong
-						// with these people? Are they all stupid, or what? Arghhhh.
-						int one_char = in.read();
-						// 0x4 is ASCII EOT aka ctrl-D via telnet.
-						if (-1 == one_char || 4 == one_char)
-						{
-							sentence = ds.getRemainder();
-							sentence = sentence.trim();
-							break;
-						}
-						if ('\r' == one_char)
-							continue;
-						if ('\n' == one_char)
-							continue;
-
-						// Another bright shining example of more java idiocy.
-						char junk[] = {(char)one_char};
-						String line = new String(junk);
-						line += in.readLine();
-
-						System.err.println("Info: recv input: \"" + line + "\"");
-
-						// If the free-text flag is set, then use the document
-						// splitter to find sentence boundaries. Otherwise,
-						// Assume one sentence per line.
-						if (free_text)
-						{
-							ds.addText(line + " ");
-							sentence = ds.getNextSentence();
-						}
-						else
-						{
-							sentence = line;
-						}
-					}
-					catch (Exception e)
-					{
-						System.err.println("Error: Read of input failed:" + e.getMessage());
-						break;
-					}
-				}
-
-				// If the sentence is null; we've run out of input.
-				if (null == sentence || sentence.equals(""))
-					break;
-
-				try
-				{
-					System.err.println("Info: sentence: \"" + sentence + "\"");
-					Sentence sntc = re.processSentence(sentence);
-					if (sntc.getParses().size() == 0)
-					{
-						System.err.println("Info: No parses!");
-						out.println("; NO PARSES");
-
-						// Only one sentence per connection in the non-free-text mode.
-						if (!free_text) break;
-						continue;
-					}
-					int np = Math.min(max_parses, sntc.getParses().size());
-					int pn;
-					for (pn = 0; pn < np; pn++)
-					{
-						ParsedSentence parse = sntc.getParses().get(pn);
-
-						// Print the phrase string ... handy for debugging.
-						out.println("; " + parse.getPhraseString());
-
-						if (verbose)
-						{
-							String fin = SimpleView.printRelationsAlt(parse);
-							System.out.print(fin);
-						}
-						opencog.setParse(parse);
-						out.println(opencog.toString());
-						out.flush();
-						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
-
-						// This is for simplifying pre-processing of scheme string
-						// before evaluating it in opencog.
-						out.println("; ##### END OF A PARSE #####");
-						out.flush();
-					}
-
-					// Add a special tag to tell the cog server that it's
-					// just recieved a brand new sentence. The OpenCog scheme
-					// code depends on this being visible, in order to find
-					// the new sentence.
-					out.println("(ListLink (stv 1 1)");
-					out.println("   (AnchorNode \"# New Parsed Sentence\")");
-					out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-					out.println(")");
-
-					out.println("; END OF SENTENCE");
-					out.flush();
-				}
-				catch (Exception e)
-				{
-					System.err.println("Error: Failed to parse: " + e.getMessage());
-					e.printStackTrace();
-					break;
-				}
-
-				// Only one sentence per connection in the non-free-text mode.
-				if (!free_text) break;
-			}
-
-			try
-			{
-				in_sock.close();
-				System.err.println("Info: Closed input socket");
-			}
-			catch (IOException e)
-			{
-				System.err.println("Error: Socket close failed: " + e.getMessage());
-			}
+			one_session(in_sock);
 
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
