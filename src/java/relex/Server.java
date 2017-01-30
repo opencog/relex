@@ -215,7 +215,7 @@ public class Server
 			sessq = null;
 
 			// Something here is leaking memory ... 10GB in 10 minutes.
-			System.gc();
+			// System.gc();
 		}
 	}
 
@@ -313,9 +313,8 @@ public class Server
 					System.err.println("Error: Queue interrupted: " + e.getMessage());
 				}
 			}
-			// Something here is leaking memory ... 10GB a day ... can this help?
-			System.gc();
 			loop_count++;
+			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
 			if (43212500 < loop_count) break;
 		}
