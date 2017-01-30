@@ -237,12 +237,6 @@ public class RelationExtractor
 		parser.getConfig().setMaxCost(maxCost);
 	}
 
-	public void setAllowSkippedWords(boolean allow)
-	{
-		if (!_is_inited) init();
-		parser.getConfig().setAllowSkippedWords(allow);
-	}
-
 	public void setMaxParseSeconds(int maxParseSeconds)
 	{
 		if (!_is_inited) init();
@@ -437,7 +431,6 @@ public class RelationExtractor
 		RelationExtractor re = new RelationExtractor();
 		// careful: set language *before* doing other  things, to avoid call to init()
 		re.setLanguage(language);
-		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 		System.out.println("; Version: " + re.getVersion());

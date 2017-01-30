@@ -108,7 +108,6 @@ public class WebFormat extends RelationExtractor
 		cv.setSourceURL(url);
 
 		WebFormat re = new WebFormat();
-		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 
