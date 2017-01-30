@@ -198,12 +198,20 @@ public class Server
 			} catch (IOException e) {
 				System.err.println("Error: Cannot handle: " + e.getMessage());
 			}
-			sessq.add(sess);
-
-			sessq = null;
-			sess = null;
-			in_sock = null;
+			out.flush();
+			out.close();
 			out = null;
+
+			try {
+				in_sock.close();
+			} catch (IOException e) {
+				System.err.println("Error: Cannot close: " + e.getMessage());
+			}
+			in_sock = null;
+
+			sessq.add(sess);
+			sess = null;
+			sessq = null;
 
 			// Something here is leaking memory ... 10GB in 10 minutes.
 			System.gc();
