@@ -11,31 +11,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright (c) 2008, 2009, 2013 Linas Vepstas <linasvepstas@gmail.com>
+ * Copyright (c) 2008, 2009, 2013, 2017 Linas Vepstas <linasvepstas@gmail.com>
  */
 
 package relex;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.HashSet;
 import java.util.Map;
-import relex.corpus.DocSplitter;
-import relex.corpus.DocSplitterFactory;
-import relex.output.SimpleView;
-import relex.output.OpenCogScheme;
+import relex.ServerSession;
 import relex.Version;
 
 /**
- * The Server class provides a very simple socket-based parse server.
+ * The Server class provides a multi-threaded socket-based parse server.
  * It will listen for plain-text input sentences on port 4444, and will
- * generate OpenCog output.
+ * generate OpenCog Atomese output.
  *
  * It is intended that this server be used by OpenCog agents to process
  * text; the text is sent from opencog to this server, and the returned
@@ -45,6 +40,7 @@ import relex.Version;
 public class Server
 {
 	// command-line arguments
+	private int NTHREADS = 8;
 	private int listen_port = 4444;
 	private String host_name = null;
 	private int host_port = 0;
@@ -186,6 +182,25 @@ public class Server
 	}
 
 	// -----------------------------------------------------------------
+	private static class ConnHandler implements Runnable
+	{
+		public ArrayBlockingQueue<ServerSession> sessq = null;
+		public ServerSession sess = null;
+		Socket in_sock = null;
+		PrintWriter out = null;
+		public void run()
+		{
+			System.err.println("Info: Enter thread with handler " + sess.id);
+			try {
+				sess.handle_session(in_sock, out);
+			} catch (IOException e) {
+				System.err.println("Error: Cannot handle: " + e.getMessage());
+			}
+			sessq.add(sess);
+		}
+	}
+
+	// -----------------------------------------------------------------
 	public void run_server()
 	{
 		int loop_count = 0;
@@ -194,33 +209,33 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
-		// -----------------------------------------------------------------
-		// After parsing the commmand arguments, set up the assorted classes.
-		RelationExtractor re = new RelationExtractor(false);
-		re.setLanguage(lang);
-		re.setMaxParses(max_parses);
-		if (1000 < max_parses) re.setMaxLinkages(max_parses+100);
-		OpenCogScheme opencog = new OpenCogScheme();
-		DocSplitter ds = DocSplitterFactory.create();
+		{
+			// Force link-grammar initialization, before anything else.
+			ServerSession tmp = new ServerSession();
+			tmp.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+		}
 
-		if (!relex_on && !link_on)
+		ArrayBlockingQueue<ServerSession> sessq = null;
+		ServerSession sess = null;
+
+		// If the end-point is null, use threads.
+		if (send_sock == null)
 		{
-			// By default just export RelEx output.
-			relex_on = true;
+			sessq = new ArrayBlockingQueue<ServerSession>(NTHREADS);
+			for (int i=0; i<NTHREADS; i++)
+			{
+				sess = new ServerSession();
+				sess.id = i+1;
+				sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+				sess.verbose = verbose;
+				sessq.add(sess);
+			}
 		}
-		if (link_on)
+		else
 		{
-			System.err.println("Info: Link grammar output on.");
-			opencog.setShowLinkage(link_on);
-		}
-		if (relex_on)
-		{
-			System.err.println("Info: RelEx output on.");
-			opencog.setShowRelex(relex_on);
-		}
-		if (!relex_on)
-		{
-			re.do_apply_algs = false;
+			sess = new ServerSession();
+			sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+			sess.verbose = verbose;
 		}
 
 		// -----------------------------------------------------------------
@@ -228,11 +243,9 @@ public class Server
 		while (true)
 		{
 			Socket in_sock = null;
-			InputStream ins = null;
 			try {
 				System.err.println("Info: Waiting for socket connection");
 				in_sock = listen_sock.accept();
-				ins = in_sock.getInputStream();
 
 				// If no end-point, return data on same socket.
 				if (send_sock == null)
@@ -244,9 +257,6 @@ public class Server
 				System.err.println("Error: Accept failed: " + e.getMessage());
 				continue;
 			}
-
-			System.err.println("Info: Socket accept");
-			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 
 			// Attempt to detect a dead socket. This could happen if the
 			// remote end died. This should be easy to do, but for some
@@ -262,134 +272,28 @@ public class Server
 				{
 					System.err.println("Error: Remote end has closed socket! " + e.getMessage());
 				}
-			}
-
-			// Loop over multiple sentences that may be present in input.
-			while (true)
-			{
-				// Loop over multiple input lines, looking for one complete sentence.
-				String sentence = null;
-				while (null == sentence)
-				{
-					try {
-						// Break if EOF encountered.  This should have been easy
-						// to figure out, but its not. Java sux rox. What is wrong
-						// with these people? Are they all stupid, or what? Arghhhh.
-						int one_char = in.read();
-						// 0x4 is ASCII EOT aka ctrl-D via telnet.
-						if (-1 == one_char || 4 == one_char)
-						{
-							sentence = ds.getRemainder();
-							sentence = sentence.trim();
-							break;
-						}
-						if ('\r' == one_char)
-							continue;
-						if ('\n' == one_char)
-							continue;
-
-						// Another bright shining example of more java idiocy.
-						char junk[] = {(char)one_char};
-						String line = new String(junk);
-						line += in.readLine();
-
-						System.err.println("Info: recv input: \"" + line + "\"");
-
-						// If the free-text flag is set, then use the document
-						// splitter to find sentence boundaries. Otherwise,
-						// Assume one sentence per line.
-						if (free_text)
-						{
-							ds.addText(line + " ");
-							sentence = ds.getNextSentence();
-						}
-						else
-						{
-							sentence = line;
-						}
-					}
-					catch (Exception e)
-					{
-						System.err.println("Error: Read of input failed:" + e.getMessage());
-						break;
-					}
+				try {
+					sess.handle_session(in_sock, out);
+				} catch (IOException e) {
+					System.err.println("Error: Cannot connect: " + e.getMessage());
 				}
-
-				// If the sentence is null; we've run out of input.
-				if (null == sentence || sentence.equals(""))
-					break;
-
-				try
-				{
-					System.err.println("Info: sentence: \"" + sentence + "\"");
-					Sentence sntc = re.processSentence(sentence);
-					if (sntc.getParses().size() == 0)
-					{
-						System.err.println("Info: No parses!");
-						out.println("; NO PARSES");
-
-						// Only one sentence per connection in the non-free-text mode.
-						if (!free_text) break;
-						continue;
-					}
-					int np = Math.min(max_parses, sntc.getParses().size());
-					int pn;
-					for (pn = 0; pn < np; pn++)
-					{
-						ParsedSentence parse = sntc.getParses().get(pn);
-
-						// Print the phrase string ... handy for debugging.
-						out.println("; " + parse.getPhraseString());
-
-						if (verbose)
-						{
-							String fin = SimpleView.printRelationsAlt(parse);
-							System.out.print(fin);
-						}
-						opencog.setParse(parse);
-						out.println(opencog.toString());
-						out.flush();
-						System.err.println("Info: sent parse " + (pn + 1) + " of " + np);
-
-						// This is for simplifying pre-processing of scheme string
-						// before evaluating it in opencog.
-						out.println("; ##### END OF A PARSE #####");
-						out.flush();
-					}
-
-					// Add a special tag to tell the cog server that it's
-					// just recieved a brand new sentence. The OpenCog scheme
-					// code depends on this being visible, in order to find
-					// the new sentence.
-					out.println("(ListLink (stv 1 1)");
-					out.println("   (AnchorNode \"# New Parsed Sentence\")");
-					out.println("   (SentenceNode \"" + sntc.getID() + "\")");
-					out.println(")");
-
-					out.println("; END OF SENTENCE");
-					out.flush();
-				}
-				catch (Exception e)
-				{
-					System.err.println("Error: Failed to parse: " + e.getMessage());
-					e.printStackTrace();
-					break;
-				}
-
-				// Only one sentence per connection in the non-free-text mode.
-				if (!free_text) break;
 			}
-
-			try
+			else
 			{
-				in_sock.close();
-				System.err.println("Info: Closed input socket");
+				try {
+					// Take will block.
+					sess = sessq.take();
+					ConnHandler cha = new ConnHandler();
+					cha.sess = sess;
+					cha.sessq = sessq;
+					cha.in_sock = in_sock;
+					cha.out = out;
+					Thread t = new Thread(cha);
+					t.start();
+				} catch (InterruptedException e) {
+					System.err.println("Error: Queue interrupted: " + e.getMessage());
+				}
 			}
-			catch (IOException e)
-			{
-				System.err.println("Error: Socket close failed: " + e.getMessage());
-			}
-
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;

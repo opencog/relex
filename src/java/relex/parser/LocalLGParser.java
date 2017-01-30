@@ -18,6 +18,7 @@ package relex.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.linkgrammar.LGService;
 import org.linkgrammar.LinkGrammar;
@@ -35,15 +36,15 @@ public class LocalLGParser extends LGParser
 	private static final double min_score = -0.001;
 	private static final double score_bump = 0.001;
 
-	private ThreadLocal<Boolean> initialized = new ThreadLocal<Boolean>()
-	{
-		protected Boolean initialValue()
-		{
-			return Boolean.FALSE;
-		}
-	};
+	private AtomicBoolean initialized = new AtomicBoolean(false);
 
-	public void init()
+	public LocalLGParser()
+	{
+		if (!initialized.getAndSet(true))
+			init();
+	}
+
+	private void init()
 	{
 		// Must set language or dictionary path BEFORE initializing!
 		if (_lang != null)
@@ -52,26 +53,22 @@ public class LocalLGParser extends LGParser
 		if (_dict_path != null)
 			LinkGrammar.setDictionariesPath(_dict_path);
 
-		if (!initialized.get())
+		try
 		{
-			try
-			{
-				LinkGrammar.init();
-			}
-      	catch (Exception e)
-			{
-				String msg = "Error: LinkGrammar initialization error";
-				if (_lang != null)
-					msg = "Error: LinkGrammar: Unknown language \"" + _lang + "\"";
-				if (_dict_path != null)
-					msg = "Error: LinkGrammar: Invalid dictionary path \"" + _dict_path + "\"";
-				throw new RuntimeException(msg);
-			}
+			LinkGrammar.init();
+		}
+     	catch (Exception e)
+		{
+			String msg = "Error: LinkGrammar initialization error";
+			if (_lang != null)
+				msg = "Error: LinkGrammar: Unknown language \"" + _lang + "\"";
+			if (_dict_path != null)
+				msg = "Error: LinkGrammar: Invalid dictionary path \"" + _dict_path + "\"";
+			throw new RuntimeException(msg);
 		}
 
 		LinkGrammar.setMaxLinkages(_max_linkages);
 		LGService.configure(_config);
-		initialized.set(Boolean.TRUE);
 	}
 
 	public void close()
@@ -82,8 +79,6 @@ public class LocalLGParser extends LGParser
 
 	public Sentence parse(String sentence) throws ParseException
 	{
-		if (!initialized.get())
-			init();
 		Long starttime;
 		if (verbosity > 0) starttime = System.currentTimeMillis();
 
