@@ -200,6 +200,11 @@ public class Server
 			}
 			sessq.add(sess);
 
+			sessq = null;
+			sess = null;
+			in_sock = null;
+			out = null;
+
 			// Something here is leaking memory ... 10GB in 10 minutes.
 			System.gc();
 		}
