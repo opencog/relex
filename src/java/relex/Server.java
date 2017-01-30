@@ -231,6 +231,8 @@ public class Server
 		public void run()
 		{
 			count.addAndGet(1);
+			System.err.println("Info: Waiting cleanup thread. cnt=" + count.get());
+
 			// Stall until all threads are running.
 			try {
 				while (count.get() < NTHREADS) { TimeUnit.SECONDS.sleep(1); }
