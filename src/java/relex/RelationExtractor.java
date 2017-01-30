@@ -180,6 +180,21 @@ public class RelationExtractor
 		_dict_path = dict_path;
 	}
 
+	// This performs a per-thread cleanup of memory
+	// (releases the link-grammar sentence and linkage for this thread)
+	public void close()
+	{
+		parser.close();
+	}
+
+	// This performs a global cleanup of memory
+	// (releases the link-grammar dictionary, shared among all the
+	// threads.)
+	public void do_finalize()
+	{
+		parser.do_finalize();
+	}
+
 	/* ---------------------------------------------------------- */
 	/* Control parameters, etc. */
 	/**
