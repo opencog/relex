@@ -81,6 +81,18 @@ public class ServerSession
 		}
 	}
 
+	// Need to close in the same thread in which work was being done,
+	// so as to release allocated memory associated with LinkGrammar,
+	// with that processing thread. The java bindings do a per-thread
+	// malloc.
+	public void sess_close()
+	{
+		ds = null;
+		opencog = null;
+		re.close();
+		re = null;
+	}
+
 	// -----------------------------------------------------------------
 	// Run a single socket session, acceptinng input, and returning
 	// responses.
