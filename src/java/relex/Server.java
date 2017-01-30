@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +44,7 @@ import relex.Version;
 public class Server
 {
 	// command-line arguments
-	private int NTHREADS = 8;
+	static private int NTHREADS = 8;
 	private int listen_port = 4444;
 	private String host_name = null;
 	private int host_port = 0;
@@ -219,6 +220,26 @@ public class Server
 		}
 	}
 
+	// Block. until one copy of this is running in each thread.
+	// When this finally happens, perform link-grammar cleanup
+	// in each thread.
+	private static class ConnCleanup implements Runnable
+	{
+		public ServerSession sess = null;
+		public static AtomicInteger count = new AtomicInteger(0);
+		public void run()
+		{
+			count.addAndGet(1);
+			// Stall until all threads are running.
+			try {
+				while (count.get() < NTHREADS) { TimeUnit.SECONDS.sleep(1); }
+			} catch (InterruptedException e) {
+				System.err.println("Error: Shtutdown interrupted: " + e.getMessage());
+			}
+			sess.sess_close();
+		}
+	}
+
 	// -----------------------------------------------------------------
 	public void run_server()
 	{
@@ -321,18 +342,31 @@ public class Server
 
 		System.err.println("Info: Main loop shutting down");
 
+		// Invoke the Relex close handler in each thread.
+		for (int i=0; i<NTHREADS; i++)
+		{
+			try {
+				// Take will block; can throw InterruptedException
+				sess = sessq.take();
+				ConnCleanup cle = new ConnCleanup();
+				cle.sess = sess;
+				tpool.execute(cle);
+			} catch (InterruptedException e) {
+				System.err.println("Error: Cleanup interrupted: " + e.getMessage());
+			}
+		}
 		sessq = null;
 
+		// Wait until each thread has been cleaned up.
 		try {
-			// XXX TODO: need to call Relex.close() in each thread in
-			// the pool, so that we release sentence and linkage memory.
-			// Also need to call do_finalize(), to release the dicts!
 			tpool.shutdown();
 			tpool.awaitTermination(600, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			System.err.println("Error: Shutdown interrupted: " + e.getMessage());
 		}
 		tpool = null;
+
+		// Now perform Relex finalization.
 	}
 
 	public static void main(String[] args)
