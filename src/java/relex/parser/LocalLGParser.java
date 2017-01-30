@@ -95,8 +95,7 @@ public class LocalLGParser extends LGParser
 
 		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
-		if ((numParses < 1) ||
-		    (!_config.isAllowSkippedWords() && LinkGrammar.getNumSkippedWords() > 0))
+		if (numParses < 1)
 		{
 			System.err.println("Warning: No parses found for:\n" +
 			     sentence);

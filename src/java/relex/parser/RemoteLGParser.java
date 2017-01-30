@@ -35,8 +35,7 @@ public class RemoteLGParser extends LGParser
 		Sentence sntc = new Sentence();
 		sntc.setSentence(parseResult.getText());
 
-		if (parseResult.getLinkages().isEmpty() ||
-			!_config.isAllowSkippedWords() && parseResult.getNumSkippedWords() > 0)
+		if (parseResult.getLinkages().isEmpty())
 			return sntc;
 
 		String lowerCaseText = parseResult.getText().toLowerCase();
@@ -195,7 +194,6 @@ public class RemoteLGParser extends LGParser
 		RemoteLGParser parser = new RemoteLGParser();
 		parser.getLinkGrammarClient().setHostname(hostPort[0].trim());
 		parser.getLinkGrammarClient().setPort(Integer.parseInt(hostPort[1].trim()));
-		parser.getLinkGrammarClient().getConfig().setAllowSkippedWords(true);
 		parser.getLinkGrammarClient().getConfig().setMaxLinkages(5);
 		parser.parse(args[1]);
 	}
