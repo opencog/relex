@@ -28,6 +28,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Map;
+import org.linkgrammar.LinkGrammar;
 import relex.ServerSession;
 import relex.Version;
 
@@ -337,7 +338,11 @@ public class Server
 			loop_count++;
 			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
-			if (2147483600 < loop_count) break;
+			// if (2147483600 < loop_count) break;
+
+			// Sometime after about 2000 parses, Java gets old and
+			// slow and tired. Try to work around this.
+			if (2000 < loop_count) break;
 		}
 
 		System.err.println("Info: Main loop shutting down");
@@ -367,6 +372,7 @@ public class Server
 		tpool = null;
 
 		// Now perform Relex finalization.
+		LinkGrammar.do_finalize();
 	}
 
 	public static void main(String[] args)
