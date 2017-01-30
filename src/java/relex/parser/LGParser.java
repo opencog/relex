@@ -24,7 +24,7 @@ public abstract class LGParser implements IParser
 	protected LGConfig _config = new LGConfig();
 	protected String _dict_path = null;
 	protected String _lang = "en";
-	protected int _max_linkages = 1000; // consistent with jni-client.h in link-graammar
+	protected int _max_linkages = 1000; // consistent with jni-client.h in link-grammar
 
 	public LGConfig getConfig()
 	{
@@ -52,4 +52,10 @@ public abstract class LGParser implements IParser
 	}	
 	
 	public abstract String getVersion();
+
+	// close() does a per-thread cleanup
+	public abstract void close();
+
+	// do_finalize() does a global cleanup.
+	public abstract void do_finalize();
 }

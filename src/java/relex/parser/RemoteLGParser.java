@@ -173,6 +173,18 @@ public class RemoteLGParser extends LGParser
 		return getLinkGrammarClient().getVersion();
 	}
 
+	@Override
+	public void close()
+	{
+		// XXX FIXME do something here???
+	}
+
+	@Override
+	public void do_finalize()
+	{
+		// XXX FIXME do something here???
+	}
+
 	public LGRemoteClient getLinkGrammarClient()
 	{
 	return linkGrammarClient;
