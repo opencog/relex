@@ -270,8 +270,7 @@ public class Server
 				// If no end-point, return data on same socket.
 				if (send_sock == null)
 				{
-					outs = in_sock.getOutputStream();
-					out = new PrintWriter(outs, true);
+					out = new PrintWriter(in_sock.getOutputStream(), true);
 				}
 			} catch (IOException e) {
 				System.err.println("Error: Accept failed: " + e.getMessage());
