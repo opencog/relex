@@ -316,8 +316,10 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
-			if (100 < loop_count) break;
+			if (12500 < loop_count) break;
 		}
+
+		System.err.println("Info: Main loop shutting down");
 
 		sessq = null;
 
