@@ -209,6 +209,12 @@ public class Server
 		System.err.println("===============================================");
 		System.err.println("Info: Version: " + Version.getVersion());
 
+		{
+			// Force link-grammar initialization, before anything else.
+			ServerSession tmp = new ServerSession();
+			tmp.sess_setup(relex_on, link_on, free_text, max_parses, lang);
+		}
+
 		ArrayBlockingQueue<ServerSession> sessq = null;
 		ServerSession sess = null;
 
