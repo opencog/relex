@@ -197,6 +197,9 @@ public class Server
 				System.err.println("Error: Cannot handle: " + e.getMessage());
 			}
 			sessq.add(sess);
+
+			// Something here is leaking memory ... 10GB in 10 minutes.
+			System.gc();
 		}
 	}
 
@@ -297,7 +300,7 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
-			if (500 < loop_count) break;
+			if (100 < loop_count) break;
 		}
 	}
 
