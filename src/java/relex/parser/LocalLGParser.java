@@ -77,6 +77,11 @@ public class LocalLGParser extends LGParser
 		initialized.set(Boolean.FALSE);
 	}
 
+	public void do_finalize()
+	{
+		LinkGrammar.do_finalize();
+	}
+
 	public Sentence parse(String sentence) throws ParseException
 	{
 		Long starttime;
@@ -383,5 +388,6 @@ public class LocalLGParser extends LGParser
 			System.err.println("No parse found for sentence");
 		}
 		lp.close();
+		lp.do_finalize();
 	}
 }
