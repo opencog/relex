@@ -22,6 +22,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Map;
 import relex.ServerSession;
@@ -196,7 +199,20 @@ public class Server
 			} catch (IOException e) {
 				System.err.println("Error: Cannot handle: " + e.getMessage());
 			}
+			out.flush();
+			out.close();
+			out = null;
+
+			try {
+				in_sock.close();
+			} catch (IOException e) {
+				System.err.println("Error: Cannot close: " + e.getMessage());
+			}
+			in_sock = null;
+
 			sessq.add(sess);
+			sess = null;
+			sessq = null;
 
 			// Something here is leaking memory ... 10GB in 10 minutes.
 			System.gc();
@@ -219,9 +235,10 @@ public class Server
 		}
 
 		ArrayBlockingQueue<ServerSession> sessq = null;
+		ExecutorService tpool = null;
 		ServerSession sess = null;
 
-		// If the end-point is null, use threads.
+		// If the end-point is null, we can (and will) use threads.
 		if (send_sock == null)
 		{
 			sessq = new ArrayBlockingQueue<ServerSession>(NTHREADS);
@@ -233,6 +250,7 @@ public class Server
 				sess.verbose = verbose;
 				sessq.add(sess);
 			}
+			tpool = Executors.newFixedThreadPool(NTHREADS);
 		}
 		else
 		{
@@ -253,8 +271,7 @@ public class Server
 				// If no end-point, return data on same socket.
 				if (send_sock == null)
 				{
-					outs = in_sock.getOutputStream();
-					out = new PrintWriter(outs, true);
+					out = new PrintWriter(in_sock.getOutputStream(), true);
 				}
 			} catch (IOException e) {
 				System.err.println("Error: Accept failed: " + e.getMessage());
@@ -284,15 +301,14 @@ public class Server
 			else
 			{
 				try {
-					// Take will block.
+					// Take will block; can throw InterruptedException
 					sess = sessq.take();
 					ConnHandler cha = new ConnHandler();
 					cha.sess = sess;
 					cha.sessq = sessq;
 					cha.in_sock = in_sock;
 					cha.out = out;
-					Thread t = new Thread(cha);
-					t.start();
+					tpool.execute(cha);
 				} catch (InterruptedException e) {
 					System.err.println("Error: Queue interrupted: " + e.getMessage());
 				}
@@ -300,8 +316,21 @@ public class Server
 			// Something here is leaking memory ... 10GB a day ... can this help?
 			System.gc();
 			loop_count++;
-			if (100 < loop_count) break;
+			// Basically, don't ever break ...
+			if (43212500 < loop_count) break;
 		}
+
+		System.err.println("Info: Main loop shutting down");
+
+		sessq = null;
+
+		try {
+			tpool.shutdown();
+			tpool.awaitTermination(600, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			System.err.println("Error: Shutdown interrupted: " + e.getMessage());
+		}
+		tpool = null;
 	}
 
 	public static void main(String[] args)
@@ -318,6 +347,14 @@ public class Server
 		// CPU usage starts getting really heavy, and performance
 		// starts dropping after 500 sentences, and totally collapses
 		// after about 4 hours or run-time... WTF.
+		//
+		// In the old design, this was an excellent idea that halted
+		// the Java memory leaks. nn the new design, this is a bad
+		// idea, because the Link-grammar jni wrapper now shares a
+		// common dict, which is never released/finalized ... that's
+		// a bug that results in a mem leak.  I think the leak is in
+		// the shared lib dtor. See
+		// https://github.com/opencog/link-grammar/issues/491
 		//
 		int restart_count = 0;
 		while (true)
