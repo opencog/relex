@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.HashSet;
 import java.util.Map;
 import relex.ServerSession;
@@ -219,9 +221,10 @@ public class Server
 		}
 
 		ArrayBlockingQueue<ServerSession> sessq = null;
+		ExecutorService tpool = null;
 		ServerSession sess = null;
 
-		// If the end-point is null, use threads.
+		// If the end-point is null, we can (and will) use threads.
 		if (send_sock == null)
 		{
 			sessq = new ArrayBlockingQueue<ServerSession>(NTHREADS);
@@ -233,6 +236,7 @@ public class Server
 				sess.verbose = verbose;
 				sessq.add(sess);
 			}
+			tpool = Executors.newFixedThreadPool(NTHREADS);
 		}
 		else
 		{
@@ -284,15 +288,14 @@ public class Server
 			else
 			{
 				try {
-					// Take will block.
+					// Take will block; can throw InterruptedException
 					sess = sessq.take();
 					ConnHandler cha = new ConnHandler();
 					cha.sess = sess;
 					cha.sessq = sessq;
 					cha.in_sock = in_sock;
 					cha.out = out;
-					Thread t = new Thread(cha);
-					t.start();
+					tpool.execute(cha);
 				} catch (InterruptedException e) {
 					System.err.println("Error: Queue interrupted: " + e.getMessage());
 				}
