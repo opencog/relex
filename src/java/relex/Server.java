@@ -24,6 +24,7 @@ import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Map;
 import relex.ServerSession;
@@ -317,6 +318,16 @@ public class Server
 			loop_count++;
 			if (100 < loop_count) break;
 		}
+
+		sessq = null;
+
+		try {
+			tpool.shutdown();
+			tpool.awaitTermination(600, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			System.err.println("Error: Shutdown interrupted: " + e.getMessage());
+		}
+		tpool = null;
 	}
 
 	public static void main(String[] args)
