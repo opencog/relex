@@ -180,6 +180,21 @@ public class RelationExtractor
 		_dict_path = dict_path;
 	}
 
+	// This performs a per-thread cleanup of memory
+	// (releases the link-grammar sentence and linkage for this thread)
+	public void close()
+	{
+		parser.close();
+	}
+
+	// This performs a global cleanup of memory
+	// (releases the link-grammar dictionary, shared among all the
+	// threads.)
+	public void do_finalize()
+	{
+		parser.do_finalize();
+	}
+
 	/* ---------------------------------------------------------- */
 	/* Control parameters, etc. */
 	/**
@@ -220,12 +235,6 @@ public class RelationExtractor
 	{
 		if (!_is_inited) init();
 		parser.getConfig().setMaxCost(maxCost);
-	}
-
-	public void setAllowSkippedWords(boolean allow)
-	{
-		if (!_is_inited) init();
-		parser.getConfig().setAllowSkippedWords(allow);
 	}
 
 	public void setMaxParseSeconds(int maxParseSeconds)
@@ -422,7 +431,6 @@ public class RelationExtractor
 		RelationExtractor re = new RelationExtractor();
 		// careful: set language *before* doing other  things, to avoid call to init()
 		re.setLanguage(language);
-		re.setAllowSkippedWords(true);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
 		System.out.println("; Version: " + re.getVersion());

@@ -316,7 +316,7 @@ public class Server
 			loop_count++;
 			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
-			if (43212500 < loop_count) break;
+			if (2147483600 < loop_count) break;
 		}
 
 		System.err.println("Info: Main loop shutting down");
@@ -324,6 +324,9 @@ public class Server
 		sessq = null;
 
 		try {
+			// XXX TODO: need to call Relex.close() in each thread in
+			// the pool, so that we release sentence and linkage memory.
+			// Also need to call do_finalize(), to release the dicts!
 			tpool.shutdown();
 			tpool.awaitTermination(600, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -346,14 +349,6 @@ public class Server
 		// CPU usage starts getting really heavy, and performance
 		// starts dropping after 500 sentences, and totally collapses
 		// after about 4 hours or run-time... WTF.
-		//
-		// In the old design, this was an excellent idea that halted
-		// the Java memory leaks. nn the new design, this is a bad
-		// idea, because the Link-grammar jni wrapper now shares a
-		// common dict, which is never released/finalized ... that's
-		// a bug that results in a mem leak.  I think the leak is in
-		// the shared lib dtor. See
-		// https://github.com/opencog/link-grammar/issues/491
 		//
 		int restart_count = 0;
 		while (true)
