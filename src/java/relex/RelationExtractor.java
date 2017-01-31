@@ -148,16 +148,21 @@ public class RelationExtractor
 		parser.getConfig().setStoreConstituentString(true);
 		parser.getConfig().setStoreSense(true);
 
+		setMaxParses(DEFAULT_MAX_PARSES);
+		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
+		setMaxCost(DEFAULT_MAX_PARSE_COST);
+
+		// Force initialization of Link Grammar (i.e force loading of
+		// dicts) We want to do this before multiple threads start
+		// launching parses.
+		parser.parse("RelEx initialization");
+
 		// XXX TODO: this is loading the English Language morphy;
 		// we need to load a generic language handler.
 		Morphy morphy = MorphyFactory.getImplementation(MorphyFactory.DEFAULT_SINGLE_THREAD_IMPLEMENTATION);
 		context = new RelexContext(parser, morphy);
 
 		sentenceAlgorithmApplier = new SentenceAlgorithmApplier();
-
-		setMaxParses(DEFAULT_MAX_PARSES);
-		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
-		setMaxCost(DEFAULT_MAX_PARSE_COST);
 
 		doco = new Document();
 
@@ -429,7 +434,8 @@ public class RelationExtractor
 		if (html != null) html.println("<html>");
 
 		RelationExtractor re = new RelationExtractor();
-		// careful: set language *before* doing other  things, to avoid call to init()
+		// careful: set language *before* doing other things,
+		// to avoid call to init()
 		re.setLanguage(language);
 		re.setMaxParses(maxParses);
 		re.setMaxParseSeconds(maxParseSeconds);
