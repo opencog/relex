@@ -62,6 +62,9 @@ public class Server
 	private OutputStream outs = null;
 	private PrintWriter out = null;
 
+	// stats
+	static int restart_count = 0;
+
 	public Server()
 	{
 	}
@@ -338,6 +341,9 @@ public class Server
 				}
 			}
 			loop_count++;
+			System.err.println("Loop count=" + loop_count +
+			                   "Restart count=" + restart_count);
+
 			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
 			// if (2147483600 < loop_count) break;
@@ -392,7 +398,6 @@ public class Server
 		// starts dropping after 500 sentences, and totally collapses
 		// after about 4 hours or run-time... WTF.
 		//
-		int restart_count = 0;
 		while (true)
 		{
 			srv.run_server();
