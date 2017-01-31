@@ -53,9 +53,12 @@ public abstract class LGParser implements IParser
 	
 	public abstract String getVersion();
 
+	// Most initialization must happen *after* above paramter setting.
+	public abstract void init();
+
 	// close() does a per-thread cleanup
 	public abstract void close();
 
-	// do_finalize() does a global cleanup.
-	public abstract void do_finalize();
+	// doFinalize() does a global cleanup.
+	public abstract void doFinalize();
 }

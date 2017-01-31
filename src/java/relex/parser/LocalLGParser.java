@@ -38,14 +38,10 @@ public class LocalLGParser extends LGParser
 
 	private AtomicBoolean initialized = new AtomicBoolean(false);
 
-	public LocalLGParser()
+	public void init()
 	{
-		if (!initialized.getAndSet(true))
-			init();
-	}
+		if (initialized.getAndSet(true)) return;
 
-	private void init()
-	{
 		// Must set language or dictionary path BEFORE initializing!
 		if (_lang != null)
 			LinkGrammar.setLanguage(_lang);
@@ -77,9 +73,9 @@ public class LocalLGParser extends LGParser
 		initialized.set(Boolean.FALSE);
 	}
 
-	public void do_finalize()
+	public void doFinalize()
 	{
-		LinkGrammar.do_finalize();
+		LinkGrammar.doFinalize();
 	}
 
 	public Sentence parse(String sentence) throws ParseException
@@ -388,6 +384,6 @@ public class LocalLGParser extends LGParser
 			System.err.println("No parse found for sentence");
 		}
 		lp.close();
-		lp.do_finalize();
+		lp.doFinalize();
 	}
 }

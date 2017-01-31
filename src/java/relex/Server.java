@@ -22,11 +22,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Map;
+import org.linkgrammar.LinkGrammar;
 import relex.ServerSession;
 import relex.Version;
 
@@ -43,7 +45,7 @@ import relex.Version;
 public class Server
 {
 	// command-line arguments
-	private int NTHREADS = 8;
+	static private int NTHREADS = 8;
 	private int listen_port = 4444;
 	private String host_name = null;
 	private int host_port = 0;
@@ -59,6 +61,9 @@ public class Server
 	private Socket send_sock = null;
 	private OutputStream outs = null;
 	private PrintWriter out = null;
+
+	// stats
+	static int restart_count = 0;
 
 	public Server()
 	{
@@ -219,6 +224,28 @@ public class Server
 		}
 	}
 
+	// Block. until one copy of this is running in each thread.
+	// When this finally happens, perform link-grammar cleanup
+	// in each thread.
+	private static class ConnCleanup implements Runnable
+	{
+		public ServerSession sess = null;
+		public static AtomicInteger count = new AtomicInteger(0);
+		public void run()
+		{
+			count.addAndGet(1);
+			System.err.println("Info: Waiting cleanup thread. cnt=" + count.get());
+
+			// Stall until all threads are running.
+			try {
+				while (count.get() < NTHREADS) { TimeUnit.SECONDS.sleep(1); }
+			} catch (InterruptedException e) {
+				System.err.println("Error: Shtutdown interrupted: " + e.getMessage());
+			}
+			sess.sess_close();
+		}
+	}
+
 	// -----------------------------------------------------------------
 	public void run_server()
 	{
@@ -314,25 +341,46 @@ public class Server
 				}
 			}
 			loop_count++;
+			System.err.println("Loop count=" + loop_count +
+			                   " Restart count=" + restart_count);
+
 			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
-			if (2147483600 < loop_count) break;
+			// if (2147483600 < loop_count) break;
+
+			// Sometime after about 2000 parses, Java gets old and
+			// slow and tired. Try to work around this.
+			if (2000 < loop_count) break;
 		}
 
 		System.err.println("Info: Main loop shutting down");
 
+		// Invoke the Relex close handler in each thread.
+		for (int i=0; i<NTHREADS; i++)
+		{
+			try {
+				// Take will block; can throw InterruptedException
+				sess = sessq.take();
+				ConnCleanup cle = new ConnCleanup();
+				cle.sess = sess;
+				tpool.execute(cle);
+			} catch (InterruptedException e) {
+				System.err.println("Error: Cleanup interrupted: " + e.getMessage());
+			}
+		}
 		sessq = null;
 
+		// Wait until each thread has been cleaned up.
 		try {
-			// XXX TODO: need to call Relex.close() in each thread in
-			// the pool, so that we release sentence and linkage memory.
-			// Also need to call do_finalize(), to release the dicts!
 			tpool.shutdown();
 			tpool.awaitTermination(600, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			System.err.println("Error: Shutdown interrupted: " + e.getMessage());
 		}
 		tpool = null;
+
+		// Now perform Relex finalization.
+		LinkGrammar.doFinalize();
 	}
 
 	public static void main(String[] args)
@@ -350,7 +398,6 @@ public class Server
 		// starts dropping after 500 sentences, and totally collapses
 		// after about 4 hours or run-time... WTF.
 		//
-		int restart_count = 0;
 		while (true)
 		{
 			srv.run_server();
