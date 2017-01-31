@@ -155,7 +155,7 @@ public class RelationExtractor
 		// Force initialization of Link Grammar (i.e force loading of
 		// dicts) We want to do this before multiple threads start
 		// launching parses.
-		parser.parse("RelEx initialization");
+		parser.init();
 
 		// XXX TODO: this is loading the English Language morphy;
 		// we need to load a generic language handler.

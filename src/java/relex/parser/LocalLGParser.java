@@ -38,14 +38,10 @@ public class LocalLGParser extends LGParser
 
 	private AtomicBoolean initialized = new AtomicBoolean(false);
 
-	public LocalLGParser()
+	public void init()
 	{
-		if (!initialized.getAndSet(true))
-			init();
-	}
+		if (initialized.getAndSet(true)) return;
 
-	private void init()
-	{
 		// Must set language or dictionary path BEFORE initializing!
 		if (_lang != null)
 			LinkGrammar.setLanguage(_lang);

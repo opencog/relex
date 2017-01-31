@@ -174,6 +174,12 @@ public class RemoteLGParser extends LGParser
 	}
 
 	@Override
+	public void init()
+	{
+		// XXX FIXME do something here???
+	}
+
+	@Override
 	public void close()
 	{
 		// XXX FIXME do something here???
