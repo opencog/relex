@@ -348,9 +348,9 @@ public class Server
 			// Basically, don't ever break ...
 			// if (2147483600 < loop_count) break;
 
-			// Sometime after about 2000 parses, Java gets old and
+			// Sometime after about 1000 parses, Java gets old and
 			// slow and tired. Try to work around this.
-			if (2000 < loop_count) break;
+			if (1000 < loop_count) break;
 		}
 
 		System.err.println("Info: Main loop shutting down");
