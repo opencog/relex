@@ -56,6 +56,6 @@ public abstract class LGParser implements IParser
 	// close() does a per-thread cleanup
 	public abstract void close();
 
-	// do_finalize() does a global cleanup.
-	public abstract void do_finalize();
+	// doFinalize() does a global cleanup.
+	public abstract void doFinalize();
 }

@@ -180,7 +180,7 @@ public class RemoteLGParser extends LGParser
 	}
 
 	@Override
-	public void do_finalize()
+	public void doFinalize()
 	{
 		// XXX FIXME do something here???
 	}

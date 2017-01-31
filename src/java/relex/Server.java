@@ -380,7 +380,7 @@ public class Server
 		tpool = null;
 
 		// Now perform Relex finalization.
-		LinkGrammar.do_finalize();
+		LinkGrammar.doFinalize();
 	}
 
 	public static void main(String[] args)

@@ -190,9 +190,9 @@ public class RelationExtractor
 	// This performs a global cleanup of memory
 	// (releases the link-grammar dictionary, shared among all the
 	// threads.)
-	public void do_finalize()
+	public void doFinalize()
 	{
-		parser.do_finalize();
+		parser.doFinalize();
 	}
 
 	/* ---------------------------------------------------------- */

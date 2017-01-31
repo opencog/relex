@@ -77,9 +77,9 @@ public class LocalLGParser extends LGParser
 		initialized.set(Boolean.FALSE);
 	}
 
-	public void do_finalize()
+	public void doFinalize()
 	{
-		LinkGrammar.do_finalize();
+		LinkGrammar.doFinalize();
 	}
 
 	public Sentence parse(String sentence) throws ParseException
@@ -388,6 +388,6 @@ public class LocalLGParser extends LGParser
 			System.err.println("No parse found for sentence");
 		}
 		lp.close();
-		lp.do_finalize();
+		lp.doFinalize();
 	}
 }
