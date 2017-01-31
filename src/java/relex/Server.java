@@ -342,7 +342,7 @@ public class Server
 			}
 			loop_count++;
 			System.err.println("Loop count=" + loop_count +
-			                   "Restart count=" + restart_count);
+			                   " Restart count=" + restart_count);
 
 			if (loop_count%100 == 0) System.gc();
 			// Basically, don't ever break ...
