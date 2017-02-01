@@ -86,8 +86,6 @@ public class MapMorphy implements Morphy
 				SuffixStemmer.makeSuffixStemmer("|er=|est=|er=e|est=e|"));
 	}
 
-	public static final String DEFAULT_WORDNET_CONFIG_FILE = "data/wordnet/file_properties.xml";
-
 	final POS[] pos = new POS[] { POS.NOUN, POS.VERB, POS.ADVERB, POS.ADJECTIVE };
 
 	Map<POS, Map<String, IndexWord>> partsOfSpeech = new HashMap<POS, Map<String,IndexWord>>();
