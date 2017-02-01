@@ -228,7 +228,7 @@ public class RelationExtractor
 	 * subset of possible linakges to be explored. This random subset
 	 * might not include the best (highest-scoring) linkages, which is
 	 * probably not what you want. This method is here really so as to
-	 * increase the number of linakges about 1000 (for the ANY language).
+	 * increase the number of linakges above 1000 (for the ANY language).
 	 */
 	public void setMaxLinkages(int maxLinkages)
 	{

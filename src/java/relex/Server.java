@@ -224,7 +224,7 @@ public class Server
 		}
 	}
 
-	// Block. until one copy of this is running in each thread.
+	// Block until one copy of this is running in each thread.
 	// When this finally happens, perform link-grammar cleanup
 	// in each thread.
 	private static class ConnCleanup implements Runnable
@@ -389,14 +389,22 @@ public class Server
 		srv.parse_args(args);
 		srv.socket_setup();
 
-		// Every five-hundred sentences, the server will auto-exit,
-		// and we will attempt a marathon garage collection.  I hope
-		// that maybe this will fix the performance issues that
-		// accumulate over time?  What's wrong with Java GC?
+		// Every thousand sentences, the server will auto-exit,
+		// and we will attempt a marathon garage collection.
+		// This appears to (mostly, but not completely?) fix the
+		// performance issues that accumulate over time.
 		//
-		// CPU usage starts getting really heavy, and performance
-		// starts dropping after 500 sentences, and totally collapses
-		// after about 4 hours or run-time... WTF.
+		// The core problem seems to be related to very large
+		// parse results being returned -- sometimes ten or
+		// twenty megabytes.  I think that these cause Java memory
+		// fragmentation, and the Java GC is unable to deal with
+		// this or resolve it in any way.  The symptoms are that
+		// this server gets slower and slower, suffering after
+		// about 500 maybe 1000 sentences, and coming to a near-total
+		// grinding halt after about 4 hours of run-time, with the
+		// processing rate dropping to about 5% of the fresh-restart
+		// rate. The periodic clean-sweap done here seems to fix the
+		// issue.
 		//
 		while (true)
 		{
