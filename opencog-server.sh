@@ -19,7 +19,7 @@
 #
 export LANG=en_US.UTF-8
 
-VM_OPTS="-Xmx1024m"
+VM_OPTS="-Xmx2048m"
 
 RELEX_OPTS="\
 	-Djava.library.path=/usr/lib:/usr/lib/jni:/usr/local/lib:/usr/local/lib/jni \
