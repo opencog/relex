@@ -13,10 +13,13 @@ find . -name 'Help:*' -print | wc
 echo "File:"
 find . -name 'File:*' -print | wc
 find . -name 'Image:*' -print | wc
+find . -name 'Portal:*' -print | wc
+find . -name 'Draft:*' -print | wc
 echo "Template"
 find . -name 'Template:*' -print | wc
 find . -name 'Wikipedia:*' -print | wc
 find . -name '模組:*' -print | wc
+find . -name '模块:*' -print | wc
 
 # Must use "find" to accomplish this, since using "rm Category:*"
 # leads to an overflow of the command line.
