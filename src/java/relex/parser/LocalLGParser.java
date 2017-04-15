@@ -139,10 +139,12 @@ public class LocalLGParser extends LGParser
 
 				// If link-grammar guesses a word, it will add [?] to the
 				// end of it. The regex guess will add [!] and the spell
-				// guesser will add [~]. Remove these.
-				wordString = wordString.replace("[?]","");
-				wordString = wordString.replace("[!]","");
-				wordString = wordString.replace("[~]","");
+				// guesser will add [~]. The run-on tokenizer adds [&].
+				// Remove these.
+				int idx = wordString.indexOf("[");
+				if (0 < idx)
+					wordString = wordString.substring(0,idx);
+
 				// If link-grammar cannot use a word, it will put square
 				// brackets around it. We really do not want these, they
 				// garble up processing for us.
