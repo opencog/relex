@@ -263,6 +263,9 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		// Subscripts may be one letter, or they may be longer.
 		// Note that numerical quantities might have a period in them,
 		// e.g. 3.2 million. Don't treat numerics as subscripts.
+
+		// Anyway, chop off the subscript from the word, and store the
+		// word, and it's subscript seperately.
 		int len = wordString.length();
 		int dot = wordString.lastIndexOf('.');
 
