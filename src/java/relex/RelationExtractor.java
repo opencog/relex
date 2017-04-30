@@ -145,8 +145,14 @@ public class RelationExtractor
 		parser = _use_sock ? new RemoteLGParser() : new LocalLGParser();
 		if (null != _lang) parser.setLanguage(_lang);
 		if (null != _dict_path) parser.setDictPath(_dict_path);
-		parser.getConfig().setStoreConstituentString(true);
-		parser.getConfig().setStoreSense(true);
+
+		// Don't bother with the constituent strings, and the word-senses,
+		// if this is not English.
+		if (do_apply_algs)
+		{
+			parser.getConfig().setStoreConstituentString(true);
+			parser.getConfig().setStoreSense(true);
+		}
 
 		setMaxParses(DEFAULT_MAX_PARSES);
 		setMaxParseSeconds(DEFAULT_MAX_PARSE_SECONDS);
