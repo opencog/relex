@@ -316,21 +316,27 @@ public class LocalLGParser extends LGParser
 			}
 		}
 
+		for (int i = 0; i < length; i++)
+		{
+			// We'll hang the disjunct right off the word node.
+			FeatureNode f = s.getWordAsNode(i);
+			String dj = LinkGrammar.getLinkageDisjunct(i);
+			if (dj != null)
+			{
+				f.set("DISJUNCT", new FeatureNode(dj));
+			}
+		}
+
 		if (load_senses)
 		{
-			for (int i = 0; i < length-1; i++)
+			for (int i = 0; i < length; i++)
 			{
-				// We'll hang disjunct and senses right off the word node.
+				// We'll hang senses right off the word node.
 				FeatureNode f = s.getWordAsNode(i);
-				String dj = LinkGrammar.getLinkageDisjunct(i);
-				if (dj != null)
-				{
-					f.set("DISJUNCT", new FeatureNode(dj));
-				}
 
 				// Get the total weight of all senses, for normalization.
 				int n = 0;
-				String sense = LinkGrammar.getLinkageSense(i,n);
+				String sense = LinkGrammar.getLinkageSense(i, n);
 				double tot = 0.0;
 				while (sense != null)
 				{
