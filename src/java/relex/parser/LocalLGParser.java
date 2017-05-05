@@ -316,6 +316,9 @@ public class LocalLGParser extends LGParser
 			}
 		}
 
+		// Ignore the last word (RIGHT-WALL) if this is set.
+		if (ignoreLast) length--;
+
 		for (int i = 0; i < length; i++)
 		{
 			// We'll hang the disjunct right off the word node.
