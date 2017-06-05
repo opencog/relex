@@ -174,8 +174,8 @@ public class LocalLGParser extends LGParser
 						throw new RuntimeException("Invalid parse: " +
 							"first word is not left wall");
 
-					// Set the word and part-of-speech
-					LinkableView.setWordAndPos(fn, wordString);
+					// Set the word
+					LinkableView.setWord(fn, wordString);
 
 					// Create a feature "this" which points to the linkable
 					fn.set("this", fn);

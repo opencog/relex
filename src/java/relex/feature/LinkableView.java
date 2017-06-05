@@ -242,11 +242,11 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		return null;
 	}
 
-	public void setWordAndPos(String wordString) {
-		setWordAndPos(fn(), wordString);
+	public void setWord(String wordString) {
+		setWord(fn(), wordString);
 	}
 
-	public static void setWordAndPos(FeatureNode ths, String wordString)
+	public static void setWord(FeatureNode ths, String wordString)
 	{
 		throwIfNoFN(ths);
 		FeatureNode f = new FeatureNode(wordString);

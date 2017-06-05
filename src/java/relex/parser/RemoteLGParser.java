@@ -70,8 +70,8 @@ public class RemoteLGParser extends LGParser
 						throw new RuntimeException("Invalid parse: " +
 							"first word is not left wall");
 
-					// set the word and part-of-speach
-					fnv.setWordAndPos(wordString);
+					// set the word
+					fnv.setWord(wordString);
 
 					// create a feature "this" which points to the linkable
 					fnv.fn().set("this", fnv.fn());
