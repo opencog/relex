@@ -34,6 +34,7 @@ import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.feature.FeatureNode;
 import relex.feature.LinkView;
+import relex.feature.LinkableView;
 import relex.morphy.Morphy;
 import relex.morphy.MorphyFactory;
 import relex.output.NLGInputView;
@@ -270,6 +271,11 @@ public class RelationExtractor
 
 			for (ParsedSentence parse : sntc.getParses())
 			{
+				if (_lang.equals("en"))
+				{
+					stripSubscripts(parse);
+				}
+
 				if (do_expand_preps)
 				{
 					parse.getLeft().set("expand-preps", new FeatureNode("T"));
@@ -312,6 +318,60 @@ public class RelationExtractor
 			sent = new Sentence();
 		}
 		return sent;
+	}
+
+	/**
+	 * This method is expecting a subscripted link-grammar word, such
+	 * as "knows.v" or "ball.n".  The subscripts help indicate the
+	 * part-of-speech (verb, noun, etc.) of the word.  The subscripting
+	 * in link-grammar is not really rigorous; it gives a general first
+	 * attempt at getting part-of-speech correct, but is not foolproof.
+	 */
+	private void
+	stripSubscripts(ParsedSentence parse)
+	{
+		FeatureNode fn = parse.getLeft();
+		while (fn != null)
+		{
+			LinkableView.setPOS(fn, "WORD");
+
+			String wordString = fn.get("orig_str").getValue();
+
+			// Subscripts may be one letter, or they may be longer.
+			// Note that numerical quantities might have a period in them,
+			// e.g. 3.2 million. Don't treat numerics as subscripts.
+
+			// Anyway, chop off the subscript from the word, and store the
+			// word, and it's subscript seperately.
+			int len = wordString.length();
+			int dot = wordString.lastIndexOf('.');
+
+			if ((0 < dot) && (dot < len-1))
+			{
+				// Don't truncate, if its a number!
+				// There will be an exception thrown, if
+				// the subscript isn't pure numeric ...
+				String w = wordString.substring(0, dot);
+				try { new java.math.BigInteger(w); }
+				catch (NumberFormatException ex)
+				{
+					// If we are here, its not a number.
+					String infl = wordString.substring(dot);
+					wordString = w;
+					LinkableView.setSubscript(fn, infl);
+				}
+			}
+
+			FeatureNode f = new FeatureNode(wordString);
+			fn.set("orig_str", f);
+
+			// Make a copy for MorphyAlg; it will modify this one.
+			// It has to be a distinct feature node.
+			f = new FeatureNode(wordString);
+			fn.set("str", f);
+
+			fn = fn.get("NEXT");
+		}
 	}
 
 	/* ---------------------------------------------------------- */

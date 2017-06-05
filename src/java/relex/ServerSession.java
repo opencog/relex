@@ -136,7 +136,7 @@ public class ServerSession
 
 					// If the free-text flag is set, then use the document
 					// splitter to find sentence boundaries. Otherwise,
-					// Assume one sentence per line.
+					// assume one sentence per line.
 					if (free_text)
 					{
 						ds.addText(line + " ");
