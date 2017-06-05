@@ -73,6 +73,8 @@ class OpenCogSchemeLink
 			String lab_inst = fn.get("LAB").getValue() + "@" + UUID.randomUUID();
 			String fl_inst = fn.get("F_L").get("uuid").getValue();
 			String fr_inst = fn.get("F_R").get("uuid").getValue();
+			fl_inst = fl_inst.replaceAll("\"", "\\\\\"");
+			fr_inst = fr_inst.replaceAll("\"", "\\\\\"");
 			
 			str +=
 				"(EvaluationLink (stv 1.0 1.0)\n" +
