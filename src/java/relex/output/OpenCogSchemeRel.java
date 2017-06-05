@@ -76,6 +76,7 @@ class OpenCogSchemeRel
 
 			outstr += "; " + attrName + " (" + srcName + ", " + value + ")\n";
 			String guid = srcNode.get("nameSource").get("uuid").getValue();
+			guid = guid.replaceAll("\"", "\\\\\"");
 
 			// Flags are assumed to be true, so value is the flag name.
 			if (attrName.endsWith("-FLAG"))
@@ -137,6 +138,8 @@ class OpenCogSchemeRel
 			outstr += "; " + relName + " (" + srcName + ", " + tgtName + ") \n";
 			String src_guid = srcRaw.get("uuid").getValue();
 			String tgt_guid = tgtRaw.get("uuid").getValue();
+			src_guid = src_guid.replaceAll("\"", "\\\\\"");
+			tgt_guid = tgt_guid.replaceAll("\"", "\\\\\"");
 
 			char underscore = relName.charAt(0);
 
@@ -195,6 +198,7 @@ class OpenCogSchemeRel
 				// Remember the word-to guid map; we'll need it for
 				// printing relations, and printing frames,
 				String guid_word = fn.get("uuid").getValue();
+				guid_word = guid_word.replaceAll("\"", "\\\\\"");
 
 				// The word instance, and its associated lemma form
 				refs += "(LemmaLink (stv 1.0 1.0)\n";

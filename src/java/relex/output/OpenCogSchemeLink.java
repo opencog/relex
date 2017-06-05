@@ -150,8 +150,11 @@ class OpenCogSchemeLink
 			// split the value into different connectors
 			String[] connectors = value.split(" ");
 
+			String guid_word = srcNode.get("uuid").getValue();
+			guid_word = guid_word.replaceAll("\"", "\\\\\"");
+
 			str += "(LgWordCset \n";
-			str += "    (WordInstanceNode \"" + srcNode.get("uuid").getValue() + "\")\n";
+			str += "    (WordInstanceNode \"" + guid_word + "\")\n";
 			str += "    (LgAnd \n";
 
 			// connectors should already be sorted with - before +

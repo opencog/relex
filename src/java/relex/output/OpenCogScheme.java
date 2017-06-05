@@ -130,6 +130,8 @@ public class OpenCogScheme
 			// we are just generating bad scheme.
 			word = word.replaceAll("\"", "\\\\\"");
 			String guid_word = fn.get("uuid").getValue();
+			guid_word = guid_word.replaceAll("\"", "\\\\\"");
+
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 
