@@ -70,6 +70,26 @@ public class MorphyAlg extends SentenceAlgorithm
 			f = m.getAdj();
 		else if (pos.equals("adv"))
 			f = m.getAdv();
+		else if (pos.equals("WORD"))
+		{
+			// For a single word, try to find one that
+			// is different from the original word.
+			FeatureNode tmp = null;
+			for (int i = 0; i < 4; i++)
+			{
+				if (i == 0) tmp = m.getNoun();
+				if (i == 1) tmp = m.getVerb();
+				if (i == 2) tmp = m.getAdj();
+				if (i == 3) tmp = m.getAdv();
+
+				if (tmp != null &&
+				    !original.equalsIgnoreCase(tmp.get("root").getValue()))
+				{
+					f = tmp;
+					break;
+				}
+			}
+		}
 
 		if (f != null) {
 			node.set("morph", f);
