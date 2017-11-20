@@ -34,47 +34,67 @@ Source tarballs may be downloaded from either of two locations:
 Build and install of the core package is discussed below.
 
 
-Dependencies
+Running the Relex Servers
 -------------
 
-### Installing on Ubuntu/Debian
+### Run via Docker
 
-An installation script for Ubuntu/Debian is provided in the [install-scripts]
-(https://github.com/opencog/relex/tree/master/install-scripts) directory.
-
-### Install and run via Docker
-
-The easiest way to build and run RelEx is with Docker. The Docker
+The easiest way to run RelEx is with Docker. The Docker
 system allows sandboxed containers to be easily created and deployed;
 the typical use of a container is to run some server.  See the
 http://www.docker.io website for more info and tutorials.
 
-To use docker, simply say:
+Opencog has prebuilt images for relex available with the image tag: opencog/relex
+
+#### Running the Plain-text Server
+To have docker run the plain text server, type into a terminal:
 ```
-   $ docker build -t mine/relex .
-   $ docker run -i -t -p 3333:3333 -w /home/Downloads/relex-master mine/relex /bin/sh plain-text-server.sh
+   $ docker run -it -p 3333:3333 opencog/relex /bin/sh plain-text-server.sh
 ```
-or
-```
-   $ docker run -i -t -p 4444:4444 -w /home/Downloads/relex-master mine/relex /bin/sh opencog-server.sh
-   $ docker run -i -t -p 9000:9000 -w /home/Downloads/relex-master mine/relex /bin/sh link-grammar-server.sh
-```
-For the first two, simple say:
+
+To test the plain text server via telnet, type into another terminal:
 ```
    telnet localhost 3333
    This is a test sentence!
 ```
-The first server just returns a plain-text analysis of the input
-sentence, while the second returns an opencog-scheme version of the
-parse.
+The server will return a plain-text analysis of the input
+sentence and disconnect the session.
 
-The raw link-grammar server expects a JSON-formated input, begining
+#### Running the OpenCog-format Server
+To have docker run the OpenCog format server, type:
+```
+   $ docker run -it -p 4444:4444 opencog/relex /bin/sh opencog-server.sh
+
+```
+To test the OpenCog format server via telnet, type into another terminal:
+
+```
+   telnet localhost 4444
+   This is a test sentence!
+```
+The server will return an OpenCog/Scheme version of the parse and disconnect the session.
+
+#### Running the raw Link Grammar Server
+To have docker run the raw link-grammar JSON-format server, type:
+```
+   $ docker run -it -p 9000:9000 opencog/relex /bin/sh link-grammar-server.sh
+```
+You can now access the relex server with telnet.
+
+The raw link-grammar server expects a JSON-formatted input, begining
 with the 5 letters `text:` it returns a JSON-formatted response.
+
+To test the link-grammar JSON format server via telnet, type into another terminal:
+
 ```
    telnet localhost 9000
    text:This is a test sentence!
 ```
 
+This will return a JSON formatted parse and then disconnect the session.
+
+
+#### Docker Cheat-Sheet
 A docker cheat-sheet:
 ```
 docker ps
@@ -83,6 +103,14 @@ docker rm
 docker images
 docker rmi
 ```
+
+Installation
+-------------
+
+### Installing on Ubuntu/Debian
+
+An installation script for Ubuntu/Debian is provided in the [install-scripts]
+(https://github.com/opencog/relex/tree/master/install-scripts) directory.
 
 ### Installing on all other systems
 
