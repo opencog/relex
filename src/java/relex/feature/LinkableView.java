@@ -41,8 +41,6 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 
 	private static final String ORIG_WORD_STRING_FEATURE_NAME = "orig_str";
 
-	private static final String POS_WORD = "WORD";
-
 	private static final String TENSE_FEATURE_NAME = "tense";
 
 	private static final String NEXT_NAME = "NEXT";
@@ -244,53 +242,14 @@ public class LinkableView extends View // implements TreeNode , LinkNode
 		return null;
 	}
 
-	public void setWordAndPos(String wordString) {
-		setWordAndPos(fn(), wordString);
+	public void setWord(String wordString) {
+		setWord(fn(), wordString);
 	}
 
-	/**
-	 * This method is expecting a subscripted link-grammar word, such
-	 * as "knows.v" or "ball.n".  The subscripts help indicate the
-	 * part-of-speech (verb, noun, etc.) of the word.  The subscripting
-	 * in link-grammar is not really rigorous; it gives a general first
-	 * attempt at getting part-of-speech correct, but is not foolproof.
-	 */
-	public static void setWordAndPos(FeatureNode ths, String wordString)
+	public static void setWord(FeatureNode ths, String wordString)
 	{
 		throwIfNoFN(ths);
-		setPOS(ths, POS_WORD);
-
-		// Subscripts may be one letter, or they may be longer.
-		// Note that numerical quantities might have a period in them,
-		// e.g. 3.2 million. Don't treat numerics as subscripts.
-
-		// Anyway, chop off the subscript from the word, and store the
-		// word, and it's subscript seperately.
-		int len = wordString.length();
-		int dot = wordString.lastIndexOf('.');
-
-		if ((0 < dot) && (dot < len-1))
-		{
-			// Don't truncate, if its a number!
-			// There will be an exception thrown, if
-			// the subscript isn't pure numeric ...
-			String w = wordString.substring(0, dot);
-			try { new java.math.BigInteger(w); }
-			catch (NumberFormatException ex)
-			{
-				// If we are here, its not a number.
-				String infl = wordString.substring(dot);
-				wordString = w;
-				setSubscript(ths, infl);
-			}
-		}
-
 		FeatureNode f = new FeatureNode(wordString);
-		ths.set(WORD_STRING_FEATURE_NAME, f);
-
-		// The MorphyAlg will modify the above, so make a copy of the original.
-		// (Literally a copy -- this has to be a distinct feature node.)
-		f = new FeatureNode(wordString);
 		ths.set(ORIG_WORD_STRING_FEATURE_NAME, f);
 	}
 

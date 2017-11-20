@@ -125,7 +125,13 @@ public class OpenCogScheme
 		while (fn != null)
 		{
 			String word = fn.get("orig_str").getValue();
+
+			// We MUST escape all quotation marks! If we don't, then
+			// we are just generating bad scheme.
+			word = word.replaceAll("\"", "\\\\\"");
 			String guid_word = fn.get("uuid").getValue();
+			guid_word = guid_word.replaceAll("\"", "\\\\\"");
+
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 

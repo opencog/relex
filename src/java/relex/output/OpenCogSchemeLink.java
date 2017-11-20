@@ -73,6 +73,8 @@ class OpenCogSchemeLink
 			String lab_inst = fn.get("LAB").getValue() + "@" + UUID.randomUUID();
 			String fl_inst = fn.get("F_L").get("uuid").getValue();
 			String fr_inst = fn.get("F_R").get("uuid").getValue();
+			fl_inst = fl_inst.replaceAll("\"", "\\\\\"");
+			fr_inst = fr_inst.replaceAll("\"", "\\\\\"");
 			
 			str +=
 				"(EvaluationLink (stv 1.0 1.0)\n" +
@@ -150,8 +152,11 @@ class OpenCogSchemeLink
 			// split the value into different connectors
 			String[] connectors = value.split(" ");
 
+			String guid_word = srcNode.get("uuid").getValue();
+			guid_word = guid_word.replaceAll("\"", "\\\\\"");
+
 			str += "(LgWordCset \n";
-			str += "    (WordInstanceNode \"" + srcNode.get("uuid").getValue() + "\")\n";
+			str += "    (WordInstanceNode \"" + guid_word + "\")\n";
 			str += "    (LgAnd \n";
 
 			// connectors should already be sorted with - before +
