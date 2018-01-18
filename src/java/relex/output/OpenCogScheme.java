@@ -135,6 +135,9 @@ public class OpenCogScheme
 			if (word.equals("LEFT-WALL"))
 				word = "###LEFT-WALL###";
 
+			if (word.equals("RIGHT-WALL"))
+				word = "###RIGHT-WALL###";
+
 			str += "(ReferenceLink (stv 1.0 1.0)\n" +
 			       "   (WordInstanceNode \"" + guid_word + "\")\n" +
 			       "   (WordNode \"" + word + "\")\n" +
