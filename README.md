@@ -395,9 +395,9 @@ bullet-proof, although it might handle multi-line refs incorrectly.
 If you built RelEx with Maven, these scripts can be used.
 They accept additional arguments to be passed to `relex.Server`.
 
-1. `target/relex/bin/relexd`, which runs `java relex.Server ...`
-2. `target/relex/bin/relexd-relex`, which runs `java relex.Server --relex ...`
-3. `target/relex/bin/relexd-link`, which runs `relex.Server --link --relex --verbose ...`
+1. `sh target/appassembler/bin/relexd`, which runs `java relex.Server ...`
+2. `sh target/appassembler/bin/relexd-relex`, which runs `java relex.Server --relex ...`
+3. `sh target/appassembler/bin/relexd-link`, which runs `relex.Server --link --relex --verbose ...`
 
 
 Using RelEx in custom code
