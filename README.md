@@ -267,11 +267,20 @@ mode.  The `ant install` command will install the ssytem.
 
 ### With Maven
 
-Build and install is currently not supported with
-[Maven](http://maven.apache.org/).  You might get lucky -- if you
-know how to use maven, then please edit the project model `pom.xml`,
-fix it so that it works, and send us the patches!
+Maven manages almost all of dependencies automatically. Only exception is Link Grammar library which should be added into local maven repository manually, using:
+```
+mvn install:install-file \
+    -Dfile=<linkgrammar-jar-folder/linkgrammar.jar> \
+    -DgroupId=org.opencog \
+    -DartifactId=linkgrammar \
+    -Dversion=<linkgrammar.version> \
+    -Dpackaging=jar
+```
 
+Then you can build and install relex.jar using:
+```
+mvn install
+```
 
 Using RelEx
 -----------
