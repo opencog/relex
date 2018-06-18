@@ -267,11 +267,20 @@ mode.  The `ant install` command will install the ssytem.
 
 ### With Maven
 
-Build and install is currently not supported with
-[Maven](http://maven.apache.org/).  You might get lucky -- if you
-know how to use maven, then please edit the project model `pom.xml`,
-fix it so that it works, and send us the patches!
+Maven manages almost all of dependencies automatically. Only exception is Link Grammar library which should be added into local maven repository manually, using:
+```
+mvn install:install-file \
+    -Dfile=<linkgrammar-jar-folder/linkgrammar.jar> \
+    -DgroupId=org.opencog \
+    -DartifactId=linkgrammar \
+    -Dversion=<linkgrammar.version> \
+    -Dpackaging=jar
+```
 
+Then you can build and install relex.jar using:
+```
+mvn install
+```
 
 Using RelEx
 -----------
@@ -386,9 +395,9 @@ bullet-proof, although it might handle multi-line refs incorrectly.
 If you built RelEx with Maven, these scripts can be used.
 They accept additional arguments to be passed to `relex.Server`.
 
-1. `target/relex/bin/relexd`, which runs `java relex.Server ...`
-2. `target/relex/bin/relexd-relex`, which runs `java relex.Server --relex ...`
-3. `target/relex/bin/relexd-link`, which runs `relex.Server --link --relex --verbose ...`
+1. `sh target/appassembler/bin/relexd`, which runs `java relex.Server ...`
+2. `sh target/appassembler/bin/relexd-relex`, which runs `java relex.Server --relex ...`
+3. `sh target/appassembler/bin/relexd-link`, which runs `relex.Server --link --relex --verbose ...`
 
 
 Using RelEx in custom code
