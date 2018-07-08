@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import relex.algs.SentenceAlgorithmApplier;
 import relex.concurrent.RelexContext;
 // import relex.corpus.QuotesParensSentenceDetector;
@@ -63,7 +65,8 @@ import relex.stats.SimpleTruthValue;
  */
 public class RelationExtractor
 {
-	public static final int verbosity = 1;
+
+	private static final Logger logger = LoggerFactory.getLogger(RelationExtractor.class);
 
 	public static final int DEFAULT_MAX_PARSES = 4;
 	public static final int DEFAULT_MAX_SENTENCE_LENGTH = 1024;
@@ -260,14 +263,14 @@ public class RelationExtractor
 	public Sentence processSentence(String sentence)
 	{
 		if (!_is_inited) init();
-		starttime = System.currentTimeMillis();
+		startTime();
 
 		Sentence sntc = null;
 		try
 		{
-			if (verbosity > 0) starttime = System.currentTimeMillis();
+			startTime();
 			sntc = parseSentence(sentence);
-			if (verbosity > 0) reportTime("Link-parsing: ");
+			reportTime("Link-parsing: ");
 
 			for (ParsedSentence parse : sntc.getParses())
 			{
@@ -293,10 +296,10 @@ public class RelationExtractor
 		}
 		catch (Exception e)
 		{
-			System.err.println("Error: Failed to process sentence: " + sentence);
+			logger.error("Error: Failed to process sentence: {}", sentence, e);
 			e.printStackTrace();
 		}
-		if (verbosity > 0) reportTime("RelEx processing: ");
+		reportTime("RelEx processing: ");
 		return sntc;
 	}
 
@@ -313,8 +316,7 @@ public class RelationExtractor
 		if (sentence.length() < DEFAULT_MAX_SENTENCE_LENGTH) {
 			sent = parser.parse(sentence);
 		} else {
-			System.err.println("Sentence too long, len=" + sentence.length()
-				+ " : " + sentence);
+			logger.error("Sentence too long, len={} : {}", sentence.length(), sentence);
 			sent = new Sentence();
 		}
 		return sent;
@@ -380,27 +382,33 @@ public class RelationExtractor
 	TreeMap<String,Long> sumtime;
 	TreeMap<String,Long> cnttime;
 
+	private void startTime() {
+		if (logger.isInfoEnabled()) {
+			starttime = System.currentTimeMillis();
+		}
+	}
+
 	private void reportTime(String msg)
 	{
-		Long now = System.currentTimeMillis();
-		Long elapsed = now - starttime;
-		starttime = now;
+		if (logger.isInfoEnabled()) {
+			Long now = System.currentTimeMillis();
+			Long elapsed = now - starttime;
+			starttime = now;
 
-		Long sum = sumtime.get(msg);
-		Long cnt = cnttime.get(msg);
-		if (sum == null)
-		{
-			sum = 0L;
-			cnt = 0L;
+			Long sum = sumtime.get(msg);
+			Long cnt = cnttime.get(msg);
+			if (sum == null) {
+				sum = 0L;
+				cnt = 0L;
+			}
+			cnt++;
+			sum += elapsed;
+			sumtime.put(msg, sum);
+			cnttime.put(msg, cnt);
+
+			Long avg = sum / cnt;
+			logger.info("{}{} milliseconds (avg={} millisecs, cnt={})", msg, elapsed, avg, cnt);
 		}
-		cnt ++;
-		sum += elapsed;
-		sumtime.put(msg, sum);
-		cnttime.put(msg, cnt);
-
-		Long avg = sum / cnt;
-		System.err.println(msg + elapsed + " milliseconds (avg="
-			+ avg + " millisecs, cnt=" + cnt + ")");
 	}
 
 	/* ---------------------------------------------------------- */
@@ -481,8 +489,8 @@ public class RelationExtractor
 		}
 		catch (Exception e)
 		{
-			System.err.println("Unrecognized parameter.");
-			System.err.println(callString);
+			logger.error("Unrecognized parameter.", e);
+			logger.error(callString);
 			e.printStackTrace();
 			return;
 		}
@@ -566,7 +574,7 @@ public class RelationExtractor
 						break;
 					}
 				} catch (IOException e) {
-					System.err.println("Error reading sentence from the standard input!");
+					logger.error("Error reading sentence from the standard input!", e);
 				}
 
 				// Buffer up input text, and wait for a whole,

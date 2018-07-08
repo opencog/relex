@@ -22,6 +22,9 @@ import java.io.PrintWriter;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.Socket;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import relex.corpus.DocSplitter;
 import relex.corpus.DocSplitterFactory;
 import relex.output.SimpleView;
@@ -35,7 +38,7 @@ import relex.Version;
  */
 public class ServerSession
 {
-	public boolean verbose = false;
+	private static final Logger logger = LoggerFactory.getLogger(ServerSession.class);
 	public int id = 0;
 
 	private RelationExtractor re = null;
@@ -132,7 +135,7 @@ public class ServerSession
 					String line = new String(junk);
 					line += in.readLine();
 
-					System.err.println("Info: hndlr=" + id + " recv input: \"" + line + "\"");
+					logger.info("Info: hndlr={} recv input: \"{}\"", id, line);
 
 					// If the free-text flag is set, then use the document
 					// splitter to find sentence boundaries. Otherwise,
@@ -149,7 +152,7 @@ public class ServerSession
 				}
 				catch (Exception e)
 				{
-					System.err.println("Error: hndlr=" + id + " Read of input failed:" + e.getMessage());
+					logger.error("Error: hndlr={} Read of input failed:", id, e);
 					break;
 				}
 			}
@@ -180,15 +183,15 @@ public class ServerSession
 					// Print the phrase string ... handy for debugging.
 					out.println("; " + parse.getPhraseString());
 
-					if (verbose)
+					if (logger.isDebugEnabled())
 					{
 						String fin = SimpleView.printRelationsAlt(parse);
-						System.out.print(fin);
+						logger.debug(fin);
 					}
 					opencog.setParse(parse);
 					out.println(opencog.toString());
 					out.flush();
-					System.err.println("Info: hndlr=" + id + " sent parse " + (pn + 1) + " of " + np);
+					logger.info("Info: hndlr=" + id + " sent parse " + (pn + 1) + " of " + np);
 
 					// This is for simplifying pre-processing of scheme string
 					// before evaluating it in opencog.
@@ -210,7 +213,7 @@ public class ServerSession
 			}
 			catch (Exception e)
 			{
-				System.err.println("Error: hndlr=" + id + " Failed to parse: " + e.getMessage());
+				logger.error("Error: hndlr={} Failed to parse: ", id, e);
 				e.printStackTrace();
 				break;
 			}
@@ -222,11 +225,11 @@ public class ServerSession
 		try
 		{
 			in_sock.close();
-			System.err.println("Info: hndlr=" + id + " Closed input socket");
+			logger.info("Info: hndlr={} Closed input socket", id);
 		}
 		catch (IOException e)
 		{
-			System.err.println("Error: hndlr=" + id + " Socket close failed: " + e.getMessage());
+			logger.error("Error: hndlr={} Socket close failed: ", id, e.getMessage());
 		}
 	}
 }

@@ -28,7 +28,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Map;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.linkgrammar.LinkGrammar;
+import org.slf4j.LoggerFactory;
 import relex.ServerSession;
 import relex.Version;
 
@@ -51,7 +55,6 @@ public class Server
 	private int host_port = 0;
 	private int max_parses = 1;
 	private String lang = "en";
-	private boolean verbose = false;
 	private boolean relex_on = false;
 	private boolean link_on = false;
 	private boolean free_text = false;
@@ -142,8 +145,9 @@ public class Server
 
 		if (commandMap.get("--verbose") != null)
 		{
-			System.err.println("Info: Verbose server mode set.");
-			verbose = true;
+			Logger logger = ((Logger) LoggerFactory.getLogger("relex"));
+			logger.setLevel(Level.DEBUG);
+			logger.info("Info: Verbose server mode set.");
 		}
 	}
 
@@ -274,7 +278,6 @@ public class Server
 				sess = new ServerSession();
 				sess.id = i+1;
 				sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
-				sess.verbose = verbose;
 				sessq.add(sess);
 			}
 			tpool = Executors.newFixedThreadPool(NTHREADS);
@@ -283,7 +286,6 @@ public class Server
 		{
 			sess = new ServerSession();
 			sess.sess_setup(relex_on, link_on, free_text, max_parses, lang);
-			sess.verbose = verbose;
 		}
 
 		// -----------------------------------------------------------------

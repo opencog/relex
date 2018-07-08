@@ -22,16 +22,16 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
 import relex.feature.FeatureNode;
 
 public abstract class SentenceAlgorithm
 {
-	private static final boolean DEBUG = false;
+	private static final Logger logger = LoggerFactory.getLogger(SentenceAlgorithm.class);
 	private static final String SIGNATURE_FEATURE_NAME = "SIG";
-
-	public static final boolean VERBOSE = false;
 
 	public static final boolean INTERACTIVE = false;
 
@@ -47,8 +47,7 @@ public abstract class SentenceAlgorithm
 			Map<String,FeatureNode> vars = canApplyTo(c);
 			if (null != vars) {
 				boolean printResult = false;
-				if (VERBOSE)
-					System.err.print(" " + getSignature());
+				logger.debug("{} ", getSignature());
 				if (INTERACTIVE) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 					try {
@@ -61,11 +60,11 @@ public abstract class SentenceAlgorithm
 				try {
 					applyTo(c, context, vars);
 				} catch (Exception e) {
-					if (DEBUG)
+					if (logger.isDebugEnabled())
 					{
 						// System.err.println(sentence);
 						// System.err.println(this);
-						System.err.println("Error: bad algorithm: " + getSignature());
+						logger.debug("Error: bad algorithm: {}", getSignature());
 						e.printStackTrace();
 					}
 					sentence.setErrorString(this + "\n" + e.toString());

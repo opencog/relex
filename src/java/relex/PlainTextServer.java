@@ -25,7 +25,11 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.linkgrammar.JSONUtils;
+import org.slf4j.LoggerFactory;
 import relex.output.SimpleView;
 import relex.output.StanfordView;
 import relex.Version;
@@ -58,6 +62,8 @@ import relex.Version;
 
 public class PlainTextServer
 {
+	private static final Logger logger = (Logger) LoggerFactory.getLogger(PlainTextServer.class);
+
 	private int listen_port;
 
 	public PlainTextServer()
@@ -68,7 +74,6 @@ public class PlainTextServer
 	public static void main(String[] args)
 	{
 		int listen_port = 3333;
-		boolean verbose = false;
 		String lang = "en";
 		String dict_path = null;
 
@@ -122,8 +127,8 @@ public class PlainTextServer
 			}
 			else if (args[i].equals("--verbose") )
 			{
-				System.err.println("Info: Verbose server mode set.");
-				verbose = true;
+				logger.setLevel(Level.DEBUG);
+				logger.info("Info: Verbose server mode set.");
 			}
 			else
 			{
@@ -258,8 +263,7 @@ public class PlainTextServer
 						String fin = StanfordView.printRelations(parse, true, "    ");
 						out.println(fin);
 					}
-					if (verbose)
-						System.out.print(SimpleView.printRelations(parse));
+					logger.debug(SimpleView.printRelations(parse));
 				}
 				out.println("==== END OF SENTENCE ====");
 
