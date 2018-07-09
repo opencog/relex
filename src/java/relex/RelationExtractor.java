@@ -383,14 +383,14 @@ public class RelationExtractor
 	TreeMap<String,Long> cnttime;
 
 	private void startTime() {
-		if (logger.isInfoEnabled()) {
+		if (logger.isDebugEnabled()) {
 			starttime = System.currentTimeMillis();
 		}
 	}
 
 	private void reportTime(String msg)
 	{
-		if (logger.isInfoEnabled()) {
+		if (logger.isDebugEnabled()) {
 			Long now = System.currentTimeMillis();
 			Long elapsed = now - starttime;
 			starttime = now;
@@ -407,7 +407,7 @@ public class RelationExtractor
 			cnttime.put(msg, cnt);
 
 			Long avg = sum / cnt;
-			logger.info("{}{} milliseconds (avg={} millisecs, cnt={})", msg, elapsed, avg, cnt);
+			logger.debug("{}{} milliseconds (avg={} millisecs, cnt={})", msg, elapsed, avg, cnt);
 		}
 	}
 

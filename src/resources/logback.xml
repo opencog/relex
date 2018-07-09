@@ -12,6 +12,10 @@
         <appender-ref ref="STDOUT" />
     </logger>
 
+    <logger name="relex.RelationExtractor" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
