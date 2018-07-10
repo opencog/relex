@@ -18,7 +18,7 @@ sudo apt-get -y update
 sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
 sudo apt-get -y install wordnet-dev wordnet-sense-index
 sudo apt-get -y install openjdk-7-jdk 
-sudo apt-get -y install ant libcommons-logging-java libslf4j-java libgetopt-java
+sudo apt-get -y install ant libcommons-logging-java libslf4j-java liblogback-java libgetopt-java
 
 # Link Grammar
 wget -r --no-parent --no-check-certificate -nH --cut-dirs=3 http://www.abisource.com/downloads/link-grammar/current/
@@ -39,13 +39,6 @@ unzip jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
 sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
 rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
 sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
-
-# Logback
-wget https://logback.qos.ch/dist/logback-1.2.3.zip
-unzip logback-1.2.3.zip
-sudo mv -v logback-1.2.3/logback-core-1.2.3.jar /usr/local/share/java/
-sudo mv -v logback-1.2.3/logback-classic-1.2.3.jar /usr/local/share/java/
-rm -v logback-1.2.3.zip && rm -rf logback-1.2.3
 
 cd ..
 

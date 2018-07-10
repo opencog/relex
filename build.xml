@@ -29,8 +29,8 @@
 
         <!-- Logging -->
         <pathelement location="${PREFIX}/slf4j-api-1.7.25.jar"/>
-        <pathelement location="${ALTPREFIX}/logback-core-1.2.3.jar"/>
-        <pathelement location="${ALTPREFIX}/logback-classic-1.2.3.jar"/>
+        <pathelement location="${PREFIX}/logback-core-1.2.3.jar"/>
+        <pathelement location="${PREFIX}/logback-classic-1.2.3.jar"/>
 
         <!-- Packages required by optional OpenNLP -->
         <pathelement location="${PREFIX}/opennlp-tools-1.5.3.jar"/>
