@@ -39,6 +39,9 @@ bin:\
 /usr/local/share/java/jwnl-1.4rc2.jar:\
 /usr/local/share/java/jwnl.jar:\
 /usr/share/java/commons-logging.jar:\
+/usr/share/java/slf4j-api-1.7.25.jar:\
+/usr/local/share/java/logback-core-1.2.3.jar:\
+/usr/local/share/java/logback-classic-1.2.3.jar:\
 /usr/share/java/gnu-getopt.jar:\
 /usr/share/java/linkgrammar.jar:\
 /usr/local/share/java/linkgrammar.jar:\
