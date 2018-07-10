@@ -251,6 +251,7 @@
             <jvmarg line="-Drelex.sfalgpath=data/relex-stanford.algs"/>
             <jvmarg line="-Drelex.tagalgpath=data/relex-tagging.algs"/>
             <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
+            <jvmarg line="-Dlogback.configurationFile=src/resources/logback.xml"/>
             <classpath refid="relex.classpath"/>
             <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
         </java>
