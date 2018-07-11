@@ -34,9 +34,9 @@ bin:\
 ../../share/java/trove.jar:\
 ../../share/java/jwnl.jar:\
 ../../share/java/commons-logging.jar:\
-../../share/java/slf4j-api-1.7.25.jar:\
-../../share/java/logback-core-1.2.3.jar:\
-../../share/java/logback-classic-1.2.3.jar:\
+../../share/java/slf4j-api.jar:\
+../../share/java/logback-core.jar:\
+../../share/java/logback-classic.jar:\
 ../../share/java/gnu-getopt.jar:\
 ../../share/java/link-grammar-4.4.2.jar:\
 "
