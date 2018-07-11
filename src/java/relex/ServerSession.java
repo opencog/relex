@@ -191,7 +191,7 @@ public class ServerSession
 					opencog.setParse(parse);
 					out.println(opencog.toString());
 					out.flush();
-					logger.info("Info: hndlr=" + id + " sent parse " + (pn + 1) + " of " + np);
+					logger.info("Info: hndlr={} sent parse {} of {}", id, pn + 1, np);
 
 					// This is for simplifying pre-processing of scheme string
 					// before evaluating it in opencog.

@@ -489,8 +489,7 @@ public class RelationExtractor
 		}
 		catch (Exception e)
 		{
-			logger.error("Unrecognized parameter.", e);
-			logger.error(callString);
+			logger.error("Unrecognized parameter.\n{}", callString);
 			e.printStackTrace();
 			return;
 		}
