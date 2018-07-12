@@ -158,8 +158,8 @@ public class AlgorithmApplier
 			if (in != null)
 			{
 					logger.info(
-						"Info: Using default relex algorithms file: " +
-						defaultRelexAlgsFile);
+						"Info: Using default relex algorithms file: {}",
+						 defaultRelexAlgsFile);
 				return in;
 			}
 

@@ -263,7 +263,9 @@ public class PlainTextServer
 						String fin = StanfordView.printRelations(parse, true, "    ");
 						out.println(fin);
 					}
-					logger.debug(SimpleView.printRelations(parse));
+					if (logger.isDebugEnabled()) {
+						logger.debug("{}", SimpleView.printRelations(parse));
+					}
 				}
 				out.println("==== END OF SENTENCE ====");
 

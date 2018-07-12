@@ -185,8 +185,7 @@ public class ServerSession
 
 					if (logger.isDebugEnabled())
 					{
-						String fin = SimpleView.printRelationsAlt(parse);
-						logger.debug(fin);
+						logger.debug("{}", SimpleView.printRelationsAlt(parse));
 					}
 					opencog.setParse(parse);
 					out.println(opencog.toString());
