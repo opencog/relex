@@ -145,7 +145,8 @@ public class Server
 
 		if (commandMap.get("--verbose") != null)
 		{
-			Logger logger = ((Logger) LoggerFactory.getLogger("relex"));
+			// set debug level both for Server and ServerSession classes
+			Logger logger = ((Logger) LoggerFactory.getLogger(Server.class));
 			logger.setLevel(Level.DEBUG);
 			logger.info("Info: Verbose server mode set.");
 		}

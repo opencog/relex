@@ -38,7 +38,7 @@ import relex.Version;
  */
 public class ServerSession
 {
-	private static final Logger logger = LoggerFactory.getLogger(ServerSession.class);
+	private static final Logger logger = LoggerFactory.getLogger(Server.class);
 	public int id = 0;
 
 	private RelationExtractor re = null;
