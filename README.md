@@ -198,6 +198,26 @@ The following packages are required pre-requisites for building RelEx.
 	the `libcommons-logging-java` package. In RedHat/CentOS systems,
 	the package name is `jakarta-commons-logging`.
 
+- ***SLF4J and Logback***.
+    RelEx uses SLF4J as a facade for the Logback logging framework.
+	SLF4J home pages is at
+
+	> https://www.slf4j.org
+
+	and can be downloaded from
+
+	> https://www.slf4j.org/download.html
+
+	Logback home pages is at
+
+	> https://logback.qos.ch
+
+	and can be downloaded from
+
+	> https://logback.qos.ch/download.html
+
+    In Debian/Ubuntu SLF4J and logback can be installed by libslf4j-java 
+    and liblogback-java packages.
 
 Optional packages
 -----------------

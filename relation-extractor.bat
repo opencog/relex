@@ -11,6 +11,9 @@ set DISCO_HOME=C:/disco
 %DISCO_HOME%\lib\gnu-getopt.jar;^
 %DISCO_HOME%\lib\wordnet\jwnl.jar;^
 %DISCO_HOME%\lib\wordnet\commons-logging.jar;^
+%DISCO_HOME%\lib\wordnet\slf4j-api.jar;^
+%DISCO_HOME%\lib\wordnet\logback-core.jar;^
+%DISCO_HOME%\lib\wordnet\logback-classic.jar;^
 %DISCO_HOME%\lib\opennlp\opennlp-tools-1.5.3.jar;^
 %DISCO_HOME%\lib\opennlp\maxent-3.0.3.jar;^
 %DISCO_HOME%\lib\opennlp\trove.jar;^

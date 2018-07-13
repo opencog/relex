@@ -18,7 +18,7 @@ sudo apt-get -y update
 sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
 sudo apt-get -y install wordnet-dev wordnet-sense-index
 sudo apt-get -y install openjdk-7-jdk 
-sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+sudo apt-get -y install ant libcommons-logging-java libslf4j-java liblogback-java libgetopt-java
 
 # Link Grammar
 wget -r --no-parent --no-check-certificate -nH --cut-dirs=3 http://www.abisource.com/downloads/link-grammar/current/

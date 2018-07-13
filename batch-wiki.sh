@@ -40,6 +40,9 @@ CLASSPATH="-classpath \
 /usr/local/share/java/trove.jar:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/commons-logging.jar:\
+/usr/local/java/slf4j-api.jar:\
+/usr/local/java/logback-core.jar:\
+/usr/local/java/logback-classic.jar:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/linkgrammar.jar:\
 /usr/share/java/gnu-getopt.jar:\

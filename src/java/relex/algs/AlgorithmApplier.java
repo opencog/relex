@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import relex.ParsedSentence;
 import relex.concurrent.RelexContext;
 
@@ -33,8 +35,7 @@ import relex.concurrent.RelexContext;
  */
 public class AlgorithmApplier
 {
-	/** a debug variable */
-	private static final int verbosity = 0;
+	private static final Logger logger = LoggerFactory.getLogger(AlgorithmApplier.class);
 
 	/** The list of algorithms to be applied */
 	private ArrayList<SentenceAlgorithm> algs;
@@ -57,8 +58,7 @@ public class AlgorithmApplier
 	{
 		alg.init(initString); // init the algorithm
 		algs.add(alg); // add it to algs vector
-		if (verbosity > 1)
-			System.err.println("Info: Adding alg: " + alg.getSignature());
+		logger.debug("Info: Adding alg: " + alg.getSignature());
 	}
 
 	// The apply method!
@@ -137,10 +137,8 @@ public class AlgorithmApplier
 				in = new FileInputStream(algsFileName);
 				if (in != null)
 				{
-					if (verbosity > 0)
-						System.err.println(
-							"Info: Using relex algorithms file defined in " +
-							prop + ": " + algsFileName);
+					logger.info("Info: Using relex algorithms file defined in " +
+								prop + ": " + algsFileName);
 					return in;
 				}
 			}
@@ -149,8 +147,7 @@ public class AlgorithmApplier
 				"/" + filename);
 			if (in != null)
 			{
-				if (verbosity > 0)
-					System.err.println(
+					logger.info(
 						"Info: Using relex algorithms file defined as a resource.");
 				return in;
 			}
@@ -160,10 +157,9 @@ public class AlgorithmApplier
 			in = new FileInputStream(defaultRelexAlgsFile);
 			if (in != null)
 			{
-				if (verbosity > 0)
-					System.err.println(
-						"Info: Using default relex algorithms file: " +
-						defaultRelexAlgsFile);
+					logger.info(
+						"Info: Using default relex algorithms file: {}",
+						 defaultRelexAlgsFile);
 				return in;
 			}
 
