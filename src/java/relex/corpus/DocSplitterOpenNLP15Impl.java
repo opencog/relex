@@ -20,8 +20,8 @@ package relex.corpus;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.util.Span;
+import relex.utils.ResourceUtils;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +36,12 @@ import java.util.HashSet;
 public class DocSplitterOpenNLP15Impl implements DocSplitter
 {
 	private static final int DEBUG = 0;
+	private static final String DEFAULT_ENGLISH_DIR =
+	        "data/opennlp/models-1.5";
 	private static final String DEFAULT_ENGLISH_FILENAME =
-	        "data/opennlp/models-1.5/en-sent.bin";
+	        "en-sent.bin";
+	private static final String DEFAULT_ENGLISH_FILEPATH =
+			DEFAULT_ENGLISH_DIR + "/" + DEFAULT_ENGLISH_FILENAME;
 
 	private static HashSet<String> unacceptableSentenceEnds;
 
@@ -82,23 +86,18 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 	{
 		if (detector == null)
 		{
-			try
-			{
-				if (englishModelFilename == null)
-					englishModelFilename = System.getProperty("EnglishModelFilename");
-				if (englishModelFilename == null || englishModelFilename.length() == 0)
-					englishModelFilename = DEFAULT_ENGLISH_FILENAME;
-
-			}
-			catch (Exception e)
-			{
-				// e.printStackTrace();
-				System.err.println(e.getMessage());
-			}
+			if (englishModelFilename == null)
+				englishModelFilename = System.getProperty("EnglishModelFilename");
+			if (englishModelFilename == null || englishModelFilename.isEmpty())
+				englishModelFilename = DEFAULT_ENGLISH_FILEPATH;
 
 			try
 			{
-				InputStream modelIn = new FileInputStream(englishModelFilename);
+				InputStream modelIn = ResourceUtils.getResource(
+						"EnglishModelFilename",
+						DEFAULT_ENGLISH_FILENAME,
+						DEFAULT_ENGLISH_DIR
+				);
 				SentenceModel model = new SentenceModel(modelIn);
 				modelIn.close();
 				detector = new SentenceDetectorME(model);
