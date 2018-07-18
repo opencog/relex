@@ -36,7 +36,7 @@ public class ResourceUtils
             String filePath = System.getProperty(propertyName);
             InputStream in = loadFromFile(filePath);
             if (in != null) {
-                logger.info("Loading resource from file name: {}," +
+                logger.info("Info: Loading resource from file name: {}," +
                         " defined by Java property: {}", filePath, propertyName);
                 return in;
             }
@@ -44,17 +44,16 @@ public class ResourceUtils
             in = ResourceUtils.class.getResourceAsStream(
                     "/" + fileName);
             if (in != null) {
-                logger.info(
-                        "Info: Using relex algorithms file defined as a resource.");
+                logger.info("Info: Loading resource {} from jar.",
+                        fileName);
                 return in;
             }
 
             File defaultRelexPath = new File(defaultDir, fileName);
             in = loadFromFile(defaultRelexPath);
             if (in != null) {
-                logger.info(
-                        "Info: Using default relex algorithms file: {}",
-                        defaultRelexPath);
+                logger.info("Info: Loading resource from file {}/{}.",
+                        defaultDir, fileName);
                 return in;
             }
 
