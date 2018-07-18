@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import net.didion.jwnl.JWNL;
+import relex.utils.ResourceUtils;
 
 public class MorphyFactory
 {
@@ -65,7 +66,7 @@ public class MorphyFactory
 		try
 		{
 			JWNL.initialize(
-					getJWNLConfigFileStream(
+					ResourceUtils.getResource(
 							WORDNET_PROPERTY,
 							JWNL_FILE_PROPERTIES_XML,
 							JWNL_DIR_PROPERTIES_XML
@@ -85,48 +86,5 @@ public class MorphyFactory
 			System.err.println(estr);
 			return false;
 		}
-	}
-
-	/**
-	 * Determine the file that will be used.
-	 *
-	 * First try to load the the file in the directory defined by
-	 * the system property. Then try to load the file as a resource
-	 * in the jar file. Finally, tries the default location
-	 * (equivalent to -Dproperty=default)
-	 *
-	 * @param propertyName TODO
-	 *
-	 * @return
-	 * @throws FileNotFoundException
-	 */
-	private static InputStream getJWNLConfigFileStream (
-		            String propertyName,
-	               String file,
-	               String defaultDir)
-	throws FileNotFoundException
-	{
-			InputStream in = null;
-			String property = System.getProperty(propertyName);
-
-			if (property != null)
-			{
-				in = new FileInputStream(property);
-				if (in != null)
-				{
-					System.err.println("Info: Using file defined in " +
-						propertyName + ":" + property);
-					return in;
-				}
-			}
-
-			String defaultFile = defaultDir+"/"+file;
-			in = new FileInputStream(defaultFile);
-			if (in != null)
-			{
-				System.err.println("Info: Using default "+ defaultFile);
-				return in;
-			}
-			throw new RuntimeException("Error loading " + file + " file.");
 	}
 }
