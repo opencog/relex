@@ -86,8 +86,7 @@ public class DocSplitterOpenNLP15Impl implements DocSplitter
 	{
 		if (detector == null)
 		{
-			if (englishModelFilename == null)
-				englishModelFilename = System.getProperty("EnglishModelFilename");
+			englishModelFilename = System.getProperty("EnglishModelFilename");
 			if (englishModelFilename == null || englishModelFilename.isEmpty())
 				englishModelFilename = DEFAULT_ENGLISH_FILEPATH;
 

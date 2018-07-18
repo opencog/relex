@@ -36,8 +36,8 @@ public class ResourceUtils
             String filePath = System.getProperty(propertyName);
             InputStream in = loadFromFile(filePath);
             if (in != null) {
-                logger.info("Info: Using relex algorithms file defined in " +
-                        propertyName + ": " + filePath);
+                logger.info("Loading resource from file name: {}," +
+                        " defined by Java property: {}", filePath, propertyName);
                 return in;
             }
 
