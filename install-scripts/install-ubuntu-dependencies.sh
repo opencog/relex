@@ -17,8 +17,9 @@
 sudo apt-get -y update 
 sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
 sudo apt-get -y install wordnet-dev wordnet-sense-index
-sudo apt-get -y install openjdk-7-jdk 
-sudo apt-get -y install ant libcommons-logging-java libslf4j-java liblogback-java libgetopt-java
+
+sudo apt-get -y install openjdk-9-jdk 
+sudo apt-get -y install ant libcommons-logging-java libgetopt-java libslf4j-java liblogback-java
 
 # Link Grammar
 wget -r --no-parent --no-check-certificate -nH --cut-dirs=3 http://www.abisource.com/downloads/link-grammar/current/
@@ -26,7 +27,7 @@ tar -xvf link-grammar-5.*.tar.gz
 rm link-grammar-5.*.tar.gz*
 rm index.html*
 cd link-grammar-5.*
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64  ./configure 
+JAVA_HOME=/usr/lib/jvm/java-9-openjdk-amd64  ./configure 
 make -j6
 sudo make install
 sudo ln -v -s /usr/local/lib/liblink-grammar.so.5 /usr/lib/liblink-grammar.so.5
