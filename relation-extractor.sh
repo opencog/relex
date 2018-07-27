@@ -56,6 +56,9 @@ bin:\
 /usr/local/share/java/linkgrammar.jar:\
 /usr/share/java/linkgrammar.jar:\
 /usr/share/java/commons-logging.jar:\
+/usr/share/java/slf4j-api.jar:\
+/usr/share/java/logback-core.jar:\
+/usr/share/java/logback-classic.jar:\
 /usr/share/java/gnu-getopt.jar:\
 "
 

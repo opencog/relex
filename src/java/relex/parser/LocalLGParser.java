@@ -23,6 +23,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.linkgrammar.LGService;
 import org.linkgrammar.LinkGrammar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import relex.ParsedSentence;
 import relex.Sentence;
 import relex.feature.FeatureNode;
@@ -32,7 +34,7 @@ import relex.stats.SimpleTruthValue;
 
 public class LocalLGParser extends LGParser
 {
-	private static final int verbosity = 0;
+	private static final Logger logger = LoggerFactory.getLogger(LocalLGParser.class);
 	private static final double min_score = -0.001;
 	private static final double score_bump = 0.001;
 
@@ -81,34 +83,34 @@ public class LocalLGParser extends LGParser
 	public Sentence parse(String sentence) throws ParseException
 	{
 		Long starttime;
-		if (verbosity > 0) starttime = System.currentTimeMillis();
+		starttime = System.currentTimeMillis();
 
 		Sentence sntc = new Sentence();
 
 		boolean ignoreFirst = false; // true if first word is LEFT-WALL
 		boolean ignoreLast = false;  // true if first word is RIGHT_WALL
-		if (verbosity >= 5) System.err.println("about to parse [" + sentence + "]");
+		logger.trace("about to parse [{}]", sentence);
 		LinkGrammar.parse(sentence);
-		if (verbosity >= 5) System.err.println("parsed [" + sentence + "]");
+		logger.trace("parsed [{}]", sentence);
 
 		int numParses = LinkGrammar.getNumLinkages();
-		if (verbosity >= 5) System.err.println("found " + numParses + " parse(s)");
+		logger.trace("found {} parse(s)", numParses);
 
 		ArrayList<ParsedSentence> parses = new ArrayList<ParsedSentence>();
 
 		if (numParses < 1)
 		{
-			System.err.println("Warning: No parses found for:\n" +
+			logger.warn("Warning: No parses found for:\n{}",
 			     sentence);
 			return sntc;
 		}
 
 		for (int i = 0; i < numParses && i < _config.getMaxLinkages(); i++)
 		{
-			if (verbosity >= 5) System.err.println("making linkage for parse " + i);
+			logger.trace("making linkage for parse {}", i);
 			LinkGrammar.makeLinkage(i);
 
-			if (verbosity >= 5) System.err.println("making sentence for parse " + i);
+			logger.trace("making sentence for parse {}", i);
 			ParsedSentence s = new ParsedSentence(sentence);
 
 			// Add words
@@ -135,7 +137,7 @@ public class LocalLGParser extends LGParser
 			for (int w = 0; w < numWords; w++)
 			{
 				String wordString = LinkGrammar.getLinkageWord(w);
-				if (verbosity >= 5) System.err.println(" Processing Word " + wordString);
+				logger.trace(" Processing Word {}", wordString);
 
 				// If link-grammar guesses a word, it will add [?] to the
 				// end of it. The regex guess will add [!] and the spell
@@ -225,7 +227,7 @@ public class LocalLGParser extends LGParser
 				}
 			}
 
-			if (verbosity >= 5) System.err.println("Done with parse " + i);
+			logger.trace("Done with parse {}", i);
 
 			// set meta data
 			FeatureNode meta = new FeatureNode();
@@ -240,14 +242,14 @@ public class LocalLGParser extends LGParser
 			s.setMetaData(meta);
 
 			// add linkage and tree structure
-			if (verbosity >= 5) System.err.println("Adding Linkage Structure");
+			logger.trace("Adding Linkage Structure");
 			addLinkageStructure(s, ignoreFirst, ignoreLast, _config.isStoreSense(), skip_map);
 			if (_config.isStoreConstituentString())
 			{
-				if (verbosity >= 5) System.err.println("Adding Tree Structure");
+				logger.trace("Adding Tree Structure");
 				s.setPhraseString(LinkGrammar.getConstituentString());
 			}
-			if (verbosity >= 5) System.err.println("Ready To Finish");
+			logger.trace("Ready To Finish");
 
 			// add to return list
 			parses.add(s);
@@ -256,13 +258,10 @@ public class LocalLGParser extends LGParser
 		sntc.setParses(parses);
 		sntc.setNumParses(LinkGrammar.getNumLinkages());
 
-		if (verbosity > 0)
-		{
-			Long now = System.currentTimeMillis();
-			Long elapsed = now - starttime;
-			System.err.println("Parse setup time: " + elapsed + " milliseconds");
-		}
-		if (verbosity >= 5) System.err.println("Done with parse");
+		Long now = System.currentTimeMillis();
+		Long elapsed = now - starttime;
+		logger.debug("Parse setup time: {} milliseconds", elapsed);
+		logger.trace("Done with parse");
 
 		return sntc;
 	}
