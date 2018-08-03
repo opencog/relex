@@ -10,7 +10,8 @@ java ^
 %DISCO_HOME%\lib\gnu-getopt.jar;^
 %DISCO_HOME%\lib\wordnet\jwnl.jar;^
 %DISCO_HOME%\lib\wordnet\commons-logging.jar;^
-%DISCO_HOME%\lib\opennlp\opennlp-tools-1.3.0.jar;^
+%DISCO_HOME%\lib\opennlp\opennlp-tools-1.5.3.jar;^
+%DISCO_HOME%\lib\opennlp\opennlp-tools-1.5.0.jar;^
 %DISCO_HOME%\lib\opennlp\maxent-2.4.0.jar;^
 %DISCO_HOME%\lib\opennlp\trove.jar;^
 relex.parser.LinkParserServer %1

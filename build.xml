@@ -172,7 +172,6 @@
             <fileset file="data/relex-stanford.algs" />
             <fileset file="data/relex-tagging.algs" />
             <fileset file="data/wordnet/file_properties.xml" />
-            <fileset file="data/sentence-detector/EnglishSD.bin.gz" />
             <fileset file="data/opennlp/models-1.5/en-sent.bin" />
         </jar>
     </target>
@@ -215,7 +214,6 @@
                 <include name="data/relex-semantic.algs"/>
                 <include name="data/relex-stanford.algs"/>
                 <include name="data/relex-tagging.algs"/>
-                <include name="data/sentence-detector/EnglishSD.bin.gz"/>
                 <include name="data/opennlp/models-1.5/en-sent.bin" />
                 <include name="data/wordnet/file_properties.xml"/>
                 <include name="**/README"/>

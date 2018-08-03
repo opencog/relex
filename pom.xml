@@ -203,14 +203,6 @@
 			<resource>
 				<targetPath>./</targetPath>
 				<filtering>false</filtering>
-				<directory>${basedir}/data/sentence-detector</directory>
-				<includes>
-					<include>EnglishSD.bin.gz</include>
-				</includes>
-			</resource>
-			<resource>
-				<targetPath>./</targetPath>
-				<filtering>false</filtering>
 				<directory>${basedir}/data/opennlp/models-1.5</directory>
 				<includes>
 					<include>en-sent.bin</include>
