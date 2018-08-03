@@ -249,7 +249,7 @@ function.
 	
 	> http://maxent.sourceforge.net/
 
-	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.0.jar`.
+	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.3.jar`.
 	
 	The OpenNLP package is used solely in corpus/DocSplitter.java,
 	which provides a simple, easy-to-use wrapper for splitting a
