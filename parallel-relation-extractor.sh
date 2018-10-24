@@ -13,6 +13,7 @@ RELEX_OPTS="\
 
 CLASSPATH="-classpath \
 bin:\
+target/classes:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/opennlp-tools-1.5.3.jar:\
 /usr/local/share/java/maxent-3.0.3.jar:\
