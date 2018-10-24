@@ -41,6 +41,7 @@ VM_OPTS="-Xmx1024m \
 
 CLASSPATH="-classpath \
 bin:\
+target/classes:\
 /usr/local/share/java/jwnl.jar:\
 /usr/local/share/java/jwnl-1.4rc2.jar:\
 /usr/local/share/java/jwnl-1.3.3.jar:\
