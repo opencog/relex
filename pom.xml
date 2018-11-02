@@ -142,6 +142,15 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- workaround for https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 - surefire crash during build -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>2.22.1</version>
+                            <configuration>
+                                <useSystemClassLoader>false</useSystemClassLoader>
+                            </configuration>
+                        </plugin>
 			<!-- mvn -DskipTests package appassembler:assemble assembly:single -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
