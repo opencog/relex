@@ -25,12 +25,12 @@ wget -r --no-parent --no-check-certificate -nH --cut-dirs=3 http://www.abisource
 tar -xvf link-grammar-5.*.tar.gz
 rm link-grammar-5.*.tar.gz*
 rm index.html*
-cd link-grammar-5.*
+pushd link-grammar-5.*
 JAVA_HOME=/usr/lib/jvm/java-9-openjdk-amd64  ./configure 
 make -j6
 sudo make install
 sudo ln -v -s /usr/local/lib/liblink-grammar.so.5 /usr/lib/liblink-grammar.so.5
-cd ..
+popd
 sudo ldconfig
 
 # Java WordNet Library
@@ -39,8 +39,6 @@ unzip jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
 sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
 rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
 sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
-
-cd ..
 
 # RelEx
 if grep -q '^vagrant:' /etc/passwd; then
