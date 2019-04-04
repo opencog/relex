@@ -109,8 +109,7 @@ Installation
 
 ### Installing on Ubuntu/Debian
 
-An installation script for Ubuntu/Debian is provided in the [install-scripts]
-(https://github.com/opencog/relex/tree/master/install-scripts) directory.
+An installation script for Ubuntu/Debian is provided in the [install-scripts](./install-scripts) directory.
 
 ### Installing on all other systems
 
@@ -121,7 +120,6 @@ installed:
  - libgetopt-java (GNU getopt)
  - Link Parser
  - WordNet 3.0
- - JWNL Java wordnet library
  - OpenNLP tools (optional, but recommended)
  - W3C OWL (optional)
 
@@ -172,118 +170,8 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
-- ***didion.jwnl***.
-	The didion JWNL is the "Java WordNet Library", and provides the
-	Java programming API to access the wordnet data files.
-	Its home page is at
-	
-	> http://sourceforge.net/projects/jwordnet
-	
-	and can be downloaded from
-	
-	> http://sourceforge.net/project/showfiles.php?group_id=33824	
-
-	Verify that the final installed location of `jwnl.jar` is correctly
-	specified in the `build.xml` file. Note that GATE also provides a
-	`jwnl.jar`, but the GATE version of `jwnl.jar` is not compatible
-	(welcome to java DLL hell).
-
-	When copying `jwnl.jar`: verify the file permisions! Be sure to issue
-	the following command: `chmod 644 jwnl.jar`, as otherwise, you'll
-	get strange "java cannot unzip jar" error messages.
-
-- ***Apache Commons Logging***.
-	The JWNL package requires that the Apache commons logging
-	jar file be installed. In Debian/Ubuntu, this is supplied by
-	the `libcommons-logging-java` package. In RedHat/CentOS systems,
-	the package name is `jakarta-commons-logging`.
-
-- ***SLF4J and Logback***.
-    RelEx uses SLF4J as a facade for the Logback logging framework.
-	SLF4J home pages is at
-
-	> https://www.slf4j.org
-
-	and can be downloaded from
-
-	> https://www.slf4j.org/download.html
-
-	Logback home pages is at
-
-	> https://logback.qos.ch
-
-	and can be downloaded from
-
-	> https://logback.qos.ch/download.html
-
-    In Debian/Ubuntu SLF4J and logback can be installed by libslf4j-java 
-    and liblogback-java packages.
-
-Optional packages
------------------
-The following packages are optional. If they are found, then
-additional parts of RelEx will be built, enabling additional
-function.
-
-- ***OpenNLP***.
-	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
-	to find sentence boundaries in free text. If OpenNLP is not found,
-	then the (far) less accurate `java.text.BreakIterator` class is used.
-	Although Oracle documentation states that "Sentence boundary analysis
-	allows selection with correct interpretation of periods within numbers
-	and abbreviations", this is patently false, as it incorrectly breaks
-	the sentence "Dr. Smith is late." into two sentences.  Thus, OpenNLP
-	is recommended.
-
-   If you use Maven, this dependency is already managed.
-
-	The OpenNLP home page is at
-	
-	> http://opennlp.sourceforge.net/
-
-	Download and install OpenNLP tools, and verify that the
-	installed files are correctly identified in both `build.xml`
-	and in `relation-extractor.sh`.
-
-	OpenNLP also requires the installation of maxent from
-	
-	> http://maxent.sourceforge.net/
-
-	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.3.jar`.
-	
-	The OpenNLP package is used solely in corpus/DocSplitter.java,
-	which provides a simple, easy-to-use wrapper for splitting a
-	document into sentences. Replace this file if an alternate
-	sentence detector is desired.
-
-- ***Trove***.
-	Some users may require the GNU Trove to enable OpenNLP, although
-	this depends on the JDK installed.  GNU Trove is an implementation
-	of the java.util class hierarchy, which may or may not be included
-	in the installed JDK.  If needed, download trove from:
-
-	> http://trove4j.sourceforge.net/
-
-	Since trove is optimized, using it may improve performance and/or
-	decrease memory usage, as compared to the standard Sun JDK
-	implementation of the java.util hierarchy.
-
-	***IMPORTANT*** OpenNLP expects Gnu Trove version 1.0, and will not
-	work with version 2.0 !!
-
-
 Building
 --------
-
-### With Ant
-
-After the above are installed, the relex java code can be built.
-The build system uses `ant`, and the ant build specifications
-are in `build.xml`.  Simply saying `ant` at the command line
-should be enough to build. Saying `ant run` will run a basic
-demo of the system. The `ant test` command will run several tests
-verifying both regular parsing, and the Stanford-parser compatibility
-mode.  The `ant install` command will install the ssytem.
 
 ### With Maven
 
