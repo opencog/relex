@@ -32,14 +32,6 @@ sudo make install
 sudo ln -v -s /usr/local/lib/liblink-grammar.so.5 /usr/lib/liblink-grammar.so.5
 popd
 sudo ldconfig
-LINKGRAMMAR_JAR=`find ./link-grammar* -name linkgrammar*.jar`
-LINKGRAMMAR_VERSION=`echo $LINKGRAMMAR_JAR | grep -oP '(?<=-)\d+\.\d+\.\d+(?=\.)'`
-sudo mvn install:install-file \
-   -Dfile=$LINKGRAMMAR_JAR \
-   -DgroupId=org.opencog \
-   -DartifactId=linkgrammar \
-   -Dversion=$LINKGRAMMAR_VERSION \
-   -Dpackaging=jar
 
 # Java WordNet Library
 wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
@@ -48,12 +40,22 @@ sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
 rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
 sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
 
-# RelEx
+MVN_USER=`whoami`
+LINKGRAMMAR_JAR=`find ./link-grammar* -name linkgrammar*.jar`
+LINKGRAMMAR_VERSION=`echo $LINKGRAMMAR_JAR | grep -oP '(?<=-)\d+\.\d+\.\d+(?=\.)'`
+
 if grep -q '^vagrant:' /etc/passwd; then
     cd /home/vagrant/relex
-    sudo -u vagrant mvn package
-else
-    mvn package
+    MVN_USER=vagrant
 fi
 
-sudo mvn install
+sudo -u $MVN_USER mvn install:install-file \
+   -Dfile=$LINKGRAMMAR_JAR \
+   -DgroupId=org.opencog \
+   -DartifactId=linkgrammar \
+   -Dversion=$LINKGRAMMAR_VERSION \
+   -Dpackaging=jar
+
+# RelEx
+sudo -u $MVN_USER mvn package
+sudo -u $MVN_USER mvn install
