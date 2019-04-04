@@ -11,20 +11,5 @@ RELEX_OPTS="\
 	-Dwordnet.configfile=data/wordnet/file_properties.xml \
 	"
 
-CLASSPATH="-classpath \
-bin:\
-target/classes:\
-/usr/local/share/java/jwnl.jar:\
-/usr/local/share/java/opennlp-tools-1.5.3.jar:\
-/usr/local/share/java/maxent-3.0.3.jar:\
-/usr/local/share/java/opennlp-tools-1.5.0.jar:\
-/usr/local/share/java/maxent-3.0.0.jar:\
-/usr/local/share/java/maxent-2.5.2.jar:\
-/usr/local/share/java/trove.jar:\
-/usr/share/java/commons-logging.jar:\
-/usr/share/java/slf4j-api.jar:\
-/usr/share/java/logback-core.jar:\
-/usr/share/java/logback-classic.jar:\
-/usr/share/java/gnu-getopt.jar:\
-"
+CLASSPATH='-classpath ./target/classes:./target/lib/*'
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.concurrent.ParallelRelationExtractor $1
