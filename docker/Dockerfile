@@ -65,11 +65,6 @@ RUN mkdir /usr/local/share/java
 
 WORKDIR /home/Downloads/
 
-# OpenNLP - Never changes, so do this first.
-ADD http://archive.apache.org/dist/opennlp/opennlp-1.5.3/apache-opennlp-1.5.3-bin.tar.gz /home/Downloads/apache-opennlp-1.5.3-bin.tar.gz
-RUN tar zxf apache-opennlp-1.5.3-bin.tar.gz
-RUN (cd apache-opennlp-1.5.3; cp lib/*.jar /usr/local/share/java/; cp lib/*.jar /usr/share/java/; cp lib/opennlp-tools-1.5.3.jar /usr/local/share/java/opennlp-tools-1.5.0.jar)
-
 # Change line below on rebuild. Will use cache up to this line.
 ENV LAST_SOFTWARE_UPDATE 2015-02-25
 

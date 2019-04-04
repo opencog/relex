@@ -117,12 +117,8 @@ For other systems, follow the instructions below.
 To build and use RelEx, the following packages are required to be
 installed:
 
- - libgetopt-java (GNU getopt)
  - Link Parser
  - WordNet 3.0
- - OpenNLP tools (optional, but recommended)
- - W3C OWL (optional)
-
 
 Pre-requisite dependencies
 --------------------------
