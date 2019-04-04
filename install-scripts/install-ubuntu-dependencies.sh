@@ -18,7 +18,7 @@ sudo apt-get -y update
 sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
 sudo apt-get -y install wordnet-dev wordnet-sense-index
 sudo apt-get -y install openjdk-9-jdk 
-sudo apt-get -y install maven libcommons-logging-java libslf4j-java liblogback-java libgetopt-java
+sudo apt-get -y install maven
 
 # Link Grammar
 wget -r --no-parent --no-check-certificate -nH --cut-dirs=3 http://www.abisource.com/downloads/link-grammar/current/
@@ -32,13 +32,6 @@ sudo make install
 sudo ln -v -s /usr/local/lib/liblink-grammar.so.5 /usr/lib/liblink-grammar.so.5
 popd
 sudo ldconfig
-
-# Java WordNet Library
-wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
-unzip jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
-sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
-rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
-sudo chmod -v 0644 /usr/local/share/java/jwnl.jar 
 
 MVN_USER=`whoami`
 LINKGRAMMAR_JAR=`find ./link-grammar* -name linkgrammar*.jar`
