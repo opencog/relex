@@ -149,6 +149,7 @@
                             <version>2.22.1</version>
                             <configuration>
                                 <useSystemClassLoader>false</useSystemClassLoader>
+                                <argLine>-Djava.library.path=/usr/lib:/usr/lib/jni:/usr/local/lib:/usr/local/lib/jni</argLine>
                             </configuration>
                         </plugin>
 			<!-- mvn -DskipTests package appassembler:assemble assembly:single -->

@@ -25,23 +25,7 @@ RELEX_OPTS="\
 	"
 
 
-CLASSPATH="-classpath \
-bin:\
-target/classes:\
-/usr/local/share/java/opennlp-tools-1.5.3.jar:\
-/usr/local/share/java/maxent-3.0.3.jar:\
-../../share/java/opennlp-tools-1.5.3.jar:\
-../../share/java/opennlp-tools-1.5.0.jar:\
-../../share/java/maxent-2.4.0.jar:\
-../../share/java/trove.jar:\
-../../share/java/jwnl.jar:\
-../../share/java/commons-logging.jar:\
-../../share/java/slf4j-api.jar:\
-../../share/java/logback-core.jar:\
-../../share/java/logback-classic.jar:\
-../../share/java/gnu-getopt.jar:\
-../../share/java/link-grammar-4.4.2.jar:\
-"
+CLASSPATH='-classpath ./target/classes:./target/lib/*'
 
 function parseit {
 	fn="`basename "$1"`";

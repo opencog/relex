@@ -109,8 +109,7 @@ Installation
 
 ### Installing on Ubuntu/Debian
 
-An installation script for Ubuntu/Debian is provided in the [install-scripts]
-(https://github.com/opencog/relex/tree/master/install-scripts) directory.
+An installation script for Ubuntu/Debian is provided in the [install-scripts](./install-scripts) directory.
 
 ### Installing on all other systems
 
@@ -124,7 +123,6 @@ installed:
  - JWNL Java wordnet library
  - OpenNLP tools (optional, but recommended)
  - W3C OWL (optional)
-
 
 Pre-requisite dependencies
 --------------------------
@@ -172,16 +170,19 @@ The following packages are required pre-requisites for building RelEx.
 	The `relex/Morphy/Morphy.java` class provides a simple, easy-to-use
 	wrapper around wordnet, providing the needed word morphology info.
 
+The following packages are required pre-requisites for building RelEx.
+Note, that they are automatically installed if Maven system is used.
+
 - ***didion.jwnl***.
 	The didion JWNL is the "Java WordNet Library", and provides the
 	Java programming API to access the wordnet data files.
 	Its home page is at
-	
+
 	> http://sourceforge.net/projects/jwordnet
-	
+
 	and can be downloaded from
-	
-	> http://sourceforge.net/project/showfiles.php?group_id=33824	
+
+	> http://sourceforge.net/project/showfiles.php?group_id=33824
 
 	Verify that the final installed location of `jwnl.jar` is correctly
 	specified in the `build.xml` file. Note that GATE also provides a
@@ -216,14 +217,14 @@ The following packages are required pre-requisites for building RelEx.
 
 	> https://logback.qos.ch/download.html
 
-    In Debian/Ubuntu SLF4J and logback can be installed by libslf4j-java 
-    and liblogback-java packages.
 
 Optional packages
 -----------------
 The following packages are optional. If they are found, then
 additional parts of RelEx will be built, enabling additional
 function.
+
+If you use Maven, these dependencies are already managed.
 
 - ***OpenNLP***.
 	RelEx uses OpenNLP for sentence detection, giving RelEx the ability
@@ -235,10 +236,8 @@ function.
 	the sentence "Dr. Smith is late." into two sentences.  Thus, OpenNLP
 	is recommended.
 
-   If you use Maven, this dependency is already managed.
-
 	The OpenNLP home page is at
-	
+
 	> http://opennlp.sourceforge.net/
 
 	Download and install OpenNLP tools, and verify that the
@@ -246,11 +245,11 @@ function.
 	and in `relation-extractor.sh`.
 
 	OpenNLP also requires the installation of maxent from
-	
+
 	> http://maxent.sourceforge.net/
 
 	You'll need `maxent-3.0.0.jar` and `opennlp-tools-1.5.3.jar`.
-	
+
 	The OpenNLP package is used solely in corpus/DocSplitter.java,
 	which provides a simple, easy-to-use wrapper for splitting a
 	document into sentences. Replace this file if an alternate
@@ -274,16 +273,6 @@ function.
 
 Building
 --------
-
-### With Ant
-
-After the above are installed, the relex java code can be built.
-The build system uses `ant`, and the ant build specifications
-are in `build.xml`.  Simply saying `ant` at the command line
-should be enough to build. Saying `ant run` will run a basic
-demo of the system. The `ant test` command will run several tests
-verifying both regular parsing, and the Stanford-parser compatibility
-mode.  The `ant install` command will install the ssytem.
 
 ### With Maven
 
