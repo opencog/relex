@@ -243,7 +243,7 @@ public class LocalLGParser extends LGParser
 
 			// add linkage and tree structure
 			logger.trace("Adding Linkage Structure");
-			addLinkageStructure(s, ignoreFirst, ignoreLast, _config.isStoreSense(), skip_map);
+			addLinkageStructure(s, ignoreFirst, ignoreLast, skip_map);
 			if (_config.isStoreConstituentString())
 			{
 				logger.trace("Adding Tree Structure");
@@ -269,7 +269,6 @@ public class LocalLGParser extends LGParser
 	private void addLinkageStructure(ParsedSentence s,
 	                                 boolean ignoreFirst,
 	                                 boolean ignoreLast,
-	                                 boolean load_senses,
 	                                 int[] skip_map)
 	{
 		// Russian sentences can have 'blank words' in them which we skip.
@@ -326,50 +325,6 @@ public class LocalLGParser extends LGParser
 			if (dj != null)
 			{
 				f.set("DISJUNCT", new FeatureNode(dj));
-			}
-		}
-
-		if (load_senses)
-		{
-			for (int i = 0; i < length; i++)
-			{
-				// We'll hang senses right off the word node.
-				FeatureNode f = s.getWordAsNode(i);
-
-				// Get the total weight of all senses, for normalization.
-				int n = 0;
-				String sense = LinkGrammar.getLinkageSense(i, n);
-				double tot = 0.0;
-				while (sense != null)
-				{
-					double score = LinkGrammar.getLinkageSenseScore(i,n);
-					if (score > min_score)
-					{
-						if (0.0 >= score) score = score_bump;
-						tot += score;
-					}
-					n++;
-					sense = LinkGrammar.getLinkageSense(i,n);
-				}
-
-				// Tag words with word-senses, Use truth values to store
-				// the weight (as a confidence value).
-				n = 0;
-				sense = LinkGrammar.getLinkageSense(i,n);
-				while (sense != null)
-				{
-					double score = LinkGrammar.getLinkageSenseScore(i,n);
-					if (score > min_score)
-					{
-						if (0.0 >= score) score = score_bump;
-						SimpleTruthValue stv = new SimpleTruthValue(1.0, score/tot);
-						FeatureNode sns = new FeatureNode(sense);
-						sns.setTruthValue(stv);
-						f.set("DISJUNCT"+n, sns);
-					}
-					n++;
-					sense = LinkGrammar.getLinkageSense(i,n);
-				}
 			}
 		}
 	}
