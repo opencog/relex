@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="relex" xmlns:artifact="antlib:org.eclipse.aether.ant">
+    <property name="VERSION" value="1.6"/>    <!-- this is relex version 1.6.3 -->
+    <property name="REVISION" value="1.6.3"/> <!-- this is relex version 1.6.3 -->
+
+    <!-- <property name="PREFIX" value="${basedir}/lib"/> -->
+    <property name="PREFIX" value="/usr/share/java"/>
+    <property name="ALTPREFIX" value="/usr/local/share/java"/>
+
+    <property name="INSTALLDIR" value="/usr/local/share/java"/>
+ 
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/> <!-- this 1.6 is java, not relex -->
+    <property name="source" value="1.6"/> <!-- this 1.6 is java, not relex -->
+
+    <path id="relex.classpath">
+        <pathelement location="bin"/>
+        <!-- Mandatory packages -->
+        <pathelement location="${PREFIX}/linkgrammar.jar"/>
+        <pathelement location="${PREFIX}/gnu-getopt.jar"/>
+        <pathelement location="${PREFIX}/java-getopt-1.0.13.jar"/>
+        <pathelement location="${PREFIX}/jwnl.jar"/>
+        <pathelement location="${PREFIX}/jwnl-1.4rc2.jar"/>
+        <pathelement location="${PREFIX}/jwnl-1.3.3.jar"/>
+        <pathelement location="${PREFIX}/junit4.jar"/>
+
+        <!-- Packages required by mandatory JWNL -->
+        <pathelement location="${PREFIX}/commons-logging.jar"/>
+
+        <!-- Logging -->
+        <pathelement location="${PREFIX}/slf4j-api.jar"/>
+        <pathelement location="${PREFIX}/logback-core.jar"/>
+        <pathelement location="${PREFIX}/logback-classic.jar"/>
+
+        <!-- Packages required by optional OpenNLP -->
+        <pathelement location="${PREFIX}/opennlp-tools-1.5.3.jar"/>
+        <pathelement location="${PREFIX}/opennlp-tools-1.5.0.jar"/>
+        <pathelement location="${PREFIX}/maxent-3.0.3.jar"/>
+        <pathelement location="${PREFIX}/maxent-2.5.2.jar"/>
+        <pathelement location="${PREFIX}/trove.jar"/>
+
+        <!-- Mandatory packages -->
+        <pathelement location="${ALTPREFIX}/linkgrammar.jar"/>
+        <pathelement location="${ALTPREFIX}/gnu-getopt.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl-1.4rc2.jar"/>
+        <pathelement location="${ALTPREFIX}/jwnl-1.3.3.jar"/>
+
+        <!-- Packages required by mandatory JWNL -->
+        <pathelement location="${ALTPREFIX}/commons-logging.jar"/>
+
+        <!-- Packages required by optional OpenNLP -->
+        <pathelement location="${ALTPREFIX}/opennlp-tools-1.5.3.jar"/>
+        <pathelement location="${ALTPREFIX}/opennlp-tools-1.5.0.jar"/>
+        <pathelement location="${ALTPREFIX}/maxent-3.0.3.jar"/>
+        <pathelement location="${ALTPREFIX}/maxent-2.5.2.jar"/>
+        <pathelement location="${ALTPREFIX}/trove.jar"/>
+    </path>
+    <!-- Steps to take on initialization -->
+    <target name="init">
+    </target>
+
+    <!-- conditional compilation, check for OWL -->
+    <available classname="org.semanticweb.owl.model.OWLClass" classpathref="relex.classpath" property="OWL.present"/>
+    <target name="look-for-owl" unless="OWL.present">
+       <echo message="Will not build (optional) OWL output format; org.semanticweb.owl classes not found."/>
+    </target>
+
+    <!-- conditional compilation, check for OpenNLP-1.5 -->
+    <available classname="opennlp.tools.sentdetect.SentenceModel" classpathref="relex.classpath" property="OpenNLP15.present"/>
+    <target name="look-for-opennlp" unless="OpenNLP15.present">
+       <echo message="Could not find (optional) OpenNLP-1.5 classes."/>
+    </target>
+
+    <!-- Create a java source file containing the version number by replacing @REVISION@ -->
+    <target name="build-version">
+       <echo message="Building RelEx version ${REVISION}"/>
+       <copy file="src/java/relex/Version.java.in"
+             tofile="src/java/relex/Version.java"
+             overwrite="yes"
+             force="yes">
+           <filterset>
+               <filter token="REVISION" value="${REVISION}"/>
+           </filterset>
+       </copy>
+    </target>
+
+    <target name="build-project" depends="init, build-version, look-for-owl, look-for-opennlp">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <mkdir dir="bin" />
+        <javac destdir="bin"
+            includeantruntime="false"
+            debug="true" debuglevel="${debuglevel}"
+            nowarn="true"
+            source="${source}" target="${target}">
+            <src path="src/java"/>
+            <exclude name="**/OWLView.java" unless="OWL.present" />
+            <exclude name="**/DocSplitterOpenNLP15Impl.java" unless="OpenNLP15.present" />
+            <classpath refid="relex.classpath"/>
+            <!-- <compilerarg value="-Wno-deadCode"/> -->
+            <!-- <compilerarg value="-Wno-unused"/> -->
+        </javac>
+        <copy file="src/resources/logback.xml" todir="bin"/>
+    </target>
+
+    <target name="build-tests" depends="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+            includeantruntime="false"
+            source="${source}" target="${target}">
+            <src path="src/java_test"/>
+            <classpath refid="relex.classpath"/>
+        </javac>
+    </target>
+
+    <!-- Main build target -->
+    <target name="build" depends="build-subprojects,build-project"/>
+    <target name="build-subprojects"/>
+
+    <!-- help -->
+    <target name="usage">
+        <echo message="RelEx build file (build.xml)"/>
+        <echo message=""/>
+        <echo message="Avaliable targets are:"/>
+        <echo message=""/>
+        <echo message="    build   -- generate the relex.jar file (default)"/>
+        <echo message="    install -- install jar file in ${INSTALLDIR}"/>
+        <echo message="    test    -- run test cases"/>
+        <echo message="    run     -- run a demo of the parser"/>
+        <echo message="    dist    -- create distribution (tar.gz file)"/>
+        <echo message="    clean   -- remove temporary files created by build"/>
+    </target>
+    <target depends="usage" name="help"/>
+
+    <!-- cleanup -->
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete dir="docs"/>
+        <delete file="relex-${REVISION}.jar"/>
+    </target>
+    <target name="cleanall" depends="clean"/>
+    <target name="realclean" depends="clean"/>
+
+    <!-- Run tests -->
+    <target name="test" depends="build-tests">
+        <java classname="relex.test.TestStanford" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="relex.classpath"/>
+            <arg line=""/>
+        </java>
+        <java classname="relex.test.TestRelEx" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <classpath refid="relex.classpath"/>
+            <arg line=""/>
+        </java>
+    </target>
+
+    <!-- Build a jar file, for public consumption -->
+    <target name="jar" depends="build-project">
+        <jar basedir="bin" destfile="relex-${REVISION}.jar">
+            <manifest>
+                <attribute name="Implementation-Title" value="RelEx Semantic Relation Extractor"/>
+                <attribute name="Implementation-URL" value="http://opencog.org/wiki/RelEx"/>
+                <attribute name="Specification-Version" value="${VERSION}"/>
+                <attribute name="Implementation-Version" value="${REVISION}"/>
+                <attribute name="Main-Class" value="relex.RelationExtractor"/>
+            </manifest>
+            <fileset file="data/relex-penn-tagging.algs" />
+            <fileset file="data/relex-semantic.algs" />
+            <fileset file="data/relex-stanford.algs" />
+            <fileset file="data/relex-tagging.algs" />
+            <fileset file="data/wordnet/file_properties.xml" />
+            <fileset file="data/opennlp/models-1.5/en-sent.bin" />
+        </jar>
+    </target>
+
+    <!-- Install on user's system -->
+    <target name="install" depends="jar">
+        <mkdir dir="${INSTALLDIR}"/>
+        <copy file="relex-${REVISION}.jar" todir="${INSTALLDIR}"/>
+        <symlink link="${INSTALLDIR}/relex.jar" 
+                 resource="relex-${REVISION}.jar"
+                 overwrite="true" failonerror="false"/>
+    </target>
+
+    <!-- tar file for general distribution -->
+    <target name="dist">
+        <tar destfile="r.tar">
+            <!-- the shell and perl scripts need to be executable -->
+            <tarfileset dir="." prefix="relex-${REVISION}/"
+                        excludes=".bzr*/**, relex-*/**" mode="755">
+                <include name="batch-process.sh"/>
+                <include name="batch-wiki.sh"/>
+                <include name="doc-splitter.sh"/>
+                <include name="link-grammar-server.sh"/>
+                <include name="opencog-server.sh"/>
+                <include name="parallel-relation-extractor.sh"/>
+                <include name="relation-extractor.sh"/>
+                <include name="src/perl/*.pl"/>
+                <include name="src/perl/*.sh"/>
+            </tarfileset>
+            <tarfileset dir="." prefix="relex-${REVISION}/" 
+                        excludes=".bzr*/**, relex-*/**">
+                <include name="AUTHORS"/>
+                <include name="ChangeLog"/>
+                <include name="LICENSE"/>
+                <include name="README"/>
+                <include name="build.xml"/>
+                <include name="pom.xml"/>
+                <include name="test-corpus.txt"/>
+                <include name="data/relex-penn-tagging.algs"/>
+                <include name="data/relex-semantic.algs"/>
+                <include name="data/relex-stanford.algs"/>
+                <include name="data/relex-tagging.algs"/>
+                <include name="data/opennlp/models-1.5/en-sent.bin" />
+                <include name="data/wordnet/file_properties.xml"/>
+                <include name="**/README"/>
+                <include name="**/*.java"/>
+                <include name="**/*.java.in"/>
+            </tarfileset>
+        </tar>
+        <gzip destfile="relex-${REVISION}.tar.gz" src="r.tar"/>
+        <delete file="r.tar"/>
+    </target>
+
+    <!-- make documentation -->
+    <target name="javadoc">
+        <mkdir dir="docs" />
+        <javadoc packagenames="relex.*"
+                 sourcepath="src/java"
+                 destdir="docs"
+                 version="true"
+                 splitindex="true"
+                 noindex="false"
+                 windowtitle="RelEx"
+                 doctitle="RelEx Dependency Relation Extractor version $VERSION"
+                 bottom="Copyright &#169; 2005-2009 Mike Ross, Linas Vepstas and others."
+        />
+    </target>
+
+    <!-- demo example run -->
+    <target name="run" depends="build-project">
+        <java classname="relex.RelationExtractor" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024m"/>
+            <jvmarg line="-Djava.library.path=/usr/lib/jni:/usr/lib:/usr/local/lib/jni:/usr/local/lib"/>
+            <jvmarg line="-Drelex.pennalgpath=data/relex-penn-tagging.algs"/>
+            <jvmarg line="-Drelex.semalgpath=data/relex-semantic.algs"/>
+            <jvmarg line="-Drelex.sfalgpath=data/relex-stanford.algs"/>
+            <jvmarg line="-Drelex.tagalgpath=data/relex-tagging.algs"/>
+            <jvmarg line="-Dwordnet.configfile=data/wordnet/file_properties.xml"/>
+            <classpath refid="relex.classpath"/>
+            <arg line="-n 4 -l -t -f -s 'Alice wrote a book about dinosaurs for the University of California in Berkeley.'"/>
+        </java>
+    </target>
+
+</project>
+
