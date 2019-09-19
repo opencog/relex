@@ -155,7 +155,6 @@ public class RelationExtractor
 		if (do_apply_algs)
 		{
 			parser.getConfig().setStoreConstituentString(true);
-			parser.getConfig().setStoreSense(true);
 		}
 
 		setMaxParses(DEFAULT_MAX_PARSES);
