@@ -98,11 +98,11 @@ class OpenCogSchemeLink
 				"(LgLinkInstanceLink \n" +
 				"   (LgLinkInstanceNode \"" + lab_inst + "\")\n" +
 				"   (LgConnector\n" +
-				"      (LgConnectorNode \"" + labl.getValue() + "\")\n" +
+				"      (LgConnNode \"" + labl.getValue() + "\")\n" +
 				"      (LgConnDirNode \"+\")\n" +
 				"   )\n" +
 				"   (LgConnector\n" +
-				"      (LgConnectorNode \"" + labr.getValue() + "\")\n" +
+				"      (LgConnNode \"" + labr.getValue() + "\")\n" +
 				"      (LgConnDirNode \"-\")\n" +
 				"   )\n)\n";
 
@@ -180,7 +180,7 @@ class OpenCogSchemeLink
 				}
 
 				str += "        (LgConnector \n";
-				str += "            (LgConnectorNode \"" + name + "\")\n";
+				str += "            (LgConnNode \"" + name + "\")\n";
 				str += "            (LgConnDirNode \"" + direction + "\")\n";
 
 				if (multi)
