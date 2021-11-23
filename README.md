@@ -17,7 +17,7 @@ cleaning up web and wiki pages, &c.
 
 The main RelEx website is at
 
-   > http://opencog.org/wiki/RelEx
+   > http://wiki.opencog.org/w/RelEx
 
 It provides an overview of the project, as well as detailed documentation.
 
