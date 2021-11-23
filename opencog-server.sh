@@ -29,6 +29,23 @@ RELEX_OPTS="\
 
 CLASSPATH='-classpath ./target/classes:./target/lib/*'
 
+# It might work better if you uncomment these lines:
+#CLASSPATH="-classpath \
+#bin:\
+#/usr/local/share/java/relex.jar:\
+#/usr/local/share/java/opennlp-tools-1.5.0.jar:\
+#/usr/local/share/java/maxent-3.0.0.jar:\
+#/usr/local/share/java/maxent-2.5.2.jar:\
+#/usr/local/share/java/trove.jar:\
+#/usr/local/share/java/jwnl-1.4rc2.jar:\
+#/usr/local/share/java/jwnl.jar:\
+#/usr/share/java/commons-logging.jar:\
+#/usr/share/java/slf4j-api.jar:\
+#/usr/share/java/gnu-getopt.jar:\
+#/usr/share/java/linkgrammar.jar:\
+#/usr/local/share/java/linkgrammar.jar:\
+#"
+
 # Return with Link Grammar and Relex output on default port 4444.
 java $VM_OPTS $RELEX_OPTS $CLASSPATH relex.Server --link --relex
 
